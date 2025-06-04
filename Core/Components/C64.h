@@ -397,7 +397,7 @@ public:
 
 private:
 
-    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream &os) const override;
 
     void _didReset(bool hard) override;
     void _isReady() const throws override;
@@ -441,7 +441,7 @@ public:
     
     // Exports the current configuration to a script file
     void exportConfig(const fs::path &path) const;
-    void exportConfig(std::ostream& stream) const;
+    void exportConfig(std::ostream &stream) const;
 
 
     //

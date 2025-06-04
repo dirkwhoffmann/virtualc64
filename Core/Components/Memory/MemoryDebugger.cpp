@@ -65,7 +65,7 @@ MemoryDebugger::dump(char *dst, u16 addr, const char *fmt) const
 }
 
 isize
-MemoryDebugger::dump(std::ostream& os, u16 addr, const char *fmt) const
+MemoryDebugger::dump(std::ostream &os, u16 addr, const char *fmt) const
 {
     char str[256];
     isize result = dump(str, addr, fmt);
@@ -74,7 +74,7 @@ MemoryDebugger::dump(std::ostream& os, u16 addr, const char *fmt) const
 }
 
 isize
-MemoryDebugger::ascDump(std::ostream& os, u16 addr, isize lines)
+MemoryDebugger::ascDump(std::ostream &os, u16 addr, isize lines)
 {
     current = addr;
     
@@ -92,7 +92,7 @@ MemoryDebugger::ascDump(std::ostream& os, u16 addr, isize lines)
 }
 
 isize
-MemoryDebugger::hexDump(std::ostream& os, u16 addr, isize lines)
+MemoryDebugger::hexDump(std::ostream &os, u16 addr, isize lines)
 {
     current = addr;
 
@@ -107,7 +107,7 @@ MemoryDebugger::hexDump(std::ostream& os, u16 addr, isize lines)
 }
 
 isize
-MemoryDebugger::memDump(std::ostream& os, u16 addr, isize lines)
+MemoryDebugger::memDump(std::ostream &os, u16 addr, isize lines)
 {
     current = addr;
 
@@ -187,7 +187,7 @@ MemoryDebugger::load(std::istream& is, u16 addr)
 }
 
 void
-MemoryDebugger::load(fs::path& path, u16 addr)
+MemoryDebugger::load(fs::path &path, u16 addr)
 {
     std::ifstream stream(path, std::ifstream::binary);
     if (!stream.is_open()) throw AppError(Fault::FILE_NOT_FOUND, path);
@@ -196,7 +196,7 @@ MemoryDebugger::load(fs::path& path, u16 addr)
 }
 
 void
-MemoryDebugger::save(std::ostream& os, u16 addr, isize count)
+MemoryDebugger::save(std::ostream &os, u16 addr, isize count)
 {
     for (isize i = 0; i < count; i++) {
 
@@ -209,7 +209,7 @@ MemoryDebugger::save(std::ostream& os, u16 addr, isize count)
 }
 
 void
-MemoryDebugger::save(fs::path& path, u16 addr, isize count)
+MemoryDebugger::save(fs::path &path, u16 addr, isize count)
 {
     std::ofstream stream(path, std::ifstream::binary);
     if (!stream.is_open()) throw AppError(Fault::FILE_CANT_CREATE, path);
@@ -218,7 +218,7 @@ MemoryDebugger::save(fs::path& path, u16 addr, isize count)
 }
 
 void
-MemoryDebugger::convertNumeric(std::ostream& os, u8 value) const
+MemoryDebugger::convertNumeric(std::ostream &os, u8 value) const
 {
     using namespace util;
 
@@ -229,7 +229,7 @@ MemoryDebugger::convertNumeric(std::ostream& os, u8 value) const
 }
 
 void
-MemoryDebugger::convertNumeric(std::ostream& os, u16 value) const
+MemoryDebugger::convertNumeric(std::ostream &os, u16 value) const
 {
     using namespace util;
 
@@ -240,7 +240,7 @@ MemoryDebugger::convertNumeric(std::ostream& os, u16 value) const
 }
 
 void
-MemoryDebugger::convertNumeric(std::ostream& os, u32 value) const
+MemoryDebugger::convertNumeric(std::ostream &os, u32 value) const
 {
     using namespace util;
 
@@ -251,7 +251,7 @@ MemoryDebugger::convertNumeric(std::ostream& os, u32 value) const
 }
 
 void
-MemoryDebugger::convertNumeric(std::ostream& os, string s) const
+MemoryDebugger::convertNumeric(std::ostream &os, string s) const
 {
     u8 bytes[4];
 

@@ -853,6 +853,7 @@
 		50650F3C2DF094A3008AD660 /* Compression.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Compression.h; sourceTree = "<group>"; };
 		50650F3D2DF094A3008AD660 /* Compression.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compression.cpp; sourceTree = "<group>"; };
 		50650F412DF0C7A5008AD660 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		50650F432DF0E715008AD660 /* DumpableTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DumpableTypes.h; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		5066B4152C7CCFA0003AEEE8 /* CoreComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreComponentTypes.h; sourceTree = "<group>"; };
 		506A724721C033EF00DA0AC3 /* Configuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Configuration.xib; sourceTree = "<group>"; };
@@ -2060,6 +2061,7 @@
 				50FFB54C2B8262BA00042771 /* Serializable.cpp */,
 				506A8A872B88D00200B95383 /* Configurable.h */,
 				506A8A862B88D00200B95383 /* Configurable.cpp */,
+				50650F432DF0E715008AD660 /* DumpableTypes.h */,
 				50EFB0C32C18D6200013B73C /* Dumpable.h */,
 				50EFB0C22C18D6200013B73C /* Dumpable.cpp */,
 				50BB3E902B7A232800B2D87B /* Inspectable.h */,

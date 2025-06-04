@@ -49,7 +49,7 @@ Reu::_didLoad()
 }
 
 void
-Reu::_dump(Category category, std::ostream& os) const
+Reu::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

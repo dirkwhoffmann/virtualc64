@@ -54,7 +54,7 @@ public:
     void resetConfig(const Defaults &defaults, isize objid = 0);
 
     // Dumps the current configuration
-    void dumpConfig(std::ostream& os) const;
+    void dumpConfig(std::ostream &os) const;
 };
 
 }

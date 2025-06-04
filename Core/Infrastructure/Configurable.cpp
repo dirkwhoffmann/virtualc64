@@ -60,15 +60,15 @@ Configurable::resetConfig(const Defaults &defaults, isize objid)
     for (auto &option : getOptions()) {
         
         try {
-            setOption(option, defaults.get(option, objid));            
-        } catch (const AppError &err) {
+            setOption(option, defaults.get(option, objid));
+        } catch (...) {
             setOption(option, defaults.getFallback(option, objid));
         }
     }
 }
 
 void
-Configurable::dumpConfig(std::ostream& os) const
+Configurable::dumpConfig(std::ostream &os) const
 {
     using namespace util;
 
@@ -77,10 +77,13 @@ Configurable::dumpConfig(std::ostream& os) const
         auto name = OptEnum::key(opt);
         auto help = OptEnum::help(opt);
         auto arg  = OptionParser::asString(opt, getOption(opt));
+        auto arghelp = OptionParser::help(opt, getOption(opt));
 
         os << tab(name);
         os << std::setw(16) << std::left << std::setfill(' ') << arg;
-        os <<help << std::endl;
+        os << help;
+        if (arghelp != "") os << " (" << arghelp << ")";
+        os << std::endl;
     }
 }
 

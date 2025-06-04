@@ -69,7 +69,7 @@ public:
 private:
     
     const char *objectName() const override { return "Socket"; }
-    void _dump(Category category, std::ostream& os) const override { };
+    void _dump(Category category, std::ostream &os) const override { };
 
     
     //

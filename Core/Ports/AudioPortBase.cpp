@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-AudioPort::_dump(Category category, std::ostream& os) const
+AudioPort::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

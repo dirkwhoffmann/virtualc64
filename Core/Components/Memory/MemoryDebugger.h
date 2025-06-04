@@ -85,12 +85,12 @@ public:
 
     // Returns a memory dump in ASCII, hex, or both
     isize dump(char *dst, u16 addr, const char *fmt) const;
-    isize dump(std::ostream& os, u16 addr, const char *fmt) const;
+    isize dump(std::ostream &os, u16 addr, const char *fmt) const;
 
     // Writes a memory dump into a stream
-    isize ascDump(std::ostream& os, u16 addr, isize lines);
-    isize hexDump(std::ostream& os, u16 addr, isize lines);
-    isize memDump(std::ostream& os, u16 addr, isize lines);
+    isize ascDump(std::ostream &os, u16 addr, isize lines);
+    isize hexDump(std::ostream &os, u16 addr, isize lines);
+    isize memDump(std::ostream &os, u16 addr, isize lines);
 
     // Searches a number sequence in memory
     isize memSearch(const string &pattern, u16 addr);
@@ -105,22 +105,22 @@ public:
     void copy(u16 src, u16 dst, isize cnt = 1);
 
     // Loads a chunk of RAM from a stream or file
-    void load(std::istream& is, u16 addr);
-    void load(fs::path& path, u16 addr);
+    void load(std::istream &is, u16 addr);
+    void load(fs::path &path, u16 addr);
 
     // Saves a chunk of RAM to a stream or file
-    void save(std::ostream& is, u16 addr, isize count);
-    void save(fs::path& path, u16 addr, isize count);
+    void save(std::ostream &is, u16 addr, isize count);
+    void save(fs::path &path, u16 addr, isize count);
 
     //
     // Displaying expressions
     //
 
     // Displays a value in different number formats (hex, dec, bin, alpha)
-    void convertNumeric(std::ostream& os, u8 value) const;
-    void convertNumeric(std::ostream& os, u16 value) const;
-    void convertNumeric(std::ostream& os, u32 value) const;
-    void convertNumeric(std::ostream& os, string value) const;
+    void convertNumeric(std::ostream &os, u8 value) const;
+    void convertNumeric(std::ostream &os, u16 value) const;
+    void convertNumeric(std::ostream &os, u32 value) const;
+    void convertNumeric(std::ostream &os, string value) const;
 };
 
 

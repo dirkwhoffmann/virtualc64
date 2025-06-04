@@ -168,14 +168,6 @@ Emulator::put(const Command &cmd)
     cmdQueue.put(cmd);
 }
 
-/*
-void
-Emulator::process(const Cmd &cmd)
-{
-
-}
-*/
-
 i64
 Emulator::get(Opt opt, isize objid) const
 {
@@ -207,9 +199,9 @@ Emulator::set(const string &opt, const string &value, const std::vector<isize> o
 }
 
 void
-Emulator::set(ConfigScheme model)
+Emulator::set(ConfigScheme scheme)
 {
-    main.set(model);
+    main.set(scheme);
 }
 
 void

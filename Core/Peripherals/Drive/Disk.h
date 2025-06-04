@@ -169,7 +169,7 @@ public:
 private:
 
     const char *objectName() const override { return "Disk"; }
-    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream &os) const override;
 
 
     //

@@ -13,11 +13,11 @@
 
 #pragma once
 
-#include "EmulatorTypes.h"
-
 // Infrastructure
+#include "Infrastructure/EmulatorTypes.h"
 #include "Infrastructure/CmdQueueTypes.h"
 #include "Infrastructure/CoreComponentTypes.h"
+#include "Infrastructure/DumpableTypes.h"
 #include "Infrastructure/ErrorTypes.h"
 #include "Infrastructure/MsgQueueTypes.h"
 #include "Infrastructure/OptionTypes.h"

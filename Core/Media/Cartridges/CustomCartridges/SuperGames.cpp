@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-SuperGames::_dump(Category category, std::ostream& os) const
+SuperGames::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

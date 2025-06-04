@@ -91,7 +91,7 @@ public:
 
 private:
 
-    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream &os) const override;
 
 
     //
@@ -124,7 +124,7 @@ public:
 
 private:
 
-    void dumpTexture(C64 &c64, std::ostream& os);
+    void dumpTexture(C64 &c64, std::ostream &os);
 
 
     //

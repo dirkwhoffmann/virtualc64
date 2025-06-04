@@ -78,7 +78,7 @@ fprintf(stderr, format __VA_OPT__(,) __VA_ARGS__);
 fprintf(stderr, "Warning: " format __VA_OPT__(,) __VA_ARGS__);
 
 #define fatal(format, ...) \
-{ fprintf(stderr, "Fatal: " format __VA_OPT__(,) __VA_ARGS__); exit(1); }
+{ fprintf(stderr, "Fatal: " format __VA_OPT__(,) __VA_ARGS__); assert(false); exit(1); }
 
 #define debug(enable, format, ...) \
 if (enable) { if (verbosity) { \

@@ -20,14 +20,12 @@
 
 namespace vc64 {
 
-namespace fs = ::std::filesystem;
-
 class Defaults final : public CoreObject, public Synchronizable {
 
-    /// The key-value storage
+    // The key-value storage
     std::map <string, string> values;
 
-    /// The default value storage
+    // The default value storage
     std::map <string, string> fallbacks;
 
 
@@ -49,7 +47,7 @@ public:
 private:
 
     const char *objectName() const override { return "Defaults"; }
-    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream &os) const override;
 
 
     //

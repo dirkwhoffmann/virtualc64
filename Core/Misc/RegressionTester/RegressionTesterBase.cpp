@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-RegressionTester::_dump(Category category, std::ostream& os) const
+RegressionTester::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

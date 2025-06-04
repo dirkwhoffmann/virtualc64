@@ -26,7 +26,7 @@ GeoRAM::GeoRAM(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
 }
 
 void
-GeoRAM::_dump(Category category, std::ostream& os) const
+GeoRAM::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

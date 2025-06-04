@@ -698,7 +698,7 @@ Memory::txtdump(u16 addr, isize num, MemType src) const
 }
 
 void
-Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
+Memory::memDump(std::ostream &os, u16 addr, isize numLines, bool hex)
 {
     addr &= ~0xF;
 

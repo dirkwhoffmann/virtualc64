@@ -10,21 +10,31 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "VirtualC64Config.h"
-#include "Dumpable.h"
+#pragma once
 
 namespace vc64 {
 
-void 
-Dumpable::dump(Category category, std::ostream &ss) const
+enum class Category
 {
-    _dump(category, ss);
-}
-
-void 
-Dumpable::dump(Category category) const
-{
-    dump(category, std::cout);
-}
+    BankMap,
+    Breakpoints,
+    Checksums,
+    Config,
+    Current,
+    Debug,
+    Defaults,
+    Disk,
+    Dma,
+    Layout,
+    Properties,
+    Registers,
+    RunAhead,
+    Slots,
+    State,
+    Stats,
+    Summary,
+    Tod,
+    Watchpoints
+};
 
 }

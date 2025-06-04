@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-Drive::_dump(Category category, std::ostream& os) const
+Drive::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

@@ -84,7 +84,7 @@ RegressionTester::dumpTexture(C64 &c64, const std::filesystem::path &path)
 }
 
 void
-RegressionTester::dumpTexture(C64 &c64, std::ostream& os)
+RegressionTester::dumpTexture(C64 &c64, std::ostream &os)
 {
     char grey2[3] = { 0x22, 0x22, 0x22 };
     char grey4[3] = { 0x44, 0x44, 0x44 };

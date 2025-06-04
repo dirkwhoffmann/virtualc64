@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-RS232::_dump(Category category, std::ostream& os) const
+RS232::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

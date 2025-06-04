@@ -79,7 +79,7 @@ public:
 
 private:
 
-    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream &os) const override;
 
 
     //
@@ -112,7 +112,7 @@ public:
     void set(const string &opt, const string &value, const std::vector<isize> objids = { }) throws;
 
     // Configures the emulator to match a specific C64 model
-    void set(ConfigScheme model);
+    void set(ConfigScheme scheme);
 
     // Powers off and resets the emulator to it's initial state
     void revertToFactorySettings();

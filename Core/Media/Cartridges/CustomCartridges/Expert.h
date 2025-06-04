@@ -55,7 +55,7 @@ public:
     // Methods from CoreObject
     //
 
-    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream &os) const override;
 
 
     //

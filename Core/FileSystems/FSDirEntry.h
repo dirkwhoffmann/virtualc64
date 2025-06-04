@@ -17,8 +17,6 @@
 
 namespace vc64 {
 
-namespace fs = ::std::filesystem;
-
 struct FSDirEntry
 {
     u8 nextDirTrack;      // $00

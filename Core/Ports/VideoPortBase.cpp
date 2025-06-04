@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-VideoPort::_dump(Category category, std::ostream& os) const
+VideoPort::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

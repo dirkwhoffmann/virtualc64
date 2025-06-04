@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-PowerPort::_dump(Category category, std::ostream& os) const
+PowerPort::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

@@ -86,7 +86,7 @@ Cartridge::operator << (SerWriter &worker)
 }
 
 void
-Cartridge::_dump(Category category, std::ostream& os) const
+Cartridge::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

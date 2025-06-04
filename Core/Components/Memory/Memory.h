@@ -154,7 +154,7 @@ public:
 
 private:
 
-    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream &os) const override;
     void _didReset(bool hard) override;
 
 
@@ -246,7 +246,7 @@ public:
     string txtdump(u16 addr, isize num) { return txtdump(addr, num, peekSrc[addr >> 12]); }
 
     // Dumps a portion of memory to a stream
-    void memDump(std::ostream& os, u16 addr, isize numLines = 16, bool hex = true);
+    void memDump(std::ostream &os, u16 addr, isize numLines = 16, bool hex = true);
 
 
     //

@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-CPU::_dump(Category category, std::ostream& os) const
+CPU::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

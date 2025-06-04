@@ -187,7 +187,7 @@ Defaults::Defaults()
 }
 
 void
-Defaults::_dump(Category category, std::ostream& os) const
+Defaults::_dump(Category category, std::ostream &os) const
 {
     for (const auto &it: fallbacks) {
 
@@ -231,13 +231,13 @@ Defaults::load(std::ifstream &stream)
 void
 Defaults::load(std::stringstream &stream)
 {
-    isize line = 0;
-    isize accepted = 0;
-    isize skipped = 0;
-    string input;
-    string section;
-
     {   SYNCHRONIZED
+
+        isize line = 0;
+        isize accepted = 0;
+        isize skipped = 0;
+        string input;
+        string section;
 
         debug(DEF_DEBUG, "Loading user defaults from string stream...\n");
 
@@ -279,7 +279,7 @@ Defaults::load(std::stringstream &stream)
                 // Check if the key is a known key
                 if (!fallbacks.contains(key)) {
 
-                    warn("Ignoring invalid key %s\n", key.c_str());
+                    warn("Ignoring invalid key %s = %s\n", key.c_str(), value.c_str());
                     skipped++;
                     continue;
                 }
@@ -477,7 +477,7 @@ Defaults::set(Opt option, const string &value, std::vector <isize> objids)
     }
 }
 
-void 
+void
 Defaults::set(Opt option, i64 value)
 {
     set(option, std::to_string(value));
@@ -530,7 +530,10 @@ Defaults::setFallback(Opt option, i64 value, std::vector <isize> objids)
 void
 Defaults::remove()
 {
-    SYNCHRONIZED values.clear();
+    {   SYNCHRONIZED
+
+        values.clear();
+    }
 }
 
 void

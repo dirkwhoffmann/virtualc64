@@ -40,7 +40,7 @@ Joystick::operator << (SerReader &worker)
 }
 
 void
-Joystick::_dump(Category category, std::ostream& os) const
+Joystick::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

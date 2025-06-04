@@ -16,7 +16,7 @@
 namespace vc64 {
 
 void
-FinalIII::_dump(Category category, std::ostream& os) const
+FinalIII::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

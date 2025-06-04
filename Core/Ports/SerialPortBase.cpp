@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-SerialPort::_dump(Category category, std::ostream& os) const
+SerialPort::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

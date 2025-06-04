@@ -247,7 +247,7 @@ public:
 protected:
 
     const char *objectName() const override { return getCartridgeTraits().title; }
-    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream &os) const override;
 
 
     //

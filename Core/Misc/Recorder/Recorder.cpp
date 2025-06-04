@@ -29,7 +29,7 @@ Recorder::_initialize()
 }
 
 void
-Recorder::_dump(Category category, std::ostream& os) const
+Recorder::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

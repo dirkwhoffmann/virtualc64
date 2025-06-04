@@ -69,7 +69,7 @@ FlashRom::_didReset(bool hard)
 }
 
 void
-FlashRom::_dump(Category category, std::ostream& os) const
+FlashRom::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

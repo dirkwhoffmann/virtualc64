@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-SID::_dump(Category category, std::ostream& os) const
+SID::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

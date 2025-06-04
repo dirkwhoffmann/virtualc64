@@ -452,7 +452,7 @@ VirtualC64::exportConfig(const fs::path &path) const
 }
 
 void
-VirtualC64::exportConfig(std::ostream& stream) const
+VirtualC64::exportConfig(std::ostream &stream) const
 {
     VC64_PUBLIC_SUSPEND
     emu->main.exportConfig(stream);

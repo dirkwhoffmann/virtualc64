@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-StarDos::_dump(Category category, std::ostream& os) const
+StarDos::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
     

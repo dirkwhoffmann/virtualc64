@@ -19,8 +19,6 @@
 
 namespace vc64 {
 
-namespace fs = ::std::filesystem;
-
 class MediaFile {
 
 public:

@@ -79,7 +79,7 @@ Host::setOption(Opt opt, i64 value)
 }
 
 void
-Host::_dump(Category category, std::ostream& os) const
+Host::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 

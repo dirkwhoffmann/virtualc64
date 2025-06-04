@@ -253,7 +253,7 @@ Debugger::watchpointMatches(u32 addr)
 }
 
 void
-Debugger::dumpLogBuffer(std::ostream& os, isize count)
+Debugger::dumpLogBuffer(std::ostream &os, isize count)
 {
     isize num = loggedInstructions();
 
@@ -282,7 +282,7 @@ Debugger::dumpLogBuffer(std::ostream& os, isize count)
 }
 
 void
-Debugger::dumpLogBuffer(std::ostream& os)
+Debugger::dumpLogBuffer(std::ostream &os)
 {
     dumpLogBuffer(os, loggedInstructions());
 }
