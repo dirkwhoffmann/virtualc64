@@ -41,7 +41,7 @@ OptionParser::create(Opt opt, i64 arg)
 
         case Opt::C64_SNAP_AUTO:             return boolParser();
         case Opt::C64_SNAP_DELAY:            return numParser(" sec");
-        case Opt::C64_SNAP_COMPRESS:         return boolParser();
+        case Opt::C64_SNAP_COMPRESSOR:       return enumParser.template operator()<CompressorEnum,Compressor>();
 
         case Opt::DASM_NUMBERS:              return enumParser.template operator()<DasmNumbersEnum,DasmNumbers>();
             

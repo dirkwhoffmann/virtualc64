@@ -16,6 +16,14 @@ if(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE Release)
 endif()
 
+# Find and optionally link zlib
+find_package(ZLIB QUIET)
+if(ZLIB_FOUND)
+  message(STATUS "Found ZLIB: ${ZLIB_LIBRARIES}")
+else()
+  message(STATUS "ZLIB not found. Compression support will be disabled.")
+endif()
+
 # Add the emulator library
 add_library(VC64Core VirtualC64.cpp VirtualC64Config.cpp)
 

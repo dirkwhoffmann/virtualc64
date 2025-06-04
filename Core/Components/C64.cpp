@@ -1344,7 +1344,7 @@ C64::takeSnapshot()
     result = new Snapshot(*this);
 
     // Compress the snapshot if requested
-    if (config.compressSnapshots) result->compress();
+    result->compress(config.snapshotCompressor);
 
     return result;
 }

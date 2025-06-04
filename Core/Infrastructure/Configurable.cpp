@@ -60,12 +60,9 @@ Configurable::resetConfig(const Defaults &defaults, isize objid)
     for (auto &option : getOptions()) {
         
         try {
-            
-            setOption(option, defaults.get(option, objid));
-            
+            setOption(option, defaults.get(option, objid));            
         } catch (const AppError &err) {
-            
-            warn("resetConfig(%s): %s\n", OptEnum::key(option), err.what());
+            setOption(option, defaults.getFallback(option, objid));
         }
     }
 }

@@ -166,11 +166,11 @@
 		505D492821C155DD00A7C575 /* RomConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomConf.swift */; };
 		505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE62580BD780066ACE4 /* AudioConf.swift */; };
 		505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */; };
-		50650F382DF087E5008AD660 /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50650F372DF087DE008AD660 /* CMakeLists.txt */; };
 		50650F3B2DF093B7008AD660 /* lz4.c in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3A2DF093B7008AD660 /* lz4.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50650F3E2DF094A3008AD660 /* Compression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3D2DF094A3008AD660 /* Compression.cpp */; };
 		50650F3F2DF094A3008AD660 /* Compression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3D2DF094A3008AD660 /* Compression.cpp */; };
 		50650F402DF094FD008AD660 /* lz4.c in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3A2DF093B7008AD660 /* lz4.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		50650F422DF0C7A5008AD660 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 50650F412DF0C7A5008AD660 /* libz.tbd */; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		506A724821C033EF00DA0AC3 /* Configuration.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A724721C033EF00DA0AC3 /* Configuration.xib */; };
 		506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A724921C0341900DA0AC3 /* ConfigurationController.swift */; };
@@ -852,6 +852,7 @@
 		50650F3A2DF093B7008AD660 /* lz4.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lz4.c; sourceTree = "<group>"; };
 		50650F3C2DF094A3008AD660 /* Compression.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Compression.h; sourceTree = "<group>"; };
 		50650F3D2DF094A3008AD660 /* Compression.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compression.cpp; sourceTree = "<group>"; };
+		50650F412DF0C7A5008AD660 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		5066B4152C7CCFA0003AEEE8 /* CoreComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreComponentTypes.h; sourceTree = "<group>"; };
 		506A724721C033EF00DA0AC3 /* Configuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Configuration.xib; sourceTree = "<group>"; };
@@ -1177,6 +1178,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50650F422DF0C7A5008AD660 /* libz.tbd in Frameworks */,
 				50C72DE41BC7BC8800F1863B /* Metal.framework in Frameworks */,
 				5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
@@ -1235,6 +1237,7 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50650F412DF0C7A5008AD660 /* libz.tbd */,
 				50C72DE31BC7BC8800F1863B /* Metal.framework */,
 				5055A83E1BC7996900399A20 /* MetalKit.framework */,
 				5051A1551B884EBE00CBFB5A /* AVFoundation.framework */,
@@ -2366,7 +2369,6 @@
 				501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */,
 				5098C57D2658D4DC00E05EFC /* VideoExporter.xib in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
-				50650F382DF087E5008AD660 /* CMakeLists.txt in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */,
@@ -2958,6 +2960,10 @@
 					"$(PROJECT_DIR)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"USE_ZLIB=1",
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -3006,6 +3012,7 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_DEVELOPER_DIR)/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				GCC_PREPROCESSOR_DEFINITIONS = "USE_ZLIB=1";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				INFOPLIST_FILE = Resources/Info.plist;

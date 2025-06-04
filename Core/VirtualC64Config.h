@@ -148,6 +148,7 @@ extern debugflag FORCE_CRT_UNKNOWN;
 extern debugflag FORCE_CRT_UNSUPPORTED;
 extern debugflag FORCE_RECORDING_ERROR;
 extern debugflag FORCE_NO_FFMPEG;
+extern debugflag FORCE_ZLIB_ERROR;
 
 }
 

@@ -33,7 +33,7 @@ Defaults::Defaults()
 
     setFallback(Opt::C64_SNAP_AUTO,              false);
     setFallback(Opt::C64_SNAP_DELAY,             10);
-    setFallback(Opt::C64_SNAP_COMPRESS,          true);
+    setFallback(Opt::C64_SNAP_COMPRESSOR,        (i64)Compressor::GZIP);
 
     setFallback(Opt::DASM_NUMBERS,               (i64)DasmNumbers::HEX0);
     

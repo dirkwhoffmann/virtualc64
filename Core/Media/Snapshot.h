@@ -48,8 +48,11 @@ struct SnapshotHeader {
     u8 subminor;
     u8 beta;
 
-    // Indicates if the snapshot contents is stored in compressed form
-    bool compressed;
+    // Size of this snapshot when uncompressed
+    i32 rawSize;
+    
+    // Applied compression method
+    u8 compressor;
 
     // Preview image
     Thumbnail screenshot;
@@ -127,11 +130,11 @@ public:
     // Compressing
     //
 
-    // Indicates whether the snapshot is compressed
-    bool isCompressed() const override { return getHeader()->compressed; }
+    // Returns the compression method
+    Compressor compressor() const override { return Compressor(getHeader()->compressor); }
 
     // Compresses or uncompresses the snapshot
-    void compress() override;
+    void compress(Compressor method) override;
     void uncompress() override;
 };
 

@@ -338,27 +338,27 @@ typedef struct
 {
     //! After a reset, the emulator runs in warp mode for this amout of seconds
     isize warpBoot;
-
+    
     //! Warp mode
     Warp warpMode;
-
+    
     //! Emulator speed in percent (100 is native speed)
     isize speedBoost;
-
+    
     //! Vertical Synchronization
     bool vsync;
-
+    
     //! Number of run-ahead frames (0 = run-ahead is disabled)
     isize runAhead;
-
+    
     //! Enable auto-snapshots
     bool snapshots;
-
+    
     //! Delay between two auto-snapshots in seconds
     isize snapshotDelay;
-
-    //! Indicates whether snapshots should be stored in compressed form
-    bool compressSnapshots;
+    
+    //! Selects the snapshot compression method
+    Compressor snapshotCompressor;
 }
 C64Config;
 

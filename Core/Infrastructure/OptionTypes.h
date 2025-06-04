@@ -40,7 +40,7 @@ enum class Opt : long
     // Snapshots
     C64_SNAP_AUTO,          ///< Automatically take a snapshots
     C64_SNAP_DELAY,         ///< Delay between two snapshots in seconds
-    C64_SNAP_COMPRESS,      ///< Compress snapshot data
+    C64_SNAP_COMPRESSOR,    ///< Snapshot compression method
 
     // CPU
     DASM_NUMBERS,           ///< Disassembler number format
@@ -226,7 +226,7 @@ struct OptEnum : Reflection<OptEnum, Opt> {
             
             case Opt::C64_SNAP_AUTO:         return "C64.SNAP_AUTO";
             case Opt::C64_SNAP_DELAY:        return "C64.SNAP_DELAY";
-            case Opt::C64_SNAP_COMPRESS:     return "C64.SNAP_COMPRESS";
+            case Opt::C64_SNAP_COMPRESSOR:   return "C64.SNAP_COMPRESSOR";
 
             case Opt::DASM_NUMBERS:          return "CPU.DASM_NUMBERS";
                 
@@ -386,7 +386,7 @@ struct OptEnum : Reflection<OptEnum, Opt> {
 
             case Opt::C64_SNAP_AUTO:         return "Automatically take snapshots";
             case Opt::C64_SNAP_DELAY:        return "Time span between two snapshots";
-            case Opt::C64_SNAP_COMPRESS:     return "Compress snapshot data";
+            case Opt::C64_SNAP_COMPRESSOR:   return "Snapshot compression method";
 
             case Opt::DASM_NUMBERS:          return "Disassembler number format";
                 
