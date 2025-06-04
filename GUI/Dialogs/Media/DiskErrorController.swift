@@ -48,7 +48,7 @@ extension DiskErrorController: NSTableViewDataSource {
         
         return errors.count
         /*
-        if let ht = parent.halftrack {
+        if let ht = controller.halftrack {
             return analyzer?.numErrors(ht) ?? 0
         } else {
             return 0

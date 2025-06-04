@@ -152,7 +152,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
         register()
         if awake { dialogWillShow() }
 
-        parent.window?.beginSheet(window!, completionHandler: { result in
+        controller.window?.beginSheet(window!, completionHandler: { result in
 
             handler?()
             self.cleanup()
