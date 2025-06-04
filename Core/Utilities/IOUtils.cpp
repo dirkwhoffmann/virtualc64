@@ -17,8 +17,6 @@
 #include <bitset>
 #include <fstream>
 #include <iomanip>
-#include <limits>
-#include <vector>
 
 namespace vc64::util {
 
@@ -134,6 +132,20 @@ files(const fs::path &path, std::vector <string> &suffixes)
 }
 
 bool
+matchingFileHeader(const fs::path &path, const u8 *header, isize len, isize offset)
+{
+    std::ifstream file(path, std::ios::binary);
+    return file.is_open() ? matchingStreamHeader(file, header, len, offset) : false;
+}
+
+bool
+matchingFileHeader(const fs::path &path, const string &header, isize offset)
+{
+    std::ifstream file(path, std::ios::binary);
+    return file.is_open() ? matchingStreamHeader(file, header, offset) : false;
+}
+
+bool
 matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset)
 {
     assert(header != nullptr);
@@ -158,12 +170,12 @@ matchingStreamHeader(std::istream &is, const string &header, isize offset)
 }
 
 bool
-matchingBufferHeader(const u8 *buf, const u8 *header, isize hlen, isize offset)
+matchingBufferHeader(const u8 *buf, const u8 *header, isize len, isize offset)
 {
     assert(buf != nullptr);
     assert(header != nullptr);
     
-    for (isize i = 0; i < hlen; i++) {
+    for (isize i = 0; i < len; i++) {
         if (buf[offset + i] != header[i])
             return false;
     }

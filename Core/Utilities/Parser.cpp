@@ -17,26 +17,22 @@ namespace vc64::util {
 
 bool isBool(const string& token)
 {
-    return
-    token == "1" || token == "true" || token == "yes" ||
-    token == "0" || token == "false" || token == "no";
+    try { (void)parseBool(token); }
+    catch (std::exception&) { return false; }
+    return true;
 }
 
 bool isOnOff(const string& token)
 {
-    return token == "on" || token == "off";
+    try { (void)parseOnOff(token); }
+    catch (std::exception&) { return false; }
+    return true;
 }
 
 bool isNum(const string& token)
 {
-    string _token = token;
-
-    // Replace leading '$' by '0x'
-    if (!token.empty() && token[0] == '$') _token = "0x" + _token.erase(0, 1);
-
-    try { (void)stol(_token, nullptr, 0); }
+    try { (void)parseNum(token); }
     catch (std::exception&) { return false; }
-
     return true;
 }
 
@@ -62,12 +58,26 @@ long
 parseNum(const string& token)
 {
     string _token = token;
+    int base = 0;
     long result;
 
-    // Replace leading '$' by '0x'
-    if (!token.empty() && token[0] == '$') _token = "0x" + _token.erase(0, 1);
+    if (token.starts_with("$")) {
 
-    try { result = stol(_token, nullptr, 0); }
+        _token.erase(0, 1);
+        base = 16;
+
+    } else if (token.starts_with("0x")) {
+
+        _token.erase(0, 2);
+        base = 16;
+
+    } else if (token.starts_with("%")) {
+
+        _token.erase(0, 1);
+        base = 2;
+    }
+
+    try { result = stol(_token, nullptr, base); }
     catch (std::exception&) { throw ParseNumError(token); }
 
     return result;

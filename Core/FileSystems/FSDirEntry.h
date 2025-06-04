@@ -14,7 +14,6 @@
 
 #include "FSTypes.h"
 #include "PETName.h"
-#include <filesystem>
 
 namespace vc64 {
 

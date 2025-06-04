@@ -13,15 +13,8 @@
 #include "VirtualC64Config.h"
 #include "Checksum.h"
 #include "Macros.h"
-#include <iomanip>
-#include <sstream>
-#include <vector>
 
 namespace vc64::util {
-
-//
-// FNV
-//
 
 u32
 NO_SANITIZE("unsigned-integer-overflow")
@@ -64,10 +57,6 @@ fnv64(const u8 *addr, isize size)
     
     return hash;
 }
-
-//
-// CRC
-//
 
 u16 crc16(const u8 *addr, isize size)
 {

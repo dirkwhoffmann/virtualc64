@@ -19,13 +19,13 @@ CartridgeRom::CartridgeRom(C64 &ref) : SubComponent(ref)
 {
 }
 
-CartridgeRom::CartridgeRom(C64 &ref, u16 size, u16 loadAddress, const u8 *buffer) : CartridgeRom(ref)
+CartridgeRom::CartridgeRom(C64 &ref, u16 size, u16 loadAddress, const u8 *buf) : CartridgeRom(ref)
 {
     this->size = size;
     this->loadAddress = loadAddress;
     rom = new u8[size];
-    if (buffer) {
-        memcpy(rom, buffer, size);
+    if (buf) {
+        memcpy(rom, buf, size);
     }
 }
 

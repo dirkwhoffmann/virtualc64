@@ -16,16 +16,11 @@
 #include "StringUtils.h"
 
 #include <fcntl.h>
-#include <filesystem>
 #include <fstream>
 #include <istream>
 #include <iostream>
 #include <sstream>
 #include <sys/stat.h>
-#include <vector>
-
-// Namespace aliases
-namespace vc64 { namespace fs = std::filesystem; }
 
 namespace vc64::util {
 
@@ -55,10 +50,12 @@ isize numDirectoryItems(const fs::path &path);
 std::vector<fs::path> files(const fs::path &path, const string &suffix = "");
 std::vector<fs::path> files(const fs::path &path, std::vector <string> &suffixes);
 
-// Checks the header signature (magic bytes) of a stream or buffer
+// Checks the header signature (magic bytes) of a file, stream, or buffer
+bool matchingFileHeader(const fs::path &path, const u8 *header, isize len, isize offset = 0);
+bool matchingFileHeader(const fs::path &path, const string &header, isize offset = 0);
 bool matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset = 0);
 bool matchingStreamHeader(std::istream &is, const string &header, isize offset = 0);
-bool matchingBufferHeader(const u8 *buf, const u8 *header, isize hlen, isize offset = 0);
+bool matchingBufferHeader(const u8 *buf, const u8 *header, isize len, isize offset = 0);
 bool matchingBufferHeader(const u8 *buf, const string &header, isize offset = 0);
 bool matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize offset = 0);
 

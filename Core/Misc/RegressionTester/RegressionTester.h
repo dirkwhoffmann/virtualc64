@@ -15,7 +15,6 @@
 #include "RegressionTesterTypes.h"
 #include "SubComponent.h"
 #include "C64Types.h"
-#include <filesystem>
 
 namespace vc64 {
 

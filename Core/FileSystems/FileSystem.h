@@ -18,7 +18,6 @@
 #include "D64File.h"
 #include "AnyCollection.h"
 #include "IOUtils.h"
-#include <vector>
 
 namespace vc64 {
 

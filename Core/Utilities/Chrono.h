@@ -13,7 +13,6 @@
 #pragma once
 
 #include "BasicTypes.h"
-#include <chrono>
 #include <ctime>
 
 namespace vc64::util {
@@ -75,6 +74,7 @@ class Clock {
     bool paused = false;
 
     void updateElapsed();
+    void updateElapsed(Time now);
 
 public:
     
@@ -89,12 +89,14 @@ public:
 
 class StopWatch {
 
+    bool enable;
     string description;
     Clock clock;
 
 public:
     
-    StopWatch(const string &description = "");
+    StopWatch(bool enable, const string &description);
+    StopWatch(const string &description = "") : StopWatch(true, description) { }
     ~StopWatch();
 };
 

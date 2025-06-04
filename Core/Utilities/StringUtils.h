@@ -13,7 +13,6 @@
 #pragma once
 
 #include "BasicTypes.h"
-#include <vector>
 
 namespace vc64::util {
 

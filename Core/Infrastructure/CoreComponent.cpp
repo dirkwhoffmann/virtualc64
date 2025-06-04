@@ -281,13 +281,13 @@ CoreComponent::size(bool recursive)
 }
 
 isize
-CoreComponent::load(const u8 *buffer)
+CoreComponent::load(const u8 *buf)
 {
     isize result = 0;
 
-    postorderWalk([this, buffer, &result](CoreComponent *c) {
+    postorderWalk([this, buf, &result](CoreComponent *c) {
 
-        const u8 *ptr = buffer + result;
+        const u8 *ptr = buf + result;
 
         // Load the checksum for this component
         auto hash = read64(ptr);
@@ -296,7 +296,7 @@ CoreComponent::load(const u8 *buffer)
         SerReader reader(ptr); *c << reader;
 
         // Determine the number of loaded bytes
-        isize count = (isize)(reader.ptr - (buffer + result));
+        isize count = (isize)(reader.ptr - (buf + result));
 
         // Check integrity
         if (hash != c->checksum(false) || FORCE_SNAP_CORRUPTED) {

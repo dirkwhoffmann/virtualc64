@@ -15,8 +15,8 @@
 #include "BasicTypes.h"
 #include "Checksum.h"
 #include "Compression.h"
-#include <filesystem>
-#include <vector>
+#include <functional>
+#include <ostream>
 
 namespace vc64::util {
 
@@ -93,23 +93,27 @@ template <class T> struct Buffer : public Allocator <T> {
     
     T *ptr = nullptr;
     
-    Buffer()
-    : Allocator<T>(ptr) { };
-    Buffer(isize bytes)
-    : Allocator<T>(ptr) { this->init(bytes); }
-    Buffer(isize bytes, T value)
-    : Allocator<T>(ptr) { this->init(bytes, value); }
-    Buffer(const T *buf, isize len)
-    : Allocator<T>(ptr) { this->init(buf, len); }
-    Buffer(const fs::path &path)
-    : Allocator<T>(ptr) { this->init(path); }
-    Buffer(const fs::path &path, const string &name)
-    : Allocator<T>(ptr) { this->init(path, name); }
+    Buffer() : Allocator<T>(ptr) { };
+    Buffer(isize bytes) : Allocator<T>(ptr) { this->init(bytes); }
+    Buffer(isize bytes, T value) : Allocator<T>(ptr) { this->init(bytes, value); }
+    Buffer(const T *buf, isize len) : Allocator<T>(ptr) { this->init(buf, len); }
+    Buffer(const fs::path &path) : Allocator<T>(ptr) { this->init(path); }
+    Buffer(const fs::path &path, const string &name) : Allocator<T>(ptr) { this->init(path, name); }
     
     Buffer& operator= (const Buffer& other) { Allocator<T>::operator=(other); return *this; }
 
     T operator [] (isize i) const { return ptr[i]; }
     T &operator [] (isize i) { return ptr[i]; }
 };
+
+// Stream operators
+template <class T>
+std::ostream &operator<<(std::ostream &os, const Allocator<T> &buffer) {
+    
+    if (buffer.ptr && buffer.size > 0) {
+        os.write((const char *)buffer.ptr, buffer.size * sizeof(T));
+    }
+    return os;
+}
 
 }

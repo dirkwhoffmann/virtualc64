@@ -14,7 +14,6 @@
 
 #include "BasicTypes.h"
 #include <functional>
-#include <vector>
 #include <stack>
 
 namespace vc64 {

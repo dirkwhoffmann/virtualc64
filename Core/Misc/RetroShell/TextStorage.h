@@ -15,7 +15,6 @@
 #include "Macros.h"
 #include <sstream>
 #include <fstream>
-#include <vector>
 
 namespace vc64 {
 

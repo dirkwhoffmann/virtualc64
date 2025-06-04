@@ -278,7 +278,12 @@ Clock::Clock()
 void
 Clock::updateElapsed()
 {
-    auto now = Time::now();
+    updateElapsed(Time::now());
+}
+
+void 
+Clock::updateElapsed(Time now)
+{
     if (!paused) elapsed += now - start;
     start = now;
 }
@@ -309,25 +314,30 @@ Clock::go()
 Time
 Clock::restart()
 {
-    updateElapsed();
+    auto now = Time::now();
+
+    updateElapsed(now);
     auto result = elapsed;
 
-    start = Time::now();
+    start = now;
     elapsed = 0;
     paused = false;
     
     return result;
 }
 
-StopWatch::StopWatch(const string &description) : description(description)
+StopWatch::StopWatch(bool enable, const string &description) : enable(enable), description(description)
 {
-    clock.restart();
+    if (enable) clock.restart();
 }
 
 StopWatch::~StopWatch()
 {
-    auto elapsed = clock.stop();
-    fprintf(stderr, "%s: %f sec\n", description.c_str(), elapsed.asSeconds());
+    if (enable) {
+        
+        auto elapsed = clock.stop();
+        fprintf(stderr, "%s %1.4f sec\n", description.c_str(), elapsed.asSeconds());
+    }
 }
 
 }

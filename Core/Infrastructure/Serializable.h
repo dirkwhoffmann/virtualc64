@@ -15,7 +15,6 @@
 #include "Macros.h"
 #include "MemUtils.h"
 #include "Buffer.h"
-#include <vector>
 
 namespace vc64 {
 

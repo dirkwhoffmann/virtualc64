@@ -14,7 +14,6 @@
 
 #include "BasicTypes.h"
 #include <functional>
-#include <vector>
 
 /* The purpose of the Reflection interface is to make the symbolic names of
  * an enumeration type available inside the application. I.e., it provides

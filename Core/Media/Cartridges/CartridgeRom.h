@@ -56,7 +56,7 @@ public:
 public:
 
     CartridgeRom(C64 &ref);
-    CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = nullptr);
+    CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buf = nullptr);
     ~CartridgeRom();
 
 

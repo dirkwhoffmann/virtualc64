@@ -151,7 +151,156 @@ struct SortedArray : public Array<T, capacity>
 };
 
 //
-// Ringbuffer
+// Resizable Ringbuffer
+//
+
+template <class T> struct ResizableRingBuffer
+{
+    isize capacity = 0;
+    
+    // Element storage
+    T *elements = nullptr;
+    
+    // Read and write pointers
+    isize r, w;
+    
+    
+    //
+    // Initializing
+    //
+    
+    ResizableRingBuffer(isize cap) { capacity = cap; elements = new T[cap](); clear(); }
+    ~ResizableRingBuffer() { delete[] elements; }
+    
+    ResizableRingBuffer& operator= (const ResizableRingBuffer& other) {
+        
+        for (isize i = 0; i < capacity; i++) elements[i] = other.elements[i];
+        r = other.r;
+        w = other.w;
+        
+        return *this;
+    }
+    
+    void resize(isize cap) {
+        
+        if (capacity != cap) {
+            
+            capacity = cap;
+            
+            if (elements) delete[] elements;
+            elements = new T[cap]();
+            
+            clear();
+        }
+    }
+
+    void clear() { r = w = 0; }
+    void clear(T t) { clear(); for (isize i = 0; i < capacity; i++) elements[i] = t; }
+    void align(isize offset) { w = (r + offset) % capacity; }
+    
+    
+    //
+    // Querying the fill status
+    //
+    
+    isize cap() const { return capacity; }
+    isize count() const { return r > w ? capacity - (r - w) : w - r; }
+    isize free() const { return capacity - count() - 1; }
+    double fillLevel() const { return (double)count() / capacity; }
+    bool isEmpty() const { return r == w; }
+    bool isFull() const { return count() == capacity - 1; }
+    
+    
+    //
+    // Working with indices
+    //
+    
+    isize begin() const { return r; }
+    isize end() const { return w; }
+    isize next(isize i) const { return i + 1 < capacity ? i + 1 : 0; }
+    isize prev(isize i) const { return i > 0 ? i - 1 : capacity - 1; }
+    
+    
+    //
+    // Reading and writing elements
+    //
+    
+    T& read()
+    {
+        assert(!isEmpty());
+        
+        auto oldr = r;
+        r = next(r);
+        return elements[oldr];
+    }
+    
+    const T& read(T fallback)
+    {
+        if (isEmpty()) write(fallback);
+        return read();
+    }
+    
+    void write(T element)
+    {
+        assert(!isFull());
+        
+        elements[w] = element;
+        w = next(w);
+    }
+
+    void put(T element)
+    {
+        elements[w] = element;
+        if ((w = next(w)) == r) r = next(r);
+    }
+    
+    void skip()
+    {
+        r = next(r);
+    }
+    
+    void skip(isize n)
+    {
+        r = (r + n) % capacity;
+    }
+    
+    
+    //
+    // Examining the element storage
+    //
+    
+    const T& current() const
+    {
+        return elements[r];
+    }
+
+    T *currentAddr()
+    {
+        return &elements[r];
+    }
+    
+    const T& current(isize offset) const
+    {
+        return elements[(r + offset) % capacity];
+    }
+    
+    const T& latest() const
+    {
+        return elements[prev(w)];
+    }
+    
+    std::vector<T> vector() const
+    {
+        std::vector<T> result;
+        for (auto i = begin(); i != end(); i = next(i)) {
+            result.push_back(elements[i]);
+        }
+        return result;
+    }
+};
+
+//
+// Fixed-size Ringbuffer
 //
 
 template <class T, isize capacity> struct RingBuffer
@@ -180,7 +329,7 @@ template <class T, isize capacity> struct RingBuffer
     }
 
     void clear() { r = w = 0; }
-    void clear(T t) { for (isize i = 0; i < capacity; i++) elements[i] = t; clear(); }
+    void clear(T t) { clear(); for (isize i = 0; i < capacity; i++) elements[i] = t; }
     void align(isize offset) { w = (r + offset) % capacity; }
 
 
@@ -266,6 +415,15 @@ template <class T, isize capacity> struct RingBuffer
     const T& latest() const
     {
         return elements[prev(w)];
+    }
+
+    std::vector<T> vector() const
+    {
+        std::vector<T> result;
+        for (auto i = begin(); i != end(); i = next(i)) {
+            result.push_back(elements[i]);
+        }
+        return result;
     }
 };
 
