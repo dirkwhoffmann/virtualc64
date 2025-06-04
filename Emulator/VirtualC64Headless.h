@@ -27,6 +27,9 @@ void process(const void *listener, Message msg);
 
 class Headless : Wakeable {
 
+    static const char *selfTestScript[];
+    static const char *smokeTestScript[];
+
     // Parsed command line arguments
     std::map<string,string> keys;
 

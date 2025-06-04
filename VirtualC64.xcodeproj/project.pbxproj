@@ -1129,7 +1129,6 @@
 		50E806C125A1F1C500F08732 /* SIDTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDTypes.h; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
-		50EAF5292C7A101E005AC890 /* DiagnoseScripts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiagnoseScripts.h; sourceTree = "<group>"; };
 		50EAF52A2C7A5DC5005AC890 /* OpenRoms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenRoms.h; sourceTree = "<group>"; };
 		50EAFFE924B2600D00024CD2 /* MyToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbar.swift; sourceTree = "<group>"; };
 		50EB45B22DDF2A7200BEC06F /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1552,7 +1551,6 @@
 				506F30462B7692180083EAEA /* VirtualC64.cpp */,
 				50726FBC2961CA5A0031F2F5 /* VirtualC64Headless.h */,
 				50726FBB2961CA5A0031F2F5 /* VirtualC64Headless.cpp */,
-				50EAF5292C7A101E005AC890 /* DiagnoseScripts.h */,
 				50EB45B12DDF20B300BEC06F /* VC64Core */,
 			);
 			path = Emulator;
