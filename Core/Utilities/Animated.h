@@ -25,7 +25,7 @@ template <typename T> struct Animated {
     // Current value
     double current = 1.0;
 
-    // Maximum volume
+    // Maximum value
     double maximum = 1.0;
 
     // Fading direction and speed

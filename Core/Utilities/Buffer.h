@@ -20,8 +20,6 @@
 
 namespace vc64::util {
 
-namespace fs = ::std::filesystem;
-
 template <class T> struct Allocator {
     
     static constexpr isize maxCapacity = 512 * 1024 * 1024;
@@ -49,7 +47,7 @@ template <class T> struct Allocator {
     void init(const std::vector<T> &vector);
     void init(const fs::path &path);
     void init(const fs::path &path, const string &name);
-
+    
     // Resizes an existing buffer
     void resize(isize elements);
     void resize(isize elements, T pad);
@@ -71,11 +69,24 @@ template <class T> struct Allocator {
     u64 fnv64() const { return ptr ? util::fnv64((u8 *)ptr, bytesize()) : 0; }
     u16 crc16() const { return ptr ? util::crc16((u8 *)ptr, bytesize()) : 0; }
     u32 crc32() const { return ptr ? util::crc32((u8 *)ptr, bytesize()) : 0; }
-    string md5() const { return ptr ? util::md5((u8 *)ptr, bytesize()) : 0; }
-
+    
     // Compresses or uncompresses a buffer
-    void compress(isize n = 2, isize offset = 0);
-    void uncompress(isize n = 2, isize offset = 0);
+    void gzip(isize offset = 0) { compress(util::gzip, offset); }
+    void gunzip(isize offset = 0, isize sizeEstimate = 0) { uncompress(util::gunzip, offset, sizeEstimate); }
+    
+    void lz4(isize offset = 0) { compress(util::lz4, offset); }
+    void unlz4(isize offset = 0, isize sizeEstimate = 0) { uncompress(util::unlz4, offset, sizeEstimate); }
+    
+    void rle2(isize offset = 0) { compress(util::rle2, offset); }
+    void unrle2(isize offset = 0, isize sizeEstimate = 0) { uncompress(util::unrle2, offset, sizeEstimate); }
+    
+    void rle3(isize offset = 0) { compress(util::rle3, offset); }
+    void unrle3(isize offset = 0, isize sizeEstimate = 0) { uncompress(util::unrle3, offset, sizeEstimate); }
+
+private:
+
+    void compress(std::function<void(u8 *,isize,std::vector<u8>&)> algo, isize offset = 0);
+    void uncompress(std::function<void(u8 *,isize,std::vector<u8>&, isize)> algo, isize offset = 0, isize sizeEstimate = 0);
 };
 
 template <class T> struct Buffer : public Allocator <T> {

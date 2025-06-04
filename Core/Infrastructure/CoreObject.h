@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "Annotations.h"
 #include "Error.h"
 #include "Dumpable.h"
 

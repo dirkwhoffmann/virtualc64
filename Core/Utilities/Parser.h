@@ -13,6 +13,7 @@
 #pragma once
 
 #include "BasicTypes.h"
+#include "Annotations.h"
 #include <functional>
 
 namespace vc64::util {

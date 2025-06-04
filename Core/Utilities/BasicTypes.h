@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "Annotations.h"
 #include <sys/types.h>
 #include <stdint.h>
 
@@ -53,7 +52,7 @@ namespace vc64 { using std::string; }
 //
 
 #include <vector>
-namespace vamiga { using std::vector; }
+namespace vc64 { using std::vector; }
 
 
 //

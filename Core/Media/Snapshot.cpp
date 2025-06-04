@@ -183,7 +183,7 @@ Snapshot::compress()
 
         debug(SNP_DEBUG, "Compressing %ld bytes (hash: 0x%x)...\n", data.size, data.fnv32());
 
-        data.compress(2, sizeof(SnapshotHeader));
+        data.rle2(sizeof(SnapshotHeader));
         getHeader()->compressed = true;
 
         debug(SNP_DEBUG, "Compressed size: %ld bytes\n", data.size);
@@ -196,7 +196,7 @@ Snapshot::uncompress()
 
         debug(SNP_DEBUG, "Uncompressing %ld bytes...\n", data.size);
 
-        data.uncompress(2, sizeof(SnapshotHeader));
+        data.unrle2(sizeof(SnapshotHeader));
         getHeader()->compressed = false;
 
         debug(SNP_DEBUG, "Uncompressed size: %ld bytes (hash: 0x%x)\n", data.size, data.fnv32());

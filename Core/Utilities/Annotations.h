@@ -29,12 +29,10 @@
 // Syntactic sugar
 //
 
-/** @brief  Marks a function a throwing.
- *  It is used to mark all methods that use the exception mechanism to signal
- *  error conditions instead of returning error codes. The keyword is used for
- *  documentary purposes only as C++ implicitly marks all functions with
- *  noexcept(false) by default.
- *  @note   It is used in favor of classic throw lists since the latter causes
- *          the compiler to embed unwanted runtime checks in the code.
+/* This macro marks a function a throwing.
+ * It is used to mark all methods that use the exception mechanism to signal
+ * error conditions instead of returning error codes. The keyword is used for
+ * documentary purposes only as C++ implicitly marks all functions with
+ * noexcept(false) by default.
  */
 #define throws noexcept(false)

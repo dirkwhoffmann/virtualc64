@@ -283,8 +283,6 @@ CoreComponent::size(bool recursive)
 isize
 CoreComponent::load(const u8 *buffer)
 {
-    assert(!isRunning());
-
     isize result = 0;
 
     postorderWalk([this, buffer, &result](CoreComponent *c) {
