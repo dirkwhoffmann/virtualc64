@@ -13,8 +13,8 @@
 
 #pragma once
 
-#include "VC64Core/Infrastructure/ThreadTypes.h"
-#include "VC64Core/Components/C64Types.h"
+#include "Infrastructure/ThreadTypes.h"
+#include "Components/C64Types.h"
 
 namespace vc64 {
 
