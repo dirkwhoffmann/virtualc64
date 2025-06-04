@@ -14,6 +14,7 @@
 
 #include "BasicTypes.h"
 #include "Checksum.h"
+#include "Compression.h"
 #include <filesystem>
 #include <vector>
 

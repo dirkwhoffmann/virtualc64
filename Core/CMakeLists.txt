@@ -55,12 +55,22 @@ add_subdirectory(FileSystems)
 add_subdirectory(Media)
 add_subdirectory(Misc)
 add_subdirectory(Peripherals)
+add_subdirectory(ThirdParty)
 add_subdirectory(Utilities)
 
 # Add libraries
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(VC64Core resid Threads::Threads)
+target_link_libraries(VC64Core lz4)
+target_link_libraries(vc64Headless lz4)
+
+# Link zlib if available
+if(ZLIB_FOUND)
+  target_link_libraries(VC64Core ZLIB::ZLIB)
+  target_link_libraries(vc64Headless ZLIB::ZLIB)
+  target_compile_definitions(VC64Core PUBLIC USE_ZLIB=1)  # Optional define for conditional compilation
+endif()
 
 # Add tests
 add_test(NAME SelfTest1 COMMAND vc64Headless --verbose --footprint)

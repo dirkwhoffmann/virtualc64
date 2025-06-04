@@ -14,6 +14,7 @@
 
 #include "BasicTypes.h"
 #include "Checksum.h"
+#include "Macros.h"
 #include <bit>
 
 namespace vc64::util {
