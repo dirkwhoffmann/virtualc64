@@ -15,13 +15,13 @@
 
 namespace vc64 {
 
-void 
+void
 Dumpable::dump(Category category, std::ostream &ss) const
 {
     _dump(category, ss);
 }
 
-void 
+void
 Dumpable::dump(Category category) const
 {
     dump(category, std::cout);

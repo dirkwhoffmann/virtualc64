@@ -77,9 +77,9 @@ Thread::execute()
 
         // The emulator is out of sync
         if (missing > 0) {
-            debug(TIM_DEBUG, "Emulation is way too slow (%ld frames behind)\n", missing);
+            debug(RUN_DEBUG, "Emulation is way too slow (%ld frames behind)\n", missing);
         } else {
-            debug(TIM_DEBUG, "Emulation is way too fast (%ld time slices ahead)\n", -missing);
+            debug(RUN_DEBUG, "Emulation is way too fast (%ld time slices ahead)\n", -missing);
         }
 
         resync();
@@ -340,7 +340,7 @@ Thread::trackOff(isize source)
 void
 Thread::wakeUp()
 {
-    trace(TIM_DEBUG, "wakeup: %lld us\n", wakeupClock.restart().asMicroseconds());
+    trace(RUN_DEBUG >= 2, "wakeup: %lld us\n", wakeupClock.restart().asMicroseconds());
     Wakeable::wakeUp();
 }
 

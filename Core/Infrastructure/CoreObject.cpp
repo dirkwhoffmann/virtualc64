@@ -17,7 +17,7 @@
 namespace vc64 {
 
 isize
-CoreObject::verbosity = 2;
+CoreObject::verbosity = 3;
 
 void
 CoreObject::prefix(isize level, const char *component, isize line) const

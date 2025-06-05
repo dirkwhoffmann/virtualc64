@@ -9,12 +9,12 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
-/// @file
 
 #pragma once
 
 #include "ThreadTypes.h"
 #include "CoreComponent.h"
+#include "Concurrency.h"
 #include "Chrono.h"
 #include "Wakeable.h"
 
@@ -199,9 +199,6 @@ public:
 
 private:
 
-    // Initiates a state change
-    // void changeStateTo(ExecState requestedState);
-
     // Returns if the emulator is ready to runs, throws an exception otherwise
     virtual void isReady() throws = 0;
 
@@ -220,7 +217,5 @@ public:
     // Wait until the thread has terminated
     void join() { if (thread.joinable()) thread.join(); }
 };
-
-/** @} */
 
 }

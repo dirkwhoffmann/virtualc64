@@ -29,17 +29,17 @@ protected:
     //
     // Initializing
     //
-    
+
 public:
-    
+
     virtual ~CoreObject() = default;
-    
+
     // Returns the name for this component
     virtual const char *objectName() const = 0;
 
     // Returns a textual description for this component
     virtual const char *description() const { return ""; }
-
+    
     // Called by debug() and trace() to produce a detailed debug output
     virtual void prefix(isize level, const char *component, isize line) const;
 };

@@ -22,7 +22,7 @@ VideoPort::VideoPort(C64 &ref) : SubComponent(ref)
 };
 
 u32 *
-VideoPort::getTexture() const
+VideoPort::getTexture(isize offset) const
 {
     if (isPoweredOff()) {
         return config.whiteNoise ? getNoiseTexture() : getBlankTexture();

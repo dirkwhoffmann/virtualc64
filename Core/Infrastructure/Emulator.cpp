@@ -58,7 +58,7 @@ void
 Emulator::initialize()
 {
     baseTime = util::Time::now();
-    
+
     // Make sure this function is only called once
     if (isInitialized()) throw AppError(Fault::LAUNCH, "The emulator is already initialized.");
 
@@ -74,7 +74,7 @@ Emulator::initialize()
 
     // Switch state
     state = ExecState::OFF;
-    
+
     // Mark the thread as initialized
     initLatch.count_down();
 }
@@ -92,7 +92,7 @@ Emulator::_dump(Category category, std::ostream &os) const
             os << dec(getDebugVariable(DebugFlag(i))) << std::endl;
         }
     }
-
+    
     if (category == Category::Defaults) {
 
         defaults.dump(category, os);
@@ -163,7 +163,6 @@ Emulator::cacheStats(EmulatorStats &result) const
         result.fps = fps;
         result.resyncs = resyncs;
     }
-
 }
 
 i64
@@ -276,7 +275,7 @@ Emulator::computeFrame()
 {
     auto &config = main.getConfig();
 
-    if (config.runAhead) {
+    if (config.runAhead > 0) {
 
         try {
 
@@ -326,6 +325,8 @@ Emulator::cloneRunAheadInstance()
 void
 Emulator::recreateRunAheadInstance()
 {
+    assert(main.config.runAhead > 0);
+
     auto &config = main.getConfig();
 
     // Clone the main instance
@@ -404,17 +405,36 @@ Emulator::finishFrame()
 u32 *
 Emulator::getTexture() const
 {
-    return main.config.runAhead && isRunning() ?
-    ahead.videoPort.getTexture() :
-    main.videoPort.getTexture();
+    if (isRunning()) {
+
+        // In run-ahead mode, return the texture from the run-ahead instance
+        if (main.config.runAhead > 0) {
+            return ahead.videoPort.getTexture();
+        }
+
+        // In run-behind mode, return a texture from the texture buffer
+        if (main.config.runAhead < 0) {
+            return main.videoPort.getTexture(main.config.runAhead);
+        }
+    }
+
+    // Return the most recent texture from the main instance
+    return main.videoPort.getTexture();
 }
 
 u32 *
 Emulator::getDmaTexture() const
 {
-    return main.config.runAhead && isRunning() ?
-    ahead.videoPort.getDmaTexture() :
-    main.videoPort.getDmaTexture();
+    if (isRunning()) {
+
+        // In run-ahead mode, return the texture from the run-ahead instance
+        if (main.config.runAhead > 0) {
+            return ahead.videoPort.getDmaTexture();
+        }
+    }
+
+    // Return the most recent texture from the main instance
+    return main.videoPort.getDmaTexture();
 }
 
 void

@@ -100,7 +100,7 @@ public:
 public:
 
     // Returns a pointer to the stable emulator texture
-    u32 *getTexture() const;
+    u32 *getTexture(isize offset = 0) const;
 
     // Returns a pointer to the stable DMA debugger texture
     u32 *getDmaTexture() const;
