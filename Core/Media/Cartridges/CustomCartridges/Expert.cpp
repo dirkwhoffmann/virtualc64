@@ -14,7 +14,7 @@
 // Schematics and explanation by Martin Sikström:
 // https://people.kth.se/~e93_msi/c64/expert.html
 
-#include "VirtualC64Config.h"
+#include "config.h"
 #include "C64.h"
 
 namespace vc64 {

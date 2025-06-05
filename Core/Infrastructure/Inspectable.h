@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "Dumpable.h"
 #include <iostream>
 
 namespace vc64 {

@@ -10,7 +10,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "VirtualC64Config.h"
+#include "config.h"
 #include "MsgQueue.h"
 
 namespace vc64 {
@@ -30,28 +30,6 @@ MsgQueue::setListener(const void *listener, Callback *callback)
             callback(listener, msg);
         }
     }
-
-    /*
-    {   SYNCHRONIZED
-
-        this->listener = listener;
-        this->callback = callback;
-    }
-
-    // Send all pending messages
-    while (1) {
-
-        Message msg;
-
-        {   SYNCHRONIZED
-
-            if (queue.isEmpty()) break;
-            msg = queue.read();
-        }
-
-        callback(listener, msg);
-    }
-    */
 }
 
 bool
@@ -88,7 +66,7 @@ MsgQueue::put(const Message &msg)
             if (!queue.isFull()) {
                 queue.write(msg);
             } else {
-                debug(MSG_DEBUG, "Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
+                warn("Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
             }
         }
     }
@@ -117,13 +95,5 @@ MsgQueue::put(Msg type, ScriptMsg payload)
 {
     put( Message { .type = type, .script = payload } );
 }
-
-/*
-void
-MsgQueue::put(Msg type, Snapshot *payload)
-{
-    put( Message { .type = type, .snapshot = payload } );
-}
-*/
 
 }

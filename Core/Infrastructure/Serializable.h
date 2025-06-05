@@ -518,12 +518,6 @@ public:
         return *this;
     }
 
-    void copy(void *dst, isize n)
-    {
-        std::memcpy(dst, (void *)ptr, n);
-        ptr += n;
-    }
-
     template <class E, class = std::enable_if_t<std::is_enum<E>{}>>
     SerReader& operator<<(E &v)
     {
@@ -543,6 +537,12 @@ public:
     {
         v << *this;
         return *this;
+    }
+
+    void copy(void *dst, isize n)
+    {
+        std::memcpy(dst, (void *)ptr, n);
+        ptr += n;
     }
 };
 
@@ -664,12 +664,6 @@ public:
         return *this;
     }
 
-    void copy(const void *src, isize n)
-    {
-        std::memcpy((void *)ptr, src, n);
-        ptr += n;
-    }
-
     template <class E, class = std::enable_if_t<std::is_enum<E>{}>>
     SerWriter& operator<<(E &v)
     {
@@ -689,6 +683,12 @@ public:
     {
         v << *this;
         return *this;
+    }
+
+    void copy(const void *src, isize n)
+    {
+        std::memcpy((void *)ptr, src, n);
+        ptr += n;
     }
 };
 

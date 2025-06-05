@@ -21,15 +21,15 @@
  *
  * The interface distinguishes two enumeration types:
  *
- * - Standard enumerations
+ *   - Standard enumerations
  *
- *   The enumeration members must be numbered 0, 1, 2, etc. Each member of the
- *   enumeration is treated as a stand-alone option.
+ *     The enumeration members must be numbered 0, 1, 2, etc. Each member of
+ *     the enumeration is treated as a stand-alone option.
  *
- * - Bit field enumerations
+ *   - Bit field enumerations
  *
- *   The enumeration members must be numbered 1, 2, 4, etc. Each member of the
- *   enumeration is treated as flag of a combined bit field.
+ *     The enumeration members must be numbered 1, 2, 4, etc. Each member of
+ *     the enumeration is treated as flag of a combined bit field.
  *
  * Some enums label their key with a prefix. E.g., the key Option::CPU_OVERCLOCKING
  * is labeled "CPU.OVERCLOCKING". Function fullKey() always the label with the

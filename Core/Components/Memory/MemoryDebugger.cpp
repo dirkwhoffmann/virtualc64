@@ -10,7 +10,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "VirtualC64Config.h"
+#include "config.h"
 #include "MemoryDebugger.h"
 #include "C64.h"
 #include "IOUtils.h"

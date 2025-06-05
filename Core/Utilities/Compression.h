@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "VirtualC64Config.h"
+#include "config.h"
 #include "BasicTypes.h"
 
 namespace vc64::util {

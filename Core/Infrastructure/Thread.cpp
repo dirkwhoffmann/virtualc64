@@ -10,7 +10,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "VirtualC64Config.h"
+#include "config.h"
 #include "Thread.h"
 #include "Chrono.h"
 #include <iostream>
@@ -209,9 +209,9 @@ Thread::switchState(ExecState newState)
 
                 switch (state) {
 
-                    case ExecState::OFF:        state = ExecState::HALTED; _halt(); break;
-                    case ExecState::PAUSED:     state = ExecState::OFF; _powerOff(); break;
-                    case ExecState::RUNNING:    state = ExecState::PAUSED; _pause(); break;
+                    case ExecState::OFF:     state = ExecState::HALTED; _halt(); break;
+                    case ExecState::PAUSED:  state = ExecState::OFF; _powerOff(); break;
+                    case ExecState::RUNNING: state = ExecState::PAUSED; _pause(); break;
 
                     default:
                         invalid();

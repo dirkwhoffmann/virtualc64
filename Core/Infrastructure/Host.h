@@ -41,7 +41,6 @@ class Host final : public SubComponent {
     // Current configuration
     HostConfig config = { };
 
-
     // Search path prepended in makeAbsolute()
     fs::path searchPath;
     
@@ -122,4 +121,3 @@ public:
 };
 
 }
-

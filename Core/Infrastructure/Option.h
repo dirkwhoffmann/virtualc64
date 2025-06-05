@@ -76,7 +76,7 @@ public:
 class NumParser : public OptionParser {
 
 public:
-    
+
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { arg = util::parseNum(s); return arg; }
@@ -99,7 +99,7 @@ public:
     virtual string argList() override { return "<value>"; }
 };
 
-template <typename T, typename E>
+template <class T, typename E>
 class EnumParser : public OptionParser {
 
     using OptionParser::OptionParser;

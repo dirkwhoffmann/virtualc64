@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "VirtualC64Config.h"
+#include "config.h"
 
 /* Idle memory accesses
  *

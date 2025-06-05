@@ -25,16 +25,16 @@ else()
 endif()
 
 # Add the emulator library
-add_library(VC64Core VirtualC64.cpp VirtualC64Config.cpp)
+add_library(VC64Core VirtualC64.cpp config.cpp)
 
 # Add the headless app
-add_executable(vc64Headless VirtualC64Headless.cpp VirtualC64Config.cpp)
-target_link_libraries(vc64Headless VC64Core)
+add_executable(VC64Headless Headless.cpp config.cpp)
+target_link_libraries(VC64Headless VC64Core)
 
 # Specify compile options
 target_compile_definitions(VC64Core PUBLIC _USE_MATH_DEFINES)
 if(WIN32)
-  target_link_libraries(vc64Headless ws2_32)
+  target_link_libraries(VC64Headless ws2_32)
 endif()
 if(MSVC)
   target_compile_options(VC64Core PUBLIC /W4 /WX /Zc:preprocessor)
@@ -71,16 +71,16 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(VC64Core resid Threads::Threads)
 target_link_libraries(VC64Core lz4)
-target_link_libraries(vc64Headless lz4)
+target_link_libraries(VC64Headless lz4)
 
 # Link zlib if available
 if(ZLIB_FOUND)
   target_link_libraries(VC64Core ZLIB::ZLIB)
-  target_link_libraries(vc64Headless ZLIB::ZLIB)
+  target_link_libraries(VC64Headless ZLIB::ZLIB)
   target_compile_definitions(VC64Core PUBLIC USE_ZLIB=1)  # Optional define for conditional compilation
 endif()
 
 # Add tests
-add_test(NAME SelfTest1 COMMAND vc64Headless --verbose --footprint)
-add_test(NAME SelfTest2 COMMAND vc64Headless --verbose --smoke)
-add_test(NAME SelfTest3 COMMAND vc64Headless --verbose --diagnose)
+add_test(NAME SelfTest1 COMMAND VC64Headless --verbose --footprint)
+add_test(NAME SelfTest2 COMMAND VC64Headless --verbose --smoke)
+add_test(NAME SelfTest3 COMMAND VC64Headless --verbose --diagnose)

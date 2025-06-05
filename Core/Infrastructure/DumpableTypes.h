@@ -14,7 +14,7 @@
 
 namespace vc64 {
 
-enum class Category
+enum class Category : long
 {
     BankMap,
     Breakpoints,

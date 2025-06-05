@@ -7,7 +7,7 @@
 // See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
-#include "VirtualC64Config.h"
+#include "config.h"
 #include "Compression.h"
 #include "MemUtils.h"
 #include "lz4.h"

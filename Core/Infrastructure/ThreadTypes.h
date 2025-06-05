@@ -17,6 +17,10 @@
 
 namespace vc64 {
 
+//
+// Enumerations
+//
+
 /// Execution state
 enum class ExecState : long
 {

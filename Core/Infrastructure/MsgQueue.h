@@ -22,7 +22,7 @@ namespace vc64 {
 class MsgQueue final : CoreObject, Synchronizable {
 
     // Ring buffer storing all pending messages
-    util::RingBuffer <Message, 128> queue;
+    util::RingBuffer <Message, 512> queue;
 
     // The registered listener
     const void *listener = nullptr;
@@ -33,16 +33,19 @@ class MsgQueue final : CoreObject, Synchronizable {
     // If disabled, no messages will be stored
     bool enabled = true;
 
+    //
+    // Constructing
+    //
     
     //
-    // Methods
+    // Methods from CoreObject
     //
-    
-private:
+
+public:
 
     const char *objectName() const override { return "MsgQueue"; }
 
-
+    
     //
     // Managing the queue
     //
@@ -54,6 +57,9 @@ public:
 
     // Disables the message queue
     void disable() { enabled = false; }
+    
+    // Reads a message
+    bool get(Message &msg);
 
     // Sends a message
     void put(const Message &msg);
@@ -61,9 +67,6 @@ public:
     void put(Msg type, CpuMsg payload);
     void put(Msg type, DriveMsg payload);
     void put(Msg type, ScriptMsg payload);
-
-    // Reads a message
-    bool get(Message &msg);
 };
 
 }

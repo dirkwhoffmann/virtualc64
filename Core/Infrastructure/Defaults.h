@@ -30,7 +30,7 @@ class Defaults final : public CoreObject, public Synchronizable {
 
 
     //
-    // Methods
+    // Initializing
     //
 
 public:
