@@ -23,7 +23,7 @@
 
 namespace vc64 {
 
-struct VICIIRegisters : Serializable
+struct VICIIRegisters : SerializableStruct
 {
     // Registers
     u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
@@ -60,10 +60,10 @@ struct VICIIRegisters : Serializable
         << xscroll
         << mode;
 
-    } SERIALIZERS(serialize);
+    } STRUCT_SERIALIZERS(serialize);
 };
 
-struct SpriteSR : Serializable
+struct SpriteSR : SerializableStruct
 {
     // Shift register data (24 bit)
     u32 data;
@@ -101,7 +101,7 @@ struct SpriteSR : Serializable
         << expFlop
         << colBits;
 
-    } SERIALIZERS(serialize);
+    } STRUCT_SERIALIZERS(serialize);
 };
 
 class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStats> {

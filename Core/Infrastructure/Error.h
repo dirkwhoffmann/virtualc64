@@ -33,16 +33,15 @@ struct AppException : public std::exception {
     const char *what() const noexcept override { return description.c_str(); }
 };
 
-/// Emulator exception
 struct AppError : public AppException
 {
-    AppError(Fault code, const string &s);
-    AppError(Fault code, const char *s) : AppError(code, string(s)) { };
-    AppError(Fault code, const std::filesystem::path &path) : AppError(code, path.string()) { };
-    AppError(Fault code, long v) : AppError(code, std::to_string(v)) { };
-    AppError(Fault code) : AppError(code, "") { }
+    AppError(Fault fault, const string &s);
+    AppError(Fault fault, const char *s) : AppError(fault, string(s)) { };
+    AppError(Fault fault, const fs::path &p) : AppError(fault, p.string()) { };
+    AppError(Fault fault, std::integral auto v) : AppError(fault, std::to_string(v)) { };
+    AppError(Fault fault) : AppError(fault, "") { }
 
-    /// Returns a textual description of this error
+    Fault fault() const { return Fault(data); }
     const char *what() const throw() override;
 };
 

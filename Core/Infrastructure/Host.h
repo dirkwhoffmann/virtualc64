@@ -42,8 +42,12 @@ class Host final : public SubComponent {
     HostConfig config = { };
 
 
+    // Search path prepended in makeAbsolute()
+    fs::path searchPath;
+    
+    
     //
-    // Methods
+    // Initializing
     //
 
 public:
@@ -80,7 +84,7 @@ private:
 
 
     //
-    // Configuring
+    // Methods from CoreObject
     //
 
 public:
@@ -93,11 +97,23 @@ public:
 
 
     //
-    // Working with temporary files and folders
+    // Working with files and folders
     //
 
 public:
-    
+
+    // Makes a file name compatible with the host file system
+    static fs::path sanitize(const string &filename);
+
+    // Makes a file name compatible with the Amiga file system
+    static string unsanitize(const fs::path &filename);
+
+    // Sets the search path used in makeAbsolute
+    void setSearchPath(const fs::path &path);
+
+    // Makes a path absolute
+    fs::path makeAbsolute(const fs::path &path) const;
+
     // Returns a path to a temporary folder
     fs::path tmp() const throws;
 

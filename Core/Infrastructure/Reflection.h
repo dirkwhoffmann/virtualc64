@@ -30,6 +30,12 @@
  *
  *   The enumeration members must be numbered 1, 2, 4, etc. Each member of the
  *   enumeration is treated as flag of a combined bit field.
+ *
+ * Some enums label their key with a prefix. E.g., the key Option::CPU_OVERCLOCKING
+ * is labeled "CPU.OVERCLOCKING". Function fullKey() always the label with the
+ * prefix included. Other functions such as key() provide an additional
+ * parameter that decides whether to key label should be return with or without
+ * the prefix.
  */
 
 namespace vc64 {
@@ -69,30 +75,6 @@ template <class T, typename E> struct Reflection {
         
         return result;
     }
-    
-    // Returns a textual representation for a bit mask
-    /*
-    static const char *mask(isize mask) {
-
-        static string result;
-        result = "";
-
-        if (isBitField()) {
-
-            for (isize i = T::minVal; i <= T::maxVal; i *= 2) {
-                if (mask & i) result += (result.empty() ? "" : " | ") + string(T::_key((E)i));
-            }
-
-        } else {
-
-            for (isize i = T::minVal; i <= T::maxVal; i++) {
-                if (mask & (1 << i)) result += (result.empty() ? "" : " | ") + string(T::_key((E)i));
-            }
-        }
-
-        return result.c_str();
-    }
-    */
     
     // Collects all key / value pairs
     static std::vector < std::pair<string,long> >

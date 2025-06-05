@@ -22,6 +22,20 @@ MsgQueue::setListener(const void *listener, Callback *callback)
 
         this->listener = listener;
         this->callback = callback;
+
+        // Send all pending messages
+        while (!queue.isEmpty()) {
+
+            Message &msg = queue.read();
+            callback(listener, msg);
+        }
+    }
+
+    /*
+    {   SYNCHRONIZED
+
+        this->listener = listener;
+        this->callback = callback;
     }
 
     // Send all pending messages
@@ -36,6 +50,21 @@ MsgQueue::setListener(const void *listener, Callback *callback)
         }
 
         callback(listener, msg);
+    }
+    */
+}
+
+bool
+MsgQueue::get(Message &msg)
+{
+    if (!enabled) return false;
+
+    {   SYNCHRONIZED
+
+        if (queue.isEmpty()) return false;
+
+        msg = queue.read();
+        return true;
     }
 }
 
@@ -96,19 +125,5 @@ MsgQueue::put(Msg type, Snapshot *payload)
     put( Message { .type = type, .snapshot = payload } );
 }
 */
-
-bool
-MsgQueue::get(Message &msg)
-{
-    if (!enabled) return false;
-
-    {   SYNCHRONIZED
-
-        if (queue.isEmpty()) return false;
-
-        msg = queue.read();
-        return true;
-    }
-}
 
 }
