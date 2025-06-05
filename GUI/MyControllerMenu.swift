@@ -533,7 +533,7 @@ extension MyController: NSMenuItemValidation {
         if let emu = emu {
 
             renderer.rotateLeft()
-            emu.c64.hardReset()
+            emu.hardReset()
             try? emu.run()
         }
     }
@@ -541,7 +541,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func softResetAction(_ sender: Any!) {
 
         if let emu = emu {
-            emu.c64.softReset()
+            emu.softReset()
         }
     }
 
@@ -1030,7 +1030,7 @@ extension MyController: NSMenuItemValidation {
         if let emu = emu {
 
             emu.expansionport.detachCartridge()
-            emu.c64.hardReset()
+            emu.hardReset()
         }
     }
 

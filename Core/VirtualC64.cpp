@@ -260,7 +260,6 @@ VirtualC64::powerOn()
 {
     VC64_PUBLIC
     emu->put(Cmd::POWER_ON);
-    // emu->Thread::powerOn();
 }
 
 void 
@@ -268,7 +267,6 @@ VirtualC64::powerOff()
 {
     VC64_PUBLIC
     emu->put(Cmd::POWER_OFF);
-    // emu->Thread::powerOff();
 }
 
 void 
@@ -280,19 +278,31 @@ VirtualC64::run()
     isReady();
     
     emu->put(Cmd::RUN);
-    
-    // emu->run();
 }
 
 void 
 VirtualC64::pause() 
 {
     VC64_PUBLIC
+
     emu->put(Cmd::PAUSE);
-    // emu->pause();
 }
 
-void 
+void
+VirtualC64::hardReset()
+{
+    VC64_PUBLIC
+    emu->put(Cmd::HARD_RESET);
+}
+
+void
+VirtualC64::softReset()
+{
+    VC64_PUBLIC
+    emu->put(Cmd::SOFT_RESET);
+}
+
+void
 VirtualC64::halt() 
 {
     VC64_PUBLIC
@@ -301,7 +311,6 @@ VirtualC64::halt()
     
     // Wait for the thread to terminate
     emu->join();
-    // emu->halt();
 }
 
 void 
@@ -323,7 +332,6 @@ VirtualC64::warpOn(isize source)
 {
     VC64_PUBLIC
     emu->put(Cmd::WARP_ON, source);
-    // emu->warpOn(source);
 }
 
 void 
@@ -331,7 +339,6 @@ VirtualC64::warpOff(isize source)
 {
     VC64_PUBLIC
     emu->put(Cmd::WARP_OFF, source);
-    // emu->warpOff(source);
 }
 
 void 
@@ -469,20 +476,6 @@ VirtualC64::put(const Command &cmd)
 //
 // C64API
 //
-
-void
-C64API::hardReset()
-{
-    emu->hardReset();
-    emu->markAsDirty();
-}
-
-void
-C64API::softReset()
-{
-    emu->softReset();
-    emu->markAsDirty();
-}
 
 u64
 C64API::getAutoInspectionMask() const

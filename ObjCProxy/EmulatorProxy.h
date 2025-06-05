@@ -185,6 +185,9 @@ NSString *EventSlotName(EventSlot slot);
 - (void)trackOff;
 - (void)trackOff:(NSInteger)source;
 
+- (void)hardReset;
+- (void)softReset;
+
 - (void)stepInto;
 - (void)stepOver;
 - (void)stepCycle;
@@ -271,9 +274,6 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) RomTraits charRom;
 @property (readonly) RomTraits kernalRom;
 @property (readonly) RomTraits vc1541Rom;
-
-- (void)hardReset;
-- (void)softReset;
 
 - (MediaFileProxy *) takeSnapshot;
 

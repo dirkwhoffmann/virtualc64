@@ -1043,25 +1043,6 @@ struct C64API : public API {
     RomTraits getRomTraits(RomType type) const;
 
     /// @}
-    /// @name Resetting the C64
-    /// @{
-
-    /** @brief  Performs a hard reset
-     *
-     *  A hard reset affects all components. The effect is similar to
-     *  switching power off and on.
-     */
-    void hardReset();
-
-    /** @brief  Performs a hard reset
-     *
-     *  A soft reset emulates a real reset of the C64 which can be initiated
-     *  via the reset line on the expansion port.
-     */
-    void softReset();
-
-
-    /// @}
     /// @name Auto-inspecting components
     /// @{
 
@@ -1297,6 +1278,24 @@ public:
      */
     void pause();
 
+    /// @}
+    /// @name Resetting the C64
+    /// @{
+
+    /** @brief  Performs a hard reset
+     *
+     *  A hard reset affects all components. The effect is similar to
+     *  switching power off and on.
+     */
+    void hardReset();
+
+    /** @brief  Performs a hard reset
+     *
+     *  A soft reset emulates a real reset of the C64 which can be initiated
+     *  via the reset line on the expansion port.
+     */
+    void softReset();
+    
     /** @brief   Terminates the emulator thread
      *
      *  Halting the emulator changes the internal state to #STATE\_HALTED.

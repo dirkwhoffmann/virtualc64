@@ -1682,16 +1682,6 @@ NSString *EventSlotName(EventSlot slot)
     return [self getRomTraits:RomType::VC1541];
 }
 
-- (void)hardReset
-{
-    [self c64]->hardReset();
-}
-
-- (void)softReset
-{
-    [self c64]->softReset();
-}
-
 - (MediaFileProxy *)takeSnapshot
 {
     MediaFile *snapshot = [self c64]->takeSnapshot();
@@ -1818,6 +1808,16 @@ NSString *EventSlotName(EventSlot slot)
 {
     try { [self emu]->launch(listener, func); }
     catch (AppError &error) { [ex save:error]; }
+}
+
+- (void)hardReset
+{
+    [self emu]->hardReset();
+}
+
+- (void)softReset
+{
+    [self emu]->softReset();
 }
 
 - (void)isReady:(ExceptionWrapper *)ex
