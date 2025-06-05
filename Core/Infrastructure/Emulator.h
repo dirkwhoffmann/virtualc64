@@ -21,15 +21,19 @@
 
 namespace vc64 {
 
-class VirtualC64;
-
-class Emulator : public Thread, public Synchronizable,
-public Inspectable<EmulatorInfo, EmulatorStats> {
+class Emulator : public Thread, public Synchronizable, public Inspectable<EmulatorInfo, EmulatorStats> {
 
     friend class API;
     friend class VirtualC64;
 
-    // The virtual C64
+public:
+
+    // User default settings
+    static Defaults defaults;
+
+private:
+    
+    // The main emulator instance
     C64 main = C64(*this, 0);
 
     // The run-ahead instance
@@ -37,14 +41,6 @@ public Inspectable<EmulatorInfo, EmulatorStats> {
 
     // Indicates if the run-ahead instance needs to be updated
     bool isDirty = true;
-
-    // Keeps track of the number of recreated run-ahead instances
-    isize clones = 0;
-
-public:
-
-    // User default settings
-    static Defaults defaults;
 
     // Incoming external events
     CmdQueue cmdQueue;

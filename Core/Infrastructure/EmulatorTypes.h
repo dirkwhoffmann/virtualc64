@@ -323,6 +323,7 @@ typedef struct
     double cpuLoad;         ///< Measured CPU load
     double fps;             ///< Measured frames per seconds
     isize resyncs;          ///< Number of out-of-sync conditions
+    isize clones;           ///< Number of created run-ahead instances
 }
 EmulatorStats;
 

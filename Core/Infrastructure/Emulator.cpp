@@ -292,7 +292,7 @@ Emulator::computeFrame()
 void
 Emulator::cloneRunAheadInstance()
 {
-    clones++;
+    stats.clones++;
 
     // Recreate the runahead instance from scratch
     ahead = main; isDirty = false;
