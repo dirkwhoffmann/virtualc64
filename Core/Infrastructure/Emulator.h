@@ -124,7 +124,7 @@ public:
 private:
 
     void update() override;
-    bool shouldWarp();
+    bool shouldWarp() const;
     isize missingFrames() const override;
     void computeFrame() override;
 
@@ -139,10 +139,6 @@ private:
     void _trackOff() override { main.trackOff(); }
 
     void isReady() override;
-
-public:
-
-    //  double refreshRate() const override;
 
 
     //
@@ -192,6 +188,12 @@ public:
     // Feeds a command into the command queue
     void put(const Command &cmd);
     void put(Cmd type, i64 payload) { put (Command(type, payload)); }
+    void put(Cmd type, AlarmCmd payload) { put(Command(type, payload)); }
+    void put(Cmd type, ConfigCmd payload) { put(Command(type, payload)); }
+    void put(Cmd type, CoordCmd payload) { put(Command(type, payload)); }
+    void put(Cmd type, GamePadCmd payload) { put(Command(type, payload)); }
+    void put(Cmd type, KeyCmd payload) { put(Command(type, payload)); }
+    void put(Cmd type, TapeCmd payload) { put(Command(type, payload)); }
 
 
     //

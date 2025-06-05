@@ -376,8 +376,6 @@
 		50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194862BDA5D4D0046849E /* VICIIInfo.cpp */; };
 		50A1948A2BDA5EED0046849E /* VICIIBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIBase.cpp */; };
 		50A1948B2BDA5EED0046849E /* VICIIBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194892BDA5EED0046849E /* VICIIBase.cpp */; };
-		50A1948D2BDA6F490046849E /* EmulatorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1948C2BDA6F490046849E /* EmulatorBase.cpp */; };
-		50A1948E2BDA6F490046849E /* EmulatorBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1948C2BDA6F490046849E /* EmulatorBase.cpp */; };
 		50A194932BDA709D0046849E /* CPUBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194922BDA709D0046849E /* CPUBase.cpp */; };
 		50A194942BDA709D0046849E /* CPUBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194922BDA709D0046849E /* CPUBase.cpp */; };
 		50A194992BDA82720046849E /* SIDBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A194982BDA82720046849E /* SIDBase.cpp */; };
@@ -960,7 +958,6 @@
 		50A194832BDA5CD40046849E /* TODBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TODBase.cpp; sourceTree = "<group>"; };
 		50A194862BDA5D4D0046849E /* VICIIInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIInfo.cpp; sourceTree = "<group>"; };
 		50A194892BDA5EED0046849E /* VICIIBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIIBase.cpp; sourceTree = "<group>"; };
-		50A1948C2BDA6F490046849E /* EmulatorBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EmulatorBase.cpp; sourceTree = "<group>"; };
 		50A194922BDA709D0046849E /* CPUBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUBase.cpp; sourceTree = "<group>"; };
 		50A194982BDA82720046849E /* SIDBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBase.cpp; sourceTree = "<group>"; };
 		50A1949E2BDA84710046849E /* MemoryBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MemoryBase.cpp; sourceTree = "<group>"; };
@@ -2042,7 +2039,6 @@
 				5078BEAC264D72C000EDA161 /* CMakeLists.txt */,
 				506F30442B7578870083EAEA /* EmulatorTypes.h */,
 				506F30392B729CE80083EAEA /* Emulator.h */,
-				50A1948C2BDA6F490046849E /* EmulatorBase.cpp */,
 				506F30382B729CE80083EAEA /* Emulator.cpp */,
 				50A2D7AE24AF944500671F38 /* Constants.h */,
 				50E806BE25A1C2B800F08732 /* Reflection.h */,
@@ -2522,7 +2518,6 @@
 				50726F882961CA0D0031F2F5 /* Comal80.cpp in Sources */,
 				506A8A8D2B89DAF800B95383 /* SID.cpp in Sources */,
 				50BD641E2C04C05A007CD347 /* Heatmap.cpp in Sources */,
-				50A1948E2BDA6F490046849E /* EmulatorBase.cpp in Sources */,
 				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
 				50A5B7D22C74E44C00D6DDAD /* RemoteServer.cpp in Sources */,
 				508C1E572C0B20760097473C /* ExpansionPortBase.cpp in Sources */,
@@ -2899,7 +2894,6 @@
 				504C435D24AF29AC00E69CAE /* EasyFlash.cpp in Sources */,
 				504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */,
 				5058A924281D10C600C223C9 /* DiskCreator.swift in Sources */,
-				50A1948D2BDA6F490046849E /* EmulatorBase.cpp in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
 				504C438C24AF29AC00E69CAE /* VICIIDraw.cpp in Sources */,

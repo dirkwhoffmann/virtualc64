@@ -10,7 +10,6 @@ CoreComponent.cpp
 Defaults.cpp
 Dumpable.cpp
 Emulator.cpp
-EmulatorBase.cpp
 Error.cpp
 Host.cpp
 Inspectable.cpp

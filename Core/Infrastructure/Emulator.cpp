@@ -17,11 +17,11 @@
 namespace vc64 {
 
 // Perform some consistency checks
-static_assert(sizeof(i8 ) == 1, "i8  size mismatch");
+static_assert(sizeof(i8)  == 1, "i8  size mismatch");
 static_assert(sizeof(i16) == 2, "i16 size mismatch");
 static_assert(sizeof(i32) == 4, "i32 size mismatch");
 static_assert(sizeof(i64) == 8, "i64 size mismatch");
-static_assert(sizeof(u8 ) == 1, "u8  size mismatch");
+static_assert(sizeof(u8)  == 1, "u8  size mismatch");
 static_assert(sizeof(u16) == 2, "u16 size mismatch");
 static_assert(sizeof(u32) == 4, "u32 size mismatch");
 static_assert(sizeof(u64) == 8, "u64 size mismatch");
@@ -73,99 +73,99 @@ Emulator::initialize()
     // Setup the default configuration
     revertToFactorySettings();
 
+    // Get the runahead instance up-to-date
+    ahead = main;
+
     // Switch state
     state = ExecState::OFF;
     assert(isInitialized());
 }
 
 void
-Emulator::hardReset()
+Emulator::_dump(Category category, std::ostream &os) const
 {
-    main.hardReset();
+    using namespace util;
+
+    if (category == Category::Debug) {
+
+        for (const auto &i : DebugFlagEnum::elements()) {
+
+            os << tab(DebugFlagEnum::key(i));
+            os << bol(getDebugVariable(DebugFlag(i))) << std::endl;
+        }
+    }
+
+    if (category == Category::Defaults) {
+
+        defaults.dump(category, os);
+    }
+
+    if (category == Category::RunAhead) {
+
+        os << "Primary instance:" << std::endl << std::endl;
+
+        os << tab("Frame");
+        os << dec(main.frame) << std::endl;
+        os << tab("Beam");
+        os << "(" << dec(main.scanline) << "," << dec(main.rasterCycle) << ")" << std::endl;
+        os << tab("Cycle");
+        os << dec(main.cpu.clock) << std::endl << std::endl;
+
+        os << "Run-ahead instance:" << std::endl << std::endl;
+
+        os << tab("Clone nr");
+        os << dec(stats.clones) << std::endl;
+        os << tab("Frame");
+        os << dec(ahead.frame) << std::endl;
+        os << tab("Beam");
+        os << " (" << dec(ahead.scanline) << "," << dec(ahead.rasterCycle) << ")" << std::endl;
+        os << tab("Cycle");
+        os << dec(ahead.cpu.clock) << std::endl;
+    }
+
+    if (category == Category::State) {
+
+        os << tab("Execution state");
+        os << ExecStateEnum::key(state) << std::endl;
+        os << tab("Power");
+        os << bol(isPoweredOn()) << std::endl;
+        os << tab("Running");
+        os << bol(isRunning()) << std::endl;
+        os << tab("Suspended");
+        os << bol(isSuspended()) << std::endl;
+        os << tab("Warping");
+        os << bol(isWarping()) << std::endl;
+        os << tab("Tracking");
+        os << bol(isTracking()) << std::endl;
+        os << std::endl;
+    }
 }
 
 void
-Emulator::softReset()
+Emulator::cacheInfo(EmulatorInfo &result) const
 {
-    main.softReset();
+    {   SYNCHRONIZED
+
+        result.state = state;
+        result.powered = isPoweredOn();
+        result.paused = isPaused();
+        result.running = isRunning();
+        result.suspended = isSuspended();
+        result.warping = isWarping();
+        result.tracking = isTracking();
+    }
 }
 
 void
-Emulator::stepInto()
+Emulator::cacheStats(EmulatorStats &result) const
 {
-    if (isRunning()) return;
+    {   SYNCHRONIZED
 
-    main.stepTo = { };
-    main.setFlag(RL::SINGLE_STEP);
-    run();
-}
+        result.cpuLoad = cpuLoad;
+        result.fps = fps;
+        result.resyncs = resyncs;
+    }
 
-void 
-Emulator::stepOver()
-{
-    if (isRunning()) return;
-
-    main.stepTo = main.cpu.getAddressOfNextInstruction();
-    main.setFlag(RL::SINGLE_STEP);
-    run();
-}
-
-void
-Emulator::stepCycle()
-{
-    if (isRunning()) return;
-    main.setFlag(RL::SINGLE_CYCLE);
-    run();
-}
-
-void
-Emulator::finishLine()
-{
-    if (isRunning()) return;
-    main.setFlag(RL::FINISH_LINE);
-    run();
-}
-
-void
-Emulator::finishFrame()
-{
-    if (isRunning()) return;
-    main.setFlag(RL::FINISH_FRAME);
-    run();
-}
-
-void
-Emulator::revertToFactorySettings()
-{
-    // Setup the default configuration
-    main.resetConfig();
-    ahead.resetConfig();
-
-    // Perform a hard reset
-    main.hardReset();
-    ahead.hardReset();
-}
-
-u32 *
-Emulator::getTexture() const
-{
-    return main.config.runAhead && isRunning() ?
-    ahead.videoPort.getTexture() :
-    main.videoPort.getTexture();
-}
-
-u32 *
-Emulator::getDmaTexture() const
-{
-    return main.config.runAhead && isRunning() ?
-    ahead.videoPort.getDmaTexture() :
-    main.videoPort.getDmaTexture();
-}
-
-void
-Emulator::put(const Command &cmd)
-{
-    cmdQueue.put(cmd);
 }
 
 i64
@@ -205,6 +205,21 @@ Emulator::set(ConfigScheme scheme)
 }
 
 void
+Emulator::revertToFactorySettings()
+{
+    // Power off
+    powerOff();
+
+    // Setup the default configuration
+    main.resetConfig();
+    ahead.resetConfig();
+
+    // Perform a hard reset
+    main.hardReset();
+    ahead.hardReset();
+}
+
+void
 Emulator::update()
 {
     // Switch warp mode on or off
@@ -218,7 +233,7 @@ Emulator::update()
 }
 
 bool
-Emulator::shouldWarp()
+Emulator::shouldWarp() const
 {
     auto &config = main.getConfig();
 
@@ -290,6 +305,12 @@ Emulator::computeFrame()
 }
 
 void
+Emulator::isReady()
+{
+    main.isReady();
+}
+
+void
 Emulator::cloneRunAheadInstance()
 {
     stats.clones++;
@@ -327,9 +348,81 @@ Emulator::recreateRunAheadInstance()
 }
 
 void
-Emulator::isReady()
+Emulator::hardReset()
 {
-    main.isReady();
+    main.hardReset();
+}
+
+void
+Emulator::softReset()
+{
+    main.softReset();
+}
+
+void
+Emulator::stepInto()
+{
+    if (isRunning()) return;
+
+    main.stepTo = { };
+    main.setFlag(RL::SINGLE_STEP);
+    run();
+}
+
+void 
+Emulator::stepOver()
+{
+    if (isRunning()) return;
+
+    main.stepTo = main.cpu.getAddressOfNextInstruction();
+    main.setFlag(RL::SINGLE_STEP);
+    run();
+}
+
+void
+Emulator::stepCycle()
+{
+    if (isRunning()) return;
+    main.setFlag(RL::SINGLE_CYCLE);
+    run();
+}
+
+void
+Emulator::finishLine()
+{
+    if (isRunning()) return;
+    main.setFlag(RL::FINISH_LINE);
+    run();
+}
+
+void
+Emulator::finishFrame()
+{
+    if (isRunning()) return;
+    main.setFlag(RL::FINISH_FRAME);
+    run();
+}
+
+u32 *
+Emulator::getTexture() const
+{
+    return main.config.runAhead && isRunning() ?
+    ahead.videoPort.getTexture() :
+    main.videoPort.getTexture();
+}
+
+u32 *
+Emulator::getDmaTexture() const
+{
+    return main.config.runAhead && isRunning() ?
+    ahead.videoPort.getDmaTexture() :
+    main.videoPort.getDmaTexture();
+}
+
+void
+Emulator::put(const Command &cmd)
+{
+    cmdQueue.put(cmd);
 }
 
 int

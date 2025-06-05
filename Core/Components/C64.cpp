@@ -477,14 +477,13 @@ C64::set(const string &opt, const string &value, const std::vector<isize> objids
 }
 
 void
-C64::set(ConfigScheme model)
+C64::set(ConfigScheme scheme)
 {
-    assert_enum(ConfigScheme, model);
+    assert_enum(ConfigScheme, scheme);
     
-    powerOff();
     emulator.revertToFactorySettings();
     
-    switch(model) {
+    switch(scheme) {
             
         case ConfigScheme::PAL:
             
