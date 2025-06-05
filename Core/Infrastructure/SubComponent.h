@@ -18,7 +18,7 @@ namespace vc64 {
 
 class References {
 
-protected:
+public:
 
     class AudioPort &audioPort;
     class C64 &c64;
@@ -66,6 +66,7 @@ public:
     SubComponent(C64& ref);
     SubComponent(C64& ref, isize id);
 
+    bool isRunAheadInstance() const;
     void prefix(isize level, const char *component, isize line) const override;
 };
 

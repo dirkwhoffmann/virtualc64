@@ -288,6 +288,8 @@ public:
     C64(class Emulator& ref, isize id);
     ~C64();
 
+    bool isRunAheadInstance() const { return objid == 1; }
+    
 private:
 
     void initialize();

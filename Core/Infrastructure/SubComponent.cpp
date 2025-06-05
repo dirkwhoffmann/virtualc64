@@ -56,6 +56,12 @@ videoPort(ref.videoPort)
 SubComponent::SubComponent(C64& ref) : CoreComponent(ref.emulator), References(ref) { };
 SubComponent::SubComponent(C64& ref, isize id) : CoreComponent(ref.emulator, id), References(ref) { };
 
+bool
+SubComponent::isRunAheadInstance() const
+{
+    return c64.isRunAheadInstance();
+}
+
 void
 SubComponent::prefix(isize level, const char *component, isize line) const
 {
