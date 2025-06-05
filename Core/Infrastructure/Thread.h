@@ -40,7 +40,10 @@ protected:
     std::thread thread;
     
     // The current thread state
-    ExecState state = ExecState::UNINIT;
+    ExecState state = ExecState::OFF;
+
+    // A latch controlling the launch procedure
+    std::latch initLatch {1};
 
     // Synchronization mutex
     mutable util::ReentrantMutex lock;
@@ -106,14 +109,14 @@ public:
 
 private:
 
+    // Initializes the emulator (implemented by the subclass)
+    virtual void initialize() = 0;
+
     // Updates the emulator state (implemented by the subclass)
     virtual void update() = 0;
 
     // Computes the number of overdue frames (provided by the subclass)
     virtual isize missingFrames() const = 0;
-
-    // Target frame rate of this thread (provided by the subclass)
-    // virtual double refreshRate() const = 0;
 
     // The code to be executed in each iteration (implemented by the subclass)
     virtual void computeFrame() = 0;
@@ -163,9 +166,9 @@ public:
      */
     void resume() const;
 
-    bool isInitialized() const { return state != ExecState::UNINIT; }
-    bool isPoweredOn() const { return state != ExecState::UNINIT && state != ExecState::OFF; }
-    bool isPoweredOff() const { return state == ExecState::UNINIT || state == ExecState::OFF; }
+    bool isInitialized() const { return initLatch.try_wait(); }
+    bool isPoweredOn() const { return state != ExecState::OFF; }
+    bool isPoweredOff() const { return state == ExecState::OFF; }
     bool isPaused() const { return state == ExecState::PAUSED; }
     bool isRunning() const { return state == ExecState::RUNNING; }
     bool isHalted() const { return state == ExecState::HALTED; }

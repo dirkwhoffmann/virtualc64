@@ -941,7 +941,7 @@ FileSystem::exportDirectory(const fs::path &path, bool createDir)
     scanDirectory();
     
     // Export all items
-    for (auto const& entry : dir) {
+    for (auto const &entry : dir) {
 
         if (entry->getFileType() != FSFileType::PRG) {
             debug(FS_DEBUG, "Skipping file %s\n", entry->getName().c_str());

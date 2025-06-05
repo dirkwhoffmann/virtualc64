@@ -20,7 +20,6 @@ namespace vc64 {
 /// Execution state
 enum class ExecState : long
 {
-    UNINIT,       ///< Not yet initialized
     OFF,          ///< Powered off
     PAUSED,       ///< Powered on, but currently paused
     RUNNING,      ///< Up and running
@@ -36,7 +35,6 @@ struct ExecStateEnum : Reflection<ExecStateEnum, ExecState>
     {
         switch (value) {
 
-            case ExecState::UNINIT:       return "UNINIT";
             case ExecState::OFF:          return "OFF";
             case ExecState::PAUSED:       return "PAUSED";
             case ExecState::RUNNING:      return "RUNNING";

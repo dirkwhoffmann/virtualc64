@@ -21,11 +21,16 @@ void
 Thread::launch()
 {
     assert(!isLaunched());
+    assert(!isInitialized());
 
     // Start the thread and enter the main function
     thread = std::thread(&Thread::runLoop, this);
 
+    // Wait until the thread is fully initialized
+    initLatch.wait();
+
     assert(isLaunched());
+    assert(isInitialized());
 }
 
 void
@@ -120,7 +125,7 @@ Thread::computeStats()
 void
 Thread::runLoop()
 {
-    baseTime = util::Time::now();
+    initialize();
 
     while (state != ExecState::HALTED) {
 
@@ -274,7 +279,7 @@ Thread::halt()
 {
     debug(RUN_DEBUG, "halt()\n");
 
-    if (state != ExecState::UNINIT && state != ExecState::HALTED) {
+    if (state != ExecState::HALTED) {
 
         switchState(ExecState::HALTED);
     }

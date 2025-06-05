@@ -58,7 +58,7 @@ public:
     static string asString(Opt opt, i64 arg);
     static string keyList(Opt opt);
     static string argList(Opt opt);
-    static string help(Opt opt, isize item);
+    static string help(Opt opt, i64 arg);
 };
 
 class BoolParser : public OptionParser {

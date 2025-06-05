@@ -264,7 +264,7 @@ DriveMemory::poke(u16 addr, u8 value)
 void
 DriveMemory::updateBankMap()
 {
-    auto config = drive.getConfig();
+    auto &config = drive.getConfig();
     
     // Start from scratch
     for (isize i = 0; i < 64; i++) usage[i] = DrvMemType::NONE;

@@ -12,9 +12,9 @@
 
 #pragma once
 
-#include "C64.h"
-#include "Defaults.h"
 #include "EmulatorTypes.h"
+#include "Defaults.h"
+#include "C64.h"
 #include "Host.h"
 #include "Thread.h"
 #include "CmdQueue.h"
@@ -47,7 +47,7 @@ private:
 
     // Texture lock
     util::Mutex textureLock;
-    
+
 
     //
     // Methods
@@ -62,7 +62,7 @@ public:
     void launch(const void *listener, Callback *func);
 
     // Initializes all components
-    void initialize();
+    void initialize() override;
 
     // Forces to recreate the run-ahead instance in the next frame
     void markAsDirty() { isDirty = true; }
@@ -110,11 +110,11 @@ public:
     void set(Opt opt, const string &value, const std::vector<isize> objids = { }) throws;
     void set(const string &opt, const string &value, const std::vector<isize> objids = { }) throws;
 
-    // Configures the emulator to match a specific C64 model
+    // Configures the emulator to match a specific configuration
     void set(ConfigScheme scheme);
 
-    // Powers off and resets the emulator to it's initial state
-    void revertToFactorySettings();
+    // Powers off and reverts to the default configuration
+    void revertToDefaultConfig();
 
 
     //

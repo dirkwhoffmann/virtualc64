@@ -481,7 +481,7 @@ C64::set(ConfigScheme scheme)
 {
     assert_enum(ConfigScheme, scheme);
     
-    emulator.revertToFactorySettings();
+    emulator.revertToDefaultConfig();
     
     switch(scheme) {
             

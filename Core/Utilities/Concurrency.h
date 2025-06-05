@@ -15,6 +15,7 @@
 #include "Chrono.h"
 #include <thread>
 #include <future>
+#include <latch>
 
 namespace vc64::util {
 

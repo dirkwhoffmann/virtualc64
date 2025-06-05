@@ -43,9 +43,6 @@ void
 Emulator::launch(const void *listener, Callback *func)
 {
     if (FORCE_LAUNCH_ERROR) throw AppError(Fault::LAUNCH);
-    
-    // Initialize the emulator if needed
-    if (!isInitialized()) initialize();
 
     // Connect the listener to the message queue of the main instance
     if (listener && func) { main.msgQueue.setListener(listener, func); }
@@ -55,14 +52,13 @@ Emulator::launch(const void *listener, Callback *func)
 
     // Launch the emulator thread
     Thread::launch();
-    
-    // Schedule a hard reset
-    put(Cmd::HARD_RESET);
 }
 
 void
 Emulator::initialize()
 {
+    baseTime = util::Time::now();
+    
     // Make sure this function is only called once
     if (isInitialized()) throw AppError(Fault::LAUNCH, "The emulator is already initialized.");
 
@@ -71,14 +67,16 @@ Emulator::initialize()
     ahead.initialize();
 
     // Setup the default configuration
-    revertToFactorySettings();
+    revertToDefaultConfig();
 
     // Get the runahead instance up-to-date
     ahead = main;
 
     // Switch state
     state = ExecState::OFF;
-    assert(isInitialized());
+    
+    // Mark the thread as initialized
+    initLatch.count_down();
 }
 
 void
@@ -91,7 +89,7 @@ Emulator::_dump(Category category, std::ostream &os) const
         for (const auto &i : DebugFlagEnum::elements()) {
 
             os << tab(DebugFlagEnum::key(i));
-            os << bol(getDebugVariable(DebugFlag(i))) << std::endl;
+            os << dec(getDebugVariable(DebugFlag(i))) << std::endl;
         }
     }
 
@@ -205,7 +203,7 @@ Emulator::set(ConfigScheme scheme)
 }
 
 void
-Emulator::revertToFactorySettings()
+Emulator::revertToDefaultConfig()
 {
     // Power off
     powerOff();
