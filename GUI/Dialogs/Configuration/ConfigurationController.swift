@@ -133,26 +133,29 @@ class ConfigurationController: DialogController {
     // Performance
     //
     
-    // Power saving
-    @IBOutlet weak var comDrivePowerSave: NSButton!
-    @IBOutlet weak var comViciiPowerSave: NSButton!
-    @IBOutlet weak var comSidPowerSave: NSButton!
-
-    // Collision detection
-    @IBOutlet weak var comSsCollisions: NSButton!
-    @IBOutlet weak var comSbCollisions: NSButton!
-
-    // Warp mode
+    // Warp
     @IBOutlet weak var comWarpMode: NSPopUpButton!
     @IBOutlet weak var comWarpBoot: NSTextField!
 
     // Threading
-    @IBOutlet weak var prfSyncMode: NSPopUpButton!
     @IBOutlet weak var prfVSync: NSButton!
     @IBOutlet weak var prfSpeedBoost: NSSlider!
     @IBOutlet weak var prfSpeedBoostInfo: NSTextField!
+    @IBOutlet weak var prfRunAheadLabel: NSTextField!
     @IBOutlet weak var prfRunAhead: NSSlider!
     @IBOutlet weak var prfRunAheadInfo: NSTextField!
+
+    // Boosters
+    @IBOutlet weak var comDrivePowerSave: NSButton!
+    @IBOutlet weak var comViciiPowerSave: NSButton!
+    @IBOutlet weak var comSidPowerSave: NSButton!
+
+    // Compression
+    @IBOutlet weak var prfSnapCompressor: NSPopUpButton!
+
+    // Collision detection
+    @IBOutlet weak var comSsCollisions: NSButton!
+    @IBOutlet weak var comSbCollisions: NSButton!
 
     // Buttons
     @IBOutlet weak var comPowerButton: NSButton!

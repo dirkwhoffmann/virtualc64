@@ -11,7 +11,24 @@ extension ConfigurationController {
 
     func refreshPerformanceTab() {
                                 
-        // Power saving
+        // Warp
+        comWarpMode.selectItem(withTag: config.warpMode)
+        comWarpBoot.integerValue = config.warpBoot
+
+        // Threading
+        let speedBoost = config.speedBoost
+        let runAhead = config.runAhead
+        let runAheadAbs = abs(runAhead)
+        prfVSync.state = config.vsync ? .on : .off
+        prfSpeedBoost.integerValue = speedBoost
+        prfSpeedBoostInfo.stringValue = "\(speedBoost) %"
+        prfSpeedBoost.isEnabled = !config.vsync
+        prfSpeedBoostInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
+        prfRunAheadLabel.stringValue = runAhead >= 0 ? "Run ahead:" : "Run behind:"
+        prfRunAhead.integerValue = runAhead
+        prfRunAheadInfo.stringValue = "\(runAheadAbs) frame" + (runAheadAbs == 1 ? "" : "s")
+
+        // Boosters
         comDrivePowerSave.state = config.drive8PowerSave ? .on : .off
         comViciiPowerSave.state = config.viciiPowerSave ? .on : .off
         comSidPowerSave.state = config.sidPowerSave ? .on : .off
@@ -20,27 +37,15 @@ extension ConfigurationController {
         comSsCollisions.state = config.ssCollisions ? .on : .off
         comSbCollisions.state = config.sbCollisions ? .on : .off
 
-        // Warp
-        comWarpMode.selectItem(withTag: config.warpMode)
-        comWarpBoot.integerValue = config.warpBoot
-
-        // Threading
-        let speedBoost = config.speedBoost
-        let runAhead = config.runAhead
-        prfVSync.state = config.vsync ? .on : .off
-        prfSpeedBoost.integerValue = speedBoost
-        prfSpeedBoostInfo.stringValue = "\(speedBoost) %"
-        prfRunAhead.integerValue = runAhead
-        prfRunAheadInfo.stringValue = "\(runAhead) frame" + (runAhead == 1 ? "" : "s")
-        prfSpeedBoost.isEnabled = !config.vsync
-        prfSpeedBoostInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
+        // Compression
+        prfSnapCompressor.selectItem(withTag: config.snapCompressor)
 
         // Power button
         comPowerButton.isHidden = !bootable
     }
 
     //
-    // Action methods (power saving)
+    // Action methods (Boosters)
     //
 
     @IBAction func comDrivePowerSaveAction(_ sender: NSButton!) {
@@ -60,7 +65,7 @@ extension ConfigurationController {
     }
     
     //
-    // Action methods (collision detection)
+    // Action methods (Collisions)
     //
 
     @IBAction func comSsCollisionsAction(_ sender: NSButton!) {
@@ -74,7 +79,7 @@ extension ConfigurationController {
     }
 
     //
-    // Action methods (warp)
+    // Action methods (Warp)
     //
 
     @IBAction func comWarpModeAction(_ sender: NSPopUpButton!) {
@@ -88,7 +93,7 @@ extension ConfigurationController {
     }
 
     //
-    // Action methods (threading)
+    // Action methods (Threading)
     //
 
     @IBAction func prfVSyncAction(_ sender: NSButton!) {
@@ -146,7 +151,20 @@ extension ConfigurationController {
             emu.resume()
         }
     }
-    
+
+    //
+    // Action methods (Compressor)
+    //
+
+    @IBAction func prfSnapCompressorAction(_ sender: NSPopUpButton!) {
+
+        config.snapCompressor = sender.selectedTag()
+    }
+
+    //
+    // Presets
+    //
+
     @IBAction func comDefaultsAction(_ sender: NSButton!) {
         
         config.savePerformanceUserDefaults()

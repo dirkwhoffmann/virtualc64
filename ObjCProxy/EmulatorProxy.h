@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#import "VirtualC64Config.h"
+#import "config.h"
 #import "VirtualC64Types.h"
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>

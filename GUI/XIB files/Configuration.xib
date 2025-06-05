@@ -98,6 +98,8 @@
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
                 <outlet property="prfRunAhead" destination="qYR-eZ-gM3" id="mzS-g4-Sqw"/>
                 <outlet property="prfRunAheadInfo" destination="7Gk-Yf-PBW" id="vcy-N8-4dH"/>
+                <outlet property="prfRunAheadLabel" destination="zXR-N0-V0Z" id="oIm-Um-lg2"/>
+                <outlet property="prfSnapCompressor" destination="3ba-Jv-Gy2" id="P8M-mk-GZ8"/>
                 <outlet property="prfSpeedBoost" destination="jG0-WW-g2Z" id="A9q-ck-1Ow"/>
                 <outlet property="prfSpeedBoostInfo" destination="KOV-eH-3s2" id="85r-j2-FqP"/>
                 <outlet property="prfVSync" destination="FHx-4K-dGQ" id="t0q-RM-Yzd"/>
@@ -1652,9 +1654,9 @@ Gw
                                             </buttonCell>
                                         </button>
                                         <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0dC-4b-gcc">
-                                            <rect key="frame" x="7" y="291" width="114" height="17"/>
+                                            <rect key="frame" x="313" y="391" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Power saving" id="ViR-lG-nzB">
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Speed Boosters" id="ViR-lG-nzB">
                                                 <font key="font" metaFont="systemBold"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1670,7 +1672,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button toolTip="Disable this option in combination with Fast Loaders or programs that run directly in the memory of the floppy drive. " verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7b-YR-bii">
-                                            <rect key="frame" x="26" y="259" width="238" height="18"/>
+                                            <rect key="frame" x="332" y="359" width="238" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Put drives to sleep when not in use" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ENc-Xp-SX3">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1681,7 +1683,7 @@ Gw
                                             </connections>
                                         </button>
                                         <button toolTip="Disable this option in combination with programs that rely on exact collision register values while warp mode is active." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WZL-K6-LDf">
-                                            <rect key="frame" x="26" y="232" width="224" height="18"/>
+                                            <rect key="frame" x="332" y="332" width="224" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Reduce frame rate in warp mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="YgZ-jT-3Uo">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1692,7 +1694,7 @@ Gw
                                             </connections>
                                         </button>
                                         <button toolTip="Disable this option to avoid the unlikely, but possible case of corrupted sound being played after leaving warp mode." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xx0-43-RDp">
-                                            <rect key="frame" x="26" y="205" width="236" height="18"/>
+                                            <rect key="frame" x="332" y="305" width="236" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Skip audio synthesis in warp mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Bxr-vl-hDe">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1793,7 +1795,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qnY-Rc-kUU">
-                                            <rect key="frame" x="313" y="391" width="114" height="17"/>
+                                            <rect key="frame" x="8" y="266" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sprites" id="QhC-cs-oyb">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1802,7 +1804,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgS-di-RAL">
-                                            <rect key="frame" x="332" y="360" width="205" height="18"/>
+                                            <rect key="frame" x="27" y="235" width="205" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Detect sprite-sprite collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="5QX-T5-tXj">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1813,7 +1815,7 @@ Gw
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnG-rw-e1M">
-                                            <rect key="frame" x="332" y="332" width="243" height="18"/>
+                                            <rect key="frame" x="27" y="207" width="243" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Detect sprite-background collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NJp-nu-9Jd">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1843,7 +1845,7 @@ Gw
                                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qYR-eZ-gM3">
                                             <rect key="frame" x="97" y="69" width="142" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="12" tickMarkPosition="above" numberOfTickMarks="13" allowsTickMarkValuesOnly="YES" sliderType="linear" id="3xI-sF-6tx"/>
+                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-7" maxValue="7" tickMarkPosition="above" numberOfTickMarks="13" allowsTickMarkValuesOnly="YES" sliderType="linear" id="3xI-sF-6tx"/>
                                             <connections>
                                                 <action selector="prfRunAheadAction:" target="-2" id="c61-wD-2gB"/>
                                             </connections>
@@ -1877,6 +1879,51 @@ Gw
                                                 <action selector="prfVSyncAction:" target="-2" id="U4K-AE-d2j"/>
                                             </connections>
                                         </button>
+                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1vu-00-7sw">
+                                            <rect key="frame" x="332" y="234" width="88" height="19"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Snapshots:" id="mwB-Rl-rAT">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0x8-Rl-r2B">
+                                            <rect key="frame" x="313" y="263" width="114" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Compression" id="SvS-Xt-6fp">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ba-Jv-Gy2">
+                                            <rect key="frame" x="423" y="229" width="144" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Off" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="36j-m5-dcO" id="LPC-av-sM5">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="message"/>
+                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="bzT-Dn-OcM">
+                                                    <items>
+                                                        <menuItem title="Off" state="on" id="36j-m5-dcO">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="GZIP" tag="1" id="9A2-bo-whz">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="LZ4" tag="2" id="Z7p-Ol-5xQ">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="RLE" tag="3" id="k7b-aF-355">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="prfSnapCompressorAction:" target="-2" id="uKl-bM-ZDE"/>
+                                            </connections>
+                                        </popUpButton>
                                     </subviews>
                                 </view>
                             </tabViewItem>
