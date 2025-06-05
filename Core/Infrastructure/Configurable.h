@@ -13,9 +13,6 @@
 #pragma once
 
 #include "OptionTypes.h"
-#include "Reflection.h"
-#include "Defaults.h"
-#include <algorithm>
 
 namespace vc64 {
 
@@ -51,7 +48,7 @@ public:
     void setOption(const string &opt, const string &value);
 
     // Resets all config options
-    void resetConfig(const Defaults &defaults, isize objid = 0);
+    void resetConfig(const class Defaults &defaults, isize objid = 0);
 
     // Dumps the current configuration
     void dumpConfig(std::ostream &os) const;

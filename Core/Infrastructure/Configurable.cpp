@@ -13,7 +13,7 @@
 #include "VirtualC64Config.h"
 #include "Configurable.h"
 #include "Option.h"
-#include "Parser.h"
+#include "Defaults.h"
 #include "IOUtils.h"
 #include <algorithm>
 

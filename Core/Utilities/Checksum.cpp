@@ -80,7 +80,7 @@ crc32(const u8 *addr, isize size)
             r = (r & 1? 0: (u32)0xEDB88320L) ^ r >> 1;
         return r ^ (u32)0xFF000000L;
     };
-        
+
     if (addr == nullptr || size == 0) return 0;
 
     u32 result = 0;

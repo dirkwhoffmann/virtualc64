@@ -13,8 +13,10 @@
 #include "VirtualC64Config.h"
 #include "CoreComponent.h"
 #include "Emulator.h"
+#include "Defaults.h"
 #include "Checksum.h"
 #include "Option.h"
+#include <algorithm>
 
 namespace vc64 {
 
@@ -82,14 +84,6 @@ CoreComponent::isRunning() const
     return emulator.isRunning();
 }
 
-/*
-bool
-CoreComponent::isSuspended() const
-{
-    return emulator.isSuspended();
-}
-*/
-
 bool
 CoreComponent::isHalted() const
 {
@@ -117,30 +111,24 @@ CoreComponent::checksum(bool recursive)
     return checker.hash;
 }
 
-/*
-void
-CoreComponent::suspend() const
+bool
+CoreComponent::isEmulatorThread() const
 {
-    return emulator.suspend();
+    return emulator.isEmulatorThread();
 }
 
-void
-CoreComponent::resume() const
+bool
+CoreComponent::isUserThread() const
 {
-    return emulator.resume();
+    return emulator.isUserThread();
 }
-*/
+
 void
 CoreComponent::resetConfig()
 {
-    for (CoreComponent *c : subComponents) { c->resetConfig(); }
-    Configurable::resetConfig(emulator.defaults, objid);
-}
-
-i64
-CoreComponent::getFallback(Opt opt) const
-{
-    return emulator.defaults.get(opt);
+    postorderWalk([this](CoreComponent *c) {
+        c->Configurable::resetConfig(emulator.defaults, c->objid);
+    });
 }
 
 Configurable *
@@ -156,128 +144,114 @@ CoreComponent::routeOption(Opt opt, isize objid)
     return nullptr;
 }
 
+i64
+CoreComponent::getFallback(Opt opt) const
+{
+    return emulator.defaults.get(opt);
+}
+
 void
 CoreComponent::initialize()
 {
-    assert(!isRunning());
+    postorderWalk([](CoreComponent *c) { c->_initialize(); });
+}
 
-    try {
+void
+CoreComponent::powerOn()
+{
+    postorderWalk([](CoreComponent *c) { c->_powerOn(); });
+}
 
-        for (CoreComponent *c : subComponents) { c->initialize(); }
-        _initialize();
+void
+CoreComponent::powerOff()
+{
+    postorderWalk([](CoreComponent *c) { c->_powerOff(); });
+}
 
-    } catch (std::exception &e) {
+void
+CoreComponent::run()
+{
+    postorderWalk([](CoreComponent *c) { c->_run(); });
+}
 
-        warn("Initialization aborted: %s\n", e.what());
-    }
+void
+CoreComponent::pause()
+{
+    postorderWalk([](CoreComponent *c) { c->_pause(); });
+}
+
+void
+CoreComponent::halt()
+{
+    postorderWalk([](CoreComponent *c) { c->_halt(); });
+}
+
+void
+CoreComponent::warpOn()
+{
+    postorderWalk([](CoreComponent *c) { c->_warpOn(); });
+}
+
+void
+CoreComponent::warpOff()
+{
+    postorderWalk([](CoreComponent *c) { c->_warpOff(); });
+}
+
+void
+CoreComponent::trackOn()
+{
+    postorderWalk([](CoreComponent *c) { c->_trackOn(); });
+}
+
+void
+CoreComponent::trackOff()
+{
+    postorderWalk([](CoreComponent *c) { c->_trackOff(); });
+}
+
+void
+CoreComponent::focus()
+{
+    postorderWalk([](CoreComponent *c) { c->_focus(); });
+}
+
+void
+CoreComponent::unfocus()
+{
+    postorderWalk([](CoreComponent *c) { c->_unfocus(); });
+}
+
+isize
+CoreComponent::size(bool recursive)
+{
+    // Count elements
+    SerCounter counter;
+    *this << counter;
+    isize result = counter.count;
+
+    // Add 8 bytes for the size and checksum
+    result += 16;
+
+    // Add size of subcomponents if requested
+    if (recursive) for (CoreComponent *c : subComponents) { result += c->size(); }
+
+    return result;
 }
 
 void
 CoreComponent::reset(bool hard)
 {
     SerResetter resetter(hard);
-    
+
     // Call the pre-reset delegate
     postorderWalk([hard](CoreComponent *c) { c->_willReset(hard); });
-    
+
     // Revert to a clean state
     postorderWalk([&resetter](CoreComponent *c) { *c << resetter; });
-    
+
     // Call the post-reset delegate
     postorderWalk([hard](CoreComponent *c) { c->_didReset(hard); });
-}
-
-void
-CoreComponent::powerOn()
-{
-    for (auto c : subComponents) { c->powerOn(); }
-    _powerOn();
-}
-
-void
-CoreComponent::powerOff()
-{
-    for (auto c : subComponents) { c->powerOff(); }
-    _powerOff();
-}
-
-void
-CoreComponent::run()
-{
-    for (auto c : subComponents) { c->run(); }
-    _run();
-}
-
-void
-CoreComponent::pause()
-{
-    for (auto c : subComponents) { c->pause(); }
-    _pause();
-}
-
-void
-CoreComponent::halt()
-{
-    for (auto c : subComponents) { c->halt(); }
-    _halt();
-}
-
-void
-CoreComponent::warpOn()
-{
-    for (auto c : subComponents) { c->warpOn(); }
-    _warpOn();
-}
-
-void
-CoreComponent::warpOff()
-{
-    for (auto c : subComponents) { c->warpOff(); }
-    _warpOff();
-}
-
-void
-CoreComponent::trackOn()
-{    
-    for (auto c : subComponents) { c->trackOn(); }
-    _trackOn();
-}
-
-void
-CoreComponent::trackOff()
-{
-    for (auto c : subComponents) { c->trackOff(); }
-    _trackOff();
-}
-
-void
-CoreComponent::focus()
-{
-    for (auto c : subComponents) { c->focus(); }
-    _focus();
-}
-
-void
-CoreComponent::unfocus()
-{
-    for (auto c : subComponents) { c->unfocus(); }
-    _unfocus();
-}
-
-isize
-CoreComponent::size(bool recursive)
-{
-    SerCounter counter;
-    *this << counter;
-    isize result = counter.count;
-
-    // Add 8 bytes for the checksum
-    result += 8;
-
-    // Add size of subcomponents if requested
-    if (recursive) for (CoreComponent *c : subComponents) { result += c->size(); }
-
-    return result;
 }
 
 isize
@@ -289,22 +263,26 @@ CoreComponent::load(const u8 *buf)
 
         const u8 *ptr = buf + result;
 
-        // Load the checksum for this component
+        // Load the size and checksum for this component
+        auto size = read64(ptr);
         auto hash = read64(ptr);
 
         // Load the internal state of this component
         SerReader reader(ptr); *c << reader;
 
         // Determine the number of loaded bytes
-        isize count = (isize)(reader.ptr - (buf + result));
+        auto count = u64(reader.ptr - (buf + result));
 
         // Check integrity
-        if (hash != c->checksum(false) || FORCE_SNAP_CORRUPTED) {
+        if (size != count || hash != c->checksum(false) || FORCE_SNAP_CORRUPTED) {
+
+            msg("Loaded %llu bytes (expected %llu)\n", count, size);
+            msg("Hash: %llx (expected %llx)\n", hash, c->checksum(false));
             if (SNP_DEBUG) { fatalError; } else { throw AppError(Fault::SNAP_CORRUPTED); }
         }
 
-        debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", count, c->size(false));
-        result += count;
+        debug(SNP_DEBUG >= 2, "Loaded %llu bytes (expected %llu)\n", count, size);
+        result += isize(count);
     });
 
     postorderWalk([](CoreComponent *c) { c->_didLoad(); });
@@ -321,7 +299,8 @@ CoreComponent::save(u8 *buffer)
 
         u8 *ptr = buffer + result;
 
-        // Save the checksum for this component
+        // Save the size and the checksum for this component
+        write64(ptr, c->size(false));
         write64(ptr, c->checksum(false));
 
         // Save the internal state of this component
@@ -332,10 +311,12 @@ CoreComponent::save(u8 *buffer)
 
         // Check integrity
         if (count != c->size(false) || FORCE_SNAP_CORRUPTED) {
+
+            msg("Saved %ld bytes (expected %ld)\n", count, c->size(false));
             if (SNP_DEBUG) { fatalError; } else { throw AppError(Fault::SNAP_CORRUPTED); }
         }
 
-        debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", count, c->size(false));
+        debug(SNP_DEBUG >= 2, "Saved %ld bytes (expected %ld)\n", count, c->size(false));
         result += count;
     });
 
@@ -371,18 +352,6 @@ CoreComponent::postorderWalk(std::function<void(CoreComponent *)> func)
 {
     for (auto &c : subComponents) c->postorderWalk(func);
     func(this);
-}
-
-bool
-CoreComponent::isEmulatorThread() const
-{
-    return emulator.isEmulatorThread();
-}
-
-bool
-CoreComponent::isUserThread() const
-{
-    return emulator.isUserThread();
 }
 
 void

@@ -429,7 +429,7 @@ void
 VirtualC64::set(ConfigScheme model)
 {
     VC64_PUBLIC_SUSPEND
-    emu->set(model);
+    put(Cmd::CONFIG_SCHEME, (i64)model);
     emu->markAsDirty();
 }
 

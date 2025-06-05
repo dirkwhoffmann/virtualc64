@@ -179,7 +179,6 @@ matchingBufferHeader(const u8 *buf, const u8 *header, isize len, isize offset)
         if (buf[offset + i] != header[i])
             return false;
     }
-
     return true;
 }
 
@@ -189,7 +188,7 @@ matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize offs
     assert(buf != nullptr);
 
     if (isize length = isize(header.length()); length <= blen) {
-    
+
         for (usize i = 0; i < header.length(); i++) {
             if (buf[offset + i] != header[i])
                 return false;

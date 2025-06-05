@@ -621,6 +621,12 @@ C64::update(CmdQueue &queue)
                 emulator.set(cmd.config.option, cmd.config.value, { });
                 break;
 
+            case Cmd::CONFIG_SCHEME:
+
+                cmdConfig = true;
+                set(ConfigScheme(cmd.value));
+                break;
+
             case Cmd::HARD_RESET:
             case Cmd::SOFT_RESET:
             case Cmd::POWER_ON:
