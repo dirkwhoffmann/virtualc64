@@ -682,6 +682,8 @@ VICII::beginFrame()
 void
 VICII::endFrame()
 {
+    bool debug = dmaDebugger.config.dmaDebug;
+
     // Update the VICII revision if requested
     updateRevision();
 
@@ -689,25 +691,41 @@ VICII::endFrame()
     if (c64.getHeadless()) return;
 
     // Run the DMA debugger if enabled
-    bool debug = dmaDebugger.config.dmaDebug;
     if (debug) dmaDebugger.computeOverlay(emuTexture, dmaTexture);
 
     // Switch texture buffers
+    emulator.lockTexture();
+
     if (emuTexture == emuTexture1) {
-        
+
         assert(dmaTexture == dmaTexture1);
         emuTexture = emuTexture2;
         dmaTexture = dmaTexture2;
         if (debug) { resetEmuTexture(2); resetDmaTexture(2); }
 
     } else {
-        
+
         assert(emuTexture == emuTexture2);
         assert(dmaTexture == dmaTexture2);
         emuTexture = emuTexture1;
         dmaTexture = dmaTexture1;
         if (debug) { resetEmuTexture(1); resetDmaTexture(1); }
     }
+
+    /* From vAmiga:
+    videoPort.buffersWillSwap();
+
+    isize oldActiveBuffer = activeBuffer;
+    isize newActiveBuffer = (activeBuffer + 1) % NUM_TEXTURES;
+
+    emuTexture[newActiveBuffer].nr = agnus.pos.frame;
+    emuTexture[newActiveBuffer].lof = agnus.pos.lof;
+    emuTexture[newActiveBuffer].prevlof = emuTexture[oldActiveBuffer].lof;
+
+    activeBuffer = newActiveBuffer;
+    */
+
+    emulator.unlockTexture();
 }
 
 void

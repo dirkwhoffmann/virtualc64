@@ -32,7 +32,7 @@ public:
     static Defaults defaults;
 
 private:
-    
+
     // The main emulator instance
     C64 main = C64(*this, 0);
 
@@ -45,6 +45,9 @@ private:
     // Incoming external events
     CmdQueue cmdQueue;
 
+    // Texture lock
+    util::Mutex textureLock;
+    
 
     //
     // Methods
@@ -176,6 +179,8 @@ public:
 
     u32 *getTexture() const;
     u32 *getDmaTexture() const;
+    void lockTexture() { textureLock.lock(); }
+    void unlockTexture() { textureLock.unlock(); }
 
 
     //

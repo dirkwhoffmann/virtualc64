@@ -1409,7 +1409,7 @@ public:
      * each frame.
      */
     void endFrame();
-    
+
     /* Processes all time delayed actions. This function is called at the
      * beginning of each VICII cycle.
      */
