@@ -12,6 +12,7 @@
 #import "DiskAnalyzer.h"
 #import "FFmpeg.h"
 #import "FileSystem.h"
+#import "Texture.h"
 
 using namespace vc64;
 

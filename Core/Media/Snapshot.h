@@ -14,6 +14,7 @@
 
 #include "AnyFile.h"
 #include "Constants.h"
+#include "Texture.h"
 
 namespace vc64 {
 

@@ -11,5 +11,6 @@ VICIICycles.cpp
 VICIITable.cpp
 DmaDebugger.cpp
 DmaDebuggerBase.cpp
+Texture.cpp
 
 )

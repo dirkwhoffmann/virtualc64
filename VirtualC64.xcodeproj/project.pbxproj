@@ -171,6 +171,8 @@
 		50650F3F2DF094A3008AD660 /* Compression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3D2DF094A3008AD660 /* Compression.cpp */; };
 		50650F402DF094FD008AD660 /* lz4.c in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3A2DF093B7008AD660 /* lz4.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50650F422DF0C7A5008AD660 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 50650F412DF0C7A5008AD660 /* libz.tbd */; };
+		50650F462DF23C8D008AD660 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F452DF23C8A008AD660 /* Texture.cpp */; };
+		50650F472DF23C8D008AD660 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F452DF23C8A008AD660 /* Texture.cpp */; };
 		50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */; };
 		506A724821C033EF00DA0AC3 /* Configuration.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A724721C033EF00DA0AC3 /* Configuration.xib */; };
 		506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A724921C0341900DA0AC3 /* ConfigurationController.swift */; };
@@ -852,6 +854,8 @@
 		50650F3D2DF094A3008AD660 /* Compression.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compression.cpp; sourceTree = "<group>"; };
 		50650F412DF0C7A5008AD660 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		50650F432DF0E715008AD660 /* DumpableTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DumpableTypes.h; sourceTree = "<group>"; };
+		50650F442DF23C81008AD660 /* Texture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
+		50650F452DF23C8A008AD660 /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
 		5066B4152C7CCFA0003AEEE8 /* CoreComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreComponentTypes.h; sourceTree = "<group>"; };
 		506A724721C033EF00DA0AC3 /* Configuration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Configuration.xib; sourceTree = "<group>"; };
@@ -1763,6 +1767,8 @@
 				50DBB3D02641101E006F45E6 /* DmaDebugger.h */,
 				508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */,
 				50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */,
+				50650F442DF23C81008AD660 /* Texture.h */,
+				50650F452DF23C8A008AD660 /* Texture.cpp */,
 			);
 			path = VICII;
 			sourceTree = "<group>";
@@ -2560,6 +2566,7 @@
 				50726F4F2961C9940031F2F5 /* CoreObject.cpp in Sources */,
 				50726F3D2961C96B0031F2F5 /* C64.cpp in Sources */,
 				50726F9F2961CA0D0031F2F5 /* EasyFlash.cpp in Sources */,
+				50650F462DF23C8D008AD660 /* Texture.cpp in Sources */,
 				50BD640B2C01FADC007CD347 /* VideoPort.cpp in Sources */,
 				50726F962961CA0D0031F2F5 /* Westermann.cpp in Sources */,
 				50726F6B2961C9C60031F2F5 /* extfilt.cc in Sources */,
@@ -2788,6 +2795,7 @@
 				5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */,
 				506F30422B74C1C70083EAEA /* Wakeable.cpp in Sources */,
 				50F0EB7A25CC33B3002D0D72 /* GameKiller.cpp in Sources */,
+				50650F472DF23C8D008AD660 /* Texture.cpp in Sources */,
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,
 				50FFB54D2B8262BA00042771 /* Serializable.cpp in Sources */,
 				504C439624AF29AC00E69CAE /* pot.cc in Sources */,

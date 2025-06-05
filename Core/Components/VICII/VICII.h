@@ -20,6 +20,7 @@
 #include "MemoryTypes.h"
 #include "MonitorTypes.h"
 #include "TimeDelayed.h"
+#include "Texture.h"
 
 namespace vc64 {
 

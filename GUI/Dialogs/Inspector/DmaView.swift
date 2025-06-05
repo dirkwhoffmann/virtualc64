@@ -41,10 +41,8 @@ class DmaView: NSImageView {
 
     override func awakeFromNib() {
 
-        // let w = inspector.sidWaveformView.visibleRect.width
-        // let h = inspector.sidWaveformView.visibleRect.height
-        let w = vc64.Texture.width
-        let h = vc64.Texture.height
+        let w = vc64.Tex.width
+        let h = vc64.Tex.height
 
         size = NSSize(width: w, height: h)
         buffer = UnsafeMutablePointer<UInt32>.allocate(capacity: wordCount)
