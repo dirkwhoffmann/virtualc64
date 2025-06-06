@@ -35,6 +35,71 @@ VideoPort::VideoPort(C64 &ref) : SubComponent(ref)
     }
 };
 
+VideoPort::~VideoPort()
+{
+    // Don't free the white-noise framebuffer as it points to managed data
+    whiteNoise.pixels.ptr = nullptr;
+    whiteNoise.pixels.size = 0;
+}
+
+void
+VideoPort::_dump(Category category, std::ostream &os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+
+    if (category == Category::State) {
+
+    }
+}
+
+i64
+VideoPort::getOption(Opt option) const
+{
+    switch (option) {
+
+        case Opt::VID_WHITE_NOISE:   return config.whiteNoise;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+VideoPort::checkOption(Opt opt, i64 value)
+{
+    switch (opt) {
+
+        case Opt::VID_WHITE_NOISE:
+
+            return;
+
+        default:
+            throw AppError(Fault::OPT_UNSUPPORTED);
+    }
+}
+
+void
+VideoPort::setOption(Opt opt, i64 value)
+{
+    checkOption(opt, value);
+
+    switch (opt) {
+
+        case Opt::VID_WHITE_NOISE:
+
+            config.whiteNoise = (bool)value;
+            return;
+
+        default:
+            fatalError;
+    }
+}
+
 const class Texture &
 VideoPort::getTexture(isize offset) const
 {

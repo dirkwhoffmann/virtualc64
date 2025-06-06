@@ -55,24 +55,35 @@ class SnapshotViewer: DialogController {
     }
 
     func updateLabels() {
-        
+
+        let MB = 1024 * 1024
+
         moveUp.isEnabled = currentItem >= 0 && currentItem < lastItem
         moveDown.isEnabled = currentItem > 0
         nr.stringValue = "Snapshot \(currentItem + 1) / \(numItems)"
 
         if let snapshot = myDocument.snapshots.element(at: currentItem) {
+
             let takenAt = snapshot.timeStamp
-            let compressed = snapshot.compressed ? "(Compressed)" : ""
+            let compressed = snapshot.compressed ? "(\(snapshot.compressor))" : ""
+            let sizemb = Double(snapshot.size) / Double(MB)
+            let rounded = Double(Int(sizemb * 100.0)) / 100.0
+
+            text1.stringValue = "\(rounded) MB " + compressed
+            text2.stringValue = "Taken at " + timeInfo(time: takenAt)
+            text3.stringValue = Date.elapsed(time: takenAt)
+            message.stringValue = ""
+            /*
             text1.stringValue = "Taken at " + timeInfo(time: takenAt)
             text2.stringValue = Date.elapsed(time: takenAt)
             text3.stringValue = "\(snapshot.size / 1024) KB " + compressed
             message.stringValue = ""
+            */
         } else {
             nr.stringValue = "No snapshots taken"
             message.stringValue = ""
         }
 
-        let MB = 1024 * 1024
         let fill = myDocument.snapshots.fill 
         let size = myDocument.snapshots.used / MB
         let max = myDocument.snapshots.maxSize / MB

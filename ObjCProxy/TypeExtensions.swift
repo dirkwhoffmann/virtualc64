@@ -8,58 +8,50 @@
 // -----------------------------------------------------------------------------
 
 typealias AppClass = vc64.AppError
+typealias CartridgeType = vc64.CartridgeType
 typealias Class = vc64.Class
 typealias ControlPortDevice = vc64.ControlPortDevice
+typealias Compressor = vc64.Compressor
+typealias DOSType = vc64.DOSType
 typealias ErrorCode = vc64.Fault
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum
 typealias EventSlotInfo = vc64.EventSlotInfo
+typealias Fault = vc64.Fault
+typealias FileType = vc64.FileType
+typealias FSBlockType = vc64.FSBlockType
+typealias FSFileType = vc64.FSFileType
+typealias FSUsage = vc64.FSUsage
 typealias GamePadAction = vc64.GamePadAction
 typealias Message = vc64.Message
 typealias Opt = vc64.Opt
 typealias RomType = vc64.RomType
+typealias TAPVersion = vc64.TAPVersion
 
 let DRIVE8 = vc64.DRIVE8
 let DRIVE9 = vc64.DRIVE9
 
-extension vc64.EventSlot: CustomStringConvertible {
+extension Compressor: CustomStringConvertible {
 
-    public var description: String { return EventSlotName(self) }
+    public var description: String {
 
-    /*
         switch self {
-
-        case ._CIA1:    return "CIA 1"
-        case ._CIA2:    return "CIA 2"
-        case ._SEC:     return "Next Secondary Event"
-
-        case ._SER:     return "Serial Port"
-        case ._DAT:     return "Datasette Data"
-        case ._TER:     return "Next Tertiary Event"
-
-        case ._EXP:     return "Expansion Port"
-        case ._TXD:     return "RS232 Out"
-        case ._RXD:     return "RS232 In"
-        case ._MOT:     return "Datasette Motor"
-        case ._DC8:     return "Disk Change Drive 8"
-        case ._DC9:     return "Disk Change Drive 9"
-        case ._SNP:     return "Snapshots"
-        case ._RSH:     return "Retro Shell"
-        case ._KEY:     return "Auto Typing"
-        case ._SRV:     return "Server Daemon"
-        case ._DBG:     return "Debugger"
-        case ._ALA:     return "Alarms"
-        case ._INS:     return "Inspector"
-
-        case ._COUNT:   return "???"
-
+        case .NONE:     return ""
+        case .GZIP:     return "GZIP"
+        case .LZ4:      return "LZ4"
+        case .RLE2:     return "RLE2"
+        case .RLE3:     return "RLE3"
         default:        fatalError()
         }
     }
-    */
 }
 
-extension vc64.FileType {
+extension EventSlot: CustomStringConvertible {
+
+    public var description: String { return EventSlotName(self) }
+}
+
+extension FileType {
 
     init?(url: URL?) {
         self = url == nil ? .UNKNOWN : MediaFileProxy.type(of: url)
@@ -88,7 +80,7 @@ extension vc64.FileType {
     }
 }
 
-extension vc64.DOSType: CustomStringConvertible {
+extension DOSType: CustomStringConvertible {
 
     public var description: String {
         
@@ -102,7 +94,7 @@ extension vc64.DOSType: CustomStringConvertible {
     }
 }
 
-extension vc64.FSFileType: CustomStringConvertible {
+extension FSFileType: CustomStringConvertible {
 
     public var description: String {
         
@@ -119,7 +111,7 @@ extension vc64.FSFileType: CustomStringConvertible {
     }
 }
 
-extension vc64.FSBlockType: CustomStringConvertible {
+extension FSBlockType: CustomStringConvertible {
 
     public var description: String {
         
@@ -135,7 +127,7 @@ extension vc64.FSBlockType: CustomStringConvertible {
     }
 }
 
-extension vc64.FSUsage: CustomStringConvertible {
+extension FSUsage: CustomStringConvertible {
 
     public var description: String {
         
@@ -170,7 +162,7 @@ extension vc64.FSUsage: CustomStringConvertible {
     }
 }
 
-extension vc64.Fault {
+extension Fault {
 
     func description(expected exp: Int = 0) -> String {
         
@@ -191,7 +183,7 @@ extension vc64.Fault {
     }
 }
 
-extension vc64.CartridgeType {
+extension CartridgeType {
     
     var description: String {
         
@@ -263,7 +255,7 @@ extension vc64.CartridgeType {
     }
 }
             
-extension vc64.TAPVersion {
+extension TAPVersion {
     
     var description: String {
         

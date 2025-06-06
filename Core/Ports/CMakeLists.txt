@@ -15,6 +15,5 @@ SerialPortBase.cpp
 UserPort.cpp
 UserPortBase.cpp
 VideoPort.cpp
-VideoPortBase.cpp
 
 )

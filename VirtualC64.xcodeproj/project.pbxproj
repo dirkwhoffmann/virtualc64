@@ -439,8 +439,6 @@
 		50BB3E9B2B7A50F600B2D87B /* Synchronizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E982B7A50F600B2D87B /* Synchronizable.cpp */; };
 		50BD640A2C01FADC007CD347 /* VideoPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64082C01FADC007CD347 /* VideoPort.cpp */; };
 		50BD640B2C01FADC007CD347 /* VideoPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64082C01FADC007CD347 /* VideoPort.cpp */; };
-		50BD640E2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */; };
-		50BD640F2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */; };
 		50BD64112C03396D007CD347 /* DriveBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveBase.cpp */; };
 		50BD64122C03396D007CD347 /* DriveBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64102C03396D007CD347 /* DriveBase.cpp */; };
 		50BD64152C035682007CD347 /* Gmod2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64132C035682007CD347 /* Gmod2.cpp */; };
@@ -1052,7 +1050,6 @@
 		50BD64082C01FADC007CD347 /* VideoPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPort.cpp; sourceTree = "<group>"; };
 		50BD64092C01FADC007CD347 /* VideoPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPort.h; sourceTree = "<group>"; };
 		50BD640C2C01FAF5007CD347 /* VideoPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPortTypes.h; sourceTree = "<group>"; };
-		50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPortBase.cpp; sourceTree = "<group>"; };
 		50BD64102C03396D007CD347 /* DriveBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveBase.cpp; sourceTree = "<group>"; };
 		50BD64132C035682007CD347 /* Gmod2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Gmod2.cpp; sourceTree = "<group>"; };
 		50BD64142C035682007CD347 /* Gmod2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Gmod2.h; sourceTree = "<group>"; };
@@ -2167,7 +2164,6 @@
 				505A13292C3503B400FF8D2C /* UserPort.cpp */,
 				50BD640C2C01FAF5007CD347 /* VideoPortTypes.h */,
 				50BD64092C01FADC007CD347 /* VideoPort.h */,
-				50BD640D2C01FFEC007CD347 /* VideoPortBase.cpp */,
 				50BD64082C01FADC007CD347 /* VideoPort.cpp */,
 			);
 			path = Ports;
@@ -2464,7 +2460,6 @@
 				50726F532961C9940031F2F5 /* SerialPort.cpp in Sources */,
 				50726F8D2961CA0D0031F2F5 /* ActionReplay.cpp in Sources */,
 				50726FB52961CA290031F2F5 /* RetroShell.cpp in Sources */,
-				50BD640F2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */,
 				50726F6F2961C9C60031F2F5 /* wave.cc in Sources */,
 				50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */,
 				50726F952961CA0D0031F2F5 /* Funplay.cpp in Sources */,
@@ -2717,7 +2712,6 @@
 				50DA1BBC2DD5B80900004964 /* InspectorToolbar.swift in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */,
-				50BD640E2C01FFEC007CD347 /* VideoPortBase.cpp in Sources */,
 				508C1E662C0B5F770097473C /* MonitorBase.cpp in Sources */,
 				50BE4B6A24E7FB6C008F39C9 /* NSImage.swift in Sources */,
 				50650F3B2DF093B7008AD660 /* lz4.c in Sources */,

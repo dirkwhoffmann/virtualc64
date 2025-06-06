@@ -74,8 +74,8 @@ VICII::_didReset(bool hard)
         lowerComparisonVal = lowerComparisonValue();
         
         // Reset the screen buffer pointers
-        emuTexture = getWorkingBuffer().pixels.ptr; // emuTexture1;
-        dmaTexture = getWorkingDmaBuffer().pixels.ptr; // dmaTexture1;
+        emuTexture = getWorkingBuffer().pixels.ptr;
+        dmaTexture = getWorkingDmaBuffer().pixels.ptr;
     }
 }
 
@@ -274,20 +274,6 @@ VICII::isVBlankLine(isize line) const
             return line < 16 || line >= 16 + 284;
     }
 }
-
-/*
-u32 *
-VICII::oldGetTexture() const
-{
-    return emuTexture == emuTexture1 ? emuTexture2 : emuTexture1;
-}
-
-u32 *
-VICII::oldGetDmaTexture() const
-{
-    return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
-}
-*/
 
 Texture &
 VICII::getWorkingBuffer()
@@ -733,28 +719,9 @@ VICII::endFrame()
     // Switch texture buffers
     emulator.lockTexture();
 
-    /*
-    if (emuTexture == emuTexture1) {
-
-        assert(dmaTexture == dmaTexture1);
-        emuTexture = emuTexture2;
-        dmaTexture = dmaTexture2;
-        if (debug) { resetEmuTexture(2); resetDmaTexture(2); }
-
-    } else {
-
-        assert(emuTexture == emuTexture2);
-        assert(dmaTexture == dmaTexture2);
-        emuTexture = emuTexture1;
-        dmaTexture = dmaTexture1;
-        if (debug) { resetEmuTexture(1); resetDmaTexture(1); }
-    }
-    */
-
     videoPort.buffersWillSwap();
-
+    
     activeBuffer = (activeBuffer + 1) % NUM_TEXTURES;
-
     emuTex[activeBuffer].nr = c64.frame;
     dmaTex[activeBuffer].nr = c64.frame;
     emuTexture = emuTex[activeBuffer].pixels.ptr;
