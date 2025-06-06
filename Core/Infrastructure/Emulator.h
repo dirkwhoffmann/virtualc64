@@ -173,8 +173,8 @@ public:
     // Audio and Video
     //
 
-    [[deprecated]] u32 *oldGetTexture() const;
-    [[deprecated]] u32 *oldGetDmaTexture() const;
+    // [[deprecated]] u32 *oldGetTexture() const;
+    // [[deprecated]] u32 *oldGetDmaTexture() const;
     const Texture &getTexture() const;
     const Texture &getDmaTexture() const;
 

@@ -48,7 +48,7 @@ AudioPort::handleBufferUnderflow()
         sampleRateCorrection += count() / elapsedTime.asSeconds();
          */
         stats.bufferUnderflows++;
-        warn("Last underflow: %f seconds ago\n", elapsedTime.asSeconds());
+        debug(AUDBUF_DEBUG, "Last underflow: %f seconds ago\n", elapsedTime.asSeconds());
         // warn("New sample rate correction: %f\n", sampleRateCorrection);
     }
 }
@@ -78,7 +78,7 @@ AudioPort::handleBufferOverflow()
         sampleRateCorrection -= count() / elapsedTime.asSeconds();
          */
         stats.bufferOverflows++;
-        warn("Last overflow: %f seconds ago\n", elapsedTime.asSeconds());
+        debug(AUDBUF_DEBUG, "Last overflow: %f seconds ago\n", elapsedTime.asSeconds());
         // warn("New sample rate correction: %f\n", sampleRateCorrection);
     }
 }

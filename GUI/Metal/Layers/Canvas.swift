@@ -200,19 +200,26 @@ class Canvas: Layer {
 
         guard let emu = emu else { return }
 
+        var buffer: UnsafePointer<UInt32>!
+        var nr = 0
+
         // Prevent the stable texture from changing
         emu.videoPort.lockTexture()
 
         // Get a pointer to most recent texture
-        if let buffer = emu.videoPort.oldTexture {
+        emu.videoPort.texture(&buffer, nr: &nr)
 
-            prevBuffer = buffer
+        // Check for duplicated or dropped frames
+        if nr != prevNr + 1 {
 
-            // Update the GPU texture
-            let w = Constants.texWidth
-            let h = Constants.texHeight
-            emulatorTexture.replace(w: w, h: h, buffer: buffer)
+            debug(.vsync, "Frame sync mismatch (\(prevNr) -> \(nr))")
         }
+        prevNr = nr
+
+        // Update the GPU texture
+        let w = Constants.texWidth
+        let h = Constants.texHeight
+        emulatorTexture.replace(w: w, h: h, buffer: buffer)
 
         // Release the texture lock
         emu.videoPort.unlockTexture()

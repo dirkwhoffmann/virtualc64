@@ -871,6 +871,7 @@ VideoPortAPI::unlockTexture()
     emu->unlockTexture();
 }
 
+/*
 u32 *
 VideoPortAPI::oldGetTexture() const
 {
@@ -882,6 +883,7 @@ VideoPortAPI::oldGetDmaTexture() const
 {
     return emu->oldGetDmaTexture();
 }
+*/
 
 const u32 *
 VideoPortAPI::getTexture() const

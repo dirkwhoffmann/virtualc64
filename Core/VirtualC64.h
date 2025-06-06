@@ -308,8 +308,8 @@ struct VideoPortAPI : API {
      * and vc64::Texture::height texels. Each texel is represented by a
      * 32 bit color value.
      */
-    [[deprecated]] u32 *oldGetTexture() const;
-    [[deprecated]] u32 *oldGetDmaTexture() const;
+    // [[deprecated]] u32 *oldGetTexture() const;
+    // [[deprecated]] u32 *oldGetDmaTexture() const;
 
     const u32 *getTexture() const;
     const u32 *getTexture(isize *nr, isize *width, isize *height) const;

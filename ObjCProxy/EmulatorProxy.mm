@@ -581,6 +581,7 @@ NSString *EventSlotName(EventSlot slot)
     [self port]->unlockTexture();
 }
 
+/*
 - (u32 *)oldTexture
 {
     return [self port]->oldGetTexture();
@@ -590,6 +591,7 @@ NSString *EventSlotName(EventSlot slot)
 {
     return [self port]->oldGetDmaTexture();
 }
+*/
 
 - (void)texture:(const u32 **)ptr nr:(NSInteger *)nr
 {

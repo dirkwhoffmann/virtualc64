@@ -68,22 +68,6 @@ VideoPort::getDmaTexture(isize offset) const
     }
 }
 
-u32 *
-VideoPort::oldGetTexture(isize offset) const
-{
-    if (isPoweredOff()) {
-        return config.whiteNoise ? getNoiseTexture() : getBlankTexture();
-    } else {
-        return vic.oldGetTexture();
-    }
-}
-
-u32 *
-VideoPort::oldGetDmaTexture() const
-{
-    return vic.oldGetDmaTexture();
-}
-
 void
 VideoPort::buffersWillSwap()
 {

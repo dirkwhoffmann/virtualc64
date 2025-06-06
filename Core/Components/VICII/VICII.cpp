@@ -74,17 +74,14 @@ VICII::_didReset(bool hard)
         lowerComparisonVal = lowerComparisonValue();
         
         // Reset the screen buffer pointers
-        emuTexture = emuTexture1;
-        dmaTexture = dmaTexture1;
+        emuTexture = getWorkingBuffer().pixels.ptr; // emuTexture1;
+        dmaTexture = getWorkingDmaBuffer().pixels.ptr; // dmaTexture1;
     }
 }
 
 void
 VICII::resetEmuTexture(isize nr)
 {
-    if (nr == 1) { resetTexture(emuTexture1); }
-    if (nr == 2) { resetTexture(emuTexture2); }
-
     assert(nr < NUM_TEXTURES);
 
     emuTex[nr].clear(Texture::grey2, Texture::grey4);
@@ -93,30 +90,22 @@ VICII::resetEmuTexture(isize nr)
 void
 VICII::resetEmuTextures()
 {
-    resetEmuTexture(1); resetEmuTexture(2);
-
     // Wipe out all textures
     for (isize i = 0; i < NUM_TEXTURES; i++) resetEmuTexture(i);
 }
 
 void
 VICII::resetDmaTexture(isize nr)
-{    
-    u32 *p = nr == 1 ? dmaTexture1 : dmaTexture2;
-
-    for (int i = 0; i < Texture::height * Texture::width; i++) {
-        p[i] = 0xFF000000;
-    }
-
+{
     assert(nr < NUM_TEXTURES);
 
-    emuTex[nr].clear(Texture::black, Texture::black);
+    dmaTex[nr].clear(Texture::black, Texture::black);
 }
 
 void
 VICII::resetDmaTextures()
 {
-    resetDmaTexture(1); resetDmaTexture(2);
+    // resetDmaTexture(1); resetDmaTexture(2);
 
     // Wipe out all textures
     for (isize i = 0; i < NUM_TEXTURES; i++) resetDmaTexture(i);
@@ -286,6 +275,7 @@ VICII::isVBlankLine(isize line) const
     }
 }
 
+/*
 u32 *
 VICII::oldGetTexture() const
 {
@@ -297,6 +287,7 @@ VICII::oldGetDmaTexture() const
 {
     return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
 }
+*/
 
 Texture &
 VICII::getWorkingBuffer()
@@ -742,6 +733,7 @@ VICII::endFrame()
     // Switch texture buffers
     emulator.lockTexture();
 
+    /*
     if (emuTexture == emuTexture1) {
 
         assert(dmaTexture == dmaTexture1);
@@ -757,19 +749,22 @@ VICII::endFrame()
         dmaTexture = dmaTexture1;
         if (debug) { resetEmuTexture(1); resetDmaTexture(1); }
     }
+    */
 
-    /* From vAmiga:
     videoPort.buffersWillSwap();
 
-    isize oldActiveBuffer = activeBuffer;
-    isize newActiveBuffer = (activeBuffer + 1) % NUM_TEXTURES;
+    activeBuffer = (activeBuffer + 1) % NUM_TEXTURES;
 
-    emuTexture[newActiveBuffer].nr = agnus.pos.frame;
-    emuTexture[newActiveBuffer].lof = agnus.pos.lof;
-    emuTexture[newActiveBuffer].prevlof = emuTexture[oldActiveBuffer].lof;
+    emuTex[activeBuffer].nr = c64.frame;
+    dmaTex[activeBuffer].nr = c64.frame;
+    emuTexture = emuTex[activeBuffer].pixels.ptr;
+    dmaTexture = dmaTex[activeBuffer].pixels.ptr;
 
-    activeBuffer = newActiveBuffer;
-    */
+    if (debug) {
+
+        resetEmuTexture(activeBuffer);
+        resetDmaTexture(activeBuffer);
+    }
 
     emulator.unlockTexture();
 }

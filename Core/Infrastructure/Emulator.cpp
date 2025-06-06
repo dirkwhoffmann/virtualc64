@@ -402,6 +402,7 @@ Emulator::finishFrame()
     run();
 }
 
+/*
 u32 *
 Emulator::oldGetTexture() const
 {
@@ -421,6 +422,7 @@ Emulator::oldGetTexture() const
     // Return the most recent texture from the main instance
     return main.videoPort.oldGetTexture();
 }
+*/
 
 const Texture &
 Emulator::getTexture() const
@@ -442,6 +444,7 @@ Emulator::getTexture() const
     return main.videoPort.getTexture();
 }
 
+/*
 u32 *
 Emulator::oldGetDmaTexture() const
 {
@@ -456,6 +459,7 @@ Emulator::oldGetDmaTexture() const
     // Return the most recent texture from the main instance
     return main.videoPort.oldGetDmaTexture();
 }
+*/
 
 const Texture &
 Emulator::getDmaTexture() const

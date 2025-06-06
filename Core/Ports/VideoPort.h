@@ -108,11 +108,11 @@ public:
 
     // Returns a pointer to the emulator texture
     const class Texture &getTexture(isize offset = 0) const;
-    [[deprecated]] u32 *oldGetTexture(isize offset = 0) const;
+    // [[deprecated]] u32 *oldGetTexture(isize offset = 0) const;
 
     // Returns a pointer to the bus debugger texture
     const class Texture &getDmaTexture(isize offset = 0) const;
-    [[deprecated]] u32 *oldGetDmaTexture() const;
+    // [[deprecated]] u32 *oldGetDmaTexture() const;
 
     // Informs the video port about a buffer swap
     void buffersWillSwap();

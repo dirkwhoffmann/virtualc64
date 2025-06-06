@@ -55,11 +55,21 @@ class DmaView: NSImageView {
 
     override func draw(_ dirtyRect: NSRect) {
 
+        var texture: UnsafePointer<UInt32>!
+        var nr = 0
+
+        if let videoPort = videoPort {
+
+            videoPort.dmaTexture(&texture, nr: &nr)
+            buffer.update(from: texture, count: wordCount)
+        }
+        /*
         if let texture = videoPort?.oldDmaTexture {
 
             buffer.update(from: texture, count: wordCount)
         }
-        
+        */
+
         // maxAmp = sid?.drawWaveform(buffer, size: size, scale: maxAmp, color: color, source: source) ?? 0
         image = NSImage.make(data: buffer, rect: CGSize(width: size.width, height: size.height))
         super.draw(dirtyRect)
