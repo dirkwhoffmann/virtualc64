@@ -19,7 +19,7 @@
 // Version number
 #define VER_MAJOR 5
 #define VER_MINOR 2
-#define VER_SUBMINOR 0
+#define VER_SUBMINOR 1
 #define VER_BETA 0
 
 // Snapshot version number
