@@ -571,14 +571,40 @@ NSString *EventSlotName(EventSlot slot)
     return (VideoPortAPI *)obj;
 }
 
-- (u32 *)texture
+- (void)lockTexture
 {
-    return [self port]->getTexture();
+    [self port]->lockTexture();
 }
 
-- (u32 *)dmaTexture
+- (void)unlockTexture
 {
-    return [self port]->getDmaTexture();
+    [self port]->unlockTexture();
+}
+
+- (u32 *)oldTexture
+{
+    return [self port]->oldGetTexture();
+}
+
+- (u32 *)oldDmaTexture
+{
+    return [self port]->oldGetDmaTexture();
+}
+
+- (void)texture:(const u32 **)ptr nr:(NSInteger *)nr
+{
+    isize frame, width, height;
+
+    *ptr = [self port]->getTexture(&frame, &width, &height);
+    *nr = frame;
+}
+
+- (void)dmaTexture:(const u32 **)ptr nr:(NSInteger *)nr
+{
+    isize frame, width, height;
+
+    *ptr = [self port]->getDmaTexture(&frame, &width, &height);
+    *nr = frame;
 }
 
 @end

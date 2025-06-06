@@ -20,11 +20,14 @@ namespace vc64 {
 typedef u32 Texel;
 consteval u32 TEXEL(u32 x) { return x; }
 
-struct Texture {
+class Texture {
 
+public:
+    
     // Texture dimensions
-    static const long height = Tex::height;
     static const long width  = Tex::width;
+    static const long height = Tex::height;
+    static const long texels = Tex::width * Tex::height;
 
     // Predefined colors
     static constexpr Texel black    = TEXEL(0xFF000000);
@@ -41,8 +44,6 @@ struct Texture {
     // Color aliases
     // static constexpr Texel vblank   = grey4;    // VBLANK area
     // static constexpr Texel hblank   = grey4;    // HBLANK area
-    static constexpr Texel cb1      = grey2;    // Checkerboard color 1
-    static constexpr Texel cb2      = grey4;    // Checkerboard color 2
 
     // Frame number
     i64 nr = 0;
@@ -53,9 +54,9 @@ struct Texture {
     Texture();
 
     // Initializes (a portion of) the frame buffer with a checkerboard pattern
-    void clear();
-    void clear(isize row);
-    void clear(isize row, isize cycle);
+    void clear(Texel col1 = grey2, Texel col2 = grey4);
+    void clear(isize row, Texel col1 = grey2, Texel col2 = grey4);
+    void clear(isize row, isize cycle, Texel col1 = grey2, Texel col2 = grey4);
 };
 
 }

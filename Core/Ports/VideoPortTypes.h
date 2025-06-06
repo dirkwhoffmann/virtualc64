@@ -29,8 +29,14 @@ VideoPortConfig;
 
 typedef struct
 {
-
+    i64 latestGrabbedFrame;
 }
 VideoPortInfo;
+
+typedef struct
+{
+    isize droppedFrames;
+}
+VideoPortStats;
 
 }

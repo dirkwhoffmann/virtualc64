@@ -14,10 +14,11 @@
 
 #include "VideoPortTypes.h"
 #include "SubComponent.h"
+#include "Texture.h"
 
 namespace vc64 {
 
-class VideoPort final : public SubComponent {
+class VideoPort final : public SubComponent, public Inspectable<VideoPortInfo, VideoPortStats> {
 
     Descriptions descriptions = {{
 
@@ -35,6 +36,12 @@ class VideoPort final : public SubComponent {
     // Current configuration
     VideoPortConfig config = { };
 
+    // Predefined frame buffers
+    mutable Texture whiteNoise;
+    Texture blank;
+
+    //  White noise data
+    util::Buffer <Texel> noise;
 
     //
     // Methods
@@ -99,11 +106,16 @@ public:
 
 public:
 
-    // Returns a pointer to the stable emulator texture
-    u32 *getTexture(isize offset = 0) const;
+    // Returns a pointer to the emulator texture
+    const class Texture &getTexture(isize offset = 0) const;
+    [[deprecated]] u32 *oldGetTexture(isize offset = 0) const;
 
-    // Returns a pointer to the stable DMA debugger texture
-    u32 *getDmaTexture() const;
+    // Returns a pointer to the bus debugger texture
+    const class Texture &getDmaTexture(isize offset = 0) const;
+    [[deprecated]] u32 *oldGetDmaTexture() const;
+
+    // Informs the video port about a buffer swap
+    void buffersWillSwap();
 
 private:
 

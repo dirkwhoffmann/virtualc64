@@ -36,7 +36,7 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
     height = i32(c64.vic.numVisibleLines() / dy);
 
     u32 *target = screen;
-    u32 *source = (u32 *)c64.videoPort.getTexture();
+    u32 *source = (u32 *)c64.videoPort.oldGetTexture();
     source += xStart + yStart * Texture::width;
 
     for (isize y = 0; y < height; y++) {

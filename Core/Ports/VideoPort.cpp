@@ -18,23 +18,85 @@ namespace vc64 {
 
 VideoPort::VideoPort(C64 &ref) : SubComponent(ref)
 {
+    // Create random noise data
+    noise.alloc(2 * Texture::texels);
+    for (isize i = 0; i < noise.size; i++) {
+        noise[i] = rand() % 2 ? Texture::black : Texture::white;
+    }
 
+    // Create the white-noise texture, redirecting the data source
+    whiteNoise.pixels.dealloc();
+    whiteNoise.pixels.ptr = noise.ptr;
+    whiteNoise.pixels.size = Texture::texels;
+
+    // Create the blank texture
+    for (isize i = 0; i < blank.pixels.size; i++) {
+        blank.pixels.ptr[i] = Texture::black;
+    }
 };
 
-u32 *
+const class Texture &
 VideoPort::getTexture(isize offset) const
 {
-    if (isPoweredOff()) {
-        return config.whiteNoise ? getNoiseTexture() : getBlankTexture();
+    if (isPoweredOn()) {
+
+        auto &result = vic.getStableBuffer(offset);
+        info.latestGrabbedFrame = result.nr;
+        return result;
+    }
+    if (config.whiteNoise) {
+
+        whiteNoise.pixels.ptr = noise.ptr + (rand() % Texture::texels);
+        whiteNoise.nr++;
+
+        return whiteNoise;
+    }
+
+    return blank;
+}
+
+const class Texture &
+VideoPort::getDmaTexture(isize offset) const
+{
+    if (isPoweredOn()) {
+
+        return vic.getStableDmaBuffer(offset);
+
     } else {
-        return vic.getTexture();
+
+        return blank;
     }
 }
 
 u32 *
-VideoPort::getDmaTexture() const
+VideoPort::oldGetTexture(isize offset) const
 {
-    return vic.getDmaTexture();
+    if (isPoweredOff()) {
+        return config.whiteNoise ? getNoiseTexture() : getBlankTexture();
+    } else {
+        return vic.oldGetTexture();
+    }
+}
+
+u32 *
+VideoPort::oldGetDmaTexture() const
+{
+    return vic.oldGetDmaTexture();
+}
+
+void
+VideoPort::buffersWillSwap()
+{
+    // Check if the texture has been grabbed
+    auto grabbed = info.latestGrabbedFrame;
+    auto current = vic.getStableBuffer().nr;
+
+    if (grabbed < current) {
+
+        stats.droppedFrames++;
+        debug(TIM_DEBUG, "Frame %lld dropped (total: %ld latest: %lld)\n",
+            current, stats.droppedFrames, grabbed);
+    }
 }
 
 u32 *

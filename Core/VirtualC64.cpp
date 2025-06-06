@@ -857,16 +857,70 @@ AudioPortAPI::copyInterleaved(float *buffer, isize n)
 // Video port
 //
 
-u32 *
-VideoPortAPI::getTexture() const
+void
+VideoPortAPI::lockTexture()
 {
-    return emu->getTexture();
+    VC64_PUBLIC
+    emu->lockTexture();
+}
+
+void
+VideoPortAPI::unlockTexture()
+{
+    VC64_PUBLIC
+    emu->unlockTexture();
 }
 
 u32 *
+VideoPortAPI::oldGetTexture() const
+{
+    return emu->oldGetTexture();
+}
+
+u32 *
+VideoPortAPI::oldGetDmaTexture() const
+{
+    return emu->oldGetDmaTexture();
+}
+
+const u32 *
+VideoPortAPI::getTexture() const
+{
+    VC64_PUBLIC
+    return (u32 *)emu->getTexture().pixels.ptr;
+}
+
+const u32 *
+VideoPortAPI::getTexture(isize *nr, isize *width, isize *height) const
+{
+    VC64_PUBLIC
+    auto &texture = emu->getTexture();
+
+    *nr = isize(texture.nr);
+    *width = isize(Texture::width);
+    *height = isize(Texture::height);
+
+    return (u32 *)texture.pixels.ptr;
+}
+
+const u32 *
 VideoPortAPI::getDmaTexture() const
 {
-    return emu->getDmaTexture();
+    VC64_PUBLIC
+    return (u32 *)emu->getDmaTexture().pixels.ptr;
+}
+
+const u32 *
+VideoPortAPI::getDmaTexture(isize *nr, isize *width, isize *height) const
+{
+    VC64_PUBLIC
+    auto &texture = emu->getDmaTexture();
+
+    *nr = isize(texture.nr);
+    *width = isize(Texture::width);
+    *height = isize(Texture::height);
+
+    return (u32 *)texture.pixels.ptr;
 }
 
 

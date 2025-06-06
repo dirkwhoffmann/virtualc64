@@ -16,6 +16,9 @@ class Canvas: Layer {
     var scanlineFilter: ComputeKernel! { return ressourceManager.scanlineFilter }
 
     // Used to determine if the GPU texture needs to be updated
+    var prevNr = 0
+
+    // Used to determine if the GPU texture needs to be updated (DEPRECATED)
     var prevBuffer: UnsafeMutablePointer<UInt32>?
 
     //
@@ -194,13 +197,15 @@ class Canvas: Layer {
                 
         precondition(scanlineTexture != nil)
         precondition(emulatorTexture != nil)
-        
-        // Get a pointer to most recent texture
-        if let buffer = emu?.videoPort.texture {
 
-            // Only proceed if the emulator delivers a new texture
-            // TODO: THE FOLLOWING LINE DOES NO LONGER WORK WITH RUNAHEAD
-            // if prevBuffer == buffer { return }
+        guard let emu = emu else { return }
+
+        // Prevent the stable texture from changing
+        emu.videoPort.lockTexture()
+
+        // Get a pointer to most recent texture
+        if let buffer = emu.videoPort.oldTexture {
+
             prevBuffer = buffer
 
             // Update the GPU texture
@@ -208,6 +213,9 @@ class Canvas: Layer {
             let h = Constants.texHeight
             emulatorTexture.replace(w: w, h: h, buffer: buffer)
         }
+
+        // Release the texture lock
+        emu.videoPort.unlockTexture()
     }
     
     //

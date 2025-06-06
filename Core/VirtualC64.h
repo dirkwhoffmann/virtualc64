@@ -288,14 +288,34 @@ struct VideoPortAPI : API {
     /// @name Retrieving video data
     /// @{
 
+    /** @brief  Locks the emulator texture
+     *
+     * This function aquires a mutex that prevents the emulator to modify the
+     * stable texture. Call this function prior to getTexture().
+     */
+    void lockTexture();
+
+    /** @brief  Unlocks the emulator texture
+     *
+     * This function releases the mutex acquired in lockTexture(). Call this
+     * function when the pointer returned by getTexture() is no longer needed.
+     */
+    void unlockTexture();
+
     /** @brief  Returns a pointer to the most recent stable texture
      *
      * The texture dimensions are given by constants vc64::Texture::width
      * and vc64::Texture::height texels. Each texel is represented by a
      * 32 bit color value.
      */
-    u32 *getTexture() const;
-    u32 *getDmaTexture() const;
+    [[deprecated]] u32 *oldGetTexture() const;
+    [[deprecated]] u32 *oldGetDmaTexture() const;
+
+    const u32 *getTexture() const;
+    const u32 *getTexture(isize *nr, isize *width, isize *height) const;
+
+    const u32 *getDmaTexture() const;
+    const u32 *getDmaTexture(isize *nr, isize *width, isize *height) const;
 
 };
 

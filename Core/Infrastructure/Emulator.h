@@ -173,8 +173,11 @@ public:
     // Audio and Video
     //
 
-    u32 *getTexture() const;
-    u32 *getDmaTexture() const;
+    [[deprecated]] u32 *oldGetTexture() const;
+    [[deprecated]] u32 *oldGetDmaTexture() const;
+    const Texture &getTexture() const;
+    const Texture &getDmaTexture() const;
+
     void lockTexture() { textureLock.lock(); }
     void unlockTexture() { textureLock.unlock(); }
 

@@ -690,7 +690,9 @@ private:
     //
     
 private:
-    
+
+    static constexpr isize NUM_TEXTURES = 8;
+
     // C64 colors in RGBA format (updated in updatePalette())
     u32 rgbaTable[16];
 
@@ -709,6 +711,12 @@ private:
     u32 *emuTexture2 = new u32[Texture::height * Texture::width];
     u32 *dmaTexture1 = new u32[Texture::height * Texture::width];
     u32 *dmaTexture2 = new u32[Texture::height * Texture::width];
+
+    Texture emuTex[NUM_TEXTURES];
+    Texture dmaTex[NUM_TEXTURES];
+
+    // The currently active texture
+    isize activeBuffer = 0;
 
     /* Pointer to the current working texture. This variable points either to
      * the first or the second texture buffer. After a frame has been finished,
@@ -1002,9 +1010,9 @@ private:
 private:
 
     void resetEmuTexture(isize nr);
-    void resetEmuTextures() { resetEmuTexture(1); resetEmuTexture(2); }
+    void resetEmuTextures();
     void resetDmaTexture(isize nr);
-    void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
+    void resetDmaTextures();
     void resetTexture(u32 *p);
 
     void initFuncTable(VICIIRev revision);
@@ -1083,8 +1091,15 @@ public:
 private:
 
     // Returns pointers to the stable textures
-    u32 *getTexture() const;
-    u32 *getDmaTexture() const;
+    [[deprecated]] u32 *oldGetTexture() const;
+    [[deprecated]] u32 *oldGetDmaTexture() const;
+
+    // Returns the working buffer or the stable buffer
+    Texture &getWorkingBuffer();
+    const Texture &getStableBuffer(isize offset = 0) const;
+
+    Texture &getWorkingDmaBuffer();
+    const Texture &getStableDmaBuffer(isize offset = 0) const;
 
 
     //

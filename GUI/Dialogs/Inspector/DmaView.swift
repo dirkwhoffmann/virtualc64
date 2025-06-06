@@ -55,7 +55,7 @@ class DmaView: NSImageView {
 
     override func draw(_ dirtyRect: NSRect) {
 
-        if let texture = videoPort?.dmaTexture {
+        if let texture = videoPort?.oldDmaTexture {
 
             buffer.update(from: texture, count: wordCount)
         }

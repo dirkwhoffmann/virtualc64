@@ -17,38 +17,38 @@ namespace vc64 {
 
 Texture::Texture()
 {
-    pixels.alloc(height * width);
+    pixels.alloc(texels);
 }
 
 void
-Texture::clear()
+Texture::clear(Texel col1, Texel col2)
 {
     auto *ptr = pixels.ptr;
 
     for (isize row = 0; row < height; row++, ptr += width) {
         for (isize col = 0; col < width; col++) {
-            ptr[col] = ((row >> 2) & 1) == ((col >> 3) & 1) ? cb1 : cb2;
+            ptr[col] = ((row >> 2) & 1) == ((col >> 3) & 1) ? col1 : col2;
         }
     }
 }
 
 void
-Texture::clear(isize row)
+Texture::clear(isize row, Texel col1, Texel col2)
 {
     auto *ptr = pixels.ptr + row * width;
 
     for (isize col = 0; col < width; col++) {
-        ptr[col] = ((row >> 2) & 1) == ((col >> 3) & 1) ? cb1 : cb2;
+        ptr[col] = ((row >> 2) & 1) == ((col >> 3) & 1) ? col1 : col2;
     }
 }
 
 void
-Texture::clear(isize row, isize cycle)
+Texture::clear(isize row, isize cycle, Texel col1, Texel col2)
 {
     auto *ptr = pixels.ptr + row * width + 4 * cycle;
 
     for (isize col = 0; col < 4; col++) {
-        ptr[col] = ((row >> 2) & 1) == ((col >> 3) & 1) ? cb1 : cb2;
+        ptr[col] = ((row >> 2) & 1) == ((col >> 3) & 1) ? col1 : col2;
     }
 }
 

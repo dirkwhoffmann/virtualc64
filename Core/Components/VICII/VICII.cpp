@@ -82,22 +82,44 @@ VICII::_didReset(bool hard)
 void
 VICII::resetEmuTexture(isize nr)
 {
-    assert(nr == 1 || nr == 2);
-
     if (nr == 1) { resetTexture(emuTexture1); }
     if (nr == 2) { resetTexture(emuTexture2); }
+
+    assert(nr < NUM_TEXTURES);
+
+    emuTex[nr].clear(Texture::grey2, Texture::grey4);
+}
+
+void
+VICII::resetEmuTextures()
+{
+    resetEmuTexture(1); resetEmuTexture(2);
+
+    // Wipe out all textures
+    for (isize i = 0; i < NUM_TEXTURES; i++) resetEmuTexture(i);
 }
 
 void
 VICII::resetDmaTexture(isize nr)
-{
-    assert(nr == 1 || nr == 2);
-    
+{    
     u32 *p = nr == 1 ? dmaTexture1 : dmaTexture2;
 
     for (int i = 0; i < Texture::height * Texture::width; i++) {
         p[i] = 0xFF000000;
     }
+
+    assert(nr < NUM_TEXTURES);
+
+    emuTex[nr].clear(Texture::black, Texture::black);
+}
+
+void
+VICII::resetDmaTextures()
+{
+    resetDmaTexture(1); resetDmaTexture(2);
+
+    // Wipe out all textures
+    for (isize i = 0; i < NUM_TEXTURES; i++) resetDmaTexture(i);
 }
 
 void
@@ -265,15 +287,39 @@ VICII::isVBlankLine(isize line) const
 }
 
 u32 *
-VICII::getTexture() const
+VICII::oldGetTexture() const
 {
     return emuTexture == emuTexture1 ? emuTexture2 : emuTexture1;
 }
 
 u32 *
-VICII::getDmaTexture() const
+VICII::oldGetDmaTexture() const
 {
     return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
+}
+
+Texture &
+VICII::getWorkingBuffer()
+{
+    return emuTex[activeBuffer];
+}
+
+const Texture &
+VICII::getStableBuffer(isize offset) const
+{
+    return emuTex[(activeBuffer + offset - 1 + NUM_TEXTURES) % NUM_TEXTURES];
+}
+
+Texture &
+VICII::getWorkingDmaBuffer()
+{
+    return dmaTex[activeBuffer];
+}
+
+const Texture &
+VICII::getStableDmaBuffer(isize offset) const
+{
+    return dmaTex[(activeBuffer + offset - 1 + NUM_TEXTURES) % NUM_TEXTURES];
 }
 
 void
