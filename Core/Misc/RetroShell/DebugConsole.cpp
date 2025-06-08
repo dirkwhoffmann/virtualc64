@@ -78,7 +78,7 @@ DebugConsole::pressReturn(bool shift)
 {
     if (!shift && input.empty()) {
 
-        emulator.isRunning() ? emulator.pause() : emulator.stepInto();
+        emulator.isRunning() ? emulator.put(Cmd::PAUSE) : emulator.stepInto();
 
     } else {
 
