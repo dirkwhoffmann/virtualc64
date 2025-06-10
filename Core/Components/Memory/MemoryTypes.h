@@ -137,9 +137,10 @@ struct RomTypeEnum : Reflection<RomTypeEnum, RomType> {
 
 enum class RomVendor
 {
+    UNKNOWN,
     COMMODORE,
     MEGA65,
-    OTHER
+    OTHER,
 };
 
 struct RomVendorEnum : Reflection<RomVendorEnum, RomVendor> {
@@ -151,6 +152,7 @@ struct RomVendorEnum : Reflection<RomVendorEnum, RomVendor> {
     {
         switch (value) {
 
+            case RomVendor::UNKNOWN:    return "UNKNOWN";
             case RomVendor::COMMODORE:  return "COMMODORE";
             case RomVendor::MEGA65:     return "MEGA65";
             case RomVendor::OTHER:      return "OTHER";
