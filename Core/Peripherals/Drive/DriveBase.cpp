@@ -399,6 +399,7 @@ Drive::autoConfigure()
 
         case 0x28CD4E47A40C41CA: // VC1541_DOLPHIN_20
         case 0x1C1DDD64E02CAD32: // VC1541_DOLPHIN_20_SLVDR
+        case 0x682b5c77e7535b4a: // Dolphin DOS2 (donnchawp) 1.1
 
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
             setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541II);

@@ -34,18 +34,18 @@ class RS232 final : public SubComponent {
     };
 
     // Current configuration
-    RS232Config config = { };
+    RS232Config config {};
 
     // The current values of the external port pins (client side)
-    u32 port = 0xFFFF;
+    u32 port {};
 
     // Shift registers
-    u16 rxdShr = 0;
-    u16 txdShr = 0;
+    u16 rxdShr {};
+    u16 txdShr {};
 
     // Bit counters
-    u8 rxdCnt = 0;
-    u8 txdCnt = 0;
+    u8 rxdCnt {};
+    u8 txdCnt {};
 
     // External input
     string input;
@@ -114,6 +114,7 @@ public:
 private:
 
     void _dump(Category category, std::ostream &os) const override;
+    void _didReset(bool hard) override;
 
 
     //
