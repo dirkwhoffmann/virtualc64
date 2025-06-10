@@ -28,7 +28,8 @@ Drive::Drive(C64 &ref, isize id) : SubComponent(ref, id)
         &mem,
         &cpu,
         &via1,
-        &via2
+        &via2,
+        &pia
     };
 
     // Assign a unique ID to the CPU
