@@ -298,7 +298,7 @@ static std::vector<RomTraits> roms = {
         .type       = KERNAL,
         .patched    = true
     },{
-        .fnv        = 0x141a584872021c25,
+        .fnv        = 0x141A584872021C25,
         .title      = "Patched Kernal Rom",
         .subtitle   = "Dolphin DOS2 (donnchawp)",
         .revision   = "V1.1",
@@ -478,7 +478,7 @@ static std::vector<RomTraits> roms = {
         .type       = VC1541,
         .patched    = true
     },{
-        .fnv        = 0x682b5c77e7535b4a,
+        .fnv        = 0x682B5C77E7535B4A,
         .title      = "Patched Drive Firmware",
         .subtitle   = "Dolphin DOS2 (donnchawp)",
         .revision   = "V1.1",

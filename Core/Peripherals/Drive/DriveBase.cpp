@@ -399,11 +399,18 @@ Drive::autoConfigure()
 
         case 0x28CD4E47A40C41CA: // VC1541_DOLPHIN_20
         case 0x1C1DDD64E02CAD32: // VC1541_DOLPHIN_20_SLVDR
-        case 0x682b5c77e7535b4a: // Dolphin DOS2 (donnchawp) 1.1
 
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
             setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM,      (i64)DriveRam::RANGE_8000_9FFF);
+            setOption(Opt::DRV_PARCABLE, (i64)ParCableType::STANDARD);
+            break;
+
+        case 0x682b5c77e7535b4a: // Dolphin DOS2 (donnchawp) 1.1
+
+            debug(CNF_DEBUG, "autoConfig: Dolphin DOS (donnchawp)\n");
+            setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541II);
+            setOption(Opt::DRV_RAM,      (i64)DriveRam::RANGE_4000_7FFF);
             setOption(Opt::DRV_PARCABLE, (i64)ParCableType::STANDARD);
             break;
 

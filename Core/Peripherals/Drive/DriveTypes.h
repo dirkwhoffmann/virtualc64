@@ -76,14 +76,15 @@ struct DriveTypeEnum : Reflection<DriveTypeEnum, DriveType> {
 enum class DriveRam : long
 {
     NONE,
-    RANGE_8000_9FFF,
-    RANGE_6000_7FFF
+    RANGE_8000_9FFF,    //  8K
+    RANGE_6000_7FFF,    //  8K
+    RANGE_4000_7FFF     // 16K
 };
 
 struct DriveRamEnum : Reflection<DriveRamEnum, DriveRam> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(DriveRam::RANGE_6000_7FFF);
+    static constexpr long maxVal = long(DriveRam::RANGE_4000_7FFF);
 
     static const char *_key(DriveRam value)
     {
@@ -92,6 +93,7 @@ struct DriveRamEnum : Reflection<DriveRamEnum, DriveRam> {
             case DriveRam::NONE:            return "NONE";
             case DriveRam::RANGE_8000_9FFF: return "8000_9FFF";
             case DriveRam::RANGE_6000_7FFF: return "6000_7FFF";
+            case DriveRam::RANGE_4000_7FFF: return "4000_7FFF";
         }
         return "???";
     }
