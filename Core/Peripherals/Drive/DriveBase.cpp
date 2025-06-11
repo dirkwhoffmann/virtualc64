@@ -406,6 +406,14 @@ Drive::autoConfigure()
             setOption(Opt::DRV_PARCABLE, (i64)ParCableType::STANDARD);
             break;
 
+        case 0x682b5c77e7535b4a: // Dolphin DOS2 (donnchawp) 1.1
+
+            debug(CNF_DEBUG, "autoConfig: Dolphin DOS (donnchawp)\n");
+            setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541II);
+            setOption(Opt::DRV_RAM,      (i64)DriveRam::RANGE_4000_7FFF);
+            setOption(Opt::DRV_PARCABLE, (i64)ParCableType::STANDARD);
+            break;
+
         case 0x09D8FBAB61E59FF0: // VC1541_DOLPHIN_30
         case 0xF684F72388EE5364: // VC1541_DOLPHIN_30_SLVDR
 

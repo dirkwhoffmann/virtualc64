@@ -39,26 +39,26 @@ protected:
     Drive &drive;
 
     // Peripheral ports (pin values)
-    u8 pa;
-    u8 pb;
+    u8 pa = 0;
+    u8 pb = 0;
 
     // Output registers
-    u8 ora;
-    u8 orb;
-    
+    u8 ora = 0;
+    u8 orb = 0;
+
     // Data direction registers
-    u8 ddra;
-    u8 ddrb;
-    
+    u8 ddra = 0;
+    u8 ddrb = 0;
+
     // Control registers
-    u8 cra;
-    u8 crb;
-    
+    u8 cra = 0;
+    u8 crb = 0;
+
     // Interrupt control lines
-    bool ca1;
-    bool ca2;
-    bool cb1;
-    bool cb2;
+    bool ca1 = false;
+    bool ca2 = false;
+    bool cb1 = false;
+    bool cb2 = false;
 
     
     //

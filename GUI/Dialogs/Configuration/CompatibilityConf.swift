@@ -18,7 +18,6 @@ extension ConfigurationController {
         // Threading
         let speedBoost = config.speedBoost
         let runAhead = config.runAhead
-        let runAheadAbs = abs(runAhead)
         prfVSync.state = config.vsync ? .on : .off
         prfSpeedBoost.integerValue = speedBoost
         prfSpeedBoostInfo.stringValue = "\(speedBoost) %"
@@ -26,7 +25,7 @@ extension ConfigurationController {
         prfSpeedBoostInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
         prfRunAheadLabel.stringValue = runAhead >= 0 ? "Run ahead:" : "Run behind:"
         prfRunAhead.integerValue = runAhead
-        prfRunAheadInfo.stringValue = "\(runAheadAbs) frame" + (runAheadAbs == 1 ? "" : "s")
+        prfRunAheadInfo.stringValue = "\(abs(runAhead)) frame" + (abs(runAhead) == 1 ? "" : "s")
 
         // Boosters
         comDrivePowerSave.state = config.drive8PowerSave ? .on : .off

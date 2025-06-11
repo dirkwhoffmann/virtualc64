@@ -305,6 +305,10 @@ DriveMemory::updateBankMap()
             for (isize i = 24; i < 32; i++) usage[i] = DrvMemType::EXP;
             break;
 
+        case DriveRam::RANGE_4000_7FFF:
+            for (isize i = 16; i < 32; i++) usage[i] = DrvMemType::EXP;
+            break;
+
         default:
             break;
     }

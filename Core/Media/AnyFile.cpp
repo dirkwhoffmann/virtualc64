@@ -91,7 +91,7 @@ AnyFile::getName() const
 void
 AnyFile::strip(isize count)
 {
-    data.resize(count);
+    data.strip(count);
 }
 
 void

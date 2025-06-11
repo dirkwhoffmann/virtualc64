@@ -161,8 +161,6 @@
 		505A13302C3503EB00FF8D2C /* UserPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A132D2C3503EB00FF8D2C /* UserPortBase.cpp */; };
 		505A13332C35551D00FF8D2C /* RS232.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13312C35551D00FF8D2C /* RS232.cpp */; };
 		505A13342C35551D00FF8D2C /* RS232.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13312C35551D00FF8D2C /* RS232.cpp */; };
-		505A13382C35557100FF8D2C /* RS232Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13372C35557100FF8D2C /* RS232Base.cpp */; };
-		505A13392C35557100FF8D2C /* RS232Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13372C35557100FF8D2C /* RS232Base.cpp */; };
 		505D492821C155DD00A7C575 /* RomConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomConf.swift */; };
 		505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE62580BD780066ACE4 /* AudioConf.swift */; };
 		505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */; };
@@ -840,7 +838,6 @@
 		505A13312C35551D00FF8D2C /* RS232.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RS232.cpp; sourceTree = "<group>"; };
 		505A13322C35551D00FF8D2C /* RS232.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RS232.h; sourceTree = "<group>"; };
 		505A13362C35555D00FF8D2C /* RS232Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RS232Types.h; sourceTree = "<group>"; };
-		505A13372C35557100FF8D2C /* RS232Base.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RS232Base.cpp; sourceTree = "<group>"; };
 		505A133A2C3557BB00FF8D2C /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505D492721C155DD00A7C575 /* RomConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomConf.swift; sourceTree = "<group>"; };
 		505F8FE62580BD780066ACE4 /* AudioConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioConf.swift; sourceTree = "<group>"; };
@@ -1903,7 +1900,6 @@
 				505A133A2C3557BB00FF8D2C /* CMakeLists.txt */,
 				505A13362C35555D00FF8D2C /* RS232Types.h */,
 				505A13322C35551D00FF8D2C /* RS232.h */,
-				505A13372C35557100FF8D2C /* RS232Base.cpp */,
 				505A13312C35551D00FF8D2C /* RS232.cpp */,
 			);
 			path = Network;
@@ -2409,7 +2405,6 @@
 				505A13302C3503EB00FF8D2C /* UserPortBase.cpp in Sources */,
 				50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */,
 				50E5BF742BA81E710004712B /* Monitor.cpp in Sources */,
-				505A13392C35557100FF8D2C /* RS232Base.cpp in Sources */,
 				50726F622961C9AC0031F2F5 /* VICIITable.cpp in Sources */,
 				50726F872961CA0D0031F2F5 /* MikroAss.cpp in Sources */,
 				50726F7D2961C9E80031F2F5 /* Joystick.cpp in Sources */,
@@ -2770,7 +2765,6 @@
 				50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */,
 				500A52B12DD4F93C00B06D23 /* BusPanel.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */,
-				505A13382C35557100FF8D2C /* RS232Base.cpp in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
 				508C1E5A2C0B20EE0097473C /* SerialPortBase.cpp in Sources */,
 				50A9A088250DE90900723D32 /* PageFox.cpp in Sources */,
