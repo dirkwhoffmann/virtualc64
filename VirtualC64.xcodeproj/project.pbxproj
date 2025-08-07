@@ -1221,7 +1221,7 @@
 				504C428D24AF29AB00E69CAE /* Core */,
 				5070D72224AF3330005862D0 /* ObjCProxy */,
 				50176C6D0A6F7357009E80BD /* GUI */,
-				50441A882B9495BE00102A4D /* Docs */,
+				50441A882B9495BE00102A4D /* Manual */,
 				5070D72124AF2EB1005862D0 /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
@@ -1487,12 +1487,12 @@
 			path = RetroShell;
 			sourceTree = "<group>";
 		};
-		50441A882B9495BE00102A4D /* Docs */ = {
+		50441A882B9495BE00102A4D /* Manual */ = {
 			isa = PBXGroup;
 			children = (
 				50441A892B9495BE00102A4D /* Doxygen */,
 			);
-			path = Docs;
+			path = Manual;
 			sourceTree = "<group>";
 		};
 		50441A892B9495BE00102A4D /* Doxygen */ = {
