@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$structvc64_1_1util_1_1_exception.html" title="Base class for all emulator exceptions." alt="" coords="5,5,85,31"/>
+<area shape="rect" id="Node000001" href="$structvc64_1_1_error.html" title="Emulator exception." alt="" coords="133,5,182,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="100,16,132,16,132,21,100,21"/>
+</map>

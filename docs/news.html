@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<!--
+	Arcana by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>VirtualC64 for macOS</title>
+	<meta name="description" content="Newsboard of VirtualC64 for macOS" />
+
+	<!-- <title>Arcana by HTML5 UP</title> -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+
+	<!-- web emulator view stuff start-->
+	<style>
+		.emulator_view {
+			width: 100%;
+		}
+
+		#vc64web {
+			border-radius: 10px;
+		}
+
+		#player_container {
+			background-color: gray;
+			border-radius: 10px;
+		}
+
+		#player_container div:last-child {
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+
+		.player_icon_btn {
+			background-color: transparent;
+			color: #eeeeee;
+			margin-right: 15px;
+			cursor: grab;
+		}
+
+		[player="on"] .style1 {
+			background-color: #555555;
+			color: #999999;
+			animation: go_dark 2s ease-out;
+		}
+
+		[player="off"] .style1 {
+			animation: go_light 1s ease-in;
+		}
+
+		[player="on"] a {
+			color: #cccccc;
+			animation: a_go_dark 2s ease-out;
+		}
+
+		[player="off"] a {
+			animation: a_go_light 1s ease-in;
+		}
+
+		@keyframes a_go_dark {
+			0% {
+				color: #448DBC;
+			}
+
+			100% {
+				color: #cccccc;
+			}
+		}
+
+		@keyframes a_go_light {
+			0% {
+				color: #cccccc;
+			}
+
+			100% {
+				color: #448DBC;
+			}
+		}
+
+		@keyframes go_dark {
+			0% {
+				background-color: #ffffff;
+				color: #474747;
+			}
+
+			100% {
+				background-color: #555555;
+				color: #999999;
+			}
+		}
+
+		@keyframes go_light {
+			0% {
+				background-color: #555555;
+				color: #999999;
+			}
+
+			100% {
+				background-color: #ffffff;
+				color: #474747;
+			}
+
+		}
+	</style>
+	<script>
+		function switch_cinema_display() {
+			var observer = new MutationObserver(function (mutations) {
+				let player_on = false;
+				for (var mutation of mutations) {
+					for (var node of mutation.addedNodes) {
+						if (node.id == "player_container") {
+							player_on = true;
+							break;
+						}
+					};
+				}
+				document.body.setAttribute("player", player_on ? "on" : "off");
+			});
+			var emulator_views = document.querySelectorAll(".emulator_view");
+			for (emulator_view of emulator_views)
+				observer.observe(emulator_view, { childList: true });
+		}
+	</script>
+	<!-- web emulator view stuff end-->
+</head>
+
+<body class="is-preload" onload="switch_cinema_display()">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<div id="header">
+
+			<!-- Logo -->
+			<h1><a href="index.html" id="logo">VirtualC64<em> for macOS</em></a></h1>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html">About</a></li>
+					<li class="current"><a href="news.html">News</a></li>
+					<li><a href="docs/index.html">Documentation</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64">Code</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64/issues">Issues</a></li>
+					<li><a href="https://github.com/dirkwhoffmann/virtualc64/discussions">Discussions</a></li>
+					<li><a href="impressum.html">Impressum</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<section class="wrapper style1">
+			<div class="container">
+				<div id="content">
+					<article>
+						<span class="image featured"><img src="images/vc-plain.jpg" alt="" /></span>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- Main -->
+		<section class="wrapper style1">
+			<div class="container">
+				<div class="row gtr-200">
+					<div class="col-8 col-12-narrower imp-narrower">
+						<div id="content">
+
+							<!-- Content -->
+
+							<article>
+								<header>
+									<h2>News</h2>
+								</header>
+
+								<h3><em>26.12.2024 &nbsp;</em>VirtualC64 5.1 released</h3>
+								<p>This release features massively improved REU support and fixes several minor bugs.</p>
+
+								<h3><em>21.7.2024 &nbsp;</em>VirtualC64 5.0 released</h3>
+								<p>VirtualC64 5.0 has finally been released.</p>
+								
+								<h3><em>24.6.2024 &nbsp;</em>VirtualC64 5.0 Beta 6 released</h3>
+								<p>Today, the sixth beta of version 5.0 has been released. As expected, the numerous changes in the new core have introduced minor and major bugs, but most of these should have been fixed by now. In the meantime, we have also managed to compile the new core under WebAssembly, allowing the web-port maintainers to update the v5 core shortly.</p>
+
+								<h3><em>8.6.2024 &nbsp;</em>VirtualC64 5.0 on the home straight</h3>
+								<p>Today, the second beta of VirtualC64 5.0 has been released. This update was initially planned as version 4.8, with run-ahead support as its most prominent new feature. In run-ahead mode, two emulator instances operate side-by-side: a primary instance emulating the C64 as usual and a run-ahead instance running several frames ahead. The run-ahead instance generates the image texture, requiring both instances to run in sync with a time delay. Whenever the primary instance's execution state changes, such as by a joystick event, the emulator must update the run-ahead instance accordingly. For seamless synchronization, it is crucial to recognize every externally initiated state change in the primary instance.</p>
+								<p>This necessity prompted a fundamental revision of the emulator's external API. The extensive changes to the emulator's architecture warranted skipping the version 4.8 designation and releasing it as version 5.0 instead. From a developer's perspective, the effort has been worthwhile. The internal code architecture has significantly improved, becoming more streamlined than ever. However, these numerous changes have introduced some bugs, as expected in such a substantial update.</p>
+								<p>The current version is in the beta phase, and I highly value your participation in testing. Your feedback is crucial for fine-tuning the software. Once the beta version achieves the stability level of the current version 4.7, version 5.0 will be officially released.</p>
+							</article>
+
+						</div>
+					</div>
+					<div class="col-4 col-12-narrower">
+						<div id="sidebar2">
+
+							<!-- Sidebar -->
+
+							<section>
+								<h3>Project activity</h3>
+								<p>
+									<img alt="GitHub watchers"
+										src="https://img.shields.io/github/watchers/dirkwhoffmann/virtualC64?style=social">
+									<img alt="GitHub Repo stars"
+										src="https://img.shields.io/github/stars/dirkwhoffmann/virtualC64?style=social">
+									<img alt="GitHub forks"
+										src="https://img.shields.io/github/forks/dirkwhoffmann/virtualC64?style=social"><br><br>
+									<img alt="GitHub build status Linux"
+										src="https://github.com/dirkwhoffmann/virtualC64/workflows/CMake/badge.svg"><br>
+									<img alt="GitHub build status MinGW"
+										src="https://github.com/dirkwhoffmann/virtualC64/workflows/CMake-MinGW/badge.svg"><br>
+									<img alt="GitHub build status MSVC"
+										src="https://github.com/dirkwhoffmann/virtualC64/workflows/CMake-MSVC/badge.svg"><br>
+									<img alt="GitHub release (latest by date)"
+										src="https://img.shields.io/github/downloads/dirkwhoffmann/virtualC64/latest/total">
+									<img alt="GitHub all releases"
+										src="https://img.shields.io/github/downloads/dirkwhoffmann/virtualC64/total"><br>
+									<img alt="GitHub issues"
+										src="https://img.shields.io/github/issues/dirkwhoffmann/virtualC64">
+									<img alt="GitHub closed issues"
+										src="https://img.shields.io/github/issues-closed/dirkwhoffmann/virtualC64"><br>
+									<img alt="GitHub code size in bytes"
+										src="https://img.shields.io/github/languages/code-size/dirkwhoffmann/virtualC64">
+									<img alt="GitHub repo size"
+										src="https://img.shields.io/github/repo-size/dirkwhoffmann/virtualC64">
+								</p>
+							</section>
+							<!--
+							<section>
+								<h3>VirtualC64 Web</h3>
+								<span class="image featured"><img src="images/vcweb.png" alt="" /></span>
+								<p>The core emulator is designed to be compatible with WebAssembly and can now run in
+									your
+									browser.</p>
+								<div id="emuview0" class="emulator_view"><a style="border:none" href="#"
+										onclick="vc64web_player.load(this, '#dark=false#openROMS=true#2ndSID=d420#navbar=hidden#wide=true#border=false', 'http://csdb.dk/getinternalfile.php/206403/to_norah.prg');return false;">
+										<img src="images/nora.jpg" style="width:100%;border-radius:10px"></a>
+								</div>
+								<br>
+								<div id="emuview1" class="emulator_view"><a href="#"
+										ontouchstart="touch_param='#touch=true';"
+										onclick="let extra_param=''; if(typeof touch_param != 'undefined'){extra_param=touch_param;touch_param='';} vc64web_player.load(this, extra_param+'#dark=false#openROMS=true#navbar=hidden#wide=true#border=false#port2=true', 'http://csdb.dk/getinternalfile.php/92366/VVVVVV.prg');return false;">
+										<img src="https://vc64web.github.io/doc/images/vvvvvv.png" style="width:100%;border-radius:10px">
+									</a>
+								</div>
+								<br>
+								<div id="emuview2" class="emulator_view"><a href="#"
+										ontouchstart="touched=true"
+										onclick="let touch=(typeof touched!='undefined')?touched:false;touched=false;let config={touch:touch,openROMS:true,dark:false,navbar:false,wide:true,border:false,port2:true,buttons:[{run:true,script:`await action('4000ms');$('#alert_wait').show();await action('11000ms');$('#alert_wait').hide();`},{position:'bottom:0vh;right:0vw',title:'[w]eapon',key:'w',script:`action('Space')`}],url:'http://csdb.dk/getinternalfile.php/162224/moonspire - the draxx war preview.crt'}; vc64web_player.load(this,encodeURIComponent(JSON.stringify(config)));return false;">
+										<img src="https://vc64web.github.io/doc/images/moonspire2.png" style="width:100%;border-radius:10px">
+									</a>
+								</div>
+								<br>
+								<footer>
+									<a href="https://vc64web.github.io/doc/about.html"
+										class="button">Learn
+										more</a>
+								</footer>
+							</section> 
+							-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<div id="footer">
+
+			<!-- Icons -->
+			<ul class="icons">
+				<li style="display:flex; flex-direction: row; justify-content: center;">
+					<a href="https://github.com/dirkwhoffmann" class="icon brands fa-github" style="padding:8px"><span
+							class="label">GitHub</span></a>
+					<iframe src="https://github.com/sponsors/dirkwhoffmann/button" title="Sponsor Moira" height="32"
+						width="114" style="border: 0;border-radius: 7px;"></iframe>
+				</li>
+			</ul>
+
+			<!-- Copyright -->
+			<div class="copyright">
+				<ul class="menu">
+					<li>&copy; <a href="http://www.dirkwhoffmann.de">Dirk W. Hoffmann</a></li>
+					<li><a href="impressum.html">Impressum</a></li>
+					<li><a href="impressum.html">Datenschutz</a></li>
+					<li><a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+	<script src="https://vc64web.github.io/js/vc64web_player.js"></script>
+</body>
+
+</html>

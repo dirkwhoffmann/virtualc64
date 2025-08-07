@@ -1,0 +1,77 @@
+html {
+
+    --fragment-background: #fdf6e3;
+    --fragment-foreground: #586e75;
+    --fragment-keyword: #cb4b16;
+    --fragment-keywordtype: #268bd2;
+    --fragment-keywordflow: #859900;
+    --fragment-token: #2aa198;
+    --fragment-comment: #657b83;
+    --fragment-link: #d33682;
+    --fragment-preprocessor: #2aa198;
+    --fragment-linenumber-color: #586e75;
+    --fragment-linenumber-background: #eee8d5;
+}
+
+html.dark-mode {
+    --primary-color: #7aa2f7;
+    --primary-dark-color: #bb9af7;
+    --primary-light-color: #b4f9f8;
+
+    --page-background-color: #24283b;
+    --page-foreground-color: #a9b1d6;
+    --page-secondary-foreground-color: #9aa5ce;
+    --separator-color: #565f89;
+    --side-nav-background: #1a1b26;
+
+    --code-background: #31364e;
+    --code-foreground: #73daca;
+
+    --tablehead-background: #1a1b26;
+
+    --blockquote-background: #414868;
+    --blockquote-foreground: #73daca;
+
+    --warning-color: #e0af68;
+    --warning-color-dark: #ff9e64;
+    --warning-color-darker: #f7768e;
+    --bug-color: #f7768e;
+
+    --fragment-background: #24283b;
+    --fragment-foreground: #a9b1d6;
+    --fragment-keyword: #bb9af7;
+    --fragment-keywordtype: #a9b1d6;
+    --fragment-keywordflow: #bb9af7;
+    --fragment-token: #9ece6a;
+    --fragment-comment: #565f89;
+    --fragment-link: #73daca;
+    --fragment-preprocessor: #bb9af7;
+    --fragment-linenumber-color: #414868;
+    --fragment-linenumber-background: #24283b;
+    --fragment-linenumber-border: #1a1b26;
+}
+
+ div.groupHeader {
+    margin-left: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.github-corner svg {
+    fill: var(--primary-light-color);
+    color: var(--page-background-color);
+    width: 72px;
+    height: 72px;
+}
+
+@media screen and (max-width: 767px) {
+    .github-corner svg {
+        width: 50px;
+        height: 50px;
+    }
+    #projectnumber {
+        margin-right: 22px;
+    }
+}
