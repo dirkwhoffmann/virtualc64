@@ -2915,10 +2915,10 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_ENTITLEMENTS = Resources/VirtualC64.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 250808;
+				CURRENT_PROJECT_VERSION = 250809;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2965,10 +2965,10 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_ENTITLEMENTS = Resources/VirtualC64.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 250808;
+				CURRENT_PROJECT_VERSION = 250809;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;

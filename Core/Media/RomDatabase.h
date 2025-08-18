@@ -78,6 +78,20 @@ static std::vector<RomTraits> roms = {
         .vendor     = COMMODORE,
         .type       = CHAR
     },{
+        .fnv        = 0x8550B7ECEEED00C5,
+        .title      = "Character Rom",
+        .subtitle   = "Japanese C64",
+        .revision   = "",
+        .vendor     = COMMODORE,
+        .type       = CHAR
+    },{
+        .fnv        = 0x2D5C504BBC4E5631,
+        .title      = "Character Rom",
+        .subtitle   = "Croatian C64",
+        .revision   = "",
+        .vendor     = COMMODORE,
+        .type       = CHAR
+    },{
         .fnv        = 0x4D31ECBF4F967DC3,
         .title      = "Character Rom",
         .subtitle   = "M.E.G.A C64 OpenROM",
@@ -195,6 +209,20 @@ static std::vector<RomTraits> roms = {
         .title      = "Kernal Rom",
         .subtitle   = "Danish C64",
         .revision   = "V3",
+        .vendor     = COMMODORE,
+        .type       = KERNAL
+    },{
+        .fnv        = 0xF695289f3EC48A38,
+        .title      = "Kernal Rom",
+        .subtitle   = "Japanese C64",
+        .revision   = "",
+        .vendor     = COMMODORE,
+        .type       = KERNAL
+    },{
+        .fnv        = 0x1124ECFFE9ED2FE9,
+        .title      = "Kernal Rom",
+        .subtitle   = "Croatian C64",
+        .revision   = "",
         .vendor     = COMMODORE,
         .type       = KERNAL
     },{
