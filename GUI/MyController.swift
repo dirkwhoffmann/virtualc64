@@ -197,7 +197,7 @@ extension MyController {
         }
 
         // Add media file (if provided on startup)
-        if let url = mydocument.launchUrl { try? mm.addMedia(url: url) }
+        // if let url = mydocument.launchUrl { try? mm.addMedia(url: url) }
 
         // Create speed monitor
         speedometer = Speedometer()
@@ -335,8 +335,11 @@ extension MyController {
                 renderer.canvas.open(delay: 2)
                 virtualKeyboard = nil
 
-            } else {
+                if let url = mydocument.launchUrl {
 
+                    try? mm.addMedia(url: url)
+                    mydocument.launchUrl = nil
+                }
             }
 
             toolbar.updateToolbar()

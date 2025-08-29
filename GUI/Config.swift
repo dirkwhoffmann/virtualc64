@@ -19,8 +19,8 @@ public extension Int {
     static let events       = 0     // Event processing
     static let exec         = 0     // Execution of external tools
     static let hid          = 0     // Human interface devices
-    static let lifetime     = 0     // Object management, delegation calls
-    static let media        = 0     // Media files, screenshots, snapshots
+    static let lifetime     = 1     // Object management, delegation calls
+    static let media        = 1     // Media files, screenshots, snapshots
     static let metal        = 0     // GPU drawing, shaders
     static let vsync        = 0     // VSYNC mode
     static let shutdown     = 0     // Termination procedure

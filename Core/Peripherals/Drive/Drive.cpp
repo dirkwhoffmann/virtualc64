@@ -408,6 +408,7 @@ Drive::insertMediaFile(class MediaFile &file, bool wp)
     try {
 
         const D64File &d64 = dynamic_cast<const D64File &>(file);
+        printf("Drive::insertMediaFile\n");
         insertDisk(std::make_unique<Disk>(d64, wp));
 
     } catch (...) { try {
