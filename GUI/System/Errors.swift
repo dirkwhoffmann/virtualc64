@@ -89,6 +89,7 @@ enum Failure {
     case noFFmpegFound(exec: String)
     case noFFmpegInstalled
     case noMetalSupport
+    case unsupportedOSVersion
     case recorderAborted
     case recorderSandboxed(exec: String)
     case unknown
@@ -98,7 +99,8 @@ enum Failure {
         switch self {
 
         case .noMetalSupport: return .critical
-
+        case .unsupportedOSVersion: return .critical
+            
         default: return .warning
         }
     }
@@ -172,6 +174,9 @@ enum Failure {
         case .noMetalSupport:
             return "No suitable GPU hardware found."
 
+        case .unsupportedOSVersion:
+            return "Incompatible macOS version."
+
         case .recorderAborted:
             return "Screen recording has been aborted."
 
@@ -196,6 +201,9 @@ enum Failure {
         case .noMetalSupport: return
             "The emulator can only run on machines supporting the Metal graphics " +
             "technology (2012 models and above)."
+
+        case .unsupportedOSVersion: return
+            "The emulator is not yet compatible with macOS Tahoe."
 
         case .recorderAborted: return
             "Failed to write to the FFmpeg pipes."
