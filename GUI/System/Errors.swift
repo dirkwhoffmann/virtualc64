@@ -42,9 +42,9 @@ public func warn(_ msg: String = "",
 // Errors
 //
 
-class VC64Error: Error {
+class AppError: Error {
     
-    var errorCode: vc64.ErrorCode
+    var errorCode: vc64.Fault
     var what: String
     
     init(_ exception: ExceptionWrapper) {
@@ -53,7 +53,7 @@ class VC64Error: Error {
         self.what = exception.what
     }
     
-    init(_ errorCode: vc64.ErrorCode, _ what: String = "") {
+    init(_ errorCode: vc64.Fault, _ what: String = "") {
         
         self.errorCode = errorCode
         self.what = what
@@ -62,7 +62,7 @@ class VC64Error: Error {
 
 extension NSError {
 
-    convenience init(error: VC64Error) {
+    convenience init(error: AppError) {
 
         self.init(domain: "VirtualC64",
                   code: error.errorCode.rawValue,
@@ -110,7 +110,7 @@ enum Failure {
         switch self {
 
         case .cantRecord: return NSImage(named: "FFmpegIcon")!
-        case .cantRun: return NSImage(named: "pref_transparent")!
+        // case .cantRun: return NSImage(named: "pref_transparent")!
         case .noFFmpegFound: return NSImage(named: "FFmpegIcon")!
         case .noFFmpegInstalled: return NSImage(named: "FFmpegIcon")!
         case .noMetalSupport: return NSImage(named: "metal")!
@@ -265,7 +265,7 @@ extension MyDocument {
     func showAlert(_ failure: Failure, error: Error,
                    async: Bool = false, window: NSWindow? = nil) {
 
-        if let error = error as? VC64Error {
+        if let error = error as? AppError {
             showAlert(failure, what: error.what, async:
                         async, window: window)
         } else {
@@ -307,6 +307,27 @@ extension MyDocument {
         alert.runSheet(for: windowForSheet!)
     }
 
+    func showLaunchAlert(error: Error) {
+             
+        var reason: String
+        if let error = error as? AppError {
+            reason = error.what
+        } else {
+            reason = error.localizedDescription
+        }
+        
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.icon = NSImage(named: "biohazard")
+        alert.messageText = "The emulator failed to launch."
+        alert.informativeText = "An unexpected exception interrupted the startup procedure:\n\n\(reason)"
+        alert.addButton(withTitle: "Exit")
+        
+        if alert.runSheet(for: windowForSheet!) == .alertFirstButtonReturn {
+            NSApp.terminate(self)
+        }
+    }
+    
     func showIsUnsavedAlert(msg: String, icon: String) -> NSApplication.ModalResponse {
 
         let alert = NSAlert()

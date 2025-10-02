@@ -13,6 +13,7 @@ extension NSControl {
         
         abortEditing()
         self.formatter = formatter
+        self.alignment = .right
         needsDisplay = true
     }
 }

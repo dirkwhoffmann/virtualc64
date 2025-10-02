@@ -234,12 +234,26 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func importConfigAction(_ sender: Any!) {
 
-        let openPanel = NSOpenPanel()
+        // let openPanel = NSOpenPanel()
 
         // Power off the emulator if the user doesn't object
         if !askToPowerOff() { return }
 
+        myOpenPanel.configure(types: [ .retrosh ], prompt: "Import")
+        myOpenPanel.open(for: window, { result in
+            
+            if result == .OK, let url = self.myOpenPanel.url {
+
+                do {
+                    try self.mm.addMedia(url: url, allowedTypes: [.SCRIPT])
+                } catch {
+                    self.showAlert(.cantOpen(url: url), error: error, async: true)
+                }
+            }
+        })
+        
         // Show file panel
+        /*
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = true
         openPanel.canCreateDirectories = false
@@ -257,6 +271,7 @@ extension MyController: NSMenuItemValidation {
                 }
             }
         })
+        */
     }
 
     @IBAction func exportConfigAction(_ sender: Any!) {
@@ -299,20 +314,60 @@ extension MyController: NSMenuItemValidation {
         openConfigurator()
     }
 
-    @IBAction func inspectorAction(_ sender: Any!) {
+    func addInspector() {
+    
+        let count = inspectors.count
         
-        if inspector == nil {
-            inspector = Inspector(with: self, nibName: "Inspector")
+        // Allow 8 inspectors at a time
+        if count < 8, let inspector = Inspector(with: self, nibName: "Inspector") {
+            
+            inspectors.append(inspector)
+            inspector.showAsWindow()
+
+        } else {
+         
+            NSSound.beep();
         }
-        inspector?.showWindow(self)
     }
     
-    @IBAction func monitorAction(_ sender: Any!) {
+    @IBAction func inspectorAction(_ sender: Any!) {
         
-        if monitor == nil {
-            monitor = Monitor(with: self, nibName: "Monitor")
+        if inspectors.isEmpty {
+            addInspector()
+        } else {
+            inspectors[0].showAsWindow()
         }
-        monitor?.showWindow(self)
+    }
+    
+    func addDashboard(type: PanelType = .Combined) {
+    
+        let count = dashboards.count
+        
+        // Allow 24 dashboards at a time
+        if count < 24 {
+            
+            let myStoryboard = NSStoryboard(name: "Dashboard", bundle: nil)
+            
+            if let newDashboard = myStoryboard.instantiateController(withIdentifier: "MyWindowController") as? Dashboard {
+                
+                dashboards.append(newDashboard)
+                newDashboard.setController(self)
+                newDashboard.showWindow(self)
+                newDashboard.viewController?.type = type
+                return
+            }
+        }
+
+        NSSound.beep();
+    }
+    
+    @IBAction func dashboardAction(_ sender: Any!) {
+        
+        if dashboards.isEmpty {
+            addDashboard()
+        } else {
+            dashboards[0].showWindow(self)
+        }
     }
     
     @IBAction func consoleAction(_ sender: Any!) {
@@ -347,7 +402,7 @@ extension MyController: NSMenuItemValidation {
         if snapshotBrowser == nil {
             snapshotBrowser = SnapshotViewer(with: self, nibName: "SnapshotViewer")
         }
-        snapshotBrowser?.showSheet()
+        snapshotBrowser?.showAsSheet()
     }
     
     @IBAction func takeScreenshotAction(_ sender: Any!) {
@@ -377,7 +432,7 @@ extension MyController: NSMenuItemValidation {
         if screenshotBrowser == nil {
             screenshotBrowser = ScreenshotViewer(with: self, nibName: "ScreenshotViewer")
         }
-        screenshotBrowser?.showSheet()
+        screenshotBrowser?.showAsSheet()
     }
 
     @IBAction func captureScreenAction(_ sender: Any!) {
@@ -420,7 +475,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func exportVideoAction(_ sender: Any!) {
 
         let exporter = VideoExporter(with: self, nibName: "VideoExporter")
-        exporter?.showSheet()
+        exporter?.showAsSheet()
     }
     
     //
@@ -478,7 +533,7 @@ extension MyController: NSMenuItemValidation {
         if let emu = emu {
 
             renderer.rotateLeft()
-            emu.c64.hardReset()
+            emu.hardReset()
             try? emu.run()
         }
     }
@@ -486,7 +541,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func softResetAction(_ sender: Any!) {
 
         if let emu = emu {
-            emu.c64.softReset()
+            emu.softReset()
         }
     }
 
@@ -696,24 +751,16 @@ extension MyController: NSMenuItemValidation {
             // Ask user to continue if the current disk contains modified data
             if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
 
-            let openPanel = NSOpenPanel()
-            openPanel.allowsMultipleSelection = false
-            openPanel.canChooseDirectories = false
-            openPanel.canCreateDirectories = false
-            openPanel.canChooseFiles = true
-            openPanel.prompt = "Insert"
-            openPanel.allowedContentTypes = [ .t64, .prg, .p00, .d64, .g64, .zip, .gzip ]
-            openPanel.beginSheetModal(for: window!, completionHandler: { result in
+            myOpenPanel.configure(types: [ .t64, .prg, .p00, .d64, .g64, .zip, .gzip ], prompt: "Insert")
+            myOpenPanel.open(for: window, { result in
 
-                if result == .OK, let url = openPanel.url {
-
-                    print("url = \(url)")
+                if result == .OK, let url = self.myOpenPanel.url {
 
                     do {
                         try self.mm.addMedia(url: url,
                                              allowedTypes: [ .D64, .T64, .PRG, .P00, .G64 ],
                                              drive: id,
-                                             options: [.force])
+                                             options: [.force, .remember])
 
                     } catch {
                         self.showAlert(.cantInsert, error: error, async: true)
@@ -890,16 +937,10 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func insertTapeAction(_ sender: Any!) {
         
-        let openPanel = NSOpenPanel()
-        openPanel.allowsMultipleSelection = false
-        openPanel.canChooseDirectories = false
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.prompt = "Insert"
-        // openPanel.allowedFileTypes = ["tap", "zip", "gz"]
-        openPanel.allowedContentTypes = [.tap, .zip, .gzip]
-        openPanel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK, let url = openPanel.url {
+        myOpenPanel.configure(types: [ .tap, .zip, .gzip ], prompt: "Insert")
+        myOpenPanel.open(for: window, { result in
+
+            if result == .OK, let url = self.myOpenPanel.url {
                 self.insertTapeAction(from: url)
             }
         })
@@ -956,24 +997,18 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func attachCartridgeAction(_ sender: Any!) {
         
-        let openPanel = NSOpenPanel()
-        openPanel.allowsMultipleSelection = false
-        openPanel.canChooseDirectories = false
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.prompt = "Attach"
-        // Note: macOS classifies CRT files as a .x509Certificate
-        openPanel.allowedContentTypes = [.crt, .zip, .gzip, .x509Certificate]
-        openPanel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK, let url = openPanel.url {
+        myOpenPanel.configure(types: [ .crt, .zip, .gzip ], prompt: "Insert")
+        myOpenPanel.open(for: window, { result in
 
+            if result == .OK, let url = self.myOpenPanel.url {
+                
                 do {
                     try self.mm.addMedia(url: url, allowedTypes: [ .CRT ])
                 } catch {
                     self.showAlert(.cantAttach, error: error, async: true)
                 }
             }
-        })
+        })        
     }
     
     @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) {
@@ -995,7 +1030,7 @@ extension MyController: NSMenuItemValidation {
         if let emu = emu {
 
             emu.expansionport.detachCartridge()
-            emu.c64.hardReset()
+            emu.hardReset()
         }
     }
 

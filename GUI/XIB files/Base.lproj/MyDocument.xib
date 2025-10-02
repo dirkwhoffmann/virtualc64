@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -41,10 +41,10 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="preferred" titlebarAppearsTransparent="YES" toolbarStyle="expanded" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="800" height="640"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1496" height="933"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
             <value key="minSize" type="size" width="402" height="323"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="800" height="640"/>
+                <rect key="frame" x="0.0" y="0.0" width="800" height="630"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <button toolTip="Connect / Disconnect drive" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1208">
@@ -133,7 +133,7 @@
                         </buttonCell>
                     </button>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DD4-5B-w9h" customClass="MetalView" customModule="VirtualC64" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="26" width="800" height="614"/>
+                        <rect key="frame" x="0.0" y="26" width="800" height="604"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <connections>
                             <outlet property="parent" destination="-2" id="DoA-Vt-vqv"/>
@@ -231,7 +231,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <popUpButtonCell key="cell" type="bevel" title="C64 Frequency" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" state="on" transparent="YES" inset="2" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="menu"/>
+                            <font key="font" metaFont="message"/>
                             <menu key="menu" id="m7b-17-QHH">
                                 <items>
                                     <menuItem title="C64 Frequency" state="on" id="LP1-PF-LdL"/>
@@ -266,7 +266,7 @@
                     </stepper>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845" customClass="MyToolbar" customModule="VirtualC64" customModuleProvider="target">
+            <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="1845" customClass="MyToolbar" customModule="VirtualC64" customModuleProvider="target">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="B3E0ED18-38A1-47E0-8714-6499B91888F8" label="Inspectors" paletteLabel="Inspectors" sizingBehavior="auto" id="GsP-C7-APh">
                         <nil key="toolTip"/>
@@ -329,7 +329,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
                                     <items>
                                         <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="VD3-Wr-Ufe"/>
@@ -356,7 +356,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
                                     <items>
                                         <menuItem title="None" state="on" image="devNoneTemplate" tag="-1" id="xyt-eC-0im"/>
@@ -447,10 +447,10 @@
                     <outlet property="controlPort1Item" destination="kR6-IR-lNs" id="s1g-oo-fgw"/>
                     <outlet property="controlPort2" destination="4MP-rV-xX2" id="Hem-gu-lAA"/>
                     <outlet property="controlPort2Item" destination="Klt-YL-0mv" id="qK2-bf-H6Q"/>
+                    <outlet property="controller" destination="-2" id="T9L-Bq-Pny"/>
                     <outlet property="controlsItem" destination="tcr-bJ-p79" id="3Ea-pP-E4K"/>
                     <outlet property="controlsSegCtrl" destination="JDC-UY-HHD" id="edL-25-gyY"/>
                     <outlet property="keyboardItem" destination="Ckl-d3-vFW" id="ERa-sy-J2Z"/>
-                    <outlet property="parent" destination="-2" id="T9L-Bq-Pny"/>
                     <outlet property="preferencesItem" destination="E7X-uf-vpw" id="fE2-se-OKZ"/>
                     <outlet property="screenshotSegCtrl" destination="qPe-qh-6UI" id="m5u-9x-Vto"/>
                     <outlet property="snapshotSegCtrl" destination="AHD-MB-nXC" id="FJe-yy-eIY"/>

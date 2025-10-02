@@ -1,0 +1,13 @@
+{
+  "data" : [
+    {
+      "filename" : "IconVirtualC64.icns",
+      "idiom" : "universal",
+      "universal-type-identifier" : "com.apple.icns"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

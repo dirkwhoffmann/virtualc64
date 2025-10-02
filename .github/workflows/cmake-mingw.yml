@@ -42,7 +42,7 @@ jobs:
           mingw-w64-${{matrix.env}}-ninja
     
     - name: Build
-      working-directory: ./Emulator
+      working-directory: ./Core
       run: |
         cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=${{matrix.build}}
         cmake --build build --config ${{matrix.build}}

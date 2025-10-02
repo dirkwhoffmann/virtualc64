@@ -18,18 +18,20 @@ class MyController: NSWindowController, MessageReceiver {
     // Reference to the connected document
     var mydocument: MyDocument!
     
+    // File panels
+    let myOpenPanel = MyOpenPanel()
+    let mySavePanel = MySavePanel()
+
     // Emulator proxy (bridge between the Swift frontend and the C++ backend)
     var emu: EmulatorProxy? { return mydocument.emu }
 
     // Media manager (handles the import and export of media files)
     var mm: MediaManager { return mydocument.mm }
 
-    // Inspector panel of this emulator instance
-    var inspector: Inspector?
-    
-    // Monitor panel of this emulator instance
-    var monitor: Monitor?
-    
+    // Auxiliary windows of this emulator instance
+    var inspectors: [Inspector] = []
+    var dashboards: [Dashboard] = []
+        
     // Configuration panel of this emulator instance
     var configurator: ConfigurationController?
 
@@ -195,7 +197,7 @@ extension MyController {
         }
 
         // Add media file (if provided on startup)
-        if let url = mydocument.launchUrl { try? mm.addMedia(url: url) }
+        // if let url = mydocument.launchUrl { try? mm.addMedia(url: url) }
 
         // Create speed monitor
         speedometer = Speedometer()
@@ -226,23 +228,32 @@ extension MyController {
     
     func launch() {
 
-        // Pass in command line arguments as a RetroShell script
-        var script = ""
-        for arg in myAppDelegate.argv where arg.hasPrefix("-") {
-            script = script + arg.dropFirst() + "\n"
-        }
-        emu?.retroShell.execute(script)
+        do {
+            
+            // Pass in command line arguments as a RetroShell script
+            var script = ""
+            for arg in myAppDelegate.argv where arg.hasPrefix("-") {
+                script = script + arg.dropFirst() + "\n"
+            }
+            emu!.retroShell.execute(script)
+            
+            // Convert 'self' to a void pointer
+            let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+            
+            try emu!.launch(myself) { (ptr, msg: vc64.Message) in
+                
+                // Convert void pointer back to 'self'
+                let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
+                
+                // Process message in the main thread
+                Task { @MainActor in myself.processMessage(msg) }
+                // DispatchQueue.main.async { myself.processMessage(msg) }
+            }
+        } catch {
 
-        // Convert 'self' to a void pointer
-        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-        
-        emu!.launch(myself) { (ptr, msg: vc64.Message) in
-
-            // Convert void pointer back to 'self'
-            let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
-
-            // Process message in the main thread
-            DispatchQueue.main.async { myself.processMessage(msg) }
+            // In theory, we should never be here
+            shutDown()
+            mydocument.showLaunchAlert(error: error)
         }
     }
     
@@ -254,9 +265,12 @@ extension MyController {
 
         if frames % 5 == 0 {
 
-            // Animate the inspector
-            if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
+            // Animate the inspectors
+            for inspector in inspectors { inspector.continuousRefresh() }
 
+            // Animate the dashboards
+            for dashboard in dashboards { dashboard.continuousRefresh() }
+            
             // Update the cartridge LED
             if emu?.expansionport.traits.leds ?? 0 > 0 {
                 let led = emu!.expansionport.info.led ? 1 : 0
@@ -296,14 +310,21 @@ extension MyController {
         var vol: Int { return Int(msg.drive.volume) }
         var pan: Int { return Int(msg.drive.pan) }
 
+        /*
+        func passToInspector() {
+            for inspector in inspectors { inspector.processMessage(msg) }
+        }
+        func passToDashboard() {
+            // for dashboard in dashboards { dashboard.processMessage(msg) }
+        }
+        */
+        
         // Only proceed if the proxy object is still alive
         if emu == nil { return }
 
         switch msg.type {
 
         case .CONFIG:
-            inspector?.fullRefresh()
-            monitor?.refresh()
             configurator?.refresh()
             refreshStatusBar()
 
@@ -313,11 +334,12 @@ extension MyController {
 
                 renderer.canvas.open(delay: 2)
                 virtualKeyboard = nil
-                inspector?.powerOn()
 
-            } else {
+                if let url = mydocument.launchUrl {
 
-                inspector?.powerOff()
+                    try? mm.addMedia(url: url)
+                    mydocument.launchUrl = nil
+                }
             }
 
             toolbar.updateToolbar()
@@ -327,21 +349,21 @@ extension MyController {
             needsSaving = true
             jammed = false
             toolbar.updateToolbar()
-            inspector?.run()
             refreshStatusBar()
 
         case .PAUSE:
             toolbar.updateToolbar()
-            inspector?.pause()
             refreshStatusBar()
 
         case .STEP:
             needsSaving = true
-            inspector?.step()
-
+            
+        case .EOL_TRAP, .EOF_TRAP:
+            break
+            
         case .RESET:
-            inspector?.reset()
-
+            break
+            
         case .SHUTDOWN:
             shutDown()
 
@@ -372,22 +394,21 @@ extension MyController {
             NSSound.beep()
             renderer.console.isDirty = true
 
-        case .BREAKPOINT_UPDATED, 
-                .WATCHPOINT_UPDATED:
-            inspector?.fullRefresh()
-
+        case .BREAKPOINT_UPDATED, .WATCHPOINT_UPDATED:
+            break
+            
         case .BREAKPOINT_REACHED:
-            inspector?.signalBreakPoint(pc: pc)
+            break
 
         case .WATCHPOINT_REACHED:
-            inspector?.signalWatchPoint(pc: pc)
+            break
 
         case .CPU_JAMMED:
             jammed = true
             refreshStatusBar()
 
         case .CPU_JUMPED:
-            inspector?.signalGoto(pc: pc)
+            break
 
         case .PAL, .NTSC:
             renderer.canvas.updateTextureRect()
@@ -399,12 +420,10 @@ extension MyController {
         case .DISK_INSERT:
             macAudio.playInsertSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: nr)
-            inspector?.fullRefresh()
 
         case .DISK_EJECT:
             macAudio.playEjectSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: nr)
-            inspector?.fullRefresh()
 
         case .FILE_FLASHED:
             break
@@ -417,6 +436,9 @@ extension MyController {
                 .DRIVE_MOTOR:
             refreshStatusBar()
 
+        case .MON_SETTING:
+            renderer.processMessage(msg)
+            
         case .DRIVE_CONNECT,
                 .DRIVE_POWER where drive.value == 0:
             hideOrShowDriveMenus()
@@ -467,7 +489,6 @@ extension MyController {
 
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()
-            // renderer.canvas.updateTextureRect()
             refreshStatusBar()
             hideOrShowDriveMenus()
 
@@ -515,6 +536,10 @@ extension MyController {
             warn("Unknown message: \(msg)")
             fatalError()
         }
+        
+        // Pass message to all open auxiliary windows
+        for inspector in inspectors { inspector.processMessage(msg) }
+        for dashboard in dashboards { dashboard.processMessage(msg) }
     }
 
     //

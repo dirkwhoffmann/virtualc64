@@ -196,7 +196,78 @@ extension Renderer {
         
         canvas.vertexUniforms3D.mvp = mvp
     }
+       
+    func updateShaderOptions() {
         
+        updateShaderOption(.MON_BLUR, value: Int64(config.blur))
+        updateShaderOption(.MON_BLUR_RADIUS, value: Int64(config.blurRadius))
+        updateShaderOption(.MON_BLOOM, value: Int64(config.bloom))
+        updateShaderOption(.MON_BLOOM_RADIUS, value: Int64(config.bloomRadius))
+        updateShaderOption(.MON_BLOOM_BRIGHTNESS, value: Int64(config.bloomBrightness))
+        updateShaderOption(.MON_BLOOM_WEIGHT, value: Int64(config.bloomWeight))
+        updateShaderOption(.MON_DOTMASK, value: Int64(config.dotMask))
+        updateShaderOption(.MON_DOTMASK, value: Int64(config.dotMask))
+        updateShaderOption(.MON_DOTMASK_BRIGHTNESS, value: Int64(config.dotMaskBrightness))
+        updateShaderOption(.MON_SCANLINES, value: Int64(config.scanlines))
+        updateShaderOption(.MON_SCANLINE_BRIGHTNESS, value: Int64(config.scanlineBrightness))
+        updateShaderOption(.MON_SCANLINE_WEIGHT, value: Int64(config.scanlineWeight))
+        updateShaderOption(.MON_DISALIGNMENT, value: Int64(config.disalignment))
+        updateShaderOption(.MON_DISALIGNMENT_H, value: Int64(config.disalignmentH))
+        updateShaderOption(.MON_DISALIGNMENT_V, value: Int64(config.disalignmentV))
+    }
+    
+    func updateShaderOption(_ option: Opt, value: Int64)
+    {
+        func map(_ value: Int64, from source: ClosedRange<Int64> = 0...1000, to target: ClosedRange<Float>) -> Float {
+            
+            let clamped = min(max(value, source.lowerBound), source.upperBound)
+            let normalized = Float(clamped - source.lowerBound) / Float(source.upperBound - source.lowerBound)
+            return target.lowerBound + normalized * (target.upperBound - target.lowerBound)
+        }
+
+        switch option {
+            
+        case .MON_UPSCALER:
+            ressourceManager.selectUpscaler(Int(value))
+        case .MON_BLUR:
+            shaderOptions.blur = Int32(value)
+        case .MON_BLUR_RADIUS:
+            shaderOptions.blurRadius = map(value, to: 0...5.0)
+        case .MON_BLOOM:
+            shaderOptions.bloom = Int32(value)
+            ressourceManager.selectBloomFilter(Int(value))
+        case .MON_BLOOM_RADIUS:
+            shaderOptions.bloomRadius = map(value, to: 0...5)
+        case .MON_BLOOM_BRIGHTNESS:
+            shaderOptions.bloomBrightness = map(value, to: 0...2)
+        case .MON_BLOOM_WEIGHT:
+            shaderOptions.bloomWeight = map(value, to: 0...3)
+        case .MON_DOTMASK:
+            shaderOptions.dotMask = Int32(value)
+            ressourceManager.buildDotMasks()
+            ressourceManager.selectDotMask(Int(value))
+        case .MON_DOTMASK_BRIGHTNESS:
+            shaderOptions.dotMaskBrightness = map(value, to: 0...1)
+            ressourceManager.buildDotMasks()
+            ressourceManager.selectDotMask(config.dotMask)
+        case .MON_SCANLINES:
+            shaderOptions.scanlines = Int32(value)
+            ressourceManager.selectScanlineFilter(Int(value))
+        case .MON_SCANLINE_BRIGHTNESS:
+            shaderOptions.scanlineBrightness = map(value, to: 0...1)
+        case .MON_SCANLINE_WEIGHT:
+            shaderOptions.scanlineWeight = map(value, to: 0...1)
+        case .MON_DISALIGNMENT:
+            shaderOptions.disalignment = Int32(value)
+        case .MON_DISALIGNMENT_H:
+            shaderOptions.disalignmentH = map(value, to: -0.004...0.004)
+        case .MON_DISALIGNMENT_V:
+            shaderOptions.disalignmentV = map(value, to: -0.004...0.004)
+        default:
+            break
+        }
+    }
+    
     //
     // Matrix utilities
     //

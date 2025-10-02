@@ -11,15 +11,16 @@ import UniformTypeIdentifiers
 
 extension UTType {
 
-    static let vc64 = UTType("de.dirkwhoffmann.retro.vc64")!
-    static let ini = UTType("de.dirkwhoffmann.retro.ini")!
-    static let d64 = UTType("de.dirkwhoffmann.retro.d64")!
-    static let g64 = UTType("de.dirkwhoffmann.retro.g64")!
-    static let t64 = UTType("de.dirkwhoffmann.retro.t64")!
-    static let prg = UTType("de.dirkwhoffmann.retro.prg")!
-    static let p00 = UTType("de.dirkwhoffmann.retro.p00")!
-    static let crt = UTType("de.dirkwhoffmann.retro.crt")!
-    static let tap = UTType("de.dirkwhoffmann.retro.tap")!
+    // static let workspace = UTType("de.dirkwhoffmann.retro.vc64")!
+    static let snapshot = UTType("de.dirkwhoffmann.retro.vcsnap")!
+    static let retrosh = UTType("de.dirkwhoffmann.retro.retrosh")!
+    static let d64 = UTType("public.retro.d64")!
+    static let g64 = UTType("public.retro.g64")!
+    static let t64 = UTType("public.retro.t64")!
+    static let prg = UTType("public.retro.prg")!
+    static let p00 = UTType("public.retro.p00")!
+    static let crt = UTType("public.retro.crt")!
+    static let tap = UTType("public.retro.tap")!
 }
 
 class MyDocument: NSDocument {
@@ -92,7 +93,7 @@ class MyDocument: NSDocument {
 
         debug(.shutdown, "Remove proxy...")
 
-        emu!.kill()
+        emu?.kill()
         emu = nil
 
         debug(.shutdown, "Done")
@@ -111,7 +112,7 @@ class MyDocument: NSDocument {
         do {
             try mm.addMedia(url: url, allowedTypes: vc64.FileType.draggable)
 
-        } catch let error as VC64Error {
+        } catch let error as AppError {
 
             throw NSError(error: error)
         }
@@ -125,7 +126,7 @@ class MyDocument: NSDocument {
         do {
             try mm.addMedia(url: url, allowedTypes: [.SNAPSHOT])
 
-        } catch let error as VC64Error {
+        } catch let error as AppError {
 
             throw NSError(error: error)
         }
@@ -139,14 +140,14 @@ class MyDocument: NSDocument {
 
         debug(.media)
 
-        if typeName == UTType.vc64.identifier {
+        if typeName == UTType.snapshot.identifier {
 
             if let snapshot = MediaFileProxy.make(withC64: emu) {
 
                 do {
                     try snapshot.writeToFile(url: url)
 
-                } catch let error as VC64Error {
+                } catch let error as AppError {
 
                     throw NSError(error: error)
                 }

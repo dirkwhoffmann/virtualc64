@@ -217,14 +217,34 @@ class Renderer: NSObject, MTKViewDelegate {
         }
     }
 
+    func processMessage(_ msg: Message) {
+        
+        let option = Opt(rawValue: Int(msg.value))!
+
+        switch msg.type {
+            
+        case .MON_SETTING:
+            
+            switch option {
+                
+            case .MON_HCENTER, .MON_VCENTER, .MON_HZOOM, .MON_VZOOM:
+                canvas.updateTextureRect()
+
+            default:
+                updateShaderOption(option, value: msg.value2)
+            }
+            
+        default:
+            break
+        }
+    }
+    
     //
     // Methods from MTKViewDelegate
     //
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
-        emu?.set(.HOST_FRAMEBUF_WIDTH, value: Int(size.width))
-        emu?.set(.HOST_FRAMEBUF_HEIGHT, value: Int(size.height))
         reshape(withSize: size)
     }
     

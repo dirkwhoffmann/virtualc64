@@ -11,6 +11,8 @@
 
 extension MyController {
 
+    var snapshotCount: Int { return mydocument!.snapshots.count }
+
     func restoreSnapshot(item: Int) throws {
         
         if let snapshot = mydocument.snapshots.element(at: item) {

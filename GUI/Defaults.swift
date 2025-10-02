@@ -29,7 +29,7 @@ extension DefaultsProxy {
 
         let exception = ExceptionWrapper()
         load(url, exception: exception)
-        if exception.errorCode != .OK { throw VC64Error(exception) }
+        if exception.errorCode != .OK { throw AppError(exception) }
     }
 
     func load() {
@@ -56,7 +56,7 @@ extension DefaultsProxy {
 
         let exception = ExceptionWrapper()
         save(url, exception: exception)
-        if exception.errorCode != .OK { throw VC64Error(exception) }
+        if exception.errorCode != .OK { throw AppError(exception) }
     }
 
     func save() {
@@ -97,10 +97,10 @@ extension DefaultsProxy {
     func register(_ key: String, _ val: Double) {
         register(key, value: "\(val)")
     }
-    func remove(_ option: vc64.Option, _ nr: Int) {
+    func remove(_ option: vc64.Opt, _ nr: Int) {
         remove(option, nr: nr)
     }
-    func remove(_ option: vc64.Option, _ nr: [Int]) {
+    func remove(_ option: vc64.Opt, _ nr: [Int]) {
         for n in nr { remove(option, nr: n) }
     }
     func set(_ key: String, _ val: String) {
@@ -121,28 +121,28 @@ extension DefaultsProxy {
     func set(_ key: String, _ val: Double) {
         setKey(key, value: "\(val)")
     }
-    func set(_ option: vc64.Option, _ val: Int) {
+    func set(_ option: vc64.Opt, _ val: Int) {
         setOpt(option, value: val)
     }
-    func set(_ option: vc64.Option, _ val: Bool) {
+    func set(_ option: vc64.Opt, _ val: Bool) {
         setOpt(option, value: val ? 1 : 0)
     }
-    func set(_ option: vc64.Option, _ nr: Int, _ val: Int) {
+    func set(_ option: vc64.Opt, _ nr: Int, _ val: Int) {
         setOpt(option, nr: nr, value: val)
     }
-    func set(_ option: vc64.Option, _ nr: Int, _ val: Bool) {
+    func set(_ option: vc64.Opt, _ nr: Int, _ val: Bool) {
         setOpt(option, nr: nr, value: val ? 1 : 0)
     }
-    func set(_ option: vc64.Option, _ nr: [Int], _ val: Int) {
+    func set(_ option: vc64.Opt, _ nr: [Int], _ val: Int) {
         for n in nr { setOpt(option, nr: n, value: val) }
     }
-    func set(_ option: vc64.Option, _ nr: [Int], _ val: Bool) {
+    func set(_ option: vc64.Opt, _ nr: [Int], _ val: Bool) {
         for n in nr { setOpt(option, nr: n, value: val ? 1 : 0) }
     }
-    func get(_ option: vc64.Option) -> Int {
+    func get(_ option: vc64.Opt) -> Int {
         return getOpt(option)
     }
-    func get(_ option: vc64.Option, _ nr: Int) -> Int {
+    func get(_ option: vc64.Opt, _ nr: Int) -> Int {
         return getOpt(option, nr: nr)
     }
     func string(_ key: String) -> String {
@@ -664,7 +664,7 @@ extension DefaultsProxy {
         remove(.CIA_REVISION)
         remove(.CIA_TIMER_B_BUG)
 
-        remove(.SID_REVISION)
+        remove(.SID_REV)
         remove(.SID_FILTER)
         remove(.SID_ENABLE, [0, 1, 2, 3])
         remove(.SID_ADDRESS, [0, 1, 2, 3])
@@ -694,7 +694,7 @@ extension Configuration {
             defaults.set(.CIA_REVISION, ciaRevision)
             defaults.set(.CIA_TIMER_B_BUG, ciaTimerBBug)
 
-            defaults.set(.SID_REVISION, [0, 1, 2, 3], sidRevision)
+            defaults.set(.SID_REV, [0, 1, 2, 3], sidRevision)
             defaults.set(.SID_FILTER, [0, 1, 2, 3], sidFilter)
             defaults.set(.SID_ENABLE, 1, sidEnable1)
             defaults.set(.SID_ENABLE, 2, sidEnable2)
@@ -730,7 +730,7 @@ extension Configuration {
             ciaRevision = defaults.get(.CIA_REVISION)
             ciaTimerBBug = defaults.get(.CIA_TIMER_B_BUG) != 0
 
-            sidRevision = defaults.get(.SID_REVISION, 0)
+            sidRevision = defaults.get(.SID_REV, 0)
             sidFilter = defaults.get(.SID_FILTER, 0) != 0
             sidEnable1 = defaults.get(.SID_ENABLE, 1) != 0
             sidEnable2 = defaults.get(.SID_ENABLE, 2) != 0

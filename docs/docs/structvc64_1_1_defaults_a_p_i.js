@@ -1,0 +1,28 @@
+var structvc64_1_1_defaults_a_p_i =
+[
+    [ "get", "structvc64_1_1_defaults_a_p_i.html#a289600f5b8559d2cf3458457ff426f63", null ],
+    [ "get", "structvc64_1_1_defaults_a_p_i.html#ae5f5b5e42ede7caa7c5d4b4c59b7bb1d", null ],
+    [ "getFallback", "structvc64_1_1_defaults_a_p_i.html#a01d5a7a9710d938e3861de45c52be471", null ],
+    [ "getFallback", "structvc64_1_1_defaults_a_p_i.html#abd46d737e9c4bb50bea2146a6e7ff1cd", null ],
+    [ "getFallback", "structvc64_1_1_defaults_a_p_i.html#a9b141af34643e8277f07de097eac57f3", null ],
+    [ "getFallbackRaw", "structvc64_1_1_defaults_a_p_i.html#a2e16d5a70f164ee685978d46bd577c91", null ],
+    [ "getInt", "structvc64_1_1_defaults_a_p_i.html#a01a69a930a3ce418df87dfe1119777ac", null ],
+    [ "getString", "structvc64_1_1_defaults_a_p_i.html#aa4d1311c321572578cf3e30879386928", null ],
+    [ "load", "structvc64_1_1_defaults_a_p_i.html#ac8fbda183f658684c5d3311f6eb847de", null ],
+    [ "load", "structvc64_1_1_defaults_a_p_i.html#a70917ab7c11382f3b3ff7bde0251fd11", null ],
+    [ "load", "structvc64_1_1_defaults_a_p_i.html#a2c053262a9605a05015bd67afbe54e25", null ],
+    [ "remove", "structvc64_1_1_defaults_a_p_i.html#a1fcb45e5d2428352eb36b487d1d4eea3", null ],
+    [ "remove", "structvc64_1_1_defaults_a_p_i.html#a116ac3db1fa88518d2eadad98491589b", null ],
+    [ "remove", "structvc64_1_1_defaults_a_p_i.html#a913ad239562048e170c5513565689ef8", null ],
+    [ "remove", "structvc64_1_1_defaults_a_p_i.html#ad2eeed832c5c114287e0edf9bf8b6031", null ],
+    [ "remove", "structvc64_1_1_defaults_a_p_i.html#ae9cd9bccfca8cbed2b7705c7dd021a3d", null ],
+    [ "save", "structvc64_1_1_defaults_a_p_i.html#a0cb69236f9e7ece25705db4de529a291", null ],
+    [ "save", "structvc64_1_1_defaults_a_p_i.html#ad2a5c23cfe89a6c812fe718adcbbfa8c", null ],
+    [ "save", "structvc64_1_1_defaults_a_p_i.html#a3403fdf88bf02e3012dc0a71311545b5", null ],
+    [ "set", "structvc64_1_1_defaults_a_p_i.html#a1dc195558c3d9326ffdec98968c2b985", null ],
+    [ "set", "structvc64_1_1_defaults_a_p_i.html#a5eaa4fc8ef11ba30bf9acfd6f273931a", null ],
+    [ "set", "structvc64_1_1_defaults_a_p_i.html#ace455663d0fa7239cfaf0b5b7a2a2808", null ],
+    [ "setFallback", "structvc64_1_1_defaults_a_p_i.html#a8859620adf65d8c7e8ba71a3930e2c6a", null ],
+    [ "setFallback", "structvc64_1_1_defaults_a_p_i.html#a5adcce28038fd1722743667af897bdb2", null ],
+    [ "setFallback", "structvc64_1_1_defaults_a_p_i.html#aea2c25a45f24014ed4167d1cc2e7a8f8", null ]
+];

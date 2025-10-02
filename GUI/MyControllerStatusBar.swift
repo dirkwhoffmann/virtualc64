@@ -11,7 +11,7 @@ extension MyController {
 
     var hourglassIcon: NSImage? {
 
-        if vc64.WarpMode(rawValue: config.warpMode) == .AUTO {
+        if vc64.Warp(rawValue: config.warpMode) == .AUTO {
 
             return NSImage(named: emu?.info.warping == true ? "hourglass3Template" : "hourglass1Template")
 
@@ -286,7 +286,9 @@ extension MyController {
 
             let state = emu.cpu.info
 
-            speedometer.updateWith(cycle: state.cycle, gpuFrame: renderer.frames)
+            speedometer.updateWith(cycle: state.cycle,
+                                   emuFrame: Int64(emu.c64.info.frame),
+                                   gpuFrame: renderer.frames)
 
             switch activityType.selectedTag() {
 
@@ -312,7 +314,7 @@ extension MyController {
                 setColor(color: [.systemGreen, .systemGreen, .systemGreen, .systemYellow, .systemRed])
 
             case 3:
-                let fps = speedometer.gpsFps
+                let fps = speedometer.gpuFps
                 activityBar.maxValue = 120
                 activityBar.doubleValue = fps
                 activityInfo.stringValue = String(format: "%d FPS", Int(fps))
@@ -343,11 +345,11 @@ extension MyController {
 
     @IBAction func warpAction(_ sender: Any!) {
 
-        switch vc64.WarpMode(rawValue: config.warpMode) {
+        switch vc64.Warp(rawValue: config.warpMode) {
 
-        case .AUTO: config.warpMode = vc64.WarpMode.NEVER.rawValue
-        case .NEVER: config.warpMode = vc64.WarpMode.ALWAYS.rawValue
-        case .ALWAYS: config.warpMode = vc64.WarpMode.AUTO.rawValue
+        case .AUTO: config.warpMode = vc64.Warp.NEVER.rawValue
+        case .NEVER: config.warpMode = vc64.Warp.ALWAYS.rawValue
+        case .ALWAYS: config.warpMode = vc64.Warp.AUTO.rawValue
 
         default:
             fatalError()

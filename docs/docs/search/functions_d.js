@@ -1,0 +1,17 @@
+var searchData=
+[
+  ['save_0',['save',['../structvc64_1_1_defaults_a_p_i.html#a0cb69236f9e7ece25705db4de529a291',1,'vc64::DefaultsAPI::save(const std::filesystem::path &amp;path)'],['../structvc64_1_1_defaults_a_p_i.html#ad2a5c23cfe89a6c812fe718adcbbfa8c',1,'vc64::DefaultsAPI::save(std::ofstream &amp;stream)'],['../structvc64_1_1_defaults_a_p_i.html#a3403fdf88bf02e3012dc0a71311545b5',1,'vc64::DefaultsAPI::save(std::stringstream &amp;stream)']]],
+  ['saverom_1',['saveRom',['../structvc64_1_1_c64_a_p_i.html#a59ad9406bbb884fd13050cfb6e01f7ae',1,'vc64::C64API']]],
+  ['set_2',['set',['../structvc64_1_1_defaults_a_p_i.html#a1dc195558c3d9326ffdec98968c2b985',1,'vc64::DefaultsAPI::set(const string &amp;key, const string &amp;value)'],['../structvc64_1_1_defaults_a_p_i.html#a5eaa4fc8ef11ba30bf9acfd6f273931a',1,'vc64::DefaultsAPI::set(Option opt, const string &amp;value, std::vector&lt; isize &gt; objids={ 0 })'],['../structvc64_1_1_defaults_a_p_i.html#ace455663d0fa7239cfaf0b5b7a2a2808',1,'vc64::DefaultsAPI::set(Option opt, i64 value, std::vector&lt; isize &gt; objids={ 0 })'],['../classvc64_1_1_virtual_c64.html#abb37cb9c42294ab76c5c2ceb86404cf5',1,'vc64::VirtualC64::set(C64Model model)'],['../classvc64_1_1_virtual_c64.html#a444f5fe0d50490660c65b137de2cee07',1,'vc64::VirtualC64::set(Option opt, i64 value) throws'],['../classvc64_1_1_virtual_c64.html#a992de80c299efee230fd5b61dd006f77',1,'vc64::VirtualC64::set(Option opt, i64 value, long id)']]],
+  ['setexecpath_3',['setExecPath',['../structvc64_1_1_recorder_a_p_i.html#a53c49005c8384158cac2ba7d74905cb3',1,'vc64::RecorderAPI']]],
+  ['setfallback_4',['setFallback',['../structvc64_1_1_defaults_a_p_i.html#a8859620adf65d8c7e8ba71a3930e2c6a',1,'vc64::DefaultsAPI::setFallback(const string &amp;key, const string &amp;value)'],['../structvc64_1_1_defaults_a_p_i.html#a5adcce28038fd1722743667af897bdb2',1,'vc64::DefaultsAPI::setFallback(Option opt, const string &amp;value, std::vector&lt; isize &gt; objids={ 0 })'],['../structvc64_1_1_defaults_a_p_i.html#aea2c25a45f24014ed4167d1cc2e7a8f8',1,'vc64::DefaultsAPI::setFallback(Option opt, i64 value, std::vector&lt; isize &gt; objids={ 0 })']]],
+  ['setinspectiontarget_5',['setInspectionTarget',['../structvc64_1_1_c64_a_p_i.html#a4830a6b34ff3fd8a0c1cb01ef4603db5',1,'vc64::C64API']]],
+  ['setnumberformat_6',['setNumberFormat',['../structvc64_1_1_c_p_u_a_p_i.html#a21818db3fa63948ea06dbb9e10bd52d3',1,'vc64::CPUAPI']]],
+  ['setstream_7',['setStream',['../structvc64_1_1_retro_shell_a_p_i.html#a7369f301fe922693d0d52347a576b4d5',1,'vc64::RetroShellAPI']]],
+  ['softreset_8',['softReset',['../structvc64_1_1_c64_a_p_i.html#a82c15f42f746b29413b1a1b3a8dd198e',1,'vc64::C64API']]],
+  ['startrecording_9',['startRecording',['../structvc64_1_1_recorder_a_p_i.html#a99bb8036491f04ad73d370caebeccdef',1,'vc64::RecorderAPI']]],
+  ['stepinto_10',['stepInto',['../classvc64_1_1_virtual_c64.html#afd495ff1d24e780aa376f58a504dd2bd',1,'vc64::VirtualC64']]],
+  ['stepover_11',['stepOver',['../classvc64_1_1_virtual_c64.html#a9d94d1abe9e4d3682380f4f73d601db3',1,'vc64::VirtualC64']]],
+  ['stoprecording_12',['stopRecording',['../structvc64_1_1_recorder_a_p_i.html#a25e0e98dd4519eaaa6b258f0dcb91ac7',1,'vc64::RecorderAPI']]],
+  ['suspend_13',['suspend',['../classvc64_1_1_suspendable.html#a1df85af222c85656525b61d690f4ed3a',1,'vc64::Suspendable::suspend()'],['../classvc64_1_1_thread.html#aa8fa1f8f16ff673064d750db79138764',1,'vc64::Thread::suspend()'],['../classvc64_1_1_virtual_c64.html#a3605b58fb45d69d498721bc2f2a14b1c',1,'vc64::VirtualC64::suspend()']]]
+];
