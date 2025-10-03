@@ -9,14 +9,14 @@
 
 import Cocoa
 
-@objc(MyApplication)
+@MainActor @objc(MyApplication)
 class MyApplication: NSApplication {
 
 }
 
-@NSApplicationMain
-@objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
-           
+@main @objc
+public class MyAppDelegate: NSObject, NSApplicationDelegate {
+
     @IBOutlet weak var drive8Menu: NSMenuItem!
     @IBOutlet weak var drive9Menu: NSMenuItem!
     @IBOutlet weak var datasetteMenu: NSMenuItem!
@@ -30,7 +30,7 @@ class MyApplication: NSApplication {
     // Preferences
     var pref: Preferences!
     var prefController: PreferencesController?
-    
+
     // Information provider for connected HID devices
     var database = DeviceDatabase()
 
@@ -41,14 +41,22 @@ class MyApplication: NSApplication {
     var token: NSObjectProtocol!
 
     override init() {
-        
+
         super.init()
         pref = Preferences()
     }
-    
+
+    public func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+
+        return true
+    }
+
+    public func application(_ application: NSApplication, open urls: [URL]) {
+
+        debug(.lifetime, "application(open urls: \(urls))")
+    }
+
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
-        
-        debug(.lifetime)
 
         token = ProcessInfo.processInfo.beginActivity(options: [ .idleSystemSleepDisabled, .suddenTerminationDisabled ], reason: "Running an emulator")
         argv = Array(CommandLine.arguments.dropFirst())
@@ -66,7 +74,7 @@ class MyApplication: NSApplication {
     }
 
     public func applicationWillTerminate(_ aNotification: Notification) {
-        
+
         debug(.lifetime)
         ProcessInfo.processInfo.endActivity(token)
     }
@@ -77,7 +85,7 @@ class MyApplication: NSApplication {
 //
 
 extension MyAppDelegate {
-    
+
     var documents: [MyDocument] {
         return NSDocumentController.shared.documents as? [MyDocument] ?? []
     }
@@ -104,7 +112,7 @@ extension MyAppDelegate {
     func deviceAdded() {
         prefController?.refresh()
     }
-    
+
     // Callen when a HID device has been removed
     func deviceRemoved() {
         prefController?.refresh()

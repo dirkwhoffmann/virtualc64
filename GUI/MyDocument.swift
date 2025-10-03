@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 
 extension UTType {
 
-    // static let workspace = UTType("de.dirkwhoffmann.retro.vc64")!
+    static let workspace = UTType("de.dirkwhoffmann.retro.vc64")!
     static let snapshot = UTType("de.dirkwhoffmann.retro.vcsnap")!
     static let retrosh = UTType("de.dirkwhoffmann.retro.retrosh")!
     static let d64 = UTType("public.retro.d64")!
@@ -25,13 +25,13 @@ extension UTType {
 
 class MyDocument: NSDocument {
 
+    var controller: MyController { return windowControllers.first as! MyController }
+    var console: Console { return controller.renderer.console }
+    var canvas: Canvas { return controller.renderer.canvas }
     var pref: Preferences { return myAppDelegate.pref }
 
-    // The window controller for this document
-    var parent: MyController { return windowControllers.first as! MyController }
-
     // Optional media URL provided on app launch
-    var launchUrl: URL?
+    var launchURL: URL?
 
     // The media manager for this document
     var mm: MediaManager!
@@ -45,19 +45,21 @@ class MyDocument: NSDocument {
     //
     // Initializing
     //
-    
+
     override init() {
 
         debug(.lifetime)
 
         super.init()
         // Check for OS compatibility
+        /*
         if #available(macOS 26, *) {
 
             showAlert(.unsupportedOSVersion)
             NSApp.terminate(self)
             return
         }
+         */
 
         // Check for Metal support
         if MTLCreateSystemDefaultDevice() == nil {
@@ -66,7 +68,7 @@ class MyDocument: NSDocument {
             NSApp.terminate(self)
             return
         }
-        
+
         // Create the media manager
         mm = MediaManager(with: self)
 
@@ -80,8 +82,13 @@ class MyDocument: NSDocument {
         emu = EmulatorProxy()
     }
 
-    override open func makeWindowControllers() {
+    override class var autosavesInPlace: Bool {
         
+        return false
+    }
+    
+    override open func makeWindowControllers() {
+
         debug(.lifetime)
 
         let controller = MyController(windowNibName: "MyDocument")
@@ -106,16 +113,16 @@ class MyDocument: NSDocument {
 
         debug(.media)
 
-        launchUrl = url
+        launchURL = url
         /*
-        do {
-            try mm.addMedia(url: url, allowedTypes: vc64.FileType.draggable)
+         do {
+         try mm.addMedia(url: url, allowedTypes: vc64.FileType.draggable)
 
-        } catch let error as AppError {
+         } catch let error as AppError {
 
-            throw NSError(error: error)
-        }
-        */
+         throw NSError(error: error)
+         }
+         */
     }
 
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {

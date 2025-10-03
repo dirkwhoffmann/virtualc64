@@ -166,6 +166,22 @@
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<true/>
+			<key>CFBundleTypeName</key>
+			<string>VC64</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>de.dirkwhoffmann.retro.vc64</string>
+			</array>
+			<key>NSDocumentClass</key>
+			<string>$(PRODUCT_MODULE_NAME).MyDocument</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
@@ -425,6 +441,28 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>tap</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>VirtualC64 Workspace</string>
+			<key>UTTypeIcons</key>
+			<dict>
+				<key>UTTypeIconText</key>
+				<string>WORKSPACE</string>
+			</dict>
+			<key>UTTypeIdentifier</key>
+			<string>de.dirkwhoffmann.retro.vc64</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>vc64</string>
 				</array>
 			</dict>
 		</dict>

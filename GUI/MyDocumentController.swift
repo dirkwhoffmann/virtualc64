@@ -24,7 +24,7 @@ class MyDocumentController: NSDocumentController {
 
             if let mydoc = doc as? MyDocument {
 
-                mydoc.launchUrl = url
+                mydoc.launchURL = url
                 return mydoc
             }
         }
