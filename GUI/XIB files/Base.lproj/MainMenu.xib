@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -329,56 +329,6 @@ CQ
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="SGb-qh-sOW"/>
-                            <menuItem title="Map Left ⌘ Key to" id="iII-GB-xeG">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Map Left ⌘ Key to" id="zlN-wG-lva">
-                                    <items>
-                                        <menuItem title="Commodore Key" tag="49" id="Hg2-1Q-YKb">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="mapLeftCmdKeyAction:" target="-1" id="MXo-UH-EaC"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Run Stop Key" tag="33" id="djR-jn-DKl">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="mapLeftCmdKeyAction:" target="-1" id="DJp-1a-p1c"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Control Key" tag="17" id="iTS-pz-cMx">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="mapLeftCmdKeyAction:" target="-1" id="Zvz-eL-KFk"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
-                            <menuItem title="Map Right ⌘ Key to" id="d3K-Rc-Ian">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Map Right ⌘ Key to" id="EOb-rf-I1t">
-                                    <items>
-                                        <menuItem title="Commodore Key" tag="49" id="8aX-Ro-7wg">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="mapRightCmdKeyAction:" target="-1" id="pcU-nG-n4A"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Run Stop Key" tag="33" id="Jd8-HF-OYw">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="mapRightCmdKeyAction:" target="-1" id="cZH-dA-Lbg"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Control Key" tag="17" id="nc5-cp-JTa">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="mapRightCmdKeyAction:" target="-1" id="qFA-D9-7Rq"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </menuItem>
                             <menuItem title="Control Warp Mode with Caps Lock Key" id="LsT-vV-EEh">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

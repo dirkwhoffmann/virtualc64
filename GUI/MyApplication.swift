@@ -27,6 +27,7 @@ class MyApplication: NSApplication {
      * Application class. This delegation function is called early enough in
      * the command chain to hide any Command key events from the Mac app.
      */
+    /*
     var disableCmdKey = false
 
     override func sendEvent(_ event: NSEvent) {
@@ -56,6 +57,7 @@ class MyApplication: NSApplication {
         }
         super.sendEvent(event)
     }
+    */
 }
 
 @NSApplicationMain
@@ -69,8 +71,8 @@ class MyApplication: NSApplication {
     let myDocumentController = MyDocumentController()
 
     // Indicates if the Command keys should be mapped to a C64 key
-    var mapLeftCmdKey: C64Key?
-    var mapRightCmdKey: C64Key?
+    // var mapLeftCmdKey: C64Key?
+    // var mapRightCmdKey: C64Key?
 
     // Indicates if the CapsLock key should control warp mode
     var mapCapsLockWarp = true

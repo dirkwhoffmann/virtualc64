@@ -74,7 +74,7 @@ class Dashboard: DialogController {
         viewController?.continuousRefresh()
     }
     
-    func process(messsage: vc64.Message) {
+    func process(messsage: Message) {
 
     }
 }

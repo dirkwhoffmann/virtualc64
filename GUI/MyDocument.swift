@@ -84,7 +84,6 @@ class MyDocument: NSDocument {
         
         debug(.lifetime)
 
-        // Create the window controller
         let controller = MyController(windowNibName: "MyDocument")
         self.addWindowController(controller)
     }

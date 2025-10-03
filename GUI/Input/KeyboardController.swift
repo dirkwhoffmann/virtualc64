@@ -98,6 +98,7 @@ class KeyboardController: NSObject {
             rightOption = event.modifierFlags.contains(.option) ? !rightOption : false
             if rightOption { keyDown(with: MacKey.rightOption) } else { keyUp(with: MacKey.rightOption) }
 
+            /*
         case kVK_Command where myAppDelegate.mapLeftCmdKey != nil:
             let key = myAppDelegate.mapLeftCmdKey!
             leftCommand = event.modifierFlags.contains(.command) ? !leftCommand : false
@@ -109,7 +110,8 @@ class KeyboardController: NSObject {
             rightCommand = event.modifierFlags.contains(.command) ? !rightCommand : false
             myApp.disableCmdKey = rightCommand
             if rightCommand { keyDown(with: key) } else { keyUp(with: key) }
-
+             */
+            
         case kVK_CapsLock where myAppDelegate.mapCapsLockWarp:
             capsLock = event.modifierFlags.contains(.capsLock)
             if capsLock { capsLockDown() } else { capsLockUp() }

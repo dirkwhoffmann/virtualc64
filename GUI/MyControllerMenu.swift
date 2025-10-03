@@ -13,179 +13,179 @@ extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
-        if let emu = emu {
+        guard let emu = emu else { return true }
 
-            let info = emu.info
-            let powered = info.powered
-            let running = info.running
-            var recording: Bool { return emu.recorder.recording }
+        let info = emu.info
+        let powered = info.powered
+        let running = info.running
+        var recording: Bool { return emu.recorder.recording }
 
-            var driveID: Int { return item.tag }
-            var drive: DriveProxy { return emu.drive(driveID) }
+        var driveID: Int { return item.tag }
+        var drive: DriveProxy { return emu.drive(driveID) }
 
-            func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
+        func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
 
-                let slot = item.tag % 10
+            let slot = item.tag % 10
 
-                if let url = MediaManager.getRecentlyUsedURL(slot, from: list) {
-                    item.title = url.lastPathComponent
-                    item.isHidden = false
-                    item.image = image
-                } else {
-                    item.title = ""
-                    item.isHidden = true
-                    item.image = nil
-                }
-
-                return true
+            if let url = MediaManager.getRecentlyUsedURL(slot, from: list) {
+                item.title = url.lastPathComponent
+                item.isHidden = false
+                item.image = image
+            } else {
+                item.title = ""
+                item.isHidden = true
+                item.image = nil
             }
 
-            switch item.action {
+            return true
+        }
 
-                // Machine menu
-            case #selector(MyController.captureScreenAction(_:)):
-                item.title = recording ? "Stop Recording" : "Record Screen"
-                return true
+        switch item.action {
 
-                // Edit menu
-            case #selector(MyController.stopAndGoAction(_:)):
-                item.title = running ? "Pause" : "Continue"
-                return true
+            // Machine menu
+        case #selector(MyController.captureScreenAction(_:)):
+            item.title = recording ? "Stop Recording" : "Record Screen"
+            return true
 
-            case #selector(MyController.powerAction(_:)):
-                item.title = powered ? "Power Off" : "Power On"
-                return true
+            // Edit menu
+        case #selector(MyController.stopAndGoAction(_:)):
+            item.title = running ? "Pause" : "Continue"
+            return true
 
-                // View menu
-            case #selector(MyController.toggleStatusBarAction(_:)):
-                item.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
-                return true
+        case #selector(MyController.powerAction(_:)):
+            item.title = powered ? "Power Off" : "Power On"
+            return true
 
-                // Keyboard menu
-            case #selector(MyController.mapLeftCmdKeyAction(_:)):
-                item.state = myAppDelegate.mapLeftCmdKey?.nr == item.tag ? .on : .off
-                return true
-            case #selector(MyController.mapRightCmdKeyAction(_:)):
-                print("item.tag = \(item.tag)")
-                item.state = myAppDelegate.mapRightCmdKey?.nr == item.tag ? .on : .off
-                return true
-            case #selector(MyController.mapCapsLockWarpAction(_:)):
-                item.state = myAppDelegate.mapCapsLockWarp ? .on : .off
-                return true
-            case #selector(MyController.shiftLockAction(_:)):
-                item.state = emu.keyboard.isPressed(.shiftLock) ? .on : .off
-                return true
+            // View menu
+        case #selector(MyController.toggleStatusBarAction(_:)):
+            item.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
+            return true
 
-                // Drive menu
-            case #selector(MyController.insertRecentDiskAction(_:)):
-                return validateURLlist(MediaManager.insertedFloppyDisks, image: smallDisk)
+            // Keyboard menu
+            /*
+        case #selector(MyController.mapLeftCmdKeyAction(_:)):
+            item.state = myAppDelegate.mapLeftCmdKey?.nr == item.tag ? .on : .off
+            return true
+        case #selector(MyController.mapRightCmdKeyAction(_:)):
+            item.state = myAppDelegate.mapRightCmdKey?.nr == item.tag ? .on : .off
+            return true
+             */
+        case #selector(MyController.mapCapsLockWarpAction(_:)):
+            item.state = myAppDelegate.mapCapsLockWarp ? .on : .off
+            return true
+        case #selector(MyController.shiftLockAction(_:)):
+            item.state = emu.keyboard.isPressed(.shiftLock) ? .on : .off
+            return true
 
-            case  #selector(MyController.ejectDiskAction(_:)),
-                #selector(MyController.exportDiskAction(_:)),
-                #selector(MyController.inspectDiskAction(_:)),
-                #selector(MyController.inspectVolumeAction(_:)):
-                return drive.info.hasDisk
+            // Drive menu
+        case #selector(MyController.insertRecentDiskAction(_:)):
+            return validateURLlist(MediaManager.insertedFloppyDisks, image: smallDisk)
 
-            case #selector(MyController.exportRecentDiskDummyAction8(_:)):
-                return emu.drive8.info.hasDisk
+        case  #selector(MyController.ejectDiskAction(_:)),
+            #selector(MyController.exportDiskAction(_:)),
+            #selector(MyController.inspectDiskAction(_:)),
+            #selector(MyController.inspectVolumeAction(_:)):
+            return drive.info.hasDisk
 
-            case #selector(MyController.exportRecentDiskDummyAction9(_:)):
-                return emu.drive9.info.hasDisk
+        case #selector(MyController.exportRecentDiskDummyAction8(_:)):
+            return emu.drive8.info.hasDisk
 
-            case #selector(MyController.exportRecentDiskAction(_:)):
-                return validateURLlist(mm.exportedFloppyDisks[driveID], image: smallDisk)
+        case #selector(MyController.exportRecentDiskDummyAction9(_:)):
+            return emu.drive9.info.hasDisk
 
-            case #selector(MyController.writeProtectAction(_:)):
-                item.state = drive.info.hasProtectedDisk ? .on : .off
-                return drive.info.hasDisk
+        case #selector(MyController.exportRecentDiskAction(_:)):
+            return validateURLlist(mm.exportedFloppyDisks[driveID], image: smallDisk)
 
-            case #selector(MyController.drivePowerAction(_:)):
-                item.title = drive.config.switchedOn ? "Switch off" : "Switch on"
-                return true
+        case #selector(MyController.writeProtectAction(_:)):
+            item.state = drive.info.hasProtectedDisk ? .on : .off
+            return drive.info.hasDisk
 
-                // Tape menu
-            case #selector(MyController.insertRecentTapeAction(_:)):
-                return validateURLlist(MediaManager.insertedTapes, image: smallTape)
+        case #selector(MyController.drivePowerAction(_:)):
+            item.title = drive.config.switchedOn ? "Switch off" : "Switch on"
+            return true
 
-            case #selector(MyController.ejectTapeAction(_:)):
-                return emu.datasette.info.hasTape
+            // Tape menu
+        case #selector(MyController.insertRecentTapeAction(_:)):
+            return validateURLlist(MediaManager.insertedTapes, image: smallTape)
 
-            case #selector(MyController.playOrStopAction(_:)):
-                item.title = emu.datasette.info.playKey ? "Press Stop Key" : "Press Play On Tape"
-                return emu.datasette.info.hasTape
+        case #selector(MyController.ejectTapeAction(_:)):
+            return emu.datasette.info.hasTape
 
-            case #selector(MyController.rewindAction(_:)):
-                return emu.datasette.info.hasTape
+        case #selector(MyController.playOrStopAction(_:)):
+            item.title = emu.datasette.info.playKey ? "Press Stop Key" : "Press Play On Tape"
+            return emu.datasette.info.hasTape
 
-                // Cartridge menu
-            case #selector(MyController.attachRecentCartridgeAction(_:)):
-                return validateURLlist(MediaManager.attachedCartridges, image: smallCart)
+        case #selector(MyController.rewindAction(_:)):
+            return emu.datasette.info.hasTape
 
-            case #selector(MyController.attachReuDummyAction(_:)):
-                item.state = (emu.expansionport.traits.type == .REU) ? .on : .off
+            // Cartridge menu
+        case #selector(MyController.attachRecentCartridgeAction(_:)):
+            return validateURLlist(MediaManager.attachedCartridges, image: smallCart)
 
-            case #selector(MyController.attachReuAction(_:)):
-                item.state = (emu.expansionport.traits.type == .REU &&
-                              emu.expansionport.traits.memory == item.tag * 1024) ? .on : .off
+        case #selector(MyController.attachReuDummyAction(_:)):
+            item.state = (emu.expansionport.traits.type == .REU) ? .on : .off
 
-            case #selector(MyController.attachGeoRamDummyAction(_:)):
-                item.state = (emu.expansionport.traits.type == .GEO_RAM) ? .on : .off
+        case #selector(MyController.attachReuAction(_:)):
+            item.state = (emu.expansionport.traits.type == .REU &&
+                          emu.expansionport.traits.memory == item.tag * 1024) ? .on : .off
 
-            case #selector(MyController.attachGeoRamAction(_:)):
-                item.state = (emu.expansionport.traits.type == .GEO_RAM &&
-                              emu.expansionport.traits.memory == item.tag * 1024) ? .on : .off
+        case #selector(MyController.attachGeoRamDummyAction(_:)):
+            item.state = (emu.expansionport.traits.type == .GEO_RAM) ? .on : .off
 
-            case #selector(MyController.attachIsepicAction(_:)):
-                item.state = (emu.expansionport.traits.type == .ISEPIC) ? .on : .off
+        case #selector(MyController.attachGeoRamAction(_:)):
+            item.state = (emu.expansionport.traits.type == .GEO_RAM &&
+                          emu.expansionport.traits.memory == item.tag * 1024) ? .on : .off
 
-            case #selector(MyController.detachCartridgeAction(_:)):
-                return emu.expansionport.cartridgeAttached()
+        case #selector(MyController.attachIsepicAction(_:)):
+            item.state = (emu.expansionport.traits.type == .ISEPIC) ? .on : .off
 
-            case #selector(MyController.inspectCartridgeAction(_:)):
-                return emu.expansionport.cartridgeAttached()
+        case #selector(MyController.detachCartridgeAction(_:)):
+            return emu.expansionport.cartridgeAttached()
 
-            case #selector(MyController.pressButtonDummyAction(_:)):
-                return emu.expansionport.traits.buttons > 0
+        case #selector(MyController.inspectCartridgeAction(_:)):
+            return emu.expansionport.cartridgeAttached()
 
-            case #selector(MyController.pressCartridgeButton1Action(_:)):
-                let title = String(charptr: emu.expansionport.traits.button1)
-                item.title = title ?? ""
-                item.isHidden = title == nil
-                return title != nil
+        case #selector(MyController.pressButtonDummyAction(_:)):
+            return emu.expansionport.traits.buttons > 0
 
-            case #selector(MyController.pressCartridgeButton2Action(_:)):
-                let title = String(charptr: emu.expansionport.traits.button2)
-                item.title = title ?? ""
-                item.isHidden = title == nil
-                return title != nil
+        case #selector(MyController.pressCartridgeButton1Action(_:)):
+            let title = String(charptr: emu.expansionport.traits.button1)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            return title != nil
 
-            case #selector(MyController.setSwitchDummyAction(_:)):
-                return emu.expansionport.traits.switches > 0
+        case #selector(MyController.pressCartridgeButton2Action(_:)):
+            let title = String(charptr: emu.expansionport.traits.button2)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            return title != nil
 
-            case #selector(MyController.setSwitchNeutralAction(_:)):
-                let title = String(charptr: emu.expansionport.traits.switchNeutral)
-                item.title = title ?? ""
-                item.isHidden = title == nil
-                item.state = emu.expansionport.info.switchPos == 0 ? .on : .off
-                return title != nil
+        case #selector(MyController.setSwitchDummyAction(_:)):
+            return emu.expansionport.traits.switches > 0
 
-            case #selector(MyController.setSwitchLeftAction(_:)):
-                let title = String(charptr: emu.expansionport.traits.switchLeft)
-                item.title = title ?? ""
-                item.isHidden = title == nil
-                item.state = emu.expansionport.info.switchPos < 0 ? .on : .off
-                return title != nil
+        case #selector(MyController.setSwitchNeutralAction(_:)):
+            let title = String(charptr: emu.expansionport.traits.switchNeutral)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            item.state = emu.expansionport.info.switchPos == 0 ? .on : .off
+            return title != nil
 
-            case #selector(MyController.setSwitchRightAction(_:)):
-                let title = String(charptr: emu.expansionport.traits.switchRight)
-                item.title = title ?? ""
-                item.isHidden = title == nil
-                item.state = emu.expansionport.info.switchPos > 0 ? .on : .off
-                return title != nil
+        case #selector(MyController.setSwitchLeftAction(_:)):
+            let title = String(charptr: emu.expansionport.traits.switchLeft)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            item.state = emu.expansionport.info.switchPos < 0 ? .on : .off
+            return title != nil
 
-            default:
-                return true
-            }
+        case #selector(MyController.setSwitchRightAction(_:)):
+            let title = String(charptr: emu.expansionport.traits.switchRight)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            item.state = emu.expansionport.info.switchPos > 0 ? .on : .off
+            return title != nil
+
+        default:
+            return true
         }
 
         return true
@@ -603,6 +603,7 @@ extension MyController: NSMenuItemValidation {
         virtualKeyboard?.showWindow()
     }
 
+    /*
     @IBAction func mapLeftCmdKeyAction(_ sender: NSMenuItem!) {
 
         let s = sender.state
@@ -622,6 +623,7 @@ extension MyController: NSMenuItemValidation {
         myAppDelegate.mapRightCmdKey = sender.state == .off ? C64Key(sender.tag) : nil
         refreshStatusBar()
     }
+    */
 
     @IBAction func mapCapsLockWarpAction(_ sender: NSMenuItem!) {
 
