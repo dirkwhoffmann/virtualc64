@@ -73,9 +73,6 @@ class GamePad {
     // Indicates if a joystick emulation key is currently pressed
     var keyUp = false, keyDown = false, keyLeft = false, keyRight = false
     
-    // Indicates if other components should be notified when the device is used
-    var notify = false
-        
     // Controller specific mapping schemes for the two sticks and the hat switch
     var lScheme = 0
     var rScheme = 0
@@ -512,7 +509,10 @@ class GamePad {
         }
 
         // Notify other components (if requested)
-        if notify { myAppDelegate.devicePulled(events: events) }
+        // if notify { myAppDelegate.devicePulled(events: events) }
+        if let controller = myAppDelegate.prefController, controller.isVisible {
+            controller.refreshDeviceEvents(events: events)
+        }
 
         return events != []
     }

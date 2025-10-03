@@ -12,7 +12,8 @@ class PreferencesController: DialogController {
     var pref: Preferences { return parent.pref }
     var gamePadManager: GamePadManager { return parent.gamePadManager }
     var firstTab: String? // The tab to open first
-
+    var isVisible: Bool { window?.isVisible ?? false }
+    
     @IBOutlet weak var tabView: NSTabView!
     
     //
@@ -165,8 +166,6 @@ class PreferencesController: DialogController {
 
     override func cleanup() {
      
-        parent.gamePadManager.gamePads[3]?.notify = false
-        parent.gamePadManager.gamePads[4]?.notify = false
     }
     
     func refresh() {

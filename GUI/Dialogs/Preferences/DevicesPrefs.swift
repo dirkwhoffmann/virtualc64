@@ -24,9 +24,6 @@ extension PreferencesController {
         func property(_ key: String) -> String {
             return pad?.property(key: key) ?? "-"
         }
-
-        // Let us notify when the device is pulled
-        pad?.notify = true
         
         let db = myAppDelegate.database
         let vend = property(kIOHIDVendorIDKey)

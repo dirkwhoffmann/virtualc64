@@ -12,52 +12,6 @@ import Cocoa
 @objc(MyApplication)
 class MyApplication: NSApplication {
 
-    /* Set this variable to true to take away the control of the Command key
-     * from the application. This becomes necessary once the command key
-     * is meant to be operate the C64 and not the Mac. If control is not taken
-     * away, pressing the Command key in combination with another key will
-     * trigger unwanted actions (e.g., Cmd+Q will quit the application).
-     *
-     * Like for all other secondary keys (Control, Option, etc.), function
-     * 'flagsChanged' is invoked when the Command key is pressed or released.
-     * However, this method is called too late in the command chain to
-     * intercept, i.e., menu actions will already be carried out.
-     *
-     * The solution taken here is to override function sendEvent in the
-     * Application class. This delegation function is called early enough in
-     * the command chain to hide any Command key events from the Mac app.
-     */
-    /*
-    var disableCmdKey = false
-
-    override func sendEvent(_ event: NSEvent) {
-
-        if disableCmdKey {
-
-            if event.type == NSEvent.EventType.keyUp {
-
-                if event.modifierFlags.contains(.command) {
-
-                    debug(.events, "keyUp: Removing CMD flag")
-                    event.cgEvent!.flags.remove(.maskCommand)
-                    super.sendEvent(NSEvent(cgEvent: event.cgEvent!)!)
-                    return
-                }
-            }
-            if event.type == NSEvent.EventType.keyDown {
-
-                if event.modifierFlags.contains(.command) {
-
-                    debug(.events, "keyDown: Removing CMD flag")
-                    event.cgEvent!.flags.remove(.maskCommand)
-                    super.sendEvent(NSEvent(cgEvent: event.cgEvent!)!)
-                    return
-                }
-            }
-        }
-        super.sendEvent(event)
-    }
-    */
 }
 
 @NSApplicationMain
@@ -69,10 +23,6 @@ class MyApplication: NSApplication {
 
     // Replace the old document controller by instantiating a custom controller
     let myDocumentController = MyDocumentController()
-
-    // Indicates if the Command keys should be mapped to a C64 key
-    // var mapLeftCmdKey: C64Key?
-    // var mapRightCmdKey: C64Key?
 
     // Indicates if the CapsLock key should control warp mode
     var mapCapsLockWarp = true
@@ -100,8 +50,7 @@ class MyApplication: NSApplication {
         
         debug(.lifetime)
 
-        token = ProcessInfo.processInfo.beginActivity(options: [ .idleSystemSleepDisabled, .suddenTerminationDisabled ], reason: "Running VirtualC64")
-
+        token = ProcessInfo.processInfo.beginActivity(options: [ .idleSystemSleepDisabled, .suddenTerminationDisabled ], reason: "Running an emulator")
         argv = Array(CommandLine.arguments.dropFirst())
 
         debug(.lifetime, "Launched with arguments \(argv)")
@@ -150,24 +99,6 @@ extension MyAppDelegate {
             }
         }
     }
-
-    /*
-    func windowDidBecomeMain(_ window: NSWindow) {
-        
-        for c in controllers {
-            
-            if c.window == window {
-                
-                c.emu?.put(.FOCUS, value: 1)
-                c.hideOrShowDriveMenus()
-                
-            } else {
-                
-                c.emu?.put(.FOCUS, value: 0)
-            }
-        }
-    }
-    */
 
     // Callen when a HID device has been added
     func deviceAdded() {
