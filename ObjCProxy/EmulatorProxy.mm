@@ -1722,6 +1722,11 @@ NSString *EventSlotName(EventSlot slot)
     return [MediaFileProxy make:snapshot];
 }
 
+- (BOOL)getMessage:(Message *)msg
+{
+    return [self c64]->getMsg(*msg);
+}
+
 @end
 
 //
@@ -1830,13 +1835,11 @@ NSString *EventSlotName(EventSlot slot)
     return [self emu]->isTracking();
 }
 
-/*
 - (void)launch:(ExceptionWrapper *)ex
 {
     try { [self emu]->launch(); }
     catch (AppError &error) { [ex save:error]; }
 }
-*/
 
 - (void)launch:(const void *)listener function:(Callback *)func exception:(ExceptionWrapper *)ex
 {

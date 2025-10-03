@@ -194,6 +194,7 @@ NSString *EventSlotName(EventSlot slot);
 - (void)finishLine;
 - (void)finishFrame;
 
+- (void)launch:(ExceptionWrapper *)ex;
 - (void)launch:(const void *)listener function:(Callback *)func exception:(ExceptionWrapper *)ex;
 - (void)wakeUp;
 
@@ -276,6 +277,8 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) RomTraits vc1541Rom;
 
 - (MediaFileProxy *) takeSnapshot;
+
+- (BOOL) getMessage:(Message *)msg;
 
 @end
 

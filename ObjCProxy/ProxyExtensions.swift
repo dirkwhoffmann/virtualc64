@@ -95,14 +95,12 @@ extension FileSystemProxy {
 
 extension EmulatorProxy {
 
-    /*
     func launch() throws {
         
         let exception = ExceptionWrapper()
         launch(exception)
         if exception.errorCode != .OK { throw AppError(exception) }
     }
-    */
     
     func launch(_ listener: UnsafeRawPointer, _ callback: @escaping @convention(c) (UnsafeRawPointer?, Message) -> Void) throws
     {

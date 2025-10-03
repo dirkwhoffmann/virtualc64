@@ -505,6 +505,13 @@ C64API::getCachedInfo() const
     return c64->getCachedInfo();
 }
 
+bool
+C64API::getMsg(Message &msg)
+{
+    VC64_PUBLIC
+    return c64->msgQueue.get(msg);
+}
+
 RomTraits
 C64API::getRomTraits(RomType type) const
 {

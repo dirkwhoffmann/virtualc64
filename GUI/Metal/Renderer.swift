@@ -183,7 +183,16 @@ class Renderer: NSObject, MTKViewDelegate {
     func update(frames: Int64) {
 
         if animates != 0 { animate() }
-        
+
+        if !BuildSettings.msgCallback {
+
+            // Process all pending messages
+            var msg = Message()
+            while emu?.c64.getMessage(&msg) == true {
+                parent.processMessage(msg)
+            }
+        }
+
         dropZone.update(frames: frames)
         console.update(frames: frames)
         canvas.update(frames: frames)

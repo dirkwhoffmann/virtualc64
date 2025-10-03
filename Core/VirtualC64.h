@@ -1062,6 +1062,19 @@ struct C64API : public API {
      */
     RomTraits getRomTraits(RomType type) const;
 
+
+    /// @}
+    /// @name Accessing the message queue
+    /// @{
+
+    /** @brief  Reads a message from the message queue
+     *
+     *  @param  msg    The returned message (if any)
+     *  @return True if a message could be read, false if the queue was empty
+     */
+    bool getMsg(Message &msg);
+
+
     /// @}
     /// @name Auto-inspecting components
     /// @{
@@ -1441,7 +1454,7 @@ public:
      *  function on that object.
      *  @param  func        The callback function.
      */
-    void launch(const void *listener, Callback *func);
+    void launch(const void *listener = nullptr, Callback *func = nullptr);
 
     /** @brief  Returns true if the emulator has been launched.
      */

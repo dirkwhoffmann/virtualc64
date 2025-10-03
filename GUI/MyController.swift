@@ -236,22 +236,29 @@ extension MyController {
                 script = script + arg.dropFirst() + "\n"
             }
             emu!.retroShell.execute(script)
-            
-            // Convert 'self' to a void pointer
-            let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-            
-            try emu!.launch(myself) { (ptr, msg: vc64.Message) in
-                
-                // Convert void pointer back to 'self'
-                let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
-                
-                // Process message in the main thread
-                Task { @MainActor in myself.processMessage(msg) }
-                // DispatchQueue.main.async { myself.processMessage(msg) }
+
+            if BuildSettings.msgCallback {
+
+                // Convert 'self' to a void pointer
+                let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+
+                try emu!.launch(myself) { (ptr, msg: vc64.Message) in
+
+                    // Convert void pointer back to 'self'
+                    let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
+
+                    // Process message in the main thread
+                    Task { @MainActor in myself.processMessage(msg) }
+                }
+
+            } else {
+
+                try emu?.launch()
             }
+
         } catch {
 
-            // In theory, we should never be here
+            // Something terrible happened
             shutDown()
             mydocument.showLaunchAlert(error: error)
         }
