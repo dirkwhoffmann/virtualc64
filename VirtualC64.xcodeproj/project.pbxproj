@@ -418,6 +418,9 @@
 		50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AF2F8026AFFE9A002DC43B /* PIA.cpp */; };
 		50B064EF2C888F2C0080FCA0 /* RegressionTesterBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B064EE2C888F2C0080FCA0 /* RegressionTesterBase.cpp */; };
 		50B064F02C888F2C0080FCA0 /* RegressionTesterBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B064EE2C888F2C0080FCA0 /* RegressionTesterBase.cpp */; };
+		50B114B62E8FB0C900EC854D /* OnboardingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B114B52E8FB0C200EC854D /* OnboardingButton.swift */; };
+		50B114B92E8FB13400EC854D /* LiveTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B114B82E8FB12E00EC854D /* LiveTextField.swift */; };
+		50B114BB2E8FB14A00EC854D /* PageDotsIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B114BA2E8FB14400EC854D /* PageDotsIndicator.swift */; };
 		50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B165AD25B06A03009B576D /* TextureToolbox.swift */; };
 		50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */; };
 		50B1A61F25A2386F00201A2C /* HIDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61E25A2386F00201A2C /* HIDExtensions.swift */; };
@@ -1013,6 +1016,9 @@
 		50AF2F8126AFFE9A002DC43B /* PIA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIA.h; sourceTree = "<group>"; };
 		50B064ED2C884AA90080FCA0 /* RegressionTesterTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegressionTesterTypes.h; sourceTree = "<group>"; };
 		50B064EE2C888F2C0080FCA0 /* RegressionTesterBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RegressionTesterBase.cpp; sourceTree = "<group>"; };
+		50B114B52E8FB0C200EC854D /* OnboardingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButton.swift; sourceTree = "<group>"; };
+		50B114B82E8FB12E00EC854D /* LiveTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextField.swift; sourceTree = "<group>"; };
+		50B114BA2E8FB14400EC854D /* PageDotsIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDotsIndicator.swift; sourceTree = "<group>"; };
 		50B165AD25B06A03009B576D /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B1A61525A2028B00201A2C /* MemoryTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryTypes.h; sourceTree = "<group>"; };
@@ -1370,6 +1376,7 @@
 		50157EF62825B01D000E9DDD /* System */ = {
 			isa = PBXGroup;
 			children = (
+				50B114B72E8FB0EE00EC854D /* Controls */,
 				5042FB102D4E121600E4A167 /* FilePanels.swift */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
 				5052A7C025A0AC0700E62EDD /* Errors.swift */,
@@ -2165,6 +2172,16 @@
 			path = Ports;
 			sourceTree = "<group>";
 		};
+		50B114B72E8FB0EE00EC854D /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				50B114BA2E8FB14400EC854D /* PageDotsIndicator.swift */,
+				50B114B82E8FB12E00EC854D /* LiveTextField.swift */,
+				50B114B52E8FB0C200EC854D /* OnboardingButton.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
 		50C4F055202D8B37004C5F21 /* XIB files */ = {
 			isa = PBXGroup;
 			children = (
@@ -2609,6 +2626,7 @@
 				50DD82A02614D47E00B84EB3 /* Chrono.cpp in Sources */,
 				50BE4B6624E7F965008F39C9 /* String.swift in Sources */,
 				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
+				50B114B62E8FB0C900EC854D /* OnboardingButton.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
 				5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */,
 				50AE19392632B787005A5898 /* Script.cpp in Sources */,
@@ -2699,6 +2717,7 @@
 				5042FB112D4E121A00E4A167 /* FilePanels.swift in Sources */,
 				50BE4B6224E7F8DE008F39C9 /* NSTableView.swift in Sources */,
 				50549B49257D288E006FE39C /* AudioPort.cpp in Sources */,
+				50B114BB2E8FB14A00EC854D /* PageDotsIndicator.swift in Sources */,
 				504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */,
 				504C43A524AF29AC00E69CAE /* ExpansionPort.cpp in Sources */,
 				508C1E602C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */,
@@ -2720,6 +2739,7 @@
 				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
 				507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */,
 				50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */,
+				50B114B92E8FB13400EC854D /* LiveTextField.swift in Sources */,
 				50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */,
 				50A22A1D261871E600C9FB1E /* Layer.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
