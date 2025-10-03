@@ -23,7 +23,7 @@ class SnapshotViewer: DialogController {
     @IBOutlet weak var indicator: NSLevelIndicator!
     @IBOutlet weak var indicatorText: NSTextField!
     @IBOutlet weak var revert: NSButton!
-
+    
     // Computed variables
     var myDocument: MyDocument { return parent.mydocument! }
     var numItems: Int { return carousel.numberOfItems }
@@ -34,62 +34,58 @@ class SnapshotViewer: DialogController {
     
     // Remembers the auto-snapshot setting
     var takeSnapshots = false
-
+    
     override func windowWillLoad() {
-   
+        
     }
     
     override func dialogDidShow() {
-
+        
         now = Date()
         
         // Don't let the emulator take snapshots while the dialog is open
         takeSnapshots = emu?.get(.C64_SNAP_AUTO) != 0
         emu?.set(.C64_SNAP_AUTO, enable: false)
-
+        
         updateLabels()
-
+        
         self.carousel.type = iCarouselType.timeMachine
         self.carousel.isHidden = false
         self.updateCarousel(goto: myDocument.snapshots.count - 1, animated: false)
     }
-
+    
     func updateLabels() {
-
+        
         let MB = 1024 * 1024
-
+        
         moveUp.isEnabled = currentItem >= 0 && currentItem < lastItem
         moveDown.isEnabled = currentItem > 0
         nr.stringValue = "Snapshot \(currentItem + 1) / \(numItems)"
-
+        
         if let snapshot = myDocument.snapshots.element(at: currentItem) {
-
+            
             let takenAt = snapshot.timeStamp
             let compressed = snapshot.compressed ? "(\(snapshot.compressor))" : ""
             let sizemb = Double(snapshot.size) / Double(MB)
             let rounded = Double(Int(sizemb * 100.0)) / 100.0
-
+            
             text1.stringValue = "\(rounded) MB " + compressed
             text2.stringValue = "Taken at " + timeInfo(time: takenAt)
             text3.stringValue = Date.elapsed(time: takenAt)
             message.stringValue = ""
-            /*
-            text1.stringValue = "Taken at " + timeInfo(time: takenAt)
-            text2.stringValue = Date.elapsed(time: takenAt)
-            text3.stringValue = "\(snapshot.size / 1024) KB " + compressed
-            message.stringValue = ""
-            */
+            
         } else {
+            
             nr.stringValue = "No snapshots taken"
             message.stringValue = ""
         }
-
-        let fill = myDocument.snapshots.fill 
-        let size = myDocument.snapshots.used / MB
-        let max = myDocument.snapshots.maxSize / MB
+        
+        let count = myDocument.snapshots.count
+        let max = MyDocument.maxSnapshots
+        let fill = 100.0 * Double(count) / Double(max)
         indicator.doubleValue = fill
-        indicatorText.stringValue = "\(size) MB / \(max) MB"
-
+        indicatorText.stringValue = "\(count) / \(max)"
+        
         text1.isHidden  = empty
         text2.isHidden  = empty
         text3.isHidden  = empty
@@ -99,66 +95,66 @@ class SnapshotViewer: DialogController {
         trash.isHidden = empty
         revert.isHidden = empty
     }
-
+    
     func updateCarousel(goto item: Int, animated: Bool) {
         
         carousel.reloadData()
         
         let index = min(item, carousel.numberOfItems - 1)
         if index >= 0 { carousel.scrollToItem(at: index, animated: animated) }
-
+        
         carousel.layOutItemViews()
         updateLabels()
     }
-
+    
     func updateCarousel(animated: Bool = false) {
         
         updateCarousel(goto: -1, animated: animated)
     }
     
     func timeInfo(date: Date?) -> String {
-         
-         if date == nil { return "" }
-         
-         let formatter = DateFormatter()
-         formatter.timeZone = TimeZone.current
-         formatter.dateFormat = "HH:mm:ss"
-         
-         return formatter.string(from: date!)
+        
+        guard let date else { return "" }
+        
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "HH:mm:ss"
+        
+        return formatter.string(from: date)
     }
     
     func timeInfo(time: time_t) -> String {
         
         return timeInfo(date: Date(timeIntervalSince1970: TimeInterval(time)))
     }
-
+    
     @IBAction func selectorAction(_ sender: NSSegmentedControl!) {
-                
+        
         updateCarousel(goto: Int.max, animated: false)
     }
     
     @IBAction func moveUpAction(_ sender: NSButton!) {
-                
+        
         if currentItem < lastItem {
             carousel.scrollToItem(at: currentItem + 1, animated: true)
         }
     }
-
+    
     @IBAction func moveDownAction(_ sender: NSButton!) {
-                
+        
         if currentItem > 0 {
             carousel.scrollToItem(at: currentItem - 1, animated: true)
         }
     }
-
+    
     @IBAction func trashAction(_ sender: NSButton!) {
-
+        
         myDocument.snapshots.remove(at: currentItem)
         updateCarousel()
     }
-
+    
     @IBAction func revertAction(_ sender: NSButton!) {
-
+        
         do {
             try parent.restoreSnapshot(item: currentItem)
             hide()
@@ -166,13 +162,13 @@ class SnapshotViewer: DialogController {
             NSSound.beep()
         }
     }
-        
+    
     @IBAction override func cancelAction(_ sender: Any!) {
-                                
+        
         hide()
-
+        
         emu?.set(.C64_SNAP_AUTO, enable: takeSnapshots)
-
+        
         // Hide some controls
         let items: [NSView] = [
             
@@ -194,10 +190,11 @@ class SnapshotViewer: DialogController {
 // iCarousel data source and delegate
 //
 
-extension SnapshotViewer: iCarouselDataSource, iCarouselDelegate {
+@MainActor
+extension SnapshotViewer: @preconcurrency iCarouselDataSource, @preconcurrency iCarouselDelegate {
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-                
+        
         return myDocument.snapshots.count
     }
     
@@ -210,10 +207,10 @@ extension SnapshotViewer: iCarouselDataSource, iCarouselDelegate {
         itemView.image = myDocument.snapshots.element(at: index)?.previewImage?.roundCorners()
         
         /*
-        itemView.wantsLayer = true
-        itemView.layer?.cornerRadius = 10.0
-        itemView.layer?.masksToBounds = true
-        */
+         itemView.wantsLayer = true
+         itemView.layer?.cornerRadius = 10.0
+         itemView.layer?.masksToBounds = true
+         */
         
         return itemView
     }

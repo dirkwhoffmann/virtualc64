@@ -24,6 +24,7 @@ namespace vc64 {
 enum class FileType : long
 {
     UNKNOWN,
+    WORKSPACE,
     SNAPSHOT,
     SCRIPT,
     CRT,
@@ -50,6 +51,7 @@ struct FileTypeEnum : Reflection<FileTypeEnum, FileType> {
         switch (value) {
 
             case FileType::UNKNOWN:    return "UNKNOWN";
+            case FileType::WORKSPACE:  return "WORKSPACE";
             case FileType::SNAPSHOT:   return "SNAPSHOT";
             case FileType::SCRIPT:     return "SCRIPT";
             case FileType::CRT:        return "CRT";

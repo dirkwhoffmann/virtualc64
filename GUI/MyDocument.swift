@@ -40,7 +40,8 @@ class MyDocument: NSDocument {
     var emu: EmulatorProxy?
 
     // Snapshot storage
-    private(set) var snapshots = ManagedArray<MediaFileProxy>(maxSize: 512 * 1024 * 1024)
+    static let maxSnapshots: Int = 16
+    private(set) var snapshots = ManagedArray<MediaFileProxy>(maxCount: maxSnapshots)
 
     //
     // Initializing
@@ -160,4 +161,36 @@ class MyDocument: NSDocument {
             }
         }
     }
+
+    //
+    // Handling snapshots
+    //
+
+    /*
+    func processSnapshotFile(url: URL) throws {
+
+        let file = try createMediaFileProxy(from: url, allowedTypes: [.SNAPSHOT])
+        try processSnapshotFile(file: file)
+    }
+
+    func processSnapshotFile(file: MediaFileProxy) throws {
+
+        try emu?.amiga.loadSnapshot(file)
+        appendSnapshot(file: file)
+    }
+
+    @discardableResult
+    func appendSnapshot(file: MediaFileProxy) -> Bool {
+
+        // Remove the oldest entry if applicable
+        if snapshots.full && pref.snapshotAutoDelete { snapshots.remove(at: 0) }
+
+        // Only proceed if there is space left
+        if snapshots.full { return false }
+
+        // Append the snapshot
+        snapshots.append(file, size: file.size)
+        return true
+    }
+    */
 }

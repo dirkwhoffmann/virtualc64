@@ -210,39 +210,41 @@ class MediaManager {
 
         debug(.media, "url = \(url) types = \(types)")
 
-        if let emu = emu {
+        guard let emu = emu else { return }
 
-            // Read file
-            let file = try createFileProxy(from: url, allowedTypes: types)
+        // Read file
+        let file = try createFileProxy(from: url, allowedTypes: types)
 
-            // Remember the URL if requested
-            if options.contains(.remember) {
+        // Remember the URL if requested
+        if options.contains(.remember) {
 
-                switch file.type {
+            switch file.type {
 
-                case .SNAPSHOT:
-                    document.snapshots.append(file, size: file.size)
+            case .WORKSPACE:
+                break // try mydocument.processWorkspaceFile(url: url)
 
-                case .CRT:
-                    MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
+            case .SNAPSHOT:
+                document.snapshots.append(file, size: file.size)
 
-                case .TAP:
-                    MediaManager.noteNewRecentlyInsertedTapeURL(url)
+            case .CRT:
+                MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
 
-                case .T64, .P00, .PRG, .D64, .G64:
-                    MediaManager.noteNewRecentlyInsertedDiskURL(url)
+            case .TAP:
+                MediaManager.noteNewRecentlyInsertedTapeURL(url)
 
-                default:
-                    break
-                }
+            case .T64, .P00, .PRG, .D64, .G64:
+                MediaManager.noteNewRecentlyInsertedDiskURL(url)
+
+            default:
+                break
             }
+        }
 
-            // Process file
-            if options.contains(.flash) {
-                try flashMedia(proxy: file, options: options)
-            } else {
-                try addMedia(proxy: file, drive: emu.drive(id), options: options)
-            }
+        // Process file
+        if options.contains(.flash) {
+            try flashMedia(proxy: file, options: options)
+        } else {
+            try addMedia(proxy: file, drive: emu.drive(id), options: options)
         }
     }
 
