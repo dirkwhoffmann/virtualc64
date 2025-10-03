@@ -98,10 +98,11 @@ class MyApplication: NSApplication {
         
         debug(.lifetime)
 
-        token = ProcessInfo.processInfo.beginActivity(options: [ .userInitiated ],
-                                                      reason: "Running VirtualC64")
+        token = ProcessInfo.processInfo.beginActivity(options: [ .idleSystemSleepDisabled, .suddenTerminationDisabled ], reason: "Running VirtualC64")
 
         argv = Array(CommandLine.arguments.dropFirst())
+
+        debug(.lifetime, "Launched with arguments \(argv)")
     }
 
     public func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
@@ -138,7 +139,17 @@ extension MyAppDelegate {
     var proxies: [EmulatorProxy?] {
         return documents.map({ $0.emu })
     }
-    
+
+    static var currentController: MyController? {
+        didSet {
+            if currentController !== oldValue {
+                oldValue?.emu?.put(.FOCUS, value: 0)
+                currentController?.emu?.put(.FOCUS, value: 1)
+            }
+        }
+    }
+
+    /*
     func windowDidBecomeMain(_ window: NSWindow) {
         
         for c in controllers {
@@ -154,7 +165,8 @@ extension MyAppDelegate {
             }
         }
     }
-    
+    */
+
     // Callen when a HID device has been added
     func deviceAdded() {
         prefController?.refresh()

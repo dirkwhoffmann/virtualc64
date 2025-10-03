@@ -17,7 +17,8 @@ class MyController: NSWindowController, MessageReceiver {
 
     // Reference to the connected document
     var mydocument: MyDocument!
-    
+    var initialized: Bool { return mydocument != nil }
+
     // File panels
     let myOpenPanel = MyOpenPanel()
     let mySavePanel = MySavePanel()
@@ -149,17 +150,20 @@ extension MyController {
     // Initializing
     //
 
-    override open func awakeFromNib() {
+    override open func windowDidLoad() {
+
+        if !initialized { commonInit() }
+    }
+
+    func commonInit() {
+
+        debug(.lifetime)
+        assert(!initialized, "Double-initialization of MyController")
 
         mydocument = document as? MyDocument
         config = Configuration(with: self)
         macAudio = MacAudio(with: self)
-    }
 
-    override open func windowDidLoad() {
-
-        debug(.lifetime)
-        
         // Create keyboard controller
         keyboard = KeyboardController(parent: self)
         assert(keyboard != nil, "Failed to create keyboard controller")

@@ -13,13 +13,19 @@ extension MyController: NSWindowDelegate {
 
         debug(.lifetime)
 
+        // Initialize if this window becomes active the first time
+        if !initialized { commonInit() }
+
         guard let window = notification.object as? NSWindow else { return }
 
         inBackground = false
 
-        // Inform the application delegate
-        myAppDelegate.windowDidBecomeMain(window)
-        
+        // Declare this controller the active one
+        MyAppDelegate.currentController = self
+
+        // Update the preferences window (if open)
+        // myAppDelegate.settingsController?.refresh()
+
         // Restart the emulator if it was paused when the window lost focus
         if pref.pauseInBackground && pauseInBackgroundSavedState { try? emu?.run() }
 
@@ -53,6 +59,7 @@ extension MyController: NSWindowDelegate {
     public func windowShouldClose(_ sender: NSWindow) -> Bool {
 
         debug(.lifetime)
+        
         if proceedWithUnsavedFloppyDisks() {
             return true
         } else {
