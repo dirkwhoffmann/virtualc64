@@ -42,11 +42,6 @@ extension MyController: NSMenuItemValidation {
 
         switch item.action {
 
-            // Machine menu
-        case #selector(MyController.captureScreenAction(_:)):
-            item.title = recording ? "Stop Recording" : "Record Screen"
-            return true
-
             // Edit menu
         case #selector(MyController.stopAndGoAction(_:)):
             item.title = running ? "Pause" : "Continue"
@@ -62,14 +57,6 @@ extension MyController: NSMenuItemValidation {
             return true
 
             // Keyboard menu
-            /*
-        case #selector(MyController.mapLeftCmdKeyAction(_:)):
-            item.state = myAppDelegate.mapLeftCmdKey?.nr == item.tag ? .on : .off
-            return true
-        case #selector(MyController.mapRightCmdKeyAction(_:)):
-            item.state = myAppDelegate.mapRightCmdKey?.nr == item.tag ? .on : .off
-            return true
-             */
         case #selector(MyController.mapCapsLockWarpAction(_:)):
             item.state = myAppDelegate.mapCapsLockWarp ? .on : .off
             return true
@@ -435,6 +422,7 @@ extension MyController: NSMenuItemValidation {
         screenshotBrowser?.showAsSheet()
     }
 
+    /*
     @IBAction func captureScreenAction(_ sender: Any!) {
 
         if let emu = emu {
@@ -477,7 +465,8 @@ extension MyController: NSMenuItemValidation {
         let exporter = VideoExporter(with: self, nibName: "VideoExporter")
         exporter?.showAsSheet()
     }
-    
+    */
+
     //
     // Action methods (Edit menu)
     //

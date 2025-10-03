@@ -20,22 +20,6 @@ class Preferences {
     // General
     //
 
-    // Snapshots
-    var autoSnapshots = false {
-        didSet {
-            for emu in myAppDelegate.proxies {
-                emu?.set(.C64_SNAP_AUTO, enable: autoSnapshots)
-            }
-        }
-    }
-    var snapshotInterval = 0 {
-        didSet {
-            for emu in myAppDelegate.proxies {
-                emu?.set(.C64_SNAP_DELAY, value: snapshotInterval)
-            }
-        }
-    }
-
     // Screenshots
     var screenshotSource = 0
     var screenshotTarget = NSBitmapImageRep.FileType.png
@@ -43,39 +27,7 @@ class Preferences {
         get { return Int(screenshotTarget.rawValue) }
         set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
     }
-    
-    // Screen captures
-    var ffmpegPath = "" {
-        didSet {
-            for emu in myAppDelegate.proxies {
-                emu?.recorder.path = ffmpegPath
-            }
-        }
-    }
-    var captureSource = 0
-
-    var bitRate = 512 {
-        didSet {
-            for emu in myAppDelegate.proxies {
-                emu?.set(.REC_BIT_RATE, value: bitRate)
-            }
-        }
-    }
-    var aspectX = 768 {
-        didSet {
-            for emu in myAppDelegate.proxies {
-                emu?.set(.REC_ASPECT_X, value: aspectX)
-            }
-        }
-    }
-    var aspectY = 702 {
-        didSet {
-            for emu in myAppDelegate.proxies {
-                emu?.set(.REC_ASPECT_Y, value: aspectY)
-            }
-        }
-    }
-    
+        
     // Fullscreen
     var keepAspectRatio = false
     var exitOnEsc = false

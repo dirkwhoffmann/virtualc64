@@ -279,18 +279,10 @@ extension Configuration {
 struct Keys {
     
     struct Gen {
-                
-        // Snapshots
-        static let autoSnapshots          = "General.AutoSnapshots"
-        static let autoSnapshotInterval   = "General.ScreenshotInterval"
 
         // Screenshots
         static let screenshotSource       = "General.ScreenshotSource"
         static let screenshotTarget       = "General.ScreenshotTarget"
-        
-        // Screen captures
-        static let ffmpegPath             = "General.ffmpegPath"
-        static let captureSource          = "General.Source"
 
         // Fullscreen
         static let keepAspectRatio        = "General.FullscreenKeepAspectRatio"
@@ -309,17 +301,9 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        // Snapshots
-        register(Keys.Gen.autoSnapshots, false)
-        register(Keys.Gen.autoSnapshotInterval, 20)
-
         // Screenshots
         register(Keys.Gen.screenshotSource, 0)
         register(Keys.Gen.screenshotTarget, NSBitmapImageRep.FileType.png.rawValue)
-
-        // Captures
-        register(Keys.Gen.ffmpegPath, "")
-        register(Keys.Gen.captureSource, 0)
 
         // Fullscreen
         register(Keys.Gen.keepAspectRatio, false)
@@ -335,14 +319,8 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        let keys = [ Keys.Gen.autoSnapshots,
-                     Keys.Gen.autoSnapshotInterval,
-
-                     Keys.Gen.screenshotSource,
+        let keys = [ Keys.Gen.screenshotSource,
                      Keys.Gen.screenshotTarget,
-
-                     Keys.Gen.ffmpegPath,
-                     Keys.Gen.captureSource,
 
                      Keys.Gen.keepAspectRatio,
                      Keys.Gen.exitOnEsc,
@@ -363,14 +341,8 @@ extension Preferences {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        defaults.set(Keys.Gen.autoSnapshots, autoSnapshots)
-        defaults.set(Keys.Gen.autoSnapshotInterval, snapshotInterval)
-
         defaults.set(Keys.Gen.screenshotSource, screenshotSource)
         defaults.set(Keys.Gen.screenshotTarget, screenshotTargetIntValue)
-
-        defaults.set(Keys.Gen.ffmpegPath, ffmpegPath)
-        defaults.set(Keys.Gen.captureSource, captureSource)
 
         defaults.set(Keys.Gen.keepAspectRatio, keepAspectRatio)
         defaults.set(Keys.Gen.exitOnEsc, exitOnEsc)
@@ -387,14 +359,8 @@ extension Preferences {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        autoSnapshots = defaults.bool(Keys.Gen.autoSnapshots)
-        snapshotInterval = defaults.int(Keys.Gen.autoSnapshotInterval)
-
         screenshotSource = defaults.int(Keys.Gen.screenshotSource)
         screenshotTargetIntValue = defaults.int(Keys.Gen.screenshotTarget)
-
-        ffmpegPath = defaults.string(Keys.Gen.ffmpegPath)
-        captureSource = defaults.int(Keys.Gen.captureSource)
 
         keepAspectRatio = defaults.bool(Keys.Gen.keepAspectRatio)
         exitOnEsc = defaults.bool(Keys.Gen.exitOnEsc)

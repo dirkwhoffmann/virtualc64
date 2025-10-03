@@ -19,22 +19,11 @@ class PreferencesController: DialogController {
     //
     // General preferences
     //
-        
-    // Snapshots
-    @IBOutlet weak var genAutoSnapshots: NSButton!
-    @IBOutlet weak var genSnapshotInterval: NSTextField!
-    
+
     // Screenshots
     @IBOutlet weak var genScreenshotSourcePopup: NSPopUpButton!
     @IBOutlet weak var genScreenshotTargetPopup: NSPopUpButton!
-        
-    // Screen captures
-    @IBOutlet weak var genFFmpegPath: NSComboBox!
-    @IBOutlet weak var genSource: NSPopUpButton!
-    @IBOutlet weak var genAspectX: NSTextField!
-    @IBOutlet weak var genAspectY: NSTextField!
-    @IBOutlet weak var genBitRate: NSComboBox!
-    
+            
     // Fullscreen
     @IBOutlet weak var genAspectRatioButton: NSButton!
     @IBOutlet weak var genExitOnEscButton: NSButton!
@@ -239,35 +228,5 @@ extension PreferencesController {
     override func windowDidBecomeKey(_ notification: Notification) {
         
         select()
-    }
-}
-
-extension PreferencesController: NSTextFieldDelegate {
-    
-    func controlTextDidChange(_ obj: Notification) {
-                
-        if let view = obj.object as? NSTextField {
-            
-            let formatter = view.formatter as? NumberFormatter
-            
-            switch view {
-                
-            case genSnapshotInterval:
-                
-                if formatter?.number(from: view.stringValue) != nil {
-                    genSnapshotIntervalAction(view)
-                }
-
-                /*
-            case conAutofireBullets:
-                
-                if formatter?.number(from: view.stringValue) != nil {
-                    conAutofireBulletsAction(view)
-                }
-                */
-            default:
-                break
-            }
-        }
     }
 }

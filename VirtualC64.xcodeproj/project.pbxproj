@@ -359,8 +359,6 @@
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* MemoryDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* MemoryDebugger.cpp */; };
 		5095C81D2BA09DE800A83825 /* MemoryDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* MemoryDebugger.cpp */; };
-		5098C57B2658CF9800E05EFC /* VideoExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5098C57A2658CF9800E05EFC /* VideoExporter.swift */; };
-		5098C57D2658D4DC00E05EFC /* VideoExporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5098C57C2658D4DC00E05EFC /* VideoExporter.xib */; };
 		5098C57F2658E1F400E05EFC /* DragImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5098C57E2658E1F400E05EFC /* DragImageView.swift */; };
 		50995F2A24DBCDE400F40713 /* PeddleDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */; };
 		50A077F8258A18B9005ACF5B /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FileSystem.cpp */; };
@@ -943,8 +941,6 @@
 		5095C81A2BA08B0A00A83825 /* MemoryDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MemoryDebugger.cpp; sourceTree = "<group>"; };
 		5095C81B2BA08B0A00A83825 /* MemoryDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryDebugger.h; sourceTree = "<group>"; };
 		50975A5D2DE05AA10016118E /* Annotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Annotations.h; sourceTree = "<group>"; };
-		5098C57A2658CF9800E05EFC /* VideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExporter.swift; sourceTree = "<group>"; };
-		5098C57C2658D4DC00E05EFC /* VideoExporter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoExporter.xib; sourceTree = "<group>"; };
 		5098C57E2658E1F400E05EFC /* DragImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragImageView.swift; sourceTree = "<group>"; };
 		50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleDebugger.cpp; sourceTree = "<group>"; };
 		50995F2924DBCDE400F40713 /* PeddleDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleDebugger.h; sourceTree = "<group>"; };
@@ -1348,7 +1344,6 @@
 			children = (
 				507E7A9F24FB881500AB433C /* ScreenshotViewer.swift */,
 				503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */,
-				5098C57A2658CF9800E05EFC /* VideoExporter.swift */,
 				50B485FE24FA1D4100844133 /* iCarousel.h */,
 				50B485FC24FA1D3200844133 /* iCarousel.m */,
 			);
@@ -2198,7 +2193,6 @@
 				5058A917281D03D200C223C9 /* DiskInspector.xib */,
 				50D5F88724F556270062EF13 /* DiskErrors.xib */,
 				5058A91B281D042D00C223C9 /* VolumeInspector.xib */,
-				5098C57C2658D4DC00E05EFC /* VideoExporter.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 				50ABD2862DD88EAC00456555 /* Dashboard.storyboard */,
@@ -2379,7 +2373,6 @@
 				50A5B7CE2C74E44C00D6DDAD /* CMakeLists.txt in Resources */,
 				500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */,
 				501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */,
-				5098C57D2658D4DC00E05EFC /* VideoExporter.xib in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
@@ -2602,7 +2595,6 @@
 				50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */,
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
 				506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */,
-				5098C57B2658CF9800E05EFC /* VideoExporter.swift in Sources */,
 				50BD641D2C04C05A007CD347 /* Heatmap.cpp in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
