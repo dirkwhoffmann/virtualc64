@@ -26,12 +26,8 @@
                 <outlet property="conMouseRight" destination="pfv-Nv-qyV" id="jfl-hH-w1T"/>
                 <outlet property="conMouseRightButton" destination="3vB-kl-o23" id="ff1-3Y-cdO"/>
                 <outlet property="conReleaseMouseByShaking" destination="WeH-uw-Lxb" id="jtq-vK-1px"/>
-                <outlet property="conReleaseMouseKeyComb" destination="gM2-l5-zdl" id="xdx-Re-W4m"/>
-                <outlet property="conReleaseMouseWithKeys" destination="9ea-iV-56O" id="LOQ-Ih-quK"/>
                 <outlet property="conRetainMouseByClick" destination="Zu3-Xh-TNY" id="d6j-sO-9M2"/>
                 <outlet property="conRetainMouseByEntering" destination="HVc-yD-TYz" id="zFR-ny-WTg"/>
-                <outlet property="conRetainMouseKeyComb" destination="l28-Wp-9Zm" id="pPW-TV-qF2"/>
-                <outlet property="conRetainMouseWithKeys" destination="JqZ-8e-HLt" id="1gQ-9C-5Lh"/>
                 <outlet property="conRight1" destination="KnJ-x2-H6b" id="90I-DT-oxr"/>
                 <outlet property="conRight1button" destination="tbT-23-uAI" id="VAI-3O-ui2"/>
                 <outlet property="conRight2" destination="oPF-x3-PoQ" id="oeZ-in-uAA"/>
@@ -735,17 +731,6 @@ DQ
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JqZ-8e-HLt">
-                                            <rect key="frame" x="61" y="319" width="92" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="by pressing" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="c6L-mY-7yL">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="conRetainMouseAction:" target="-2" id="b5F-1Z-BPv"/>
-                                            </connections>
-                                        </button>
                                         <button tag="1" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zu3-Xh-TNY">
                                             <rect key="frame" x="61" y="293" width="206" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -757,19 +742,8 @@ DQ
                                                 <action selector="conRetainMouseAction:" target="-2" id="Bf1-JI-zbp"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ea-iV-56O">
-                                            <rect key="frame" x="62" y="390" width="92" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="by pressing" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RAg-Bi-PFh">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="conReleaseMouseAction:" target="-2" id="dnp-sI-SYa"/>
-                                            </connections>
-                                        </button>
                                         <button tag="1" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WeH-uw-Lxb">
-                                            <rect key="frame" x="62" y="364" width="88" height="18"/>
+                                            <rect key="frame" x="62" y="363" width="88" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="by shaking" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="MZD-lX-DG7">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -790,52 +764,28 @@ DQ
                                                 <action selector="conRetainMouseAction:" target="-2" id="EeQ-5s-7ro"/>
                                             </connections>
                                         </button>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l28-Wp-9Zm">
-                                            <rect key="frame" x="159" y="317" width="72" height="19"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="roundRect" title="Alt+Cmd" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="74e-Yj-RGH" id="1aB-P1-8B8">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="label" size="11"/>
-                                                <menu key="menu" id="eJV-GG-57z">
-                                                    <items>
-                                                        <menuItem title="Alt+Cmd" state="on" id="74e-Yj-RGH">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Alt+Ctrl" tag="1" id="hPR-ki-teZ">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="conRetainMouseKeyCombAction:" target="-2" id="6Zo-gE-O0u"/>
-                                            </connections>
-                                        </popUpButton>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gM2-l5-zdl">
-                                            <rect key="frame" x="160" y="388" width="72" height="19"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="roundRect" title="Alt+Cmd" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" selectedItem="9Rc-4o-MeJ" id="4Mi-Jq-R2u">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="label" size="11"/>
-                                                <menu key="menu" id="tXK-wt-xPI">
-                                                    <items>
-                                                        <menuItem title="Alt+Cmd" state="on" id="9Rc-4o-MeJ">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Alt+Ctrl" tag="1" id="3UA-Uv-DYm">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="conReleaseMouseKeyCombAction:" target="-2" id="cTr-a6-wi6"/>
-                                            </connections>
-                                        </popUpButton>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tlt-aR-UwO">
                                             <rect key="frame" x="7" y="390" width="52" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Release" id="qV1-uo-qD6">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PK3-en-Lvk">
+                                            <rect key="frame" x="63" y="391" width="100" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="by pressing ⌘G" id="fHK-59-zZc">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y08-Te-0bo">
+                                            <rect key="frame" x="63" y="322" width="100" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="by pressing ⌘G" id="F6u-4l-h97">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

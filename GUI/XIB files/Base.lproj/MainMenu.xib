@@ -223,6 +223,12 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="rh0-lG-FJ7"/>
+                            <menuItem title="Grab Mouse" keyEquivalent="g" id="YQw-xB-u8y">
+                                <connections>
+                                    <action selector="grabMouseAction:" target="-1" id="4Tx-cU-eEK"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="HH8-Yz-QTC"/>
                             <menuItem title="Pause" keyEquivalent="y" id="430">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>

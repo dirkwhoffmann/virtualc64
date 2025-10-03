@@ -48,12 +48,8 @@ class Preferences {
     var disconnectJoyKeys = false
 
     // Mouse
-    var retainMouseKeyComb = 0
-    var retainMouseWithKeys = false
     var retainMouseByClick = false
     var retainMouseByEntering = false
-    var releaseMouseKeyComb = 0
-    var releaseMouseWithKeys = false
     var releaseMouseByShaking = false
 
     //

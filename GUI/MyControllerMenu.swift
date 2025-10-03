@@ -43,6 +43,10 @@ extension MyController: NSMenuItemValidation {
         switch item.action {
 
             // Edit menu
+        case #selector(MyController.grabMouseAction(_:)):
+            item.title = metal.gotMouse ? "Release Mouse" : "Retain Mouse"
+            return true
+
         case #selector(MyController.stopAndGoAction(_:)):
             item.title = running ? "Pause" : "Continue"
             return true
@@ -480,6 +484,11 @@ extension MyController: NSMenuItemValidation {
         }
         
         keyboard.type(text)
+    }
+
+    @IBAction func grabMouseAction(_ sender: Any!) {
+
+        metal.gotMouse ? metal.releaseMouse() : metal.retainMouse()
     }
     
     @IBAction func pauseAction(_ sender: Any!) {

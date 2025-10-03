@@ -71,12 +71,8 @@ class PreferencesController: DialogController {
     @IBOutlet weak var conDisconnectKeys: NSButton!
     
     // Mouse
-    @IBOutlet weak var conRetainMouseKeyComb: NSPopUpButton!
-    @IBOutlet weak var conRetainMouseWithKeys: NSButton!
     @IBOutlet weak var conRetainMouseByClick: NSButton!
     @IBOutlet weak var conRetainMouseByEntering: NSButton!
-    @IBOutlet weak var conReleaseMouseKeyComb: NSPopUpButton!
-    @IBOutlet weak var conReleaseMouseWithKeys: NSButton!
     @IBOutlet weak var conReleaseMouseByShaking: NSButton!
         
     //

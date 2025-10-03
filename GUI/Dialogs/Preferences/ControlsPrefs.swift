@@ -55,14 +55,8 @@ extension PreferencesController {
         conDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
         // Mouse
-        conRetainMouseKeyComb.selectItem(withTag: pref.retainMouseKeyComb)
-        conRetainMouseKeyComb.isEnabled = pref.retainMouseWithKeys
-        conRetainMouseWithKeys.state = pref.retainMouseWithKeys ? .on : .off
         conRetainMouseByClick.state = pref.retainMouseByClick ? .on : .off
         conRetainMouseByEntering.state = pref.retainMouseByEntering ? .on : .off
-        conReleaseMouseKeyComb.selectItem(withTag: pref.releaseMouseKeyComb)
-        conReleaseMouseKeyComb.isEnabled = pref.releaseMouseWithKeys
-        conReleaseMouseWithKeys.state = pref.releaseMouseWithKeys ? .on : .off
         conReleaseMouseByShaking.state = pref.releaseMouseByShaking ? .on : .off
     }
     
@@ -127,18 +121,11 @@ extension PreferencesController {
         pref.keyMaps[sender.tag] = [:]
         refresh()
     }
-            
-    @IBAction func conRetainMouseKeyCombAction(_ sender: NSPopUpButton!) {
-        
-        pref.retainMouseKeyComb = sender.selectedTag()
-        refresh()
-    }
-    
+
     @IBAction func conRetainMouseAction(_ sender: NSButton!) {
         
         switch sender.tag {
             
-        case 0: pref.retainMouseWithKeys   = (sender.state == .on)
         case 1: pref.retainMouseByClick    = (sender.state == .on)
         case 2: pref.retainMouseByEntering = (sender.state == .on)
         default: fatalError()
@@ -146,18 +133,11 @@ extension PreferencesController {
 
         refresh()
     }
-    
-    @IBAction func conReleaseMouseKeyCombAction(_ sender: NSPopUpButton!) {
-        
-        pref.releaseMouseKeyComb = sender.selectedTag()
-        refresh()
-    }
-    
+
     @IBAction func conReleaseMouseAction(_ sender: NSButton!) {
         
         switch sender.tag {
             
-        case 0: pref.releaseMouseWithKeys  = (sender.state == .on)
         case 1: pref.releaseMouseByShaking = (sender.state == .on)
         default: fatalError()
         }

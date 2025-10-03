@@ -471,12 +471,8 @@ extension Preferences {
         defaults.encode(Keys.Con.joyKeyMap2, keyMaps[2])
         defaults.set(Keys.Con.disconnectJoyKeys, disconnectJoyKeys)
 
-        defaults.set(Keys.Con.retainMouseKeyComb, retainMouseKeyComb)
-        defaults.set(Keys.Con.retainMouseWithKeys, retainMouseWithKeys)
         defaults.set(Keys.Con.retainMouseByClick, retainMouseByClick)
         defaults.set(Keys.Con.retainMouseByEntering, retainMouseByEntering)
-        defaults.set(Keys.Con.releaseMouseKeyComb, releaseMouseKeyComb)
-        defaults.set(Keys.Con.releaseMouseWithKeys, releaseMouseWithKeys)
         defaults.set(Keys.Con.releaseMouseByShaking, releaseMouseByShaking)
 
         defaults.save()
@@ -492,12 +488,8 @@ extension Preferences {
         defaults.decode(Keys.Con.joyKeyMap2, &keyMaps[2])
         disconnectJoyKeys = defaults.bool(Keys.Con.disconnectJoyKeys)
 
-        retainMouseKeyComb = defaults.int(Keys.Con.retainMouseKeyComb)
-        retainMouseWithKeys = defaults.bool(Keys.Con.retainMouseWithKeys)
         retainMouseByClick = defaults.bool(Keys.Con.retainMouseByClick)
         retainMouseByEntering = defaults.bool(Keys.Con.retainMouseByEntering)
-        releaseMouseKeyComb = defaults.int(Keys.Con.releaseMouseKeyComb)
-        releaseMouseWithKeys = defaults.bool(Keys.Con.releaseMouseWithKeys)
         releaseMouseByShaking = defaults.bool(Keys.Con.releaseMouseByShaking)
     }
 }
