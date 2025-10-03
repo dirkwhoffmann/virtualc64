@@ -457,8 +457,8 @@ class Inspector: DialogController {
         }
     }
     
-    func processMessage(_ msg: vc64.Message) {
-    
+    func process(messsage msg: vc64.Message) {
+
         var pc: Int { return Int(msg.cpu.pc) }
         // var vector: Int { return Int(msg.cpu.vector) }
         

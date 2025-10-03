@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------------
 
 protocol MessageReceiver {
-    func processMessage(_ msg: vc64.Message)
+    func process(messsage: vc64.Message)
 }
 
 class MyController: NSWindowController, MessageReceiver {
@@ -252,7 +252,7 @@ extension MyController {
                     let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
 
                     // Process message in the main thread
-                    Task { @MainActor in myself.processMessage(msg) }
+                    Task { @MainActor in myself.process(messsage: msg) }
                 }
 
             } else {
@@ -311,7 +311,7 @@ extension MyController {
         }
     }
 
-    func processMessage(_ msg: vc64.Message) {
+    func process(messsage msg: vc64.Message) {
 
         var value: Int { return Int(msg.value) }
         var nr: Int { return Int(msg.drive.nr) }
@@ -323,10 +323,10 @@ extension MyController {
 
         /*
         func passToInspector() {
-            for inspector in inspectors { inspector.processMessage(msg) }
+            for inspector in inspectors { inspector.process(messsage: msg) }
         }
         func passToDashboard() {
-            // for dashboard in dashboards { dashboard.processMessage(msg) }
+            // for dashboard in dashboards { dashboard.process(messsage: msg) }
         }
         */
         
@@ -448,8 +448,8 @@ extension MyController {
             refreshStatusBar()
 
         case .MON_SETTING:
-            renderer.processMessage(msg)
-            
+            renderer.process(messsage: msg)
+
         case .DRIVE_CONNECT,
                 .DRIVE_POWER where drive.value == 0:
             hideOrShowDriveMenus()
@@ -549,8 +549,8 @@ extension MyController {
         }
         
         // Pass message to all open auxiliary windows
-        for inspector in inspectors { inspector.processMessage(msg) }
-        for dashboard in dashboards { dashboard.processMessage(msg) }
+        for inspector in inspectors { inspector.process(messsage: msg) }
+        for dashboard in dashboards { dashboard.process(messsage: msg) }
     }
 
     //

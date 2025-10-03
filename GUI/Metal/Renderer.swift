@@ -189,7 +189,7 @@ class Renderer: NSObject, MTKViewDelegate {
             // Process all pending messages
             var msg = Message()
             while emu?.c64.getMessage(&msg) == true {
-                parent.processMessage(msg)
+                parent.process(messsage: msg)
             }
         }
 
@@ -226,8 +226,8 @@ class Renderer: NSObject, MTKViewDelegate {
         }
     }
 
-    func processMessage(_ msg: Message) {
-        
+    func process(messsage msg: Message) {
+
         let option = Opt(rawValue: Int(msg.value))!
 
         switch msg.type {
