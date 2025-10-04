@@ -15,7 +15,11 @@
         <customObject id="9vR-C0-Vqf" customClass="MyAppDelegate" customModule="VirtualC64" customModuleProvider="target">
             <connections>
                 <outlet property="datasetteMenu" destination="qM3-ZW-mhJ" id="2rz-po-AnF"/>
+                <outlet property="drive8ExportRecent" destination="Hkb-4l-9Ts" id="pLA-Cq-XRz"/>
+                <outlet property="drive8InsertRecent" destination="vhE-ve-l0K" id="eBH-w4-WZm"/>
                 <outlet property="drive8Menu" destination="XQm-ka-Db5" id="h36-F6-8Yq"/>
+                <outlet property="drive9ExportRecent" destination="FEE-ep-BvG" id="Avw-Cn-xwM"/>
+                <outlet property="drive9InsertRecent" destination="Odi-kw-wki" id="f8s-CH-xuc"/>
                 <outlet property="drive9Menu" destination="zmi-bv-6va" id="At6-Mn-w7m"/>
             </connections>
         </customObject>

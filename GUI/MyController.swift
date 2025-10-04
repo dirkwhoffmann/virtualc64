@@ -348,7 +348,7 @@ extension MyController {
 
                 if let url = mydocument.launchURL {
 
-                    try? mm.addMedia(url: url)
+                    try? mm.mount(url: url)
                     mydocument.launchURL = nil
                 }
             }

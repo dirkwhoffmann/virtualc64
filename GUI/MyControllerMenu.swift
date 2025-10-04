@@ -238,7 +238,7 @@ extension MyController: NSMenuItemValidation {
             if result == .OK, let url = self.myOpenPanel.url {
 
                 do {
-                    try self.mm.addMedia(url: url, allowedTypes: [.SCRIPT])
+                    try self.mm.mount(url: url, allowedTypes: [.SCRIPT])
                 } catch {
                     self.showAlert(.cantOpen(url: url), error: error, async: true)
                 }
@@ -759,7 +759,7 @@ extension MyController: NSMenuItemValidation {
                 if result == .OK, let url = self.myOpenPanel.url {
 
                     do {
-                        try self.mm.addMedia(url: url,
+                        try self.mm.mount(url: url,
                                              allowedTypes: [ .D64, .T64, .PRG, .P00, .G64 ],
                                              drive: id,
                                              options: [.force, .remember])
@@ -787,7 +787,7 @@ extension MyController: NSMenuItemValidation {
         if let url = MediaManager.getRecentlyInsertedDiskURL(slot) {
 
             do {
-                try self.mm.addMedia(url: url, allowedTypes: types, drive: drive)
+                try self.mm.mount(url: url, allowedTypes: types, drive: drive)
             } catch {
                 self.showAlert(.cantInsert, error: error)
             }
@@ -960,7 +960,7 @@ extension MyController: NSMenuItemValidation {
     func insertTapeAction(from url: URL) {
 
         do {
-            try mm.addMedia(url: url, allowedTypes: [ .TAP ])
+            try mm.mount(url: url, allowedTypes: [ .TAP ])
         } catch {
             self.showAlert(.cantInsertTape, error: error)
         }
@@ -1005,7 +1005,7 @@ extension MyController: NSMenuItemValidation {
             if result == .OK, let url = self.myOpenPanel.url {
                 
                 do {
-                    try self.mm.addMedia(url: url, allowedTypes: [ .CRT ])
+                    try self.mm.mount(url: url, allowedTypes: [ .CRT ])
                 } catch {
                     self.showAlert(.cantAttach, error: error, async: true)
                 }
@@ -1020,7 +1020,7 @@ extension MyController: NSMenuItemValidation {
         if let url = MediaManager.getRecentlyAtachedCartridgeURL(slot) {
 
             do {
-                try self.mm.addMedia(url: url, allowedTypes: [ .CRT ])
+                try self.mm.mount(url: url, allowedTypes: [ .CRT ])
             } catch {
                 self.showAlert(.cantAttach, error: error, async: true)
             }

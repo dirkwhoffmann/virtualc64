@@ -18,7 +18,13 @@ class MyApplication: NSApplication {
 public class MyAppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var drive8Menu: NSMenuItem!
+    @IBOutlet weak var drive8InsertRecent: NSMenuItem!
+    @IBOutlet weak var drive8ExportRecent: NSMenuItem!
+
     @IBOutlet weak var drive9Menu: NSMenuItem!
+    @IBOutlet weak var drive9InsertRecent: NSMenuItem!
+    @IBOutlet weak var drive9ExportRecent: NSMenuItem!
+
     @IBOutlet weak var datasetteMenu: NSMenuItem!
 
     // Replace the old document controller by instantiating a custom controller

@@ -184,11 +184,11 @@ class DropZone: Layer {
 
                 switch n {
 
-                case 0: try mm.addMedia(url: url, allowedTypes: [type], drive: DRIVE8)
-                case 1: try mm.addMedia(url: url, allowedTypes: [type], drive: DRIVE9)
-                case 2: try mm.addMedia(url: url, allowedTypes: [type], options: [.flash])
-                case 3: try mm.addMedia(url: url, allowedTypes: [type])
-                case 4: try mm.addMedia(url: url, allowedTypes: [type])
+                case 0: try mm.mount(url: url, allowedTypes: [type], drive: DRIVE8)
+                case 1: try mm.mount(url: url, allowedTypes: [type], drive: DRIVE9)
+                case 2: try mm.mount(url: url, allowedTypes: [type], options: [.flash])
+                case 3: try mm.mount(url: url, allowedTypes: [type])
+                case 4: try mm.mount(url: url, allowedTypes: [type])
 
                 default:
                     fatalError()
@@ -200,11 +200,11 @@ class DropZone: Layer {
 
                 case .SNAPSHOT:
 
-                    try mm.addMedia(url: url, allowedTypes: [type])
+                    try mm.mount(url: url, allowedTypes: [type])
 
                 case .SCRIPT:
 
-                    try mm.addMedia(url: url, allowedTypes: [type])
+                    try mm.mount(url: url, allowedTypes: [type])
                     mm.console.open()
 
                 default:

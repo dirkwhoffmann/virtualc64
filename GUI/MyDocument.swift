@@ -121,7 +121,7 @@ class MyDocument: NSDocument {
         debug(.media)
 
         do {
-            try mm.addMedia(url: url, allowedTypes: [.SNAPSHOT])
+            try mm.mount(url: url, allowedTypes: [.SNAPSHOT])
 
         } catch let error as AppError {
 

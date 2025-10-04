@@ -26,7 +26,13 @@ class MediaManager {
     var emu: EmulatorProxy? { return mydocument.emu }
     var mycontroller: MyController { return mydocument.controller }
     var console: Console { return mycontroller.renderer.console }
-    
+
+    // References to menu outlets
+    var drive8InsertRecent: NSMenuItem! { return myAppDelegate.drive8InsertRecent }
+    var drive9InsertRecent: NSMenuItem! { return myAppDelegate.drive9InsertRecent }
+    var drive8ExportRecent: NSMenuItem! { return myAppDelegate.drive8ExportRecent }
+    var drive9ExportRecent: NSMenuItem! { return myAppDelegate.drive9ExportRecent }
+
     // Shared list of recently inserted tapes
     static var insertedTapes: [URL] = []
     
@@ -47,8 +53,42 @@ class MediaManager {
         
         debug(.lifetime, "Creating media manager")
         self.mydocument = document
+
+        initUrlMenus([drive8InsertRecent, drive9InsertRecent], count: 10,
+                     action: #selector(MyController.insertRecentDiskAction(_:)))
+        initUrlMenus([drive8ExportRecent, drive9ExportRecent], count: 1,
+                     action: #selector(MyController.exportRecentDiskAction(_:)))
     }
-    
+
+    func initUrlMenus(_ menus: [NSMenuItem], count: Int,
+                      action: Selector?, clearAction: Selector? = nil) {
+
+        for (index, menu) in menus.enumerated() {
+
+            initUrlMenu(menu, count: count, tag: index, action: action, clearAction: clearAction)
+        }
+    }
+
+    func initUrlMenu(_ menuItem: NSMenuItem, count: Int, tag: Int,
+                     action: Selector?, clearAction: Selector? = nil) {
+
+        let menu = menuItem.submenu!
+        menu.removeAllItems()
+
+        for index in 0..<count {
+
+            let item = NSMenuItem(title: "\(index)", action: action, keyEquivalent: "")
+            item.tag = tag << 16 | index
+            menu.addItem(item)
+        }
+
+        if let clearAction = clearAction {
+
+            menu.addItem(NSMenuItem.separator())
+            menu.addItem(NSMenuItem(title: "Clear Menu", action: clearAction, keyEquivalent: ""))
+        }
+    }
+
     //
     // Handling lists of recently used URLs
     //
@@ -137,84 +177,52 @@ class MediaManager {
     }
     
     //
-    // Loading media files
+    // Creating media files from URLs
     //
-    
-    func createFileProxy(from url: URL, allowedTypes: [vc64.FileType]) throws -> MediaFileProxy {
-        
+
+    static func createFileProxy(from url: URL, type: FileType) throws -> MediaFileProxy {
+
+        return try createFileProxy(from: url, allowedTypes: [type])
+    }
+
+    static func createFileProxy(from url: URL, allowedTypes: [FileType]) throws -> MediaFileProxy {
+
         debug(.media, "Reading file \(url.lastPathComponent)")
-        
+
         // If the provided URL points to compressed file, decompress it first
         let newUrl = url.unpacked(maxSize: 2048 * 1024)
-        
+
         // Iterate through all allowed file types
         for type in allowedTypes {
-            
+
             do {
-                switch type {
-                    
-                case .SNAPSHOT:
-                    return try MediaFileProxy.make(with: newUrl, type: .SNAPSHOT)
-                    
-                case .SCRIPT:
-                    return try MediaFileProxy.make(with: newUrl, type: .SCRIPT)
-                    
-                case .CRT:
-                    return try MediaFileProxy.make(with: newUrl, type: .CRT)
-                    
-                case .D64:
-                    return try MediaFileProxy.make(with: newUrl, type: .D64)
-                    
-                case .T64:
-                    return try MediaFileProxy.make(with: newUrl, type: .T64)
-                    
-                case .PRG:
-                    return try MediaFileProxy.make(with: newUrl, type: .PRG)
-                    
-                case .P00:
-                    return try MediaFileProxy.make(with: newUrl, type: .P00)
-                    
-                case .G64:
-                    return try MediaFileProxy.make(with: newUrl, type: .G64)
-                    
-                case .TAP:
-                    return try MediaFileProxy.make(with: newUrl, type: .TAP)
-                    
-                case .FOLDER:
-                    return try MediaFileProxy.make(with: newUrl, type: .FOLDER)
-                    
-                default:
-                    fatalError()
-                }
-                
+                return try MediaFileProxy.make(with: newUrl, type: type)
             } catch let error as AppError {
-                if error.errorCode != .FILE_TYPE_MISMATCH {
-                    throw error
-                }
+                if error.errorCode != .FILE_TYPE_MISMATCH { throw error }
             }
         }
-        
+
         // None of the allowed types matched the file
         throw AppError(.FILE_TYPE_MISMATCH,
                        "The type of this file is not known to the emulator.")
     }
     
     //
-    // Importing media files
+    // Mounting media files
     //
-    
-    func addMedia(url: URL,
-                  allowedTypes types: [vc64.FileType] = vc64.FileType.all,
-                  drive id: Int = DRIVE8,
-                  options: [Option] = [.remember]) throws {
-        
+
+    func mount(url: URL,
+               allowedTypes types: [FileType] = FileType.all,
+               drive n: Int = DRIVE8,
+               options: [Option] = [.remember]) throws {
+
         debug(.media, "url = \(url) types = \(types)")
         
         guard let emu = emu else { return }
         
         // Read file
-        let file = try createFileProxy(from: url, allowedTypes: types)
-        
+        let file = try MediaManager.createFileProxy(from: url, allowedTypes: types)
+
         // Remember the URL if requested
         if options.contains(.remember) {
             
@@ -242,15 +250,15 @@ class MediaManager {
         
         // Process file
         if options.contains(.flash) {
-            try flashMedia(proxy: file, options: options)
+            try flash(proxy: file, options: options)
         } else {
-            try addMedia(proxy: file, drive: emu.drive(id), options: options)
+            try mount(proxy: file, drive: emu.drive(n), options: options)
         }
     }
-    
-    func addMedia(proxy: MediaFileProxy,
-                  drive: DriveProxy? = nil,
-                  options: [Option] = []) throws {
+
+    func mount(proxy: MediaFileProxy,
+               drive: DriveProxy? = nil,
+               options: [Option] = []) throws {
         
         var proceedUnsaved: Bool {
             return options.contains(.force) || proceedWithUnsavedFloppyDisk(drive: drive!)
@@ -299,7 +307,7 @@ class MediaManager {
         }
     }
     
-    func flashMedia(proxy: MediaFileProxy, options: [Option] = []) throws {
+    func flash(proxy: MediaFileProxy, options: [Option] = []) throws {
         
         if let emu = emu {
             
