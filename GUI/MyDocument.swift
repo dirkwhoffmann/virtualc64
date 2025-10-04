@@ -25,7 +25,9 @@ extension UTType {
 
 class MyDocument: NSDocument {
 
+    // The window controller of this document
     var controller: MyController { return windowControllers.first as! MyController }
+
     var console: Console { return controller.renderer.console }
     var canvas: Canvas { return controller.renderer.canvas }
     var pref: Preferences { return myAppDelegate.pref }
@@ -53,14 +55,12 @@ class MyDocument: NSDocument {
 
         super.init()
         // Check for OS compatibility
-        /*
-        if #available(macOS 26, *) {
+        if #available(macOS 27, *) {
 
             showAlert(.unsupportedOSVersion)
             NSApp.terminate(self)
             return
         }
-         */
 
         // Check for Metal support
         if MTLCreateSystemDefaultDevice() == nil {
@@ -113,17 +113,7 @@ class MyDocument: NSDocument {
     override open func read(from url: URL, ofType typeName: String) throws {
 
         debug(.media)
-
         launchURL = url
-        /*
-         do {
-         try mm.addMedia(url: url, allowedTypes: vc64.FileType.draggable)
-
-         } catch let error as AppError {
-
-         throw NSError(error: error)
-         }
-         */
     }
 
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {

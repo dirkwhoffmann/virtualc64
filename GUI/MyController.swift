@@ -58,7 +58,7 @@ class MyController: NSWindowController, MessageReceiver {
     var virtualKeyboard: VirtualKeyboardController?
     
     // Speedometer to measure clock frequence and frames per second
-    var speedometer: Speedometer!
+    var speedometer = Speedometer()
 
     // Remembers if an illegal instruction has jammed the CPU
     var jammed = false
@@ -204,7 +204,7 @@ extension MyController {
         // if let url = mydocument.launchURL { try? mm.addMedia(url: url) }
 
         // Create speed monitor
-        speedometer = Speedometer()
+        // speedometer = Speedometer()
         
         // Update toolbar
         toolbar.validateVisibleItems()
