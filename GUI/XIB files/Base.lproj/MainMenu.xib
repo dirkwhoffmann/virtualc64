@@ -588,7 +588,7 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Export To" id="pDh-nd-HeL">
                                     <items>
-                                        <menuItem title="Disk" id="qCl-TJ-dqC">
+                                        <menuItem id="qCl-TJ-dqC">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportRecentDiskAction:" target="-1" id="COa-hQ-08A"/>
@@ -736,7 +736,7 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Export To" id="NW2-B2-fhu">
                                     <items>
-                                        <menuItem title="Disk" tag="1" id="yfZ-1d-45B">
+                                        <menuItem tag="1" id="yfZ-1d-45B">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportRecentDiskAction:" target="-1" id="Ybc-bf-UVK"/>

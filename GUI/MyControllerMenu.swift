@@ -72,17 +72,19 @@ extension MyController: NSMenuItemValidation {
         case #selector(MyController.insertRecentDiskAction(_:)):
             return validateURLlist(MediaManager.insertedFloppyDisks, image: smallDisk)
 
-        case  #selector(MyController.ejectDiskAction(_:)),
+        case #selector(MyController.ejectDiskAction(_:)),
             #selector(MyController.exportDiskAction(_:)),
             #selector(MyController.inspectDiskAction(_:)),
             #selector(MyController.inspectVolumeAction(_:)):
             return drive.info.hasDisk
 
         case #selector(MyController.exportRecentDiskDummyAction8(_:)):
-            return emu.drive8.info.hasDisk
+            let empty = mm.getRecentlyExportedDiskURL(0, drive: DRIVE8) == nil
+            return emu.drive8.info.hasDisk && !empty
 
         case #selector(MyController.exportRecentDiskDummyAction9(_:)):
-            return emu.drive9.info.hasDisk
+            let empty = mm.getRecentlyExportedDiskURL(0, drive: DRIVE9) == nil
+            return emu.drive9.info.hasDisk && !empty
 
         case #selector(MyController.exportRecentDiskAction(_:)):
             return validateURLlist(mm.exportedFloppyDisks[driveID], image: smallDisk)
