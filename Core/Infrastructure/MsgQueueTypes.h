@@ -100,7 +100,7 @@ enum class Msg : long
     SHAKING,            ///< A shaking mouse has been detected
 
     // Snapshots
-    SNAPSHOT_TAKEN,     ///< A snapshot has been taken (see OPT_C64_SNAP_AUTO)
+    SNAPSHOT_TAKEN,     ///< A snapshot has been taken (see OPT_SNAP_AUTO)
     SNAPSHOT_RESTORED,  ///< A snapshot has been restored
 
     // Screen recording
