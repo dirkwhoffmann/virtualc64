@@ -180,9 +180,9 @@ C64::getOption(Opt opt) const
         case Opt::C64_SPEED_BOOST:       return (i64)config.speedBoost;
         case Opt::C64_VSYNC:             return (i64)config.vsync;
         case Opt::C64_RUN_AHEAD:         return (i64)config.runAhead;
-        case Opt::SNAP_AUTO:         return (i64)config.snapshots;
-        case Opt::SNAP_DELAY:        return (i64)config.snapshotDelay;
-        case Opt::SNAP_COMPRESSOR:   return (i64)config.snapshotCompressor;
+        case Opt::C64_SNAP_AUTO:         return (i64)config.snapshots;
+        case Opt::C64_SNAP_DELAY:        return (i64)config.snapshotDelay;
+        case Opt::C64_SNAP_COMPRESSOR:   return (i64)config.snapshotCompressor;
 
         default:
             fatalError;
@@ -223,18 +223,18 @@ C64::checkOption(Opt opt, i64 value)
             }
             return;
 
-        case Opt::SNAP_AUTO:
+        case Opt::C64_SNAP_AUTO:
 
             return;
 
-        case Opt::SNAP_DELAY:
+        case Opt::C64_SNAP_DELAY:
 
             if (value < 10 || value > 3600) {
                 throw AppError(Fault::OPT_INV_ARG, "10...3600");
             }
             return;
 
-        case Opt::SNAP_COMPRESSOR:
+        case Opt::C64_SNAP_COMPRESSOR:
 
             if (!CompressorEnum::isValid(value)) {
                 throw AppError(Fault::OPT_INV_ARG, CompressorEnum::keyList());
@@ -279,19 +279,19 @@ C64::setOption(Opt opt, i64 value)
             config.runAhead = isize(value);
             return;
 
-        case Opt::SNAP_AUTO:
+        case Opt::C64_SNAP_AUTO:
 
             config.snapshots = bool(value);
             scheduleNextSNPEvent();
             return;
 
-        case Opt::SNAP_DELAY:
+        case Opt::C64_SNAP_DELAY:
 
             config.snapshotDelay = isize(value);
             scheduleNextSNPEvent();
             return;
 
-        case Opt::SNAP_COMPRESSOR:
+        case Opt::C64_SNAP_COMPRESSOR:
 
             config.snapshotCompressor = Compressor(value);
             return;

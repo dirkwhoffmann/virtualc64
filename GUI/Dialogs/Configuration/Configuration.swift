@@ -281,8 +281,8 @@ class Configuration {
     }
 
     var snapCompressor: Int {
-        get { return emu?.get(.SNAP_COMPRESSOR) ?? 0 }
-        set { emu?.set(.SNAP_COMPRESSOR, value: newValue) }
+        get { return emu?.get(.C64_SNAP_COMPRESSOR) ?? 0 }
+        set { emu?.set(.C64_SNAP_COMPRESSOR, value: newValue) }
     }
 
     //

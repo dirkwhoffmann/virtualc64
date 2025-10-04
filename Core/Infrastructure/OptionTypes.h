@@ -38,9 +38,9 @@ enum class Opt : long
     C64_RUN_AHEAD,          ///< Number of run-ahead frames
 
     // Snapshots
-    SNAP_AUTO,              ///< Automatically take a snapshots
-    SNAP_DELAY,             ///< Delay between two snapshots in seconds
-    SNAP_COMPRESSOR,        ///< Snapshot compression method
+    C64_SNAP_AUTO,          ///< Automatically take a snapshots
+    C64_SNAP_DELAY,         ///< Delay between two snapshots in seconds
+    C64_SNAP_COMPRESSOR,    ///< Snapshot compression method
 
     // CPU
     DASM_NUMBERS,           ///< Disassembler number format
@@ -224,9 +224,9 @@ struct OptEnum : Reflection<OptEnum, Opt> {
             case Opt::C64_SPEED_BOOST:       return "C64.SPEED_BOOST";
             case Opt::C64_RUN_AHEAD:         return "C64.RUN_AHEAD";
             
-            case Opt::SNAP_AUTO:         return "C64.SNAP_AUTO";
-            case Opt::SNAP_DELAY:        return "C64.SNAP_DELAY";
-            case Opt::SNAP_COMPRESSOR:   return "C64.SNAP_COMPRESSOR";
+            case Opt::C64_SNAP_AUTO:         return "C64.SNAP_AUTO";
+            case Opt::C64_SNAP_DELAY:        return "C64.SNAP_DELAY";
+            case Opt::C64_SNAP_COMPRESSOR:   return "C64.SNAP_COMPRESSOR";
 
             case Opt::DASM_NUMBERS:          return "CPU.DASM_NUMBERS";
                 
@@ -384,9 +384,9 @@ struct OptEnum : Reflection<OptEnum, Opt> {
             case Opt::C64_SPEED_BOOST:      return "Speed adjustment";
             case Opt::C64_RUN_AHEAD:         return "Run-ahead frames";
 
-            case Opt::SNAP_AUTO:         return "Automatically take snapshots";
-            case Opt::SNAP_DELAY:        return "Time span between two snapshots";
-            case Opt::SNAP_COMPRESSOR:   return "Snapshot compression method";
+            case Opt::C64_SNAP_AUTO:         return "Automatically take snapshots";
+            case Opt::C64_SNAP_DELAY:        return "Time span between two snapshots";
+            case Opt::C64_SNAP_COMPRESSOR:   return "Snapshot compression method";
 
             case Opt::DASM_NUMBERS:          return "Disassembler number format";
                 
