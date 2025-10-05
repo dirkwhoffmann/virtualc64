@@ -48,6 +48,8 @@
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
+		5033EFAB2E92A07000C3E0EE /* MyToolbarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */; };
+		5033EFAD2E92A0CE00C3E0EE /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */; };
 		5036E0B7261AEF000048E66A /* Console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0AF261AEF000048E66A /* Console.cpp */; };
 		5036E0B9261AEF000048E66A /* RetroShellCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B2261AEF000048E66A /* RetroShellCmd.cpp */; };
 		5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B3261AEF000048E66A /* RetroShell.cpp */; };
@@ -602,6 +604,8 @@
 		50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDirEntry.cpp; sourceTree = "<group>"; };
 		50300AED258B2C5400D261E3 /* FSDirEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDirEntry.h; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbarItems.swift; sourceTree = "<group>"; };
+		5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
 		5036E0AE261AEF000048E66A /* RetroShell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetroShell.h; sourceTree = "<group>"; };
 		5036E0AF261AEF000048E66A /* Console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Console.cpp; sourceTree = "<group>"; };
 		5036E0B1261AEF000048E66A /* Console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Console.h; sourceTree = "<group>"; };
@@ -1388,6 +1392,7 @@
 		50157EF72825B047000E9DDD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */,
 				50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */,
 				50BE4B6D24E7FBE1008F39C9 /* Datatypes.swift */,
 				50BE4B5F24E7F8A1008F39C9 /* Date.swift */,
@@ -1460,6 +1465,7 @@
 				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
 				505184DD24F23484002C6124 /* MyControllerSnapshots.swift */,
 				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
+				5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */,
 				50B9F2802826392400BDFE7B /* MediaManager.swift */,
 				50157EF62825B01D000E9DDD /* System */,
 				506CE96621998C4500B70A3A /* Metal */,
@@ -2693,6 +2699,7 @@
 				50FF1FCB26BAB3DA0061E5CE /* DropZone.swift in Sources */,
 				5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */,
 				505A132F2C3503EB00FF8D2C /* UserPortBase.cpp in Sources */,
+				5033EFAD2E92A0CE00C3E0EE /* Symbols.swift in Sources */,
 				50D20B752508F6D70088E8F2 /* VICIICycles.cpp in Sources */,
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
 				504C439124AF29AC00E69CAE /* VICIIMemory.cpp in Sources */,
@@ -2799,6 +2806,7 @@
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,
 				50FFB54D2B8262BA00042771 /* Serializable.cpp in Sources */,
 				504C439624AF29AC00E69CAE /* pot.cc in Sources */,
+				5033EFAB2E92A07000C3E0EE /* MyToolbarItems.swift in Sources */,
 				504C43A124AF29AC00E69CAE /* SerialPort.cpp in Sources */,
 				50D3092024C625B200B92563 /* ProxyExtensions.swift in Sources */,
 				50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */,

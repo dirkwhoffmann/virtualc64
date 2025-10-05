@@ -15,10 +15,12 @@ struct InputDevice {
     static let mouse = 2
     static let joystick1 = 3
     static let joystick2 = 4
+    static let joystick3 = 5
+    static let joystick4 = 6
 }
 
 /* An object of this class holds and manages an array of GamePad objects.
- * Up to five gamepads are managed. The first three gamepads are initialized
+ * Up to fisevenve gamepads are managed. The first three gamepads are initialized
  * by default and represent a mouse and two keyboard emulated joysticks.
  * All remaining gamepads are added dynamically when HID devices are connected.
  */
@@ -142,9 +144,9 @@ class GamePadManager {
         var nr = 0
         while !isEmpty(slot: nr) { nr += 1 }
         
-        // We support up to 5 devices
-        if nr < 5 { return nr }
-        
+        // We support up to 7 devices
+        if nr < 7 { return nr }
+
         warn("Maximum number of devices reached")
         return nil
     }
@@ -269,17 +271,24 @@ class GamePadManager {
     }
     
     func refresh(popup: NSPopUpButton, hide: Bool = false) {
-        
+
+        refresh(menu: popup.menu!, hide: hide)
+    }
+
+    func refresh(menu: NSMenu, hide: Bool = false) {
+
         let slots = [
             InputDevice.mouse,
             InputDevice.keyset1,
             InputDevice.keyset2,
             InputDevice.joystick1,
-            InputDevice.joystick2
+            InputDevice.joystick2,
+            InputDevice.joystick3,
+            InputDevice.joystick4
         ]
-        
+
         for s in slots {
-            if let item = popup.menu?.item(withTag: s) {
+            if let item = menu.item(withTag: s) {
                 item.title = name(slot: s)
                 item.image = icon(slot: s)
                 item.isEnabled = isUsed(slot: s)

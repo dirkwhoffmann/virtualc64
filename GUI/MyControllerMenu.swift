@@ -591,8 +591,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func stickyKeyboardAction(_ sender: Any!) {
         
         if virtualKeyboard == nil {
-            let name = NSNib.Name("VirtualKeyboard")
-            virtualKeyboard = VirtualKeyboardController(with: self, nibName: name)
+            virtualKeyboard = VirtualKeyboardController.make(parent: self)
         }
         if virtualKeyboard?.window?.isVisible == true {
             debug(.lifetime, "Virtual keyboard already open")
@@ -600,7 +599,7 @@ extension MyController: NSMenuItemValidation {
             debug(.lifetime, "Opeining virtual keyboard as a window")
         }
 
-        virtualKeyboard?.showWindow()
+        virtualKeyboard?.showAsWindow()
     }
 
     /*

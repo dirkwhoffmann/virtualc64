@@ -119,7 +119,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var speedStepper: NSStepper!
 
     // Toolbar
-    @IBOutlet weak var toolbar: MyToolbar!
+    var toolbar: MyToolbar { (window?.toolbar as? MyToolbar)! }
 }
 
 extension MyController {
@@ -158,6 +158,11 @@ extension MyController {
         mydocument = document as? MyDocument
         config = Configuration(with: self)
         macAudio = MacAudio(with: self)
+
+        // Create toolbar
+        // let tb = MyToolbar(identifier: "MyToolbar")
+        // tb.controller = self
+        window?.toolbar = MyToolbar(controller: self)
 
         // Create keyboard controller
         keyboard = KeyboardController(parent: self)
