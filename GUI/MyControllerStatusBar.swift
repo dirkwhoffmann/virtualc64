@@ -11,10 +11,12 @@ extension MyController {
 
     var hourglassIcon: NSImage? {
 
-        if vc64.Warp(rawValue: config.warpMode) == .AUTO {
-            return NSImage(named: emu?.info.warping == true ? "hourglass3Template" : "hourglass1Template")
+        guard let emu = emu else { return nil }
+
+        if Warp(rawValue: config.warpMode) == .AUTO {
+            return NSImage(named: emu.info.warping ? "hourglass3Template" : "hourglass1Template")
         } else {
-            return NSImage(named: emu?.info.warping == true ? "warpOnTemplate" : "warpOffTemplate")
+            return NSImage(named: emu.info.warping ? "warpOnTemplate" : "warpOffTemplate")
         }
     }
 
@@ -46,13 +48,12 @@ extension MyController {
         // Datasette
         refreshStatusBarDatasette()
 
-        // Remote server icon
+        // Icons
         refreshStatusBarServerIcon()
-
-        // Warp mode
+        refreshStatusBarTrackIcon()
         refreshStatusBarWarpIcon()
 
-        // Speed adjust
+        // Speed stepper
         speedStepper.integerValue = boost
         speedStepper.toolTip = "\(boost) %"
 
@@ -223,6 +224,15 @@ extension MyController {
             let min = counter / 60
             let sec = counter % 60
             tapeCounter.stringValue = String(format: "%02d:%02d", min, sec)
+        }
+    }
+
+    func refreshStatusBarTrackIcon() {
+
+        trackIcon.toolTip = infoText
+        trackIcon.contentTintColor = infoText == nil ? nil : NSColor.warning
+        if let image = NSImage(systemSymbolName: "waveform.badge.magnifyingglass", accessibilityDescription: nil) {
+            trackIcon.image = image
         }
     }
 
