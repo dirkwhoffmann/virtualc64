@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-DebugConsole::_enter()
+DebuggerConsole::_enter()
 {
     msgQueue.put(Msg::RSH_DEBUGGER, true);
 
@@ -31,7 +31,7 @@ DebugConsole::_enter()
 }
 
 void
-DebugConsole::_pause()
+DebuggerConsole::_pause()
 {
     *this << '\n' << '\n';
     exec("state");
@@ -39,7 +39,7 @@ DebugConsole::_pause()
 }
 
 string
-DebugConsole::getPrompt()
+DebuggerConsole::getPrompt()
 {
     std::stringstream ss;
 
@@ -55,14 +55,14 @@ DebugConsole::getPrompt()
 }
 
 void
-DebugConsole::welcome()
+DebuggerConsole::welcome()
 {
     printHelp();
     *this << '\n';
 }
 
 void
-DebugConsole::printHelp()
+DebuggerConsole::printHelp()
 {
     storage << "Type 'help' or press 'TAB' twice for help.\n";
     storage << "Type '.' or press 'SHIFT+RETURN' to exit debug mode.";
@@ -74,7 +74,7 @@ DebugConsole::printHelp()
 }
 
 void
-DebugConsole::pressReturn(bool shift)
+DebuggerConsole::pressReturn(bool shift)
 {
     if (!shift && input.empty()) {
 
@@ -87,7 +87,7 @@ DebugConsole::pressReturn(bool shift)
 }
 
 void
-DebugConsole::initCommands(RetroShellCmd &root)
+DebuggerConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
 
@@ -95,7 +95,7 @@ DebugConsole::initCommands(RetroShellCmd &root)
     // Program execution
     //
 
-    RetroShellCmd::currentGroup = "Program execution";
+    RSCommand::currentGroup = "Program execution";
 
     root.add({
         
@@ -266,7 +266,7 @@ DebugConsole::initCommands(RetroShellCmd &root)
     // Monitoring
     //
 
-    RetroShellCmd::currentGroup = "Monitoring";
+    RSCommand::currentGroup = "Monitoring";
 
     root.add({
         
@@ -425,7 +425,7 @@ DebugConsole::initCommands(RetroShellCmd &root)
     // Components
     //
     
-    RetroShellCmd::currentGroup = "Components";
+    RSCommand::currentGroup = "Components";
 
     root.add({
         
@@ -557,7 +557,7 @@ DebugConsole::initCommands(RetroShellCmd &root)
     // Peripherals
     //
     
-    RetroShellCmd::currentGroup = "Peripherals";
+    RSCommand::currentGroup = "Peripherals";
 
     root.add({
         
@@ -733,7 +733,7 @@ DebugConsole::initCommands(RetroShellCmd &root)
     // Miscellaneous
     //
 
-    RetroShellCmd::currentGroup = "Miscellaneous";
+    RSCommand::currentGroup = "Miscellaneous";
 
     root.add({
         

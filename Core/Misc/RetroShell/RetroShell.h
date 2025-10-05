@@ -55,8 +55,8 @@ class RetroShell final : public SubComponent {
 public:
 
     // Consoles
-    CommandConsole commander = CommandConsole(c64, 0);
-    DebugConsole debugger = DebugConsole(c64, 1);
+    CommanderConsole commander = CommanderConsole(c64, 0);
+    DebuggerConsole debugger = DebuggerConsole(c64, 1);
 
     // Indicates if one of the consoles has new contents
     bool isDirty = false;

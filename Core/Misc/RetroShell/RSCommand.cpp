@@ -11,17 +11,17 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "RetroShellCmd.h"
+#include "RSCommand.h"
 #include "StringUtils.h"
 #include <algorithm>
 #include <utility>
 
 namespace vc64 {
 
-string RetroShellCmd::currentGroup;
+string RSCommand::currentGroup;
 
 void
-RetroShellCmd::add(const RetroShellCmdDescriptor &descriptor)
+RSCommand::add(const RetroShellCmdDescriptor &descriptor)
 {
     assert(!descriptor.tokens.empty());
 
@@ -35,11 +35,11 @@ RetroShellCmd::add(const RetroShellCmdDescriptor &descriptor)
     auto helpName = descriptor.help.size() > 1 ? descriptor.help[1] : name;
 
     // Traversing the command tree
-    RetroShellCmd *node = seek(std::vector<string> { tokens.begin(), tokens.end() - 1 });
+    RSCommand *node = seek(std::vector<string> { tokens.begin(), tokens.end() - 1 });
     assert(node != nullptr);
     
     // Create the instruction
-    RetroShellCmd cmd;
+    RSCommand cmd;
     cmd.name = name;
     cmd.fullName = (node->fullName.empty() ? "" : node->fullName + " ") + helpName;
     cmd.helpName = helpName;
@@ -58,14 +58,14 @@ RetroShellCmd::add(const RetroShellCmdDescriptor &descriptor)
 }
 
 void
-RetroShellCmd::clone(const std::vector<string> &tokens,
+RSCommand::clone(const std::vector<string> &tokens,
                      const string &alias,
                      const std::vector<isize> &values)
 {
     assert(!tokens.empty());
 
     // Find the command to clone
-    RetroShellCmd *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() });
+    RSCommand *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() });
     assert(cmd != nullptr);
     
     // Assemble the new token list
@@ -194,8 +194,8 @@ RetroShellCmd::clone(const string &alias, const std::vector<string> &tokens, con
 }
 */
 
-const RetroShellCmd *
-RetroShellCmd::seek(const string& token) const
+const RSCommand *
+RSCommand::seek(const string& token) const
 {
     for (auto &it : subCommands) {
         if (it.name == token) return &it;
@@ -203,16 +203,16 @@ RetroShellCmd::seek(const string& token) const
     return nullptr;
 }
 
-RetroShellCmd *
-RetroShellCmd::seek(const string& token)
+RSCommand *
+RSCommand::seek(const string& token)
 {
-    return const_cast<RetroShellCmd *>(std::as_const(*this).seek(token));
+    return const_cast<RSCommand *>(std::as_const(*this).seek(token));
 }
 
-const RetroShellCmd *
-RetroShellCmd::seek(const std::vector<string> &tokens) const
+const RSCommand *
+RSCommand::seek(const std::vector<string> &tokens) const
 {
-    const RetroShellCmd *result = this;
+    const RSCommand *result = this;
     
     for (auto &it : tokens) {
         if ((result = result->seek(it)) == nullptr) break;
@@ -221,16 +221,16 @@ RetroShellCmd::seek(const std::vector<string> &tokens) const
     return result;
 }
 
-RetroShellCmd *
-RetroShellCmd::seek(const std::vector<string> &tokens)
+RSCommand *
+RSCommand::seek(const std::vector<string> &tokens)
 {
-    return const_cast<RetroShellCmd *>(std::as_const(*this).seek(tokens));
+    return const_cast<RSCommand *>(std::as_const(*this).seek(tokens));
 }
 
-std::vector<const RetroShellCmd *>
-RetroShellCmd::filterPrefix(const string& prefix) const
+std::vector<const RSCommand *>
+RSCommand::filterPrefix(const string& prefix) const
 {
-    std::vector<const RetroShellCmd *> result;
+    std::vector<const RSCommand *> result;
     auto uprefix = util::uppercased(prefix);
 
     for (auto &it : subCommands) {
@@ -244,14 +244,14 @@ RetroShellCmd::filterPrefix(const string& prefix) const
 }
 
 string
-RetroShellCmd::autoComplete(const string& token)
+RSCommand::autoComplete(const string& token)
 {
     string result;
 
     auto matches = filterPrefix(token);
     if (!matches.empty()) {
         
-        const RetroShellCmd *first = matches.front();
+        const RSCommand *first = matches.front();
         for (usize i = 0;; i++) {
 
             for (auto m: matches) {
@@ -267,7 +267,7 @@ RetroShellCmd::autoComplete(const string& token)
 }
 
 string
-RetroShellCmd::usage() const
+RSCommand::usage() const
 {
     string arguments;
 

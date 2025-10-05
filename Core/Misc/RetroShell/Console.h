@@ -14,7 +14,7 @@
 
 #include "RetroShellTypes.h"
 #include "SubComponent.h"
-#include "RetroShellCmd.h"
+#include "RSCommand.h"
 #include "Parser.h"
 #include "TextStorage.h"
 
@@ -60,7 +60,7 @@ class Console : public SubComponent
 protected:
 
     // Root node of the command tree
-    RetroShellCmd root;
+    RSCommand root;
 
 
     //
@@ -106,9 +106,9 @@ public:
 
 protected:
 
-    virtual void initCommands(RetroShellCmd &root);
+    virtual void initCommands(RSCommand &root);
     const char *registerComponent(CoreComponent &c);
-    const char *registerComponent(CoreComponent &c, RetroShellCmd &root);
+    const char *registerComponent(CoreComponent &c, RSCommand &root);
 
 
     //
@@ -296,7 +296,7 @@ protected:
 public:
 
     // Returns the root node of the instruction tree
-    RetroShellCmd &getRoot() { return root; }
+    RSCommand &getRoot() { return root; }
 
 protected:
 
@@ -305,12 +305,12 @@ protected:
     void exec(const Arguments &argv, bool verbose = false) throws;
 
     // Prints a usage string for a command
-    void usage(const RetroShellCmd &command);
+    void usage(const RSCommand &command);
 
     // Displays a help text for a (partially typed in) command
     void help(const string &userInput);
     void help(const Arguments &argv);
-    void help(const RetroShellCmd &command);
+    void help(const RSCommand &command);
 
     // Prints a textual description of an error in the console
     void describe(const std::exception &exception, isize line = 0, const string &cmd = "");
@@ -330,11 +330,11 @@ protected:
     void _dump(CoreObject &component, Category category);
 };
 
-class CommandConsole : public Console
+class CommanderConsole : public Console
 {
     using Console::Console;
 
-    virtual void initCommands(RetroShellCmd &root) override;
+    virtual void initCommands(RSCommand &root) override;
     void _enter() override;
     void _pause() override;
     string getPrompt() override;
@@ -343,11 +343,11 @@ class CommandConsole : public Console
     void pressReturn(bool shift) override;
 };
 
-class DebugConsole : public Console
+class DebuggerConsole : public Console
 {
     using Console::Console;
 
-    virtual void initCommands(RetroShellCmd &root) override;
+    virtual void initCommands(RSCommand &root) override;
     void _enter() override;
     void _pause() override;
     string getPrompt() override;

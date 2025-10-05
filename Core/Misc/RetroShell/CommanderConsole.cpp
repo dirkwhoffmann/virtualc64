@@ -18,7 +18,7 @@
 namespace vc64 {
 
 void
-CommandConsole::_enter()
+CommanderConsole::_enter()
 {
     msgQueue.put(Msg::RSH_DEBUGGER, false);
 
@@ -32,19 +32,19 @@ CommandConsole::_enter()
 }
 
 void
-CommandConsole::_pause()
+CommanderConsole::_pause()
 {
 
 }
 
 string
-CommandConsole::getPrompt()
+CommanderConsole::getPrompt()
 {
     return "C64% ";
 }
 
 void
-CommandConsole::welcome()
+CommanderConsole::welcome()
 {
     storage << "VirtualC64 RetroShell ";
     remoteManager.rshServer << "VirtualC64 RetroShell Remote Server ";
@@ -59,7 +59,7 @@ CommandConsole::welcome()
 }
 
 void
-CommandConsole::printHelp()
+CommanderConsole::printHelp()
 {
     storage << "Type 'help' or press 'TAB' twice for help.\n";
     storage << "Type '.' or press 'SHIFT+RETURN' to enter debug mode.";
@@ -71,7 +71,7 @@ CommandConsole::printHelp()
 }
 
 void
-CommandConsole::pressReturn(bool shift)
+CommanderConsole::pressReturn(bool shift)
 {
     if (!shift && input.empty()) {
 
@@ -84,7 +84,7 @@ CommandConsole::pressReturn(bool shift)
 }
 
 void
-CommandConsole::initCommands(RetroShellCmd &root)
+CommanderConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
 
@@ -126,7 +126,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
     // Regression tester
     //
 
-    RetroShellCmd::currentGroup = "Regression testing";
+    RSCommand::currentGroup = "Regression testing";
 
     auto cmd = registerComponent(regressionTester);
     
@@ -282,7 +282,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
     // Components
     //
 
-    RetroShellCmd::currentGroup = "Components";
+    RSCommand::currentGroup = "Components";
 
     //
     // Components (C64)
@@ -470,7 +470,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
     // Ports
     //
 
-    RetroShellCmd::currentGroup = "Ports";
+    RSCommand::currentGroup = "Ports";
 
 
     //
@@ -553,7 +553,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
     // Peripherals
     //
 
-    RetroShellCmd::currentGroup = "Peripherals";
+    RSCommand::currentGroup = "Peripherals";
 
 
     //
@@ -922,7 +922,7 @@ CommandConsole::initCommands(RetroShellCmd &root)
     // Miscellaneous
     //
 
-    RetroShellCmd::currentGroup = "Miscellaneous";
+    RSCommand::currentGroup = "Miscellaneous";
 
     //
     // Miscellaneous (Host)
