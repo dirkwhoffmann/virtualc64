@@ -1209,12 +1209,12 @@ NSString *EventSlotName(EventSlot slot)
 	[self shell]->press(c);
 }
 
-- (void)pressSpecialKey:(RetroShellKey)key
+- (void)pressSpecialKey:(RSKey)key
 {
     [self shell]->press(key);
 }
 
-- (void)pressSpecialKey:(RetroShellKey)key shift:(BOOL)shift
+- (void)pressSpecialKey:(RSKey)key shift:(BOOL)shift
 {
     [self shell]->press(key, shift);
 }

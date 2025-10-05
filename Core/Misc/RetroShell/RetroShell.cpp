@@ -13,7 +13,6 @@
 #include "config.h"
 #include "RetroShell.h"
 #include "Emulator.h"
-#include "Parser.h"
 #include <istream>
 #include <sstream>
 
@@ -31,39 +30,59 @@ RetroShell::RetroShell(C64& ref) : SubComponent(ref)
 void
 RetroShell::_initialize()
 {
-    enterCommander();
-}
-
-void
-RetroShell::switchConsole() {
-    
-    inCommandShell() ? enterDebugger() : enterCommander();
-}
-
-void
-RetroShell::enterDebugger()
-{
-    // Assign the new console
+    // Set a console
     current = &debugger;
     
-    // Enter tracking mode
-    emulator.trackOn(1);
-    
-    // Call the delegate of the new console
-    current->_enter();
+    // Switch the console to let the welcome message appear
+    current->exec("commander");
 }
 
 void
-RetroShell::enterCommander()
+RetroShell::cacheInfo(RetroShellInfo &result) const
 {
+    {   SYNCHRONIZED
+    
+        result.console = current->objid;
+        result.cursorRel = current->cursorRel();
+    }
+}
+
+void
+RetroShell::enterConsole(isize nr)
+{
+    Console *newConsole = nullptr;
+    
+    switch (nr) {
+            
+        case 0: newConsole = &commander; break;
+        case 1: newConsole = &debugger; break;
+            
+        default:
+            fatalError;
+    }
+    
     // Assign the new console
-    current = &commander;
+    current = newConsole;
     
-    // Leave tracking mode
-    emulator.trackOff(1);
+    // Enter Leave tracking mode
+    nr == 1 ? emulator.trackOn(1) : emulator.trackOff(1);
     
-    // Call the delegate of the new console
-    current->_enter();
+    if (current->isEmpty()) {
+        
+        // Print the welcome message if entered the first time
+        current->exec("welcome"); *this << current->getPrompt();
+        
+    } else {
+        
+        // Otherwise, print the summary message
+        current->summary();
+    }
+    
+    // Update prompt
+    *this << '\r' << current->getPrompt();
+    
+    // Inform the GUI about the change
+    msgQueue.put(Msg::RSH_SWITCH, nr);
 }
 
 void
@@ -83,7 +102,7 @@ RetroShell::asyncExec(const string &command, bool append)
 void
 RetroShell::asyncExecScript(std::stringstream &ss)
 {
-    SYNCHRONIZED
+    {   SYNCHRONIZED
     
     std::string line;
     isize nr = 1;
@@ -94,6 +113,7 @@ RetroShell::asyncExecScript(std::stringstream &ss)
     }
     
     emulator.put(Command(Cmd::RSH_EXECUTE));
+}
 }
 
 void
@@ -147,7 +167,7 @@ RetroShell::abortScript()
 void
 RetroShell::exec()
 {
-    SYNCHRONIZED
+    {   SYNCHRONIZED
     
     // Only proceed if there is anything to process
     if (commands.empty()) return;
@@ -177,6 +197,7 @@ RetroShell::exec()
     
     // Print prompt
     if (current->lastLineIsEmpty()) *this << current->getPrompt();
+    }
 }
 
 void
@@ -210,6 +231,13 @@ RetroShell::exec(QueuedCmd cmd)
 
 RetroShell &
 RetroShell::operator<<(char value)
+{
+    *current << value;
+    return *this;
+}
+
+RetroShell &
+RetroShell::operator<<(const char *value)
 {
     *current << value;
     return *this;
@@ -271,6 +299,13 @@ RetroShell::operator<<(std::stringstream &stream)
     return *this;
 }
 
+RetroShell&
+RetroShell::operator<<(const vspace &value)
+{
+    *current << value;
+    return *this;
+}
+
 const char *
 RetroShell::text()
 {
@@ -284,8 +319,26 @@ RetroShell::cursorRel()
 }
 
 void
-RetroShell::press(RetroShellKey key, bool shift)
+RetroShell::press(RSKey key, bool shift)
 {
+    if (shift) {
+        
+        switch(key) {
+                
+            case RSKey::TAB:
+                
+                // asyncExec(".");
+                if (current->objid == 0) current->input = "debugger";
+                if (current->objid == 1) current->input = "navigator";
+                if (current->objid == 2) current->input = "commander";
+                current->pressReturn(false);
+                return;
+                
+            default:
+                break;
+        }
+    }
+    
     current->press(key, shift);
 }
 

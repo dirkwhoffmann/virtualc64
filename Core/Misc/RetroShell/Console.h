@@ -160,13 +160,16 @@ public:
     // Prints a message
     Console &operator<<(char value);
     Console &operator<<(const string &value);
+    Console &operator<<(const char *value);
     Console &operator<<(int value);
     Console &operator<<(unsigned int value);
     Console &operator<<(long value);
     Console &operator<<(unsigned long value);
     Console &operator<<(long long value);
     Console &operator<<(unsigned long long value);
+    Console &operator<<(const std::vector<string> &vec);
     Console &operator<<(std::stringstream &stream);
+    Console &operator<<(const vspace &value);
     
     // Returns the prompt
     virtual string getPrompt() = 0;
@@ -196,13 +199,13 @@ protected:
     
     // Prints the welcome message
     virtual void welcome() = 0;
-    
+
+    // Prints the status summary
+    virtual void summary() = 0;
+
     // Prints the help line
     virtual void printHelp() = 0;
-    
-    // Prints a state summary (used by the debug shell)
-    // void printState();
-    
+
     
     //
     // Managing user input
@@ -214,7 +217,7 @@ public:
     isize inputLength() { return (isize)input.length(); }
     
     // Presses a key or a series of keys
-    void press(RetroShellKey key, bool shift = false);
+    void press(RSKey key, bool shift = false);
     void press(char c);
     void press(const string &s);
     
@@ -339,6 +342,7 @@ class CommanderConsole : public Console
     void _pause() override;
     string getPrompt() override;
     void welcome() override;
+    void summary() override;
     void printHelp() override;
     void pressReturn(bool shift) override;
 };
@@ -352,6 +356,7 @@ class DebuggerConsole : public Console
     void _pause() override;
     string getPrompt() override;
     void welcome() override;
+    void summary() override;
     void printHelp() override;
     void pressReturn(bool shift) override;
 };

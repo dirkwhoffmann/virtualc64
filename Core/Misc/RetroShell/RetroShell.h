@@ -23,12 +23,12 @@
 /* RetroShell is a text-based command shell capable of controlling the emulator.
  * The shell's functionality is split among multiple consoles:
  *
- * 1. Commmand console:
+ * 1. Commmander:
  *
  *    This console is the default console and offers various command for
  *    configuring the emulator and performing actions such as ejecting a disk.
  *
- * 2. Debug console:
+ * 2. Debugger:
  *
  *    This console offers multiple debug command similar to the ones found in
  *    debug monitor. E.g., it is possible to inspect the registers of various
@@ -37,7 +37,7 @@
 
 namespace vc64 {
 
-class RetroShell final : public SubComponent {
+class RetroShell final : public SubComponent, public Inspectable<RetroShellInfo> {
     
     friend class RshServer;
     
@@ -51,6 +51,8 @@ class RetroShell final : public SubComponent {
     Options options = {
         
     };
+    
+    TextStorage s1, s2;
     
 public:
     
@@ -67,7 +69,7 @@ private:
     std::vector<QueuedCmd> commands;
     
     // The currently active console
-    Console *current = &commander;
+    Console *current = nullptr;
     
     bool inCommandShell() { return current == &commander; }
     bool inDebugShell() { return current == &debugger; }
@@ -107,6 +109,15 @@ private:
     
     
     //
+    // Methods from Inspectable
+    //
+    
+private:
+    
+    void cacheInfo(RetroShellInfo &result) const override;
+    
+    
+    //
     // Methods from Configurable
     //
     
@@ -119,9 +130,14 @@ public:
     // Managing consoles
     //
     
-    void switchConsole();
-    void enterDebugger();
-    void enterCommander();
+    void enterConsole(isize nr);
+    void enterCommander() { enterConsole(0); }
+    void enterDebugger() { enterConsole(1); }
+
+    
+    //
+    // Executing commands
+    //
     
 public:
     
@@ -153,6 +169,7 @@ private:
 public:
     
     RetroShell &operator<<(char value);
+    RetroShell &operator<<(const char *value);
     RetroShell &operator<<(const string &value);
     RetroShell &operator<<(int value);
     RetroShell &operator<<(unsigned int value);
@@ -161,10 +178,11 @@ public:
     RetroShell &operator<<(long long value);
     RetroShell &operator<<(unsigned long long value);
     RetroShell &operator<<(std::stringstream &stream);
+    RetroShell &operator<<(const vspace &value);
     
     const char *text();
     isize cursorRel();
-    void press(RetroShellKey key, bool shift = false);
+    void press(RSKey key, bool shift = false);
     void press(char c);
     void press(const string &s);
     void setStream(std::ostream &os);

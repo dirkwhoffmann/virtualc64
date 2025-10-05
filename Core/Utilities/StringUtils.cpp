@@ -136,19 +136,28 @@ split(const std::vector<string> &sv, char delimiter)
     return result;
 }
 
+std::pair<vector<string>, string>
+splitLast(const vector<string> &vec)
+{
+    if (vec.empty()) return { vec, "" };
+    std::vector<string> prefix(vec.begin(), vec.end() - 1);
+    return { prefix, vec.back() };
+}
+
 string
-concat(std::vector<string> &s, string delimiter)
+concat(const std::vector<string> &s, const string &delim, const string &ldelim, const string &rdelim)
 {
     string result;
-    
-    isize count = (isize)s.size();
-    for (isize i = 0; i < count; i++) {
-        
-        if (!result.empty()) result += delimiter;
-        result += s[i];
+    isize count = 0;
+
+    for (auto &it : s) {
+
+        if (it.empty()) continue;
+        if (count++) result += delim;
+        result += it;
     }
-    
-    return result;
+
+    return count > 1 ? ldelim + result + rdelim : result;
 }
 
 template <isize digits> string hexstr(isize number)

@@ -62,6 +62,21 @@ DebuggerConsole::welcome()
 }
 
 void
+DebuggerConsole::summary()
+{
+    std::stringstream ss;
+
+    // ss << "RetroShell Debugger" << std::endl << std::endl;
+    c64.dump(Category::Current, ss);
+
+    *this << vspace{1};
+    string line;
+    while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
+    // *this << ss;
+    *this << vspace{1};
+}
+
+void
 DebuggerConsole::printHelp()
 {
     storage << "Type 'help' or press 'TAB' twice for help.\n";

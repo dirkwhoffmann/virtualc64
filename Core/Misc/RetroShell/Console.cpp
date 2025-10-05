@@ -50,6 +50,13 @@ Console::operator<<(const string& value)
 }
 
 Console&
+Console::operator<<(const char *value)
+{
+    *this << string(value);
+    return *this;
+}
+
+Console&
 Console::operator<<(int value)
 {
     *this << std::to_string(value);
@@ -92,11 +99,28 @@ Console::operator<<(unsigned long long value)
 }
 
 Console &
+Console::operator<<(const std::vector<string> &vec)
+{
+    *this << util::concat(vec);
+    return *this;
+}
+
+Console &
 Console::operator<<(std::stringstream &stream)
 {
     string line;
     while(std::getline(stream, line)) {
         *this << line << '\n';
+    }
+    return *this;
+}
+
+Console&
+Console::operator<<(const vspace &value)
+{
+    auto blanks = storage.trailingEmptyLines();
+    while (blanks++ <= value.lines) {
+        *this << '\n';
     }
     return *this;
 }
@@ -178,15 +202,15 @@ Console::lastLineIsEmpty()
  */
 
 void
-Console::press(RetroShellKey key, bool shift)
+Console::press(RSKey key, bool shift)
 {
-    assert_enum(RetroShellKey, key);
+    assert_enum(RSKey, key);
     assert(ipos >= 0 && ipos < historyLength());
     assert(cursor >= 0 && cursor <= inputLength());
     
     switch(key) {
             
-        case RetroShellKey::UP:
+        case RSKey::UP:
             
             if (ipos > 0) {
                 
@@ -199,7 +223,7 @@ Console::press(RetroShellKey key, bool shift)
             }
             break;
             
-        case RetroShellKey::DOWN:
+        case RSKey::DOWN:
             
             if (ipos < historyLength() - 1) {
                 
@@ -209,48 +233,53 @@ Console::press(RetroShellKey key, bool shift)
             }
             break;
             
-        case RetroShellKey::LEFT:
+        case RSKey::LEFT:
             
             if (cursor > 0) cursor--;
             break;
             
-        case RetroShellKey::RIGHT:
+        case RSKey::RIGHT:
             
             if (cursor < (isize)input.size()) cursor++;
             break;
-            
-        case RetroShellKey::DEL:
+
+        case RSKey::PAGE_UP:
+        case RSKey::PAGE_DOWN:
+
+            break;
+
+        case RSKey::DEL:
             
             if (cursor < inputLength()) {
                 input.erase(input.begin() + cursor);
             }
             break;
             
-        case RetroShellKey::CUT:
+        case RSKey::CUT:
             
             if (cursor < inputLength()) {
                 input.erase(input.begin() + cursor, input.end());
             }
             break;
             
-        case RetroShellKey::BACKSPACE:
+        case RSKey::BACKSPACE:
             
             if (cursor > 0) {
                 input.erase(input.begin() + --cursor);
             }
             break;
             
-        case RetroShellKey::HOME:
+        case RSKey::HOME:
             
             cursor = 0;
             break;
             
-        case RetroShellKey::END:
+        case RSKey::END:
             
             cursor = (isize)input.length();
             break;
             
-        case RetroShellKey::TAB:
+        case RSKey::TAB:
             
             if (tabPressed) {
                 
@@ -265,19 +294,19 @@ Console::press(RetroShellKey key, bool shift)
             }
             break;
             
-        case RetroShellKey::RETURN:
+        case RSKey::RETURN:
             
             pressReturn(shift);
             break;
             
-        case RetroShellKey::CR:
+        case RSKey::CR:
             
             input = "";
             cursor = 0;
             break;
     }
     
-    tabPressed = key == RetroShellKey::TAB;
+    tabPressed = key == RSKey::TAB;
     needsDisplay();
     
     assert(ipos >= 0 && ipos < historyLength());
@@ -291,17 +320,17 @@ Console::press(char c)
             
         case '\n':
             
-            press(RetroShellKey::RETURN);
+            press(RSKey::RETURN);
             break;
             
         case '\r':
             
-            press(RetroShellKey::CR);
+            press(RSKey::CR);
             break;
             
         case '\t':
             
-            press(RetroShellKey::TAB);
+            press(RSKey::TAB);
             break;
             
         default:
@@ -787,14 +816,24 @@ Console::initCommands(RSCommand &root)
     
     root.add({
         
-        .tokens = { "." },
-        .help   = { "Enter or exit the debugger" },
+        .tokens = { "commander" },
+        .help   = { "Enters the command shell" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            retroShell.switchConsole();
+
+            retroShell.enterCommander();
         }
     });
-    
+
+    root.add({
+
+        .tokens = { "debugger" },
+        .help   = { "Enters the debug shell" },
+        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+
+            retroShell.enterDebugger();
+        }
+    });
+
     root.add({
         
         .tokens = { "clear" },

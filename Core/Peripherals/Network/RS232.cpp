@@ -343,7 +343,7 @@ RS232::dumpPacket(u16 packet)
             case '\n':
             case '\r':
 
-                retroShell.press(RetroShellKey::RETURN);
+                retroShell.press(RSKey::RETURN);
                 break;
 
             default:

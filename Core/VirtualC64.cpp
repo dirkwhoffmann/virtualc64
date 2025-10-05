@@ -1242,7 +1242,7 @@ RetroShellAPI::cursorRel()
 }
 
 void
-RetroShellAPI::press(RetroShellKey key, bool shift)
+RetroShellAPI::press(RSKey key, bool shift)
 {
     retroShell->press(key, shift);
 }

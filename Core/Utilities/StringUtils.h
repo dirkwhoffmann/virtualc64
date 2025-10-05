@@ -63,7 +63,9 @@ string trim(const string &s, const string &characters = " ");
 
 std::vector<string> split(const string &s, char delimiter);
 std::vector<string> split(const std::vector<string> &sv, char delimiter);
-string concat(std::vector<string> &s, string delimiter);
+std::pair<vector<string>, string> splitLast(const vector<string> &vec);
+string concat(const std::vector<string> &s,
+              const string &delim = " ", const string &ldelim = "", const string &rdelim = "");
 
 
 //

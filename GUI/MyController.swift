@@ -395,6 +395,9 @@ extension MyController {
         case .RSH_UPDATE:
             renderer.console.isDirty = true
 
+        case .RSH_SWITCH:
+            break
+            
         case .RSH_DEBUGGER:
             break
 
