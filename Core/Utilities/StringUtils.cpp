@@ -36,6 +36,14 @@ string createAscii(const u8 *buf, isize len, char fill)
     return result;
 }
 
+string repeat(const string &s, isize times) {
+
+    string result;
+    result.reserve(s.size() * times);
+    for (isize i = 0; i < times; i++) result += s;
+    return result;
+}
+
 bool
 parseHex(const string &s, isize *result)
 {
@@ -102,6 +110,32 @@ string
 trim(const string &s, const string &characters)
 {
     return ltrim(rtrim(s, characters), characters);
+}
+
+string
+commonPrefix(const string &s1, const string &s2, bool caseSensitive)
+{
+    auto len = std::min(s1.length(), s2.length());
+
+    usize count = 0;
+    if (caseSensitive) {
+        for (; count < len && s1[count] == s2[count]; count++);
+    } else {
+        for (; count < len && std::toupper(s1[count]) == std::toupper(s2[count]); count++);
+    }
+
+    return s1.substr(0, count);
+}
+
+string
+commonPrefix(const std::vector<string> &vec, bool caseSensitive)
+{
+    if (vec.empty()) return "";
+
+    string result = vec[0];
+    for (usize i = 1; i < vec.size(); i++) result = commonPrefix(result, vec[i], caseSensitive);
+
+    return result;
 }
 
 std::vector<string>

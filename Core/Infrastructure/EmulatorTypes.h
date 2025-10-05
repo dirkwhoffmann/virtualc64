@@ -91,8 +91,11 @@ enum class DebugFlag
     USR_DEBUG,         ///< User port
 
     // Other components
-    REC_DEBUG,         ///< Debug the screen recorder
     REU_DEBUG,         ///< Debug the REU memory expansion
+
+    // Misc
+    RSH_DEBUG,         ///< Retro shell
+    REC_DEBUG,         ///< Debug the screen recorder
     SCK_DEBUG,         ///< Debug the socket interface
     SRV_DEBUG,         ///< Debug the remote servers
 
@@ -185,8 +188,11 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::USR_DEBUG:                return "USR_DEBUG";
 
                 // Other components
-            case DebugFlag::REC_DEBUG:                return "REC_DEBUG";
             case DebugFlag::REU_DEBUG:                return "REU_DEBUG";
+
+                // Misc
+            case DebugFlag::RSH_DEBUG:                return "RSH_DEBUG";
+            case DebugFlag::REC_DEBUG:                return "REC_DEBUG";
             case DebugFlag::SCK_DEBUG:                return "SCK_DEBUG";
             case DebugFlag::SRV_DEBUG:                return "SRV_DEBUG";
 
@@ -277,23 +283,26 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::USR_DEBUG:                return "User port";
 
                 // Other components
-            case DebugFlag::REC_DEBUG:                return "Screen recorder";
             case DebugFlag::REU_DEBUG:                return "REU memory expansion";
+
+                // Misc
+            case DebugFlag::RSH_DEBUG:                return "RetroShell";
+            case DebugFlag::REC_DEBUG:                return "Screen recorder";
             case DebugFlag::SCK_DEBUG:                return "Sockets";
             case DebugFlag::SRV_DEBUG:                return "Remote servers";
 
                 // Forced error conditions
-            case DebugFlag::FORCE_LAUNCH_ERROR:       return "";
-            case DebugFlag::FORCE_ROM_MISSING:        return "";
-            case DebugFlag::FORCE_MEGA64_MISMATCH:    return "";
-            case DebugFlag::FORCE_SNAP_TOO_OLD:       return "";
-            case DebugFlag::FORCE_SNAP_TOO_NEW:       return "";
-            case DebugFlag::FORCE_SNAP_IS_BETA:       return "";
-            case DebugFlag::FORCE_SNAP_CORRUPTED:     return "";
-            case DebugFlag::FORCE_CRT_UNKNOWN:        return "";
-            case DebugFlag::FORCE_CRT_UNSUPPORTED:    return "";
-            case DebugFlag::FORCE_RECORDING_ERROR:    return "";
-            case DebugFlag::FORCE_NO_FFMPEG:          return "";
+            case DebugFlag::FORCE_LAUNCH_ERROR:       return "Forced error condition";
+            case DebugFlag::FORCE_ROM_MISSING:        return "Forced error condition";
+            case DebugFlag::FORCE_MEGA64_MISMATCH:    return "Forced error condition";
+            case DebugFlag::FORCE_SNAP_TOO_OLD:       return "Forced error condition";
+            case DebugFlag::FORCE_SNAP_TOO_NEW:       return "Forced error condition";
+            case DebugFlag::FORCE_SNAP_IS_BETA:       return "Forced error condition";
+            case DebugFlag::FORCE_SNAP_CORRUPTED:     return "Forced error condition";
+            case DebugFlag::FORCE_CRT_UNKNOWN:        return "Forced error condition";
+            case DebugFlag::FORCE_CRT_UNSUPPORTED:    return "Forced error condition";
+            case DebugFlag::FORCE_RECORDING_ERROR:    return "Forced error condition";
+            case DebugFlag::FORCE_NO_FFMPEG:          return "Forced error condition";
         }
         return "???";
     }    

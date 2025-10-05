@@ -382,7 +382,7 @@ extension MyController {
             debug(.shutdown, "Aborting with exit code \(value)")
             exit(Int32(value))
 
-        case .WARP, .TRACK:
+        case .EASTER_EGG, .WARP, .TRACK:
             refreshStatusBar()
 
         case .MUTE:

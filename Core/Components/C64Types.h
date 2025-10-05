@@ -100,7 +100,7 @@ struct ConfigSchemeEnum : Reflection<ConfigSchemeEnum, ConfigScheme> {
     
     static const char *help(ConfigScheme value)
     {
-        return "";
+        return "TODO";
     }
 };
 

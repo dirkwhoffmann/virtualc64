@@ -40,6 +40,7 @@ enum class Msg : long
     WARP,               ///< The emulator has entered or exited warp mode
     TRACK,              ///< The emulator has entered or exited track mode
     MUTE,               ///< The emulator has been muted or unmuted
+    EASTER_EGG,
 
     // Retro shell
     RSH_CLOSE,          ///< RetroShell has been closed
@@ -148,7 +149,8 @@ struct MsgEnum : Reflection<MsgEnum, Msg> {
             case Msg::WARP:                  return "WARP";
             case Msg::TRACK:                 return "TRACK";
             case Msg::MUTE:                  return "MUTE";
-
+            case Msg::EASTER_EGG:            return "EASTER_EGG";
+                
             case Msg::RSH_CLOSE:             return "RSH_CLOSE";
             case Msg::RSH_UPDATE:            return "RSH_UPDATE";
             case Msg::RSH_SWITCH:            return "RSH_SWITCH";

@@ -13,10 +13,49 @@
 #include "config.h"
 #include "Console.h"
 #include "Emulator.h"
+#include "Parser.h"
+#include "Option.h"
 #include <istream>
 #include <sstream>
+#include <string>
 
 namespace vc64 {
+
+HistoryBuffer
+Console::historyBuffer;
+
+void
+HistoryBuffer::up(string &input, isize &cursor)
+{
+    if (ipos > 0) {
+        
+        // Save the input line if it is currently shown
+        if (ipos == isize(history.size() - 1)) history.back() = { input, cursor };
+        
+        auto &item = history[--ipos];
+        input = item.first;
+        cursor = item.second;
+    }
+}
+
+void
+HistoryBuffer::down(string &input, isize &cursor)
+{
+    if (ipos < isize(history.size() - 1)) {
+        
+        auto &item = history[++ipos];
+        input = item.first;
+        cursor = item.second;
+    }
+}
+
+void
+HistoryBuffer::add(const string &input)
+{
+    history.back() = { input, (isize)input.size() };
+    history.push_back( { "", 0 } );
+    ipos = (isize)history.size() - 1;
+}
 
 void
 Console::_initialize()
@@ -26,9 +65,6 @@ Console::_initialize()
     
     // Initialize the text storage
     clear();
-    
-    // Initialize the input buffer
-    history.push_back( { "", 0 } );
 }
 
 Console&
@@ -125,6 +161,23 @@ Console::operator<<(const vspace &value)
     return *this;
 }
 
+void
+Console::welcome()
+{
+    storage << "RetroShell ";
+    remoteManager.rshServer << "vAmiga RetroShell Remote Server ";
+    *this << C64::build() << '\n';
+    *this << '\n';
+    
+    *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+    *this << "https://github.com/dirkwhoffmann/vAmiga" << '\n';
+    *this << '\n';
+    
+    // *this << "    " << description() << " console" << "\n\n";
+    
+    printHelp(0);
+}
+
 const char *
 Console::text()
 {
@@ -184,53 +237,37 @@ Console::lastLineIsEmpty()
     return storage.lastLineIsEmpty();
 }
 
-/*
- void
- Console::printState()
- {
- std::stringstream ss;
- 
- cpu.debugger.dumpLogBuffer(ss, 8);
- ss << "\n";
- c64.dump(Category::Current, ss);
- ss << "\n";
- cpu.disassembler.disassembleRange(ss, cpu.getPC0(), 8);
- ss << "\n";
- 
- *this << ss;
- }
- */
+void
+Console::printHelp(isize tab)
+{
+    *this << vspace{1};
+
+    *this << "RetroShell " << description() << " " << C64::version() << "\n\n";
+    storage << string(tab + 4, ' ') << "Type 'help' or press 'Tab' twice for help.\n";
+    storage << string(tab + 4, ' ') << "Press 'Shift+Tab' to switch consoles.";
+
+    remoteManager.rshServer << "Type 'help' for help.\n";
+
+    *this << vspace{1};
+}
 
 void
 Console::press(RSKey key, bool shift)
 {
     assert_enum(RSKey, key);
-    assert(ipos >= 0 && ipos < historyLength());
+    // assert(ipos >= 0 && ipos < historyLength());
     assert(cursor >= 0 && cursor <= inputLength());
     
     switch(key) {
             
         case RSKey::UP:
             
-            if (ipos > 0) {
-                
-                // Save the input line if it is currently shown
-                if (ipos == historyLength() - 1) history.back() = { input, cursor };
-                
-                auto &item = history[--ipos];
-                input = item.first;
-                cursor = item.second;
-            }
+            historyBuffer.up(input, cursor);
             break;
             
         case RSKey::DOWN:
             
-            if (ipos < historyLength() - 1) {
-                
-                auto &item = history[++ipos];
-                input = item.first;
-                cursor = item.second;
-            }
+            historyBuffer.down(input, cursor);
             break;
             
         case RSKey::LEFT:
@@ -281,10 +318,11 @@ Console::press(RSKey key, bool shift)
             
         case RSKey::TAB:
             
-            if (tabPressed) {
+            if (tabPressed++) {
                 
-                // TAB was pressed twice
-                retroShell.asyncExec("help \"" + input + "\"");
+                // TAB was pressed multiple times in a row
+                *this << input << '\n';
+                retroShell.asyncExec("help \"" + input + "\" TAB=" + std::to_string(tabPressed));
                 
             } else {
                 
@@ -296,6 +334,9 @@ Console::press(RSKey key, bool shift)
             
         case RSKey::RETURN:
             
+            // Remember the command
+            historyBuffer.add(input);
+            
             pressReturn(shift);
             break;
             
@@ -306,10 +347,9 @@ Console::press(RSKey key, bool shift)
             break;
     }
     
-    tabPressed = key == RSKey::TAB;
+    if (key != RSKey::TAB) tabPressed = 0;
     needsDisplay();
     
-    assert(ipos >= 0 && ipos < historyLength());
     assert(cursor >= 0 && cursor <= inputLength());
 }
 
@@ -346,7 +386,7 @@ Console::press(char c)
             }
     }
     
-    tabPressed = false;
+    tabPressed = c == '\t';
     needsDisplay();
 }
 
@@ -366,21 +406,17 @@ Console::cursorRel()
 void
 Console::pressReturn(bool shift)
 {
-    if (shift) {
+    if (input.empty()) {
         
-        // Switch the interpreter
-        // retroShell.switchConsole();
-        retroShell.asyncExec(".");
+        retroShell.asyncExec("helpstring");
         
     } else {
         
         // Add the command to the text storage
         *this << input << '\n';
         
-        // Add the command to the history buffer
-        history.back() = { input, (isize)input.size() };
-        history.push_back( { "", 0 } );
-        ipos = (isize)history.size() - 1;
+        // Remember the command
+        // historyBuffer.add(input);
         
         // Feed the command into the command queue
         retroShell.asyncExec(input);
@@ -391,11 +427,11 @@ Console::pressReturn(bool shift)
     }
 }
 
-Arguments
+Tokens
 Console::split(const string& userInput)
 {
     std::stringstream ss(userInput);
-    Arguments result;
+    Tokens result;
     
     string token;
     bool str = false; // String mode
@@ -431,125 +467,292 @@ Console::split(const string& userInput)
     return result;
 }
 
+std::pair<RSCommand *, std::vector<string>>
+Console::seekCommand(const string &argv)
+{
+    return seekCommand(split(argv));
+}
+
+std::pair<RSCommand *, std::vector<string>>
+Console::seekCommand(const std::vector<string> &argv)
+{
+    std::vector<string> args = argv;
+    RSCommand *cmd = nullptr;
+    
+    for (auto *it = &root; !args.empty() && (it = it->seek(args.front())); ) {
+        
+        args.erase(args.begin());
+        cmd = it;
+    }
+    return { cmd ? cmd : &root, args };
+}
+
 string
 Console::autoComplete(const string& userInput)
 {
-    string result;
+    // Split the input string
+    Tokens tokens = split(userInput);
     
-    // Split input string
-    Arguments tokens = split(userInput);
-    
-    // Complete all tokens
+    // Complete the last token
     autoComplete(tokens);
     
     // Recreate the command string
-    for (const auto &it : tokens) { result += (result == "" ? "" : " ") + it; }
+    string result = util::concat(tokens);
     
     // Add a space if the command has been fully completed ...
-    if (auto cmd = getRoot().seek(tokens); cmd != nullptr && !tokens.empty()) {
+    if (auto cmd = getRoot().seek(tokens); cmd && !tokens.empty()) {
         
         // ... and there are additional subcommands or arguments
-        if (cmd->subCommands.size() > 0 ||
-            cmd->requiredArgs.size() > 0 ||
-            cmd->optionalArgs.size()) { result += " "; }
+        if (!cmd->subcommands.empty() || !cmd->args.empty()) { result += " "; }
     }
     
     return result;
 }
 
 void
-Console::autoComplete(Arguments &argv)
+Console::autoComplete(Tokens &argv)
 {
     RSCommand *current = &getRoot();
     string prefix, token;
     
     for (auto it = argv.begin(); current && it != argv.end(); it++) {
         
-        *it = current->autoComplete(*it);
+        current->autoComplete(*it);
         current = current->seek(*it);
     }
 }
 
+std::map<string,string>
+Console::parse(const RSCommand &cmd, const Tokens &args)
+{
+    std::map<string,string> map;
+    std::vector<string> flags;
+    std::vector<string> keyVal;
+    std::vector<string> std;
+    
+    // Check if a command handler is present
+    if (!cmd.callback)  { throw TooFewArgumentsError(cmd.fullName); }
+    
+    // Sort input tokens by type
+    for (usize i = 0; i < args.size(); i++) {
+        
+        auto token = args[i];
+        map[std::to_string(i)] = token;
+        
+        if (token[0] == '-') {
+            for (usize j = 1; j < token.size(); j++) flags.push_back(string("-") + token[j]);
+        } else if (token.find('=') != std::string::npos) {
+            keyVal.push_back(token);
+        } else {
+            std.push_back(token);
+    }
+}
+    
+    // Iterate over all argument descriptors
+    for (auto &descr : cmd.args) {
+        
+        auto keyStr = descr.keyStr();
+        auto nameStr = descr.nameStr();
+        
+        // Does the descriptor describe a flag?
+        if (descr.isFlag()) {
+            
+            bool found = false;
+            for (auto it = flags.begin(); it != flags.end(); it++) {
+
+                if (keyStr == *it) {
+                    
+                    map[nameStr] = "true";
+                    flags.erase(it);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found && descr.isRequired()){
+                throw util::ParseError("Missing flag " + keyStr);
+            }
+            continue;
+        }
+        
+        // Does the descriptor describe a key-value pair?
+        if (descr.isKeyValuePair()) {
+            
+            bool found = false;
+            for (auto it = keyVal.begin(); it != keyVal.end(); it++) {
+                
+                auto pos = it->find('=');
+                auto key = it->substr(0, pos);
+                auto val = it->substr(pos + 1);
+                
+                if (keyStr == key) {
+                    
+                    map[nameStr] = val;
+                    keyVal.erase(it);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found && descr.isRequired()) {
+                throw util::ParseError("Missing key-value pair " + descr.keyValueStr());
+            }
+            continue;
+        }
+        
+        // Does the descriptor describe a standard argument?
+        if (descr.isStdArg()) {
+            
+            if (!std.empty()) {
+                
+                map[nameStr] = std.front();
+                std.erase(std.begin());
+                
+            } else if (descr.isRequired()) {
+                
+                throw TooFewArgumentsError(cmd.fullName);
+            }
+            continue;
+        }
+        
+        fatalError;
+    }
+    
+    // Print some debug information
+    for (auto &it : map) debug(RSH_DEBUG, "arg['%s']='%s'\n", it.first.c_str(), it.second.c_str());
+    
+    // Check for invalid or extra arguments
+    if (!flags.empty()) { throw UnknownFlagError(flags.front()); }
+    if (!keyVal.empty()) { throw UnknownKeyValueError(keyVal.front()); }
+    if (!std.empty()) { throw TooManyArgumentsError(cmd.fullName); }
+    
+    return map;
+}
+
 bool
-Console::isBool(const string &argv)
+Console::isBool(const string &argv) const
 {
     return util::isBool(argv);
 }
 
 bool
-Console::isOnOff(const string  &argv)
+Console::isOnOff(const string  &argv) const
 {
     return util::isOnOff(argv);
 }
 
 long
-Console::isNum(const string &argv)
+Console::isNum(const string &argv) const
 {
     return util::isNum(argv);
 }
 
 bool
-Console::parseBool(const string &argv)
+Console::parseBool(const string &argv) const
 {
     return util::parseBool(argv);
 }
 
 bool
-Console::parseBool(const string &argv, bool fallback)
+Console::parseBool(const string &argv, bool fallback) const
 {
     try { return parseBool(argv); } catch(...) { return fallback; }
 }
 
 bool
-Console::parseBool(const Arguments &argv, long nr, long fallback)
+Console::parseBool(const Arguments &argv, const string &key) const
 {
-    return nr < long(argv.size()) ? parseBool(argv[nr]) : fallback;
+    assert(argv.contains(key));
+    return parseBool(argv.at(key));
 }
 
 bool
-Console::parseOnOff(const string &argv)
+Console::parseBool(const Arguments &argv, const string &key, long fallback) const
+{
+    return argv.contains(key) ? parseBool(argv.at(key)) : fallback;
+}
+
+bool
+Console::parseOnOff(const string &argv) const
 {
     return util::parseOnOff(argv);
 }
 
 bool
-Console::parseOnOff(const string &argv, bool fallback)
+Console::parseOnOff(const string &argv, bool fallback) const
 {
     try { return parseOnOff(argv); } catch(...) { return fallback; }
 }
 
 bool
-Console::parseOnOff(const Arguments &argv, long nr, long fallback)
+Console::parseOnOff(const Arguments &argv, const string &key, long fallback) const
 {
-    return nr < long(argv.size()) ? parseOnOff(argv[nr]) : fallback;
+    return argv.contains(key) ? parseBool(argv.at(key)) : fallback;
+}
+
+bool
+Console::parseOnOff(const Arguments &argv, const string &key) const
+{
+    assert(argv.contains(key));
+    return parseBool(argv.at(key));
 }
 
 long
-Console::parseNum(const string &argv)
+Console::parseNum(const string &argv) const
 {
     return util::parseNum(argv);
 }
 
 long
-Console::parseNum(const string &argv, long fallback)
+Console::parseNum(const string &argv, long fallback) const
 {
     try { return parseNum(argv); } catch(...) { return fallback; }
 }
 
 long
-Console::parseNum(const Arguments &argv, long nr, long fallback)
+Console::parseNum(const Arguments &argv, const string &key) const
 {
-    return nr < long(argv.size()) ? parseNum(argv[nr]) : fallback;
+    assert(argv.contains(key));
+    return parseNum(argv.at(key));
+}
+
+long
+Console::parseNum(const Arguments &argv, const string &token, long fallback) const
+{
+    return argv.contains(token) ? parseNum(argv.at(token)) : fallback;
+}
+
+u16
+Console::parseAddr(const string &argv) const
+{
+    return (u16)parseNum(argv);
+}
+
+u16
+Console::parseAddr(const string &argv, long fallback) const
+{
+    return (u16)parseNum(argv, fallback);
+}
+
+u16
+Console::parseAddr(const Arguments &argv, const string &key) const
+{
+    assert(argv.contains(key));
+    return (u16)parseNum(argv, key);
+}
+
+u16
+Console::parseAddr(const Arguments &argv, const string &key, long fallback) const
+{
+    return (u16)parseNum(argv, key, fallback);
 }
 
 string
-Console::parseSeq(const string &argv)
+Console::parseSeq(const string &argv) const
 {
     return util::parseSeq(argv);
 }
 
 string
-Console::parseSeq(const string &argv, const string &fallback)
+Console::parseSeq(const string &argv, const string &fallback) const
 {
     try { return parseSeq(argv); } catch(...) { return fallback; }
 }
@@ -558,7 +761,7 @@ void
 Console::exec(const string& userInput, bool verbose)
 {
     // Split the command string
-    Arguments tokens = split(userInput);
+    Tokens tokens = split(userInput);
     
     // Skip empty lines
     if (tokens.empty()) return;
@@ -566,232 +769,178 @@ Console::exec(const string& userInput, bool verbose)
     // Remove the 'try' keyword
     if (tokens.front() == "try") tokens.erase(tokens.begin());
     
-    // Auto complete the token list
-    autoComplete(tokens);
-    
     // Process the command
     exec(tokens, verbose);
 }
 
 void
-Console::exec(const Arguments &argv, bool verbose)
+Console::exec(const Tokens &argv, bool verbose)
 {
+    // Tokens args = argv;
+    
     // In 'verbose' mode, print the token list
-    if (verbose) {
-        for (const auto &it : argv) *this << it << ' ';
-        *this << '\n';
-    }
+    if (verbose) *this << argv << '\n';
     
     // Skip empty lines
     if (argv.empty()) return;
     
-    // Seek the command in the command tree
-    RSCommand *current = &getRoot(), *next;
-    Arguments args = argv;
+    // Find the command in the command tree
+    if (auto [cmd, args] = seekCommand(argv); cmd) {
     
-    while (!args.empty() && ((next = current->seek(args.front())) != nullptr)) {
+        // Check if a command has been found
+        if (cmd == nullptr || cmd == &root) throw util::ParseError(argv[0]);
         
-        current = current->seek(args.front());
-        args.erase(args.begin());
-    }
-    if ((next = current->seek(""))) current = next;
+        // Parse arguments
+        Arguments parsedArgs = parse(*cmd, args);
     
-    // Error out if no command handler is present
-    if (!current->callback && !args.empty()) {
-        throw util::ParseError(args.front());
-    }
-    if (!current->callback && args.empty()) {
-        throw TooFewArgumentsError(current->fullName);
-    }
+        // Call the command handler
+        std::stringstream ss;
+        cmd->callback(ss, parsedArgs, cmd->payload);
     
-    // Check the argument count
-    if ((isize)args.size() < current->minArgs()) throw TooFewArgumentsError(current->fullName);
-    if ((isize)args.size() > current->maxArgs()) throw TooManyArgumentsError(current->fullName);
+        // Dump the output to the console
+        if (ss.peek() != EOF) { *this << vdelim << ss << vdelim; }
     
-    // Call the command handler
-    if (current->param.empty()) {
-        current->callback(args, { 0 });
     } else {
-        current->callback(args, current->param);
         
+        throw util::ParseError(util::concat(argv));
     }
 }
 
 void
-Console::usage(const RSCommand& current)
+Console::cmdUsage(const RSCommand& current, const string &prefix)
 {
-    *this << '\r' << "Usage: " << current.usage() << '\n';
+    *this << '\r' << prefix << current.cmdUsage() << '\n';
 }
 
 void
-Console::help(const string& userInput)
+Console::argUsage(const RSCommand& current, const string &prefix)
 {
-    // Split the command string
-    Arguments tokens = split(userInput);
-    
-    // Auto complete the token list
-    autoComplete(tokens);
-    
-    // Process the command
-    help(tokens);
+    *this << '\r' << prefix << current.argUsage() << '\n';
 }
 
 void
-Console::help(const Arguments &argv)
+Console::help(std::ostream &os, const string& userInput, isize tabs)
 {
-    RSCommand *current = &getRoot();
-    string prefix, token;
-    
-    for (auto &it : argv) {
-        if (current->seek(it) != nullptr) current = current->seek(it);
+    if (auto [cmd, args] = seekCommand(userInput); cmd) {
+        cmd->printHelp(os);
     }
-    
-    help(*current);
 }
 
 void
-Console::help(const RSCommand& current)
+Console::describe(const std::exception &exc, isize line, const string &cmd)
 {
-    auto indent = string("    ");
-    
-    // Print the usage string
-    usage(current);
-    
-    // Determine tabular positions to align the output
-    isize tab = 0;
-    for (auto &it : current.subCommands) {
-        tab = std::max(tab, (isize)it.fullName.length());
-    }
-    tab += (isize)indent.size();
-    
-    isize newlines = 1;
-    
-    for (auto &it : current.subCommands) {
-        
-        // Only proceed if the command is visible
-        if (it.hidden || it.help.empty() || it.help[0] == "") continue;
-        
-        // Print the group (if present)
-        if (!it.groupName.empty()) {
-            
-            *this << '\n' << it.groupName << '\n';
-            newlines = 1;
-        }
-        
-        // Print newlines
-        for (; newlines > 0; newlines--) {
-            *this << '\n';
-        }
-        
-        // Print command descriptioon
-        *this << indent;
-        *this << it.fullName;
-        (*this).tab(tab);
-        *this << " : ";
-        *this << it.help[0];
-        *this << '\n';
-    }
-    
-    *this << '\n';
+    std::stringstream ss;
+    describe(ss, exc, line, cmd);
+    *this << vdelim << ss.str() << vdelim;
 }
 
 void
-Console::describe(const std::exception &e, isize line, const string &cmd)
+Console::describe(std::ostream &ss, const std::exception &e, isize line, const string &cmd)
 {
-    if (line) *this << "Line " << line << ": " << cmd << '\n';
+    if (line) {
+        ss << "Line " << line << ": " << cmd << '\n';
+    }
+    // ss << "Error: ";
     
     if (auto err = dynamic_cast<const TooFewArgumentsError *>(&e)) {
         
-        *this << err->what() << ": Too few arguments";
-        *this << '\n';
+        ss << err->what() << ": Too few arguments.";
+        ss << '\n';
         return;
     }
-    
     if (auto err = dynamic_cast<const TooManyArgumentsError *>(&e)) {
         
-        *this << err->what() << ": Too many arguments";
-        *this << '\n';
+        ss << err->what() << ": Too many arguments.";
+        ss << '\n';
         return;
     }
+    if (auto err = dynamic_cast<const UnknownFlagError *>(&e)) {
     
-    if (auto err = dynamic_cast<const util::EnumParseError *>(&e)) {
+        ss << err->what() << " is not a valid flag.";
+        ss << '\n';
+        return;
+    }
+    if (auto err = dynamic_cast<const UnknownKeyValueError *>(&e)) {
         
-        *this << err->token << " is not a valid key" << '\n';
-        *this << "Expected: " << err->expected << '\n';
+        ss << err->what() << " is not a valid key-value pair.";
+        ss << '\n';
         return;
     }
+    if (auto err = dynamic_cast<const util::EnumParseError *>(&e)) {
     
+        ss << err->token << " is not a valid key." << '\n';
+        ss << "Expected: " << err->expected << '\n';
+        return;
+    }
     if (auto err = dynamic_cast<const util::ParseNumError *>(&e)) {
         
-        *this << err->token << " is not a number";
-        *this << '\n';
+        ss << err->token << " is not a number.";
+        ss << '\n';
         return;
     }
-    
     if (auto err = dynamic_cast<const util::ParseBoolError *>(&e)) {
         
-        *this << err->token << " must be true or false";
-        *this << '\n';
+        ss << err->token << " must be true or false.";
+        ss << '\n';
         return;
     }
-    
     if (auto err = dynamic_cast<const util::ParseOnOffError *>(&e)) {
         
-        *this << "'" << err->token << "' must be on or off";
-        *this << '\n';
+        ss << "'" << err->token << "' must be on or off.";
+        ss << '\n';
         return;
     }
-    
     if (auto err = dynamic_cast<const util::ParseError *>(&e)) {
         
-        *this << err->what() << ": Syntax error";
-        *this << '\n';
+        if (auto what = string(err->what()); !what.empty()) {
+            ss << err->what() << ": ";
+        }
+        ss << "Syntax error\n";
         return;
     }
-    
     if (auto err = dynamic_cast<const AppError *>(&e)) {
         
-        *this << err->what();
-        *this << '\n';
+        ss << err->what();
+        ss << '\n';
         return;
+    }
+    
+    ss << e.what();
+}
+
+void
+Console::dump(std::ostream &os, CoreObject &component, Category category)
+{
+    _dump(os, component, category);
+}
+
+void
+Console::dump(std::ostream &os, CoreObject &component, std::vector <Category> categories)
+{
+    for (usize i = 0; i < categories.size(); i++) {
+        
+        if (i) os << std::endl;
+        _dump(os, component, categories[i]);
     }
 }
 
 void
-Console::dump(CoreObject &component, Category category)
+Console::_dump(std::ostream &os, CoreObject &component, Category category)
 {
-    *this << '\n';
-    _dump(component, category);
-}
-
-void
-Console::dump(CoreObject &component, std::vector <Category> categories)
-{
-    *this << '\n';
-    for(auto &category : categories) _dump(component, category);
-}
-
-void
-Console::_dump(CoreObject &component, Category category)
-{
-    std::stringstream ss;
-    
     switch (category) {
             
-        case Category::Slots:       ss << "Slots:\n\n"; break;
-        case Category::Config:      ss << "Configuration:\n\n"; break;
-        case Category::Properties:  ss << "Properties:\n\n"; break;
-        case Category::Registers:   ss << "Registers:\n\n"; break;
-        case Category::State:       ss << "State:\n\n"; break;
-        case Category::Stats:       ss << "Statistics:\n\n"; break;
+        case Category::Slots:       os << "Slots:\n\n"; break;
+        case Category::Config:      os << "Configuration:\n\n"; break;
+        case Category::Properties:  os << "Properties:\n\n"; break;
+        case Category::Registers:   os << "Registers:\n\n"; break;
+        case Category::State:       os << "State:\n\n"; break;
+        case Category::Stats:       os << "Statistics:\n\n"; break;
             
         default:
             break;
     }
     
-    component.dump(category, ss);
-    
-    *this << ss << '\n';
+    component.dump(category, os);
 }
 
 void
@@ -801,55 +950,73 @@ Console::initCommands(RSCommand &root)
     // Common commands
     //
     
-    RSCommand::currentGroup = "Shell commands";
+    {   RSCommand::currentGroup = "Shell commands";
     
     root.add({
         
         .tokens = { "welcome" },
-        .hidden = true,
-        .help   = { "Prints the welcome message" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp  = { "Prints the welcome message" },
+            .flags  = rs::hidden,
             
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
             welcome();
+            }
+        });
+        
+        root.add({
+            
+            .tokens = { "helpstring" },
+            .chelp  = { "Prints how to get help" },
+            .flags  = rs::hidden,
+            
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
+                printHelp(0);
         }
     });
     
     root.add({
         
         .tokens = { "commander" },
-        .help   = { "Enters the command shell" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp  = { "Enter or command console" },
 
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
             retroShell.enterCommander();
         }
     });
 
-    root.add({
+        root.add({
 
-        .tokens = { "debugger" },
-        .help   = { "Enters the debug shell" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .tokens = { "debugger" },
+            .chelp  = { "Enter or debug console" },
 
-            retroShell.enterDebugger();
-        }
-    });
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-    root.add({
-        
-        .tokens = { "clear" },
-        .help   = { "Clear the console window" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            clear();
+                retroShell.enterDebugger();
+            }
+        });
+
+
+        root.add({
+
+            .tokens = { "clear" },
+            .chelp  = { "Clear the console window" },
+
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                clear();
         }
     });
     
     root.add({
         
         .tokens = { "close" },
-        .help   = { "Hide the console window" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp  = { "Hide the console window" },
             
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
             msgQueue.put(Msg::RSH_CLOSE);
         }
     });
@@ -857,45 +1024,56 @@ Console::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { "help" },
-        .extra  = { Arg::command },
-        .help   = { "Print usage information" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp  = { "Print usage information" },
+            .args   = {
+                { .name = { "command", "Command name" }, .flags = rs::opt },
+                { .name = { "TAB", "" }, .flags = rs::keyval | rs::hidden }
+            },
+                .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
             
-            help(argv.empty() ? "" : argv.front());
+                    help(os, args.contains("command") ? args.at("command") : "", parseNum(args, "TAB", 0));
         }
     });
     
     root.add({
         
         .tokens = { "state" },
-        .hidden = true,
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp  = { "Prints information about the current emulator state" },
+            .flags  = rs::hidden,
             
-            dump(c64, Category::Trace);
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
+                dump(os, c64, Category::Trace);
         }
     });
     
     root.add({
         
         .tokens = { "joshua" },
-        .hidden = true,
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp  = { "Easter egg" },
+            .flags  = rs::hidden,
             
-            *this << "\nGREETINGS PROFESSOR HOFFMANN.\n";
-            *this << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
-            *this << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
+                os << "\nGREETINGS PROFESSOR HOFFMANN.\n";
+                os << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
+                os << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
+                
+                msgQueue.put(Msg::EASTER_EGG);
         }
     });
     
     root.add({
         
         .tokens = { "source" },
-        .args   = { Arg::path },
-        .help   = { "Process a command script" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp  = { "Process a command script" },
+            .args   = { { .name = { "path", "Script file" } } },
             
-            auto stream = std::ifstream(argv.front());
-            if (!stream.is_open()) throw AppError(Fault::FILE_NOT_FOUND, argv.front());
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
+                auto path = host.makeAbsolute(args.at("path"));
+                auto stream = std::ifstream(path);
+                if (!stream.is_open()) throw AppError(Fault::FILE_NOT_FOUND, path);
             retroShell.asyncExecScript(stream);
         }
     });
@@ -903,59 +1081,67 @@ Console::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { "wait" },
-        .hidden = true,
-        .args   = { Arg::value, Arg::seconds },
-        .help   = { "Pause the execution of a command script" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp  = { "Pause the execution of a command script" },
+            .flags  = rs::hidden,
+            .args   = { { .name = { "seconds", "Delay" } } },
             
-            auto seconds = parseNum(argv[0]);
-            c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
-            throw ScriptInterruption();
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
+                auto seconds = parseNum(args.at("seconds"));
+                c64.scheduleRel<SLOT_RSH>(C64::sec(seconds), RSH_WAKEUP);
+                throw ScriptInterruption();
         }
     });
     
     root.add({
         
         .tokens = { "shutdown" },
-        .help   = { "Terminates the application" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+            .chelp   = { "Terminates the application" },
+            
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
             
             msgQueue.put(Msg::ABORT, 0);
         }
     });
-}
-
-const char *
-Console::registerComponent(CoreComponent &c)
-{
-    return registerComponent(c, root);
-}
-
-const char *
-Console::registerComponent(CoreComponent &c, RSCommand &root)
-{
-    // Get the shell name for this component
-    auto cmd = c.shellName();
-    assert(cmd != nullptr);
-    
-    // Register a command with the proper name
-    if (c.shellHelp().empty()) {
-        root.add( { .tokens = { cmd }, .help = { c.description() } } );
-    } else {
-        root.add( {.tokens = { cmd }, .help = c.shellHelp() } );
     }
+}
+
+const char *
+Console::registerComponent(CoreComponent &c, bool shadowed)
+{
+    return registerComponent(c, root, shadowed);
+}
+
+const char *
+Console::registerComponent(CoreComponent &c, RSCommand &root, bool shadowed)
+{
+    // Get the shell name and the options for this component
+    auto cmd = c.shellName();
+    auto descr = c.description();
+    auto &options = c.getOptions();
     
-    // In case this component has options...
-    if (auto &options = c.getOptions(); !options.empty()) {
+    // In case this component has no options, register a stub
+    if (options.empty()) {
+    
+        root.add({
+        
+            .tokens = { cmd },
+            .ghelp  = { descr }
+        });
+        
+    } else {
         
         // Register a command for querying the current configuration
         root.add({
             
-            .tokens = { cmd, ""},
-            .help   = { "Display the current configuration" },
-            .func   = [this, &c] (Arguments& argv, const std::vector<isize> &values) {
+            .tokens = { cmd },
+            .ghelp  = descr,
+            .chelp  = { "Display the current configuration" },
+            .flags  = shadowed ? rs::shadowed : 0,
                 
-                retroShell.commander.dump(c, Category::Config);
+            .func   = [this, &c] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+                
+                retroShell.commander.dump(os, c, Category::Config);
             }
         });
         
@@ -963,7 +1149,7 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
         root.add({
             
             .tokens = { cmd, "set" },
-            .help   = { "Configure the component" }
+            .ghelp  = { "Configure the component" }
         });
         
         for (auto &opt : options) {
@@ -977,14 +1163,16 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
                 root.add({
                     
                     .tokens = { cmd, "set", OptEnum::key(opt) },
-                    .args   = { OptionParser::argList(opt) },
-                    .help   = { OptEnum::help(opt) },
-                    .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                    .chelp  = { OptEnum::help(opt) },
+                    .args   = {
+                        { .name = { "value", OptionParser::argList(opt) } }
+                    },
+                        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
                         
-                        emulator.set(Opt(values[0]), argv[0], { values[1] });
-                        // msgQueue.put(Msg::CONFIG);
+                            emulator.set(Opt(values[0]), args.at("value"), { values[1] });
+                            msgQueue.put(Msg::CONFIG);
                         
-                    }, .values = { isize(opt), c.objid }
+                        }, .payload = { isize(opt), c.objid }
                 });
                 
             } else {
@@ -993,8 +1181,7 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
                 root.add({
                     
                     .tokens = { cmd, "set", OptEnum::key(opt) },
-                    .args   = { OptionParser::argList(opt) },
-                    .help   = { OptEnum::help(opt) }
+                    .chelp  = { OptEnum::help(opt) }
                 });
                 
                 for (const auto& [first, second] : pairs) {
@@ -1003,41 +1190,18 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
                     root.add({
                         
                         .tokens = { cmd, "set", OptEnum::key(opt), first },
-                        .help   = { help.empty() ? "Set to " + first : help },
-                        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
+                        .chelp  = { help.empty() ? "Set to " + first : help },
+                        
+                        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
                             
                             emulator.set(Opt(values[0]), values[1], { values[2] });
-                            // msgQueue.put(Msg::CONFIG);
+                            msgQueue.put(Msg::CONFIG);
                             
-                        },  .values = { isize(opt), isize(second), c.objid }
+                        },  .payload = { isize(opt), isize(second), c.objid }
                     });
                 }
             }
         }
-        
-        /*
-         // ...register a command for querying the current configuration
-         root.add({cmd, ""},
-         "Display the current configuration",
-         [this, &c](Arguments& argv, const std::vector<isize> &values) {
-         
-         retroShell.commander.dump(c, Category::Config);
-         });
-         
-         // ...register a setter for all config options
-         root.add({cmd, "set"}, "Configure the component");
-         for (auto &opt : options) {
-         
-         root.add({cmd, "set", OptEnum::key(opt)},
-         {OptionParser::argList(opt)},
-         OptEnum::help(opt),
-         [this](Arguments& argv, const std::vector<isize> &values) {
-         
-         emulator.set(Option(HI_WORD(values.front())), argv[0], { LO_WORD(values.front()) });
-         
-         }, HI_W_LO_W(opt, c.objid));
-         }
-         */
     }
     
     return cmd;

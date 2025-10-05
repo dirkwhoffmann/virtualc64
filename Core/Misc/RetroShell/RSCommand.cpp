@@ -13,6 +13,7 @@
 #include "config.h"
 #include "RSCommand.h"
 #include "StringUtils.h"
+#include "Parser.h"
 #include <algorithm>
 #include <utility>
 
@@ -20,164 +21,111 @@ namespace vc64 {
 
 string RSCommand::currentGroup;
 
-void
-RSCommand::add(const RetroShellCmdDescriptor &descriptor)
+string
+RSArgumentDescriptor::nameStr() const
 {
+    return name[0];
+}
+
+string
+RSArgumentDescriptor::helpStr() const
+{
+    return name.size() > 1 ? name[1] : "" ;
+}
+
+string
+RSArgumentDescriptor::keyStr() const
+ {
+    if (key.empty()) {
+ 
+        if (isStdArg())         return "";
+        if (isKeyValuePair())   return nameStr();
+        if (isFlag())           return "-" + nameStr();
+    }
+    return key;
+ }
+ 
+string
+RSArgumentDescriptor::valueStr() const
+ {
+    if (value.empty()) {
+
+        if (isStdArg())         return "<" + nameStr() + ">";
+        if (isKeyValuePair())   return "<arg>";
+        if (isFlag())           return "";
+    }
+    return value;
+ }
+ 
+string
+RSArgumentDescriptor::keyValueStr() const
+ {
+    if (key.empty()) {
+
+        if (isStdArg())         return valueStr();
+        if (isKeyValuePair())   return keyStr() + "=" + valueStr();
+        if (isFlag())           return keyStr();
+    }
+    return key;
+ }
+ 
+string
+RSArgumentDescriptor::usageStr() const
+ {
+    return isHidden() ? "" : isRequired() ? keyValueStr() : "[" + keyValueStr() + "]";
+ }
+ 
+ void
+RSCommand::add(const RSCommandDescriptor &descriptor)
+ {
     assert(!descriptor.tokens.empty());
-    
-    // Cleanse the token list (convert { "aaa bbb" } into { "aaa", "bbb" }
+    assert(!descriptor.chelp.empty() || !descriptor.ghelp.empty());
+
+    // Only register enabled commands
+    if (descriptor.flags & rs::disabled) return;
+ 
+ // Cleanse the token list (convert { "aaa bbb" } into { "aaa", "bbb" }
     auto tokens = util::split(descriptor.tokens, ' ');
-    
+ 
     // The last entry in the token list is the command name
     auto name = tokens.back();
-    
-    // Determine how the token is displayed in help messages
-    auto helpName = descriptor.help.size() > 1 ? descriptor.help[1] : name;
-    
+
     // Traversing the command tree
     RSCommand *node = seek(std::vector<string> { tokens.begin(), tokens.end() - 1 });
     assert(node != nullptr);
-    
-    // Create the instruction
+ 
+ // Create the instruction
     RSCommand cmd;
-    cmd.name = name;
-    cmd.fullName = (node->fullName.empty() ? "" : node->fullName + " ") + helpName;
-    cmd.helpName = helpName;
     cmd.groupName = currentGroup;
-    cmd.requiredArgs = descriptor.args;
-    cmd.optionalArgs = descriptor.extra;
-    cmd.help = descriptor.help;
+    cmd.name = name;
+    cmd.fullName = util::concat({ node->fullName, name }, " ");
+    cmd.flags = descriptor.flags;
+    cmd.ghelp = !descriptor.ghelp.empty() ? descriptor.ghelp : descriptor.chelp;
+    cmd.chelp = !descriptor.chelp.empty() ? descriptor.chelp : "???";
+    cmd.args = descriptor.args;
     cmd.callback = descriptor.func;
-    cmd.param = descriptor.values;
-    cmd.hidden = descriptor.hidden; //  || descriptor.help.empty();
-    
-    if (!cmd.hidden) currentGroup = "";
-    
+    cmd.payload = descriptor.payload;
+ 
+    // Remove all disabled arguments
+    cmd.args.erase(std::remove_if(cmd.args.begin(), cmd.args.end(), [](const RSArgumentDescriptor& arg) {
+        return arg.flags & rs::disabled; }), cmd.args.end());
+ 
+    // Reset the group
+    if (cmd.isVisible()) currentGroup = "";
+ 
     // Register the instruction at the proper location
-    node->subCommands.push_back(cmd);
-}
-
-void
+    node->subcommands.push_back(cmd);
+ }
+ 
+ void
 RSCommand::clone(const std::vector<string> &tokens,
                  const string &alias,
                  const std::vector<isize> &values)
-{
-    assert(!tokens.empty());
-    
-    // Find the command to clone
-    RSCommand *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() });
-    assert(cmd != nullptr);
-    
-    // Assemble the new token list
-    auto newTokens = std::vector<string> { tokens.begin(), tokens.end() - 1 };
-    newTokens.push_back(alias);
-    
-    // Create the instruction
-    add(RetroShellCmdDescriptor {
-        
-        .tokens = newTokens,
-        .hidden = true,
-        .args   = cmd->requiredArgs,
-        .extra  = cmd->optionalArgs,
-        .func   = cmd->callback,
-        .values = values
-    });
-}
-
-/*
- void
- RetroShellCmd::add(const std::vector<string> &tokens,
- const string &help,
- RetroShellCallback func, long param)
- {
- add(tokens, { }, { }, { tokens.back(), help }, func, param);
- }
- 
- void
- RetroShellCmd::add(const std::vector<string> &tokens,
- std::pair<const string &, const string &> help,
- RetroShellCallback func, long param)
- {
- add(tokens, { }, { }, help, func, param);
- }
- 
- void
- RetroShellCmd::add(const std::vector<string> &tokens,
- const std::vector<string> &arguments,
- const string &help,
- RetroShellCallback func, long param)
- {
- add(tokens, arguments, { }, { tokens.back(), help }, func, param);
- }
- 
- void
- RetroShellCmd::add(const std::vector<string> &tokens,
- const std::vector<string> &arguments,
- std::pair<const string &, const string &> help,
- RetroShellCallback func, long param)
- {
- add(tokens, arguments, { }, help, func, param);
- }
- 
- void
- RetroShellCmd::add(const std::vector<string> &tokens,
- const std::vector<string> &requiredArgs,
- const std::vector<string> &optionalArgs,
- const string &help,
- RetroShellCallback func, long param)
- {
- add(tokens, requiredArgs, optionalArgs, { tokens.back(), help }, func, param);
- }
- 
- void
- RetroShellCmd::add(const std::vector<string> &rawtokens,
- const std::vector<string> &requiredArgs,
- const std::vector<string> &optionalArgs,
- std::pair<const string &, const string &> help,
- RetroShellCallback func, long param)
- {
- assert(!rawtokens.empty());
- 
- // Cleanse the token list (convert { "aaa bbb" } into { "aaa", "bbb" }
- auto tokens = util::split(rawtokens, ' ');
- 
- // Traverse the node tree
- RetroShellCmd *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() - 1 });
- assert(cmd != nullptr);
- 
- // Create the instruction
- RetroShellCmd d;
- d.name = tokens.back();
- d.fullName = (cmd->fullName.empty() ? "" : cmd->fullName + " ") + help.first;
- d.groupName = currentGroup;
- d.requiredArgs = requiredArgs;
- d.optionalArgs = optionalArgs;
- d.help = { help.first };
- d.callback = func;
- d.param = { param };
- d.hidden = help.second.empty();
- 
- if (!d.hidden) currentGroup = "";
- 
- // Register the instruction
- cmd->subCommands.push_back(d);
- }
- 
- void 
- RetroShellCmd::clone(const string &alias,
- const std::vector<string> &tokens,
- long param)
- {
- clone(alias, tokens, "", param);
- }
- 
- void
- RetroShellCmd::clone(const string &alias, const std::vector<string> &tokens, const string &help, long param)
  {
  assert(!tokens.empty());
  
  // Find the command to clone
- RetroShellCmd *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() });
+    RSCommand *cmd = seek(std::vector<string> { tokens.begin(), tokens.end() });
  assert(cmd != nullptr);
  
  // Assemble the new token list
@@ -185,19 +133,22 @@ RSCommand::clone(const std::vector<string> &tokens,
  newTokens.push_back(alias);
  
  // Create the instruction
- add(newTokens, 
- cmd->requiredArgs,
- cmd->optionalArgs,
- help,
- cmd->callback,
- param);
+    add(RSCommandDescriptor {
+
+        .tokens = newTokens,
+        .ghelp  = cmd->ghelp,
+        .chelp  = cmd->chelp,
+        .flags  = rs::hidden,
+        .args   = cmd->args,
+        .func   = cmd->callback,
+        .payload = values
+    });
  }
- */
 
 const RSCommand *
 RSCommand::seek(const string& token) const
 {
-    for (auto &it : subCommands) {
+    for (auto &it : subcommands) {
         if (it.name == token) return &it;
     }
     return nullptr;
@@ -233,9 +184,9 @@ RSCommand::filterPrefix(const string& prefix) const
     std::vector<const RSCommand *> result;
     auto uprefix = util::uppercased(prefix);
     
-    for (auto &it : subCommands) {
+    for (auto &it : subcommands) {
         
-        if (it.hidden) continue;
+        if (it.isHidden()) continue;
         auto substr = it.name.substr(0, prefix.size());
         if (util::uppercased(substr) == uprefix) result.push_back(&it);
     }
@@ -243,76 +194,145 @@ RSCommand::filterPrefix(const string& prefix) const
     return result;
 }
 
-string
-RSCommand::autoComplete(const string& token)
+isize
+RSCommand::autoComplete(string &token)
 {
-    string result;
+    std::vector<string> tokens;
     
     auto matches = filterPrefix(token);
-    if (!matches.empty()) {
-        
-        const RSCommand *first = matches.front();
-        for (usize i = 0;; i++) {
+    for (auto &it : matches) { tokens.push_back(it->name); }
             
-            for (auto m: matches) {
-                if (m->name.size() <= i || m->name[i] != first->name[i]) {
-                    return result;
-                }
+    if (!tokens.empty()) token = util::commonPrefix(tokens);
+    return (isize)matches.size();
             }
-            result += first->name[i];
+
+void
+RSCommand::printHelp(std::ostream &os)
+{
+    string prefix;
+
+    if (subcommands.empty()) {
+
+        // Describe the current command
+        prefix = "Usage: ";
+        os << prefix + argUsage() << std::endl;
+        printArgumentHelp(os, isize(prefix.size()));
+
+    } else {
+
+        // Describe all subcommands
+        prefix = "Commands: ";
+        os << prefix + cmdUsage() << std::endl;
+        printSubcmdHelp(os, isize(prefix.size()));
+
+        if (callback && !args.empty()) {
+
+            // Describe the current command
+            prefix = string(prefix.size(), ' ') + "Usage: ";
+            os << std::endl << prefix + argUsage() << std::endl;
+            printArgumentHelp(os, isize(prefix.size()), false);
         }
     }
-    
-    return result.size() >= token.size() ? result : token;
 }
 
-string
-RSCommand::usage() const
+void
+RSCommand::printArgumentHelp(std::ostream &os, isize indent, bool verbose)
 {
-    string arguments;
+    auto skip = [](const RSArgumentDescriptor &it) { return it.isHidden() || it.helpStr().empty(); };
     
-    if (subCommands.empty()) {
+    // Gather all arguments with a help description
+    std::vector<RSArgumentDescriptor *> hargs;
+    for (auto &it : args) { if (!skip(it)) hargs.push_back(&it); }
         
-        string required;
-        string optional;
+    // Determine the tabular position to align the output
+    isize tab = 0;
+    for (auto &it : hargs) { tab = std::max(tab, (isize)it->keyValueStr().length()); }
         
-        for (isize i = 0; i < minArgs(); i++) {
+    // Print command description
+    if (verbose) os << std::endl << string(indent, ' ') << chelp << std::endl;
             
-            required += requiredArgs[i];
-            required += " ";
-        }
-        for (isize i = 0; i < optArgs(); i++) {
+    if (!hargs.empty()) {
             
-            optional += optionalArgs[i];
-            optional += " ";
-        }
-        if (optional != "") optional = "[ " + optional + "]";
-        
-        arguments = required + optional;
-        
-    } else {
-        
-        // Collect all sub-commands
-        isize count = 0;
-        for (auto &it : subCommands) {
-            
-            if (it.hidden) continue;
-            
-            if (it.name != "") {
-                
-                if (count++) arguments += " | ";
-                arguments += it.name;
-            }
-        }
-        if (count > 1) {
-            arguments = "{" + arguments + "}";
-        }
-        if (seek("") && arguments != "") {
-            arguments = "[ " + arguments + " ]";
+        os << std::endl;
+
+        // Print argument descriptions
+        for (auto &it : hargs) {
+
+            os << string(indent, ' ') << std::left << std::setw(int(tab)) << it->keyValueStr() << " : ";
+            os << it->helpStr() << std::endl;
         }
     }
+    // os << std::endl;
+}
+        
+void
+RSCommand::printSubcmdHelp(std::ostream &os, isize indent, bool verbose)
+{
+    if (subcommands.empty()) return;
+        
+    // Collect all commands that appear in the help description
+    std::vector<const RSCommand *> cmds;
+    if (callback) cmds.push_back(this);
+    for (auto &it : subcommands) { if (it.isVisible()) cmds.push_back(&it); }
+        
+    // Determine alignment parameters to get a properly formatted output
+    isize newlines = 1, tab = 0;
+    for (auto &it : cmds) {
+        tab = std::max(tab, (isize)it->fullName.length());
+    }
+            
+    for (auto &it : cmds) {
+            
+        // For top-level commands, print the command group (if present)
+        if (!it->groupName.empty() && name.empty()) {
+                
+            // *this << '\n' << it->groupName << '\n';
+            os << std::endl << it->groupName << std::endl;
+            newlines = 1;
+            }
+
+        // Print newlines
+        for (; newlines > 0; newlines--) os << std::endl;
+
+        // Print command description
+        os << string(indent, ' ') << std::left << std::setw(int(tab)) << it->fullName << " : ";
+        os << (it == this ? it->chelp : it->ghelp) << std::endl;
+        }
+    // os << std::endl;
+        }
+
+string
+RSCommand::cmdUsage() const
+{
+    std::vector<string> items;
+
+    for (auto &it : subcommands) {
+        if (it.isVisible()) items.push_back(it.name);
+        }
+    auto combined = util::concat(items, " | ", callback ? "[ " : "{ ", callback ? " ]" : " }");
+    return  util::concat({ fullName, combined });
+    }
     
-    return fullName + " " + arguments;
+string
+RSCommand::argUsage() const
+{
+    // Create a common usage string for all flags
+    string flags = "";
+
+    for (auto &it : args) {
+        if (it.isFlag()) flags += it.nameStr()[0];
+    }
+    if (!flags.empty()) flags = "[-" + flags + "]";
+
+    // Create a usage string for all other arguments
+    std::vector<string> items;
+    
+    for (auto &it : args) {
+        if (!it.isFlag()) items.push_back(it.usageStr());
+    }
+    string other = util::concat(items);
+
+    return util::concat({ fullName, flags, other });
 }
 
 }

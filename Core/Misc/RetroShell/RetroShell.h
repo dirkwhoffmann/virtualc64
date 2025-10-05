@@ -57,9 +57,9 @@ class RetroShell final : public SubComponent, public Inspectable<RetroShellInfo>
 public:
     
     // Consoles
-    CommanderConsole commander = CommanderConsole(c64, 0);
-    DebuggerConsole debugger = DebuggerConsole(c64, 1);
-    
+    CommanderConsole commander = CommanderConsole(c64, 0, s1);
+    DebuggerConsole debugger = DebuggerConsole(c64, 1, s1);
+
     // Indicates if one of the consoles has new contents
     bool isDirty = false;
     
@@ -70,6 +70,8 @@ private:
     
     // The currently active console
     Console *current = nullptr;
+
+public:
     
     bool inCommandShell() { return current == &commander; }
     bool inDebugShell() { return current == &debugger; }

@@ -81,6 +81,7 @@ debugflag EXP_DEBUG       = 0;
 debugflag USR_DEBUG       = 0;
 
 // Other components
+debugflag RSH_DEBUG       = 0;
 debugflag REC_DEBUG       = 0;
 debugflag REU_DEBUG       = 0;
 debugflag SCK_DEBUG       = 0;

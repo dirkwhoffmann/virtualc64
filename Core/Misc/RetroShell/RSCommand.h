@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "BasicTypes.h"
+#include "Reflection.h"
 #include <functional>
 #include <stack>
 
@@ -20,40 +20,71 @@ namespace vc64 {
 
 class RetroShell;
 
-using Arguments = std::vector<string>;
-using RetroShellCallback = std::function<void (Arguments&, const std::vector<isize> &values)>;
+// Represents an uninterpreted sequence of tokens (e.g. "type -h lines=100")
+typedef std::vector<string> Tokens;
 
-namespace Arg {
+// Parsed arguments (e.g. { {"h", "true"}, {"lines", "100"} })
+typedef std::map<string,string> Arguments;
 
-static const std::string address    = "<address>";
-static const std::string boolean    = "{ true | false }";
-static const std::string command    = "<command>";
-static const std::string count      = "<count>";
-static const std::string dst        = "<destination>";
-static const std::string ignores    = "<ignores>";
-static const std::string kb         = "<kb>";
-static const std::string nr         = "<nr>";
-static const std::string onoff      = "{ on | off }";
-static const std::string path       = "<path>";
-static const std::string process    = "<process>";
-static const std::string seconds    = "<seconds>";
-static const std::string value      = "<value>";
-static const std::string sequence   = "<byte sequence>";
-static const std::string src        = "<source>";
-static const std::string volume     = "<volume>";
-static const std::string string     = "<string>";
+// Command and argument flags
+namespace rs {
 
+static const usize opt              = 1LL << 0;
+static const usize keyval           = 1LL << 1;
+static const usize flag             = 1LL << 2 | opt;
+static const usize disabled         = 1LL << 3;
+static const usize hidden           = 1LL << 4 | opt;
+static const usize shadowed         = 1LL << 5;
+static const usize acdir            = 1LL << 6;
+static const usize acfile           = 1LL << 7;
+static const usize ac               = acdir | acfile;
+
+}
+
+struct RSArgumentDescriptor {
+
+    std::vector<string> name;
+    string key;
+    string value;
+    usize flags;
+    
+    bool isFlag() const { return (flags & rs::flag) == rs::flag; }
+    bool isKeyValuePair() const { return (flags & rs::keyval) == rs::keyval; }
+    bool isStdArg() const { return !isFlag() && !isKeyValuePair(); }
+    bool isHidden() const { return (flags & rs::hidden) == rs::hidden; }
+    bool isOptional() const { return (flags & rs::opt) == rs::opt; }
+    bool isRequired() const { return !isOptional(); }
+    
+    string nameStr() const;
+    string helpStr() const;
+    string keyStr() const;
+    string valueStr() const;
+    string keyValueStr() const;
+    string usageStr() const;
 };
 
-struct RetroShellCmdDescriptor {
+struct RSCommandDescriptor {
     
+    // Tokens the command is composed of
     const std::vector<string> &tokens = {};
-    bool hidden = false;
-    const std::vector<string> &args = {};
-    const std::vector<string> &extra = {};
-    const std::vector<string> help = {};
-    RetroShellCallback func = nullptr;
-    const std::vector<isize> &values = {};
+    
+    // General description of this command and all subcommands
+    string ghelp = {};
+    
+    // Specific description of this command
+    string chelp = {};
+    
+    // Command flags
+    usize flags = {};
+    
+    // Argument descriptions of this command
+    const std::vector<RSArgumentDescriptor> &args = {};
+    
+    // The command callback
+    std::function<void (std::ostream&, const Arguments&, const std::vector<isize>&)> func = nullptr;
+    
+    // Addition values passed to the command callback as last argument
+    const std::vector<isize> &payload = {};
 };
 
 struct RSCommand {
@@ -67,111 +98,94 @@ struct RSCommand {
     // Name of this command (e.g., "eject")
     string name;
     
-    // Full name of this command (e.g., "drive8 eject")
+    // Full name of this command (e.g., "df0 eject")
     string fullName;
     
-    // Name of this command as displayed in help messages (e.g., "[g]oto")
-    string helpName;
+    // Command flags
+    usize flags;
     
-    // Help description of this command (e.g., "Eject disk")
-    std::vector<string> help;
+    // General description of this command and all subcommands
+    string ghelp;
     
-    // List of required arguments
-    std::vector<string> requiredArgs;
+    // Specific description of this command
+    string chelp;
     
-    // List of optional arguments
-    std::vector<string> optionalArgs;
-    
-    // List of subcommands
-    std::vector<RSCommand> subCommands;
+    // Argument descriptions of this command
+    std::vector<RSArgumentDescriptor> args;
     
     // Command handler
-    RetroShellCallback callback = nullptr;
+    std::function<void (std::ostream&, const Arguments&, const std::vector<isize>&)> callback = nullptr;
     
-    // Additional argument passed to the command handler
-    std::vector<isize> param;
+    // Addition values passed to the command callback as last argument
+    std::vector<isize> payload;
     
-    // Indicates if this command appears in help descriptions
-    bool hidden = false;
+    // List of subcommands
+    std::vector<RSCommand> subcommands;
     
     
     //
-    // Methods
+    // Querying properties
+    //
+    
+    bool isHidden() const { return (flags & rs::hidden) == rs::hidden; }
+    bool isShadowed() const { return (flags & rs::shadowed) == rs::shadowed; }
+    bool isVisible() const { return !isHidden() && !isShadowed(); }
+    
+    
+    //
+    // Working with the command tree
     //
     
     // Creates a new node in the command tree
-    void add(const RetroShellCmdDescriptor &descriptor);
+    void add(const RSCommandDescriptor &descriptor);
     
     // Registers an alias name for an existing command
     void clone(const std::vector<string> &tokens,
                const string &alias,
                const std::vector<isize> &values = { });
     
-    /* BEGIN DEPRECATED */
-    
-    /*
-     // Creates a new node in the command tree
-     void add(const std::vector<string> &tokens,
-     const string &help,
-     RetroShellCallback func = nullptr, long param = 0);
-     
-     void add(const std::vector<string> &tokens,
-     std::pair<const string &, const string &> help,
-     RetroShellCallback func = nullptr, long param = 0);
-     
-     void add(const std::vector<string> &tokens,
-     const std::vector<string> &args,
-     const string &help,
-     RetroShellCallback func = nullptr, long param = 0);
-     
-     void add(const std::vector<string> &tokens,
-     const std::vector<string> &args,
-     std::pair<const string &, const string &> help,
-     RetroShellCallback func = nullptr, long param = 0);
-     
-     void add(const std::vector<string> &tokens,
-     const std::vector<string> &requiredArgs,
-     const std::vector<string> &optionalArgs,
-     const string &help,
-     RetroShellCallback func = nullptr, long param = 0);
-     
-     void add(const std::vector<string> &tokens,
-     const std::vector<string> &requiredArgs,
-     const std::vector<string> &optionalArgs,
-     std::pair<const string &, const string &> help,
-     RetroShellCallback func = nullptr, long param = 0);
-     
-     void clone(const string &alias,
-     const std::vector<string> &tokens,
-     long param = 0);
-     
-     void clone(const string &alias,
-     const std::vector<string> &tokens,
-     const string &help,
-     long param = 0);
-     */
-    /* END DEPRECATED */
-    
-    // Returns arguments counts
-    isize minArgs() const { return isize(requiredArgs.size()); }
-    isize optArgs() const { return isize(optionalArgs.size()); }
-    isize maxArgs() const { return minArgs() + optArgs(); }
-    
     // Seeks a command object inside the command object tree
     const RSCommand *seek(const string& token) const;
-    RSCommand *seek(const string& token);
     const RSCommand *seek(const std::vector<string> &tokens) const;
+    const RSCommand &operator/(const string& token) const { return *seek(token); }
+    
+    RSCommand *seek(const string& token);
     RSCommand *seek(const std::vector<string> &tokens);
     RSCommand &operator/(const string& token) { return *seek(token); }
-    
+     
+     
+    //
+    // Auto-completing user input
+    //
+     
+public:
+     
+    // Auto-completes a partial token string (returns the number of matches)
+    isize autoComplete(string &token);
+     
+private:
+     
     // Filters the argument list (used by auto-completion)
     std::vector<const RSCommand *> filterPrefix(const string& prefix) const;
+     
     
-    // Automatically completes a partial token string
-    string autoComplete(const string& token);
+    //
+    // Generating help messages
+    //
     
-    // Returns a syntax string for this command
-    string usage() const;
+public:
+    
+    // Returns a syntax description for subcommands or arguments
+    string cmdUsage() const;
+    string argUsage() const;
+    
+    // Displays a help text for a (partially typed in) command
+    void printHelp(std::ostream &os);
+    
+private:
+    
+    void printArgumentHelp(std::ostream &os, isize indent, bool verbose = true);
+    void printSubcmdHelp(std::ostream &os, isize indent, bool verbose = true);
 };
 
 }

@@ -14,22 +14,8 @@
 #include "Console.h"
 #include "Emulator.h"
 #include "Option.h"
-
-namespace vc64 {
-
-void
-CommanderConsole::_enter()
-{
-    msgQueue.put(Msg::RSH_DEBUGGER, false);
-    
-    // If the console is entered the first time...
-    if (isEmpty()) {
         
-        // Print the welcome message
-        exec("welcome");
-        *this << getPrompt();
-    }
-}
+namespace vc64 {
 
 void
 CommanderConsole::_pause()
@@ -46,16 +32,7 @@ CommanderConsole::getPrompt()
 void
 CommanderConsole::welcome()
 {
-    storage << "VirtualC64 RetroShell ";
-    remoteManager.rshServer << "VirtualC64 RetroShell Remote Server ";
-    *this << C64::build() << '\n';
-    *this << '\n';
-    *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-    *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
-    *this << '\n';
-    
-    printHelp();
-    *this << '\n';
+    Console::welcome();
 }
 
 void
@@ -82,28 +59,15 @@ CommanderConsole::summary()
 }
 
 void
-CommanderConsole::printHelp()
+CommanderConsole::printHelp(isize tab)
 {
-    storage << "Type 'help' or press 'TAB' twice for help.\n";
-    storage << "Type '.' or press 'SHIFT+RETURN' to enter debug mode.";
-    
-    remoteManager.rshServer << "Type 'help' for help.\n";
-    remoteManager.rshServer << "Type '.' to enter debug mode.";
-    
-    *this << '\n';
+    Console::printHelp(tab);
 }
 
 void
 CommanderConsole::pressReturn(bool shift)
 {
-    if (!shift && input.empty()) {
-        
-        printHelp();
-        
-    } else {
-        
         Console::pressReturn(shift);
-    }
 }
 
 void
@@ -114,192 +78,147 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     // Workspace management
     //
-    
+
     root.add({
-        
+
         .tokens = { "workspace" },
-        .hidden = releaseBuild,
-        .help   = { "Workspace management" }
+        .ghelp  = { "Workspace management" },
+        .flags  = releaseBuild ? rs::hidden : 0
     });
-    
+
     root.add({
-        
+
         .tokens = { "workspace init" },
-        .hidden = releaseBuild,
-        .help   = { "First command of a workspace script" },
-        .func   = [] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "First command of a workspace script" },
+        .flags  = releaseBuild ? rs::hidden : 0,
+        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             // c64.initWorkspace();
         }
     });
-    
+
     root.add({
-        
+
         .tokens = { "workspace activate" },
-        .hidden = releaseBuild,
-        .help   = { "Last command of a workspace script" },
-        .func   = [] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "Last command of a workspace script" },
+        .flags  = releaseBuild ? rs::hidden : 0,
+        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             // c64.activateWorkspace();
         }
     });
-    
-    
+
+
     //
     // Regression tester
     //
     
     RSCommand::currentGroup = "Regression testing";
-    
-    auto cmd = registerComponent(regressionTester);
-    
+
     root.add({
-        
+
         .tokens = { "regression" },
-        .hidden = releaseBuild,
-        .help   = { "Runs the regression tester" }
+        .ghelp  = { "Runs the regression tester" },
+        .flags  = releaseBuild ? rs::hidden : 0
     });
-    
+
     root.add({
-        
+
         .tokens = { "regression", "setup" },
-        .args   = { ConfigSchemeEnum::argList() },
-        .extra  = { Arg::path, Arg::path },
-        .help   = { "Initializes the test environment" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            auto model = parseEnum <ConfigScheme, ConfigSchemeEnum> (argv[0]);
-            regressionTester.prepare(c64, model);
-            
-            // Pause the script to give the C64 some time to boot
-            c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
-            throw ScriptInterruption("");
-        }
+        .ghelp  = { "Initializes the test environment" },
     });
-    
-    /*
-     root.add({"regression", "setup"}, { ConfigSchemeEnum::argList() },
-     "Initialize the test environment",
-     [this](Arguments& argv, const std::vector<isize> &values) {
-     
-     auto model = parseEnum <C64Model, ConfigSchemeEnum> (argv[0]);
-     regressionTester.prepare(c64, model);
-     
-     // Pause the script to give the C64 some time to boot
-     c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
-     throw ScriptInterruption("");
-     });
-     */
-    
+
+    for (auto &it : ConfigSchemeEnum::elements()) {
+
+        root.add({
+
+            .tokens = { "regression", "setup", ConfigSchemeEnum::key(it) },
+            .chelp  = { ConfigSchemeEnum::help(it) },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                regressionTester.prepare(c64, ConfigScheme(values[0]));
+
+                // Pause the script to give the C64 some time to boot
+                c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
+                throw ScriptInterruption("");
+
+            }, .payload = { isize(it) }
+        });
+    }
+
     root.add({
-        
+
         .tokens = { "regression", "run" },
-        .args   = { Arg::path },
-        .help   = { "Launches a regression test" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            regressionTester.run(argv.front());
+        .chelp  = { "Launches a regression test" },
+        .args   = { { .name = { "path", "Regression test script" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            auto path = host.makeAbsolute(args.at("path"));
+            regressionTester.run(path);
         }
     });
-    
-    /*
-     root.add({"regression", "run"}, { Arg::path },
-     "Launch a regression test",
-     [this](Arguments& argv, const std::vector<isize> &values) {
-     
-     regressionTester.run(argv.front());
-     });
-     */
-    
+
     root.add({
-        
+
         .tokens = { "screenshot" },
-        .hidden = releaseBuild,
-        .help   = { "Manages screenshots" }
+        .ghelp  = { "Manages screenshots" },
+        .flags  = releaseBuild ? rs::hidden : 0
     });
-    
+
     root.add({
-        
+
         .tokens = { "screenshot", "set" },
-        .help   = { "Configure the screenshot" }
+        .ghelp  = { "Configure the screenshot" }
     });
-    
+
     root.add({
-        
-        .tokens = { "screenshot", "set", "path" },
-        .args   = { Arg::path },
-        .help   = { "Assign the save directory" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            regressionTester.screenshotPath = argv.front() == "\"\"" ? "" : argv.front();
+
+        .tokens = { "screenshot", "set", "filename" },
+        .chelp  = { "Assign the screenshot filename" },
+        .args   = { { .name = { "path", "File path" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            auto path = host.makeAbsolute(args.at("path"));
+            regressionTester.screenshotPath = path;
         }
     });
-    
+
     root.add({
-        
+
         .tokens = { "screenshot", "set", "cutout" },
-        .args   = { Arg::value, Arg::value, Arg::value, Arg::value },
-        .help   = { "Adjust the texture cutout" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            isize x1 = parseNum(argv[0]);
-            isize y1 = parseNum(argv[1]);
-            isize x2 = parseNum(argv[2]);
-            isize y2 = parseNum(argv[3]);
-            
-            regressionTester.x1 = x1;
-            regressionTester.y1 = y1;
-            regressionTester.x2 = x2;
-            regressionTester.y2 = y2;
-        }
+        .chelp  = { "Adjust the texture cutout" },
+        .args   = {
+            { .name = { "x1", "Left x coordinate" }, .flags = rs::keyval },
+            { .name = { "x2", "Right x coordinate" }, .flags = rs::keyval },
+            { .name = { "y1", "Lower y coordinate" }, .flags = rs::keyval },
+            { .name = { "y2", "Upper y coordinate" }, .flags = rs::keyval }
+        },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                isize x1 = parseNum(args.at("x1"));
+                isize y1 = parseNum(args.at("y1"));
+                isize x2 = parseNum(args.at("x2"));
+                isize y2 = parseNum(args.at("y2"));
+
+                regressionTester.x1 = x1;
+                regressionTester.y1 = y1;
+                regressionTester.x2 = x2;
+                regressionTester.y2 = y2;
+            }
     });
-    
+
     root.add({
-        
+
         .tokens = { "screenshot", "save" },
-        .args   = { Arg::path },
-        .help   = { "Saves a screenshot and exits the emulator" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            regressionTester.dumpTexture(c64, argv.front());
+        .chelp  = { "Saves a screenshot and exits the emulator" },
+        .args   = { { .name = { "path", "File path" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            auto path = host.makeAbsolute(args.at("path"));
+            regressionTester.dumpTexture(c64, path);
         }
     });
-    
-    /*
-     root.add({"screenshot"}, debugBuild ? "Manages screenshots" : "");
-     
-     root.add({"screenshot", "set"},
-     "Configure the screenshot");
-     
-     root.add({"screenshot", "set", "path"}, { Arg::path },
-     "Assign the save directory",
-     [this](Arguments& argv, const std::vector<isize> &values) {
-     
-     regressionTester.screenshotPath = argv.front() == "\"\"" ? "" : argv.front();
-     });
-     
-     root.add({"screenshot", "set", "cutout"}, { Arg::value, Arg::value, Arg::value, Arg::value },
-     "Adjust the texture cutout",
-     [this](Arguments& argv, const std::vector<isize> &values) {
-     
-     isize x1 = parseNum(argv[0]);
-     isize y1 = parseNum(argv[1]);
-     isize x2 = parseNum(argv[2]);
-     isize y2 = parseNum(argv[3]);
-     
-     regressionTester.x1 = x1;
-     regressionTester.y1 = y1;
-     regressionTester.x2 = x2;
-     regressionTester.y2 = y2;
-     });
-     
-     root.add({"screenshot", "save"}, { Arg::path },
-     "Save a screenshot and exits the emulator",
-     [this](Arguments& argv, const std::vector<isize> &values) {
-     
-     regressionTester.dumpTexture(c64, argv.front());
-     });
-     */
+
     
     //
     // Components
@@ -311,50 +230,59 @@ CommanderConsole::initCommands(RSCommand &root)
     // Components (C64)
     //
     
-    cmd = registerComponent(c64);
-    
+    auto cmd = registerComponent(c64);
+
     root.add({
-        
+
         .tokens = { cmd, "defaults" },
-        .help   = { "Displays the user defaults storage" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            dump(emulator, Category::Defaults);
+        .chelp  = { "Displays the user defaults storage" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            dump(os, emulator, Category::Defaults);
         }
     });
-    
+
     root.add({
-        
+
         .tokens = { cmd, "power" },
-        .args   = { Arg::onoff },
-        .help   = { "Switches the C64 on or off" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            parseOnOff(argv[0]) ? emulator.run() : emulator.powerOff();
+        .chelp  = { "Switches the C64 on or off" },
+        .args   = { { .name = { "onoff", "Power switch state" }, .key = "{ on | off }" } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            parseOnOff(args.at("onoff")) ? emulator.run() : emulator.powerOff();
         }
     });
-    
+
     root.add({
-        
+
         .tokens = { cmd, "reset" },
-        .help   = { "Performs a hard reset" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "Performs a hard reset" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             c64.hardReset();
         }
     });
-    
+
     root.add({
-        
+
         .tokens = { cmd, "init" },
-        .args   = { ConfigSchemeEnum::argList() },
-        .help   = { "Initializes the C64 with a predefined scheme" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            emulator.set(parseEnum<ConfigScheme, ConfigSchemeEnum>(argv[0]));
-        }
+        .ghelp  = { "Initializes the C64 with a predefined scheme" },
     });
-    
+
+    for (auto &it : ConfigSchemeEnum::elements()) {
+
+        root.add({
+
+            .tokens = { cmd, "init", ConfigSchemeEnum::key(it) },
+            .chelp  = { ConfigSchemeEnum::help(it) },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                emulator.set(ConfigScheme(values[0]));
+            }, .payload = { isize(it) }
+        });
+    }
+
+
     //
     // Components (Memory)
     //
@@ -364,11 +292,11 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { cmd, "flash" },
-        .args   = { Arg::path },
-        .help   = { "Flashes a file into memory" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            auto path = argv.front();
+        .chelp  = { "Flashes a file into memory" },
+        .args   = { { .name = { "path", "File path" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            auto path = host.makeAbsolute(args.at("path"));
             if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
             
             auto file = PRGFile(path);
@@ -377,62 +305,74 @@ CommanderConsole::initCommands(RSCommand &root)
     });
     
     root.add({
-        
+
         .tokens = { cmd, "load" },
-        .help   = { "Loads memory contents from a file" }
+        .ghelp  = { "Loads memory contents from a file" }
     });
-    
+
     root.add({
-        
+
         .tokens = { cmd, "load", "rom" },
-        .args   = { Arg::path },
-        .help   = { "Loads a Rom image" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            c64.loadRom(argv.front());
+        .chelp  = { "Installs a ROM image" },
+        .args   = { { .name = { "path", "File path" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            auto path = host.makeAbsolute(args.at("path"));
+            c64.loadRom(path);
         }
     });
-    
+
     root.add({
-        
-        .tokens = { cmd, "load", "ram" },
-        .args   = { Arg::path, Arg::address },
-        .help   = { "Loads a chunk of RAM" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            fs::path path(argv[0]);
-            mem.debugger.load(path, parseAddr(argv[1]));
-        }
+
+        .tokens = { cmd, "load", "bin" },
+        .chelp  = { "Loads a chunk of memory" },
+        .args   = {
+            { .name = { "path", "File path" } },
+            { .name = { "address", "Target memory address" } },
+        },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto path = host.makeAbsolute(args.at("path"));
+                mem.debugger.load(path, parseAddr(args.at("address")));
+            }
     });
-    
+
     root.add({
         
         .tokens = { cmd, "load", "openroms" },
-        .args   = { Arg::path, Arg::address },
-        .help   = { "Installs the MEGA65 OpenROMs" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "Installs the MEGA65 OpenROMs" },
+        .args   = {
+            { .name = { "path", "File path" } },
+            { .name = { "address", "Target memory address" } },
+        },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             c64.installOpenRoms();
         }
     });
     
     root.add({
-        
+
         .tokens = { cmd, "save" },
-        .help   = { "Save memory contents to a file" }
+        .chelp  = { "Save memory contents to a file" }
     });
-    
+
     root.add({
-        
-        .tokens = { cmd, "save", "ram" },
-        .args   = { Arg::path, Arg::address, Arg::count },
-        .help   = { "Saves a chunk of RAM" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            fs::path path(argv[0]);
-            mem.debugger.save(path, parseAddr(argv[1]), parseNum(argv[2]));
-        }
+
+        .tokens = { cmd, "save", "bin" },
+        .chelp  = { "Saves a chunk of memory" },
+        .args   = {
+            { .name = { "path", "File path" } },
+            { .name = { "address", "Memory address" } },
+            { .name = { "count", "Number of bytes" } },
+        },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                fs::path path(args.at("path"));
+                mem.debugger.save(path, parseAddr(args.at("address")), parseNum(args.at("count")));
+            }
     });
+
     
     //
     // Components (CPU)
@@ -461,23 +401,7 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     
     cmd = registerComponent(vic.dmaDebugger);
-    
-    /*
-     root.add({cmd, "open"},
-     "Opens the DMA debugger",
-     [this](Arguments& argv, const std::vector<isize> &values) {
-     
-     emulator.set(Opt::DMA_DEBUG_ENABLE, true);
-     });
-     
-     root.add({cmd, "close"},
-     "Closes the DMA debugger",
-     [this](Arguments& argv, const std::vector<isize> &values) {
-     
-     emulator.set(Opt::DMA_DEBUG_ENABLE, false);
-     });
-     */
-    
+
     
     //
     // Components (SID)
@@ -533,17 +457,17 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { cmd, "attach" },
-        .help   = { "Attaches a cartridge" }
+        .chelp  = { "Attaches a cartridge" }
     });
     
     root.add({
-        
+
         .tokens = { cmd, "attach", "cartridge" },
-        .args   = { Arg::path },
-        .help   = { "Attaches a cartridge from a CRT file" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            auto path = argv.front();
+        .chelp  = { "Attaches a cartridge from a CRT file" },
+        .args   = { { .name = { "path", "File path" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            fs::path path(args.at("path"));
             if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
             expansionPort.attachCartridge(path);
         }
@@ -552,22 +476,22 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { cmd, "attach", "reu" },
-        .args   = { "<KB>" },
-        .help   = { "Attaches a REU expansion cartridge" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            expansionPort.attachReu(parseNum(argv[0]));
+        .chelp  = { "Attaches a REU expansion cartridge" },
+        .args   = { { .name = { "KB", "REU size" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            expansionPort.attachReu(parseNum(args.at("kb")));
         }
     });
     
     root.add({
         
         .tokens = { cmd, "attach", "georam" },
-        .args   = { "<KB>" },
-        .help   = { "Attaches a GeoRAM expansion cartridge" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            expansionPort.attachGeoRam(parseNum(argv[0]));
+        .chelp  = { "Attaches a GeoRAM expansion cartridge" },
+        .args   = { { .name = { "KB", "REU size" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            expansionPort.attachGeoRam(parseNum(args.at("kb")));
         }
     });
     
@@ -591,52 +515,52 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     
     cmd = registerComponent(keyboard);
-    
+
     root.add({
-        
+
         .tokens = { cmd, "press" },
-        .args   = { Arg::value },
-        .help   = { "Presses a key" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            keyboard.press(C64Key(parseNum(argv[0])));
+        .chelp  = { "Presses a key" },
+        .args   = { { .name = { "keycode", "Numerical code of the C64 key" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            keyboard.press(C64Key(parseNum(args.at("keycode"))));
         }
     });
-    
+
     root.add({
-        
-        .tokens = { cmd, "release" },
-        .args   = { Arg::value },
-        .help   = { "Releases a key" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            keyboard.release(C64Key(parseNum(argv[0])));
+
+        .tokens = { cmd, "press" },
+        .chelp  = { "Releases a key" },
+        .args   = { { .name = { "keycode", "Numerical code of the C64 key" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            keyboard.release(C64Key(parseNum(args.at("keycode"))));
         }
     });
-    
+
     root.add({
         
         .tokens = { cmd, "type" },
-        .help   = { "Types text on the keyboard" }
+        .chelp  = { "Types text on the keyboard" }
     });
     
     root.add({
         
         .tokens = { cmd, "type", "text" },
-        .args   = { Arg::string },
-        .help   = { "Types text on the keyboard" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            keyboard.autoType(argv.front());
+        .chelp  = { "Types text on the keyboard" },
+        .args   = { { .name = { "text", "Text to type" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            keyboard.autoType(args.at("text"));
         }
     });
     
     root.add({
         
         .tokens = { cmd, "type", "load" },
-        .help   = { "Types \"LOAD\"*\",8,1" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "Types \"LOAD\"*\",8,1" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             keyboard.autoType("load \"*\",8,1\n");
         }
     });
@@ -644,9 +568,9 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { cmd, "type", "run" },
-        .help   = { "Types RUN" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "Types RUN" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             keyboard.autoType("run\n");
         }
     });
@@ -668,117 +592,117 @@ CommanderConsole::initCommands(RSCommand &root)
         
         if (i == 0) cmd = registerComponent(port1.joystick);
         if (i == 1) cmd = registerComponent(port2.joystick);
-        
+
         root.add({
-            
+
             .tokens = { cmd, "press" },
-            .help   = { "Presses a joystick button" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
-                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+            .chelp  = { "Presses a joystick button" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &port = (values[0] == 0) ? c64.port1 : c64.port2;
                 port.joystick.trigger(GamePadAction::PRESS_FIRE);
-                
-            }, .values = {i}
+
+            }, .payload = {i}
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "unpress" },
-            .help   = { "Releases a joystick button" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
-                auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
+            .chelp  = { "Releases a joystick button" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &port = (values[0] == 0) ? c64.port1 : c64.port2;
                 port.joystick.trigger(GamePadAction::RELEASE_FIRE);
-                
-            }, .values = {i}
+
+            }, .payload = {i}
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "pull" },
-            .help   = { "Pulls the joystick" }
+            .ghelp  = { "Pulls the joystick" }
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "pull", "left" },
-            .help   = { "Pulls the joystick left" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Pulls the joystick left" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
                 port.joystick.trigger(GamePadAction::PULL_LEFT);
-                
-            }, .values = {i}
+
+            }, .payload = {i}
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "pull", "right" },
-            .help   = { "Pulls the joystick right" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Pulls the joystick right" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
                 port.joystick.trigger(GamePadAction::PULL_RIGHT);
-                
-            }, .values = {i}
+
+            }, .payload = {i}
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "pull", "up" },
-            .help   = { "Pulls the joystick up" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Pulls the joystick up" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
                 port.joystick.trigger(GamePadAction::PULL_UP);
-                
-            }, .values = {i}
+
+            }, .payload = {i}
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "pull", "down" },
-            .help   = { "Pulls the joystick down" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Pulls the joystick down" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
                 port.joystick.trigger(GamePadAction::PULL_DOWN);
-                
-            }, .values = {i}
+
+            }, .payload = {i}
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "release" },
-            .help   = { "Release a joystick axis" }
+            .ghelp  = { "Release a joystick axis" }
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "release", "x" },
-            .help   = { "Releases the x-axis" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Releases the x-axis" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
                 port.joystick.trigger(GamePadAction::RELEASE_X);
-                
-            }, .values = {i}
+
+            }, .payload = {i}
         });
-        
+
         root.add({
-            
+
             .tokens = { cmd, "release", "y" },
-            .help   = { "Releases the y-axis" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Releases the y-axis" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto &port = (values.front() == PORT_1) ? c64.port1 : c64.port2;
                 port.joystick.trigger(GamePadAction::RELEASE_Y);
-                
-            }, .values = {i}
+
+            }, .payload = {i}
         });
     }
-    
-    
+
+
     //
     // Peripherals (Paddles)
     //
@@ -796,9 +720,9 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { cmd, "connect" },
-        .help   = { "Connects the datasette" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "Connects the datasette" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             emulator.set(Opt::DAT_CONNECT, true);
         }
     });
@@ -806,9 +730,9 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { cmd, "disconnect" },
-        .help   = { "Disconnects the datasette" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "Disconnects the datasette" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             emulator.set(Opt::DAT_CONNECT, false);
         }
     });
@@ -816,9 +740,9 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { cmd, "rewind" },
-        .help   = { "Rewinds the tape" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+        .chelp  = { "Rewinds the tape" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             datasette.rewind();
         }
     });
@@ -826,11 +750,11 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
         
         .tokens = { cmd, "rewind", "to" },
-        .args   = { Arg::value },
-        .help   = { "Rewinds the tape to a specific position" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            datasette.rewind(parseNum(argv[0]));
+        .chelp  = { "Rewinds the tape to a specific position" },
+        .args   = { { .name = { "pos", "Tape position" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            datasette.rewind(parseNum(args.at("pos")));
         }
     });
     
@@ -847,78 +771,79 @@ CommanderConsole::initCommands(RSCommand &root)
         root.add({
             
             .tokens = { cmd, "bankmap" },
-            .help   = { "Displays the memory layout" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
-                datasette.rewind(parseNum(argv[0]));
-                
-            }, .values = {i}
+            .chelp  = { "Displays the memory layout" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.dump(Category::BankMap, os);
+
+            }, .payload = {i}
         });
         
         root.add({
             
             .tokens = { cmd, "connect" },
-            .help   = { "Connects the drive" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Connects the drive" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto id = values.front() ? DRIVE9 : DRIVE8;
                 emulator.set(Opt::DRV_CONNECT, true, { id });
                 
-            }, .values = {i}
+            }, .payload = {i}
         });
         
         root.add({
             
             .tokens = { cmd, "disconnect" },
-            .help   = { "Disconnects the drive" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Disconnects the drive" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto id = values.front() ? DRIVE9 : DRIVE8;
                 emulator.set(Opt::DRV_CONNECT, false, { id });
                 
-            }, .values = {i}
+            }, .payload = {i}
         });
         
         root.add({
             
             .tokens = { cmd, "eject" },
-            .help   = { "Ejects a floppy disk" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
+            .chelp  = { "Ejects a floppy disk" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto &drive = values.front() ? drive9 : drive8;
                 drive.ejectDisk();
                 
-            }, .values = {i}
+            }, .payload = {i}
         });
         
         root.add({
             
             .tokens = { cmd, "insert" },
-            .args   = { Arg::path },
-            .help   = { "Inserts a floppy disk" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
-                auto path = argv.front();
+            .chelp  = { "Inserts a floppy disk" },
+            .args   = {{ .name = { "path", "File path" } } },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto path = host.makeAbsolute(args.at("path"));
                 if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
                 
                 auto &drive = values.front() ? drive9 : drive8;
                 drive.insertDisk(path, false);
                 
-            }, .values = {i}
+            }, .payload = {i}
         });
         
         root.add({
             
             .tokens = { cmd, "newdisk" },
-            .args   = { DOSTypeEnum::argList() },
-            .help   = { "Inserts a new blank disk" },
-            .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                
-                auto type = util::parseEnum <DOSType, DOSTypeEnum> (argv.front());
+            .chelp  = { "Inserts a new blank disk" },
+            .args   = { { .name = { "dos", "DOS type" } } },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
                 auto &drive = values.front() ? drive9 : drive8;
+                auto type = util::parseEnum <DOSType, DOSTypeEnum> (args.at("pos"));
                 drive.insertNewDisk(type, "NEW DISK");
                 
-            }, .values = {i}
+            }, .payload = {i}
         });
     }
     
@@ -928,18 +853,18 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     
     cmd = registerComponent(userPort.rs232);
-    
+
     root.add({
-        
+
         .tokens = { cmd, "send" },
-        .args   = { Arg::string },
-        .help   = { "Feeds text into the RS232 adapter" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            userPort.rs232 << argv[0];
-        },
+        .chelp  = { "Feeds text into the RS232 adapter" },
+        .args   = { { .name = { "text", "Text message" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            userPort.rs232 << args.at("text");
+        }
     });
-    
+
     
     //
     // Miscellaneous
@@ -959,94 +884,73 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     
     root.add({
-        
+
         .tokens = { "config" },
-        .help   = { "Virtual machine configuration" }
-    });
-    
-    root.add({
-        
-        .tokens = { "config", "" },
-        .help   = { "Displays the current configuration" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            std::stringstream ss;
-            c64.exportConfig(ss);
-            *this << ss;
-        },
-    });
-    
-    root.add({
-        
-        .tokens = { "config", "diff" },
-        .help   = { "Displays the difference to the default configuration" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            std::stringstream ss;
-            c64.exportDiff(ss);
-            *this << ss;
+        .ghelp  = { "Virtual machine configuration" },
+        .chelp  = { "Displays the current configuration" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            c64.exportConfig(os);
         }
     });
-    
+
+    root.add({
+
+        .tokens = { "config", "diff" },
+        .chelp  = { "Displays the difference to the default configuration" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            c64.exportDiff(os);
+        }
+    });
+
     
     //
     // Miscellaneous (Remote server)
     //
-    
+
     root.add({
-        
+
         .tokens = { "server" },
-        .help   = { "Remote connections" }
-    });
-    
-    root.add({
-        
-        .tokens = { "server", "" },
-        .help   = { "Displays a server status summary" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            dump(remoteManager, Category::State);
+        .ghelp  = { "Remote connections" },
+        .chelp  = { "Displays a server status summary" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            dump(os, remoteManager, Category::State);
         }
     });
-    
-    cmd = registerComponent(remoteManager.rshServer, root / "server");
-    
+
+    cmd = registerComponent(remoteManager.rshServer);
+
     root.add({
-        
-        .tokens = { "server", cmd, "start" },
-        .help   = { "Starts the retro shell server" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+
+        .tokens = { cmd, "start" },
+        .chelp  = { "Starts the retro shell server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             remoteManager.rshServer.start();
         }
     });
-    
+
     root.add({
-        
-        .tokens = { "server", cmd, "stop" },
-        .help   = { "Stops the retro shell server" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+
+        .tokens = { cmd, "stop" },
+        .chelp  = { "Stops the retro shell server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             remoteManager.rshServer.stop();
         }
     });
-    
+
     root.add({
-        
-        .tokens = { "server", cmd, "disconnect" },
-        .help   = { "Disconnects a client" },
-        .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
+
+        .tokens = { cmd, "disconnect" },
+        .chelp  = { "Disconnects a client" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
             remoteManager.rshServer.disconnect();
         }
     });
-    
-    
-    //
-    // Miscellaneous (Recorder)
-    //
-    
-    cmd = registerComponent(recorder);
 }
 
 }

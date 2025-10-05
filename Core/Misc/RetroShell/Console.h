@@ -30,12 +30,41 @@ struct TooManyArgumentsError : public util::ParseError {
     using ParseError::ParseError;
 };
 
+struct UnknownFlagError : public util::ParseError {
+    using ParseError::ParseError;
+};
+
+struct UnknownKeyValueError : public util::ParseError {
+    using ParseError::ParseError;
+};
+
 struct ScriptInterruption: AppException {
     using AppException::AppException;
 };
 
-class Console : public SubComponent
-{
+class HistoryBuffer {
+    
+    // History buffer storing old input strings and cursor positions
+    std::vector<std::pair<string,isize>> history = { { "", 0 } };
+    
+    // The currently active input string
+    isize ipos = 0;
+    
+public:
+    
+    // Returns the current selection
+    std::pair<string,isize> current() const { return history[ipos]; }
+    
+    // Iterate through the buffer
+    void up(string &input, isize &ipos);
+    void down(string &input, isize &ipos);
+    
+    // Add an entry to the buffer
+    void add(const string &input);
+};
+
+class Console : public SubComponent {
+
     friend class RetroShell;
     friend class RshServer;
     friend class Interpreter;
@@ -43,12 +72,12 @@ class Console : public SubComponent
     Descriptions descriptions = {
         {
             .name           = "CmdConsole",
-            .description    = "Command shell",
+            .description    = "Commander",
             .shell          = ""
         },
         {
             .name           = "DbgConsole",
-            .description    = "Debug shell",
+            .description    = "Debugger",
             .shell          = ""
         }
     };
@@ -61,7 +90,10 @@ protected:
     
     // Root node of the command tree
     RSCommand root;
-    
+
+    // Memory pointer for commands accpeting default addresses
+    u16 current = 0;
+
     
     //
     // Text storage
@@ -70,14 +102,13 @@ protected:
 protected:
     
     // The text storage
-    TextStorage storage;
+    TextStorage &storage;
     
     // History buffer storing old input strings and cursor positions
-    std::vector<std::pair<string,isize>> history;
+    static HistoryBuffer historyBuffer;
     
-    // The currently active input string
-    isize ipos = 0;
-    
+    // Additional output inserted before and after command execution
+    string vdelim = RSH_DEBUG ? "[DEBUG]\n" : "\n";
     
     //
     // User input
@@ -89,10 +120,10 @@ protected:
     string input;
     
     // Cursor position
-    isize cursor = 0;
+    isize cursor {};
     
-    // Indicates if TAB was the most recently pressed key
-    bool tabPressed = false;
+    // Indicates how often TAB was pressed in a row
+    isize tabPressed {};
     
     
     //
@@ -101,14 +132,17 @@ protected:
     
 public:
     
-    using SubComponent::SubComponent;
+    // using SubComponent::SubComponent;
+    
+    Console(C64 &c64, isize id, TextStorage &storage) : SubComponent(c64, id), storage(storage) { };
+
     Console& operator= (const Console& other) { return *this; }
     
 protected:
     
     virtual void initCommands(RSCommand &root);
-    const char *registerComponent(CoreComponent &c);
-    const char *registerComponent(CoreComponent &c, RSCommand &root);
+    const char *registerComponent(CoreComponent &c, bool shadowed = false);
+    const char *registerComponent(CoreComponent &c, RSCommand &root, bool shadowed = false);
     
     
     //
@@ -128,7 +162,7 @@ public:
     
     const Descriptions &getDescriptions() const override { return descriptions; }
     
-private:
+protected:
     
     void _dump(Category category, std::ostream &os) const override { }
     void _initialize() override;
@@ -141,14 +175,6 @@ private:
 public:
     
     const Options &getOptions() const override { return options; }
-    
-    
-    //
-    // Delegates
-    //
-    
-    // Called from RetroShell when the console is entered
-    virtual void _enter() { };
     
     
     //
@@ -204,7 +230,7 @@ protected:
     virtual void summary() = 0;
 
     // Prints the help line
-    virtual void printHelp() = 0;
+    virtual void printHelp(isize tab = 0);
 
     
     //
@@ -230,15 +256,6 @@ protected:
     
     
     //
-    // Working with the history buffer
-    //
-    
-public:
-    
-    isize historyLength() { return (isize)history.size(); }
-    
-    
-    //
     // Parsing input
     //
     
@@ -250,33 +267,44 @@ public:
 protected:
     
     // Splits an input string into an argument list
-    Arguments split(const string& userInput);
+    Tokens split(const string& userInput);
     
     // Auto-completes an argument list
-    void autoComplete(Arguments &argv);
+    virtual void autoComplete(Tokens &argv);
+    
+    // Strips off the command tokens and returns a pointer to the command
+    std::pair<RSCommand *, std::vector<string>> seekCommand(const string &argv);
+    std::pair<RSCommand *, std::vector<string>> seekCommand(const std::vector<string> &argv);
+    
+    // Parses an argument list
+    std::map<string,string> parse(const RSCommand &cmd, const Tokens &args);
     
     // Checks or parses an argument of a certain type
-    bool isBool(const string &argv);
-    bool parseBool(const string  &argv);
-    bool parseBool(const string  &argv, bool fallback);
-    bool parseBool(const Arguments &argv, long nr, long fallback);
+    bool isBool(const string &argv) const;
+    bool parseBool(const string  &argv) const;
+    bool parseBool(const string  &argv, bool fallback) const;
+    bool parseBool(const Arguments &argv, const string &key) const;
+    bool parseBool(const Arguments &argv, const string &key, long fallback) const;
     
-    bool isOnOff(const string &argv);
-    bool parseOnOff(const string &argv);
-    bool parseOnOff(const string &argv, bool fallback);
-    bool parseOnOff(const Arguments &argv, long nr, long fallback);
+    bool isOnOff(const string &argv) const;
+    bool parseOnOff(const string &argv) const;
+    bool parseOnOff(const string &argv, bool fallback) const;
+    bool parseOnOff(const Arguments &argv, const string &key) const;
+    bool parseOnOff(const Arguments &argv, const string &key, long fallback) const;
     
-    long isNum(const string &argv);
-    long parseNum(const string &argv);
-    long parseNum(const string &argv, long fallback);
-    long parseNum(const Arguments &argv, long nr, long fallback);
+    long isNum(const string &argv) const;
+    long parseNum(const string &argv) const;
+    long parseNum(const string &argv, long fallback) const;
+    long parseNum(const Arguments &argv, const string &key) const;
+    long parseNum(const Arguments &argv, const string &key, long fallback) const;
     
-    u16 parseAddr(const string &argv) { return (u16)parseNum(argv); }
-    u16 parseAddr(const string &argv, long fallback) { return (u16)parseNum(argv, fallback); }
-    u16 parseAddr(const Arguments &argv, long nr, long fallback) { return (u16)parseNum(argv, nr, fallback); }
+    u16 parseAddr(const string &argv) const;
+    u16 parseAddr(const string &argv, long fallback) const;
+    u16 parseAddr(const Arguments &argv, const string &key) const;
+    u16 parseAddr(const Arguments &argv, const string &key, long fallback) const;
     
-    string parseSeq(const string &argv);
-    string parseSeq(const string &argv, const string &fallback);
+    string parseSeq(const string &argv) const;
+    string parseSeq(const string &argv, const string &fallback) const;
     
     template <typename T> long parseEnum(const string &argv) {
         return util::parseEnum<T>(argv);
@@ -305,18 +333,18 @@ protected:
     
     // Executes a single command
     void exec(const string& userInput, bool verbose = false) throws;
-    void exec(const Arguments &argv, bool verbose = false) throws;
+    void exec(const Tokens &argv, bool verbose = false) throws;
     
     // Prints a usage string for a command
-    void usage(const RSCommand &command);
+    void cmdUsage(const RSCommand &cmd, const string &prefix);
+    void argUsage(const RSCommand &cmd, const string &prefix);
     
     // Displays a help text for a (partially typed in) command
-    void help(const string &userInput);
-    void help(const Arguments &argv);
-    void help(const RSCommand &command);
+    virtual void help(std::ostream &os, const string &cmd, isize tabs);
     
-    // Prints a textual description of an error in the console
-    void describe(const std::exception &exception, isize line = 0, const string &cmd = "");
+    // Creates a textual description of an error
+    void describe(const std::exception &exc, isize line = 0, const string &cmd = "");
+    void describe(std::ostream &os, const std::exception &exc, isize line = 0, const string &cmd = "");
     
     
     //
@@ -325,39 +353,41 @@ protected:
     
 public:
     
-    void dump(CoreObject &component, std::vector <Category> categories);
-    void dump(CoreObject &component, Category category);
+    void dump(std::ostream &os, CoreObject &component, std::vector <Category> categories);
+    void dump(std::ostream &os, CoreObject &component, Category category);
     
 protected:
     
-    void _dump(CoreObject &component, Category category);
+    void _dump(std::ostream &os, CoreObject &component, Category category);
 };
 
-class CommanderConsole : public Console
+class CommanderConsole final : public Console
 {
     using Console::Console;
     
     virtual void initCommands(RSCommand &root) override;
-    void _enter() override;
     void _pause() override;
     string getPrompt() override;
     void welcome() override;
     void summary() override;
-    void printHelp() override;
+    void printHelp(isize tab = 0) override;
     void pressReturn(bool shift) override;
 };
 
-class DebuggerConsole : public Console
+class DebuggerConsole final : public Console
 {
     using Console::Console;
     
+    //
+    // Methods from Console
+    //
+    
     virtual void initCommands(RSCommand &root) override;
-    void _enter() override;
     void _pause() override;
     string getPrompt() override;
     void welcome() override;
     void summary() override;
-    void printHelp() override;
+    void printHelp(isize tab = 0) override;
     void pressReturn(bool shift) override;
 };
 
