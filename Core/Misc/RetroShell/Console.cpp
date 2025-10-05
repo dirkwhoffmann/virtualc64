@@ -23,10 +23,10 @@ Console::_initialize()
 {
     // Register commands
     initCommands(root);
-
+    
     // Initialize the text storage
     clear();
-
+    
     // Initialize the input buffer
     history.push_back( { "", 0 } );
 }
@@ -105,13 +105,13 @@ const char *
 Console::text()
 {
     static string all;
-
+    
     // Add the storage contents
     storage.text(all);
-
+    
     // Add the input line
     all += input + " ";
-
+    
     return all.c_str();
 }
 
@@ -119,9 +119,9 @@ void
 Console::tab(isize pos)
 {
     auto count = pos - (isize)storage[storage.size() - 1].size();
-
+    
     if (count > 0) {
-
+        
         std::string fill(count, ' ');
         storage << fill;
         remoteManager.rshServer << fill;
@@ -161,21 +161,21 @@ Console::lastLineIsEmpty()
 }
 
 /*
-void
-Console::printState()
-{
-    std::stringstream ss;
-
-    cpu.debugger.dumpLogBuffer(ss, 8);
-    ss << "\n";
-    c64.dump(Category::Current, ss);
-    ss << "\n";
-    cpu.disassembler.disassembleRange(ss, cpu.getPC0(), 8);
-    ss << "\n";
-
-    *this << ss;
-}
-*/
+ void
+ Console::printState()
+ {
+ std::stringstream ss;
+ 
+ cpu.debugger.dumpLogBuffer(ss, 8);
+ ss << "\n";
+ c64.dump(Category::Current, ss);
+ ss << "\n";
+ cpu.disassembler.disassembleRange(ss, cpu.getPC0(), 8);
+ ss << "\n";
+ 
+ *this << ss;
+ }
+ */
 
 void
 Console::press(RetroShellKey key, bool shift)
@@ -183,103 +183,103 @@ Console::press(RetroShellKey key, bool shift)
     assert_enum(RetroShellKey, key);
     assert(ipos >= 0 && ipos < historyLength());
     assert(cursor >= 0 && cursor <= inputLength());
-
+    
     switch(key) {
-
+            
         case RetroShellKey::UP:
-
+            
             if (ipos > 0) {
-
+                
                 // Save the input line if it is currently shown
                 if (ipos == historyLength() - 1) history.back() = { input, cursor };
-
+                
                 auto &item = history[--ipos];
                 input = item.first;
                 cursor = item.second;
             }
             break;
-
+            
         case RetroShellKey::DOWN:
-
+            
             if (ipos < historyLength() - 1) {
-
+                
                 auto &item = history[++ipos];
                 input = item.first;
                 cursor = item.second;
             }
             break;
-
+            
         case RetroShellKey::LEFT:
-
+            
             if (cursor > 0) cursor--;
             break;
-
+            
         case RetroShellKey::RIGHT:
-
+            
             if (cursor < (isize)input.size()) cursor++;
             break;
-
+            
         case RetroShellKey::DEL:
-
+            
             if (cursor < inputLength()) {
                 input.erase(input.begin() + cursor);
             }
             break;
-
+            
         case RetroShellKey::CUT:
-
+            
             if (cursor < inputLength()) {
                 input.erase(input.begin() + cursor, input.end());
             }
             break;
-
+            
         case RetroShellKey::BACKSPACE:
-
+            
             if (cursor > 0) {
                 input.erase(input.begin() + --cursor);
             }
             break;
-
+            
         case RetroShellKey::HOME:
-
+            
             cursor = 0;
             break;
-
+            
         case RetroShellKey::END:
-
+            
             cursor = (isize)input.length();
             break;
-
+            
         case RetroShellKey::TAB:
-
+            
             if (tabPressed) {
-
+                
                 // TAB was pressed twice
                 retroShell.asyncExec("help \"" + input + "\"");
-
+                
             } else {
-
+                
                 // Auto-complete the typed in command
                 input = autoComplete(input);
                 cursor = (isize)input.length();
             }
             break;
-
+            
         case RetroShellKey::RETURN:
-
+            
             pressReturn(shift);
             break;
-
+            
         case RetroShellKey::CR:
-
+            
             input = "";
             cursor = 0;
             break;
     }
-
+    
     tabPressed = key == RetroShellKey::TAB;
     needsDisplay();
-
+    
     assert(ipos >= 0 && ipos < historyLength());
     assert(cursor >= 0 && cursor <= inputLength());
 }
@@ -288,26 +288,26 @@ void
 Console::press(char c)
 {
     switch (c) {
-
+            
         case '\n':
-
+            
             press(RetroShellKey::RETURN);
             break;
-
+            
         case '\r':
-
+            
             press(RetroShellKey::CR);
             break;
-
+            
         case '\t':
-
+            
             press(RetroShellKey::TAB);
             break;
-
+            
         default:
-
+            
             if (isprint(c)) {
-
+                
                 if (cursor < inputLength()) {
                     input.insert(input.begin() + cursor, c);
                 } else {
@@ -316,7 +316,7 @@ Console::press(char c)
                 cursor++;
             }
     }
-
+    
     tabPressed = false;
     needsDisplay();
 }
@@ -338,24 +338,24 @@ void
 Console::pressReturn(bool shift)
 {
     if (shift) {
-
+        
         // Switch the interpreter
         // retroShell.switchConsole();
         retroShell.asyncExec(".");
-
+        
     } else {
-
+        
         // Add the command to the text storage
         *this << input << '\n';
-
+        
         // Add the command to the history buffer
         history.back() = { input, (isize)input.size() };
         history.push_back( { "", 0 } );
         ipos = (isize)history.size() - 1;
-
+        
         // Feed the command into the command queue
         retroShell.asyncExec(input);
-
+        
         // Clear the input line
         input = "";
         cursor = 0;
@@ -367,27 +367,27 @@ Console::split(const string& userInput)
 {
     std::stringstream ss(userInput);
     Arguments result;
-
+    
     string token;
     bool str = false; // String mode
     bool esc = false; // Escape mode
-
+    
     for (usize i = 0; i < userInput.size(); i++) {
-
+        
         char c = userInput[i];
-
+        
         // Abort if a comment begins
         if (c == '#') break;
-
+        
         // Check for escape mode
         if (c == '\\') { esc = true; continue; }
-
+        
         // Switch between string mode and non-string mode if '"' is detected
         if (c == '"' && !esc) { str = !str; continue; }
-
+        
         // Check for special characters in escape mode
         if (esc && c == 'n') c = '\n';
-
+        
         // Process character
         if (c != ' ' || str) {
             token += c;
@@ -398,7 +398,7 @@ Console::split(const string& userInput)
         esc = false;
     }
     if (!token.empty()) result.push_back(token);
-
+    
     return result;
 }
 
@@ -406,16 +406,16 @@ string
 Console::autoComplete(const string& userInput)
 {
     string result;
-
+    
     // Split input string
     Arguments tokens = split(userInput);
-
+    
     // Complete all tokens
     autoComplete(tokens);
-
+    
     // Recreate the command string
     for (const auto &it : tokens) { result += (result == "" ? "" : " ") + it; }
-
+    
     // Add a space if the command has been fully completed ...
     if (auto cmd = getRoot().seek(tokens); cmd != nullptr && !tokens.empty()) {
         
@@ -424,7 +424,7 @@ Console::autoComplete(const string& userInput)
             cmd->requiredArgs.size() > 0 ||
             cmd->optionalArgs.size()) { result += " "; }
     }
-
+    
     return result;
 }
 
@@ -433,9 +433,9 @@ Console::autoComplete(Arguments &argv)
 {
     RSCommand *current = &getRoot();
     string prefix, token;
-
+    
     for (auto it = argv.begin(); current && it != argv.end(); it++) {
-
+        
         *it = current->autoComplete(*it);
         current = current->seek(*it);
     }
@@ -530,16 +530,16 @@ Console::exec(const string& userInput, bool verbose)
 {
     // Split the command string
     Arguments tokens = split(userInput);
-
+    
     // Skip empty lines
     if (tokens.empty()) return;
-
+    
     // Remove the 'try' keyword
     if (tokens.front() == "try") tokens.erase(tokens.begin());
-
+    
     // Auto complete the token list
     autoComplete(tokens);
-
+    
     // Process the command
     exec(tokens, verbose);
 }
@@ -552,21 +552,21 @@ Console::exec(const Arguments &argv, bool verbose)
         for (const auto &it : argv) *this << it << ' ';
         *this << '\n';
     }
-
+    
     // Skip empty lines
     if (argv.empty()) return;
-
+    
     // Seek the command in the command tree
     RSCommand *current = &getRoot(), *next;
     Arguments args = argv;
-
+    
     while (!args.empty() && ((next = current->seek(args.front())) != nullptr)) {
-
+        
         current = current->seek(args.front());
         args.erase(args.begin());
     }
     if ((next = current->seek(""))) current = next;
-
+    
     // Error out if no command handler is present
     if (!current->callback && !args.empty()) {
         throw util::ParseError(args.front());
@@ -574,17 +574,17 @@ Console::exec(const Arguments &argv, bool verbose)
     if (!current->callback && args.empty()) {
         throw TooFewArgumentsError(current->fullName);
     }
-
+    
     // Check the argument count
     if ((isize)args.size() < current->minArgs()) throw TooFewArgumentsError(current->fullName);
     if ((isize)args.size() > current->maxArgs()) throw TooManyArgumentsError(current->fullName);
-
+    
     // Call the command handler
     if (current->param.empty()) {
         current->callback(args, { 0 });
     } else {
         current->callback(args, current->param);
-
+        
     }
 }
 
@@ -599,10 +599,10 @@ Console::help(const string& userInput)
 {
     // Split the command string
     Arguments tokens = split(userInput);
-
+    
     // Auto complete the token list
     autoComplete(tokens);
-
+    
     // Process the command
     help(tokens);
 }
@@ -612,11 +612,11 @@ Console::help(const Arguments &argv)
 {
     RSCommand *current = &getRoot();
     string prefix, token;
-
+    
     for (auto &it : argv) {
         if (current->seek(it) != nullptr) current = current->seek(it);
     }
-
+    
     help(*current);
 }
 
@@ -624,36 +624,36 @@ void
 Console::help(const RSCommand& current)
 {
     auto indent = string("    ");
-
+    
     // Print the usage string
     usage(current);
-
+    
     // Determine tabular positions to align the output
     isize tab = 0;
     for (auto &it : current.subCommands) {
         tab = std::max(tab, (isize)it.fullName.length());
     }
     tab += (isize)indent.size();
-
+    
     isize newlines = 1;
-
+    
     for (auto &it : current.subCommands) {
-
+        
         // Only proceed if the command is visible
         if (it.hidden || it.help.empty() || it.help[0] == "") continue;
-
+        
         // Print the group (if present)
         if (!it.groupName.empty()) {
-
+            
             *this << '\n' << it.groupName << '\n';
             newlines = 1;
         }
-
+        
         // Print newlines
         for (; newlines > 0; newlines--) {
             *this << '\n';
         }
-
+        
         // Print command descriptioon
         *this << indent;
         *this << it.fullName;
@@ -662,7 +662,7 @@ Console::help(const RSCommand& current)
         *this << it.help[0];
         *this << '\n';
     }
-
+    
     *this << '\n';
 }
 
@@ -670,58 +670,58 @@ void
 Console::describe(const std::exception &e, isize line, const string &cmd)
 {
     if (line) *this << "Line " << line << ": " << cmd << '\n';
-
+    
     if (auto err = dynamic_cast<const TooFewArgumentsError *>(&e)) {
-
+        
         *this << err->what() << ": Too few arguments";
         *this << '\n';
         return;
     }
-
+    
     if (auto err = dynamic_cast<const TooManyArgumentsError *>(&e)) {
-
+        
         *this << err->what() << ": Too many arguments";
         *this << '\n';
         return;
     }
-
+    
     if (auto err = dynamic_cast<const util::EnumParseError *>(&e)) {
-
+        
         *this << err->token << " is not a valid key" << '\n';
         *this << "Expected: " << err->expected << '\n';
         return;
     }
-
+    
     if (auto err = dynamic_cast<const util::ParseNumError *>(&e)) {
-
+        
         *this << err->token << " is not a number";
         *this << '\n';
         return;
     }
-
+    
     if (auto err = dynamic_cast<const util::ParseBoolError *>(&e)) {
-
+        
         *this << err->token << " must be true or false";
         *this << '\n';
         return;
     }
-
+    
     if (auto err = dynamic_cast<const util::ParseOnOffError *>(&e)) {
-
+        
         *this << "'" << err->token << "' must be on or off";
         *this << '\n';
         return;
     }
-
+    
     if (auto err = dynamic_cast<const util::ParseError *>(&e)) {
-
+        
         *this << err->what() << ": Syntax error";
         *this << '\n';
         return;
     }
-
+    
     if (auto err = dynamic_cast<const AppError *>(&e)) {
-
+        
         *this << err->what();
         *this << '\n';
         return;
@@ -746,22 +746,22 @@ void
 Console::_dump(CoreObject &component, Category category)
 {
     std::stringstream ss;
-
+    
     switch (category) {
-
+            
         case Category::Slots:       ss << "Slots:\n\n"; break;
         case Category::Config:      ss << "Configuration:\n\n"; break;
         case Category::Properties:  ss << "Properties:\n\n"; break;
         case Category::Registers:   ss << "Registers:\n\n"; break;
         case Category::State:       ss << "State:\n\n"; break;
         case Category::Stats:       ss << "Statistics:\n\n"; break;
-
+            
         default:
             break;
     }
-
+    
     component.dump(category, ss);
-
+    
     *this << ss << '\n';
 }
 
@@ -771,9 +771,9 @@ Console::initCommands(RSCommand &root)
     //
     // Common commands
     //
-
+    
     RSCommand::currentGroup = "Shell commands";
-
+    
     root.add({
         
         .tokens = { "welcome" },
@@ -814,7 +814,7 @@ Console::initCommands(RSCommand &root)
             msgQueue.put(Msg::RSH_CLOSE);
         }
     });
-
+    
     root.add({
         
         .tokens = { "help" },
@@ -831,11 +831,11 @@ Console::initCommands(RSCommand &root)
         .tokens = { "state" },
         .hidden = true,
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-
+            
             dump(c64, Category::Trace);
         }
     });
-
+    
     root.add({
         
         .tokens = { "joshua" },
@@ -856,13 +856,13 @@ Console::initCommands(RSCommand &root)
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
             
             auto stream = std::ifstream(argv.front());
-                    if (!stream.is_open()) throw AppError(Fault::FILE_NOT_FOUND, argv.front());
-                    retroShell.asyncExecScript(stream);
+            if (!stream.is_open()) throw AppError(Fault::FILE_NOT_FOUND, argv.front());
+            retroShell.asyncExecScript(stream);
         }
     });
-
+    
     root.add({
-             
+        
         .tokens = { "wait" },
         .hidden = true,
         .args   = { Arg::value, Arg::seconds },
@@ -876,7 +876,7 @@ Console::initCommands(RSCommand &root)
     });
     
     root.add({
-             
+        
         .tokens = { "shutdown" },
         .help   = { "Terminates the application" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
@@ -898,14 +898,14 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
     // Get the shell name for this component
     auto cmd = c.shellName();
     assert(cmd != nullptr);
-
+    
     // Register a command with the proper name
     if (c.shellHelp().empty()) {
         root.add( { .tokens = { cmd }, .help = { c.description() } } );
     } else {
         root.add( {.tokens = { cmd }, .help = c.shellHelp() } );
     }
-
+    
     // In case this component has options...
     if (auto &options = c.getOptions(); !options.empty()) {
         
@@ -919,7 +919,7 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
                 retroShell.commander.dump(c, Category::Config);
             }
         });
-
+        
         // Register a setter for every option
         root.add({
             
@@ -928,7 +928,7 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
         });
         
         for (auto &opt : options) {
-
+            
             // Get the key value pairs
             auto pairs = OptionParser::pairs(opt);
             
@@ -947,7 +947,7 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
                         
                     }, .values = { isize(opt), c.objid }
                 });
-
+                
             } else {
                 
                 // Register a setter for every enum
@@ -975,32 +975,32 @@ Console::registerComponent(CoreComponent &c, RSCommand &root)
                 }
             }
         }
-
+        
         /*
-        // ...register a command for querying the current configuration
-        root.add({cmd, ""},
-                 "Display the current configuration",
-                 [this, &c](Arguments& argv, const std::vector<isize> &values) {
-
-            retroShell.commander.dump(c, Category::Config);
-        });
-
-        // ...register a setter for all config options
-        root.add({cmd, "set"}, "Configure the component");
-        for (auto &opt : options) {
-
-            root.add({cmd, "set", OptEnum::key(opt)},
-                     {OptionParser::argList(opt)},
-                     OptEnum::help(opt),
-                     [this](Arguments& argv, const std::vector<isize> &values) {
-
-                emulator.set(Option(HI_WORD(values.front())), argv[0], { LO_WORD(values.front()) });
-
-            }, HI_W_LO_W(opt, c.objid));
-        }
-        */
+         // ...register a command for querying the current configuration
+         root.add({cmd, ""},
+         "Display the current configuration",
+         [this, &c](Arguments& argv, const std::vector<isize> &values) {
+         
+         retroShell.commander.dump(c, Category::Config);
+         });
+         
+         // ...register a setter for all config options
+         root.add({cmd, "set"}, "Configure the component");
+         for (auto &opt : options) {
+         
+         root.add({cmd, "set", OptEnum::key(opt)},
+         {OptionParser::argList(opt)},
+         OptEnum::help(opt),
+         [this](Arguments& argv, const std::vector<isize> &values) {
+         
+         emulator.set(Option(HI_WORD(values.front())), argv[0], { LO_WORD(values.front()) });
+         
+         }, HI_W_LO_W(opt, c.objid));
+         }
+         */
     }
-
+    
     return cmd;
 }
 

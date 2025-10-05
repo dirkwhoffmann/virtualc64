@@ -20,10 +20,10 @@ void
 DebuggerConsole::_enter()
 {
     msgQueue.put(Msg::RSH_DEBUGGER, true);
-
+    
     // If the console is entered the first time...
     if (isEmpty()) {
-
+        
         // Print the welcome message
         exec("welcome");
         *this << getPrompt();
@@ -42,7 +42,7 @@ string
 DebuggerConsole::getPrompt()
 {
     std::stringstream ss;
-
+    
     ss << "(";
     ss << std::right << std::setw(0) << std::dec << isize(c64.scanline);
     ss << ",";
@@ -50,7 +50,7 @@ DebuggerConsole::getPrompt()
     ss << ") $";
     ss << std::right << std::setw(4) << std::hex << isize(cpu.getPC0());
     ss << ": ";
-
+    
     return ss.str();
 }
 
@@ -66,10 +66,10 @@ DebuggerConsole::printHelp()
 {
     storage << "Type 'help' or press 'TAB' twice for help.\n";
     storage << "Type '.' or press 'SHIFT+RETURN' to exit debug mode.";
-
+    
     remoteManager.rshServer << "Type 'help' for help.\n";
     remoteManager.rshServer << "Type '.' to exit debug mode.";
-
+    
     *this << '\n';
 }
 
@@ -77,11 +77,11 @@ void
 DebuggerConsole::pressReturn(bool shift)
 {
     if (!shift && input.empty()) {
-
+        
         emulator.isRunning() ? emulator.put(Cmd::PAUSE) : emulator.stepInto();
-
+        
     } else {
-
+        
         Console::pressReturn(shift);
     }
 }
@@ -90,13 +90,13 @@ void
 DebuggerConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
-
+    
     //
     // Program execution
     //
-
+    
     RSCommand::currentGroup = "Program execution";
-
+    
     root.add({
         
         .tokens = { "goto" },
@@ -109,7 +109,7 @@ DebuggerConsole::initCommands(RSCommand &root)
     });
     
     root.clone({ "goto" }, "g");
-
+    
     root.add({
         
         .tokens = { "step" },
@@ -121,7 +121,7 @@ DebuggerConsole::initCommands(RSCommand &root)
     });
     
     root.clone({ "step" }, "s");
-
+    
     root.add({
         
         .tokens = { "next" },
@@ -133,7 +133,7 @@ DebuggerConsole::initCommands(RSCommand &root)
     });
     
     root.clone({ "next" }, "n");
-
+    
     root.add({
         
         .tokens = { "eol" },
@@ -143,7 +143,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             emulator.finishLine();
         }
     });
-
+    
     root.add({
         
         .tokens = { "eof" },
@@ -185,7 +185,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             cpu.setBreakpoint(parseAddr(argv[0]), parseNum(argv, 1, 0));
         }
     });
- 
+    
     root.add({
         
         .tokens = { "break", "delete" },
@@ -227,7 +227,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(cpu, Category::Watchpoints);
         }
     });
- 
+    
     root.add({
         
         .tokens = { "watch", "at" },
@@ -265,9 +265,9 @@ DebuggerConsole::initCommands(RSCommand &root)
     //
     // Monitoring
     //
-
+    
     RSCommand::currentGroup = "Monitoring";
-
+    
     root.add({
         
         .tokens = { "d" },
@@ -287,26 +287,26 @@ DebuggerConsole::initCommands(RSCommand &root)
         .extra  = { Arg::address },
         .help   = { "Dump memory in ASCII" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-
+            
             std::stringstream ss;
             mem.debugger.ascDump(ss, parseAddr(argv, 0, mem.debugger.current), 16);
             retroShell << '\n' << ss << '\n';
         }
     });
-
+    
     root.add({
         
         .tokens = {"m"},
         .extra  = { Arg::address },
         .help   = { "Dump memory" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-                        
+            
             std::stringstream ss;
             mem.debugger.memDump(ss, parseAddr(argv, 0, mem.debugger.current), 16);
             retroShell << '\n' << ss << '\n';
         }
     });
-
+    
     root.add({
         
         .tokens = { "w" },
@@ -343,15 +343,15 @@ DebuggerConsole::initCommands(RSCommand &root)
             auto pattern = parseSeq(argv[0]);
             auto addr = parseAddr(argv, 1, mem.debugger.current);
             auto found = mem.debugger.memSearch(pattern, addr);
-
+            
             if (found >= 0) {
-
+                
                 std::stringstream ss;
                 mem.debugger.memDump(ss, u16(found), 16);
                 retroShell << ss;
-
+                
             } else {
-
+                
                 std::stringstream ss;
                 ss << "Not found";
                 retroShell << ss;
@@ -374,13 +374,13 @@ DebuggerConsole::initCommands(RSCommand &root)
             mem.debugger.write(addr, val, cnt);
         }
     });
-
+    
     root.add({
         
         .tokens = { "r" },
         .help   = { "Show registers" }
     });
- 
+    
     root.add({
         
         .tokens = { "r", "cia1" },
@@ -390,7 +390,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(cia1, Category::Registers);
         }
     });
-
+    
     root.add({
         
         .tokens = { "r", "cia2" },
@@ -400,7 +400,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(cia2, Category::Registers);
         }
     });
-
+    
     root.add({
         
         .tokens = { "r", "vicii" },
@@ -410,7 +410,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(vic, Category::Registers);
         }
     });
- 
+    
     root.add({
         
         .tokens = { "r", "sid" },
@@ -426,7 +426,7 @@ DebuggerConsole::initCommands(RSCommand &root)
     //
     
     RSCommand::currentGroup = "Components";
-
+    
     root.add({
         
         .tokens = { "?" },
@@ -448,7 +448,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(emulator, Category::State);
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", "thread", "runahead" },
@@ -458,7 +458,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(emulator, Category::RunAhead);
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", c64.shellName() },
@@ -468,7 +468,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(c64, { Category::Config, Category::State });
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", cpu.shellName() },
@@ -478,7 +478,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(cpu, { Category::Config, Category::State });
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", mem.shellName() },
@@ -488,7 +488,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(mem, { Category::Config, Category::State });
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", cia1.shellName() },
@@ -528,7 +528,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             
             isize nr = parseNum(argv, 0, 0);
             if (nr < 0 || nr > 3) throw AppError(Fault::OPT_INV_ARG, "0 ... 3");
-
+            
             dump(sidBridge.sid[nr], { Category::Config, Category::State });
         }
     });
@@ -542,7 +542,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(sidBridge, { Category::Config, Category::State });
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", expansionPort.shellName() },
@@ -558,7 +558,7 @@ DebuggerConsole::initCommands(RSCommand &root)
     //
     
     RSCommand::currentGroup = "Peripherals";
-
+    
     root.add({
         
         .tokens = { "?", keyboard.shellName() },
@@ -568,7 +568,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(keyboard, { Category::Config, Category::State });
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", port1.shellName() },
@@ -578,7 +578,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(port1, { Category::Config, Category::State });
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", port2.shellName() },
@@ -687,7 +687,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             }, .values = {i}
         });
     }
-        
+    
     root.add({
         
         .tokens = { "?", serialPort.shellName() },
@@ -707,7 +707,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(datasette, { Category::Config, Category::State });
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", audioPort.shellName() },
@@ -717,7 +717,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(audioPort, { Category::Config, Category::State });
         }
     });
-
+    
     root.add({
         
         .tokens = { "?", host.shellName() },
@@ -727,14 +727,14 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(host, { Category::Config, Category::State });
         }
     });
-
+    
     
     //
     // Miscellaneous
     //
-
+    
     RSCommand::currentGroup = "Miscellaneous";
-
+    
     root.add({
         
         .tokens = { "checksums" },
@@ -760,9 +760,9 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(emulator, Category::Debug);
         }
     });
-
+    
     if (debugBuild) {
-
+        
         for (auto i : DebugFlagEnum::elements()) {
             
             root.add({
@@ -777,7 +777,7 @@ DebuggerConsole::initCommands(RSCommand &root)
                 }, .values = { isize(i) }
             });
         }
-            
+        
         root.add({
             
             .tokens = { "debug", "verbosity" },
@@ -789,7 +789,7 @@ DebuggerConsole::initCommands(RSCommand &root)
             }
         });
     }
-
+    
     root.add({
         
         .tokens = {"%"},

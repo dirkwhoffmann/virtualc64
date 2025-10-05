@@ -21,10 +21,10 @@ void
 CommanderConsole::_enter()
 {
     msgQueue.put(Msg::RSH_DEBUGGER, false);
-
+    
     // If the console is entered the first time...
     if (isEmpty()) {
-
+        
         // Print the welcome message
         exec("welcome");
         *this << getPrompt();
@@ -34,7 +34,7 @@ CommanderConsole::_enter()
 void
 CommanderConsole::_pause()
 {
-
+    
 }
 
 string
@@ -53,7 +53,7 @@ CommanderConsole::welcome()
     *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
     *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
     *this << '\n';
-
+    
     printHelp();
     *this << '\n';
 }
@@ -63,10 +63,10 @@ CommanderConsole::printHelp()
 {
     storage << "Type 'help' or press 'TAB' twice for help.\n";
     storage << "Type '.' or press 'SHIFT+RETURN' to enter debug mode.";
-
+    
     remoteManager.rshServer << "Type 'help' for help.\n";
     remoteManager.rshServer << "Type '.' to enter debug mode.";
-
+    
     *this << '\n';
 }
 
@@ -74,11 +74,11 @@ void
 CommanderConsole::pressReturn(bool shift)
 {
     if (!shift && input.empty()) {
-
+        
         printHelp();
-
+        
     } else {
-
+        
         Console::pressReturn(shift);
     }
 }
@@ -87,7 +87,7 @@ void
 CommanderConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
-
+    
     //
     // Workspace management
     //
@@ -109,7 +109,7 @@ CommanderConsole::initCommands(RSCommand &root)
             // c64.initWorkspace();
         }
     });
-
+    
     root.add({
         
         .tokens = { "workspace activate" },
@@ -120,14 +120,14 @@ CommanderConsole::initCommands(RSCommand &root)
             // c64.activateWorkspace();
         }
     });
-
+    
     
     //
     // Regression tester
     //
-
+    
     RSCommand::currentGroup = "Regression testing";
-
+    
     auto cmd = registerComponent(regressionTester);
     
     root.add({
@@ -147,7 +147,7 @@ CommanderConsole::initCommands(RSCommand &root)
             
             auto model = parseEnum <ConfigScheme, ConfigSchemeEnum> (argv[0]);
             regressionTester.prepare(c64, model);
-
+            
             // Pause the script to give the C64 some time to boot
             c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
             throw ScriptInterruption("");
@@ -155,18 +155,18 @@ CommanderConsole::initCommands(RSCommand &root)
     });
     
     /*
-    root.add({"regression", "setup"}, { ConfigSchemeEnum::argList() },
-             "Initialize the test environment",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        auto model = parseEnum <C64Model, ConfigSchemeEnum> (argv[0]);
-        regressionTester.prepare(c64, model);
-
-        // Pause the script to give the C64 some time to boot
-        c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
-        throw ScriptInterruption("");
-    });
-    */
+     root.add({"regression", "setup"}, { ConfigSchemeEnum::argList() },
+     "Initialize the test environment",
+     [this](Arguments& argv, const std::vector<isize> &values) {
+     
+     auto model = parseEnum <C64Model, ConfigSchemeEnum> (argv[0]);
+     regressionTester.prepare(c64, model);
+     
+     // Pause the script to give the C64 some time to boot
+     c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
+     throw ScriptInterruption("");
+     });
+     */
     
     root.add({
         
@@ -178,15 +178,15 @@ CommanderConsole::initCommands(RSCommand &root)
             regressionTester.run(argv.front());
         }
     });
-
+    
     /*
-    root.add({"regression", "run"}, { Arg::path },
-             "Launch a regression test",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        regressionTester.run(argv.front());
-    });
-    */
+     root.add({"regression", "run"}, { Arg::path },
+     "Launch a regression test",
+     [this](Arguments& argv, const std::vector<isize> &values) {
+     
+     regressionTester.run(argv.front());
+     });
+     */
     
     root.add({
         
@@ -243,53 +243,53 @@ CommanderConsole::initCommands(RSCommand &root)
     });
     
     /*
-    root.add({"screenshot"}, debugBuild ? "Manages screenshots" : "");
-
-    root.add({"screenshot", "set"},
-             "Configure the screenshot");
-
-    root.add({"screenshot", "set", "path"}, { Arg::path },
-             "Assign the save directory",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        regressionTester.screenshotPath = argv.front() == "\"\"" ? "" : argv.front();
-    });
-
-    root.add({"screenshot", "set", "cutout"}, { Arg::value, Arg::value, Arg::value, Arg::value },
-             "Adjust the texture cutout",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        isize x1 = parseNum(argv[0]);
-        isize y1 = parseNum(argv[1]);
-        isize x2 = parseNum(argv[2]);
-        isize y2 = parseNum(argv[3]);
-
-        regressionTester.x1 = x1;
-        regressionTester.y1 = y1;
-        regressionTester.x2 = x2;
-        regressionTester.y2 = y2;
-    });
-
-    root.add({"screenshot", "save"}, { Arg::path },
-             "Save a screenshot and exits the emulator",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        regressionTester.dumpTexture(c64, argv.front());
-    });
-    */
-
+     root.add({"screenshot"}, debugBuild ? "Manages screenshots" : "");
+     
+     root.add({"screenshot", "set"},
+     "Configure the screenshot");
+     
+     root.add({"screenshot", "set", "path"}, { Arg::path },
+     "Assign the save directory",
+     [this](Arguments& argv, const std::vector<isize> &values) {
+     
+     regressionTester.screenshotPath = argv.front() == "\"\"" ? "" : argv.front();
+     });
+     
+     root.add({"screenshot", "set", "cutout"}, { Arg::value, Arg::value, Arg::value, Arg::value },
+     "Adjust the texture cutout",
+     [this](Arguments& argv, const std::vector<isize> &values) {
+     
+     isize x1 = parseNum(argv[0]);
+     isize y1 = parseNum(argv[1]);
+     isize x2 = parseNum(argv[2]);
+     isize y2 = parseNum(argv[3]);
+     
+     regressionTester.x1 = x1;
+     regressionTester.y1 = y1;
+     regressionTester.x2 = x2;
+     regressionTester.y2 = y2;
+     });
+     
+     root.add({"screenshot", "save"}, { Arg::path },
+     "Save a screenshot and exits the emulator",
+     [this](Arguments& argv, const std::vector<isize> &values) {
+     
+     regressionTester.dumpTexture(c64, argv.front());
+     });
+     */
+    
     //
     // Components
     //
-
+    
     RSCommand::currentGroup = "Components";
-
+    
     //
     // Components (C64)
     //
-
+    
     cmd = registerComponent(c64);
-
+    
     root.add({
         
         .tokens = { cmd, "defaults" },
@@ -299,7 +299,7 @@ CommanderConsole::initCommands(RSCommand &root)
             dump(emulator, Category::Defaults);
         }
     });
-        
+    
     root.add({
         
         .tokens = { cmd, "power" },
@@ -310,13 +310,13 @@ CommanderConsole::initCommands(RSCommand &root)
             parseOnOff(argv[0]) ? emulator.run() : emulator.powerOff();
         }
     });
-       
+    
     root.add({
         
         .tokens = { cmd, "reset" },
         .help   = { "Performs a hard reset" },
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-
+            
             c64.hardReset();
         }
     });
@@ -335,7 +335,7 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     // Components (Memory)
     //
-
+    
     cmd = registerComponent(mem);
     
     root.add({
@@ -347,18 +347,18 @@ CommanderConsole::initCommands(RSCommand &root)
             
             auto path = argv.front();
             if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
-
+            
             auto file = PRGFile(path);
             c64.flash(file, 0);
         }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "load" },
         .help   = { "Loads memory contents from a file" }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "load", "rom" },
@@ -381,7 +381,7 @@ CommanderConsole::initCommands(RSCommand &root)
             mem.debugger.load(path, parseAddr(argv[1]));
         }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "load", "openroms" },
@@ -421,98 +421,98 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     // Components (CIA)
     //
-
+    
     cmd = registerComponent(cia1);
     cmd = registerComponent(cia2);
-
-
+    
+    
     //
     // Components (VICII)
     //
-
+    
     cmd = registerComponent(vic);
-
-
+    
+    
     //
     // Components (DMA Debugger)
     //
-
-    cmd = registerComponent(vic.dmaDebugger);
-
-    /*
-    root.add({cmd, "open"},
-             "Opens the DMA debugger",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        emulator.set(Opt::DMA_DEBUG_ENABLE, true);
-    });
-
-    root.add({cmd, "close"},
-             "Closes the DMA debugger",
-             [this](Arguments& argv, const std::vector<isize> &values) {
-
-        emulator.set(Opt::DMA_DEBUG_ENABLE, false);
-    });
-    */
     
-
+    cmd = registerComponent(vic.dmaDebugger);
+    
+    /*
+     root.add({cmd, "open"},
+     "Opens the DMA debugger",
+     [this](Arguments& argv, const std::vector<isize> &values) {
+     
+     emulator.set(Opt::DMA_DEBUG_ENABLE, true);
+     });
+     
+     root.add({cmd, "close"},
+     "Closes the DMA debugger",
+     [this](Arguments& argv, const std::vector<isize> &values) {
+     
+     emulator.set(Opt::DMA_DEBUG_ENABLE, false);
+     });
+     */
+    
+    
     //
     // Components (SID)
     //
-
+    
     cmd = registerComponent(sid0);
     cmd = registerComponent(sid1);
     cmd = registerComponent(sid2);
     cmd = registerComponent(sid3);
-
-
+    
+    
     //
     // Ports
     //
-
+    
     RSCommand::currentGroup = "Ports";
-
-
+    
+    
     //
     // Ports (Power port)
     //
-
+    
     cmd = registerComponent(powerSupply);
-
-
+    
+    
     //
     // Ports (Audio port)
     //
-
+    
     cmd = registerComponent(audioPort);
-
-
+    
+    
     //
     // Ports (User port)
     //
-
+    
     cmd = registerComponent(userPort);
-
-
+    
+    
     //
     // Ports (Video port)
     //
-
+    
     cmd = registerComponent(videoPort);
-
-
+    
+    
     //
     // Ports (Expansion port)
     //
-
+    
     cmd = registerComponent(expansionPort);
-
+    
     root.add({
         
         .tokens = { cmd, "attach" },
         .help   = { "Attaches a cartridge" }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "attach", "cartridge" },
@@ -525,7 +525,7 @@ CommanderConsole::initCommands(RSCommand &root)
             expansionPort.attachCartridge(path);
         }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "attach", "reu" },
@@ -536,7 +536,7 @@ CommanderConsole::initCommands(RSCommand &root)
             expansionPort.attachReu(parseNum(argv[0]));
         }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "attach", "georam" },
@@ -548,27 +548,27 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
     
-
+    
     //
     // Peripherals
     //
-
+    
     RSCommand::currentGroup = "Peripherals";
-
-
+    
+    
     //
     // Peripherals (Monitor)
     //
-
+    
     registerComponent(monitor);
-
-
+    
+    
     //
     // Peripherals (Keyboard)
     //
-
+    
     cmd = registerComponent(keyboard);
-
+    
     root.add({
         
         .tokens = { cmd, "press" },
@@ -579,7 +579,7 @@ CommanderConsole::initCommands(RSCommand &root)
             keyboard.press(C64Key(parseNum(argv[0])));
         }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "release" },
@@ -617,7 +617,7 @@ CommanderConsole::initCommands(RSCommand &root)
             keyboard.autoType("load \"*\",8,1\n");
         }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "type", "run" },
@@ -627,20 +627,20 @@ CommanderConsole::initCommands(RSCommand &root)
             keyboard.autoType("run\n");
         }
     });
-
-
+    
+    
     //
     // Peripherals (Mouse)
     //
-
+    
     registerComponent(c64.port1.mouse);
     registerComponent(c64.port2.mouse);
-
-
+    
+    
     //
     // Peripherals (Joystick)
     //
-
+    
     for (isize i = 0; i <= 1; i++) {
         
         if (i == 0) cmd = registerComponent(port1.joystick);
@@ -755,21 +755,21 @@ CommanderConsole::initCommands(RSCommand &root)
         });
     }
     
-
+    
     //
     // Peripherals (Paddles)
     //
-
+    
     cmd = registerComponent(port1.paddle);
     cmd = registerComponent(port2.paddle);
-
-
+    
+    
     //
     // Peripherals (Datasette)
     //
-
+    
     cmd = registerComponent(datasette);
-
+    
     root.add({
         
         .tokens = { cmd, "connect" },
@@ -779,7 +779,7 @@ CommanderConsole::initCommands(RSCommand &root)
             emulator.set(Opt::DAT_CONNECT, true);
         }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "disconnect" },
@@ -799,7 +799,7 @@ CommanderConsole::initCommands(RSCommand &root)
             datasette.rewind();
         }
     });
-
+    
     root.add({
         
         .tokens = { cmd, "rewind", "to" },
@@ -811,11 +811,11 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
     
-
+    
     //
     // Peripherals (Drives)
     //
-
+    
     for (isize i = 0; i < 2; i++) {
         
         if (i == 0) cmd = registerComponent(drive8);
@@ -898,14 +898,14 @@ CommanderConsole::initCommands(RSCommand &root)
             }, .values = {i}
         });
     }
-
-
+    
+    
     //
     // Peripherals (RS232)
     //
-
+    
     cmd = registerComponent(userPort.rs232);
-
+    
     root.add({
         
         .tokens = { cmd, "send" },
@@ -917,19 +917,19 @@ CommanderConsole::initCommands(RSCommand &root)
         },
     });
     
-
+    
     //
     // Miscellaneous
     //
-
+    
     RSCommand::currentGroup = "Miscellaneous";
-
+    
     //
     // Miscellaneous (Host)
     //
-
+    
     cmd = registerComponent(host);
-
+    
     
     //
     // Miscellaneous (Config)
@@ -965,11 +965,11 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
     
-
+    
     //
     // Miscellaneous (Remote server)
     //
-
+    
     root.add({
         
         .tokens = { "server" },
@@ -987,7 +987,7 @@ CommanderConsole::initCommands(RSCommand &root)
     });
     
     cmd = registerComponent(remoteManager.rshServer, root / "server");
-
+    
     root.add({
         
         .tokens = { "server", cmd, "start" },
@@ -1007,7 +1007,7 @@ CommanderConsole::initCommands(RSCommand &root)
             remoteManager.rshServer.stop();
         }
     });
-
+    
     root.add({
         
         .tokens = { "server", cmd, "disconnect" },
@@ -1018,11 +1018,11 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
     
-
+    
     //
     // Miscellaneous (Recorder)
     //
-
+    
     cmd = registerComponent(recorder);
 }
 

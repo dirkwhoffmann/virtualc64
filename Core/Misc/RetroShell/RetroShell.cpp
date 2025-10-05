@@ -22,7 +22,7 @@ namespace vc64 {
 RetroShell::RetroShell(C64& ref) : SubComponent(ref)
 {
     subComponents = std::vector<CoreComponent *> {
-
+        
         &commander,
         &debugger
     };
@@ -36,7 +36,7 @@ RetroShell::_initialize()
 
 void
 RetroShell::switchConsole() {
-
+    
     inCommandShell() ? enterDebugger() : enterCommander();
 }
 
@@ -45,10 +45,10 @@ RetroShell::enterDebugger()
 {
     // Assign the new console
     current = &debugger;
-
+    
     // Enter tracking mode
     emulator.trackOn(1);
-
+    
     // Call the delegate of the new console
     current->_enter();
 }
@@ -58,10 +58,10 @@ RetroShell::enterCommander()
 {
     // Assign the new console
     current = &commander;
-
+    
     // Leave tracking mode
     emulator.trackOff(1);
-
+    
     // Call the delegate of the new console
     current->_enter();
 }
@@ -75,7 +75,7 @@ RetroShell::asyncExec(const string &command, bool append)
     } else {
         commands.insert(commands.begin(), { 0, command});
     }
-
+    
     // Process the command queue in the next update cycle
     emulator.put(Command(Cmd::RSH_EXECUTE));
 }
@@ -84,15 +84,15 @@ void
 RetroShell::asyncExecScript(std::stringstream &ss)
 {
     SYNCHRONIZED
-
+    
     std::string line;
     isize nr = 1;
-
+    
     while (std::getline(ss, line)) {
-
+        
         commands.push_back({ nr++, line });
     }
-
+    
     emulator.put(Command(Cmd::RSH_EXECUTE));
 }
 
@@ -116,17 +116,17 @@ void
 RetroShell::asyncExecScript(const MediaFile &file)
 {
     string s;
-
+    
     switch (file.type()) {
-
+            
         case FileType::SCRIPT:
-
+            
             s = string((char *)file.getData(), file.getSize());
             asyncExecScript(s);
             break;
-
+            
         default:
-
+            
             throw AppError(Fault::FILE_TYPE_MISMATCH);
     }
 }
@@ -135,9 +135,9 @@ void
 RetroShell::abortScript()
 {
     {   SYNCHRONIZED
-
+        
         if (!commands.empty()) {
-
+            
             commands.clear();
             c64.cancel<SLOT_RSH>();
         }
@@ -148,33 +148,33 @@ void
 RetroShell::exec()
 {
     SYNCHRONIZED
-
+    
     // Only proceed if there is anything to process
     if (commands.empty()) return;
-
+    
     std::pair<isize, string> cmd;
-
+    
     try {
-
+        
         while (!commands.empty()) {
-
+            
             cmd = commands.front();
             commands.erase(commands.begin());
             exec(cmd);
         }
-
+        
     } catch (ScriptInterruption &) {
-
+        
         msgQueue.put(Msg::RSH_WAIT);
-
+        
     } catch (...) {
-
+        
         // Remove all remaining commands
         commands = { };
-
+        
         msgQueue.put(Msg::RSH_ERROR);
     }
-
+    
     // Print prompt
     if (current->lastLineIsEmpty()) *this << current->getPrompt();
 }
@@ -184,25 +184,25 @@ RetroShell::exec(QueuedCmd cmd)
 {
     auto line = cmd.first;
     auto command = cmd.second;
-
+    
     try {
-
+        
         // Print the command if it comes from a script
         if (line) *this << command << '\n';
-
+        
         // Call the interpreter
         current->exec(command);
-
+        
     } catch (ScriptInterruption &) {
-
+        
         // Rethrow the exception
         throw;
-
+        
     } catch (std::exception &err) {
-
+        
         // Print error message
         current->describe(err, line, command);
-
+        
         // Rethrow the exception if the command is not prefixed with 'try'
         if (command.rfind("try", 0)) throw;
     }

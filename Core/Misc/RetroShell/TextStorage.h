@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "Macros.h"
+#include "BasicTypes.h"
 #include <sstream>
 #include <fstream>
 
@@ -40,6 +40,9 @@ public:
 
     // Returns the number of stored lines
     isize size() const { return (isize)storage.size(); }
+    
+    // Returns the number of trailing blank lines
+    isize trailingEmptyLines() const;
 
     // Returns a single line
     string operator [] (isize i) const;
@@ -68,7 +71,7 @@ private:
 
     // Appends a new line
     void append(const string &line);
-
+    
 public:
 
     // Appends a single character or a string

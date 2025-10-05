@@ -57,48 +57,48 @@ struct RetroShellCmdDescriptor {
 };
 
 struct RSCommand {
-
+    
     // Used during command registration
     static string currentGroup;
-
+    
     // Group of this command
     string groupName;
-
+    
     // Name of this command (e.g., "eject")
     string name;
-
+    
     // Full name of this command (e.g., "drive8 eject")
     string fullName;
-
+    
     // Name of this command as displayed in help messages (e.g., "[g]oto")
     string helpName;
-
+    
     // Help description of this command (e.g., "Eject disk")
     std::vector<string> help;
     
     // List of required arguments
     std::vector<string> requiredArgs;
-
+    
     // List of optional arguments
     std::vector<string> optionalArgs;
-
+    
     // List of subcommands
     std::vector<RSCommand> subCommands;
-
+    
     // Command handler
     RetroShellCallback callback = nullptr;
-
+    
     // Additional argument passed to the command handler
     std::vector<isize> param;
     
     // Indicates if this command appears in help descriptions
     bool hidden = false;
-
-
+    
+    
     //
     // Methods
     //
-
+    
     // Creates a new node in the command tree
     void add(const RetroShellCmdDescriptor &descriptor);
     
@@ -110,66 +110,66 @@ struct RSCommand {
     /* BEGIN DEPRECATED */
     
     /*
-    // Creates a new node in the command tree
-    void add(const std::vector<string> &tokens,
-             const string &help,
-             RetroShellCallback func = nullptr, long param = 0);
-
-    void add(const std::vector<string> &tokens,
-             std::pair<const string &, const string &> help,
-             RetroShellCallback func = nullptr, long param = 0);
-
-    void add(const std::vector<string> &tokens,
-             const std::vector<string> &args,
-             const string &help,
-             RetroShellCallback func = nullptr, long param = 0);
-
-    void add(const std::vector<string> &tokens,
-             const std::vector<string> &args,
-             std::pair<const string &, const string &> help,
-             RetroShellCallback func = nullptr, long param = 0);
-
-    void add(const std::vector<string> &tokens,
-             const std::vector<string> &requiredArgs,
-             const std::vector<string> &optionalArgs,
-             const string &help,
-             RetroShellCallback func = nullptr, long param = 0);
-
-    void add(const std::vector<string> &tokens,
-             const std::vector<string> &requiredArgs,
-             const std::vector<string> &optionalArgs,
-             std::pair<const string &, const string &> help,
-             RetroShellCallback func = nullptr, long param = 0);
-
-    void clone(const string &alias,
-               const std::vector<string> &tokens,
-               long param = 0);
-
-    void clone(const string &alias,
-               const std::vector<string> &tokens,
-               const string &help,
-               long param = 0);
-    */
+     // Creates a new node in the command tree
+     void add(const std::vector<string> &tokens,
+     const string &help,
+     RetroShellCallback func = nullptr, long param = 0);
+     
+     void add(const std::vector<string> &tokens,
+     std::pair<const string &, const string &> help,
+     RetroShellCallback func = nullptr, long param = 0);
+     
+     void add(const std::vector<string> &tokens,
+     const std::vector<string> &args,
+     const string &help,
+     RetroShellCallback func = nullptr, long param = 0);
+     
+     void add(const std::vector<string> &tokens,
+     const std::vector<string> &args,
+     std::pair<const string &, const string &> help,
+     RetroShellCallback func = nullptr, long param = 0);
+     
+     void add(const std::vector<string> &tokens,
+     const std::vector<string> &requiredArgs,
+     const std::vector<string> &optionalArgs,
+     const string &help,
+     RetroShellCallback func = nullptr, long param = 0);
+     
+     void add(const std::vector<string> &tokens,
+     const std::vector<string> &requiredArgs,
+     const std::vector<string> &optionalArgs,
+     std::pair<const string &, const string &> help,
+     RetroShellCallback func = nullptr, long param = 0);
+     
+     void clone(const string &alias,
+     const std::vector<string> &tokens,
+     long param = 0);
+     
+     void clone(const string &alias,
+     const std::vector<string> &tokens,
+     const string &help,
+     long param = 0);
+     */
     /* END DEPRECATED */
-
+    
     // Returns arguments counts
     isize minArgs() const { return isize(requiredArgs.size()); }
     isize optArgs() const { return isize(optionalArgs.size()); }
     isize maxArgs() const { return minArgs() + optArgs(); }
-
+    
     // Seeks a command object inside the command object tree
     const RSCommand *seek(const string& token) const;
     RSCommand *seek(const string& token);
     const RSCommand *seek(const std::vector<string> &tokens) const;
     RSCommand *seek(const std::vector<string> &tokens);
     RSCommand &operator/(const string& token) { return *seek(token); }
-
+    
     // Filters the argument list (used by auto-completion)
     std::vector<const RSCommand *> filterPrefix(const string& prefix) const;
-
+    
     // Automatically completes a partial token string
     string autoComplete(const string& token);
-
+    
     // Returns a syntax string for this command
     string usage() const;
 };

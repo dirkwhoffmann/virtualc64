@@ -16,6 +16,18 @@
 
 namespace vc64 {
 
+isize
+TextStorage::trailingEmptyLines() const
+{
+    isize result = 0;
+    
+    for (auto it = storage.rbegin(); it != storage.rend() && it->empty(); it++) {
+        result++;
+    }
+    
+    return result;
+}
+
 string
 TextStorage::operator [] (isize i) const
 {
@@ -34,10 +46,10 @@ void
 TextStorage::text(string &all)
 {
     auto count = size();
-
+    
     all = "";
     for (isize i = 0; i < count; i++) {
-
+        
         all += storage[i];
         if (i < count - 1) all += '\n';
     }
@@ -66,7 +78,7 @@ void
 TextStorage::append(const string &line)
 {
     storage.push_back(line);
-
+    
     // Remove old entries if the storage grows too large
     while (storage.size() > capacity) storage.erase(storage.begin());
 }
@@ -75,27 +87,27 @@ TextStorage&
 TextStorage::operator<<(char c)
 {
     assert(!storage.empty());
-
+    
     switch (c) {
-
+            
         case '\n':
-
+            
             if (ostream) *ostream << storage.back() << std::endl;
-
+            
             append("");
             break;
-
+            
         case '\r':
-
+            
             storage.back() = "";
             break;
-
+            
         default:
-
+            
             if (isprint(c)) storage.back() += c;
             break;
     }
-
+    
     return *this;
 }
 

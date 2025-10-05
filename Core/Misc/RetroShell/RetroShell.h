@@ -38,120 +38,120 @@
 namespace vc64 {
 
 class RetroShell final : public SubComponent {
-
+    
     friend class RshServer;
-
+    
     Descriptions descriptions = {{
-
+        
         .name           = "RetroShell",
         .description    = "Retro Shell",
         .shell          = ""
     }};
-
+    
     Options options = {
-
+        
     };
-
+    
 public:
-
+    
     // Consoles
     CommanderConsole commander = CommanderConsole(c64, 0);
     DebuggerConsole debugger = DebuggerConsole(c64, 1);
-
+    
     // Indicates if one of the consoles has new contents
     bool isDirty = false;
-
+    
 private:
-
+    
     // Command queue (stores all pending commands)
     std::vector<QueuedCmd> commands;
-
+    
     // The currently active console
     Console *current = &commander;
-
+    
     bool inCommandShell() { return current == &commander; }
     bool inDebugShell() { return current == &debugger; }
-
+    
     
     //
     // Initializing
     //
-
+    
 public:
-
+    
     RetroShell(C64& ref);
     RetroShell& operator= (const RetroShell& other) { return *this; }
-
-
+    
+    
     //
     // Methods from Serializable
     //
-
+    
 public:
-
+    
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
-
-
+    
+    
     //
     // Methods from CoreComponent
     //
-
+    
 public:
-
+    
     const Descriptions &getDescriptions() const override { return descriptions; }
-
+    
 private:
-
+    
     void _dump(Category category, std::ostream &os) const override { }
     void _initialize() override;
-
-
+    
+    
     //
     // Methods from Configurable
     //
-
+    
 public:
-
+    
     const Options &getOptions() const override { return options; }
-
-
+    
+    
     //
     // Managing consoles
     //
-
+    
     void switchConsole();
     void enterDebugger();
     void enterCommander();
-
+    
 public:
-
+    
     // Adds a command to the list of pending commands
     void asyncExec(const string &command, bool append = true);
-
+    
     // Adds the commands of a shell script to the list of pending commands
     void asyncExecScript(std::stringstream &ss);
     void asyncExecScript(const std::ifstream &fs);
     void asyncExecScript(const string &contents);
     void asyncExecScript(const class MediaFile &script) throws;
-
+    
     // Aborts the execution of a script
     void abortScript();
-
+    
     // Executes all pending commands
     void exec() throws;
-
+    
 private:
-
+    
     // Executes a single pending command
     void exec(QueuedCmd cmd) throws;
-
-
+    
+    
     //
     // Bridge functions
     //
-
+    
 public:
-
+    
     RetroShell &operator<<(char value);
     RetroShell &operator<<(const string &value);
     RetroShell &operator<<(int value);
@@ -161,14 +161,14 @@ public:
     RetroShell &operator<<(long long value);
     RetroShell &operator<<(unsigned long long value);
     RetroShell &operator<<(std::stringstream &stream);
-
+    
     const char *text();
     isize cursorRel();
     void press(RetroShellKey key, bool shift = false);
     void press(char c);
     void press(const string &s);
     void setStream(std::ostream &os);
-
+    
     void serviceEvent();
 };
 
