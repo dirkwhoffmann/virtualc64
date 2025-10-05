@@ -1685,6 +1685,13 @@ NSString *EventSlotName(EventSlot slot)
     return [self c64]->setAutoInspectionMask(u64(mask));
 }
 
+- (NSString *)stateString
+{
+    std::stringstream ss;
+    [self c64]->dump(Category::Trace, ss);
+    return @(ss.str().c_str());
+}
+
 - (EventSlotInfo)cachedSlotInfo:(NSInteger)slot
 {
     // return [self c64]->getSlotInfo(slot);

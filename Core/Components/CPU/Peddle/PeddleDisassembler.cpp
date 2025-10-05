@@ -364,13 +364,13 @@ Disassembler::dumpWords(char *str, u16 values[], isize cnt) const
 }
 
 void
-Disassembler::disassembleRange(std::ostream &os, u16 addr, isize count)
+Disassembler::disassembleRange(std::ostream &os, u16 addr, isize count) const
 {
     disassembleRange(os, std::pair<u16, u16>(addr, UINT16_MAX), count);
 }
 
 void
-Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max)
+Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max) const
 {
     char data[16];
     char instr[16];

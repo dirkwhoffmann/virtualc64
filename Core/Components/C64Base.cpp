@@ -163,6 +163,18 @@ C64::_dump(Category category, std::ostream &os) const
         os << (cpu.getC() ? "1" : "0");
         os << std::endl;
     }
+
+    if (category == Category::Trace) {
+
+        std::stringstream ss;
+
+        cpu.debugger.dumpLogBuffer(os, 8);
+        os << "\n";
+        dump(Category::Current, os);
+        os << "\n";
+        cpu.disassembler.disassembleRange(os, cpu.getPC0(), 8);
+        os << "\n";
+    }
 }
 
 

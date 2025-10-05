@@ -34,6 +34,7 @@ enum class Category : long
     Stats,
     Summary,
     Tod,
+    Trace,
     Watchpoints
 };
 

@@ -201,7 +201,7 @@ protected:
     virtual void printHelp() = 0;
 
     // Prints a state summary (used by the debug shell)
-    void printState();
+    // void printState();
 
 
     //

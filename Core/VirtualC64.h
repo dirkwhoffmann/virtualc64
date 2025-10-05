@@ -1056,6 +1056,13 @@ struct C64API : public API {
     const C64Info &getInfo() const;
     const C64Info &getCachedInfo() const;
 
+    /** @brief  Prints debug information about the component
+     *
+     *  @param  category    Debug information category
+     *  @param  os Output stream
+     */
+    void dump(Category category, std::ostream &os) const;
+
     /** @brief  Returns information about one of the installed Roms
      *
      *  @param  type    The ROM type

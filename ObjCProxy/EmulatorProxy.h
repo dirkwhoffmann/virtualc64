@@ -269,6 +269,7 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) C64Info cachedInfo;
 - (EventSlotInfo)cachedSlotInfo:(NSInteger)slot;
 @property NSInteger autoInspectionMask;
+@property (readonly) NSString *stateString;
 
 - (RomTraits)getRomTraits:(RomType)type;
 @property (readonly) RomTraits basicRom;

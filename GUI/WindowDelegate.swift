@@ -18,8 +18,6 @@ extension MyController: NSWindowDelegate {
 
         guard let window = notification.object as? NSWindow else { return }
 
-        inBackground = false
-
         // Declare this controller the active one
         MyAppDelegate.currentController = self
 
@@ -41,8 +39,6 @@ extension MyController: NSWindowDelegate {
     
     public func windowDidResignMain(_ notification: Notification) {
                 
-        inBackground = true
-
         // Stop the emulator if it is supposed to pause in background
         if let emu = emu {
 

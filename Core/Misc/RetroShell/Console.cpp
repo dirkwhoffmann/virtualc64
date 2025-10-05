@@ -160,6 +160,7 @@ Console::lastLineIsEmpty()
     return storage.lastLineIsEmpty();
 }
 
+/*
 void
 Console::printState()
 {
@@ -174,6 +175,7 @@ Console::printState()
 
     *this << ss;
 }
+*/
 
 void
 Console::press(RetroShellKey key, bool shift)
@@ -829,8 +831,8 @@ Console::initCommands(RetroShellCmd &root)
         .tokens = { "state" },
         .hidden = true,
         .func   = [this] (Arguments& argv, const std::vector<isize> &values) {
-            
-            printState();
+
+            dump(c64, Category::Trace);
         }
     });
 

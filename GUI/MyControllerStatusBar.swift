@@ -12,87 +12,83 @@ extension MyController {
     var hourglassIcon: NSImage? {
 
         if vc64.Warp(rawValue: config.warpMode) == .AUTO {
-
             return NSImage(named: emu?.info.warping == true ? "hourglass3Template" : "hourglass1Template")
-
         } else {
-
             return NSImage(named: emu?.info.warping == true ? "warpOnTemplate" : "warpOffTemplate")
         }
     }
 
     public func refreshStatusBar() {
 
-        if let emu = emu {
+        guard let emu = emu else { return }
 
-            let dsstate = emu.datasette.info
+        let dsstate = emu.datasette.info
 
-            let c64state = emu.info
-            let running = c64state.running
-            let tracking = c64state.tracking
-            let warping = c64state.warping
-            let boost = emu.get(.C64_SPEED_BOOST)
+        let info = emu.info
+        let running = info.running
+        let tracking = info.tracking
+        let warping = info.warping
+        let boost = emu.get(.C64_SPEED_BOOST)
 
-            let config8 = emu.drive8.config
-            let config9 = emu.drive9.config
-            let connected8 = config8.connected
-            let connected9 = config9.connected
-            let on8 = config8.switchedOn
-            let on9 = config9.switchedOn
+        let config8 = emu.drive8.config
+        let config9 = emu.drive9.config
+        let connected8 = config8.connected
+        let connected9 = config9.connected
+        let on8 = config8.switchedOn
+        let on9 = config9.switchedOn
 
-            let hasCrt = emu.expansionport.cartridgeAttached()
+        let hasCrt = emu.expansionport.cartridgeAttached()
 
-            // Floppy drives
-            refreshStatusBarDriveItems(drive: DRIVE8)
-            refreshStatusBarDriveItems(drive: DRIVE9)
+        // Floppy drives
+        refreshStatusBarDriveItems(drive: DRIVE8)
+        refreshStatusBarDriveItems(drive: DRIVE9)
 
-            // Datasette
-            refreshStatusBarDatasette()
+        // Datasette
+        refreshStatusBarDatasette()
 
-            // Remote server icon
-            refreshStatusBarServerIcon()
+        // Remote server icon
+        refreshStatusBarServerIcon()
 
-            // Warp mode
-            refreshStatusBarWarpIcon()
+        // Warp mode
+        refreshStatusBarWarpIcon()
 
-            // Speed adjust
-            speedStepper.integerValue = boost
-            speedStepper.toolTip = "\(boost) %"
+        // Speed adjust
+        speedStepper.integerValue = boost
+        speedStepper.toolTip = "\(boost) %"
 
-            // Visibility
-            let items: [NSView: Bool] = [
+        // Visibility
+        let items: [NSView: Bool] = [
 
-                redLED8: connected8,
-                redLED9: connected9,
-                greenLED8: connected8,
-                greenLED9: connected9,
-                trackNumber8: connected8 && on8,
-                trackNumber9: connected9 && on9,
+            redLED8: connected8,
+            redLED9: connected9,
+            greenLED8: connected8,
+            greenLED9: connected9,
+            trackNumber8: connected8 && on8,
+            trackNumber9: connected9 && on9,
 
-                haltIcon: jammed,
-                serverIcon: true,
-                trackIcon: tracking,
-                muteIcon: warping || muted,
+            haltIcon: jammed,
+            serverIcon: true,
+            trackIcon: tracking,
+            muteIcon: warping || muted,
 
-                tapeIcon: dsstate.hasTape,
-                tapeCounter: dsstate.hasTape,
-                tapeProgress: dsstate.motor,
+            tapeIcon: dsstate.hasTape,
+            tapeCounter: dsstate.hasTape,
+            tapeProgress: dsstate.motor,
 
-                crtIcon: hasCrt,
+            crtIcon: hasCrt,
 
-                warpIcon: running,
-                activityType: running,
-                activityInfo: running,
-                activityBar: running,
-                speedStepper: running
-            ]
+            warpIcon: running,
+            activityType: running,
+            activityInfo: running,
+            activityBar: running,
+            speedStepper: running
+        ]
 
-            for (item, visible) in items {
-                item.isHidden = !visible || !statusBar
-            }
+        for (item, visible) in items {
+            item.isHidden = !visible || !statusBar
         }
     }
-    
+
     private func refreshStatusBarDriveItems(drive: Int) {
         
         refreshStatusBarLEDs(drive: drive)
@@ -338,12 +334,14 @@ extension MyController {
     // Action methods
     //
 
-    @IBAction func drivePowerButtonAction(_ sender: NSButton!) {
+    @IBAction
+    func drivePowerButtonAction(_ sender: NSButton!) {
 
         drivePowerAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
     }
 
-    @IBAction func warpAction(_ sender: Any!) {
+    @IBAction
+    func warpAction(_ sender: Any!) {
 
         switch vc64.Warp(rawValue: config.warpMode) {
 
@@ -361,10 +359,30 @@ extension MyController {
 
     @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {
 
+        var min, max, warn, crit: Double
+
+        switch sender.selectedTag() {
+
+        case 0: min = 0; max = 140; warn = 77; crit = 105
+        case 1: min = 0; max = 120; warn = 75; crit = 100
+        case 2: min = 0; max = 100; warn = 50; crit = 75
+        case 3: min = 0; max = 120; warn = 75; crit = 100
+        case 4: min = 0; max = 100; warn = 85; crit = 95
+
+        default:
+            fatalError()
+        }
+
+        activityBar.minValue = min
+        activityBar.maxValue = max
+        activityBar.warningValue = warn
+        activityBar.criticalValue = crit
+
         refreshStatusBar()
     }
 
-    @IBAction func speedAction(_ sender: NSStepper!) {
+    @IBAction
+    func speedAction(_ sender: NSStepper!) {
 
         // Round the value to the next number dividable by 5
         var value = Int(round(sender.doubleValue / 5.0)) * 5
@@ -379,5 +397,40 @@ extension MyController {
     @IBAction func speedResetAction(_ sender: Any!) {
 
         emu?.set(.C64_SPEED_BOOST, value: 100)
+    }
+
+    @IBAction
+    func infoAction(_ sender: Any!) {
+
+        print("infoAction")
+        
+        if let emu = emu, let info = infoText {
+
+            // Get some auxiliary debug information from the emulator
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: NSFont.monospaced(ofSize: 11, weight: .semibold),
+                .foregroundColor: NSColor.labelColor
+            ]
+            let text = NSAttributedString(string: emu.c64.stateString!, attributes: attributes)
+            let size = CGRect(x: 0, y: 0, width: text.size().width + 16, height: text.size().height)
+
+            // Put the information into an accessory view
+            let accessory = NSTextView(frame: size)
+            accessory.textStorage?.setAttributedString(text)
+            accessory.drawsBackground = false
+            accessory.isEditable = false
+
+            // Create an alert
+            let alert = NSAlert()
+            alert.messageText = info
+            alert.informativeText = infoText2 ?? ""
+            alert.alertStyle = .informational
+            alert.icon = NSImage(systemSymbolName: "waveform.badge.magnifyingglass",
+                                 accessibilityDescription: nil)
+            alert.addButton(withTitle: "OK")
+            alert.accessoryView = accessory
+
+            alert.runModal()
+        }
     }
 }

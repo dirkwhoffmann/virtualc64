@@ -89,8 +89,8 @@ public:
     void dumpWords(char *str, u16 values[], isize cnt) const;
 
     // Disassembles larger code sections
-    void disassembleRange(std::ostream &os, u16 addr, isize count);
-    void disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max = 255);
+    void disassembleRange(std::ostream &os, u16 addr, isize count) const;
+    void disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max = 255) const;
 };
 
 }

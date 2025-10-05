@@ -221,8 +221,8 @@ public:
     //
 
     // Dumps a portion of the log buffer
-    void dumpLogBuffer(std::ostream &os, isize count);
-    void dumpLogBuffer(std::ostream &os);
+    void dumpLogBuffer(std::ostream &os, isize count) const;
+    void dumpLogBuffer(std::ostream &os) const;
 
     // Turns instruction logging on or off
     void enableLogging();

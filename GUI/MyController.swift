@@ -66,24 +66,19 @@ class MyController: NSWindowController, MessageReceiver {
     // Remembers if audio is muted (master volume of both channels is 0)
     var muted = false
 
-    // Current keyboard modifier flags
-    // These flags tell us if one of the special keysare currently pressed.
-    // The flags are utilized, e.g., to alter behaviour when a key on the
-    // TouchBar is pressed.
-    var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
-
     // Indicates if a status bar is shown
     var statusBar = true
-    
+
+    // Information message shown in the status bar
+    var infoText: String?
+    var infoText2: String?
+
     // Small disk icon to be shown in NSMenuItems
     static let iconSize = CGSize(width: 16, height: 16)
     var smallDisk = NSImage(named: "diskTemplate")!.resize(size: iconSize)
     var smallTape = NSImage(named: "tapeTemplate")!.resize(size: iconSize)
     var smallCart = NSImage(named: "crtTemplate")!.resize(size: iconSize)
 
-    // Indicates if the window is in background
-    var inBackground = false
-    
     // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
 
@@ -553,10 +548,16 @@ extension MyController {
         for dashboard in dashboards { dashboard.process(messsage: msg) }
     }
 
-    //
-    // Keyboard events
-    //
+    func setInfo(_ text: String?, _ text2: String? = nil) {
 
-    // Keyboard events are handled by the emulator window.
-    // If they are handled here, some keys such as 'TAB' don't trigger an event.
+        infoText = text
+        infoText2 = text2
+        refreshStatusBar()
+    }
+
+    func clearInfo() {
+
+        infoText = nil
+        infoText2 = nil
+    }
 }

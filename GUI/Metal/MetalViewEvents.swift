@@ -24,9 +24,6 @@ public extension MetalView {
     }
     
     override func flagsChanged(with event: NSEvent) {
-
-        // Save modifier flags (needed by the TouchBar)
-        parent.modifierFlags = event.modifierFlags
         
         parent.keyboard.flagsChanged(with: event)
     }

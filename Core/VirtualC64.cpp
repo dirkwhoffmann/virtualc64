@@ -505,6 +505,13 @@ C64API::getCachedInfo() const
     return c64->getCachedInfo();
 }
 
+void
+C64API::dump(Category category, std::ostream &os) const
+{
+    VC64_PUBLIC_SUSPEND
+    c64->dump(category, os);
+}
+
 bool
 C64API::getMsg(Message &msg)
 {
