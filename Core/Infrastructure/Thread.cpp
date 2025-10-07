@@ -89,13 +89,21 @@ Thread::execute()
 void
 Thread::sleep()
 {
+    // Wait for a pending suspension to finish
+    suspensionLock.lock();
+    suspensionLock.unlock();
+
+    // Don't sleep if the emulator is running in warp mode
+    if (warp && isRunning()) return;
+    /*
     // Don't sleep if the emulator is running in warp mode and no suspension is pending
     if (warp && isRunning() && suspensionLock.tryLock()) {
         
         suspensionLock.unlock();
         return;
     }
-    
+    */
+
     // Set a timeout to prevent the thread from stalling
     auto timeout = util::Time::milliseconds(50);
 

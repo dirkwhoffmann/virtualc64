@@ -153,6 +153,8 @@ Headless::runScript(const fs::path &path)
     // Plug in the three MEGA65 OpenROMs
     c64.c64.installOpenRoms();
     c64.c64.deleteRom(RomType::VC1541);
+    c64.set(Opt::DRV_CONNECT, false, 0);
+    c64.set(Opt::DRV_CONNECT, false, 1);
 
     // Redirect shell output to the console in verbose mode
     if (keys.find("verbose") != keys.end()) c64.retroShell.setStream(std::cout);
@@ -239,7 +241,7 @@ Headless::selfTestScript[] = {
     "c64 power on",
     "",
     "# Let the emulator run for some time to see if it crashes",
-    "wait 2 seconds",
+    "wait 2",
     "",
     "# Terminate the application",
     "shutdown",
