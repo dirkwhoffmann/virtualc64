@@ -1193,9 +1193,9 @@ NSString *EventSlotName(EventSlot slot)
     return proxy;
 }
 
--(NSInteger)cursorRel
+-(RetroShellInfo)info
 {
-	return [self shell]->cursorRel();
+    return [self shell]->getInfo();
 }
 
 -(NSString *)getText

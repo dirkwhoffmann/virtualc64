@@ -651,7 +651,7 @@ struct GuardInfo {
 
 @interface RetroShellProxy : SubComponentProxy { }
 
-@property (readonly) NSInteger cursorRel;
+@property (readonly) RetroShellInfo info;
 
 - (NSString *)getText;
 - (void)pressKey:(char)c;

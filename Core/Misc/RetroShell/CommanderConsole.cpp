@@ -115,6 +115,8 @@ CommanderConsole::initCommands(RSCommand &root)
     
     RSCommand::currentGroup = "Regression testing";
 
+    auto cmd = registerComponent(regressionTester);
+
     root.add({
 
         .tokens = { "regression" },
@@ -230,7 +232,7 @@ CommanderConsole::initCommands(RSCommand &root)
     // Components (C64)
     //
     
-    auto cmd = registerComponent(c64);
+    cmd = registerComponent(c64);
 
     root.add({
 
@@ -480,7 +482,7 @@ CommanderConsole::initCommands(RSCommand &root)
         .args   = { { .name = { "KB", "REU size" } } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            expansionPort.attachReu(parseNum(args.at("kb")));
+            expansionPort.attachReu(parseNum(args.at("KB")));
         }
     });
     
@@ -491,7 +493,7 @@ CommanderConsole::initCommands(RSCommand &root)
         .args   = { { .name = { "KB", "REU size" } } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            expansionPort.attachGeoRam(parseNum(args.at("kb")));
+            expansionPort.attachGeoRam(parseNum(args.at("KB")));
         }
     });
     
@@ -529,7 +531,7 @@ CommanderConsole::initCommands(RSCommand &root)
 
     root.add({
 
-        .tokens = { cmd, "press" },
+        .tokens = { cmd, "release" },
         .chelp  = { "Releases a key" },
         .args   = { { .name = { "keycode", "Numerical code of the C64 key" } } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
@@ -840,7 +842,7 @@ CommanderConsole::initCommands(RSCommand &root)
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
                 auto &drive = values.front() ? drive9 : drive8;
-                auto type = util::parseEnum <DOSType, DOSTypeEnum> (args.at("pos"));
+                auto type = util::parseEnum <DOSType, DOSTypeEnum> (args.at("dos"));
                 drive.insertNewDisk(type, "NEW DISK");
                 
             }, .payload = {i}

@@ -1229,17 +1229,34 @@ RemoteManagerAPI::getCachedInfo() const
 // RetroShell
 //
 
+const RetroShellInfo &
+RetroShellAPI::getInfo() const
+{
+    VC64_PUBLIC
+    return retroShell->getInfo();
+}
+
+const RetroShellInfo &
+RetroShellAPI::getCachedInfo() const
+{
+    VC64_PUBLIC
+    return retroShell->getCachedInfo();
+}
+
 const char *
 RetroShellAPI::text()
 {
+    VC64_PUBLIC_SUSPEND
     return retroShell->text();
 }
 
+/*
 isize
 RetroShellAPI::cursorRel()
 {
     return retroShell->cursorRel();
 }
+*/
 
 void
 RetroShellAPI::press(RSKey key, bool shift)

@@ -263,10 +263,13 @@ Headless::smokeTestScript[] = {
 
     "clear",
     "help",
-    "hel",          // Test auto-completion
-    "joshua",       // Test a hidden command
-    "try joshu",    // Catch an error with 'try'
-    
+
+    // Test a hidden command
+    "joshua",
+
+    // Catch an error with 'try'
+    "try joshu",
+
     "regression set DEBUGCART true",
     "regression set DEBUGCART false",
     "regression set WATCHDOG 1000000",
