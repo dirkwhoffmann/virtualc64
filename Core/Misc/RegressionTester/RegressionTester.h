@@ -117,7 +117,7 @@ public:
     void prepare(C64 &c64, ConfigScheme model);
 
     // Runs a test case
-    void run(string path);
+    void run(const fs::path path);
 
     // Saves a screenshot and exits the emulator
     void dumpTexture(C64 &c64, const std::filesystem::path &path);
