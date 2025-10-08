@@ -194,7 +194,27 @@ extension MyController: NSMenuItemValidation {
     //
     // Action methods (App menu)
     //
-    
+
+    @IBAction func settingsAction(_ sender: Any?) {
+
+        if myAppDelegate.settingsController == nil {
+
+            let sb = NSStoryboard(name: "Settings", bundle: nil)
+            let id = "SettingsWindowController"
+
+            myAppDelegate.settingsController =
+            sb.instantiateController(withIdentifier: id) as? SettingsWindowController
+        }
+
+        if let sc = myAppDelegate.settingsController {
+
+            sc.window?.level = .floating
+            sc.showWindow(self)
+            sc.window?.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+        }
+    }
+
     @IBAction func preferencesAction(_ sender: Any!) {
         
         if myAppDelegate.prefController == nil {

@@ -15,6 +15,7 @@ extension NSToolbarItem.Identifier {
     static let port2 = NSToolbarItem.Identifier("Port2")
     static let keyboard = NSToolbarItem.Identifier("Keyboard")
     static let settings = NSToolbarItem.Identifier("Settings")
+    static let preferences = NSToolbarItem.Identifier("Preferences")
     static let controls = NSToolbarItem.Identifier("Controls")
 }
 
@@ -29,6 +30,7 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
     var port2: MyToolbarMenuItem!
     var keyboard: MyToolbarItemGroup!
     var settings: MyToolbarItemGroup!
+    var preferences: MyToolbarItemGroup!
     var controls: MyToolbarItemGroup!
 
     // Set to true to gray out all toolbar items
@@ -78,6 +80,8 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
                  .port2,
                  .flexibleSpace,
                  .keyboard,
+                 .flexibleSpace,
+                 .preferences,
                  .flexibleSpace,
                  .settings,
                  .flexibleSpace,
@@ -188,19 +192,18 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
                 #selector(configureAction),
             ]
 
-            settings = MyToolbarItemGroup(identifier: .settings,
-                                           images: images,
-                                           actions: actions,
-                                           target: self,
-                                           label: "Settings")
+            preferences = MyToolbarItemGroup(identifier: .preferences,
+                                             images: images,
+                                             actions: actions,
+                                             target: self,
+                                             label: "Preferences")
 
-            /*
             settings = MyToolbarItemGroup(identifier: .settings,
                                           images: [.gear],
                                           actions: [#selector(settingsAction)],
                                           target: self,
                                           label: "Settings")
-            */
+
             return settings
 
         case .controls:
@@ -340,7 +343,7 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
 
     @objc private func settingsAction() {
 
-        // controller.settingsAction(self)
+        controller.settingsAction(self)
     }
 
     // DEPRECATED

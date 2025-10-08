@@ -35,6 +35,7 @@ public class MyAppDelegate: NSObject, NSApplicationDelegate {
 
     // Preferences
     var pref: Preferences!
+    var settingsController: SettingsWindowController?
     var prefController: PreferencesController?
 
     // Information provider for connected HID devices
