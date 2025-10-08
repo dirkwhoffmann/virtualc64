@@ -400,18 +400,21 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func takeScreenshotAction(_ sender: Any!) {
 
-        // Determine screenshot format
-        let format = ScreenshotSource(rawValue: pref.screenshotSource)!
-        
         // Take screenshot
-        guard let screen = renderer.canvas.screenshot(source: format) else {
+        guard let screen = renderer.canvas.screenshot(source: pref.screenshotSource,
+                                                      cutout: pref.screenshotCutout,
+                                                      width: pref.screenshotWidth,
+                                                      height: pref.screenshotHeight) else {
 
             warn("Failed to create screenshot")
             return
         }
 
         // Convert to Screenshot object
-        let screenshot = Screenshot(screen: screen, format: pref.screenshotTarget)
+        let screenshot = Screenshot(screen: screen, format: pref.screenshotFormat)
+
+        // Save to disk
+        try? screenshot.save()
 
         // Save to disk
         try? screenshot.save()

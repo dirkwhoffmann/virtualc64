@@ -939,6 +939,20 @@ VideoPortAPI::getDmaTexture(isize *nr, isize *width, isize *height) const
     return (u32 *)texture.pixels.ptr;
 }
 
+void
+VideoPortAPI::findInnerArea(isize &x1, isize &x2, isize &y1, isize &y2) const
+{
+    VC64_PUBLIC_SUSPEND
+    videoPort->findInnerArea(x1, x2, y1, y2);
+}
+
+void
+VideoPortAPI::findInnerAreaNormalized(double &x1, double &x2, double &y1, double &y2) const
+{
+    VC64_PUBLIC_SUSPEND
+    videoPort->findInnerAreaNormalized(x1, x2, y1, y2);
+}
+
 
 //
 // DMA Debugger

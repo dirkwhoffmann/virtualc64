@@ -609,6 +609,28 @@ NSString *EventSlotName(EventSlot slot)
     *nr = frame;
 }
 
+- (void)innerArea:(NSInteger *)x1 x2:(NSInteger *)x2 y1:(NSInteger *)y1 y2:(NSInteger *)y2
+{
+    isize xx1, xx2, yy1, yy2;
+    [self port]->findInnerArea(xx1, xx2, yy1, yy2);
+
+    *x1 = (NSInteger)xx1;
+    *x2 = (NSInteger)xx2;
+    *y1 = (NSInteger)yy1;
+    *y2 = (NSInteger)yy2;
+}
+
+- (void)innerAreaNormalized:(double *)x1 x2:(double *)x2 y1:(double *)y1 y2:(double *)y2
+{
+    double xx1, xx2, yy1, yy2;
+    [self port]->findInnerAreaNormalized(xx1, xx2, yy1, yy2);
+
+    *x1 = (double)xx1;
+    *x2 = (double)xx2;
+    *y1 = (double)yy1;
+    *y2 = (double)yy2;
+}
+
 @end
 
 

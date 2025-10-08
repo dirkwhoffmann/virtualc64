@@ -12,8 +12,8 @@ extension PreferencesController {
     func refreshGeneralTab() {
 
         // Screenshots
-        genScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
-        genScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
+        // genScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
+        // genScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
 
         // Fullscreen
         genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
@@ -36,13 +36,13 @@ extension PreferencesController {
 
     @IBAction func genScreenshotSourceAction(_ sender: NSPopUpButton!) {
         
-        pref.screenshotSource = sender.selectedTag()
+        // pref.screenshotSource = sender.selectedTag()
         refresh()
     }
     
     @IBAction func genScreenshotTargetAction(_ sender: NSPopUpButton!) {
         
-        pref.screenshotTargetIntValue = sender.selectedTag()
+        // pref.screenshotTargetIntValue = sender.selectedTag()
         refresh()
     }
 

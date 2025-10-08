@@ -419,16 +419,14 @@ struct GuardInfo {
 
 @interface VideoPortProxy : SubComponentProxy { }
 
-/*
-@property (readonly) u32 *oldTexture;
-@property (readonly) u32 *oldDmaTexture;
-*/
-
 - (void)lockTexture;
 - (void)unlockTexture;
 
 - (void)texture:(const u32 **)ptr nr:(NSInteger *)nr;
 - (void)dmaTexture:(const u32 **)ptr nr:(NSInteger *)nr;
+
+- (void)innerArea:(NSInteger *)x1 x2:(NSInteger *)x2 y1:(NSInteger *)y1 y2:(NSInteger *)y2;
+- (void)innerAreaNormalized:(double *)x1 x2:(double *)x2 y1:(double *)y1 y2:(double *)y2;
 
 @end
 

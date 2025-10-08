@@ -117,6 +117,10 @@ public:
     // Informs the video port about a buffer swap
     void buffersWillSwap();
 
+    // Determines the active texture area by auto-detecting border pixels
+    void findInnerArea(isize &x1, isize &x2, isize &y1, isize &y2) const;
+    void findInnerAreaNormalized(double &x1, double &x2, double &y1, double &y2) const;
+
 private:
 
     // Returns a pointer to a white-noise texture

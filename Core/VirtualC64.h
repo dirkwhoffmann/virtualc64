@@ -308,15 +308,16 @@ struct VideoPortAPI : API {
      * and vc64::Texture::height texels. Each texel is represented by a
      * 32 bit color value.
      */
-    // [[deprecated]] u32 *oldGetTexture() const;
-    // [[deprecated]] u32 *oldGetDmaTexture() const;
-
     const u32 *getTexture() const;
     const u32 *getTexture(isize *nr, isize *width, isize *height) const;
 
     const u32 *getDmaTexture() const;
     const u32 *getDmaTexture(isize *nr, isize *width, isize *height) const;
 
+    /** @brief Analyzes the current texture and determines coordinates for border cropping
+     */
+    void findInnerArea(isize &x1, isize &x2, isize &y1, isize &y2) const;
+    void findInnerAreaNormalized(double &x1, double &x2, double &y1, double &y2) const;
 };
 
 

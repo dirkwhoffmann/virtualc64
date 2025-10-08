@@ -164,6 +164,24 @@
 		505A13332C35551D00FF8D2C /* RS232.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13312C35551D00FF8D2C /* RS232.cpp */; };
 		505A13342C35551D00FF8D2C /* RS232.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13312C35551D00FF8D2C /* RS232.cpp */; };
 		505D492821C155DD00A7C575 /* RomConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomConf.swift */; };
+		505F45542E96940700418105 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 505F45532E96940700418105 /* Settings.storyboard */; };
+		505F45562E96953F00418105 /* SettingsOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45552E96953000418105 /* SettingsOutlineView.swift */; };
+		505F45592E96955C00418105 /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45582E96954E00418105 /* SettingsWindowController.swift */; };
+		505F455B2E96957200418105 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F455A2E96956600418105 /* SettingsViewController.swift */; };
+		505F455D2E96958200418105 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F455C2E96957700418105 /* SettingsSplitViewController.swift */; };
+		505F45612E9695F800418105 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45602E9695EE00418105 /* SidebarViewController.swift */; };
+		505F45632E96961500418105 /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45622E96961100418105 /* GeneralSettings.swift */; };
+		505F45652E96961F00418105 /* CaturesSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45642E96961900418105 /* CaturesSettings.swift */; };
+		505F45672E96962A00418105 /* ControlsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45662E96962300418105 /* ControlsSettings.swift */; };
+		505F45692E96963B00418105 /* DevicesSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45682E96963300418105 /* DevicesSettings.swift */; };
+		505F456C2E9698A200418105 /* RomSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F456B2E96989C00418105 /* RomSettings.swift */; };
+		505F456E2E9698B700418105 /* HardwareSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F456D2E9698AF00418105 /* HardwareSettings.swift */; };
+		505F45702E9698C600418105 /* PeripheralsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F456F2E9698BE00418105 /* PeripheralsSettings.swift */; };
+		505F45722E9698D300418105 /* PerformanceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45712E9698CE00418105 /* PerformanceSettings.swift */; };
+		505F45742E9698E500418105 /* CompatibilitySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45732E9698DD00418105 /* CompatibilitySettings.swift */; };
+		505F45762E9698EF00418105 /* AudioSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45752E9698EA00418105 /* AudioSettings.swift */; };
+		505F45782E9698F600418105 /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45772E9698F300418105 /* VideoSettings.swift */; };
+		505F457E2E96A42100418105 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F457D2E96A41E00418105 /* CGRect.swift */; };
 		505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE62580BD780066ACE4 /* AudioConf.swift */; };
 		505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */; };
 		50650F3B2DF093B7008AD660 /* lz4.c in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3A2DF093B7008AD660 /* lz4.c */; settings = {COMPILER_FLAGS = "-w"; }; };
@@ -845,6 +863,25 @@
 		505A13362C35555D00FF8D2C /* RS232Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RS232Types.h; sourceTree = "<group>"; };
 		505A133A2C3557BB00FF8D2C /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		505D492721C155DD00A7C575 /* RomConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomConf.swift; sourceTree = "<group>"; };
+		505F45532E96940700418105 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		505F45552E96953000418105 /* SettingsOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOutlineView.swift; sourceTree = "<group>"; };
+		505F45582E96954E00418105 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		505F455A2E96956600418105 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		505F455C2E96957700418105 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
+		505F45602E9695EE00418105 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
+		505F45622E96961100418105 /* GeneralSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
+		505F45642E96961900418105 /* CaturesSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaturesSettings.swift; sourceTree = "<group>"; };
+		505F45662E96962300418105 /* ControlsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsSettings.swift; sourceTree = "<group>"; };
+		505F45682E96963300418105 /* DevicesSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesSettings.swift; sourceTree = "<group>"; };
+		505F456A2E96968700418105 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
+		505F456B2E96989C00418105 /* RomSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomSettings.swift; sourceTree = "<group>"; };
+		505F456D2E9698AF00418105 /* HardwareSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwareSettings.swift; sourceTree = "<group>"; };
+		505F456F2E9698BE00418105 /* PeripheralsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralsSettings.swift; sourceTree = "<group>"; };
+		505F45712E9698CE00418105 /* PerformanceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceSettings.swift; sourceTree = "<group>"; };
+		505F45732E9698DD00418105 /* CompatibilitySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilitySettings.swift; sourceTree = "<group>"; };
+		505F45752E9698EA00418105 /* AudioSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSettings.swift; sourceTree = "<group>"; };
+		505F45772E9698F300418105 /* VideoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
+		505F457D2E96A41E00418105 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		505F8FE62580BD780066ACE4 /* AudioConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioConf.swift; sourceTree = "<group>"; };
 		505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralsConf.swift; sourceTree = "<group>"; };
 		50650F372DF087DE008AD660 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1256,6 +1293,7 @@
 		5002FA7921C264C100DA4BBC /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
+				505F45572E96954500418105 /* Settings */,
 				50763276202989D300575110 /* DialogController.swift */,
 				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
 				50CD36992817BA6600E40BFC /* Dashboard */,
@@ -1384,7 +1422,6 @@
 				50DBB44A2025CE5700489271 /* Utils.swift */,
 				507E7AA124FB897D00AB433C /* Screenshot.swift */,
 				505184DF24F23CB6002C6124 /* Storage.swift */,
-				50157EF72825B047000E9DDD /* Extensions */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1392,6 +1429,7 @@
 		50157EF72825B047000E9DDD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				505F457D2E96A41E00418105 /* CGRect.swift */,
 				5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */,
 				50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */,
 				50BE4B6D24E7FBE1008F39C9 /* Datatypes.swift */,
@@ -1467,6 +1505,7 @@
 				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
 				5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */,
 				50B9F2802826392400BDFE7B /* MediaManager.swift */,
+				50157EF72825B047000E9DDD /* Extensions */,
 				50157EF62825B01D000E9DDD /* System */,
 				506CE96621998C4500B70A3A /* Metal */,
 				5002FA7921C264C100DA4BBC /* Dialogs */,
@@ -1913,6 +1952,41 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		505F45572E96954500418105 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				505F456A2E96968700418105 /* Untitled.swift */,
+				5009CF3224C0B8EF00F674FF /* Preferences.swift */,
+				50769B8924BB1B87006FE743 /* Configuration.swift */,
+				505F45552E96953000418105 /* SettingsOutlineView.swift */,
+				505F45582E96954E00418105 /* SettingsWindowController.swift */,
+				505F45602E9695EE00418105 /* SidebarViewController.swift */,
+				505F455C2E96957700418105 /* SettingsSplitViewController.swift */,
+				505F455F2E9695E500418105 /* ViewControllers */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		505F455F2E9695E500418105 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				505F455A2E96956600418105 /* SettingsViewController.swift */,
+				505F45622E96961100418105 /* GeneralSettings.swift */,
+				505F45642E96961900418105 /* CaturesSettings.swift */,
+				505F45662E96962300418105 /* ControlsSettings.swift */,
+				505F45682E96963300418105 /* DevicesSettings.swift */,
+				505F456B2E96989C00418105 /* RomSettings.swift */,
+				505F456D2E9698AF00418105 /* HardwareSettings.swift */,
+				505F456F2E9698BE00418105 /* PeripheralsSettings.swift */,
+				505F45712E9698CE00418105 /* PerformanceSettings.swift */,
+				505F45732E9698DD00418105 /* CompatibilitySettings.swift */,
+				505F45752E9698EA00418105 /* AudioSettings.swift */,
+				505F45772E9698F300418105 /* VideoSettings.swift */,
+				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		50650F362DF087C2008AD660 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
@@ -1972,9 +2046,7 @@
 		50769B8724BB1A7A006FE743 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				50769B8924BB1B87006FE743 /* Configuration.swift */,
 				506A724921C0341900DA0AC3 /* ConfigurationController.swift */,
-				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
 				505D492721C155DD00A7C575 /* RomConf.swift */,
 				5002FA7A21C2650600DA4BBC /* HardwareConf.swift */,
 				505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */,
@@ -1988,7 +2060,6 @@
 		50769B8824BB1B38006FE743 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				5009CF3224C0B8EF00F674FF /* Preferences.swift */,
 				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
 				506B13C124C1C40600814BB0 /* PreferencesController.swift */,
 				5002FA7E21C2653600DA4BBC /* GeneralPrefs.swift */,
@@ -2189,6 +2260,7 @@
 				50F55DCB0F28EC010040592B /* MainMenu.xib */,
 				50F55DA30F28EADC0040592B /* MyDocument.xib */,
 				50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */,
+				505F45532E96940700418105 /* Settings.storyboard */,
 				506A724721C033EF00DA0AC3 /* Configuration.xib */,
 				50D3092124C714A200B92563 /* Inspector.xib */,
 				503C1DD024FC10F400D91141 /* SnapshotViewer.xib */,
@@ -2396,6 +2468,7 @@
 				50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */,
 				5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */,
 				507E7A9E24FB864E00AB433C /* ScreenshotViewer.xib in Resources */,
+				505F45542E96940700418105 /* Settings.storyboard in Resources */,
 				5020434C1EE71B47006C3FD3 /* (null) in Resources */,
 				5051A15C1B885E1B00CBFB5A /* 1541_door_open_1.aiff in Resources */,
 				50D3092224C714A200B92563 /* Inspector.xib in Resources */,
@@ -2602,6 +2675,7 @@
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
 				506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */,
 				50BD641D2C04C05A007CD347 /* Heatmap.cpp in Sources */,
+				505F45592E96955C00418105 /* SettingsWindowController.swift in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
 				501C46BE2965C54200C4B27B /* StrWriter.h in Sources */,
@@ -2616,6 +2690,7 @@
 				50ABD2902DD8907000456555 /* Dashboard.swift in Sources */,
 				50ABD2912DD8907000456555 /* DashboardPanel.swift in Sources */,
 				50ABD2922DD8907000456555 /* DashboardViewController.swift in Sources */,
+				505F45672E96962A00418105 /* ControlsSettings.swift in Sources */,
 				50ABD2932DD8907000456555 /* WaveformPanel.swift in Sources */,
 				50A1948A2BDA5EED0046849E /* VICIIBase.cpp in Sources */,
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
@@ -2633,9 +2708,11 @@
 				50A5B7CF2C74E44C00D6DDAD /* RemoteManager.cpp in Sources */,
 				5085D89D25B848940043B15C /* Joystick.cpp in Sources */,
 				500E2D662824EC140015C46F /* CartridgeInspector.swift in Sources */,
+				505F45722E9698D300418105 /* PerformanceSettings.swift in Sources */,
 				500E34172615C40D006A38DA /* Parser.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
+				505F45742E9698E500418105 /* CompatibilitySettings.swift in Sources */,
 				504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */,
 				506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */,
 				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,
@@ -2664,6 +2741,7 @@
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
 				50726F31295C27470031F2F5 /* EventTableView.swift in Sources */,
 				5007E1E826A70170000E7344 /* ParallelCable.cpp in Sources */,
+				505F455B2E96957200418105 /* SettingsViewController.swift in Sources */,
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
 				50A22A252618723200C9FB1E /* Canvas.swift in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
@@ -2671,6 +2749,7 @@
 				5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */,
 				5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
+				505F45692E96963B00418105 /* DevicesSettings.swift in Sources */,
 				500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */,
 				50157EEB28256035000E9DDD /* Config.swift in Sources */,
 				508C1E632C0B5EE80097473C /* KeyboardBase.cpp in Sources */,
@@ -2696,6 +2775,7 @@
 				50A22A202618720100C9FB1E /* SplashScreen.swift in Sources */,
 				50BB3E952B7A426800B2D87B /* CmdQueue.cpp in Sources */,
 				50EFB0C42C18D6200013B73C /* Dumpable.cpp in Sources */,
+				505F455D2E96958200418105 /* SettingsSplitViewController.swift in Sources */,
 				50FF1FCB26BAB3DA0061E5CE /* DropZone.swift in Sources */,
 				5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */,
 				505A132F2C3503EB00FF8D2C /* UserPortBase.cpp in Sources */,
@@ -2704,6 +2784,7 @@
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
 				504C439124AF29AC00E69CAE /* VICIIMemory.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
+				505F456C2E9698A200418105 /* RomSettings.swift in Sources */,
 				505184DE24F23484002C6124 /* MyControllerSnapshots.swift in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
 				50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */,
@@ -2744,7 +2825,9 @@
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				5058A922281D10B100C223C9 /* VolumeInspector.swift in Sources */,
+				505F45782E9698F600418105 /* VideoSettings.swift in Sources */,
 				50A5B7D32C74E44C00D6DDAD /* RshServer.cpp in Sources */,
+				505F45652E96961F00418105 /* CaturesSettings.swift in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
 				50891C012652380A0004AC1B /* VICIISprites.cpp in Sources */,
 				50DF719425021FCA00953E2E /* Keycap.swift in Sources */,
@@ -2781,6 +2864,7 @@
 				504C437F24AF29AC00E69CAE /* Memory.cpp in Sources */,
 				504C43AA24AF29AC00E69CAE /* TOD.cpp in Sources */,
 				50726F2B295B61C50031F2F5 /* DebuggerConsole.cpp in Sources */,
+				505F45612E9695F800418105 /* SidebarViewController.swift in Sources */,
 				50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */,
 				500A52B12DD4F93C00B06D23 /* BusPanel.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */,
@@ -2813,6 +2897,7 @@
 				504C436D24AF29AC00E69CAE /* Rex.cpp in Sources */,
 				5058A920281D109F00C223C9 /* DiskInspector.swift in Sources */,
 				508C1E532C0B20610097473C /* ControlPortBase.cpp in Sources */,
+				505F456E2E9698B700418105 /* HardwareSettings.swift in Sources */,
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
 				50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */,
@@ -2821,14 +2906,17 @@
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
 				50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */,
+				505F45762E9698EF00418105 /* AudioSettings.swift in Sources */,
 				505A132B2C3503B400FF8D2C /* UserPort.cpp in Sources */,
 				50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
+				505F457E2E96A42100418105 /* CGRect.swift in Sources */,
 				50BD64112C03396D007CD347 /* DriveBase.cpp in Sources */,
 				508C1E562C0B20760097473C /* ExpansionPortBase.cpp in Sources */,
 				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
+				505F45702E9698C600418105 /* PeripheralsSettings.swift in Sources */,
 				50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				504C438224AF29AC00E69CAE /* CoreObject.cpp in Sources */,
@@ -2855,6 +2943,7 @@
 				500375062C23F26000979A1B /* C64Base.cpp in Sources */,
 				50461BBE26B522450019CEDF /* Thread.cpp in Sources */,
 				50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */,
+				505F45632E96961500418105 /* GeneralSettings.swift in Sources */,
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
 				5016F02829574FDF00F2063B /* Reu.cpp in Sources */,
 				50A5B7D12C74E44C00D6DDAD /* RemoteServer.cpp in Sources */,
@@ -2871,6 +2960,7 @@
 				50F420CA250BA3460043DE56 /* Colors.cpp in Sources */,
 				50650F3E2DF094A3008AD660 /* Compression.cpp in Sources */,
 				50995F2A24DBCDE400F40713 /* PeddleDebugger.cpp in Sources */,
+				505F45562E96953F00418105 /* SettingsOutlineView.swift in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoConf.swift in Sources */,

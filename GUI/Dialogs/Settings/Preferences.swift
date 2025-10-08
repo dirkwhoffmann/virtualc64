@@ -20,14 +20,6 @@ class Preferences {
     // General
     //
 
-    // Screenshots
-    var screenshotSource = 0
-    var screenshotTarget = NSBitmapImageRep.FileType.png
-    var screenshotTargetIntValue: Int {
-        get { return Int(screenshotTarget.rawValue) }
-        set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
-    }
-        
     // Fullscreen
     var keepAspectRatio = false
     var exitOnEsc = false
@@ -37,6 +29,43 @@ class Preferences {
     var closeWithoutAsking = false
     var pauseInBackground = false
 
+    //
+    // Captures
+    //
+
+    // Snapshots
+    var snapshotAutoDelete: Bool = true
+
+    // Screenshots
+    var screenshotFormat = NSBitmapImageRep.FileType.png
+    var screenshotFormatIntValue: Int {
+        get { return Int(screenshotFormat.rawValue) }
+        set { screenshotFormat = NSBitmapImageRep.FileType(rawValue: UInt(newValue)) ?? screenshotFormat }
+    }
+
+    var screenshotSource = ScreenshotSource.emulator
+    var screenshotSourceIntValue: Int {
+        get { return Int(screenshotSource.rawValue) }
+        set { screenshotSource = ScreenshotSource(rawValue: newValue) ?? screenshotSource }
+    }
+    var screenshotCutout = ScreenshotCutout.visible
+    var screenshotCutoutIntValue: Int {
+        get { return Int(screenshotCutout.rawValue) }
+        set { screenshotCutout = ScreenshotCutout(rawValue: newValue) ?? screenshotCutout }
+    }
+    var screenshotWidth = 1200 {
+        didSet {
+            screenshotWidth = max(screenshotWidth, 0)
+            screenshotWidth = min(screenshotWidth, TextureSize.original.width)
+        }
+    }
+    var screenshotHeight = 900 {
+        didSet {
+            screenshotHeight = max(screenshotHeight, 0)
+            screenshotHeight = min(screenshotHeight, TextureSize.original.height)
+        }
+    }
+    
     //
     // Controls
     //

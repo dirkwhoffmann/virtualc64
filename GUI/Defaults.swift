@@ -280,10 +280,6 @@ struct Keys {
     
     struct Gen {
 
-        // Screenshots
-        static let screenshotSource       = "General.ScreenshotSource"
-        static let screenshotTarget       = "General.ScreenshotTarget"
-
         // Fullscreen
         static let keepAspectRatio        = "General.FullscreenKeepAspectRatio"
         static let exitOnEsc              = "General.FullscreenExitOnEsc"
@@ -301,10 +297,6 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        // Screenshots
-        register(Keys.Gen.screenshotSource, 0)
-        register(Keys.Gen.screenshotTarget, NSBitmapImageRep.FileType.png.rawValue)
-
         // Fullscreen
         register(Keys.Gen.keepAspectRatio, false)
         register(Keys.Gen.exitOnEsc, true)
@@ -319,10 +311,7 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        let keys = [ Keys.Gen.screenshotSource,
-                     Keys.Gen.screenshotTarget,
-
-                     Keys.Gen.keepAspectRatio,
+        let keys = [ Keys.Gen.keepAspectRatio,
                      Keys.Gen.exitOnEsc,
 
                      Keys.Gen.ejectWithoutAsking,
@@ -341,9 +330,6 @@ extension Preferences {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        defaults.set(Keys.Gen.screenshotSource, screenshotSource)
-        defaults.set(Keys.Gen.screenshotTarget, screenshotTargetIntValue)
-
         defaults.set(Keys.Gen.keepAspectRatio, keepAspectRatio)
         defaults.set(Keys.Gen.exitOnEsc, exitOnEsc)
 
@@ -359,15 +345,102 @@ extension Preferences {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
-        screenshotSource = defaults.int(Keys.Gen.screenshotSource)
-        screenshotTargetIntValue = defaults.int(Keys.Gen.screenshotTarget)
-
         keepAspectRatio = defaults.bool(Keys.Gen.keepAspectRatio)
         exitOnEsc = defaults.bool(Keys.Gen.exitOnEsc)
 
         ejectWithoutAsking = defaults.bool(Keys.Gen.ejectWithoutAsking)
         closeWithoutAsking = defaults.bool(Keys.Gen.closeWithoutAsking)
         pauseInBackground = defaults.bool(Keys.Gen.pauseInBackground)
+    }
+}
+
+//
+// User defaults (Captures)
+//
+
+@MainActor
+extension Keys {
+
+    struct Cap {
+
+        // Snapshots
+        static let snapshotAutoDelete     = "Cap.SnapshotAutoDelete"
+
+        // Screenshots
+        static let screenshotFormat       = "Cap.ScreenshotFormat"
+        static let screenshotSource       = "Cap.ScreenshotSource"
+        static let screenshotCutout       = "Cap.ScreenshotCutout"
+        static let screenshotWidth        = "Cap.ScreenshotWidth"
+        static let screenshotHeight       = "Cap.ScreenshotHeight"
+    }
+}
+
+@MainActor
+extension DefaultsProxy {
+
+    func registerCapturesUserDefaults() {
+
+        debug(.defaults)
+
+        // Snapshots
+        register(Keys.Cap.snapshotAutoDelete, true)
+
+        // Screenshots
+        register(Keys.Cap.screenshotFormat, NSBitmapImageRep.FileType.png.rawValue)
+        register(Keys.Cap.screenshotSource, 0)
+        register(Keys.Cap.screenshotCutout, 0)
+        register(Keys.Cap.screenshotWidth, 1200)
+        register(Keys.Cap.screenshotHeight, 900)
+    }
+
+    func removeCapturesUserDefaults() {
+
+        debug(.defaults)
+
+        let keys = [ Keys.Cap.snapshotAutoDelete,
+
+                     Keys.Cap.screenshotFormat,
+                     Keys.Cap.screenshotSource,
+                     Keys.Cap.screenshotCutout,
+                     Keys.Cap.screenshotWidth,
+                     Keys.Cap.screenshotHeight,
+        ]
+
+        for key in keys { removeKey(key) }
+    }
+}
+
+@MainActor
+extension Preferences {
+
+    func saveCapturesUserDefaults() {
+
+        debug(.defaults)
+        let defaults = EmulatorProxy.defaults!
+
+        defaults.set(Keys.Cap.snapshotAutoDelete, snapshotAutoDelete)
+
+        defaults.set(Keys.Cap.screenshotFormat, screenshotFormatIntValue)
+        defaults.set(Keys.Cap.screenshotSource, screenshotSourceIntValue)
+        defaults.set(Keys.Cap.screenshotCutout, screenshotCutoutIntValue)
+        defaults.set(Keys.Cap.screenshotWidth, screenshotWidth)
+        defaults.set(Keys.Cap.screenshotHeight, screenshotHeight)
+
+        defaults.save()
+    }
+
+    func applyCapturesUserDefaults() {
+
+        debug(.defaults)
+        let defaults = EmulatorProxy.defaults!
+
+        snapshotAutoDelete = defaults.bool(Keys.Cap.snapshotAutoDelete)
+ 
+        screenshotFormatIntValue = defaults.int(Keys.Cap.screenshotFormat)
+        screenshotSourceIntValue = defaults.int(Keys.Cap.screenshotSource)
+        screenshotCutoutIntValue = defaults.int(Keys.Cap.screenshotCutout)
+        screenshotWidth = defaults.int(Keys.Cap.screenshotWidth)
+        screenshotHeight = defaults.int(Keys.Cap.screenshotHeight)
     }
 }
 

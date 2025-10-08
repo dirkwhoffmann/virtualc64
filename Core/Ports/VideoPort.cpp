@@ -148,6 +148,64 @@ VideoPort::buffersWillSwap()
     }
 }
 
+void
+VideoPort::findInnerArea(isize &x1, isize &x2, isize &y1, isize &y2) const
+{
+    x1 = 0;
+    x2 = Tex::width - 1;
+    y1 = 0;
+    y2 = Tex::height - 1;
+
+    /*
+    auto &buffer = denise.pixelEngine.getStableBuffer();
+
+    // Start with a large box
+    x1 = 4 * HBLANK_CNT;
+    x2 = 4 * PAL::HPOS_MAX;
+    y1 = agnus.isPAL() ? PAL::VBLANK_CNT : NTSC::VBLANK_CNT;
+    y2 = agnus.isPAL() ? PAL::VPOS_CNT_SF : NTSC::VPOS_CNT_SF;
+
+    // Get a reference pixel from the border
+    auto border = buffer.pixels[y1 * HPIXELS + x1];
+
+    // Shrink the box as much as possible
+    auto emptyRow = [&](isize row) {
+
+        for (isize x = x1; x < x2; x++) {
+            if (buffer.pixels[row * HPIXELS + x] != border) { return false; }
+        }
+        return true;
+    };
+    auto emptyCol = [&](isize col) {
+
+        for (isize y = y1; y < y2; y++) {
+            if (buffer.pixels[y * HPIXELS + col] != border) { return false; }
+        }
+        return true;
+    };
+    while (x2 > 0  && emptyCol(x2)) { x2 -= 1; }
+    while (x1 < x2 && emptyCol(x1)) { x1 += 1; }
+    while (y2 > 0  && emptyRow(y2)) { y2 -= 1; }
+    while (y1 < y2 && emptyRow(y1)) { y1 += 1; }
+    // printf("Shrinked box: (%ld,%ld) - (%ld,%ld)\n", x1, y1, x2, y2);
+
+    // Return a zero rect if the box is invalid
+    if (x2 <= x1 || y2 <= y1) { x1 = x2 = y1 = y2 = 0; }
+    */
+}
+
+void
+VideoPort::findInnerAreaNormalized(double &x1, double &x2, double &y1, double &y2) const
+{
+    isize ix1, ix2, iy1, iy2;
+    findInnerArea(ix1, ix2, iy1, iy2);
+
+    x1 = double(ix1) / (Tex::width - 1);
+    x2 = double(ix2) / (Tex::width - 1);
+    y1 = double(iy1) / (Tex::height - 1);
+    y2 = double(iy2) / (Tex::height - 1);
+}
+
 u32 *
 VideoPort::getNoiseTexture() const
 {
