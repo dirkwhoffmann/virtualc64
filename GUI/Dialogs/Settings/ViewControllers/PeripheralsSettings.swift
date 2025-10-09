@@ -10,43 +10,43 @@
 class PeripheralsSettingsViewController: SettingsViewController {
 
     // Drive
-    @IBOutlet weak var perDrive8Connect: NSButton!
-    @IBOutlet weak var perDrive8Config: NSPopUpButton!
-    @IBOutlet weak var perDrive8Type: NSPopUpButton!
-    @IBOutlet weak var perDrive8Ram: NSPopUpButton!
-    @IBOutlet weak var perDrive8Cable: NSPopUpButton!
-    @IBOutlet weak var perDrive9Connect: NSButton!
-    @IBOutlet weak var perDrive9Config: NSPopUpButton!
-    @IBOutlet weak var perDrive9Type: NSPopUpButton!
-    @IBOutlet weak var perDrive9Ram: NSPopUpButton!
-    @IBOutlet weak var perDrive9Cable: NSPopUpButton!
+    @IBOutlet weak var drive8Connect: NSButton!
+    @IBOutlet weak var drive8Config: NSPopUpButton!
+    @IBOutlet weak var drive8Type: NSPopUpButton!
+    @IBOutlet weak var drive8Ram: NSPopUpButton!
+    @IBOutlet weak var drive8Cable: NSPopUpButton!
+    @IBOutlet weak var drive9Connect: NSButton!
+    @IBOutlet weak var drive9Config: NSPopUpButton!
+    @IBOutlet weak var drive9Type: NSPopUpButton!
+    @IBOutlet weak var drive9Ram: NSPopUpButton!
+    @IBOutlet weak var drive9Cable: NSPopUpButton!
 
     // Parallel cable
-    @IBOutlet weak var perParCableType: NSPopUpButton!
+    @IBOutlet weak var parCableType: NSPopUpButton!
 
     // Datasette
-    @IBOutlet weak var perDatasetteConnect: NSButton!
-    @IBOutlet weak var perDatasetteModel: NSPopUpButton!
+    @IBOutlet weak var datasetteConnect: NSButton!
+    @IBOutlet weak var datasetteModel: NSPopUpButton!
 
     // Ports
-    @IBOutlet weak var perControlPort1: NSPopUpButton!
-    @IBOutlet weak var perControlPort2: NSPopUpButton!
+    @IBOutlet weak var controlPort1: NSPopUpButton!
+    @IBOutlet weak var controlPort2: NSPopUpButton!
 
     // Mouse
-    @IBOutlet weak var perMouseModel: NSPopUpButton!
-    @IBOutlet weak var perPaddleOrientation: NSPopUpButton!
-    @IBOutlet weak var perPaddleOrientationText: NSTextField!
+    @IBOutlet weak var mouseModel: NSPopUpButton!
+    @IBOutlet weak var paddleOrientation: NSPopUpButton!
+    @IBOutlet weak var paddleOrientationText: NSTextField!
 
     // Joystick
-    @IBOutlet weak var perAutofire: NSButton!
-    @IBOutlet weak var perAutofireText: NSTextField!
-    @IBOutlet weak var perAutofireFrequency: NSSlider!
-    @IBOutlet weak var perAutofireFrequencyText1: NSTextField!
-    @IBOutlet weak var perAutofireFrequencyText2: NSTextField!
-    @IBOutlet weak var perAutofireCease: NSButton!
-    @IBOutlet weak var perAutofireCeaseText: NSTextField!
-    @IBOutlet weak var perAutofireBullets: NSTextField!
-    @IBOutlet weak var perAutofireBulletsText: NSTextField!
+    @IBOutlet weak var autofire: NSButton!
+    @IBOutlet weak var autofireText: NSTextField!
+    @IBOutlet weak var autofireFrequency: NSSlider!
+    @IBOutlet weak var autofireFrequencyText1: NSTextField!
+    @IBOutlet weak var autofireFrequencyText2: NSTextField!
+    @IBOutlet weak var autofireCease: NSButton!
+    @IBOutlet weak var autofireCeaseText: NSTextField!
+    @IBOutlet weak var autofireBullets: NSTextField!
+    @IBOutlet weak var autofireBulletsText: NSTextField!
 
     override var showLock: Bool { true }
 
@@ -71,64 +71,64 @@ class PeripheralsSettingsViewController: SettingsViewController {
         let enable9 = config.drive9Connected && !config.drive9AutoConf
 
         // First drive
-        perDrive8Connect.state = config.drive8Connected ? .on : .off
-        perDrive8Config.selectItem(withTag: config.drive8AutoConf ? 0 : 1)
-        perDrive8Type.selectItem(withTag: config.drive8Type)
-        perDrive8Ram.selectItem(withTag: config.drive8Ram)
-        perDrive8Cable.selectItem(withTag: config.drive8ParCable)
-        perDrive8Config.isEnabled = config.drive8Connected
-        perDrive8Type.isEnabled = enable8
-        perDrive8Ram.isEnabled = enable8
-        perDrive8Cable.isEnabled = enable8
+        drive8Connect.state = config.drive8Connected ? .on : .off
+        drive8Config.selectItem(withTag: config.drive8AutoConf ? 0 : 1)
+        drive8Type.selectItem(withTag: config.drive8Type)
+        drive8Ram.selectItem(withTag: config.drive8Ram)
+        drive8Cable.selectItem(withTag: config.drive8ParCable)
+        drive8Config.isEnabled = config.drive8Connected
+        drive8Type.isEnabled = enable8
+        drive8Ram.isEnabled = enable8
+        drive8Cable.isEnabled = enable8
 
         // Second drive
-        perDrive9Connect.state = config.drive9Connected ? .on : .off
-        perDrive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
-        perDrive9Type.selectItem(withTag: config.drive9Type)
-        perDrive9Ram.selectItem(withTag: config.drive9Ram)
-        perDrive9Cable.selectItem(withTag: config.drive9ParCable)
-        perDrive9Config.isEnabled = config.drive9Connected
-        perDrive9Type.isEnabled = enable9
-        perDrive9Ram.isEnabled = enable9
-        perDrive9Cable.isEnabled = enable9
+        drive9Connect.state = config.drive9Connected ? .on : .off
+        drive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
+        drive9Type.selectItem(withTag: config.drive9Type)
+        drive9Ram.selectItem(withTag: config.drive9Ram)
+        drive9Cable.selectItem(withTag: config.drive9ParCable)
+        drive9Config.isEnabled = config.drive9Connected
+        drive9Type.isEnabled = enable9
+        drive9Ram.isEnabled = enable9
+        drive9Cable.isEnabled = enable9
 
         // Datasette
-        perDatasetteModel.selectItem(withTag: config.datasetteModel)
-        perDatasetteConnect.state = config.datasetteConnected ? .on : .off
-        perDrive9Connect.state = config.drive9Connected ? .on : .off
-        perDrive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
-        perDrive9Type.selectItem(withTag: config.drive9Type)
-        perDatasetteModel.isEnabled = config.datasetteConnected
+        datasetteModel.selectItem(withTag: config.datasetteModel)
+        datasetteConnect.state = config.datasetteConnected ? .on : .off
+        drive9Connect.state = config.drive9Connected ? .on : .off
+        drive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
+        drive9Type.selectItem(withTag: config.drive9Type)
+        datasetteModel.isEnabled = config.datasetteConnected
 
         // Ports
-        gamePadManager?.refresh(popup: perControlPort1, hide: true)
-        gamePadManager?.refresh(popup: perControlPort2, hide: true)
-        perControlPort1.selectItem(withTag: config.gameDevice1)
-        perControlPort2.selectItem(withTag: config.gameDevice2)
+        gamePadManager?.refresh(popup: controlPort1, hide: true)
+        gamePadManager?.refresh(popup: controlPort2, hide: true)
+        controlPort1.selectItem(withTag: config.gameDevice1)
+        controlPort2.selectItem(withTag: config.gameDevice2)
 
         // Mouse
         let paddle = config.mouseModel >= 3
-        perMouseModel.selectItem(withTag: config.mouseModel)
-        perPaddleOrientation.selectItem(withTag: config.paddleOrientation)
-        update(perPaddleOrientation, enable: paddle)
-        update(perPaddleOrientationText, enable: paddle)
+        mouseModel.selectItem(withTag: config.mouseModel)
+        paddleOrientation.selectItem(withTag: config.paddleOrientation)
+        update(paddleOrientation, enable: paddle)
+        update(paddleOrientationText, enable: paddle)
 
         // Joysticks
         let enable = config.autofire
-        perAutofire.state = enable ? .on : .off
-        perAutofireCease.state = config.autofireBursts ? .on : .off
-        perAutofireBullets.integerValue = config.autofireBullets
-        perAutofireFrequency.integerValue = config.autofireFrequency
-        update(perAutofireFrequency, enable: enable)
-        update(perAutofireFrequencyText1, enable: enable)
-        update(perAutofireFrequencyText2, enable: enable)
-        update(perAutofireCease, enable: enable)
-        update(perAutofireCeaseText, enable: enable)
-        update(perAutofireBullets, enable: enable && perAutofireCease.state == .on)
-        update(perAutofireBulletsText, enable: enable && perAutofireCease.state == .on)
+        autofire.state = enable ? .on : .off
+        autofireCease.state = config.autofireBursts ? .on : .off
+        autofireBullets.integerValue = config.autofireBullets
+        autofireFrequency.integerValue = config.autofireFrequency
+        update(autofireFrequency, enable: enable)
+        update(autofireFrequencyText1, enable: enable)
+        update(autofireFrequencyText2, enable: enable)
+        update(autofireCease, enable: enable)
+        update(autofireCeaseText, enable: enable)
+        update(autofireBullets, enable: enable && autofireCease.state == .on)
+        update(autofireBulletsText, enable: enable && autofireCease.state == .on)
     }
 
-    @IBAction func perDriveConnectAction(_ sender: NSButton!) {
+    @IBAction func driveConnectAction(_ sender: NSButton!) {
 
         switch sender.tag {
         case 8: config?.drive8Connected = sender.state == .on
@@ -137,7 +137,7 @@ class PeripheralsSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func perDriveConfigAction(_ sender: NSPopUpButton!) {
+    @IBAction func driveConfigAction(_ sender: NSPopUpButton!) {
 
         switch sender.tag {
         case 8: config?.drive8AutoConf = sender.selectedTag() == 0
@@ -146,7 +146,7 @@ class PeripheralsSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func perDriveTypeAction(_ sender: NSPopUpButton!) {
+    @IBAction func driveTypeAction(_ sender: NSPopUpButton!) {
 
         switch sender.tag {
         case 8: config?.drive8Type = sender.selectedTag()
@@ -155,7 +155,7 @@ class PeripheralsSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func perDriveRamAction(_ sender: NSPopUpButton!) {
+    @IBAction func driveRamAction(_ sender: NSPopUpButton!) {
 
         switch sender.tag {
         case 8: config?.drive8Ram = sender.selectedTag()
@@ -164,7 +164,7 @@ class PeripheralsSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func perDriveCableAction(_ sender: NSPopUpButton!) {
+    @IBAction func driveCableAction(_ sender: NSPopUpButton!) {
 
         switch sender.tag {
         case 8: config?.drive8ParCable = sender.selectedTag()
@@ -173,17 +173,17 @@ class PeripheralsSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func perDatasetteConnectAction(_ sender: NSButton!) {
+    @IBAction func datasetteConnectAction(_ sender: NSButton!) {
 
         config?.datasetteConnected = sender.state == .on
     }
 
-    @IBAction func perDatasetteModelAction(_ sender: NSPopUpButton!) {
+    @IBAction func datasetteModelAction(_ sender: NSPopUpButton!) {
 
         config?.datasetteModel = sender.selectedTag()
     }
 
-    @IBAction func perControlPortAction(_ sender: NSPopUpButton!) {
+    @IBAction func controlPortAction(_ sender: NSPopUpButton!) {
 
         switch sender.tag {
         case 1: config?.gameDevice1 = sender.selectedTag()
@@ -192,32 +192,32 @@ class PeripheralsSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func perMouseModelAction(_ sender: NSPopUpButton!) {
+    @IBAction func mouseModelAction(_ sender: NSPopUpButton!) {
 
         config?.mouseModel = sender.selectedTag()
     }
 
-    @IBAction func perPaddleOrientationAction(_ sender: NSPopUpButton!) {
+    @IBAction func paddleOrientationAction(_ sender: NSPopUpButton!) {
 
         config?.paddleOrientation = sender.selectedTag()
     }
 
-    @IBAction func perAutofireAction(_ sender: NSButton!) {
+    @IBAction func autofireAction(_ sender: NSButton!) {
 
         config?.autofire = (sender.state == .on)
     }
 
-    @IBAction func perAutofireCeaseAction(_ sender: NSButton!) {
+    @IBAction func autofireCeaseAction(_ sender: NSButton!) {
 
         config?.autofireBursts = (sender.state == .on)
     }
 
-    @IBAction func perAutofireBulletsAction(_ sender: NSTextField!) {
+    @IBAction func autofireBulletsAction(_ sender: NSTextField!) {
 
         config?.autofireBullets = sender.integerValue
     }
 
-    @IBAction func perAutofireFrequencyAction(_ sender: NSSlider!) {
+    @IBAction func autofireFrequencyAction(_ sender: NSSlider!) {
 
         config?.autofireFrequency = sender.integerValue
     }

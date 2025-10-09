@@ -37,7 +37,7 @@
                             <menuItem isSeparatorItem="YES" id="tOL-V1-ZdE"/>
                             <menuItem title="Settings..." keyEquivalent="," id="3VY-9N-OZs">
                                 <connections>
-                                    <action selector="preferencesAction:" target="-1" id="WOg-iI-awC"/>
+                                    <action selector="settingsAction:" target="-1" id="04A-hd-p6m"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="202">

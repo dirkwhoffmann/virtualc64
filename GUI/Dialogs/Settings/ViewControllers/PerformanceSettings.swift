@@ -10,31 +10,28 @@
 class PerformanceSettingsViewController: SettingsViewController {
 
     // Warp
-    @IBOutlet weak var comWarpMode: NSPopUpButton!
-    @IBOutlet weak var comWarpBoot: NSTextField!
+    @IBOutlet weak var warpMode: NSPopUpButton!
+    @IBOutlet weak var warpBoot: NSTextField!
 
     // Threading
-    @IBOutlet weak var prfVSync: NSButton!
-    @IBOutlet weak var prfSpeedBoost: NSSlider!
-    @IBOutlet weak var prfSpeedBoostInfo: NSTextField!
-    @IBOutlet weak var prfRunAheadLabel: NSTextField!
-    @IBOutlet weak var prfRunAhead: NSSlider!
-    @IBOutlet weak var prfRunAheadInfo: NSTextField!
+    @IBOutlet weak var vSync: NSButton!
+    @IBOutlet weak var speedBoost: NSSlider!
+    @IBOutlet weak var speedBoostInfo: NSTextField!
+    @IBOutlet weak var runAheadLabel: NSTextField!
+    @IBOutlet weak var runAhead: NSSlider!
+    @IBOutlet weak var runAheadInfo: NSTextField!
 
     // Boosters
-    @IBOutlet weak var comDrivePowerSave: NSButton!
-    @IBOutlet weak var comViciiPowerSave: NSButton!
-    @IBOutlet weak var comSidPowerSave: NSButton!
+    @IBOutlet weak var drivePowerSave: NSButton!
+    @IBOutlet weak var viciiPowerSave: NSButton!
+    @IBOutlet weak var sidPowerSave: NSButton!
 
     // Compression
-    @IBOutlet weak var prfSnapCompressor: NSPopUpButton!
+    @IBOutlet weak var snapCompressor: NSPopUpButton!
 
     // Collision detection
-    @IBOutlet weak var comSsCollisions: NSButton!
-    @IBOutlet weak var comSbCollisions: NSButton!
-
-    // Buttons
-    @IBOutlet weak var comPowerButton: NSButton!
+    @IBOutlet weak var ssCollisions: NSButton!
+    @IBOutlet weak var sbCollisions: NSButton!
 
     override var showLock: Bool { true }
 
@@ -48,50 +45,50 @@ class PerformanceSettingsViewController: SettingsViewController {
         guard let config = config else { return }
 
         // Warp
-        comWarpMode.selectItem(withTag: config.warpMode)
-        comWarpBoot.integerValue = config.warpBoot
+        warpMode.selectItem(withTag: config.warpMode)
+        warpBoot.integerValue = config.warpBoot
 
         // Threading
-        let speedBoost = config.speedBoost
-        let runAhead = config.runAhead
-        prfVSync.state = config.vsync ? .on : .off
-        prfSpeedBoost.integerValue = speedBoost
-        prfSpeedBoostInfo.stringValue = "\(speedBoost) %"
-        prfSpeedBoost.isEnabled = !config.vsync
-        prfSpeedBoostInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
-        prfRunAheadLabel.stringValue = runAhead >= 0 ? "Run ahead:" : "Run behind:"
-        prfRunAhead.integerValue = runAhead
-        prfRunAheadInfo.stringValue = "\(abs(runAhead)) frame" + (abs(runAhead) == 1 ? "" : "s")
+        let boost = config.speedBoost
+        let ahead = config.runAhead
+        vSync.state = config.vsync ? .on : .off
+        speedBoost.integerValue = boost
+        speedBoostInfo.stringValue = "\(boost) %"
+        speedBoost.isEnabled = !config.vsync
+        speedBoostInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
+        runAheadLabel.stringValue = ahead >= 0 ? "Run ahead:" : "Run behind:"
+        runAhead.integerValue = ahead
+        runAheadInfo.stringValue = "\(abs(ahead)) frame" + (abs(ahead) == 1 ? "" : "s")
 
         // Boosters
-        comDrivePowerSave.state = config.drive8PowerSave ? .on : .off
-        comViciiPowerSave.state = config.viciiPowerSave ? .on : .off
-        comSidPowerSave.state = config.sidPowerSave ? .on : .off
+        drivePowerSave.state = config.drive8PowerSave ? .on : .off
+        viciiPowerSave.state = config.viciiPowerSave ? .on : .off
+        sidPowerSave.state = config.sidPowerSave ? .on : .off
 
         // Collision detection
-        comSsCollisions.state = config.ssCollisions ? .on : .off
-        comSbCollisions.state = config.sbCollisions ? .on : .off
+        ssCollisions.state = config.ssCollisions ? .on : .off
+        sbCollisions.state = config.sbCollisions ? .on : .off
 
         // Compression
-        prfSnapCompressor.selectItem(withTag: config.snapCompressor)
+        snapCompressor.selectItem(withTag: config.snapCompressor)
     }
 
     //
     // Action methods (Boosters)
     //
 
-    @IBAction func comDrivePowerSaveAction(_ sender: NSButton!) {
+    @IBAction func drivePowerSaveAction(_ sender: NSButton!) {
 
         config?.drive8PowerSave = sender.state == .on
         config?.drive9PowerSave = sender.state == .on
     }
 
-    @IBAction func comViciiPowerSaveAction(_ sender: NSButton!) {
+    @IBAction func viciiPowerSaveAction(_ sender: NSButton!) {
 
         config?.viciiPowerSave = sender.state == .on
     }
 
-    @IBAction func comSidPowerSaveAction(_ sender: NSButton!) {
+    @IBAction func sidPowerSaveAction(_ sender: NSButton!) {
 
         config?.sidPowerSave = sender.state == .on
     }
@@ -100,12 +97,12 @@ class PerformanceSettingsViewController: SettingsViewController {
     // Action methods (Collisions)
     //
 
-    @IBAction func comSsCollisionsAction(_ sender: NSButton!) {
+    @IBAction func ssCollisionsAction(_ sender: NSButton!) {
 
         config?.ssCollisions = sender.state == .on
     }
 
-    @IBAction func comSbCollisionsAction(_ sender: NSButton!) {
+    @IBAction func sbCollisionsAction(_ sender: NSButton!) {
 
         config?.sbCollisions = sender.state == .on
     }
@@ -114,12 +111,12 @@ class PerformanceSettingsViewController: SettingsViewController {
     // Action methods (Warp)
     //
 
-    @IBAction func comWarpModeAction(_ sender: NSPopUpButton!) {
+    @IBAction func warpModeAction(_ sender: NSPopUpButton!) {
 
         config?.warpMode = sender.selectedTag()
     }
 
-    @IBAction func comWarpBootAction(_ sender: NSTextField!) {
+    @IBAction func warpBootAction(_ sender: NSTextField!) {
 
         config?.warpBoot = sender.integerValue
     }
@@ -128,17 +125,17 @@ class PerformanceSettingsViewController: SettingsViewController {
     // Action methods (Threading)
     //
 
-    @IBAction func prfVSyncAction(_ sender: NSButton!) {
+    @IBAction func vSyncAction(_ sender: NSButton!) {
 
         config?.vsync = sender.state == .on
     }
 
-    @IBAction func prfSpeedBoostAction(_ sender: NSSlider!) {
+    @IBAction func speedBoostAction(_ sender: NSSlider!) {
 
         config?.speedBoost = sender.integerValue
     }
 
-    @IBAction func prfRunAheadAction(_ sender: NSSlider!) {
+    @IBAction func runAheadAction(_ sender: NSSlider!) {
 
         config?.runAhead = sender.integerValue
     }
@@ -147,7 +144,7 @@ class PerformanceSettingsViewController: SettingsViewController {
     // Action methods (Compressor)
     //
 
-    @IBAction func prfSnapCompressorAction(_ sender: NSPopUpButton!) {
+    @IBAction func snapCompressorAction(_ sender: NSPopUpButton!) {
 
         config?.snapCompressor = sender.selectedTag()
     }

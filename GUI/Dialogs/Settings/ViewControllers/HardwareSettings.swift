@@ -10,33 +10,29 @@
 class HardwareSettingsViewController: SettingsViewController {
 
     // VIC
-    @IBOutlet weak var hwVicModelPopup: NSPopUpButton!
-    @IBOutlet weak var hwVicIcon: NSImageView!
-    @IBOutlet weak var hwVicGrayDotBug: NSButton!
+    @IBOutlet weak var vicModelPopup: NSPopUpButton!
+    @IBOutlet weak var vicIcon: NSImageView!
+    @IBOutlet weak var vicGrayDotBug: NSButton!
 
     // CIA
-    @IBOutlet weak var hwCiaModelPopup: NSPopUpButton!
-    @IBOutlet weak var hwCiaTimerBBug: NSButton!
+    @IBOutlet weak var ciaModelPopup: NSPopUpButton!
+    @IBOutlet weak var ciaTimerBBug: NSButton!
 
     // SID
-    @IBOutlet weak var hwSidModelPopup: NSPopUpButton!
-    @IBOutlet weak var hwSidEnable1: NSButton!
-    @IBOutlet weak var hwSidEnable2: NSButton!
-    @IBOutlet weak var hwSidEnable3: NSButton!
-    @IBOutlet weak var hwSidAddress1: NSPopUpButton!
-    @IBOutlet weak var hwSidAddress2: NSPopUpButton!
-    @IBOutlet weak var hwSidAddress3: NSPopUpButton!
+    @IBOutlet weak var sidModelPopup: NSPopUpButton!
+    @IBOutlet weak var sidEnable1: NSButton!
+    @IBOutlet weak var sidEnable2: NSButton!
+    @IBOutlet weak var sidEnable3: NSButton!
+    @IBOutlet weak var sidAddress1: NSPopUpButton!
+    @IBOutlet weak var sidAddress2: NSPopUpButton!
+    @IBOutlet weak var sidAddress3: NSPopUpButton!
 
     // Board logic and power supply
-    @IBOutlet weak var hwGlueLogicPopup: NSPopUpButton!
-    @IBOutlet weak var hwPowerGridPopup: NSPopUpButton!
+    @IBOutlet weak var glueLogicPopup: NSPopUpButton!
+    @IBOutlet weak var powerGridPopup: NSPopUpButton!
 
     // Startup
-    @IBOutlet weak var hwRamPatternPopup: NSPopUpButton!
-
-    // Buttons
-    @IBOutlet weak var hwOkButton: NSButton!
-    @IBOutlet weak var hwPowerButton: NSButton!
+    @IBOutlet weak var ramPatternPopup: NSPopUpButton!
 
     override var showLock: Bool { true }
 
@@ -46,12 +42,12 @@ class HardwareSettingsViewController: SettingsViewController {
         for addr in stride(from: 0xD400, through: 0xD7E0, by: 0x20) {
 
             let label = String(format: "$%04X", addr)
-            hwSidAddress1.addItem(withTitle: label)
-            hwSidAddress2.addItem(withTitle: label)
-            hwSidAddress3.addItem(withTitle: label)
-            hwSidAddress1.lastItem!.tag = addr
-            hwSidAddress2.lastItem!.tag = addr
-            hwSidAddress3.lastItem!.tag = addr
+            sidAddress1.addItem(withTitle: label)
+            sidAddress2.addItem(withTitle: label)
+            sidAddress3.addItem(withTitle: label)
+            sidAddress1.lastItem!.tag = addr
+            sidAddress2.lastItem!.tag = addr
+            sidAddress3.lastItem!.tag = addr
         }
     }
 
@@ -60,82 +56,82 @@ class HardwareSettingsViewController: SettingsViewController {
         guard let config = config else { return }
 
         // VIC
-        hwVicModelPopup.selectItem(withTag: config.vicRevision)
+        vicModelPopup.selectItem(withTag: config.vicRevision)
 
         switch vc64.VICIIRev(rawValue: config.vicRevision) {
 
         case .PAL_6569_R1, .PAL_6569_R3:
 
-            hwVicIcon.image = NSImage(named: "pref_vicii_pal")
-            hwVicGrayDotBug.isEnabled = false
+            vicIcon.image = NSImage(named: "pref_vicii_pal")
+            vicGrayDotBug.isEnabled = false
 
         case .PAL_8565:
 
-            hwVicIcon.image = NSImage(named: "pref_vicii_pal")
-            hwVicGrayDotBug.isEnabled = true
+            vicIcon.image = NSImage(named: "pref_vicii_pal")
+            vicGrayDotBug.isEnabled = true
 
         case .NTSC_6567_R56A, .NTSC_6567:
 
-            hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
-            hwVicGrayDotBug.isEnabled = false
+            vicIcon.image = NSImage(named: "pref_vicii_ntsc")
+            vicGrayDotBug.isEnabled = false
 
         case .NTSC_8562:
 
-            hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
-            hwVicGrayDotBug.isEnabled = true
+            vicIcon.image = NSImage(named: "pref_vicii_ntsc")
+            vicGrayDotBug.isEnabled = true
 
         default:
             assert(false)
         }
-        hwVicGrayDotBug.state = config.vicGrayDotBug ? .on : .off
+        vicGrayDotBug.state = config.vicGrayDotBug ? .on : .off
 
         // CIA
-        hwCiaModelPopup.selectItem(withTag: config.ciaRevision)
-        hwCiaTimerBBug.state = config.ciaTimerBBug ? .on : .off
+        ciaModelPopup.selectItem(withTag: config.ciaRevision)
+        ciaTimerBBug.state = config.ciaTimerBBug ? .on : .off
 
         // Audio
-        hwSidModelPopup.selectItem(withTag: config.sidRevision)
-        hwSidEnable1.state = config.sidEnable1 ? .on : .off
-        hwSidEnable2.state = config.sidEnable2 ? .on : .off
-        hwSidEnable3.state = config.sidEnable3 ? .on : .off
-        hwSidAddress1.selectItem(withTag: config.sidAddress1)
-        hwSidAddress2.selectItem(withTag: config.sidAddress2)
-        hwSidAddress3.selectItem(withTag: config.sidAddress3)
+        sidModelPopup.selectItem(withTag: config.sidRevision)
+        sidEnable1.state = config.sidEnable1 ? .on : .off
+        sidEnable2.state = config.sidEnable2 ? .on : .off
+        sidEnable3.state = config.sidEnable3 ? .on : .off
+        sidAddress1.selectItem(withTag: config.sidAddress1)
+        sidAddress2.selectItem(withTag: config.sidAddress2)
+        sidAddress3.selectItem(withTag: config.sidAddress3)
 
         // Logic board and power supply
-        hwGlueLogicPopup.selectItem(withTag: config.glueLogic)
-        hwPowerGridPopup.selectItem(withTag: config.powerGrid)
+        glueLogicPopup.selectItem(withTag: config.glueLogic)
+        powerGridPopup.selectItem(withTag: config.powerGrid)
 
         // Startup
-        hwRamPatternPopup.selectItem(withTag: config.ramPattern)
+        ramPatternPopup.selectItem(withTag: config.ramPattern)
     }
 
-    @IBAction func hwVicRevAction(_ sender: NSPopUpButton!) {
+    @IBAction func vicRevAction(_ sender: NSPopUpButton!) {
 
         config?.vicRevision = sender.selectedTag()
     }
 
-    @IBAction func hwVicGrayDotBugAction(_ sender: NSButton!) {
+    @IBAction func vicGrayDotBugAction(_ sender: NSButton!) {
 
         config?.vicGrayDotBug = sender.state == .on
     }
 
-    @IBAction func hwCiaRevAction(_ sender: NSPopUpButton!) {
+    @IBAction func ciaRevAction(_ sender: NSPopUpButton!) {
 
         config?.ciaRevision = sender.selectedTag()
     }
 
-    @IBAction func hwCiaTimerBBugAction(_ sender: NSButton!) {
+    @IBAction func ciaTimerBBugAction(_ sender: NSButton!) {
 
         config?.ciaTimerBBug = sender.state == .on
     }
 
-    @IBAction func hwSidRevAction(_ sender: NSPopUpButton!) {
+    @IBAction func sidRevAction(_ sender: NSPopUpButton!) {
 
         config?.sidRevision = sender.selectedTag()
     }
 
-    @IBAction func hwSidEnable(_ sender: NSButton!) {
+    @IBAction func sidEnable(_ sender: NSButton!) {
 
         switch sender.tag {
         case 1: config?.sidEnable1 = sender.state == .on
@@ -145,7 +141,7 @@ class HardwareSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func hwSidAddressAction(_ sender: NSPopUpButton!) {
+    @IBAction func sidAddressAction(_ sender: NSPopUpButton!) {
 
         switch sender.tag {
         case 1: config?.sidAddress1 = sender.selectedTag()
@@ -155,17 +151,17 @@ class HardwareSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func hwGlueLogicAction(_ sender: NSPopUpButton!) {
+    @IBAction func glueLogicAction(_ sender: NSPopUpButton!) {
 
         config?.glueLogic = sender.selectedTag()
     }
 
-    @IBAction func hwPowerGridAction(_ sender: NSPopUpButton!) {
+    @IBAction func powerGridAction(_ sender: NSPopUpButton!) {
 
         config?.powerGrid = sender.selectedTag()
     }
 
-    @IBAction func hwRamPatternAction(_ sender: NSPopUpButton!) {
+    @IBAction func ramPatternAction(_ sender: NSPopUpButton!) {
 
         config?.ramPattern = sender.selectedTag()
     }

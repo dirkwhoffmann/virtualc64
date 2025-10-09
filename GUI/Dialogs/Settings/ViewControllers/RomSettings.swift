@@ -33,8 +33,6 @@ class RomSettingsViewController: SettingsViewController {
     @IBOutlet weak var vc1541Subsubtitle: NSTextField!
     @IBOutlet weak var vc1541DeleteButton: NSButton!
 
-    @IBOutlet weak var romInstallButton: NSButton!
-
     @IBOutlet weak var romLockImage: NSButton!
     @IBOutlet weak var romLockText: NSTextField!
     @IBOutlet weak var romLockSubText: NSTextField!
@@ -99,7 +97,6 @@ class RomSettingsViewController: SettingsViewController {
         kernalDeleteButton.isEnabled = poweredOff
         vc1541DropView.isEnabled = poweredOff
         vc1541DeleteButton.isEnabled = poweredOff
-        romInstallButton.isEnabled = poweredOff
 
         // Icons
         basicDropView.image =
