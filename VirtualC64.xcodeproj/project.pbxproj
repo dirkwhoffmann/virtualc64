@@ -179,7 +179,6 @@
 		505F456E2E9698B700418105 /* HardwareSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F456D2E9698AF00418105 /* HardwareSettings.swift */; };
 		505F45702E9698C600418105 /* PeripheralsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F456F2E9698BE00418105 /* PeripheralsSettings.swift */; };
 		505F45722E9698D300418105 /* PerformanceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45712E9698CE00418105 /* PerformanceSettings.swift */; };
-		505F45742E9698E500418105 /* CompatibilitySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45732E9698DD00418105 /* CompatibilitySettings.swift */; };
 		505F45762E9698EF00418105 /* AudioSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45752E9698EA00418105 /* AudioSettings.swift */; };
 		505F45782E9698F600418105 /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45772E9698F300418105 /* VideoSettings.swift */; };
 		505F457E2E96A42100418105 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F457D2E96A41E00418105 /* CGRect.swift */; };
@@ -880,7 +879,6 @@
 		505F456D2E9698AF00418105 /* HardwareSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwareSettings.swift; sourceTree = "<group>"; };
 		505F456F2E9698BE00418105 /* PeripheralsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralsSettings.swift; sourceTree = "<group>"; };
 		505F45712E9698CE00418105 /* PerformanceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceSettings.swift; sourceTree = "<group>"; };
-		505F45732E9698DD00418105 /* CompatibilitySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilitySettings.swift; sourceTree = "<group>"; };
 		505F45752E9698EA00418105 /* AudioSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSettings.swift; sourceTree = "<group>"; };
 		505F45772E9698F300418105 /* VideoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
 		505F457D2E96A41E00418105 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
@@ -1981,7 +1979,6 @@
 				505F456D2E9698AF00418105 /* HardwareSettings.swift */,
 				505F456F2E9698BE00418105 /* PeripheralsSettings.swift */,
 				505F45712E9698CE00418105 /* PerformanceSettings.swift */,
-				505F45732E9698DD00418105 /* CompatibilitySettings.swift */,
 				505F45752E9698EA00418105 /* AudioSettings.swift */,
 				505F45772E9698F300418105 /* VideoSettings.swift */,
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
@@ -2716,7 +2713,6 @@
 				500E34172615C40D006A38DA /* Parser.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
-				505F45742E9698E500418105 /* CompatibilitySettings.swift in Sources */,
 				504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */,
 				506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */,
 				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,

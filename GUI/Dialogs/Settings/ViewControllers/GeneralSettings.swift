@@ -46,15 +46,6 @@ class GeneralSettingsViewController: SettingsViewController {
         ejectWithoutAskingButton.state = pref.ejectWithoutAsking ? .on : .off
         closeWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
         pauseInBackground.state = pref.pauseInBackground ? .on : .off
-
-        // Mouse
-        /*
-        retainMouseKeyComb.selectItem(withTag: pref.retainMouseKeyComb)
-        retainMouseByClick.state = pref.retainMouseByClick ? .on : .off
-        retainMouseByEntering.state = pref.retainMouseByEntering ? .on : .off
-        releaseMouseKeyComb.selectItem(withTag: pref.releaseMouseKeyComb)
-        releaseMouseByShaking.state = pref.releaseMouseByShaking ? .on : .off
-        */
     }
 
     //
@@ -164,6 +155,10 @@ class GeneralSettingsViewController: SettingsViewController {
         refresh()
     }
 
+    //
+    // Presets and Saving
+    //
+    
     override func preset(tag: Int) {
 
         print("preset(tag: \(tag))")

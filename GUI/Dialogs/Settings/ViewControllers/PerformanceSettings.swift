@@ -9,4 +9,195 @@
 
 class PerformanceSettingsViewController: SettingsViewController {
 
+    // Warp
+    @IBOutlet weak var comWarpMode: NSPopUpButton!
+    @IBOutlet weak var comWarpBoot: NSTextField!
+
+    // Threading
+    @IBOutlet weak var prfVSync: NSButton!
+    @IBOutlet weak var prfSpeedBoost: NSSlider!
+    @IBOutlet weak var prfSpeedBoostInfo: NSTextField!
+    @IBOutlet weak var prfRunAheadLabel: NSTextField!
+    @IBOutlet weak var prfRunAhead: NSSlider!
+    @IBOutlet weak var prfRunAheadInfo: NSTextField!
+
+    // Boosters
+    @IBOutlet weak var comDrivePowerSave: NSButton!
+    @IBOutlet weak var comViciiPowerSave: NSButton!
+    @IBOutlet weak var comSidPowerSave: NSButton!
+
+    // Compression
+    @IBOutlet weak var prfSnapCompressor: NSPopUpButton!
+
+    // Collision detection
+    @IBOutlet weak var comSsCollisions: NSButton!
+    @IBOutlet weak var comSbCollisions: NSButton!
+
+    // Buttons
+    @IBOutlet weak var comPowerButton: NSButton!
+
+    override var showLock: Bool { true }
+
+    override func viewDidLoad() {
+
+        log(.lifetime)
+    }
+
+    override func refresh() {
+
+        guard let config = config else { return }
+
+        // Warp
+        comWarpMode.selectItem(withTag: config.warpMode)
+        comWarpBoot.integerValue = config.warpBoot
+
+        // Threading
+        let speedBoost = config.speedBoost
+        let runAhead = config.runAhead
+        prfVSync.state = config.vsync ? .on : .off
+        prfSpeedBoost.integerValue = speedBoost
+        prfSpeedBoostInfo.stringValue = "\(speedBoost) %"
+        prfSpeedBoost.isEnabled = !config.vsync
+        prfSpeedBoostInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
+        prfRunAheadLabel.stringValue = runAhead >= 0 ? "Run ahead:" : "Run behind:"
+        prfRunAhead.integerValue = runAhead
+        prfRunAheadInfo.stringValue = "\(abs(runAhead)) frame" + (abs(runAhead) == 1 ? "" : "s")
+
+        // Boosters
+        comDrivePowerSave.state = config.drive8PowerSave ? .on : .off
+        comViciiPowerSave.state = config.viciiPowerSave ? .on : .off
+        comSidPowerSave.state = config.sidPowerSave ? .on : .off
+
+        // Collision detection
+        comSsCollisions.state = config.ssCollisions ? .on : .off
+        comSbCollisions.state = config.sbCollisions ? .on : .off
+
+        // Compression
+        prfSnapCompressor.selectItem(withTag: config.snapCompressor)
+    }
+
+    //
+    // Action methods (Boosters)
+    //
+
+    @IBAction func comDrivePowerSaveAction(_ sender: NSButton!) {
+
+        config?.drive8PowerSave = sender.state == .on
+        config?.drive9PowerSave = sender.state == .on
+    }
+
+    @IBAction func comViciiPowerSaveAction(_ sender: NSButton!) {
+
+        config?.viciiPowerSave = sender.state == .on
+    }
+
+    @IBAction func comSidPowerSaveAction(_ sender: NSButton!) {
+
+        config?.sidPowerSave = sender.state == .on
+    }
+
+    //
+    // Action methods (Collisions)
+    //
+
+    @IBAction func comSsCollisionsAction(_ sender: NSButton!) {
+
+        config?.ssCollisions = sender.state == .on
+    }
+
+    @IBAction func comSbCollisionsAction(_ sender: NSButton!) {
+
+        config?.sbCollisions = sender.state == .on
+    }
+
+    //
+    // Action methods (Warp)
+    //
+
+    @IBAction func comWarpModeAction(_ sender: NSPopUpButton!) {
+
+        config?.warpMode = sender.selectedTag()
+    }
+
+    @IBAction func comWarpBootAction(_ sender: NSTextField!) {
+
+        config?.warpBoot = sender.integerValue
+    }
+
+    //
+    // Action methods (Threading)
+    //
+
+    @IBAction func prfVSyncAction(_ sender: NSButton!) {
+
+        config?.vsync = sender.state == .on
+    }
+
+    @IBAction func prfSpeedBoostAction(_ sender: NSSlider!) {
+
+        config?.speedBoost = sender.integerValue
+    }
+
+    @IBAction func prfRunAheadAction(_ sender: NSSlider!) {
+
+        config?.runAhead = sender.integerValue
+    }
+
+    //
+    // Action methods (Compressor)
+    //
+
+    @IBAction func prfSnapCompressorAction(_ sender: NSPopUpButton!) {
+
+        config?.snapCompressor = sender.selectedTag()
+    }
+
+    //
+    // Presets and Saving
+    //
+
+    override func preset(tag: Int) {
+
+        guard let emu = emu else { return }
+
+        emu.suspend()
+
+        // Revert to standard settings
+        EmulatorProxy.defaults.removePerformanceUserDefaults()
+
+        // Update the configuration
+        config?.applyPerformanceUserDefaults()
+
+        // Override some options
+        switch tag {
+
+        case 1: // Accurate
+
+            config?.drive8PowerSave = false
+            config?.drive9PowerSave = false
+            config?.viciiPowerSave = false
+            config?.sidPowerSave = false
+            config?.ssCollisions = true
+            config?.sbCollisions = true
+
+        case 2: // Accelerated
+
+            config?.drive8PowerSave = true
+            config?.drive9PowerSave = true
+            config?.viciiPowerSave = true
+            config?.sidPowerSave = true
+            config?.ssCollisions = false
+            config?.sbCollisions = false
+
+        default:
+            break
+        }
+
+        emu.resume()
+    }
+
+    override func save() {
+
+        config?.savePerformanceUserDefaults()
+    }
 }

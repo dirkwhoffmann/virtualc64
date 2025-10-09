@@ -197,5 +197,4 @@ extension ConfigurationController {
         
         config.savePeripheralsUserDefaults()
     }
-    
 }

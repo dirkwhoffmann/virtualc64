@@ -18,6 +18,7 @@ class SettingsViewController: NSViewController {
     var controller: MyController? { MyAppDelegate.currentController }
     var config: Configuration? { return controller?.config }
     var gamePadManager: GamePadManager? { controller?.gamePadManager }
+    var renderer: Renderer? { controller?.renderer }
     var emu: EmulatorProxy? { controller?.emu }
 
     var showLock: Bool { false }

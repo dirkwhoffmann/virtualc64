@@ -91,31 +91,6 @@ class CapturesSettingsViewController: SettingsViewController {
         refresh()
     }
 
-    /*
-    @IBAction func snapshotStorageAction(_ sender: NSTextField!) {
-
-        if sender.integerValue > 0 {
-            pref.snapshotStorage = sender.integerValue
-        }
-        refresh()
-    }
-
-    @IBAction func autoSnapshotAction(_ sender: NSButton!) {
-
-        pref.autoSnapshots = sender.state == .on
-        refresh()
-    }
-
-    @IBAction func snapshotIntervalAction(_ sender: NSTextField!) {
-
-        print("snapshotIntervalAction: \(sender.integerValue)")
-        if sender.integerValue > 0 {
-            pref.snapshotInterval = sender.integerValue
-        }
-        refresh()
-    }
-    */
-
     @IBAction func screenshotSourceAction(_ sender: NSPopUpButton!) {
 
         pref.screenshotSourceIntValue = sender.selectedTag()
@@ -153,6 +128,10 @@ class CapturesSettingsViewController: SettingsViewController {
         }
     }
 
+    //
+    // Presets and Saving
+    //
+    
     override func preset(tag: Int) {
 
         print("preset(tag: \(tag))")

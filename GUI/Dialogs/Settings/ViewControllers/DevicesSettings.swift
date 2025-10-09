@@ -151,6 +151,10 @@ class DevicesSettingsViewController: SettingsViewController {
         refresh()
     }
 
+    //
+    // Presets and Saving
+    //
+    
     override func preset(tag: Int) {
 
         // Reset the database
