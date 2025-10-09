@@ -33,8 +33,6 @@ class DevicesSettingsViewController: SettingsViewController {
     @IBOutlet weak var hidMapping: NSTextView!
     @IBOutlet weak var hidMappingScrollView: NSScrollView!
 
-    /*
-
     var pad: GamePad? { return gamePadManager?.gamePads[selector.selectedTag()] }
     var db: DeviceDatabase { return myAppDelegate.database }
     var guid: GUID {return pad?.guid ?? GUID() }
@@ -114,7 +112,6 @@ class DevicesSettingsViewController: SettingsViewController {
         case .DPAD_RIGHT: text = "DPad = Right"
         case .DPAD_LEFT: text = "DPad = Left"
         case .HATSWITCH: text = "h\(nr).\(value)"
-        default: text = ""
         }
 
         hidEvent?.stringValue = text
@@ -170,11 +167,8 @@ class DevicesSettingsViewController: SettingsViewController {
         pref.saveDevicesUserDefaults()
         myAppDelegate.database.save()
     }
-     */
-
 }
 
-/*
 extension DevicesSettingsViewController : NSTextViewDelegate {
 
     func textDidChange(_ notification: Notification) {
@@ -189,4 +183,3 @@ extension DevicesSettingsViewController : NSTextViewDelegate {
         }
     }
 }
-*/

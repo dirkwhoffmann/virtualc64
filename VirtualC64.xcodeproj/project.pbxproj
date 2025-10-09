@@ -47,6 +47,7 @@
 		501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */; };
+		50316E452E96CE7700BDF90F /* gamecontrollerdb.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
 		5033EFAB2E92A07000C3E0EE /* MyToolbarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */; };
 		5033EFAD2E92A0CE00C3E0EE /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */; };
@@ -171,7 +172,7 @@
 		505F455D2E96958200418105 /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F455C2E96957700418105 /* SettingsSplitViewController.swift */; };
 		505F45612E9695F800418105 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45602E9695EE00418105 /* SidebarViewController.swift */; };
 		505F45632E96961500418105 /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45622E96961100418105 /* GeneralSettings.swift */; };
-		505F45652E96961F00418105 /* CaturesSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45642E96961900418105 /* CaturesSettings.swift */; };
+		505F45652E96961F00418105 /* CapturesSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45642E96961900418105 /* CapturesSettings.swift */; };
 		505F45672E96962A00418105 /* ControlsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45662E96962300418105 /* ControlsSettings.swift */; };
 		505F45692E96963B00418105 /* DevicesSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45682E96963300418105 /* DevicesSettings.swift */; };
 		505F456C2E9698A200418105 /* RomSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F456B2E96989C00418105 /* RomSettings.swift */; };
@@ -621,6 +622,7 @@
 		5026118D259CACB60066E754 /* PETName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PETName.h; sourceTree = "<group>"; };
 		50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDirEntry.cpp; sourceTree = "<group>"; };
 		50300AED258B2C5400D261E3 /* FSDirEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDirEntry.h; sourceTree = "<group>"; };
+		50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = gamecontrollerdb.txt; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbarItems.swift; sourceTree = "<group>"; };
 		5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
@@ -870,7 +872,7 @@
 		505F455C2E96957700418105 /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		505F45602E9695EE00418105 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		505F45622E96961100418105 /* GeneralSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
-		505F45642E96961900418105 /* CaturesSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaturesSettings.swift; sourceTree = "<group>"; };
+		505F45642E96961900418105 /* CapturesSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturesSettings.swift; sourceTree = "<group>"; };
 		505F45662E96962300418105 /* ControlsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsSettings.swift; sourceTree = "<group>"; };
 		505F45682E96963300418105 /* DevicesSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesSettings.swift; sourceTree = "<group>"; };
 		505F456A2E96968700418105 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
@@ -1972,7 +1974,7 @@
 			children = (
 				505F455A2E96956600418105 /* SettingsViewController.swift */,
 				505F45622E96961100418105 /* GeneralSettings.swift */,
-				505F45642E96961900418105 /* CaturesSettings.swift */,
+				505F45642E96961900418105 /* CapturesSettings.swift */,
 				505F45662E96962300418105 /* ControlsSettings.swift */,
 				505F45682E96963300418105 /* DevicesSettings.swift */,
 				505F456B2E96989C00418105 /* RomSettings.swift */,
@@ -2020,6 +2022,7 @@
 		5070D72124AF2EB1005862D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */,
 				50FBB62F282A51FB001366F9 /* VirtualC64.entitlements */,
 				503E198F20C42C6D007E91F1 /* Assets.xcassets */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -2447,6 +2450,7 @@
 				500E2D642824EBE30015C46F /* CartridgeInspector.xib in Resources */,
 				503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */,
 				503C1DD124FC10F400D91141 /* SnapshotViewer.xib in Resources */,
+				50316E452E96CE7700BDF90F /* gamecontrollerdb.txt in Resources */,
 				50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */,
 				50A5B7CE2C74E44C00D6DDAD /* CMakeLists.txt in Resources */,
 				500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */,
@@ -2827,7 +2831,7 @@
 				5058A922281D10B100C223C9 /* VolumeInspector.swift in Sources */,
 				505F45782E9698F600418105 /* VideoSettings.swift in Sources */,
 				50A5B7D32C74E44C00D6DDAD /* RshServer.cpp in Sources */,
-				505F45652E96961F00418105 /* CaturesSettings.swift in Sources */,
+				505F45652E96961F00418105 /* CapturesSettings.swift in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
 				50891C012652380A0004AC1B /* VICIISprites.cpp in Sources */,
 				50DF719425021FCA00953E2E /* Keycap.swift in Sources */,

@@ -10,9 +10,9 @@
 struct InputDevice {
     
     static let none = -1
-    static let keyset1 = 0
-    static let keyset2 = 1
-    static let mouse = 2
+    static let mouse = 0
+    static let keyset1 = 1
+    static let keyset2 = 2
     static let joystick1 = 3
     static let joystick2 = 4
     static let joystick3 = 5
@@ -20,18 +20,18 @@ struct InputDevice {
 }
 
 /* An object of this class holds and manages an array of GamePad objects.
- * Up to fisevenve gamepads are managed. The first three gamepads are initialized
+ * Up to seven gamepads are managed. The first three gamepads are initialized
  * by default and represent a mouse and two keyboard emulated joysticks.
  * All remaining gamepads are added dynamically when HID devices are connected.
  */
 class GamePadManager {
-
+    
     // Reference to the main controller
-    var parent: MyController!
+    var controller: MyController!
     
     // Reference to the HID manager
     var hidManager: IOHIDManager
-        
+    
     // Gamepad storage
     var gamePads: [Int: GamePad] = [:]
     
@@ -44,7 +44,7 @@ class GamePadManager {
     
     init(parent: MyController) {
         
-        self.parent = parent
+        self.controller = parent
         
         hidManager = IOHIDManagerCreate(kCFAllocatorDefault,
                                         IOOptionBits(kIOHIDOptionsTypeNone))
@@ -52,22 +52,22 @@ class GamePadManager {
         // Add default devices
         gamePads[0] = GamePad(manager: self, type: .MOUSE)
         gamePads[0]!.name = "Mouse"
-        gamePads[0]!.setIcon(name: "devMouseTemplate")
+        gamePads[0]!.icon = SFSymbol.get(.mouse)
         gamePads[0]!.keyMap = 0
-
+        
         gamePads[1] = GamePad(manager: self, type: .JOYSTICK)
         gamePads[1]!.name = "Joystick Keyset 1"
-        gamePads[1]!.setIcon(name: "devKeyset1Template")
+        gamePads[1]!.icon = SFSymbol.get(.arrowkeys)
         gamePads[1]!.keyMap = 1
         
         gamePads[2] = GamePad(manager: self, type: .JOYSTICK)
         gamePads[2]!.name = "Joystick Keyset 2"
-        gamePads[2]!.setIcon(name: "devKeyset2Template")
+        gamePads[2]!.icon = SFSymbol.get(.arrowkeys)
         gamePads[2]!.keyMap = 2
-                
+        
         // Tell the mouse event receiver where the mouse resides
         parent.metal.mouse1 = gamePads[0]!
-
+        
         // Prepare to accept HID devices
         let deviceCriteria = [
             [
@@ -107,11 +107,11 @@ class GamePadManager {
         IOHIDManagerScheduleWithRunLoop(hidManager, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode.rawValue)
         IOHIDManagerOpen(hidManager, IOOptionBits(kIOHIDOptionsTypeNone))
     }
-
+    
     func shutDown() {
         
         debug(.hid, "GamePadManager: shutdown")
-
+        
         debug(.shutdown)
         
         // Terminate communication with all connected HID devices
@@ -146,7 +146,7 @@ class GamePadManager {
         
         // We support up to 7 devices
         if nr < 7 { return nr }
-
+        
         warn("Maximum number of devices reached")
         return nil
     }
@@ -154,26 +154,20 @@ class GamePadManager {
     func connect(slot: Int, port: Int) {
         
         // Remove any existing binding to this port
-        for (_, pad) in gamePads where pad.port == port { pad.port = nil }
-
+        for (_, pad) in gamePads where pad.port == port { pad.port = 0 }
+        
         // Bind the new device
         gamePads[slot]?.port = port
     }
-
+    
     func name(slot: Int) -> String {
         return gamePads[slot]?.name ?? "External device"
     }
-
+    
     func icon(slot: Int) -> NSImage {
-
-        // Override the icon if a mouse-emulated paddle is connected
-        if gamePads[slot]?.isMouse == true && parent.config.mouseModel >= 3 {
-            return NSImage(named: "devPaddleTemplate")!
-        }
-
-        return gamePads[slot]?.icon ?? NSImage(named: "devGamepad1Template")!
+        return gamePads[slot]?.icon ?? SFSymbol.get(.gamecontroller)
     }
-
+    
     //
     // HID support
     //
@@ -183,12 +177,12 @@ class GamePadManager {
                         result: IOReturn,
                         sender: UnsafeMutableRawPointer?,
                         device: IOHIDDevice) {
-    
+        
         lock.lock(); defer { lock.unlock() }
-
+        
         debug(.hid)
-        // device.listProperties()
-
+        if (Int.hid != 0) { device.listProperties() }
+        
         // Ignore internal devices
         if device.isInternalDevice { return }
         
@@ -197,16 +191,16 @@ class GamePadManager {
         
         // Add device
         addDevice(slot: slot, device: device)
-                
+        
         // Reconnect devices (assignments trigger side effects)
-        parent.config.gameDevice1 = parent.config.gameDevice1
-        parent.config.gameDevice2 = parent.config.gameDevice2
+        controller.config.gameDevice1 = controller.config.gameDevice1
+        controller.config.gameDevice2 = controller.config.gameDevice2
         
         // Inform about the changed configuration
-        parent.toolbar.validateVisibleItems()
+        controller.toolbar.validateVisibleItems()
         myAppDelegate.deviceAdded()
         
-        // listDevices()
+        if Int.hid != 0 { listDevices() }
     }
     
     func addDevice(slot: Int, device: IOHIDDevice) {
@@ -217,16 +211,16 @@ class GamePadManager {
             gamePads[slot] = GamePad(manager: self, device: device, type: .MOUSE)
             
             // Inform the mouse event receiver about the new mouse
-            parent.metal.mouse2 = gamePads[slot]
-
+            controller.metal.mouse2 = gamePads[slot]
+            
         } else {
-
+            
             // Open device
             if !device.open() { return }
-
+            
             // Create a GamePad object
             gamePads[slot] = GamePad(manager: self, device: device, type: .JOYSTICK)
-
+            
             // Register input value callback
             let hidContext = unsafeBitCast(gamePads[slot], to: UnsafeMutableRawPointer.self)
             IOHIDDeviceRegisterInputValueCallback(device,
@@ -241,42 +235,43 @@ class GamePadManager {
                           device: IOHIDDevice) {
         
         lock.lock(); defer { lock.unlock() }
-
+        
         debug(.hid)
-
+        
         // Search for a matching locationID and remove device
         for (slot, pad) in gamePads where pad.locationID == device.locationID {
             gamePads[slot] = nil
         }
-
+        
         // Inform about the changed configuration
-        parent.toolbar.validateVisibleItems()
+        controller.toolbar.validateVisibleItems()
         myAppDelegate.deviceAdded()
-
-        // listDevices()
+        
+        if Int.hid != 0 { listDevices() }
+    }
+    
+    func updateHidMapping() {
+        
+        for (_, pad) in gamePads { pad.updateMapping() }
     }
     
     func listDevices() {
-
-        if Int.hid != 0 {
-
-            print("Input devices:")
-            for i in 0 ... Int.max {
-
-                guard let dev = gamePads[i] else { break }
-                dev.dump()
-            }
-
+        
+        print("Input devices:")
+        for i in 0 ... Int.max {
+            
+            guard let dev = gamePads[i] else { break }
+            dev.dump()
         }
     }
     
     func refresh(popup: NSPopUpButton, hide: Bool = false) {
-
+        
         refresh(menu: popup.menu!, hide: hide)
     }
-
+    
     func refresh(menu: NSMenu, hide: Bool = false) {
-
+        
         let slots = [
             InputDevice.mouse,
             InputDevice.keyset1,
@@ -286,7 +281,7 @@ class GamePadManager {
             InputDevice.joystick3,
             InputDevice.joystick4
         ]
-
+        
         for s in slots {
             if let item = menu.item(withTag: s) {
                 item.title = name(slot: s)

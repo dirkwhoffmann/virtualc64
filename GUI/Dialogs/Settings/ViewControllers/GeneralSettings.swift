@@ -22,7 +22,6 @@ class GeneralSettingsViewController: SettingsViewController {
 
     // Misc
     @IBOutlet weak var ejectWithoutAskingButton: NSButton!
-    @IBOutlet weak var detachWithoutAskingButton: NSButton!
     @IBOutlet weak var closeWithoutAskingButton: NSButton!
     @IBOutlet weak var pauseInBackground: NSButton!
 

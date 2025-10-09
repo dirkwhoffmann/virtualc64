@@ -400,6 +400,27 @@ struct MouseAPI : API {
 
     class Mouse *mouse = nullptr;
 
+    /** @brief  Returns the component's current configuration.
+     */
+    const MouseConfig &getConfig() const;
+
+    /** Moves the mouse
+     *  @param x    New absolute horizontal coordinate
+     *  @param y    New absolute vertical coordinate
+     */
+    void setXY(double x, double y);
+
+    /** Moves the mouse
+     *  @param dx       Relative horizontal mouse movement
+     *  @param dy       Relative vertical mouse movement
+     */
+    void setDxDy(double dx, double dy);
+
+    /** Triggers a mouse button event
+     *  @param action   The triggered event
+     */
+    void trigger(GamePadAction action);
+
     /** Feeds a coordinate into the shake detector.
      *
      *  The shake detector keeps track of the transmitted coordinates and
@@ -436,6 +457,10 @@ struct JoystickAPI : API {
      */
     const JoystickInfo &getInfo() const;
     const JoystickInfo &getCachedInfo() const;
+
+    /** @brief  Triggers a joystick action.
+     */
+    void trigger(GamePadAction event);
 };
 
 

@@ -595,6 +595,9 @@ struct GuardInfo {
 
 @interface MouseProxy : SubComponentProxy { }
 
+- (void)setXY:(NSPoint)pos;
+- (void)setDxDy:(NSPoint)pos;
+- (void)trigger:(GamePadAction)event;
 - (BOOL)detectShakeAbs:(NSPoint)pos;
 - (BOOL)detectShakeRel:(NSPoint)pos;
 
@@ -606,6 +609,11 @@ struct GuardInfo {
 //
 
 @interface JoystickProxy : SubComponentProxy { }
+
+@property (readonly) JoystickInfo info;
+@property (readonly) JoystickInfo cachedInfo;
+
+- (void)trigger:(GamePadAction)event;
 
 @end
 

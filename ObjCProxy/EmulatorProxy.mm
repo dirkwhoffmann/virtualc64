@@ -1046,7 +1046,6 @@ NSString *EventSlotName(EventSlot slot)
 @end
 
 
-
 //
 // Mouse proxy
 //
@@ -1056,6 +1055,21 @@ NSString *EventSlotName(EventSlot slot)
 - (MouseAPI *)mouse
 {
     return (MouseAPI *)obj;
+}
+
+- (void)setXY:(NSPoint)pos
+{
+    [self mouse]->setXY(pos.x, pos.y);
+}
+
+- (void)setDxDy:(NSPoint)pos
+{
+    [self mouse]->setDxDy((double)pos.x, (double)pos.y);
+}
+
+- (void)trigger:(GamePadAction)event
+{
+    [self mouse]->trigger(event);
 }
 
 - (BOOL)detectShakeAbs:(NSPoint)pos
@@ -1080,6 +1094,21 @@ NSString *EventSlotName(EventSlot slot)
 - (JoystickAPI *)joystick
 {
     return (JoystickAPI *)obj;
+}
+
+- (JoystickInfo)info
+{
+    return [self joystick]->getInfo();
+}
+
+- (JoystickInfo)cachedInfo
+{
+    return [self joystick]->getCachedInfo();
+}
+
+- (void)trigger:(GamePadAction)event
+{
+    [self joystick]->trigger(event);
 }
 
 @end

@@ -45,7 +45,6 @@ class SidebarViewController: NSViewController {
             SidebarItem(title: "Hardware",      icon: "engine.combustion"),
             SidebarItem(title: "Peripherals",   icon: "externaldrive"),
             SidebarItem(title: "Performance",   icon: "hare"),
-            SidebarItem(title: "Compatibility", icon: "compass.drawing"),
             SidebarItem(title: "Audio",         icon: "waveform"),
             SidebarItem(title: "Video",         icon: "eye")
         ])
@@ -66,7 +65,6 @@ class SidebarViewController: NSViewController {
         outlineView.reloadData()
 
         // Select first item by default
-        // outlineView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
         outlineView.selectRowIndexes(IndexSet(integer: 1), byExtendingSelection: false)
 
         // Expand all items

@@ -16,56 +16,40 @@ import IOKit.hid
  * GamePadAction events by utilizing a key map.
  */
 class GamePad {
-
-    // Mapping schemes
-    enum Schemes {
-
-        // Left stick
-        static let A0A1 = 0
-        static let A0A1r = 1
-        
-        // Right stick
-        static let A2A5 = 0
-        static let A2A3 = 1
-        static let A3A4 = 2
-        static let A2A5r = 3
-
-        // Hat switch
-        static let H0H7 = 0
-        static let H1H8 = 1
-        static let B4B7 = 2
-        static let B11B14 = 3
-        static let U90U93 = 4
-    }
-             
-    // References to other objects
+    
+    // References
     var manager: GamePadManager
-    var prefs: Preferences { return manager.parent.pref }
-    var config: Configuration { return manager.parent.config }
+    var prefs: Preferences { return manager.controller.pref }
+    var config: Configuration { return manager.controller.config }
     var db: DeviceDatabase { return myAppDelegate.database }
     
     // The control port this device is connected to (0, 1, or nil)
     var port: Int?
-
+    
+    // HID mapping
+    var mapping: HIDMapping?
+    
     // Reference to the HID device
     var device: IOHIDDevice?
     var vendorID: String { return device?.vendorID ?? "" }
     var productID: String { return device?.productID ?? "" }
     var locationID: String { return device?.locationID ?? "" }
+    var version: String { return device?.versionNumberKey ?? "" }
+    var guid: GUID { return device?.guid ?? GUID() }
     
     // Type of the managed device (joystick or mouse)
-    var type: vc64.ControlPortDevice
+    var type: ControlPortDevice
     var isMouse: Bool { return type == .MOUSE }
     var isJoystick: Bool { return type == .JOYSTICK }
-
+    
     // Name of the managed device
     var name = ""
-
+    
     // Icon of this device
     var icon: NSImage?
-            
+    
     // Indicates if this device is officially supported
-    var isKnown: Bool { return db.isKnown(vendorID: vendorID, productID: productID) }
+    var isKnown: Bool { return db.isKnown(guid: guid) }
     
     // Keymap of the managed device (only set for keyboard emulated devices)
     var keyMap: Int?
@@ -73,17 +57,15 @@ class GamePad {
     // Indicates if a joystick emulation key is currently pressed
     var keyUp = false, keyDown = false, keyLeft = false, keyRight = false
     
-    // Controller specific mapping schemes for the two sticks and the hat switch
-    var lScheme = 0
-    var rScheme = 0
-    var hScheme = 0
-
+    // Indicates if other components should be notified when the device is used
+    var notify = false
+    
     /* Rescued information from the latest invocation of the action function.
      * This information is utilized to determine whether a joystick event has
      * to be triggered.
      */
-    var oldEvents: [Int: [vc64.GamePadAction]] = [:]
-
+    var oldEvents: [Int: [GamePadAction]] = [:]
+    
     // Receivers for HID events
     let inputValueCallback: IOHIDValueCallback = {
         inContext, inResult, inSender, value in
@@ -94,36 +76,29 @@ class GamePad {
                                  value: value)
     }
     
-    init(manager: GamePadManager, device: IOHIDDevice? = nil, type: vc64.ControlPortDevice) {
-
+    init(manager: GamePadManager, device: IOHIDDevice? = nil, type: ControlPortDevice) {
+        
         self.manager = manager
         self.device = device
         self.type = type
         
-        name = db.name(vendorID: vendorID, productID: productID) ?? device?.name ?? ""
-        icon = db.icon(vendorID: vendorID, productID: productID)
-
-        if icon == nil && isMouse {
-            icon = NSImage(named: "devMouseTemplate")
-        }
+        name = device?.name ?? "HID device"
+        // icon = NSImage(named: isMouse ? "devMouseTemplate" : "devGamepad1Template")!
+        icon = isMouse ? SFSymbol.get(.mouse) : SFSymbol.get(.gamecontroller)
         
-        updateMappingScheme()
+        updateMapping()
     }
     
-    func updateMappingScheme() {
+    func updateMapping() {
         
-        lScheme = db.left(vendorID: vendorID, productID: productID)
-        rScheme = db.right(vendorID: vendorID, productID: productID)
-        hScheme = db.hatSwitch(vendorID: vendorID, productID: productID)
-    }
-        
-    func setIcon(name: String) {
-        
-        icon = NSImage(named: name)
+        if device != nil {
+            
+            mapping = db.query(guid: device!.guid)
+        }
     }
     
     func property(key: String) -> String? {
-            
+        
         if device != nil {
             if let prop = IOHIDDeviceGetProperty(device!, key as CFString) {
                 return "\(prop)"
@@ -133,49 +108,48 @@ class GamePad {
     }
     
     func dump() {
-
+        
         print(name != "" ? "\(name) " : "Placeholder device ", terminator: "")
         print(isMouse ? "(Mouse) " : "", terminator: "")
         print(port != nil ? "[\(port!)]" : "[-] ", terminator: "")
         print(vendorID == "" ? "" : "v: \(vendorID) ", terminator: "")
         print(productID == "" ? "" : "v: \(productID) ", terminator: "")
         print(locationID == "" ? "" : "v: \(locationID) ")
+        print("")
     }
     
     //
     // Responding to keyboard events
     //
-
+    
     // Binds a key to a gamepad action
-    func bind(key: MacKey, action: vc64.GamePadAction) {
-
+    func bind(key: MacKey, action: GamePadAction) {
+        
         guard let n = keyMap else { return }
         
         // Avoid double mappings
         unbind(action: action)
-
+        
         prefs.keyMaps[n][key] = action.rawValue
     }
-
+    
     // Removes a key binding to the specified gampad action (if any)
-    func unbind(action: vc64.GamePadAction) {
-
+    func unbind(action: GamePadAction) {
+        
         guard let n = keyMap else { return }
         
         for (k, dir) in prefs.keyMaps[n] where dir == action.rawValue {
             prefs.keyMaps[n][k] = nil
         }
-     }
-
+    }
+    
     // Translates a key press event to a list of gamepad actions
-    func keyDownEvents(_ macKey: MacKey) -> [vc64.GamePadAction] {
-
-        var macKey2 = macKey
-        macKey2.carbonFlags = 0
-        guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
-                    
-        switch vc64.GamePadAction(rawValue: direction) {
-
+    func keyDownEvents(_ macKey: MacKey) -> [GamePadAction] {
+        
+        guard let n = keyMap, let direction = prefs.keyMaps[n][macKey] else { return [] }
+        
+        switch GamePadAction(rawValue: direction) {
+            
         case .PULL_UP:
             keyUp = true
             return [.PULL_UP]
@@ -205,18 +179,18 @@ class GamePad {
             fatalError()
         }
     }
-        
+    
     // Handles a key release event
-    func keyUpEvents(_ macKey: MacKey) -> [vc64.GamePadAction] {
-
+    func keyUpEvents(_ macKey: MacKey) -> [GamePadAction] {
+        
         var macKey2 = macKey
         macKey2.carbonFlags = 0
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
-                
+        
         debug(.events, "keyUpEvents \(direction)")
         
-        switch vc64.GamePadAction(rawValue: direction) {
-
+        switch GamePadAction(rawValue: direction) {
+            
         case .PULL_UP:
             keyUp = false
             return keyDown ? [.PULL_DOWN] : [.RELEASE_Y]
@@ -250,246 +224,147 @@ class GamePad {
     //
     // Responding to HID events
     //
-
+    
     // Based on
     // http://docs.ros.org/hydro/api/oculus_sdk/html/OSX__Gamepad_8cpp_source.html#l00170
-
-    static func analogAxis(value: IOHIDValue, element: IOHIDElement) -> Double {
-
-        let min = IOHIDElementGetLogicalMin(element)
-        let max = IOHIDElementGetLogicalMax(element)
-        let val = IOHIDValueGetIntegerValue(value)
-
-        let v = (Double) (val - min) / (Double) (max - min)
-        return v * 2.0 - 1.0
-    }
-
-    static func analogAxisRev(value: IOHIDValue, element: IOHIDElement) -> Double {
-
-        return -analogAxis(value: value, element: element)
-    }
-
-    static func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Int? {
-
+    
+    func mapAnalogAxis(value: IOHIDValue, element: IOHIDElement) -> Int? {
+        
         let min = IOHIDElementGetLogicalMin(element)
         let max = IOHIDElementGetLogicalMax(element)
         let val = IOHIDValueGetIntegerValue(value)
         
         var v = (Double) (val - min) / (Double) (max - min)
         v = v * 2.0 - 1.0
-
+        
         if v < 0 {
-            if v < -0.45 { return -2 }
+            if v < -0.45 { return -1 }
             if v > -0.35 { return 0 }
         } else {
-            if v > 0.45 { return 2 }
+            if v > 0.45 { return 1 }
             if v < 0.35 { return 0 }
         }
         
         return nil // Dead zone
     }
     
-    static func mapHAxis(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
-
-        if let v = mapAnalogAxis(value: value, element: element) {
-            return v == 2 ? [.PULL_RIGHT] : v == -2 ? [.PULL_LEFT] : [.RELEASE_X]
-        } else {
-            return nil
+    func mapHatSwitch(value: IOHIDValue, element: IOHIDElement) -> Int? {
+        
+        
+        let val = IOHIDValueGetIntegerValue(value)
+        let min = IOHIDElementGetLogicalMin(element)
+        
+        // let max = IOHIDElementGetLogicalMax(element)
+        // print("min = \(min) max = \(max) val = \(val)")
+        
+        switch (val - min) {
+        case 0: return 1
+        case 1: return 1 | 2
+        case 2: return 2
+        case 3: return 2 | 4
+        case 4: return 4
+        case 5: return 4 | 8
+        case 6: return 8
+        case 7: return 8 | 1
+        default: return 0
         }
     }
     
-    static func mapVAxis(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
-
-        if let v = mapAnalogAxis(value: value, element: element) {
-            return v == 2 ? [.PULL_DOWN] : v == -2 ? [.PULL_UP] : [.RELEASE_Y]
-        } else {
-            return nil
-        }
-    }
-
-    static func mapVAxisRev(value: IOHIDValue, element: IOHIDElement) -> [vc64.GamePadAction]? {
-
-        if let v = mapAnalogAxis(value: value, element: element) {
-            return v == 2 ? [.PULL_UP] : v == -2 ? [.PULL_DOWN] : [.RELEASE_Y]
-        } else {
-            return nil
-        }
-    }
-
     func hidInputValueAction(context: UnsafeMutableRawPointer?,
                              result: IOReturn,
                              sender: UnsafeMutableRawPointer?,
                              value: IOHIDValue) {
         
+        var hidEvent: (HIDEvent, Int, Int)?
+        
         let element   = IOHIDValueGetElement(value)
         let intValue  = Int(IOHIDValueGetIntegerValue(value))
         let usagePage = Int(IOHIDElementGetUsagePage(element))
         let usage     = Int(IOHIDElementGetUsage(element))
-                
+        
         // debug(.hid, "usagePage = \(usagePage) usage = \(usage) value = \(intValue)")
-
-        var events: [vc64.GamePadAction]?
         
         if usagePage == kHIDPage_Button {
-
-            switch hScheme {
             
-            case Schemes.B4B7:
-                
-                switch usage {
-                case 5: events = intValue != 0 ? [.PULL_UP] : [.RELEASE_Y]
-                case 6: events = intValue != 0 ? [.PULL_RIGHT] : [.RELEASE_X]
-                case 7: events = intValue != 0 ? [.PULL_DOWN] : [.RELEASE_Y]
-                case 8: events = intValue != 0 ? [.PULL_LEFT] : [.RELEASE_X]
-                default: events = intValue != 0 ? [.PRESS_FIRE] : [.RELEASE_FIRE]
-                }
-            
-            case Schemes.B11B14:
-                
-                switch usage {
-                case 12: events = intValue != 0 ? [.PULL_UP] : [.RELEASE_Y]
-                case 13: events = intValue != 0 ? [.PULL_DOWN] : [.RELEASE_Y]
-                case 14: events = intValue != 0 ? [.PULL_LEFT] : [.RELEASE_X]
-                case 15: events = intValue != 0 ? [.PULL_RIGHT] : [.RELEASE_X]
-                default: events = intValue != 0 ? [.PRESS_FIRE] : [.RELEASE_FIRE]
-                }
-            
-            default:
-                events = intValue != 0 ? [.PRESS_FIRE] : [.RELEASE_FIRE]
-            }
+            // usage - 1 yields the button number with 0 = first button
+            hidEvent = (.BUTTON, usage - 1, intValue)
         }
         
-        /* Experimental code for Paddle support
-        var pos: Double?
-        if usagePage == kHIDPage_GenericDesktop {
-
-            switch usage {
-
-            case kHIDUsage_GD_X where lScheme == Schemes.A0A1:   // A0
-                pos = GamePad.analogAxis(value: value, element: element)
-
-            case kHIDUsage_GD_X where lScheme == Schemes.A0A1r:  // A0
-                pos = GamePad.analogAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Y where lScheme == Schemes.A0A1:   // A1
-                break
-
-            case kHIDUsage_GD_Y where lScheme == Schemes.A0A1r:  // A1
-                break
-
-            case kHIDUsage_GD_Z where rScheme == Schemes.A2A5:   // A2
-                pos = GamePad.analogAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Z where rScheme == Schemes.A2A5r:  // A2
-                pos = GamePad.analogAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Z where rScheme == Schemes.A2A3:   // A2
-                pos = GamePad.analogAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Rx where lScheme == Schemes.A3A4:  // A3
-                pos = GamePad.analogAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Rx where lScheme == Schemes.A2A3:  // A3
-                break
-
-            case kHIDUsage_GD_Ry where lScheme == Schemes.A3A4:  // A4
-                break
-
-            case kHIDUsage_GD_Rz where rScheme == Schemes.A2A5:  // A5
-                break
-
-            case kHIDUsage_GD_Rz where rScheme == Schemes.A2A5r: // A5
-                break
-
-            default:
-                debug(.hid, "Unknown HID usage: \(usage)")
-            }
-        }
-
-        if pos != nil {
-            print("New paddle pos: \(pos!)")
-            processPaddleEvents(pos: pos!)
-        }
-        */
         if usagePage == kHIDPage_GenericDesktop {
             
             switch usage {
-            
-            case kHIDUsage_GD_X where lScheme == Schemes.A0A1:   // A0
-                events = GamePad.mapHAxis(value: value, element: element)
-
-            case kHIDUsage_GD_X where lScheme == Schemes.A0A1r:  // A0
-                events = GamePad.mapHAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Y where lScheme == Schemes.A0A1:   // A1
-                events = GamePad.mapVAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Y where lScheme == Schemes.A0A1r:  // A1
-                events = GamePad.mapVAxisRev(value: value, element: element)
-
-            case kHIDUsage_GD_Z where rScheme == Schemes.A2A5:   // A2
-                events = GamePad.mapHAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Z where rScheme == Schemes.A2A5r:  // A2
-                events = GamePad.mapHAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Z where rScheme == Schemes.A2A3:   // A2
-                events = GamePad.mapHAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Rx where lScheme == Schemes.A3A4:  // A3
-                events = GamePad.mapHAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Rx where lScheme == Schemes.A2A3:  // A3
-                events = GamePad.mapVAxisRev(value: value, element: element)
-
-            case kHIDUsage_GD_Ry where lScheme == Schemes.A3A4:  // A4
-                events = GamePad.mapVAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Rz where rScheme == Schemes.A2A5:  // A5
-                events = GamePad.mapVAxis(value: value, element: element)
-
-            case kHIDUsage_GD_Rz where rScheme == Schemes.A2A5r: // A5
-                events = GamePad.mapVAxisRev(value: value, element: element)
-
-            case 0x90 where hScheme == Schemes.U90U93:
-                events = intValue != 0 ? [.PULL_UP] : [.RELEASE_Y]
-
-            case 0x91 where hScheme == Schemes.U90U93:
-                events = intValue != 0 ? [.PULL_DOWN] : [.RELEASE_Y]
-
-            case 0x92 where hScheme == Schemes.U90U93:
-                events = intValue != 0 ? [.PULL_RIGHT] : [.RELEASE_X]
-
-            case 0x93 where hScheme == Schemes.U90U93:
-                events = intValue != 0 ? [.PULL_LEFT] : [.RELEASE_X]
-
+                
+            case kHIDUsage_GD_X: // A0
+                if let value = mapAnalogAxis(value: value, element: element) {
+                    hidEvent = (.AXIS, 0, value)
+                }
+                
+            case kHIDUsage_GD_Y: // A1
+                if let value = mapAnalogAxis(value: value, element: element) {
+                    hidEvent = (.AXIS, 1, value)
+                }
+                
+            case kHIDUsage_GD_Z: // A2
+                if let value = mapAnalogAxis(value: value, element: element) {
+                    hidEvent = (.AXIS, 2, value)
+                }
+                
+            case kHIDUsage_GD_Rx: // A3
+                if let value = mapAnalogAxis(value: value, element: element) {
+                    hidEvent = (.AXIS, 3, value)
+                }
+                
+            case kHIDUsage_GD_Ry: // A4
+                if let value = mapAnalogAxis(value: value, element: element) {
+                    hidEvent = (.AXIS, 4, value)
+                }
+                
+            case kHIDUsage_GD_Rz: // A5
+                if let value = mapAnalogAxis(value: value, element: element) {
+                    hidEvent = (.AXIS, 5, value)
+                }
+                
             case kHIDUsage_GD_Hatswitch:
-                
-                let shift = hScheme == Schemes.H0H7 ? 0 : 1
-                    
-                switch intValue - shift {
-                case 0: events = [.PULL_UP, .RELEASE_X]
-                case 1: events = [.PULL_UP, .PULL_RIGHT]
-                case 2: events = [.PULL_RIGHT, .RELEASE_Y]
-                case 3: events = [.PULL_RIGHT, .PULL_DOWN]
-                case 4: events = [.PULL_DOWN, .RELEASE_X]
-                case 5: events = [.PULL_DOWN, .PULL_LEFT]
-                case 6: events = [.PULL_LEFT, .RELEASE_Y]
-                case 7: events = [.PULL_LEFT, .PULL_UP]
-                default: events = [.RELEASE_XY]
+                if let value = mapHatSwitch(value: value, element: element) {
+                    hidEvent = (.HATSWITCH, 0, value)
                 }
-
+                
+            case kHIDUsage_GD_DPadUp:
+                hidEvent = (.DPAD_UP, 0, intValue == 0 ? 0 : 1)
+                
+            case kHIDUsage_GD_DPadDown:
+                hidEvent = (.DPAD_DOWN, 0, intValue == 0 ? 0 : 1)
+                
+            case kHIDUsage_GD_DPadRight:
+                hidEvent = (.DPAD_RIGHT, 0, intValue == 0 ? 0 : 1)
+                
+            case kHIDUsage_GD_DPadLeft:
+                hidEvent = (.DPAD_LEFT, 0, intValue == 0 ? 0 : 1)
+                
             default:
                 debug(.hid, "Unknown HID usage: \(usage)")
             }
         }
-
-        // Only proceed if the event is different than the previous one
-        if events == nil || oldEvents[usage] == events { return }
-        oldEvents[usage] = events!
         
-        // Trigger events
-        processJoystickEvents(events: events!)
+        if let hid = hidEvent {
+            
+            // Notify the GUI
+            if let controller = myAppDelegate.settingsController, controller.isVisible {
+                controller.devicesVC?.refreshDeviceEvent(event: hid.0, nr: hid.1, value: hid.2)
+            }
+            
+            // Map the HID event to an action list
+            if let events = mapping?[hid.0]?[hid.1]?[hid.2] {
+                
+                // Only proceed if the event is different than the previous one
+                if oldEvents[usage] != events {
+                    
+                    // Trigger events
+                    processJoystickEvents(events: events)
+                    oldEvents[usage] = events
+                }
+            }
+        }
     }
     
     //
@@ -497,68 +372,59 @@ class GamePad {
     //
     
     @discardableResult
-    func processJoystickEvents(events: [vc64.GamePadAction]) -> Bool {
+    func processJoystickEvents(events: [GamePadAction]) -> Bool {
+        
+        let emu = manager.controller.emu!
 
-        let c64 = manager.parent.emu!
+        if port == 1 { for e in events { emu.port1.joystick.trigger(e) } }
+        if port == 2 { for e in events { emu.port2.joystick.trigger(e) } }
 
-        if let id = port {
-
-            for event in events {
-                c64.put(.JOY_EVENT, action: vc64.GamePadCmd(port: id, action: event))
-            }
+        // Notify the GUI
+        if let controller = myAppDelegate.settingsController, controller.isVisible {
+            controller.devicesVC?.refreshDeviceActions(actions: events)
         }
-
-        // Notify other components (if requested)
+        
         // if notify { myAppDelegate.devicePulled(events: events) }
-        if let controller = myAppDelegate.prefController, controller.isVisible {
-            controller.refreshDeviceEvents(events: events)
-        }
-
+        
         return events != []
     }
-
+    
     @discardableResult
-    func processMouseEvents(events: [vc64.GamePadAction]) -> Bool {
+    func processMouseEvents(events: [GamePadAction]) -> Bool {
+        
+        let emu = manager.controller.emu!
 
-        let c64 = manager.parent.emu!
-
-        if let id = port {
-
-            for event in events {
-                c64.put(.MOUSE_BUTTON, action: vc64.GamePadCmd(port: id, action: event))
-            }
-        }
+        if port == 1 { for e in events { emu.port1.mouse.trigger(e) } }
+        if port == 2 { for e in events { emu.port2.mouse.trigger(e) } }
 
         return events != []
     }
     
     func processMouseEvents(delta: NSPoint) {
         
-        let c64 = manager.parent.emu!
+        let emu = manager.controller.emu!
 
         // Check for a shaking mouse
-        c64.port1.mouse.detectShakeRel(delta)
+        emu.port1.mouse.detectShakeRel(delta)
 
-        if let id = port {
-
-            c64.put(.MOUSE_MOVE_REL, coord: vc64.CoordCmd(port: id, x: delta.x, y: delta.y))
-        }
+        if port == 1 { emu.port1.mouse.setDxDy(delta) }
+        if port == 2 { emu.port2.mouse.setDxDy(delta) }
     }
-
+    
     func processKeyDownEvent(macKey: MacKey) -> Bool {
-
+        
         // Only proceed if a keymap is present
         if keyMap == nil { return false }
-
+        
         // Only proceed if this key is used for emulation
         let events = keyDownEvents(macKey)
         if events.isEmpty { return false }
-
+        
         // Process the events
         processKeyboardEvent(events: events)
         return true
     }
-
+    
     func processKeyUpEvent(macKey: MacKey) -> Bool {
         
         // Only proceed if a keymap is present
@@ -572,18 +438,17 @@ class GamePad {
         processKeyboardEvent(events: events)
         return true
     }
+    
+    func processKeyboardEvent(events: [GamePadAction]) {
+        
+        let emu = manager.controller.emu!
 
-    func processKeyboardEvent(events: [vc64.GamePadAction]) {
-
-        let c64 = manager.parent.emu!
-
-        if let id = port {
-
-            let type  = isMouse ? vc64.Cmd.MOUSE_BUTTON : vc64.Cmd.JOY_EVENT
-
-            for e in events {
-                c64.put(type, action: vc64.GamePadCmd(port: id, action: e))
-            }
+        if isMouse {
+            if port == 1 { for e in events { emu.port1.mouse.trigger(e) } }
+            if port == 2 { for e in events { emu.port2.mouse.trigger(e) } }
+        } else {
+            if port == 1 { for e in events { emu.port1.joystick.trigger(e) } }
+            if port == 2 { for e in events { emu.port2.joystick.trigger(e) } }
         }
     }
 }

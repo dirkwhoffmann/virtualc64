@@ -63,15 +63,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="220" height="362"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ej-5u-yUe">
+                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="32" horizontalPageScroll="10" verticalLineScroll="32" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ej-5u-yUe">
                                 <rect key="frame" x="0.0" y="0.0" width="220" height="362"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="dVA-9k-CoE">
-                                    <rect key="frame" x="1" y="1" width="218" height="343"/>
+                                    <rect key="frame" x="1" y="1" width="218" height="360"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="7MY-3B-eVb" viewBased="YES" indentationPerLevel="13" outlineTableColumn="EUQ-eO-eBG" id="Wg2-c5-D1r" customClass="SettingsOutlineView" customModule="VirtualC64" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="219" height="315"/>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="32" rowSizeStyle="automatic" headerView="7MY-3B-eVb" viewBased="YES" indentationPerLevel="13" outlineTableColumn="EUQ-eO-eBG" id="Wg2-c5-D1r" customClass="SettingsOutlineView" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="219" height="332"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -89,12 +89,12 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
-                                                        <tableCellView id="zPj-aS-og0">
-                                                            <rect key="frame" x="8" y="0.0" width="202" height="24"/>
+                                                        <tableCellView identifier="SidebarCell" id="zPj-aS-og0">
+                                                            <rect key="frame" x="8" y="0.0" width="201" height="32"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dMa-ed-N6l">
-                                                                    <rect key="frame" x="62" y="4" width="140" height="16"/>
+                                                                    <rect key="frame" x="33" y="8" width="167" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Maf-Tk-JZd">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -103,7 +103,7 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44G-4k-sWX">
-                                                                    <rect key="frame" x="3" y="-4.5" width="24.5" height="31"/>
+                                                                    <rect key="frame" x="3" y="4.5" width="25.5" height="24"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="gear" catalog="system" id="fs9-10-4ww"/>
                                                                 </imageView>
@@ -116,6 +116,9 @@
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
+                                            <connections>
+                                                <outlet property="sidebarViewController" destination="Q7S-mt-x3K" id="24O-TC-xby"/>
+                                            </connections>
                                         </outlineView>
                                     </subviews>
                                     <nil key="backgroundColor"/>
@@ -243,6 +246,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="aspectRatioAction:" target="FI5-1X-4kk" id="Tuq-6l-OM4"/>
+                                </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0uy-g8-gcU">
                                 <rect key="frame" x="38" y="314" width="268" height="25"/>
@@ -251,6 +257,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="exitOnEscAction:" target="FI5-1X-4kk" id="d6v-Kd-X9o"/>
+                                </connections>
                             </button>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Up-dv-lNn">
                                 <rect key="frame" x="315" y="373" width="143" height="20"/>
@@ -262,12 +271,15 @@
                                 </textFieldCell>
                             </textField>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-B2-Yfj">
-                                <rect key="frame" x="333" y="284" width="268" height="25"/>
+                                <rect key="frame" x="333" y="314" width="268" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Close unsaved instances without asking" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="ii8-jq-R72">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="closeWithoutAskingAction:" target="FI5-1X-4kk" id="KvV-6m-689"/>
+                                </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kHQ-qg-hnK">
                                 <rect key="frame" x="333" y="344" width="248" height="25"/>
@@ -276,14 +288,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                            </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ld9-Hp-2ie">
-                                <rect key="frame" x="333" y="314" width="287" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Detach unsaved hard drives without asking" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8s6-f5-ene">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
+                                <connections>
+                                    <action selector="ejectWithoutAskingAction:" target="FI5-1X-4kk" id="ddy-DI-Ibz"/>
+                                </connections>
                             </button>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ebX-CP-upJ">
                                 <rect key="frame" x="19" y="241" width="119" height="17"/>
@@ -319,6 +326,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="retainMouseAction:" target="FI5-1X-4kk" id="fue-kd-I7y"/>
+                                </connections>
                             </button>
                             <button tag="1" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ffJ-Iq-xNA">
                                 <rect key="frame" x="74" y="181" width="88" height="18"/>
@@ -327,6 +337,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="releaseMouseAction:" target="FI5-1X-4kk" id="X7Y-zw-bAk"/>
+                                </connections>
                             </button>
                             <button tag="2" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tHI-il-JpR">
                                 <rect key="frame" x="73" y="86" width="221" height="18"/>
@@ -335,6 +348,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="retainMouseAction:" target="FI5-1X-4kk" id="khi-zm-DdT"/>
+                                </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2tZ-P2-vNB">
                                 <rect key="frame" x="153" y="134" width="72" height="19"/>
@@ -373,6 +389,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="pauseInBackgroundAction:" target="FI5-1X-4kk" id="rPD-ei-A8h"/>
+                                </connections>
                             </button>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GJo-7v-8tY">
                                 <rect key="frame" x="74" y="137" width="74" height="16"/>
@@ -406,9 +425,19 @@
                         <viewLayoutGuide key="layoutMargins" id="Wy9-s0-QpB"/>
                     </view>
                     <connections>
+                        <outlet property="aspectRatioButton" destination="vGJ-35-LiN" id="n8q-H9-hCg"/>
+                        <outlet property="closeWithoutAskingButton" destination="RYS-B2-Yfj" id="Bwu-w0-FNX"/>
+                        <outlet property="ejectWithoutAskingButton" destination="kHQ-qg-hnK" id="9os-qB-y1k"/>
+                        <outlet property="exitOnEscButton" destination="0uy-g8-gcU" id="K78-Y2-HqS"/>
                         <outlet property="lockImage" destination="z0F-B9-xK6" id="ICD-ob-z8P"/>
                         <outlet property="lockInfo1" destination="GHX-eW-NLO" id="ynE-9T-6Ry"/>
                         <outlet property="lockInfo2" destination="cBb-Yn-6GG" id="zjA-oy-p7t"/>
+                        <outlet property="pauseInBackground" destination="7bB-Bn-rfp" id="ilc-YS-Vl9"/>
+                        <outlet property="releaseMouseByShaking" destination="ffJ-Iq-xNA" id="VoY-vi-2Ed"/>
+                        <outlet property="releaseMouseKeyComb" destination="gpp-BS-1z4" id="BKV-W0-6Ck"/>
+                        <outlet property="retainMouseByClick" destination="PjQ-MW-rJn" id="XMi-Pg-rts"/>
+                        <outlet property="retainMouseByEntering" destination="tHI-il-JpR" id="grp-uk-Tcr"/>
+                        <outlet property="retainMouseKeyComb" destination="2tZ-P2-vNB" id="lc9-o3-92M"/>
                     </connections>
                 </viewController>
                 <customObject id="YXC-Ol-OU1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -723,6 +752,7 @@
                         <outlet property="lockInfo1" destination="32e-HQ-JLr" id="eFa-aD-Sgf"/>
                         <outlet property="lockInfo2" destination="fkM-8c-dJ8" id="jGv-Ez-utb"/>
                         <outlet property="screenshotCutoutPopup" destination="aPz-40-8B3" id="ehh-5M-xDR"/>
+                        <outlet property="screenshotCutoutText" destination="hMN-Yw-88Y" id="ZaZ-B2-eUH"/>
                         <outlet property="screenshotFormatPopup" destination="lfc-Lb-SOl" id="Rm0-qf-A2s"/>
                         <outlet property="screenshotHeight" destination="aml-VL-ann" id="lah-Di-PxN"/>
                         <outlet property="screenshotHeightText" destination="uoC-hY-6nU" id="Z4p-MJ-tPq"/>
@@ -1308,7 +1338,7 @@
                         <outlet property="right2" destination="slt-hE-nqN" id="yN3-0u-ugm"/>
                         <outlet property="right2button" destination="tLD-2T-tLO" id="sBP-Nv-p7g"/>
                         <outlet property="up1" destination="m6F-5H-KEl" id="RQB-BF-8nn"/>
-                        <outlet property="up1button" destination="pom-aI-7ir" id="XFh-zb-ygf"/>
+                        <outlet property="up1button" destination="pom-aI-7ir" id="7Ma-Kx-EzL"/>
                         <outlet property="up2" destination="M2Z-aw-Ipc" id="WuH-MZ-imN"/>
                         <outlet property="up2button" destination="zUJ-ML-a8s" id="Q3q-hC-0f4"/>
                     </connections>
@@ -1571,14 +1601,14 @@
                                 <rect key="frame" x="324" y="20" width="296" height="169"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" drawsBackground="NO" id="Hh0-gn-Ulv">
-                                    <rect key="frame" x="0.0" y="0.0" width="279" height="169"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="296" height="169"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Ic7-MR-4Lq">
-                                            <rect key="frame" x="0.0" y="0.0" width="279" height="169"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="296" height="169"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="279" height="169"/>
+                                            <size key="minSize" width="296" height="169"/>
                                             <size key="maxSize" width="296" height="10000000"/>
                                             <connections>
                                                 <outlet property="delegate" destination="r4r-XO-jL2" id="r8R-ho-soG"/>
@@ -4744,7 +4774,7 @@
         <image name="devKeyset2Template" width="20" height="20"/>
         <image name="devMouseTemplate" width="20" height="20"/>
         <image name="devNoneTemplate" width="20" height="20"/>
-        <image name="gamepad" width="316" height="151"/>
+        <image name="gamepad" width="244" height="151"/>
         <image name="gear" catalog="system" width="17" height="16"/>
         <image name="joystick2" width="261" height="300"/>
         <image name="lock" width="121" height="171"/>

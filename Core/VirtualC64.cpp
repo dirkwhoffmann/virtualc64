@@ -1056,13 +1056,22 @@ void KeyboardAPI::abortAutoTyping()
 const JoystickInfo &
 JoystickAPI::getInfo() const
 {
+    VC64_PUBLIC
     return joystick->getInfo();
 }
 
 const JoystickInfo &
 JoystickAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return joystick->getCachedInfo();
+}
+
+void
+JoystickAPI::trigger(GamePadAction event)
+{
+    VC64_PUBLIC
+    emu->put(Cmd::JOY_EVENT, GamePadCmd { .port = joystick->objid, .action = event });
 }
 
 
@@ -1073,12 +1082,14 @@ JoystickAPI::getCachedInfo() const
 const PaddleInfo &
 PaddleAPI::getInfo() const
 {
+    VC64_PUBLIC
     return paddle->getInfo();
 }
 
 const PaddleInfo &
 PaddleAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return paddle->getCachedInfo();
 }
 
@@ -1090,18 +1101,21 @@ PaddleAPI::getCachedInfo() const
 const DatasetteInfo &
 DatasetteAPI::getInfo() const
 {
+    VC64_PUBLIC
     return datasette->getInfo();
 }
 
 const DatasetteInfo &
 DatasetteAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return datasette->getCachedInfo();
 }
 
 void
 DatasetteAPI::insertTape(MediaFile &file)
 {
+    VC64_PUBLIC
     datasette->insertTape(file);
     emu->markAsDirty();
 }
@@ -1109,6 +1123,7 @@ DatasetteAPI::insertTape(MediaFile &file)
 void
 DatasetteAPI::ejectTape()
 {
+    VC64_PUBLIC
     datasette->ejectTape();
     emu->markAsDirty();
 }
@@ -1121,36 +1136,42 @@ DatasetteAPI::ejectTape()
 void
 RS232API::operator<<(char c)
 {
+    VC64_PUBLIC
     *rs232 << c;
 }
 
 void 
 RS232API::operator<<(const string &s)
 {
+    VC64_PUBLIC
     *rs232 << s;
 }
 
 std::u16string
 RS232API::readIncoming()
 {
+    VC64_PUBLIC
     return rs232->readIncoming();
 }
 
 std::u16string 
 RS232API::readOutgoing()
 {
+    VC64_PUBLIC
     return rs232->readOutgoing();
 }
 
 int
 RS232API::readIncomingPrintableByte()
 {
+    VC64_PUBLIC
     return rs232->readIncomingPrintableByte();
 }
 
 int
 RS232API::readOutgoingPrintableByte()
 {
+    VC64_PUBLIC
     return rs232->readOutgoingPrintableByte();
 }
 
@@ -1159,13 +1180,46 @@ RS232API::readOutgoingPrintableByte()
 // Mouse
 //
 
-bool MouseAPI::detectShakeXY(double x, double y)
+const MouseConfig &
+MouseAPI::getConfig() const
 {
+    VC64_PUBLIC
+    return mouse->getConfig();
+}
+
+void
+MouseAPI::setXY(double x, double y)
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::MOUSE_MOVE_ABS, CoordCmd { .port = mouse->objid, .x = x, .y = y }));
+}
+
+void
+MouseAPI::setDxDy(double dx, double dy)
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::MOUSE_MOVE_REL, CoordCmd { .port = mouse->objid, .x = dx, .y = dy }));
+}
+
+void
+MouseAPI::trigger(GamePadAction action)
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::MOUSE_BUTTON, GamePadCmd { .port = mouse->objid, .action = action }));
+}
+
+
+bool
+MouseAPI::detectShakeXY(double x, double y)
+{
+    VC64_PUBLIC
     return mouse->detectShakeXY(x, y);
 }
 
-bool MouseAPI::detectShakeDxDy(double dx, double dy)
+bool
+MouseAPI::detectShakeDxDy(double dx, double dy)
 {
+    VC64_PUBLIC
     return mouse->detectShakeDxDy(dx, dy);
 }
 

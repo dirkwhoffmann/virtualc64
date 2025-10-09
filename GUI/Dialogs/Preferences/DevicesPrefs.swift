@@ -18,7 +18,8 @@ extension PreferencesController {
     }
 
     func refreshDevicesTab() {
-                
+
+        /*
         let pad = selectedDev
 
         func property(_ key: String) -> String {
@@ -71,6 +72,7 @@ extension PreferencesController {
         devHatScheme.isHidden = pad == nil
         devActivity.isHidden = pad == nil
         devActivity2.isHidden = pad == nil
+        */
     }
 
     func refreshDeviceEvents(events: [vc64.GamePadAction]) {
@@ -112,7 +114,8 @@ extension PreferencesController {
     }
     
     @IBAction func devLeftAction(_ sender: NSPopUpButton!) {
-        
+
+        /*
         let selectedTag = "\(sender.selectedTag())"
 
         if let device = selectedDev {
@@ -121,11 +124,13 @@ extension PreferencesController {
                                            selectedTag)
             device.updateMappingScheme()
         }
+        */
         refresh()
     }
 
     @IBAction func devRightAction(_ sender: NSPopUpButton!) {
-        
+
+        /*
         let selectedTag = "\(sender.selectedTag())"
 
         if let device = selectedDev {
@@ -134,11 +139,13 @@ extension PreferencesController {
                                             selectedTag)
             device.updateMappingScheme()
         }
+        */
         refresh()
     }
 
     @IBAction func devHatSwitchAction(_ sender: NSPopUpButton!) {
-        
+
+        /*
         let selectedTag = "\(sender.selectedTag())"
         
         if let device = selectedDev {
@@ -147,13 +154,15 @@ extension PreferencesController {
                                                 selectedTag)
             device.updateMappingScheme()
         }
+        */
         refresh()
     }
         
     @IBAction func devPresetAction(_ sender: NSPopUpButton!) {
         
         assert(sender.selectedTag() == 0)
-        
+
+        /*
         if let device = selectedDev {
             
             let db = myAppDelegate.database
@@ -162,6 +171,7 @@ extension PreferencesController {
             db.setHatSwitch(vendorID: device.vendorID, productID: device.productID, nil)
             device.updateMappingScheme()
         }
+        */
         
         refresh()
     }

@@ -11,10 +11,6 @@ extension PreferencesController {
     
     func refreshGeneralTab() {
 
-        // Screenshots
-        // genScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
-        // genScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
-
         // Fullscreen
         genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
         genExitOnEscButton.state = pref.exitOnEsc ? .on : .off
