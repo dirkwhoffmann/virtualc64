@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Onboarding Layer View Controller-->
+        <scene sceneID="0wo-sd-BhL">
+            <objects>
+                <viewController storyboardIdentifier="OnboardingLayerViewController" id="2EI-pN-4NJ" customClass="OnboardingLayerViewController" customModule="vAmiga" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Mco-Zt-9zA" customClass="OnboardingLayerView" customModule="vAmiga" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k9J-le-DXY">
+                                <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="c64bg2" id="09e-yb-16v"/>
+                            </imageView>
+                            <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dG7-CX-69H">
+                                <rect key="frame" x="20" y="17" width="25" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="arrowshape.backward.circle" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="nZZ-wO-qzN">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="previousPage:" target="2EI-pN-4NJ" id="coP-KN-aO4"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWB-5Q-lfh">
+                                <rect key="frame" x="761" y="17.5" width="25" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.octagon.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="A0U-KD-fdv">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="skipAction:" target="2EI-pN-4NJ" id="JEi-KA-C92"/>
+                                </connections>
+                            </button>
+                            <box fixedFrame="YES" title="Box" titlePosition="noTitle" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IpI-Dm-hsS">
+                                <rect key="frame" x="100" y="64" width="600" height="478"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" id="3sf-bE-Ihe" customClass="OnboardingPageContainerView" customModule="vAmiga" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="478"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aD4-yh-y6k">
+                                            <rect key="frame" x="268" y="414" width="64" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="icon" id="6sl-RL-QND"/>
+                                        </imageView>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nEt-Pn-6uJ">
+                                            <rect key="frame" x="234" y="28" width="124" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Continue" bezelStyle="rounded" alignment="center" controlSize="large" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Mt9-tO-mNq">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" size="15" name="Optima-Regular"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="nextPage:" target="2EI-pN-4NJ" id="drM-Do-hPX"/>
+                                            </connections>
+                                        </button>
+                                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h7X-KB-SZK" customClass="PageDotsIndicator" customModule="vAmiga" customModuleProvider="target">
+                                            <rect key="frame" x="215" y="76" width="163" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </customView>
+                                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fwM-FR-pts">
+                                            <rect key="frame" x="0.0" y="124" width="600" height="320"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        </customView>
+                                    </subviews>
+                                </view>
+                            </box>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="nextButton" destination="nEt-Pn-6uJ" id="aTu-fK-TvC"/>
+                        <outlet property="pageContainerView" destination="fwM-FR-pts" id="UOO-OO-oqZ"/>
+                        <outlet property="pageDotIndicator" destination="h7X-KB-SZK" id="yDC-yT-XyH"/>
+                        <outlet property="prevButton" destination="dG7-CX-69H" id="wuT-cg-8AE"/>
+                        <outlet property="skipButton" destination="hWB-5Q-lfh" id="Veg-Yx-VhC"/>
+                    </connections>
+                </viewController>
+                <customObject id="dfb-Ye-tYI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="487" y="55"/>
+        </scene>
+        <!--Onboarding View Controller1-->
+        <scene sceneID="xwE-8F-bjL">
+            <objects>
+                <viewController storyboardIdentifier="Step1" id="G1J-Wq-3fF" customClass="OnboardingViewController1" customModule="vAmiga" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="BDl-dk-6Qr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="320"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="erf-nf-QJ0">
+                                <rect key="frame" x="34" y="191" width="4" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="2Nl-B8-ABM">
+                                    <font key="font" textStyle="title2" name=".SFNS-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wJ4-ad-5WC" customClass="OnboardingButton" customModule="vAmiga" customModuleProvider="target">
+                                <rect key="frame" x="27" y="0.0" width="172" height="172"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAp-EQ-PC1">
+                                        <rect key="frame" x="28" y="47" width="116" height="116"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="iconGeneral" id="bQT-fT-jKw"/>
+                                    </imageView>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eus-oy-tAZ">
+                                        <rect key="frame" x="46" y="19" width="79" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="C64 PAL" id="yaE-MK-H3I">
+                                            <font key="font" size="15" name="Optima-Regular"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="tag">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="modelAction:" target="G1J-Wq-3fF" id="xpP-HQ-Qhg"/>
+                                    <outlet property="icon" destination="lAp-EQ-PC1" id="xwh-qZ-Ptm"/>
+                                    <outlet property="label" destination="Eus-oy-tAZ" id="2Yt-O3-mB2"/>
+                                </connections>
+                            </customView>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xp1-mw-8hg" customClass="OnboardingButton" customModule="vAmiga" customModuleProvider="target">
+                                <rect key="frame" x="214" y="0.0" width="172" height="172"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wg7-cU-4tO">
+                                        <rect key="frame" x="43" y="19" width="86" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="C64 NTSC" id="x5C-Qq-7YM">
+                                            <font key="font" size="15" name="Optima-Regular"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ek-Bd-agI">
+                                        <rect key="frame" x="28" y="47" width="116" height="116"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="iconGeneral" id="Zta-rb-T45"/>
+                                    </imageView>
+                                </subviews>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="tag">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="modelAction:" target="G1J-Wq-3fF" id="vGo-o1-Bos"/>
+                                    <outlet property="icon" destination="5Ek-Bd-agI" id="Cz6-gW-HN3"/>
+                                    <outlet property="label" destination="wg7-cU-4tO" id="761-Ri-2mP"/>
+                                </connections>
+                            </customView>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cI1-aW-lhn" customClass="OnboardingButton" customModule="vAmiga" customModuleProvider="target">
+                                <rect key="frame" x="410" y="0.0" width="172" height="172"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d7n-6c-iZv">
+                                        <rect key="frame" x="28" y="47" width="116" height="116"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="iconGeneral" id="gqE-5X-Fky"/>
+                                    </imageView>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dEz-fg-Jgu">
+                                        <rect key="frame" x="42" y="19" width="88" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Amiga 2000" id="AIq-vM-Lya">
+                                            <font key="font" size="15" name="Optima-Regular"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="tag">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="modelAction:" target="G1J-Wq-3fF" id="087-NB-jgD"/>
+                                    <outlet property="icon" destination="d7n-6c-iZv" id="pEt-s1-pJU"/>
+                                    <outlet property="label" destination="dEz-fg-Jgu" id="V75-qi-bCf"/>
+                                </connections>
+                            </customView>
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OdJ-60-pId">
+                                <rect key="frame" x="66" y="199" width="470" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" selectable="YES" alignment="center" title="We’ll have you ready in just a few steps. Start by selecting the Amiga model you want to emulate." id="4Mp-o6-HCI">
+                                    <font key="font" size="15" name="Optima-Regular"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rnB-yd-isk">
+                                <rect key="frame" x="208" y="263" width="235" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Getting Started" id="w6Q-2f-JbM">
+                                    <font key="font" size="36" name="Optima-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yb7-0Q-LYv">
+                                <rect key="frame" x="159" y="263" width="43" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="logoRound" id="14a-hO-LZi"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="a1000Button" destination="xp1-mw-8hg" id="SBq-vE-zaB"/>
+                        <outlet property="a2000Button" destination="cI1-aW-lhn" id="dPA-2R-ivW"/>
+                        <outlet property="a500Button" destination="wJ4-ad-5WC" id="r1H-MR-tXz"/>
+                    </connections>
+                </viewController>
+                <customObject id="uG6-RA-R3V" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="387" y="670"/>
+        </scene>
+        <!--Onboarding View Controller2-->
+        <scene sceneID="6xw-kU-aTh">
+            <objects>
+                <viewController storyboardIdentifier="Step2" id="sj5-Aa-QdR" customClass="OnboardingViewController2" customModule="vAmiga" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="EDk-ow-yRn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="320"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ug8-iY-Nuh" customClass="OnboardingButton" customModule="vAmiga" customModuleProvider="target">
+                                <rect key="frame" x="99" y="0.0" width="172" height="172"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="umc-h1-sxA">
+                                        <rect key="frame" x="28" y="37" width="116" height="116"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="rom_mega65" id="akR-LX-2iG"/>
+                                    </imageView>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K6E-1o-Cnl">
+                                        <rect key="frame" x="51" y="14" width="71" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Aros Rom" id="4Y0-1W-aqC">
+                                            <font key="font" size="15" name="Optima-Regular"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="tag">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="romAction:" target="sj5-Aa-QdR" id="wXb-im-Nij"/>
+                                    <outlet property="icon" destination="umc-h1-sxA" id="Vcr-IN-PIe"/>
+                                    <outlet property="label" destination="K6E-1o-Cnl" id="3gS-un-TG3"/>
+                                </connections>
+                            </customView>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BCl-j3-9Kd" customClass="OnboardingButton" customModule="vAmiga" customModuleProvider="target">
+                                <rect key="frame" x="330" y="0.0" width="172" height="172"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pf1-Ea-6Oa">
+                                        <rect key="frame" x="28" y="37" width="116" height="116"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="rom_medium" id="wrR-hS-AsO"/>
+                                    </imageView>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HCd-Ak-dTY">
+                                        <rect key="frame" x="52" y="14" width="69" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="DiagROM" id="Wl8-Wt-Mvc">
+                                            <font key="font" size="15" name="Optima-Regular"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="tag">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="romAction:" target="sj5-Aa-QdR" id="pwn-vz-QgH"/>
+                                    <outlet property="icon" destination="Pf1-Ea-6Oa" id="bLg-6K-0Om"/>
+                                    <outlet property="label" destination="HCd-Ak-dTY" id="eun-1E-qHo"/>
+                                </connections>
+                            </customView>
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hsh-Pc-ukV">
+                                <rect key="frame" x="62" y="194" width="476" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" selectable="YES" alignment="center" id="0De-rT-6U6">
+                                    <font key="font" size="15" name="Optima-Regular"/>
+                                    <string key="title">For legal reasons, vAmiga does not include original Amiga ROMs. Choose to start with the AROS Kickstart replacement or DiagROM, and add your own ROMs later in Settings.</string>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYx-5h-fFH">
+                                <rect key="frame" x="280" y="263" width="91" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Roms" id="93P-Bz-6vY">
+                                    <font key="font" size="36" name="Optima-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MEM-Zx-5fS">
+                                <rect key="frame" x="230" y="263" width="43" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="logoRound" id="5X3-JY-FFK"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="arosButton" destination="Ug8-iY-Nuh" id="QfE-rs-whz"/>
+                        <outlet property="diagButton" destination="BCl-j3-9Kd" id="0yG-bw-22V"/>
+                    </connections>
+                </viewController>
+                <customObject id="B3P-aX-pIF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1021" y="670"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrowshape.backward.circle" catalog="system" width="15" height="15"/>
+        <image name="c64bg2" width="1561" height="1149"/>
+        <image name="icon" width="1024" height="1024"/>
+        <image name="iconGeneral" width="256" height="256"/>
+        <image name="logoRound" width="1024" height="1024"/>
+        <image name="rom_medium" width="129" height="157"/>
+        <image name="rom_mega65" width="130" height="157"/>
+        <image name="xmark.octagon.fill" catalog="system" width="17" height="15"/>
+    </resources>
+</document>

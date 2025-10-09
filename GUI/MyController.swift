@@ -160,8 +160,6 @@ extension MyController {
         macAudio = MacAudio(with: self)
 
         // Create toolbar
-        // let tb = MyToolbar(identifier: "MyToolbar")
-        // tb.controller = self
         window?.toolbar = MyToolbar(controller: self)
 
         // Create keyboard controller
@@ -188,24 +186,21 @@ extension MyController {
         config.applyUserDefaults()
 
         do {
-            // Let the C64 throw an exception if it is not ready to power on
-            try emu?.isReady()
+            // Press the virtual power switch
+            try emu?.powerOn()
 
             // Start emulation
             try emu?.run()
 
         } catch {
             
-            // Open the Rom dialog
-            openConfigurator(tab: "Roms")
+            // Switch off
+            emu?.powerOff()
+
+            // Open the onboarding agent
+            renderer.onboarding.open(delay: 1.0)
         }
 
-        // Add media file (if provided on startup)
-        // if let url = mydocument.launchURL { try? mm.addMedia(url: url) }
-
-        // Create speed monitor
-        // speedometer = Speedometer()
-        
         // Update toolbar
         toolbar.validateVisibleItems()
         

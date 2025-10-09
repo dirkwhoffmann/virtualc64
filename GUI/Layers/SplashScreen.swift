@@ -20,9 +20,9 @@ class SplashScreen: Layer {
                                             scanlineDistance: 0)
     
     override init(renderer: Renderer) {
-
+        
         super.init(renderer: renderer)
-
+        
         alpha.set(1.0)
         let img = NSImage(named: "background")!
         bgTexture = img.toTexture(device: device, vflip: false)
@@ -46,7 +46,7 @@ class SplashScreen: Layer {
         
         // Select the texture sampler
         encoder.setFragmentSamplerState(ressourceManager.samplerLinear, index: 0)
-
+        
         // Setup uniforms
         encoder.setFragmentBytes(&renderer.shaderOptions,
                                  length: MemoryLayout<ShaderOptions>.stride,
@@ -55,7 +55,7 @@ class SplashScreen: Layer {
                                  length: MemoryLayout<FragmentUniforms>.stride,
                                  index: 1)
     }
-        
+    
     func render(_ encoder: MTLRenderCommandEncoder) {
         
         // Configure the vertex shader
@@ -65,7 +65,7 @@ class SplashScreen: Layer {
         
         // Configure the fragment shader
         setupFragmentShader(encoder: encoder)
-                
+        
         // Render
         bgRect!.drawPrimitives(encoder)
     }

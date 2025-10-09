@@ -48,6 +48,8 @@
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */; };
 		50316E452E96CE7700BDF90F /* gamecontrollerdb.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */; };
+		50316E472E97B9CD00BDF90F /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50316E462E97B9C700BDF90F /* Onboarding.swift */; };
+		50316E492E97BC7800BDF90F /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50316E482E97BC7800BDF90F /* Onboarding.storyboard */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
 		5033EFAB2E92A07000C3E0EE /* MyToolbarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */; };
 		5033EFAD2E92A0CE00C3E0EE /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */; };
@@ -622,6 +624,8 @@
 		50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDirEntry.cpp; sourceTree = "<group>"; };
 		50300AED258B2C5400D261E3 /* FSDirEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDirEntry.h; sourceTree = "<group>"; };
 		50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = gamecontrollerdb.txt; sourceTree = "<group>"; };
+		50316E462E97B9C700BDF90F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
+		50316E482E97BC7800BDF90F /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbarItems.swift; sourceTree = "<group>"; };
 		5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
@@ -1508,6 +1512,7 @@
 				50157EF72825B047000E9DDD /* Extensions */,
 				50157EF62825B01D000E9DDD /* System */,
 				506CE96621998C4500B70A3A /* Metal */,
+				50A22A1E261871EC00C9FB1E /* Layers */,
 				5002FA7921C264C100DA4BBC /* Dialogs */,
 				50157EF82825B08B000E9DDD /* Input */,
 				50C4F055202D8B37004C5F21 /* XIB files */,
@@ -2011,7 +2016,6 @@
 				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 				50B165AD25B06A03009B576D /* TextureToolbox.swift */,
-				50A22A1E261871EC00C9FB1E /* Layers */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -2104,6 +2108,7 @@
 			children = (
 				50A22A1C261871E600C9FB1E /* Layer.swift */,
 				50A22A1F2618720100C9FB1E /* SplashScreen.swift */,
+				50316E462E97B9C700BDF90F /* Onboarding.swift */,
 				50A22A242618723200C9FB1E /* Canvas.swift */,
 				50A22A292618725200C9FB1E /* Console.swift */,
 				50FF1FCA26BAB3DA0061E5CE /* DropZone.swift */,
@@ -2274,6 +2279,7 @@
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 				50ABD2862DD88EAC00456555 /* Dashboard.storyboard */,
+				50316E482E97BC7800BDF90F /* Onboarding.storyboard */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -2441,6 +2447,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50316E492E97BC7800BDF90F /* Onboarding.storyboard in Resources */,
 				506A724821C033EF00DA0AC3 /* Configuration.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
@@ -2731,6 +2738,7 @@
 				50BD64192C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
+				50316E472E97B9CD00BDF90F /* Onboarding.swift in Sources */,
 				508C1E722C0C59A20097473C /* PaddleBase.cpp in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
 				50F5B6A22959C44E000457A0 /* Host.cpp in Sources */,

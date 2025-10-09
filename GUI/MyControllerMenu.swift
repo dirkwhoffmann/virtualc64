@@ -240,9 +240,9 @@ extension MyController: NSMenuItemValidation {
         // Apply new settings
         config.applyUserDefaults()
         pref.applyUserDefaults()
-
-        // Relaunch the emulator
-        try? emu?.run()
+        
+        // Launch the onboarding agent
+        renderer.onboarding.open(delay: 1.0)
     }
 
     @IBAction func importConfigAction(_ sender: Any!) {

@@ -10,7 +10,7 @@
 class Layer: NSObject {
     
     let renderer: Renderer
-
+    
     var controller: MyController { return renderer.parent }
     var ressourceManager: RessourceManager { return renderer.ressourceManager }
     var device: MTLDevice { return renderer.device }
@@ -19,7 +19,7 @@ class Layer: NSObject {
     
     // Alpha channel of this layer
     var alpha: AnimatedFloat = AnimatedFloat(0.0)
-
+    
     //
     // Initializing
     //
@@ -33,7 +33,7 @@ class Layer: NSObject {
     //
     // Querying the visual state
     //
-        
+    
     var isVisible: Bool { return alpha.current > 0.0 }
     var isOpaque: Bool { return alpha.current == 1.0 }
     var isTransparent: Bool { return alpha.current < 1.0 }
@@ -50,7 +50,7 @@ class Layer: NSObject {
     func open() { alpha.target = 1.0 }
     func close() { alpha.target = 0.0 }
     func toggle() { if isVisible { close() } else { open() } }
-
+    
     //
     // Performing continuous tasks
     //
@@ -58,7 +58,7 @@ class Layer: NSObject {
     func update(frames: Int64) {
         
         if alpha.animates {
-
+            
             alpha.move()
             alphaDidChange()
             
