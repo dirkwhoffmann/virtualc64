@@ -58,7 +58,7 @@ class GamePad {
     var keyUp = false, keyDown = false, keyLeft = false, keyRight = false
     
     // Indicates if other components should be notified when the device is used
-    var notify = false
+    // var notify = false
     
     /* Rescued information from the latest invocation of the action function.
      * This information is utilized to determine whether a joystick event has
@@ -383,9 +383,7 @@ class GamePad {
         if let controller = myAppDelegate.settingsController, controller.isVisible {
             controller.devicesVC?.refreshDeviceActions(actions: events)
         }
-        
-        // if notify { myAppDelegate.devicePulled(events: events) }
-        
+
         return events != []
     }
     

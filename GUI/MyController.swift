@@ -33,8 +33,8 @@ class MyController: NSWindowController, MessageReceiver {
     var inspectors: [Inspector] = []
     var dashboards: [Dashboard] = []
         
-    // Configuration panel of this emulator instance
-    var configurator: ConfigurationController?
+    // Settings panel
+    var settings: SettingsWindowController? { myAppDelegate.settingsController }
 
     // Snapshot and screenshot browsers
     var snapshotBrowser: SnapshotViewer?
@@ -316,14 +316,12 @@ extension MyController {
         var vol: Int { return Int(msg.drive.volume) }
         var pan: Int { return Int(msg.drive.pan) }
 
-        /*
         func passToInspector() {
             for inspector in inspectors { inspector.process(messsage: msg) }
         }
         func passToDashboard() {
-            // for dashboard in dashboards { dashboard.process(messsage: msg) }
+            for dashboard in dashboards { dashboard.process(messsage: msg) }
         }
-        */
         
         // Only proceed if the proxy object is still alive
         if emu == nil { return }
@@ -331,8 +329,11 @@ extension MyController {
         switch msg.type {
 
         case .CONFIG:
-            configurator?.refresh()
+
             refreshStatusBar()
+            passToInspector()
+            passToDashboard()
+            settings?.refresh()
 
         case .POWER:
 
@@ -348,28 +349,35 @@ extension MyController {
                 }
             }
 
-            toolbar.updateToolbar()
-            configurator?.refresh()
+            clearInfo()
+            passToInspector()
+            settings?.refresh()
 
         case .RUN:
             needsSaving = true
             jammed = false
             toolbar.updateToolbar()
             refreshStatusBar()
+            clearInfo()
+            passToInspector()
 
         case .PAUSE:
             toolbar.updateToolbar()
             refreshStatusBar()
+            passToInspector()
 
         case .STEP:
+            clearInfo()
+            passToInspector()
             needsSaving = true
             
         case .EOL_TRAP, .EOF_TRAP:
             break
             
         case .RESET:
-            break
-            
+            clearInfo()
+            passToInspector()
+
         case .SHUTDOWN:
             shutDown()
 
@@ -389,6 +397,7 @@ extension MyController {
 
         case .RSH_UPDATE:
             renderer.console.isDirty = true
+            passToInspector()
 
         case .RSH_SWITCH:
             break

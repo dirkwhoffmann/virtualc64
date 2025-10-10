@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 class ConfigurationController: DialogController {
 
     var config: Configuration { return parent.config }
@@ -334,3 +335,4 @@ extension ConfigurationController: NSTextFieldDelegate {
         }
     }
 }
+*/

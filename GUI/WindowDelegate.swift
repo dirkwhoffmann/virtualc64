@@ -22,7 +22,7 @@ extension MyController: NSWindowDelegate {
         MyAppDelegate.currentController = self
 
         // Update the preferences window (if open)
-        // myAppDelegate.settingsController?.refresh()
+        myAppDelegate.settingsController?.refresh()
 
         // Restart the emulator if it was paused when the window lost focus
         if pref.pauseInBackground && pauseInBackgroundSavedState { try? emu?.run() }

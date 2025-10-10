@@ -21,7 +21,7 @@ extension NSDraggingInfo {
 
 class DropView: NSImageView {
 
-    @IBOutlet var parent: ConfigurationController!
+    @IBOutlet var parent: SettingsViewController!
     var emu: EmulatorProxy? { return parent.emu }
 
     override func awakeFromNib() {
@@ -78,10 +78,10 @@ class RomDropView: DropView {
 
         } catch {
 
-            parent.parent.showAlert(.cantOpen(url: url),
-                                    error: error,
-                                    async: true,
-                                    window: parent.window)
+            parent.controller?.showAlert(.cantOpen(url: url),
+                                         error: error,
+                                         async: true,
+                                         window: parent.controller!.window)
             return false
         }
     }

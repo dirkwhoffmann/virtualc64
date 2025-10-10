@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 extension ConfigurationController {
 
     func refreshPerformanceTab() {
@@ -169,3 +170,4 @@ extension ConfigurationController {
         config.savePerformanceUserDefaults()
     }
 }
+*/

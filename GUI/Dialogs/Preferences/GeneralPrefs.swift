@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 extension PreferencesController {
     
     func refreshGeneralTab() {
@@ -101,3 +102,4 @@ extension PreferencesController {
         refresh()
     }
 }
+*/

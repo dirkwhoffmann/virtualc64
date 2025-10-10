@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 extension ConfigurationController {
 
     func refreshRomTab() {
@@ -189,3 +190,4 @@ extension ConfigurationController {
         }
     }
 }
+*/

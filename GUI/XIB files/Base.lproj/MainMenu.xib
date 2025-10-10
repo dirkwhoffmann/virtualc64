@@ -119,12 +119,6 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aWt-rp-gig"/>
-                            <menuItem title="Configure..." keyEquivalent="" id="8Bd-jD-aLS">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="configureAction:" target="-1" id="t8g-gP-hF2"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Inspector..." keyEquivalent="" id="lLA-nI-jYm">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                 <connections>

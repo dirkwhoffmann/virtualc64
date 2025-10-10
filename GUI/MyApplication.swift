@@ -36,7 +36,6 @@ public class MyAppDelegate: NSObject, NSApplicationDelegate {
     // Preferences
     var pref: Preferences!
     var settingsController: SettingsWindowController?
-    var prefController: PreferencesController?
 
     // Information provider for connected HID devices
     var database = DeviceDatabase()
@@ -117,18 +116,20 @@ extension MyAppDelegate {
 
     // Callen when a HID device has been added
     func deviceAdded() {
-        prefController?.refresh()
+        settingsController?.refresh()
     }
 
     // Callen when a HID device has been removed
     func deviceRemoved() {
-        prefController?.refresh()
+        settingsController?.refresh()
     }
 
     // Callen when a HID device has been pulled
+    /*
     func devicePulled(events: [vc64.GamePadAction]) {
-        prefController?.refreshDeviceEvents(events: events)
+        settingsController?.refresh()
     }
+    */
 }
 
 var myApp: MyApplication { return NSApp as! MyApplication }

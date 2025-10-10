@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 class PreferencesController: DialogController {
     
     var pref: Preferences { return parent.pref }
@@ -226,3 +227,4 @@ extension PreferencesController {
         select()
     }
 }
+*/

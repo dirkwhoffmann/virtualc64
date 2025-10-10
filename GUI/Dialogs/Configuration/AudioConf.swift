@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 extension ConfigurationController {
     
     func refreshAudioTab() {
@@ -176,3 +177,4 @@ extension ConfigurationController {
         config.saveAudioUserDefaults()
     }
 }
+*/

@@ -45,6 +45,12 @@ class RomSettingsViewController: SettingsViewController {
     override func viewDidLoad() {
 
         log(.lifetime)
+
+        basicDropView.parent = self
+        kernalDropView.parent = self
+        charDropView.parent = self
+        vc1541DropView.parent = self
+
         refreshRomSelector()
     }
 

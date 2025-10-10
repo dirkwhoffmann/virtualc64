@@ -364,7 +364,7 @@ extension MyController {
         }
 
         refreshStatusBar()
-        myAppDelegate.prefController?.refresh()
+        myAppDelegate.settingsController?.refresh()
     }
 
     @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {

@@ -214,16 +214,6 @@ extension MyController: NSMenuItemValidation {
             NSApp.activate(ignoringOtherApps: true)
         }
     }
-
-    @IBAction func preferencesAction(_ sender: Any!) {
-        
-        if myAppDelegate.prefController == nil {
-
-            myAppDelegate.prefController =
-            PreferencesController(with: self, nibName: "Preferences")
-        }
-        myAppDelegate.prefController?.showWindow(self)
-    }
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
 
@@ -240,7 +230,7 @@ extension MyController: NSMenuItemValidation {
         // Apply new settings
         config.applyUserDefaults()
         pref.applyUserDefaults()
-        
+
         // Launch the onboarding agent
         renderer.onboarding.open(delay: 1.0)
     }
@@ -314,19 +304,6 @@ extension MyController: NSMenuItemValidation {
     // Action methods (Machine menu)
     //
     
-    func openConfigurator(tab: String = "") {
-        
-        if configurator == nil {
-            configurator = ConfigurationController(with: self, nibName: "Configuration")
-        }
-        configurator?.showSheet(tab: tab)
-    }
-    
-    @IBAction func configureAction(_ sender: Any!) {
-        
-        openConfigurator()
-    }
-
     func addInspector() {
     
         let count = inspectors.count

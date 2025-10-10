@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 extension ConfigurationController {
     
     func awakeVideoPrefsFromNib() {
@@ -292,3 +293,4 @@ extension ConfigurationController {
         config.saveVideoUserDefaults()
     }
 }
+*/

@@ -30,7 +30,6 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
     var port2: MyToolbarMenuItem!
     var keyboard: MyToolbarItemGroup!
     var settings: MyToolbarItemGroup!
-    var preferences: MyToolbarItemGroup!
     var controls: MyToolbarItemGroup!
 
     // Set to true to gray out all toolbar items
@@ -180,30 +179,11 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
 
         case .settings:
 
-            let images: [SFSymbol] = [
-
-                .gear,
-                .engine
-            ]
-
-            let actions: [Selector] = [
-
-                #selector(preferencesAction),
-                #selector(configureAction),
-            ]
-
-            preferences = MyToolbarItemGroup(identifier: .preferences,
-                                             images: images,
-                                             actions: actions,
-                                             target: self,
-                                             label: "Preferences")
-
             settings = MyToolbarItemGroup(identifier: .settings,
                                           images: [.gear],
                                           actions: [#selector(settingsAction)],
                                           target: self,
                                           label: "Settings")
-
             return settings
 
         case .controls:
@@ -344,18 +324,6 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
     @objc private func settingsAction() {
 
         controller.settingsAction(self)
-    }
-
-    // DEPRECATED
-    @objc private func preferencesAction() {
-
-        controller.preferencesAction(self)
-    }
-
-    // DEPRECATED
-    @objc private func configureAction() {
-
-        controller.configureAction(self)
     }
 
     @objc private func runAction() {

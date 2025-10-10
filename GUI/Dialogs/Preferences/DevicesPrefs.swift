@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#if false
+
 extension PreferencesController {
     
     var selectedDev: GamePad? {
@@ -176,3 +178,4 @@ extension PreferencesController {
         refresh()
     }
 }
+#endif
