@@ -38,7 +38,8 @@ class OnboardingLayerViewController: NSViewController {
     var emu: EmulatorProxy! { layer.emu }
 
     // Onboarding settings
-    var amigaModel = 0
+    var model = 1
+    var pal = true
     var rom = 0
 
     // Array holding the individual view controllers for each panel
@@ -148,17 +149,19 @@ class OnboardingLayerViewController: NSViewController {
 
     func apply() {
 
-        /*
-        // Amiga model
-        config.revertTo(model: amigaModel)
+        var scheme: ConfigScheme
 
-        // Kickstart
-        switch rom {
-        case 0: mm.installAros()
-        case 1: mm.installDiagRom()
+        // C64 model
+        switch model {
+        case 0: scheme = pal ? .PAL_OLD : .NTSC_OLD
+        case 1: scheme = pal ? .PAL : .NTSC
+        case 2: scheme = pal ? .PAL_II : .NTSC_II
         default: fatalError()
         }
-        */
+        emu.set(scheme)
+
+        // Roms
+        emu.installOpenRoms()
     }
 
     func finish() {
@@ -204,29 +207,41 @@ class OnboardingViewController: NSViewController {
 
 class OnboardingViewController1: OnboardingViewController {
 
-    var amigaModel: Int {
-        get { layer.onboardingVC.amigaModel }
-        set { layer.onboardingVC.amigaModel = newValue; refresh() }
-    }
-    var a500: Bool { amigaModel == 0 }
-    var a1000: Bool { amigaModel == 1 }
-    var a2000: Bool { amigaModel == 2 }
+    @IBOutlet weak var model0Button: OnboardingButton!
+    @IBOutlet weak var model1Button: OnboardingButton!
+    @IBOutlet weak var model2Button: OnboardingButton!
+    @IBOutlet weak var palButton: OnboardingButton!
+    @IBOutlet weak var ntscButton: OnboardingButton!
+    @IBOutlet weak var palIcon: NSImageView!
+    @IBOutlet weak var ntscIcon: NSImageView!
 
-    @IBOutlet weak var a500Button: OnboardingButton!
-    @IBOutlet weak var a1000Button: OnboardingButton!
-    @IBOutlet weak var a2000Button: OnboardingButton!
+    var model: Int {
+        get { layer.onboardingVC.model }
+        set { layer.onboardingVC.model = newValue; refresh() }
+    }
+    var pal: Bool {
+        get { layer.onboardingVC.pal }
+        set { layer.onboardingVC.pal = newValue; refresh() }
+    }
 
     @IBAction func modelAction(_ sender: NSControl) {
 
-        amigaModel = sender.tag
+        model = sender.tag
 
     }
 
+    @IBAction func palAction(_ sender: NSControl) {
+
+        pal = sender.tag == 0
+    }
+    
     override func refresh() {
 
-        a500Button.state = a500 ? .on : .off
-        a1000Button.state = a1000 ? .on : .off
-        a2000Button.state = a2000 ? .on : .off
+        model0Button.state = model == 0 ? .on : .off
+        model1Button.state = model == 1 ? .on : .off
+        model2Button.state = model == 2 ? .on : .off
+        palButton.state = pal ? .on : .off
+        ntscButton.state = !pal ? .on : .off
     }
 }
 
@@ -236,23 +251,18 @@ class OnboardingViewController2: OnboardingViewController {
         get { layer.onboardingVC.rom }
         set { layer.onboardingVC.rom = newValue; refresh() }
     }
+    var openRoms: Bool { rom == 0 }
 
-    var aros: Bool { rom == 0 }
-    var diag: Bool { rom == 1 }
-
-    @IBOutlet weak var arosButton: OnboardingButton!
-    @IBOutlet weak var diagButton: OnboardingButton!
+    @IBOutlet weak var openRomButton: OnboardingButton!
 
     @IBAction func romAction(_ sender: NSControl) {
 
         rom = sender.tag
-
     }
 
     override func refresh() {
 
-        arosButton.state = aros ? .on : .off
-        diagButton.state = diag ? .on : .off
+        openRomButton.state = openRoms ? .on : .off
     }
 }
 
@@ -292,8 +302,6 @@ class Onboarding: Layer {
 
     override func layerDidOpen() {
 
-        // renderer.canvas.shouldRender = true
-        // renderer.splashScreen.shouldRender = true
     }
 
     override func layerDidClose() {

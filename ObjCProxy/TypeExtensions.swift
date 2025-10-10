@@ -10,6 +10,7 @@
 typealias AppClass = vc64.AppError
 typealias CartridgeType = vc64.CartridgeType
 typealias Class = vc64.Class
+typealias ConfigScheme = vc64.ConfigScheme
 typealias ControlPortDevice = vc64.ControlPortDevice
 typealias Compressor = vc64.Compressor
 typealias DOSType = vc64.DOSType

@@ -765,9 +765,9 @@ C64::computeFrame(bool headless)
     cpu.debugger.breakpointPC = -1;
 
     // Dispatch
-    switch ((drive8.isPoweredOn()                   ? 4 : 0) |
-            (drive9.isPoweredOn()                   ? 2 : 0) |
-            (expansionport.needsAccurateEmulation() ? 1 : 0) ) {
+    switch ((drive8.isPoweredOn() && drive8.mem.hasRom() ? 4 : 0) |
+            (drive9.isPoweredOn() && drive9.mem.hasRom() ? 2 : 0) |
+            (expansionport.needsAccurateEmulation()      ? 1 : 0) ) {
 
         case 0b000: execute <false, false, false> (); break;
         case 0b001: execute <false, false, true>  (); break;
