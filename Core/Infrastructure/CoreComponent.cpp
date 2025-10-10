@@ -127,7 +127,7 @@ void
 CoreComponent::resetConfig()
 {
     postorderWalk([this](CoreComponent *c) {
-        c->Configurable::resetConfig(emulator.defaults, c->objid);
+        c->resetConfigItems(emulator.defaults, c->objid);
     });
 }
 

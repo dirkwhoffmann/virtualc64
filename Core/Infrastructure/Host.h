@@ -93,6 +93,7 @@ public:
     i64 getOption(Opt opt) const override;
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt opt, i64 value) override;
+    void resetConfigItems(const class Defaults &defaults, isize objid = 0) override;
 
 
     //

@@ -403,7 +403,7 @@ public:
     i64 getOption(Opt opt) const override;
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt opt, i64 value) override;
-    void resetConfig() override;
+    void resetConfigItems(const class Defaults &defaults, isize objid = 0) override;
 
     // Updates the current configuration according to the installed ROM
     void autoConfigure();

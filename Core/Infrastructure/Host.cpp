@@ -81,6 +81,12 @@ Host::setOption(Opt opt, i64 value)
 }
 
 void
+Host::resetConfigItems(const class Defaults &defaults, isize objid)
+{
+    // Don't reset any host properties
+}
+
+void
 Host::_dump(Category category, std::ostream &os) const
 {
     using namespace util;

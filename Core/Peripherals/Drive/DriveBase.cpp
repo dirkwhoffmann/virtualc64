@@ -148,10 +148,8 @@ Drive::_didReset(bool hard)
 }
 
 void
-Drive::resetConfig()
+Drive::resetConfigItems(const class Defaults &defaults, isize objid)
 {
-    auto &defaults = emulator.defaults;
-
     for (auto &opt : getOptions()) {
 
         if (opt == Opt::DRV_CONNECT && !canConnect()) {

@@ -48,7 +48,7 @@ public:
     void setOption(const string &opt, const string &value);
 
     // Resets all config options
-    void resetConfig(const class Defaults &defaults, isize objid = 0);
+    virtual void resetConfigItems(const class Defaults &defaults, isize objid = 0);
 
     // Dumps the current configuration
     void dumpConfig(std::ostream &os) const;
