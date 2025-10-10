@@ -57,6 +57,8 @@ class PeripheralsSettingsViewController: SettingsViewController {
 
     override func refresh() {
 
+        super.refresh()
+        
         guard let config = config else { return }
 
         func update(_ component: NSTextField, enable: Bool) {

@@ -57,6 +57,8 @@ class VideoSettingsViewController: SettingsViewController {
 
     override func refresh() {
 
+        super.refresh()
+        
         guard let config = config, let renderer = renderer else { return }
 
         // Colors

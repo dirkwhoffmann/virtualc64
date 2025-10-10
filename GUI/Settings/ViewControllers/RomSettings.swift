@@ -56,6 +56,8 @@ class RomSettingsViewController: SettingsViewController {
 
     override func refresh() {
 
+        super.refresh()
+        
         guard let emu = emu else { return }
 
         let basicRom = emu.c64.basicRom

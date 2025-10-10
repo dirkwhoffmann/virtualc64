@@ -44,6 +44,8 @@ class AudioSettingsViewController: SettingsViewController {
 
     override func refresh() {
 
+        super.refresh()
+        
         guard let config = config else { return }
 
         // Engine

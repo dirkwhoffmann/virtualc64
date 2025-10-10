@@ -70,6 +70,8 @@ class SettingsViewController: NSViewController {
 
     @IBAction func unlockAction(_ sender: Any!) {
 
+        print("unlockAction \(emu)")
+        
         if emu?.poweredOff == true {
             try? emu?.run()
         } else {

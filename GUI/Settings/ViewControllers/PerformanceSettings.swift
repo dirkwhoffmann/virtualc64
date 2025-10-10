@@ -42,6 +42,8 @@ class PerformanceSettingsViewController: SettingsViewController {
 
     override func refresh() {
 
+        super.refresh()
+        
         guard let config = config else { return }
 
         // Warp
