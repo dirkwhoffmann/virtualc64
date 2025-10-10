@@ -1815,7 +1815,7 @@
                                         <popUpButton toolTip="Revert To..." fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sd1-0F-HBr">
                                             <rect key="frame" x="17" y="11" width="40" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <popUpButtonCell key="cell" type="bevel" title="Revert to..." bezelStyle="regularSquare" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" selectedItem="38K-hu-tL8" id="gxB-ay-Lfc">
+                                            <popUpButtonCell key="cell" type="bevel" title="Revert to..." bezelStyle="regularSquare" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="gxB-ay-Lfc">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="message"/>
                                                 <menu key="menu" id="81c-Zj-qj8">
@@ -1825,9 +1825,13 @@
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="H3J-qc-f7l"/>
+                                                        <menuItem title="Open ROMs" tag="1" id="dph-Dg-l5u"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="presetAction:" target="cBW-zY-3Xw" id="e0R-QE-u7v"/>
+                                            </connections>
                                         </popUpButton>
                                         <button toolTip="Use As Default" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="74T-Os-gl3">
                                             <rect key="frame" x="59" y="11" width="40" height="34"/>
@@ -1837,6 +1841,9 @@
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="saveAction:" target="cBW-zY-3Xw" id="Z77-eY-sX7"/>
+                                            </connections>
                                         </button>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="icM-n4-opa">
                                             <rect key="frame" x="112" y="15" width="59" height="26"/>
@@ -2185,6 +2192,9 @@
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="presetAction:" target="NhS-yP-7IJ" id="jrU-MK-BlM"/>
+                                            </connections>
                                         </popUpButton>
                                         <button toolTip="Use As Default" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jrh-uI-Npz">
                                             <rect key="frame" x="59" y="11" width="40" height="34"/>
@@ -2194,6 +2204,9 @@
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="saveAction:" target="NhS-yP-7IJ" id="qJq-tI-umj"/>
+                                            </connections>
                                         </button>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXJ-jy-BXz">
                                             <rect key="frame" x="112" y="15" width="96" height="26"/>
@@ -2636,6 +2649,9 @@
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="presetAction:" target="A6r-di-ehg" id="qgV-hK-Ati"/>
+                                            </connections>
                                         </popUpButton>
                                         <button toolTip="Use As Default" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jaW-Yl-EmW">
                                             <rect key="frame" x="59" y="11" width="40" height="34"/>
@@ -2645,6 +2661,9 @@
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="saveAction:" target="A6r-di-ehg" id="jJG-e8-4RE"/>
+                                            </connections>
                                         </button>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQL-bM-aC7">
                                             <rect key="frame" x="112" y="15" width="111" height="26"/>
@@ -3342,6 +3361,9 @@
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="presetAction:" target="Dqs-kh-h3R" id="Cey-gY-eis"/>
+                                            </connections>
                                         </popUpButton>
                                         <button toolTip="Use As Default" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="riT-Q2-w7J">
                                             <rect key="frame" x="59" y="11" width="40" height="34"/>
@@ -3351,6 +3373,9 @@
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="saveAction:" target="Dqs-kh-h3R" id="8qC-Lc-QWc"/>
+                                            </connections>
                                         </button>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kO8-Ii-1Ta">
                                             <rect key="frame" x="112" y="15" width="126" height="26"/>
@@ -3723,6 +3748,9 @@
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="presetAction:" target="WlI-B9-QcR" id="9vN-X9-FCl"/>
+                                            </connections>
                                         </popUpButton>
                                         <button toolTip="Use As Default" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bd7-jW-jb6">
                                             <rect key="frame" x="59" y="11" width="40" height="34"/>
@@ -3731,6 +3759,9 @@
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
+                                                <connections>
+                                                    <action selector="saveAction:" target="WlI-B9-QcR" id="PnD-fL-kyg"/>
+                                                </connections>
                                             </buttonCell>
                                         </button>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dTW-1H-rJt">
@@ -4512,6 +4543,9 @@
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="presetAction:" target="06R-tY-DG5" id="dPI-30-syj"/>
+                                            </connections>
                                         </popUpButton>
                                         <button toolTip="Use As Default" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oXP-In-cXK">
                                             <rect key="frame" x="59" y="11" width="40" height="34"/>
@@ -4521,6 +4555,9 @@
                                                 <font key="font" metaFont="system"/>
                                                 <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="saveAction:" target="06R-tY-DG5" id="aUN-5c-JmY"/>
+                                            </connections>
                                         </button>
                                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H9V-JI-z4R">
                                             <rect key="frame" x="112" y="15" width="59" height="26"/>

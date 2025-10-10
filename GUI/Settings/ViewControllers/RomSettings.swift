@@ -226,7 +226,10 @@ class RomSettingsViewController: SettingsViewController {
     //
     // Presets and Saving
     //
-    
+    override func preset(tag: Int) {
+        
+    }
+
     override func save() {
 
         do {
