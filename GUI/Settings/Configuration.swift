@@ -381,7 +381,15 @@ class Configuration {
         get { return emu?.get(.DRV_PAN, drive: DRIVE9) ?? 0 }
         set { emu?.set(.DRV_PAN, drive: DRIVE9, value: newValue) }
     }
-
+    var asr: Int {
+        get { return emu?.get(.AUD_ASR) ?? 0 }
+        set { emu?.set(.AUD_ASR, value: newValue) }
+    }
+    var audioBufferSize: Int {
+        get { return emu?.get(.AUD_BUFFER_SIZE) ?? 0 }
+        set { emu?.set(.AUD_BUFFER_SIZE, value: newValue) }
+    }
+    
     //
     // Video
     //

@@ -138,6 +138,8 @@ enum class Opt : long
     AUD_PAN3,               ///< Channel 3 panning
     AUD_VOL_L,              ///< Master volume (left channel)
     AUD_VOL_R,              ///< Master volume (right channel)
+    AUD_BUFFER_SIZE,        ///< Size of the audio ringbuffer
+    AUD_ASR,                ///< Adaptive Sample Rate
 
     // Memory
     MEM_INIT_PATTERN,       ///< Ram initialization pattern
@@ -311,6 +313,8 @@ struct OptEnum : Reflection<OptEnum, Opt> {
             case Opt::AUD_PAN3:              return "AUD.PAN3";
             case Opt::AUD_VOL_L:             return "AUD.VOLL";
             case Opt::AUD_VOL_R:             return "AUD.VOLR";
+            case Opt::AUD_BUFFER_SIZE:       return "AUD.BUFFER_SIZE";
+            case Opt::AUD_ASR:               return "AUD.ASR";
 
             case Opt::MEM_INIT_PATTERN:      return "MEM.INIT_PATTERN";
             case Opt::MEM_HEATMAP:           return "MEM.HEATMAP";
@@ -470,6 +474,8 @@ struct OptEnum : Reflection<OptEnum, Opt> {
             case Opt::AUD_PAN3:              return "Channel 3 pan";
             case Opt::AUD_VOL_L:             return "Master volume (left)";
             case Opt::AUD_VOL_R:             return "Master volume (right)";
+            case Opt::AUD_BUFFER_SIZE:       return "Audio buffer capacity";
+            case Opt::AUD_ASR:               return "Adaptive Sample Rate";
 
             case Opt::MEM_INIT_PATTERN:      return "Memory start-up pattern";
             case Opt::MEM_HEATMAP:           return "Heatmap";

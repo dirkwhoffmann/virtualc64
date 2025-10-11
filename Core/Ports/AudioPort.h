@@ -46,7 +46,9 @@ public util::RingBuffer <SamplePair, 12288> {
         Opt::AUD_PAN2,
         Opt::AUD_PAN3,
         Opt::AUD_VOL_L,
-        Opt::AUD_VOL_R
+        Opt::AUD_VOL_R,
+        Opt::AUD_BUFFER_SIZE,
+        Opt::AUD_ASR,
     };
 
     // Current configuration

@@ -32,6 +32,12 @@ typedef struct
     // Master volume (left and right channel)
     i64 volL;
     i64 volR;
+
+    // Sample buffer capacity
+    isize bufferSize;
+
+    // Adaptive Sample Rate enable switch
+    bool asr;
 }
 
 AudioPortConfig;

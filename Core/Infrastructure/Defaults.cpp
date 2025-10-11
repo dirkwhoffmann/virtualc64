@@ -111,6 +111,8 @@ Defaults::Defaults()
     setFallback(Opt::AUD_PAN3,                   0);
     setFallback(Opt::AUD_VOL_L,                  50);
     setFallback(Opt::AUD_VOL_R,                  50);
+    setFallback(Opt::AUD_BUFFER_SIZE,            4096);
+    setFallback(Opt::AUD_ASR,                    true);
 
     setFallback(Opt::SID_ENABLE,                 true,                   {0});
     setFallback(Opt::SID_ENABLE,                 false,                  {1, 2, 3});

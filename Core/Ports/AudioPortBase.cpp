@@ -133,16 +133,18 @@ AudioPort::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::AUD_VOL0:      return config.vol[0];
-        case Opt::AUD_VOL1:      return config.vol[1];
-        case Opt::AUD_VOL2:      return config.vol[2];
-        case Opt::AUD_VOL3:      return config.vol[3];
-        case Opt::AUD_PAN0:      return config.pan[0];
-        case Opt::AUD_PAN1:      return config.pan[1];
-        case Opt::AUD_PAN2:      return config.pan[2];
-        case Opt::AUD_PAN3:      return config.pan[3];
-        case Opt::AUD_VOL_L:     return config.volL;
-        case Opt::AUD_VOL_R:     return config.volR;
+        case Opt::AUD_VOL0:         return config.vol[0];
+        case Opt::AUD_VOL1:         return config.vol[1];
+        case Opt::AUD_VOL2:         return config.vol[2];
+        case Opt::AUD_VOL3:         return config.vol[3];
+        case Opt::AUD_PAN0:         return config.pan[0];
+        case Opt::AUD_PAN1:         return config.pan[1];
+        case Opt::AUD_PAN2:         return config.pan[2];
+        case Opt::AUD_PAN3:         return config.pan[3];
+        case Opt::AUD_VOL_L:        return config.volL;
+        case Opt::AUD_VOL_R:        return config.volR;
+        case Opt::AUD_BUFFER_SIZE:  return (i64)config.bufferSize;
+        case Opt::AUD_ASR:          return (i64)config.asr;
 
         default:
             fatalError;
@@ -170,6 +172,17 @@ AudioPort::checkOption(Opt opt, i64 value)
 
         case Opt::AUD_VOL_L:
         case Opt::AUD_VOL_R:
+
+            return;
+
+        case Opt::AUD_BUFFER_SIZE:
+
+            if (value < 512 || value > 65536) {
+                throw AppError(Fault::OPT_INV_ARG, "512 ... 65536");
+            }
+            return;
+
+        case Opt::AUD_ASR:
 
             return;
 
@@ -216,6 +229,17 @@ AudioPort::setOption(Opt opt, i64 value)
 
             config.volR = std::clamp(value, 0LL, 100LL);
             volR.maximum = powf((float)config.volR / 50, 1.4f);
+            return;
+
+        case Opt::AUD_BUFFER_SIZE:
+
+            config.bufferSize = isize(value);
+            // TODO: stream.resize(isize(value));
+            return;
+
+        case Opt::AUD_ASR:
+
+            config.asr = (bool)value;
             return;
 
         default:

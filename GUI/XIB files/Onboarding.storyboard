@@ -17,7 +17,7 @@
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k9J-le-DXY">
                                 <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="onboardingBg25" id="09e-yb-16v"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="c64bg2" id="09e-yb-16v"/>
                             </imageView>
                             <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dG7-CX-69H">
                                 <rect key="frame" x="20" y="17" width="25" height="26"/>
@@ -367,9 +367,9 @@
         <image name="FlagEU" width="256" height="256"/>
         <image name="FlagUSA" width="256" height="256"/>
         <image name="arrowshape.backward.circle" catalog="system" width="15" height="15"/>
+        <image name="c64bg2" width="686" height="509"/>
         <image name="iconGeneral" width="256" height="256"/>
         <image name="logoRound75" width="1025" height="1025"/>
-        <image name="onboardingBg25" width="1126" height="974"/>
         <image name="rom_mega65" width="130" height="157"/>
         <image name="xmark.octagon.fill" catalog="system" width="17" height="15"/>
     </resources>

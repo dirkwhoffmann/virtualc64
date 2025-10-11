@@ -125,6 +125,8 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::AUD_PAN3:                  return numParser();
         case Opt::AUD_VOL_L:                 return numParser("%");
         case Opt::AUD_VOL_R:                 return numParser("%");
+        case Opt::AUD_BUFFER_SIZE:           return numParser(" samples");
+        case Opt::AUD_ASR:                   return boolParser();
 
         case Opt::MEM_INIT_PATTERN:          return enumParser.template operator()<RamPatternEnum,RamPattern>();
         case Opt::MEM_HEATMAP:               return boolParser();
