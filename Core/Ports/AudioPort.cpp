@@ -54,7 +54,6 @@ AudioPort::generateSamples()
     if (s2) numSamples = std::min(numSamples, s2);
     if (s3) numSamples = std::min(numSamples, s3);
 
-
     // Check for a buffer overflow
     if (stream.free() < numSamples) handleBufferOverflow();
 
@@ -73,20 +72,27 @@ AudioPort::generateSamples()
 void
 AudioPort::updateSampleRateCorrection()
 {
-    // Compute the difference between the ideal and the current fill level
-    auto error = (0.5 - stream.fillLevel());
+    if (config.asr) {
 
-    // Smooth it out
-    sampleRateError = 0.75 * sampleRateError + 0.25 * error;
+        // Compute the difference between the ideal and the current fill level
+        auto error = (0.5 - stream.fillLevel());
 
-    // Compute a sample rate correction
-    auto correction = (0.5 - stream.fillLevel()) * 4000;
+        // Smooth it out
+        sampleRateError = 0.75 * sampleRateError + 0.25 * error;
 
-    // Smooth it out
-    sampleRateCorrection = (sampleRateCorrection * 0.75) + (correction * 0.25);
+        // Compute a sample rate correction
+        auto correction = (0.5 - stream.fillLevel()) * 4000;
 
-    debug(AUDBUF_DEBUG, "ASR correction: %.0f Hz (fill: %.2f)\n",
-          sampleRateCorrection, stream.fillLevel());
+        // Smooth it out
+        sampleRateCorrection = (sampleRateCorrection * 0.75) + (correction * 0.25);
+
+        debug(AUDBUF_DEBUG, "ASR correction: %.0f Hz (fill: %.2f)\n",
+              sampleRateCorrection, stream.fillLevel());
+
+    } else {
+
+        sampleRateCorrection = 0;
+    }
 }
 
 /*

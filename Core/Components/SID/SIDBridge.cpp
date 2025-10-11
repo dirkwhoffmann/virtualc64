@@ -149,8 +149,11 @@ SIDBridge::beginFrame()
     // Update the CPU clock frequency
     c64.updateClockFrequency();
 
+    // Run the ASR algorithm (adaptive sample rate)
+    audioPort.updateSampleRateCorrection();
+
     // Update the audio sample rate
-    setSampleRate(host.getOption(Opt::HOST_SAMPLE_RATE) + audioPort.getSampleRateCorrection());
+    setSampleRate(audioPort.sampleRate + audioPort.sampleRateCorrection);
 }
 
 void 

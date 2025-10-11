@@ -27,6 +27,8 @@ class SIDBridge;
 
 class AudioPort final : public SubComponent, public Inspectable<AudioPortInfo, AudioPortStats> {
 
+    friend class SIDBridge;
+    
     Descriptions descriptions = {{
 
         .type           = Class::AudioPort,
