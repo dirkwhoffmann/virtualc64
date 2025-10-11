@@ -10,6 +10,7 @@ ExpansionPort.cpp
 ExpansionPortBase.cpp
 PowerPort.cpp
 PowerPortBase.cpp
+SampleRateDetector.cpp
 SerialPort.cpp
 SerialPortBase.cpp
 UserPort.cpp
