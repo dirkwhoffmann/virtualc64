@@ -100,6 +100,7 @@ extern debugflag RASTERIRQ_DEBUG;
 extern debugflag SID_DEBUG;
 extern debugflag SID_EXEC;
 extern debugflag SIDREG_DEBUG;
+extern debugflag AUD_DEBUG;
 extern debugflag AUDBUF_DEBUG;
 extern debugflag AUDVOL_DEBUG;
 

@@ -191,11 +191,11 @@ SIDBridge::draw(u32 *buffer, isize width, isize height,
 
         default:
 
-            dw = audioPort.cap() / float(width);
+            dw = audioPort.stream.cap() / float(width);
 
             for (isize w = 0; w < width; w++) {
 
-                auto sample = audioPort.current(isize(w * dw));
+                auto sample = audioPort.stream.current(isize(w * dw));
                 samples[w][0] = abs(sample.l);
                 samples[w][1] = abs(sample.r);
             }

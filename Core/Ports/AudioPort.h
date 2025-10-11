@@ -15,17 +15,17 @@
 #include "AudioPortTypes.h"
 #include "SIDTypes.h"
 #include "SubComponent.h"
-#include "Concurrency.h"
-#include "Volume.h"
+#include "Animated.h"
+#include "AudioStream.h"
+// #include "Concurrency.h"
+// #include "Volume.h"
+#include "SampleRateDetector.h"
 
 namespace vc64 {
 
 class SIDBridge;
 
-class AudioPort final :
-public SubComponent,
-public Inspectable<AudioPortInfo, AudioPortStats>,
-public util::RingBuffer <SamplePair, 12288> {
+class AudioPort final : public SubComponent, public Inspectable<AudioPortInfo, AudioPortStats> {
 
     Descriptions descriptions = {{
 
@@ -54,24 +54,41 @@ public util::RingBuffer <SamplePair, 12288> {
     // Current configuration
     AudioPortConfig config = { };
 
-    // Time stamp of the last write pointer alignment
-    util::Time lastAlignment;
+    // Current sample rate
+    double sampleRate = 44100.0;
 
-    // Sample rate adjustment
+    // Variables needed to implement ASR (Adaptive Sample Rate)
+    double sampleRateError = 0.0;
     double sampleRateCorrection = 0.0;
+
+    // Time stamp of the last write pointer alignment
+    util::Time lastAlignment = util::Time::now();
 
     // Channel volumes
     float vol[4] = { };
 
     // Panning factors
-    float pan[4] ={ };
+    float pan[4] = { };
 
     // Master volumes (fadable)
-    Volume volL;
-    Volume volR;
+    util::Animated<float> volL;
+    util::Animated<float> volR;
 
-    // Used to determine if a MSG_MUTE should be send
-    bool muted = false;
+    // Used to determine if Msg::MUTE should be send
+    bool wasMuted = false;
+
+
+    //
+    // Subcomponents
+    //
+
+public:
+
+    // Output buffer
+    AudioStream stream = AudioStream(4096);
+
+    // Detector for measuring the sample rate
+    SampleRateDetector detector = SampleRateDetector(c64);
 
 
     //
@@ -84,11 +101,17 @@ public:
 
     AudioPort& operator= (const AudioPort& other) {
 
-        CLONE(lastAlignment)
         CLONE(config)
+        CLONE_ARRAY(pan)
+        CLONE_ARRAY(vol)
+        CLONE(volL)
+        CLONE(volR)
 
         return *this;
     }
+
+    // Resets the output buffer
+    void clear();
 
 
     //
@@ -123,6 +146,7 @@ public:
 private:
 
     void _dump(Category category, std::ostream &os) const override;
+    void _didLoad() override;
     void _didReset(bool hard) override;
     void _powerOn() override;
     void _run() override;
@@ -131,16 +155,6 @@ private:
     void _warpOff() override;
     void _focus() override;
     void _unfocus() override;
-
-
-    //
-    // Methods from Inspectable
-    //
-
-public:
-
-    void cacheInfo(AudioPortInfo &result) const override;
-    void cacheStats(AudioPortStats &result) const override;
 
 
     //
@@ -155,30 +169,27 @@ public:
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt opt, i64 value) override;
 
+    void setSampleRate(double hz);
+
 
     //
-    // Managing the ring buffer
+    // Methods from Inspectable
     //
 
 public:
 
-    // Puts the write pointer somewhat ahead of the read pointer
-    void alignWritePtr();
+    void cacheInfo(AudioPortInfo &result) const override;
+    void cacheStats(AudioPortStats &result) const override;
 
-    /* Handles a buffer underflow condition. A buffer underflow occurs when the
-     * audio device of the host machine needs sound samples than SID hasn't
-     * produced, yet.
-     */
-    void handleBufferUnderflow();
 
-    /* Handles a buffer overflow condition. A buffer overflow occurs when SID
-     * is producing more samples than the audio device of the host machine is
-     * able to consume.
-     */
-    void handleBufferOverflow();
+    //
+    // Analyzing
+    //
 
-    // Reduces the sample count to the specified number
-    void clamp(isize maxSamples);
+private:
+
+    // Returns true if the output volume is zero
+    bool isMuted() const;
 
 
     //
@@ -195,11 +206,18 @@ public:
 
 private:
 
+    // Runs the ASR algorithms (adaptive sample rate)
+    void updateSampleRateCorrection();
+
     // Generates samples from the audio source with a single active SID
     template <bool fading> void mixSingleSID(isize numSamples);
 
     // Generates samples from the audio source with multiple active SIDs
     template <bool fading> void mixMultiSID(isize numSamples);
+
+    // Handles a buffer underflow or overflow condition
+    void handleBufferUnderflow();
+    void handleBufferOverflow();
 
 
     //
@@ -209,15 +227,13 @@ private:
 public:
 
     // Rescale the existing samples to gradually fade out (to avoid cracks)
-    void fadeOut();
+    void eliminateCracks();
 
     // Gradually decrease the master volume to zero
-    void mute() { volL.mute(); volR.mute(); }
-    void mute(isize steps) { volL.mute(steps); volR.mute(steps); }
+    void mute(isize steps = 0) { volL.fadeOut(steps); volR.fadeOut(steps); }
 
     // Gradually inrease the master volume to max
-    void unmute() { volL.unmute(); volR.unmute(); }
-    void unmute(isize steps) { volL.unmute(steps); volR.unmute(steps); }
+    void unmute(isize steps = 0) { volL.fadeIn(steps); volR.fadeIn(steps); }
 
 
     //

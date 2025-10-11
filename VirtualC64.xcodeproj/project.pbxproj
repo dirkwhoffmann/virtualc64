@@ -50,6 +50,10 @@
 		50316E452E96CE7700BDF90F /* gamecontrollerdb.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */; };
 		50316E472E97B9CD00BDF90F /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50316E462E97B9C700BDF90F /* Onboarding.swift */; };
 		50316E492E97BC7800BDF90F /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50316E482E97BC7800BDF90F /* Onboarding.storyboard */; };
+		50316E4C2E9A41CD00BDF90F /* AudioStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50316E4B2E9A41CC00BDF90F /* AudioStream.cpp */; };
+		50316E4D2E9A41CD00BDF90F /* AudioStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50316E4B2E9A41CC00BDF90F /* AudioStream.cpp */; };
+		50316E502E9A425400BDF90F /* SampleRateDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50316E4F2E9A425200BDF90F /* SampleRateDetector.cpp */; };
+		50316E512E9A425400BDF90F /* SampleRateDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50316E4F2E9A425200BDF90F /* SampleRateDetector.cpp */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
 		5033EFAB2E92A07000C3E0EE /* MyToolbarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */; };
 		5033EFAD2E92A0CE00C3E0EE /* Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */; };
@@ -626,6 +630,10 @@
 		50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = gamecontrollerdb.txt; sourceTree = "<group>"; };
 		50316E462E97B9C700BDF90F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		50316E482E97BC7800BDF90F /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		50316E4A2E9A41C200BDF90F /* AudioStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioStream.h; sourceTree = "<group>"; };
+		50316E4B2E9A41CC00BDF90F /* AudioStream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioStream.cpp; sourceTree = "<group>"; };
+		50316E4E2E9A424100BDF90F /* SampleRateDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleRateDetector.h; sourceTree = "<group>"; };
+		50316E4F2E9A425200BDF90F /* SampleRateDetector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SampleRateDetector.cpp; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5033EFAA2E92A06B00C3E0EE /* MyToolbarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbarItems.swift; sourceTree = "<group>"; };
 		5033EFAC2E92A0CA00C3E0EE /* Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbols.swift; sourceTree = "<group>"; };
@@ -1834,6 +1842,8 @@
 		504C431124AF29AC00E69CAE /* SID */ = {
 			isa = PBXGroup;
 			children = (
+				50316E4A2E9A41C200BDF90F /* AudioStream.h */,
+				50316E4B2E9A41CC00BDF90F /* AudioStream.cpp */,
 				5078BEB6264D738000EDA161 /* CMakeLists.txt */,
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
 				50E806C125A1F1C500F08732 /* SIDTypes.h */,
@@ -2222,6 +2232,8 @@
 				50549B48257D288E006FE39C /* AudioPort.h */,
 				50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */,
 				50549B47257D288E006FE39C /* AudioPort.cpp */,
+				50316E4E2E9A424100BDF90F /* SampleRateDetector.h */,
+				50316E4F2E9A425200BDF90F /* SampleRateDetector.cpp */,
 				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				508C1E522C0B20610097473C /* ControlPortBase.cpp */,
@@ -2609,6 +2621,7 @@
 				50726F5B2961C9AC0031F2F5 /* VICIICycles.cpp in Sources */,
 				50726FA62961CA1C0031F2F5 /* G64File.cpp in Sources */,
 				50726F6E2961C9C60031F2F5 /* dac.cc in Sources */,
+				50316E512E9A425400BDF90F /* SampleRateDetector.cpp in Sources */,
 				50726F662961C9B80031F2F5 /* SIDBridge.cpp in Sources */,
 				50726F892961CA0D0031F2F5 /* SuperGames.cpp in Sources */,
 				50BD64122C03396D007CD347 /* DriveBase.cpp in Sources */,
@@ -2622,6 +2635,7 @@
 				50726F762961C9DC0031F2F5 /* VIA.cpp in Sources */,
 				50726F7C2961C9DC0031F2F5 /* Disk.cpp in Sources */,
 				50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */,
+				50316E4D2E9A41CD00BDF90F /* AudioStream.cpp in Sources */,
 				50E17E222B8B26AC0029747D /* Option.cpp in Sources */,
 				50EFB0C52C18D6200013B73C /* Dumpable.cpp in Sources */,
 				50726FB12961CA230031F2F5 /* FSDirEntry.cpp in Sources */,
@@ -2695,6 +2709,7 @@
 				504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */,
 				50ABD28E2DD8907000456555 /* DashboardToolbar.swift in Sources */,
 				50ABD28F2DD8907000456555 /* DashboardDataProvider.swift in Sources */,
+				50316E502E9A425400BDF90F /* SampleRateDetector.cpp in Sources */,
 				50ABD2902DD8907000456555 /* Dashboard.swift in Sources */,
 				50ABD2912DD8907000456555 /* DashboardPanel.swift in Sources */,
 				50ABD2922DD8907000456555 /* DashboardViewController.swift in Sources */,
@@ -2707,6 +2722,7 @@
 				50DD82A02614D47E00B84EB3 /* Chrono.cpp in Sources */,
 				50BE4B6624E7F965008F39C9 /* String.swift in Sources */,
 				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
+				50316E4C2E9A41CD00BDF90F /* AudioStream.cpp in Sources */,
 				50B114B62E8FB0C900EC854D /* OnboardingButton.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
 				5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */,

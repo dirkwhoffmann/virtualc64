@@ -58,6 +58,15 @@ typedef struct
 
     // Number of buffer overflows since power up
     u64 bufferOverflows;
+
+    // Total number of generated sampleds
+    i64 producedSamples;
+
+    // Total number of samples produced without executing SID
+    i64 idleSamples;
+
+    // Total number of sampels grabbed by the audio backend
+    i64 consumedSamples;
 }
 AudioPortStats;
 

@@ -16,71 +16,12 @@
 
 namespace vc64 {
 
+#if 0
+
 void
 AudioPort::alignWritePtr()
 {
     this->align(this->cap() / 2);
-}
-
-void
-AudioPort::handleBufferUnderflow()
-{
-    // There are two common scenarios in which buffer underflows occur:
-    //
-    // (1) The consumer runs slightly faster than the producer.
-    // (2) The producer is halted or not startet yet.
-
-    trace(AUDBUF_DEBUG, "BUFFER UNDERFLOW (r: %ld w: %ld)\n", r, w);
-
-    // Wipe out the buffer and reset the write pointer
-    clear(SamplePair{0,0});
-    alignWritePtr();
-
-    // Determine the elapsed seconds since the last pointer adjustment
-    auto elapsedTime = util::Time::now() - lastAlignment;
-    lastAlignment = util::Time::now();
-
-    // Check for condition (1)
-    if (elapsedTime.asSeconds() > 10.0) {
-
-        /*
-        // Increase the sample rate based on what we've measured
-        sampleRateCorrection += count() / elapsedTime.asSeconds();
-         */
-        stats.bufferUnderflows++;
-        debug(AUDBUF_DEBUG, "Last underflow: %f seconds ago\n", elapsedTime.asSeconds());
-        // warn("New sample rate correction: %f\n", sampleRateCorrection);
-    }
-}
-
-void
-AudioPort::handleBufferOverflow()
-{
-    // There are two common scenarios in which buffer overflows occur:
-    //
-    // (1) The consumer runs slightly slower than the producer
-    // (2) The consumer is halted or not startet yet
-
-    trace(AUDBUF_DEBUG, "BUFFER OVERFLOW (r: %ld w: %ld)\n", r, w);
-
-    // Reset the write pointer
-    alignWritePtr();
-
-    // Determine the number of elapsed seconds since the last adjustment
-    auto elapsedTime = util::Time::now() - lastAlignment;
-    lastAlignment = util::Time::now();
-
-    // Adjust the sample rate, if condition (1) holds
-    if (elapsedTime.asSeconds() > 10.0) {
-
-        /*
-        // Decrease the sample rate based on what we've measured
-        sampleRateCorrection -= count() / elapsedTime.asSeconds();
-         */
-        stats.bufferOverflows++;
-        debug(AUDBUF_DEBUG, "Last overflow: %f seconds ago\n", elapsedTime.asSeconds());
-        // warn("New sample rate correction: %f\n", sampleRateCorrection);
-    }
 }
 
 void 
@@ -90,11 +31,17 @@ AudioPort::clamp(isize maxSamples)
 
     while (count() > maxSamples) read();
 }
+#endif
 
 void
 AudioPort::generateSamples()
 {
-    SYNCHRONIZED
+    bool muted = isMuted();
+
+    // Send the MUTE message if needed
+    if (muted != wasMuted) { msgQueue.put(Msg::MUTE, wasMuted = muted); }
+
+    stream.mutex.lock();
 
     // Check how many samples can be generated
     auto s0 = sid0.stream.count();
@@ -107,6 +54,10 @@ AudioPort::generateSamples()
     if (s2) numSamples = std::min(numSamples, s2);
     if (s3) numSamples = std::min(numSamples, s3);
 
+
+    // Check for a buffer overflow
+    if (stream.free() < numSamples) handleBufferOverflow();
+
     // Generate the samples
     bool fading = volL.isFading() || volR.isFading();
 
@@ -115,8 +66,30 @@ AudioPort::generateSamples()
     } else {
         fading ? mixSingleSID<true>(numSamples) : mixSingleSID<false>(numSamples);
     }
+
+    stream.mutex.unlock();
 }
 
+void
+AudioPort::updateSampleRateCorrection()
+{
+    // Compute the difference between the ideal and the current fill level
+    auto error = (0.5 - stream.fillLevel());
+
+    // Smooth it out
+    sampleRateError = 0.75 * sampleRateError + 0.25 * error;
+
+    // Compute a sample rate correction
+    auto correction = (0.5 - stream.fillLevel()) * 4000;
+
+    // Smooth it out
+    sampleRateCorrection = (sampleRateCorrection * 0.75) + (correction * 0.25);
+
+    debug(AUDBUF_DEBUG, "ASR correction: %.0f Hz (fill: %.2f)\n",
+          sampleRateCorrection, stream.fillLevel());
+}
+
+/*
 void
 AudioPort::fadeOut()
 {
@@ -146,6 +119,7 @@ AudioPort::fadeOut()
         elements[i] = SamplePair { 0, 0 };
     }
 }
+*/
 
 template <bool fading> void
 AudioPort::mixSingleSID(isize numSamples)
@@ -158,50 +132,39 @@ AudioPort::mixSingleSID(isize numSamples)
     // Print some debug info
     debug(SID_EXEC, "volL: %f volR: %f vol0: %f pan0: %f\n", curL, curR, vol0, pan0);
 
-    // Check for buffer overflow
-    if (free() < numSamples) handleBufferOverflow();
+    if (wasMuted) {
 
-    if constexpr (fading == false) {
+        // Fast path: All samples are zero
+        for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
+        for (isize i = 0; i < numSamples; i++) stream.write(SamplePair { 0, 0 } );
 
-        if (curL + curR == 0.0 || vol0 == 0.0) {
+    } else {
 
-            // Fast path: All samples are zero
-            for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
-            for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
+        // Slow path: There is something to hear
+        for (isize i = 0; i < numSamples; i++) {
 
-            // Send a MUTE message if applicable
-            if (!muted) { muted = true; msgQueue.put(Msg::MUTE, true); }
-            return;
+            // Read SID sample from ring buffer
+            float ch0 = (float)sidBridge.sid0.stream.read() * vol0;
+
+            // Compute left and right channel output
+            double l = ch0 * (1 - pan0);
+            double r = ch0 * pan0;
+
+            // Modulate the master volume
+            if constexpr (fading) { volL.shift(); curL = volL.current; }
+            if constexpr (fading) { volR.shift(); curR = volR.current; }
+
+            // Apply master volume
+            l *= curL;
+            r *= curR;
+
+            // Prevent hearing loss
+            assert(std::abs(l) < 1.0);
+            assert(std::abs(r) < 1.0);
+
+            stream.write(SamplePair { float(l), float(r) } );
         }
     }
-
-    // Slow path: There is something to hear
-    for (isize i = 0; i < numSamples; i++) {
-
-        // Read SID sample from ring buffer
-        float ch0 = (float)sidBridge.sid0.stream.read() * vol0;
-
-        // Compute left and right channel output
-        float l = ch0 * (1 - pan0);
-        float r = ch0 * pan0;
-
-        // Modulate the master volume
-        if constexpr (fading) { volL.shift(); curL = volL.current; }
-        if constexpr (fading) { volR.shift(); curR = volR.current; }
-
-        // Apply master volume
-        l *= curL;
-        r *= curR;
-
-        // Prevent hearing loss
-        assert(std::abs(l) < 1.0);
-        assert(std::abs(r) < 1.0);
-
-        write(SamplePair { l, r } );
-    }
-
-    // Send a MUTE message if applicable
-    if (muted) { muted = false; msgQueue.put(Msg::MUTE, false); }
 }
 
 template <bool fading> void
@@ -218,191 +181,141 @@ AudioPort::mixMultiSID(isize numSamples)
     debug(SID_EXEC, "volL: %f volR: %f\n", curL, curR);
     debug(SID_EXEC, "vol0: %f vol1: %f vol2: %f vol3: %f\n", vol0, vol1, vol2, vol3);
 
-    // Check for buffer overflow
-    if (free() < numSamples) handleBufferOverflow();
+    if (wasMuted) {
 
-    if constexpr (fading == false) {
+        // Fast path: All samples are zero
+        for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
+        for (isize i = 0; i < numSamples; i++) (void)sid1.stream.read(0);
+        for (isize i = 0; i < numSamples; i++) (void)sid2.stream.read(0);
+        for (isize i = 0; i < numSamples; i++) (void)sid3.stream.read(0);
+        for (isize i = 0; i < numSamples; i++) stream.write(SamplePair { 0, 0 } );
 
-        if (curL + curR == 0.0 || vol0 + vol1 + vol2 + vol3 == 0.0) {
+    } else {
 
-            // Fast path: All samples are zero
-            for (isize i = 0; i < numSamples; i++) (void)sid0.stream.read();
-            for (isize i = 0; i < numSamples; i++) (void)sid1.stream.read(0);
-            for (isize i = 0; i < numSamples; i++) (void)sid2.stream.read(0);
-            for (isize i = 0; i < numSamples; i++) (void)sid3.stream.read(0);
-            for (isize i = 0; i < numSamples; i++) write(SamplePair { 0, 0 } );
+        // Slow path: There is something to hear
+        for (isize i = 0; i < numSamples; i++) {
 
-            // Send a MUTE message if applicable
-            if (!muted) { muted = true; msgQueue.put(Msg::MUTE, true); }
-            return;
+            double ch0, ch1, ch2, ch3, l, r;
+
+            ch0 = (float)sid0.stream.read()  * vol0;
+            ch1 = (float)sid1.stream.read(0) * vol1;
+            ch2 = (float)sid2.stream.read(0) * vol2;
+            ch3 = (float)sid3.stream.read(0) * vol3;
+
+            // Compute left and right channel output
+            l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);
+            r = ch0 * pan0 + ch1 * pan1 + ch2 * pan2 + ch3 * pan3;
+
+            // Modulate the master volume
+            if constexpr (fading) { volL.shift(); curL = volL.current; }
+            if constexpr (fading) { volR.shift(); curR = volR.current; }
+
+            // Apply master volume
+            l *= curL;
+            r *= curR;
+
+            // Prevent hearing loss
+            assert(abs(l) < 1.0);
+            assert(abs(r) < 1.0);
+
+            stream.write(SamplePair { float(l), float(r) } );
         }
     }
+}
 
-    // Slow path: There is something to hear
-    for (isize i = 0; i < numSamples; i++) {
+void
+AudioPort::handleBufferUnderflow()
+{
+    // Wipe out the buffer and reset the write pointer
+    stream.clear(SamplePair{0,0});
+    stream.alignWritePtr();
 
-        float ch0, ch1, ch2, ch3, l, r;
+    // Determine the elapsed seconds since the last pointer adjustment
+    auto elapsedTime = util::Time::now() - lastAlignment;
+    lastAlignment = util::Time::now();
 
-        ch0 = (float)sid0.stream.read()  * vol0;
-        ch1 = (float)sid1.stream.read(0) * vol1;
-        ch2 = (float)sid2.stream.read(0) * vol2;
-        ch3 = (float)sid3.stream.read(0) * vol3;
+    // Adjust the sample rate if the emulator runs under normal conditions
+    if (emulator.isRunning() && !emulator.isWarping()) {
 
-        // Compute left and right channel output
-        l = ch0 * (1 - pan0) + ch1 * (1 - pan1) + ch2 * (1 - pan2) + ch3 * (1 - pan3);
-        r = ch0 * pan0 + ch1 * pan1 + ch2 * pan2 + ch3 * pan3;
+        stats.bufferUnderflows++;
+        debug(AUDBUF_DEBUG, "Audio buffer underflow after %f seconds\n", elapsedTime.asSeconds());
 
-        // Modulate the master volume
-        if constexpr (fading) { volL.shift(); curL = volL.current; }
-        if constexpr (fading) { volR.shift(); curR = volR.current; }
-
-        // Apply master volume
-        l *= curL;
-        r *= curR;
-
-        // Prevent hearing loss
-        assert(abs(l) < 1.0);
-        assert(abs(r) < 1.0);
-
-        write(SamplePair { l, r } );
+        // Adjust the sample rate
+        setSampleRate(host.getConfig().sampleRate);
+        debug(AUDBUF_DEBUG, "New sample rate = %.2f\n", sampleRate);
     }
+}
 
-    // Send a MUTE message if applicable
-    if (muted) { muted = false; msgQueue.put(Msg::MUTE, false); }
+void
+AudioPort::handleBufferOverflow()
+{
+    // Reset the write pointer
+    stream.alignWritePtr();
+
+    // Determine the number of elapsed seconds since the last adjustment
+    auto elapsedTime = util::Time::now() - lastAlignment;
+    lastAlignment = util::Time::now();
+
+    // Adjust the sample rate if the emulator runs under normal conditions
+    if (emulator.isRunning() && !emulator.isWarping()) {
+
+        stats.bufferOverflows++;
+        debug(AUDBUF_DEBUG, "Audio buffer overflow after %f seconds\n", elapsedTime.asSeconds());
+
+        // Adjust the sample rate
+        setSampleRate(host.getConfig().sampleRate);
+        debug(AUDBUF_DEBUG, "New sample rate = %.2f\n", sampleRate);
+    }
+}
+
+void
+AudioPort::eliminateCracks()
+{
+    stream.eliminateCracks();
+    volL.current = 0;
+    volR.current = 0;
 }
 
 isize
 AudioPort::copyMono(float *buffer, isize n)
 {
-    {   SYNCHRONIZED
+    // Copy sound samples
+    auto cnt = stream.copyMono(buffer, n);
+    stats.consumedSamples += cnt;
 
-        // Be silent when the recorder is running (fill with zeroes)
-        if (recorder.isRecording()) {
+    // Check for a buffer underflow
+    if (cnt < n) handleBufferUnderflow();
 
-            for (isize i = 0; i < n; i++) { *buffer++ = 0; }
-            return 0;
-        }
-
-        // Check for buffer underflows
-        if (auto cnt = count(); cnt < n) {
-
-            // Copy all we have and stepwise lower the volume to minimize cracks
-            for (isize i = 0; i < cnt; i++) {
-
-                SamplePair pair = read();
-                *buffer++ = (pair.l + pair.r) * float(cnt - i) / float(cnt);
-            }
-            assert(isEmpty());
-
-            // Fill the rest with zeroes
-            for (isize i = cnt; i < n; i++) *buffer++ = 0;
-
-            // Realign the ring buffer
-            handleBufferUnderflow();
-
-            return cnt;
-        }
-
-        // The standard case: We have enough samples. Copy the requested number
-        for (isize i = 0; i < n; i++) {
-
-            SamplePair pair = read();
-            *buffer++ = pair.l + pair.r;
-        }
-
-        return n;
-    }
+    return cnt;
 }
 
 isize
 AudioPort::copyStereo(float *left, float *right, isize n)
 {
-    {   SYNCHRONIZED
+    // Inform the sample rate detector about the number of requested samples
+    detector.feed(n);
 
-        // Be silent when the recorder is running (fill with zeroes)
-        if (recorder.isRecording()) {
+    // Copy sound samples
+    auto cnt = stream.copyStereo(left, right, n);
+    stats.consumedSamples += cnt;
 
-            for (isize i = 0; i < n; i++) { *left++ = *right++ = 0; }
-            return 0;
-        }
+    // Check for a buffer underflow
+    if (cnt < n) handleBufferUnderflow();
 
-        // Check for buffer underflows
-        if (auto cnt = count(); cnt < n) {
-
-            // Copy all we have and stepwise lower the volume to minimize cracks
-            for (isize i = 0; i < cnt; i++) {
-
-                SamplePair pair = read();
-                *left++ = pair.l * float(cnt - i) / float(cnt);
-                *right++ = pair.r * float(cnt - i) / float(cnt);
-            }
-            assert(isEmpty());
-
-            // Fill the rest with zeroes
-            for (isize i = cnt; i < n; i++) *left++ = *right++ = 0;
-
-            // Realign the ring buffer
-            handleBufferUnderflow();
-
-            return cnt;
-        }
-
-        // The standard case: We have enough samples. Copy the requested number
-        for (isize i = 0; i < n; i++) {
-
-            SamplePair pair = read();
-            *left++ = pair.l;
-            *right++ = pair.r;
-        }
-
-        return n;
-    }
+    return cnt;
 }
 
 isize
 AudioPort::copyInterleaved(float *buffer, isize n)
 {
-    {   SYNCHRONIZED
+    // Copy sound samples
+    auto cnt = stream.copyInterleaved(buffer, n);
+    stats.consumedSamples += cnt;
 
-        // Be silent when the recorder is running (fill with zeroes)
-        if (recorder.isRecording()) {
+    // Check for a buffer underflow
+    if (cnt < n) handleBufferUnderflow();
 
-            // Fill with zeroes
-            for (isize i = 0; i < n; i++) { *buffer++ = 0; }
-            return 0;
-        }
-
-        // Check for buffer underflows
-        if (auto cnt = count(); cnt < n) {
-
-            // Copy all we have and stepwise lower the volume to minimize cracks
-            for (isize i = 0; i < cnt; i++) {
-
-                SamplePair pair = read();
-                *buffer++ = pair.l * float(cnt - i) / float(cnt);
-                *buffer++ = pair.r * float(cnt - i) / float(cnt);
-            }
-            assert(isEmpty());
-
-            // Fill the rest with zeroes
-            for (isize i = cnt; i < n; i++) { *buffer++ = 0; *buffer++ = 0; }
-
-            // Realign the ring buffer
-            handleBufferUnderflow();
-
-            return cnt;
-        }
-
-        // We have enough samples. Copy over the requested number
-        for (isize i = 0; i < n; i++) {
-
-            SamplePair pair = read();
-            *buffer++ = pair.l;
-            *buffer++ = pair.r;
-        }
-        
-        return n;
-    }
+    return cnt;
 }
 
 }

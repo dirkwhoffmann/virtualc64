@@ -17,6 +17,16 @@
 namespace vc64 {
 
 void
+AudioPort::clear()
+{
+    debug(AUDBUF_DEBUG, "Clearing the audio sample buffer\n");
+
+    // Wipe out the ringbuffer
+    stream.wipeOut();
+    stream.alignWritePtr();
+}
+
+void
 AudioPort::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
@@ -64,30 +74,34 @@ AudioPort::cacheStats(AudioPortStats &result) const
 {
     {   SYNCHRONIZED
         
-        stats.fillLevel = fillLevel();
+        result.fillLevel = stream.fillLevel();
     }
+}
+
+bool
+AudioPort::isMuted() const
+{
+    if (volL.isFading() || volR.isFading()) return false;
+    return volL + volR == 0.0 || vol[0] + vol[1] + vol[2] + vol[3] == 0.0;
+}
+
+void
+AudioPort::_didLoad()
+{
+
 }
 
 void
 AudioPort::_didReset(bool hard)
 {
-    SYNCHRONIZED
-
-    // Wipe out the buffer contents
-    this->clear(SamplePair{0,0});
-
-    // Realign the write pointer
-    alignWritePtr();
-    lastAlignment = util::Time::now();
-
-    // Clear statistics
-    if (hard) clearStats();
+    stats = { };
+    clear();
 }
 
 void 
 AudioPort::_powerOn()
 {
-    sampleRateCorrection = 0.0;
+
 }
 
 void
@@ -99,15 +113,15 @@ AudioPort::_run()
 void
 AudioPort::_pause()
 {
-    fadeOut();
-    mute(0);
+    eliminateCracks();
+    mute();
 }
 
 void
 AudioPort::_warpOn()
 {
-    fadeOut();
-    mute(0);
+    eliminateCracks();
+    mute();
 }
 
 void
@@ -244,6 +258,22 @@ AudioPort::setOption(Opt opt, i64 value)
 
         default:
             fatalError;
+    }
+}
+
+void
+AudioPort::setSampleRate(double hz)
+{
+    // Set the sample rate or get it from the detector if none is provided
+    if (hz != 0.0) {
+
+        sampleRate = hz;
+        trace(AUD_DEBUG, "setSampleRate(%.2f)\n", sampleRate);
+
+    } else {
+
+        sampleRate = detector.sampleRate();
+        trace(AUD_DEBUG, "setSampleRate(%.2f) (predicted)\n", sampleRate);
     }
 }
 

@@ -166,6 +166,7 @@ Recorder::getDuration() const
 void
 Recorder::startRecording(isize x1, isize y1, isize x2, isize y2)
 {
+    /*
     SYNCHRONIZED
 
     // Override the frameRate by now (remove this later)
@@ -309,11 +310,13 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2)
 
     debug(REC_DEBUG, "Success\n");
     state = RecState::PREPARE;
+    */
 }
 
 void
 Recorder::stopRecording()
 {
+    /*
     debug(REC_DEBUG, "stopRecording()\n");
 
     {   SYNCHRONIZED
@@ -322,11 +325,13 @@ Recorder::stopRecording()
             state = RecState::FINALIZE;
         }
     }
+    */
 }
 
 bool
 Recorder::exportAs(const fs::path &path)
 {
+    /*
     if (isRecording()) return false;
 
     //
@@ -360,11 +365,13 @@ Recorder::exportAs(const fs::path &path)
 
     debug(REC_DEBUG, "Success\n");
     return true;
+    */
 }
 
 void
 Recorder::vsyncHandler()
 {
+    /*
     // Quick-exit if the recorder is not active
     if (state == RecState::WAIT) return;
 
@@ -379,6 +386,7 @@ Recorder::vsyncHandler()
             case RecState::ABORT:    abort(); break;
         }
     }
+    */
 }
 
 void
@@ -397,6 +405,7 @@ Recorder::prepare()
      * SID produce the correct number of sound samples per frame (882 for PAL
      * and 735 for NTSC).
      */
+    /*
     if (vic.pal()) {
         host.setOption(Opt::HOST_SAMPLE_RATE, i64(config.sampleRate * 50.125 / 50.0));
         samplesPerFrame = 882;
@@ -412,11 +421,13 @@ Recorder::prepare()
     state = RecState::RECORD;
     recStart = util::Time::now();
     msgQueue.put(Msg::RECORDING_STARTED);
+    */
 }
 
 void
 Recorder::recordVideo()
 {
+    /*
     assert(videoFFmpeg.isRunning());
     assert(videoPipe.isOpen());
 
@@ -441,11 +452,13 @@ Recorder::recordVideo()
     if (written != length || FORCE_RECORDING_ERROR) {
         state = RecState::ABORT;
     }
+    */
 }
 
 void
 Recorder::recordAudio()
 {
+    /*
     assert(audioFFmpeg.isRunning());
     assert(audioPipe.isOpen());
 
@@ -470,11 +483,13 @@ Recorder::recordAudio()
     }
     
     audioPort.clear();
+    */
 }
 
 void
 Recorder::finalize()
 {
+    /*
     // Close pipes
     videoPipe.close();
     audioPipe.close();
@@ -487,13 +502,16 @@ Recorder::finalize()
     state = RecState::WAIT;
     recStop = util::Time::now();
     msgQueue.put(Msg::RECORDING_STOPPED);
+    */
 }
 
 void
 Recorder::abort()
 {
+    /*
     finalize();
     msgQueue.put(Msg::RECORDING_ABORTED);
+    */
 }
 
 }

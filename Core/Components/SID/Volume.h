@@ -10,6 +10,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
+#if 0
 #pragma once
 
 #include "Serializable.h"
@@ -107,6 +108,7 @@ template <typename T> struct AudioVolume : Serializable {
     }
 };
 
-typedef AudioVolume<float> Volume;
+// typedef AudioVolume<float> Volume;
 
 }
+#endif

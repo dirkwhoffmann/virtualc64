@@ -120,6 +120,7 @@ struct SamplingMethodEnum : Reflection<SamplingMethodEnum, SamplingMethod> {
 // Structures
 //
 
+/*
 typedef struct {
 
     // Audio sample of the left stereo channel
@@ -129,6 +130,7 @@ typedef struct {
     float r;
 }
 SamplePair;
+*/
 
 typedef struct
 {

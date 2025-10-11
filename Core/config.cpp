@@ -54,6 +54,7 @@ debugflag RASTERIRQ_DEBUG = 0;
 debugflag SID_DEBUG       = 0;
 debugflag SID_EXEC        = 0;
 debugflag SIDREG_DEBUG    = 0;
+debugflag AUD_DEBUG       = 0;
 debugflag AUDBUF_DEBUG    = 0;
 debugflag AUDVOL_DEBUG    = 0;
 

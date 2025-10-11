@@ -46,6 +46,7 @@ enum class Class : long
     SerialPort,
     UserPort,
     VideoPort,
+    SampleRateDetector,
     
     // Peripherals
     Cartridge,

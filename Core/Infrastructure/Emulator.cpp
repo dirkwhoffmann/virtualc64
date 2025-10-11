@@ -530,6 +530,7 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::SID_DEBUG:        return SID_DEBUG;
         case DebugFlag::SID_EXEC:         return SID_EXEC;
         case DebugFlag::SIDREG_DEBUG:     return SIDREG_DEBUG;
+        case DebugFlag::AUD_DEBUG:        return AUD_DEBUG;
         case DebugFlag::AUDBUF_DEBUG:     return AUDBUF_DEBUG;
         case DebugFlag::AUDVOL_DEBUG:     return AUDVOL_DEBUG;
 
@@ -622,6 +623,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::SID_DEBUG:        SID_DEBUG       = val; break;
         case DebugFlag::SID_EXEC:         SID_EXEC        = val; break;
         case DebugFlag::SIDREG_DEBUG:     SIDREG_DEBUG    = val; break;
+        case DebugFlag::AUD_DEBUG:        AUD_DEBUG       = val; break;
         case DebugFlag::AUDBUF_DEBUG:     AUDBUF_DEBUG    = val; break;
         case DebugFlag::AUDVOL_DEBUG:     AUDVOL_DEBUG    = val; break;
 

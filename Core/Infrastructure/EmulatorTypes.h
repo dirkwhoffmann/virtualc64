@@ -64,6 +64,7 @@ enum class DebugFlag
     SID_DEBUG,         ///< Debug the Sound Interface Device
     SID_EXEC,          ///< Debug SID execution
     SIDREG_DEBUG,      ///< Debug SID register accesses
+    AUD_DEBUG,         ///< Debug audio parameters
     AUDBUF_DEBUG,      ///< Debug the audio buffers
     AUDVOL_DEBUG,      ///< Debug the audio volumes
 
@@ -161,6 +162,7 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::SID_DEBUG:                return "SID_DEBUG";
             case DebugFlag::SID_EXEC:                 return "SID_EXEC";
             case DebugFlag::SIDREG_DEBUG:             return "SIDREG_DEBUG";
+            case DebugFlag::AUD_DEBUG:                return "AUD_DEBUG";
             case DebugFlag::AUDBUF_DEBUG:             return "AUDBUF_DEBUG";
             case DebugFlag::AUDVOL_DEBUG:             return "AUDVOL_DEBUG";
 
@@ -256,6 +258,7 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::SID_DEBUG:                return "Sound Interface Device";
             case DebugFlag::SID_EXEC:                 return "Sound Interface Device (Execution)";
             case DebugFlag::SIDREG_DEBUG:             return "Sound Interface Device (Registers)";
+            case DebugFlag::AUD_DEBUG:                return "Audio parameters";
             case DebugFlag::AUDBUF_DEBUG:             return "Audio buffers";
             case DebugFlag::AUDVOL_DEBUG:             return "Audio volumes";
                 
