@@ -39,10 +39,6 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::C64_SPEED_BOOST:           return numParser("%");
         case Opt::C64_RUN_AHEAD:             return numParser(" frames");
 
-        case Opt::C64_SNAP_AUTO:             return boolParser();
-        case Opt::C64_SNAP_DELAY:            return numParser(" sec");
-        case Opt::C64_SNAP_COMPRESSOR:       return enumParser.template operator()<CompressorEnum,Compressor>();
-
         case Opt::DASM_NUMBERS:              return enumParser.template operator()<DasmNumbersEnum,DasmNumbers>();
             
         case Opt::VICII_REVISION:            return enumParser.template operator()<VICIIRevEnum,VICIIRev>();

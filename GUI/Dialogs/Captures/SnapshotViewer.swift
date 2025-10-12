@@ -34,7 +34,10 @@ class SnapshotViewer: DialogController {
     
     // Remembers the auto-snapshot setting
     var takeSnapshots = false
-    
+
+    // Remembers the emulator state
+    var wasRunning = false
+
     override func windowWillLoad() {
         
     }
@@ -42,11 +45,15 @@ class SnapshotViewer: DialogController {
     override func dialogDidShow() {
         
         now = Date()
-        
+
+        wasRunning = emu?.running ?? false
+
+        if wasRunning { emu?.pause() }
+
         // Don't let the emulator take snapshots while the dialog is open
-        takeSnapshots = emu?.get(.C64_SNAP_AUTO) != 0
-        emu?.set(.C64_SNAP_AUTO, enable: false)
-        
+        // takeSnapshots = emu?.get(.C64_SNAP_AUTO) != 0
+        // emu?.set(.C64_SNAP_AUTO, enable: false)
+
         updateLabels()
         
         self.carousel.type = iCarouselType.timeMachine
@@ -161,14 +168,14 @@ class SnapshotViewer: DialogController {
         } catch {
             NSSound.beep()
         }
+
+        if wasRunning { try? emu?.run() }
     }
     
     @IBAction override func cancelAction(_ sender: Any!) {
         
         hide()
-        
-        emu?.set(.C64_SNAP_AUTO, enable: takeSnapshots)
-        
+
         // Hide some controls
         let items: [NSView] = [
             
@@ -181,8 +188,9 @@ class SnapshotViewer: DialogController {
             text3,
             carousel
         ]
-        
         for item in items { item.isHidden = true }
+
+        if wasRunning { try? emu?.run() }
     }
 }
 

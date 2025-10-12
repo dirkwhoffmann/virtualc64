@@ -31,10 +31,6 @@ Defaults::Defaults()
     setFallback(Opt::C64_SPEED_BOOST,            100);
     setFallback(Opt::C64_RUN_AHEAD,              0);
 
-    setFallback(Opt::C64_SNAP_AUTO,              false);
-    setFallback(Opt::C64_SNAP_DELAY,             10);
-    setFallback(Opt::C64_SNAP_COMPRESSOR,        (i64)Compressor::GZIP);
-
     setFallback(Opt::DASM_NUMBERS,               (i64)DasmNumbers::HEX0);
     
     setFallback(Opt::POWER_GRID,                 (i64)PowerGrid::STABLE_50HZ);

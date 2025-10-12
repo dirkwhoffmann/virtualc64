@@ -1594,17 +1594,6 @@ C64::scheduleNextSNPEvent()
     } else {
         cancel<SLOT_SNP>();
     }
-
-    /*
-    auto snapshots = emulator.get(Opt::C64_SNAP_AUTO);
-    auto delay = emulator.get(Opt::C64_SNAP_DELAY);
-
-    if (snapshots) {
-        scheduleRel<SLOT_SNP>(C64::sec(double(delay)), SNP_TAKE);
-    } else {
-        cancel<SLOT_SNP>();
-    }
-    */
 }
 
 RomTraits
