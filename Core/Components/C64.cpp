@@ -11,9 +11,13 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "C64.h"
 #include "Emulator.h"
-#include "Checksum.h"
-#include "IOUtils.h"
+#include "Option.h"
+#include "Script.h"
+// #include "Checksum.h"
+// #include "IOUtils.h"
+#include "Chrono.h"
 #include "RomDatabase.h"
 #include "OpenRoms.h"
 #include <algorithm>
@@ -375,6 +379,7 @@ C64::updateClockFrequency()
     sidBridge.sid[3].setClockFrequency((u32)frequency);
 }
 
+/*
 void
 C64::exportConfig(const fs::path &path) const
 {
@@ -397,6 +402,7 @@ C64::exportConfig(std::ostream &stream) const
     CoreComponent::exportConfig(stream);
     stream << "c64 power on\n";
 }
+*/
 
 i64
 C64::get(Opt opt, isize objid) const
@@ -1338,6 +1344,148 @@ C64::clearFlag(u32 flag)
 
     flags &= ~flag;
 }
+
+void
+C64::loadWorkspace(const fs::path &path)
+{
+    std::stringstream ss;
+
+    // Set the search path to the workspace directoy
+    host.setSearchPath(path);
+
+    // Assemble the setup script
+    try {
+
+        // Power off the amiga to make it configurable
+        ss << "\n";
+        ss << "try workspace init";
+        ss << "\n";
+
+        // Read the config script
+        if (fs::exists(path / "config.retrosh")) {
+
+            Script script(path / "config.retrosh");
+            script.writeToStream(ss);
+        }
+
+        // Power on the Amiga with the new configuration
+        ss << "\n";
+        ss << "try workspace activate";
+
+    } catch (AppError &exc) {
+
+        printf("Error: %s\n", exc.what());
+        throw;
+    }
+
+    // Execute the setup script
+    retroShell.asyncExec("commander");
+    retroShell.asyncExecScript(ss);
+}
+
+void
+C64::saveWorkspace(const fs::path &path)
+{
+    std::stringstream ss, g64;
+
+    auto exportG64 = [&](Drive& drive, string name) {
+
+        if (drive.disk != nullptr) {
+
+            string file = name + ".g64";
+
+            try {
+
+                G64File(*drive.disk).writeToFile(path / file);
+                drive.markDiskAsUnmodified();
+
+                g64 << "try " << name << " insert " << file << "\n";
+                g64 << "try " << name << (drive.hasProtectedDisk() ? " protect\n" : " unprotect\n");
+
+            } catch (...) { }
+
+        } else {
+
+            g64 << "try " << name << " eject\n";
+        }
+    };
+
+    auto exportRom = [&](RomType type, string name) {
+
+        if (hasRom(type)) {
+
+            saveRom(type, path / "rom.bin");
+            ss << "try mem load rom rom.bin\n";
+        }
+    };
+
+    // TODO: exportTAP, exportCRT
+
+    // If a file with the specified name exists, delete it
+    if (fs::exists(path) && !fs::is_directory(path)) fs::remove(path);
+
+    // Create the directory if necessary
+    if (!fs::exists(path)) fs::create_directories(path);
+
+    // Remove old files
+    for (const auto& entry : fs::directory_iterator(path)) fs::remove_all(entry.path());
+
+    // Prepare the config script
+    auto now = std::time(nullptr);
+    auto local = util::Time::local(now);
+    ss << "# Workspace setup (" << std::put_time(&local, "%c") << ")\n";
+    ss << "# Generated with VirtualC64 " << C64::build() << "\n";
+    ss << "\n";
+
+    // Dump the current config
+    exportConfig(ss, false, { Class::Host } );
+
+    // Export ROMs
+    exportRom(RomType::BASIC, "basic.rom");
+    exportRom(RomType::KERNAL, "kernal.rom");
+    exportRom(RomType::CHAR, "char.rom");
+    exportRom(RomType::VC1541, "vc1541.rom");
+
+    // Export floppy disks
+    exportG64(drive8, "drive8");
+    exportG64(drive9, "drive9");
+
+    if (!g64.str().empty()) {
+        ss << "\n# Floppy disks\n\n";
+        ss << g64.str();
+    }
+
+    // TODO: TAP, CRT
+
+    // Write the script into the workspace bundle
+    std::ofstream file(path / "config.retrosh");
+    file << ss.str();
+
+    // Inform the GUI
+    msgQueue.put(Msg::WORKSPACE_SAVED);
+}
+
+void
+C64::initWorkspace()
+{
+    /* This function is called at the beginning of a workspace script */
+
+    // Power off the Amiga to make it configurable
+    emulator.powerOff();
+}
+
+void
+C64::activateWorkspace()
+{
+    /* This function is called at the end of a workspace script */
+
+    // Power on the Amiga
+    emulator.run();
+
+    // Inform the GUI
+    msgQueue.put(Msg::WORKSPACE_LOADED);
+}
+
 
 MediaFile *
 C64::takeSnapshot()

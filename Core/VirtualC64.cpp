@@ -523,6 +523,20 @@ C64API::getRomTraits(RomType type) const
     return c64->getRomTraits(type);
 }
 
+void
+C64API::loadWorkspace(const fs::path &path)
+{
+    VC64_PUBLIC_SUSPEND
+    c64->loadWorkspace(path);
+}
+
+void
+C64API::saveWorkspace(const fs::path &path) const
+{
+    VC64_PUBLIC_SUSPEND
+    c64->saveWorkspace(path);
+}
+
 MediaFile *
 C64API::takeSnapshot()
 {

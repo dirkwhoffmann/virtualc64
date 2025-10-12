@@ -105,10 +105,9 @@ enum class Msg : long
     SNAPSHOT_TAKEN,     ///< A snapshot has been taken (see OPT_C64_SNAP_AUTO)
     SNAPSHOT_RESTORED,  ///< A snapshot has been restored
 
-    // Screen recording
-    RECORDING_STARTED,  ///< The screen recorder has started
-    RECORDING_STOPPED,  ///< The screen recorder has stopped
-    RECORDING_ABORTED,  ///< Screen recording has been aborted
+    // Workspaces
+    WORKSPACE_LOADED,   ///< A workspace has been loaded
+    WORKSPACE_SAVED,    ///< A workspace has been saved
 
     // Debugging
     DMA_DEBUG,          ///< The DMA debugger has been started or stopped
@@ -203,10 +202,9 @@ struct MsgEnum : Reflection<MsgEnum, Msg> {
             case Msg::SNAPSHOT_TAKEN:        return "SNAPSHOT_TAKEN";
             case Msg::SNAPSHOT_RESTORED:     return "SNAPSHOT_RESTORED";
 
-            case Msg::RECORDING_STARTED:     return "RECORDING_STARTED";
-            case Msg::RECORDING_STOPPED:     return "RECORDING_STOPPED";
-            case Msg::RECORDING_ABORTED:     return "RECORDING_ABORTED";
-
+            case Msg::WORKSPACE_LOADED:      return "WORKSPACE_LOADED";
+            case Msg::WORKSPACE_SAVED:       return "WORKSPACE_SAVED";
+                
             case Msg::DMA_DEBUG:             return "DMA_DEBUG";
 
             case Msg::ALARM:                 return "ALARM";

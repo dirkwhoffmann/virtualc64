@@ -29,10 +29,6 @@ extension NSColor {
     static var warningColor: NSColor {
         return NSColor(named: NSColor.Name("warningColor"))!
     }
-    
-    static var recordingColor: NSColor {
-        return NSColor(named: NSColor.Name("recordingColor"))!
-    }
 
     convenience init(r: Int, g: Int, b: Int, a: Int = 255) {
         

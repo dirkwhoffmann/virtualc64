@@ -424,7 +424,6 @@ public:
     void setAutoInspectionMask(u64 mask);
 
 
-
     //
     // Methods from Configurable
     //
@@ -439,8 +438,8 @@ public:
     void setOption(Opt opt, i64 value) override;
     
     // Exports the current configuration to a script file
-    void exportConfig(const fs::path &path) const;
-    void exportConfig(std::ostream &stream) const;
+    // void exportConfig(const fs::path &path) const;
+    // void exportConfig(std::ostream &stream) const;
 
 
     //
@@ -665,6 +664,23 @@ private:
 
     // Services an inspection event
     void processINSEvent();
+
+
+    //
+    // Handling workspaces
+    //
+
+public:
+
+    // Loads a workspace from a file
+    void loadWorkspace(const fs::path &path) throws;
+
+    // Saves the current workspace to a file
+    void saveWorkspace(const fs::path &path);
+
+    // Called by (hidden) RetroShell 'workspace' commands
+    void initWorkspace();
+    void activateWorkspace();
 
 
     //

@@ -1095,8 +1095,20 @@ struct C64API : public API {
 
 
     /// @}
-    /// @name Handling snapshots
+    /// @name Working with workspaces and snapshots
     /// @{
+
+    /** @brief  Loads a workspace.
+     *
+     *  @param  path    Path to a workspace folder
+     */
+    void loadWorkspace(const fs::path &path);
+
+    /** @brief  Saves a workspace to disk.
+     *
+     *  @param  path    Destination path
+     */
+    void saveWorkspace(const fs::path &path) const;
 
     /** @brief  Takes a snapshot
      *
@@ -1107,9 +1119,9 @@ struct C64API : public API {
      */
     MediaFile *takeSnapshot();
 
-    /** @brief  Loads a snapshot into the emulator.
+    /** @brief  Loads a snapshot
      *
-     *  @param  snapshot    Reference to a snapshot.
+     *  @param  snapshot    Reference to a snapshot
      */
     void loadSnapshot(const MediaFile &snapshot);
 
