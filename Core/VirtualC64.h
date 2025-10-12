@@ -574,50 +574,6 @@ struct UserPortAPI : API {
 };
 
 
-/** Screen Recorder Public API
- */
-struct RecorderAPI : API {
-
-    class Recorder *recorder = nullptr;
-
-    /** @brief  Returns the component's configuration.
-     */
-    const RecorderConfig &getConfig() const;
-
-    /** @brief  Returns the component's current state.
-     */
-    const RecorderInfo &getInfo() const;
-    const RecorderInfo &getCachedInfo() const;
-
-    /** @brief  Returns the path to the FFmpeg executable.
-     */
-    const fs::path getExecPath() const;
-
-    /** @brief  Sets the path to the FFmpeg executable.
-     */
-    void setExecPath(const std::filesystem::path &path);
-
-    /** @brief  Starts the recorder.
-     *  @param  x1      Horizontal start coordinate of the recorded area
-     *  @param  y1      Vertical start coordinate of the recorded area
-     *  @param  x2      Horizontal end coordinate of the recorded area
-     *  @param  y2      Vertical stop coordinate of the recorded area
-     */
-    void startRecording(isize x1, isize y1, isize x2, isize y2);
-
-    /** @brief  Interrupts a recording in progress.
-     */
-    void stopRecording();
-
-    /** @brief  Exports the recorded video to a file.
-     *  @param  path    The export destination.
-     *  @return true on success.
-     */
-    bool exportAs(const std::filesystem::path &path);
-
-};
-
-
 /** Expansion Port Public API
  */
 struct ExpansionPortAPI : API {
@@ -1596,7 +1552,6 @@ public:
     DatasetteAPI datasette;
     ControlPortAPI controlPort1, controlPort2;
     UserPortAPI userPort;
-    RecorderAPI recorder;
     ExpansionPortAPI expansionPort;
     SerialPortAPI serialPort;
     DriveAPI drive8, drive9;

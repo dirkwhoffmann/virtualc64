@@ -1128,7 +1128,6 @@ C64::endFrame()
     port2.execute();
     drive8.vsyncHandler();
     drive9.vsyncHandler();
-    recorder.vsyncHandler();
 }
 
 void

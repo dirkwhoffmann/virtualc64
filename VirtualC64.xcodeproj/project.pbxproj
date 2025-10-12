@@ -70,7 +70,6 @@
 		503C1DD324FCD1BF00D91141 /* SnapshotViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */; };
 		503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Assets.xcassets */; };
 		5042FB112D4E121A00E4A167 /* FilePanels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5042FB102D4E121600E4A167 /* FilePanels.swift */; };
-		5044A03B2657A7A800C551C6 /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5044A0392657A7A800C551C6 /* Recorder.cpp */; };
 		50461BBE26B522450019CEDF /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50461BBC26B522450019CEDF /* Thread.cpp */; };
 		504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429124AF29AB00E69CAE /* Ocean.cpp */; };
 		504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429224AF29AB00E69CAE /* WarpSpeed.cpp */; };
@@ -254,9 +253,6 @@
 		50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430524AF29AB00E69CAE /* VICIIDraw.cpp */; };
 		50726F612961C9AC0031F2F5 /* VICIISprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICIISprites.cpp */; };
 		50726F622961C9AC0031F2F5 /* VICIITable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICIITable.cpp */; };
-		50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5044A0392657A7A800C551C6 /* Recorder.cpp */; };
-		50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
-		50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3693281681D000E40BFC /* NamedPipe.cpp */; };
 		50726F662961C9B80031F2F5 /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* SIDBridge.cpp */; };
 		50726F672961C9B80031F2F5 /* AudioPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* AudioPort.cpp */; };
 		50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433124AF29AC00E69CAE /* ReSID.cpp */; };
@@ -496,8 +492,6 @@
 		50CCC8012C117ACF0047ED17 /* MediaFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */; };
 		50CCC8022C117ACF0047ED17 /* MediaFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */; };
 		50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CCE178259DFD7800481E7F /* DevicesPrefs.swift */; };
-		50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3693281681D000E40BFC /* NamedPipe.cpp */; };
-		50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
 		50CD369C2817D69000E40BFC /* Defaults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD369A2817D69000E40BFC /* Defaults.cpp */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D20B752508F6D70088E8F2 /* VICIICycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICIICycles.cpp */; };
@@ -679,8 +673,6 @@
 		50441A9F2B9495BE00102A4D /* header.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = header.html; sourceTree = "<group>"; };
 		50441AA02B9495BE00102A4D /* delete_me.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = delete_me.css; sourceTree = "<group>"; };
 		50441AA22B94CDE400102A4D /* headless.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = headless.md; sourceTree = "<group>"; };
-		5044A0392657A7A800C551C6 /* Recorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recorder.cpp; sourceTree = "<group>"; };
-		5044A03A2657A7A800C551C6 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		5044C5D02931F94800F4A413 /* PeddleInit_cpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleInit_cpp.h; sourceTree = "<group>"; };
 		5044C5D12931FA5F00F4A413 /* PeddleMemory_cpp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleMemory_cpp.h; sourceTree = "<group>"; };
 		50461BBC26B522450019CEDF /* Thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
@@ -1135,11 +1127,6 @@
 		50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MediaFile.cpp; sourceTree = "<group>"; };
 		50CCC8002C117ACF0047ED17 /* MediaFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaFile.h; sourceTree = "<group>"; };
 		50CCE178259DFD7800481E7F /* DevicesPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefs.swift; sourceTree = "<group>"; };
-		50CD3692281681A300E40BFC /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		50CD3693281681D000E40BFC /* NamedPipe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamedPipe.cpp; sourceTree = "<group>"; };
-		50CD3694281681D000E40BFC /* NamedPipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamedPipe.h; sourceTree = "<group>"; };
-		50CD3696281681E700E40BFC /* FFmpeg.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFmpeg.cpp; sourceTree = "<group>"; };
-		50CD3697281681E700E40BFC /* FFmpeg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFmpeg.h; sourceTree = "<group>"; };
 		50CD369A2817D69000E40BFC /* Defaults.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Defaults.cpp; sourceTree = "<group>"; };
 		50CD369B2817D69000E40BFC /* Defaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
 		50CFF5652C2589DF00A47ECC /* HostTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HostTypes.h; sourceTree = "<group>"; };
@@ -1180,7 +1167,6 @@
 		50E5BF722BA81E710004712B /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
 		50E5BF762BA81EB30004712B /* MonitorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonitorTypes.h; sourceTree = "<group>"; };
 		50E5BF772BA81ECD0004712B /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		50E5D66E2B9C9C97004113A9 /* RecorderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecorderTypes.h; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		50E5FFB3227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50E5FFB4227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MyDocument.xib; sourceTree = "<group>"; };
@@ -2296,21 +2282,6 @@
 			path = "XIB files";
 			sourceTree = "<group>";
 		};
-		50CD36912816817500E40BFC /* Recorder */ = {
-			isa = PBXGroup;
-			children = (
-				50CD3692281681A300E40BFC /* CMakeLists.txt */,
-				50CD3694281681D000E40BFC /* NamedPipe.h */,
-				50CD3693281681D000E40BFC /* NamedPipe.cpp */,
-				50CD3697281681E700E40BFC /* FFmpeg.h */,
-				50CD3696281681E700E40BFC /* FFmpeg.cpp */,
-				50E5D66E2B9C9C97004113A9 /* RecorderTypes.h */,
-				5044A03A2657A7A800C551C6 /* Recorder.h */,
-				5044A0392657A7A800C551C6 /* Recorder.cpp */,
-			);
-			path = Recorder;
-			sourceTree = "<group>";
-		};
 		50CD36992817BA6600E40BFC /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -2372,7 +2343,6 @@
 				50A5B7CD2C74E44C00D6DDAD /* RemoteServers */,
 				5036E0AD261AEF000048E66A /* RetroShell */,
 				50EF22302815922300440C4D /* RegressionTester */,
-				50CD36912816817500E40BFC /* Recorder */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -2512,7 +2482,6 @@
 				50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */,
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
 				505A13302C3503EB00FF8D2C /* UserPortBase.cpp in Sources */,
-				50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */,
 				50E5BF742BA81E710004712B /* Monitor.cpp in Sources */,
 				50726F622961C9AC0031F2F5 /* VICIITable.cpp in Sources */,
 				50726F872961CA0D0031F2F5 /* MikroAss.cpp in Sources */,
@@ -2603,7 +2572,6 @@
 				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
 				50A5B7D22C74E44C00D6DDAD /* RemoteServer.cpp in Sources */,
 				508C1E572C0B20760097473C /* ExpansionPortBase.cpp in Sources */,
-				50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */,
 				50726F8C2961CA0D0031F2F5 /* Reu.cpp in Sources */,
 				50726F422961C97B0031F2F5 /* Concurrency.cpp in Sources */,
 				50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */,
@@ -2653,7 +2621,6 @@
 				50726F752961C9DC0031F2F5 /* DriveMemory.cpp in Sources */,
 				50726F792961C9DC0031F2F5 /* ParallelCable.cpp in Sources */,
 				50BB3E9B2B7A50F600B2D87B /* Synchronizable.cpp in Sources */,
-				50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */,
 				508C1E5E2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */,
 				50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */,
 				50BD641A2C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
@@ -2727,7 +2694,6 @@
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
 				5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */,
 				50AE19392632B787005A5898 /* Script.cpp in Sources */,
-				5044A03B2657A7A800C551C6 /* Recorder.cpp in Sources */,
 				50A9443B2DD7594700A242B0 /* DmaView.swift in Sources */,
 				50A5B7CF2C74E44C00D6DDAD /* RemoteManager.cpp in Sources */,
 				5085D89D25B848940043B15C /* Joystick.cpp in Sources */,
@@ -2865,7 +2831,6 @@
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
 				50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */,
 				50A194992BDA82720046849E /* SIDBase.cpp in Sources */,
-				50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */,
 				504C437324AF29AC00E69CAE /* RomFile.cpp in Sources */,
 				504C437E24AF29AC00E69CAE /* TAPFile.cpp in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
@@ -2902,7 +2867,6 @@
 				505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */,
 				508C1E692C0C507D0097473C /* CartridgeBase.cpp in Sources */,
 				50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */,
-				50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */,
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
 				50A194932BDA709D0046849E /* CPUBase.cpp in Sources */,
 				506F30472B7692180083EAEA /* VirtualC64.cpp in Sources */,

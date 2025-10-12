@@ -34,7 +34,6 @@ using namespace vc64;
 @class MemoryProxy;
 @class MouseProxy;
 @class MyController;
-@class RecorderProxy;
 @class RemoteManagerProxy;
 @class RetroShellProxy;
 @class RS232Proxy;
@@ -117,7 +116,6 @@ NSString *EventSlotName(EventSlot slot);
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
     MouseProxy *mouse;
-    RecorderProxy *recorder;
     RetroShellProxy *retroShell;
     SIDProxy *sid;
     VICIIProxy *vic;
@@ -142,7 +140,6 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly, strong) SerialPortProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
-@property (readonly, strong) RecorderProxy *recorder;
 @property (readonly, strong) RemoteManagerProxy *remoteManager;
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
@@ -614,28 +611,6 @@ struct GuardInfo {
 @property (readonly) JoystickInfo cachedInfo;
 
 - (void)trigger:(GamePadAction)event;
-
-@end
-
-
-//
-// Recorder
-//
-
-@interface RecorderProxy : SubComponentProxy { }
-
-@property (readonly) RecorderConfig config;
-@property (readonly) RecorderInfo info;
-@property (readonly) RecorderInfo cachedInfo;
-
-@property NSString *path;
-- (NSString *)findFFmpeg:(NSInteger)nr;
-@property (readonly) BOOL hasFFmpeg;
-@property (readonly) BOOL recording;
-
-- (void)startRecording:(NSRect)rect exception:(ExceptionWrapper *)ex;
-- (void)stopRecording;
-- (BOOL)exportAs:(NSString *)path;
 
 @end
 

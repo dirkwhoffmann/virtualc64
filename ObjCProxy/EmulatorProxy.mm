@@ -10,7 +10,6 @@
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
 #import "DiskAnalyzer.h"
-#import "FFmpeg.h"
 #import "FileSystem.h"
 #import "Texture.h"
 
@@ -1115,90 +1114,6 @@ NSString *EventSlotName(EventSlot slot)
 
 
 //
-// Recorder
-//
-
-@implementation RecorderProxy
-
-- (RecorderAPI *)recorder
-{
-    return (RecorderAPI *)obj;
-}
-
-- (RecorderConfig)config
-{
-    return [self recorder]->getConfig();
-}
-
-- (RecorderInfo)info
-{
-    return [self recorder]->getInfo();
-}
-
-- (RecorderInfo)cachedInfo
-{
-    return [self recorder]->getCachedInfo();
-}
-
-- (NSString *)path
-{
-    auto path = FFmpeg::getExecPath();
-    return @(path.c_str());
-}
-
-- (void)setPath:(NSString *)path
-{
-    if ([path length] == 0) {
-        FFmpeg::setExecPath("");
-    } else {
-        FFmpeg::setExecPath(string([path fileSystemRepresentation]));
-    }
-}
-
-- (NSString *)findFFmpeg:(NSInteger)nr
-{
-    if (nr < (NSInteger)FFmpeg::paths.size()) {
-        return @(FFmpeg::paths[nr].c_str());
-    } else {
-        return nil;
-    }
-}
-
-- (BOOL)hasFFmpeg
-{
-    return FFmpeg::available();
-}
-
-- (BOOL)recording
-{
-    return [self recorder]->getInfo().state != RecState::WAIT;
-}
-
-- (void)startRecording:(NSRect)rect exception:(ExceptionWrapper *)ex
-{
-    auto x1 = isize(rect.origin.x);
-    auto y1 = isize(rect.origin.y);
-    auto x2 = isize(x1 + (int)rect.size.width);
-    auto y2 = isize(y1 + (int)rect.size.height);
-
-    try { return [self recorder]->startRecording(x1, y1, x2, y2); }
-    catch (AppError &error) { [ex save:error]; }
-}
-
-- (void)stopRecording
-{
-    [self recorder]->stopRecording();
-}
-
-- (BOOL)exportAs:(NSString *)path
-{
-    return [self recorder]->exportAs(string([path fileSystemRepresentation]));
-}
-
-@end
-
-
-//
 // RemoteManager proxy
 //
 
@@ -1809,7 +1724,6 @@ NSString *EventSlotName(EventSlot slot)
 @synthesize mem;
 @synthesize port1;
 @synthesize port2;
-@synthesize recorder;
 @synthesize remoteManager;
 @synthesize retroShell;
 @synthesize sid;
@@ -1841,7 +1755,6 @@ NSString *EventSlotName(EventSlot slot)
     mem = [[MemoryProxy alloc] initWith:&emu->mem emu:emu];
     port1 = [[ControlPortProxy alloc] initWith:&emu->controlPort1 emu:emu];
     port2 = [[ControlPortProxy alloc] initWith:&emu->controlPort2 emu:emu];
-    recorder = [[RecorderProxy alloc] initWith:&emu->recorder emu:emu];
     remoteManager = [[RemoteManagerProxy alloc] initWith:&emu->remoteManager emu:emu];
     retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell emu:emu];
     sid = [[SIDProxy alloc] initWith:&emu->sid emu:emu];

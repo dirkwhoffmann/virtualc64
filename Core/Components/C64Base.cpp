@@ -45,8 +45,7 @@ C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
         &monitor,
         &remoteManager,
         &retroShell,
-        &regressionTester,
-        &recorder
+        &regressionTester
     };
 
     // Assign a unique ID to the CPU

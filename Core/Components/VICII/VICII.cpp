@@ -166,8 +166,6 @@ VICII::setRevision(VICIIRev revision)
         assert(isPoweredOff() || !emulator.isInitialized());
     }
 
-    recorder.stopRecording();
-
     config.revision = revision;
     isFirstDMAcycle = isSecondDMAcycle = 0;
     updatePalette();

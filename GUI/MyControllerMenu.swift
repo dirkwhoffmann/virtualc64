@@ -18,7 +18,6 @@ extension MyController: NSMenuItemValidation {
         let info = emu.info
         let powered = info.powered
         let running = info.running
-        var recording: Bool { return emu.recorder.recording }
 
         var driveID: Int { return item.tag }
         var drive: DriveProxy { return emu.drive(driveID) }

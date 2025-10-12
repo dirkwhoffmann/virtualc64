@@ -151,9 +151,6 @@ VirtualC64::VirtualC64() {
     drive9.drive = &emu->main.drive9;
     drive9.disk.drive = &emu->main.drive9;
 
-    recorder.emu = emu;
-    recorder.recorder = &emu->main.recorder;
-
     remoteManager.emu = emu;
     remoteManager.remoteManager = &emu->main.remoteManager;
 
@@ -1221,58 +1218,6 @@ MouseAPI::detectShakeDxDy(double dx, double dy)
 {
     VC64_PUBLIC
     return mouse->detectShakeDxDy(dx, dy);
-}
-
-
-//
-// Recorder
-//
-
-const RecorderConfig &
-RecorderAPI::getConfig() const
-{
-    return recorder->getConfig();
-}
-
-const RecorderInfo &
-RecorderAPI::getInfo() const
-{
-    return recorder->getInfo();
-}
-
-const RecorderInfo &
-RecorderAPI::getCachedInfo() const
-{
-    return recorder->getCachedInfo();
-}
-
-const fs::path
-RecorderAPI::getExecPath() const
-{
-    return FFmpeg::getExecPath();
-}
-
-void RecorderAPI::setExecPath(const std::filesystem::path &path)
-{
-    FFmpeg::setExecPath(path);
-}
-
-void
-RecorderAPI::startRecording(isize x1, isize y1, isize x2, isize y2)
-{
-    recorder->startRecording(x1, y1, x2, y2);
-}
-
-void
-RecorderAPI::stopRecording()
-{
-    recorder->stopRecording();
-}
-
-bool
-RecorderAPI::exportAs(const std::filesystem::path &path)
-{
-    return recorder->exportAs(path);
 }
 
 
