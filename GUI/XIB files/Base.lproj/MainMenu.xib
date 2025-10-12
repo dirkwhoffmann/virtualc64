@@ -43,6 +43,26 @@
                             <menuItem isSeparatorItem="YES" id="202">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
+                            <menuItem title="Inspector..." keyEquivalent="" id="lLA-nI-jYm">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                <connections>
+                                    <action selector="inspectorAction:" target="-1" id="tpP-z8-bBt"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Dashboard..." id="02W-sT-jHS" userLabel="Dashboard...">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="dashboardAction:" target="-1" id="PAk-Ig-aX3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Console..." keyEquivalent="^" id="A7q-Kf-Mey">
+                                <connections>
+                                    <action selector="consoleAction:" target="-1" id="8XI-rS-RBA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="WNt-ZM-8Er">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
                             <menuItem title="Hide Virtual C64" keyEquivalent="h" id="134">
                                 <connections>
                                     <action selector="hide:" target="-2" id="152"/>
@@ -118,47 +138,22 @@
                                     <action selector="revertDocumentToSaved:" target="-1" id="198"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="aWt-rp-gig"/>
-                            <menuItem title="Inspector..." keyEquivalent="" id="lLA-nI-jYm">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
-                                <connections>
-                                    <action selector="inspectorAction:" target="-1" id="tpP-z8-bBt"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Monitor..." id="02W-sT-jHS">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="dashboardAction:" target="-1" id="PAk-Ig-aX3"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Console..." keyEquivalent="^" id="A7q-Kf-Mey">
-                                <connections>
-                                    <action selector="consoleAction:" target="-1" id="8XI-rS-RBA"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="f6W-1J-YBf"/>
-                            <menuItem title="Import Script..." id="wOE-dg-0WH">
+                            <menuItem title="Load Snapshot..." id="BX4-y5-PoI">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="importConfigAction:" target="-1" id="dBf-W1-X97"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Export Configuration Script..." id="kqX-GG-E6Q">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="exportConfigAction:" target="-1" id="jX3-Pt-TIs"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Restore Factory Settings" id="A2y-TS-y6Z">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="factorySettingsAction:" target="-1" id="yJ4-Kp-1ir"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="7Yz-nT-kS2"/>
-                            <menuItem title="Take Snapshot" keyEquivalent="+" id="BX4-y5-PoI">
                                 <connections>
                                     <action selector="takeSnapshotAction:" target="-1" id="jhF-O1-8rn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Save Snapshot..." id="fJ4-Fj-fSD">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="takeSnapshotAction:" target="-1" id="EpX-44-NwF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Take Snapshot" keyEquivalent="+" id="gpz-VL-eFm">
+                                <connections>
+                                    <action selector="takeSnapshotAction:" target="-1" id="z3d-Yu-IzR"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Restore Latest Snapshot" keyEquivalent="-" id="EcZ-LE-gfc">
@@ -184,6 +179,22 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="browseScreenshotsAction:" target="-1" id="2lN-BD-hwW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="7Yz-nT-kS2"/>
+                            <menuItem title="Import Script..." id="wOE-dg-0WH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="importConfigAction:" target="-1" id="dBf-W1-X97"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="3it-CX-KQy">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Restore Factory Settings" id="A2y-TS-y6Z">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="factorySettingsAction:" target="-1" id="yJ4-Kp-1ir"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -268,6 +279,18 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="stepIntoAction:" target="-1" id="488"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Finish line" id="EIy-tF-ngZ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="stepIntoAction:" target="-1" id="XB2-CF-U3x"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Finish frame" id="OxB-ce-XbO">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="stepIntoAction:" target="-1" id="w1t-8q-JH2"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="qq8-Qm-VmD"/>
@@ -569,13 +592,13 @@ CQ
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="PlF-BJ-HIT"/>
                             <menuItem title="Eject" id="mVY-LA-phJ">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="ejectDiskAction:" target="-1" id="6hq-cd-dhx"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="PlF-BJ-HIT"/>
                             <menuItem title="Export..." id="inq-yB-iPf" userLabel="Export disk">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

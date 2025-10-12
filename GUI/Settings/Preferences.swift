@@ -34,6 +34,11 @@ class Preferences {
     //
 
     // Snapshots
+    var snapshotCompressor = Compressor.NONE
+    var snapshotCompressorIntValue: Int {
+        get { return Int(snapshotCompressor.rawValue) }
+        set { snapshotCompressor = Compressor(rawValue: newValue) ?? snapshotCompressor }
+    }
     var snapshotAutoDelete: Bool = true
 
     // Screenshots

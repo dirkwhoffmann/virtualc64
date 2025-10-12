@@ -26,9 +26,6 @@ class PerformanceSettingsViewController: SettingsViewController {
     @IBOutlet weak var viciiPowerSave: NSButton!
     @IBOutlet weak var sidPowerSave: NSButton!
 
-    // Compression
-    @IBOutlet weak var snapCompressor: NSPopUpButton!
-
     // Collision detection
     @IBOutlet weak var ssCollisions: NSButton!
     @IBOutlet weak var sbCollisions: NSButton!
@@ -70,9 +67,6 @@ class PerformanceSettingsViewController: SettingsViewController {
         // Collision detection
         ssCollisions.state = config.ssCollisions ? .on : .off
         sbCollisions.state = config.sbCollisions ? .on : .off
-
-        // Compression
-        snapCompressor.selectItem(withTag: config.snapCompressor)
     }
 
     //
@@ -140,15 +134,6 @@ class PerformanceSettingsViewController: SettingsViewController {
     @IBAction func runAheadAction(_ sender: NSSlider!) {
 
         config?.runAhead = sender.integerValue
-    }
-
-    //
-    // Action methods (Compressor)
-    //
-
-    @IBAction func snapCompressorAction(_ sender: NSPopUpButton!) {
-
-        config?.snapCompressor = sender.selectedTag()
     }
 
     //

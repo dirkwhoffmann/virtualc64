@@ -280,6 +280,7 @@ class Configuration {
         set { emu?.set(.C64_RUN_AHEAD, value: newValue) }
     }
 
+    // DEPRECATED
     var snapCompressor: Int {
         get { return emu?.get(.C64_SNAP_COMPRESSOR) ?? 0 }
         set { emu?.set(.C64_SNAP_COMPRESSOR, value: newValue) }

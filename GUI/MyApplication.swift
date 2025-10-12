@@ -123,13 +123,6 @@ extension MyAppDelegate {
     func deviceRemoved() {
         settingsController?.refresh()
     }
-
-    // Callen when a HID device has been pulled
-    /*
-    func devicePulled(events: [vc64.GamePadAction]) {
-        settingsController?.refresh()
-    }
-    */
 }
 
 var myApp: MyApplication { return NSApp as! MyApplication }

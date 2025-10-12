@@ -28,6 +28,7 @@ typealias Message = vc64.Message
 typealias Opt = vc64.Opt
 typealias RomType = vc64.RomType
 typealias TAPVersion = vc64.TAPVersion
+typealias VICIIRev = vc64.VICIIRev
 typealias Warp = vc64.Warp
 
 let DRIVE8 = vc64.DRIVE8

@@ -7,6 +7,46 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+extension C64Proxy {
+
+    /*
+    func loadSnapshot(_ proxy: MediaFileProxy) throws {
+
+        let exception = ExceptionWrapper()
+        loadSnapshot(proxy, exception: exception)
+        if exception.fault != .OK { throw AppError(exception) }
+    }
+
+    func loadSnapshot(url: URL) throws {
+
+        let exception = ExceptionWrapper()
+        loadSnapshot(from: url, exception: exception)
+        if exception.fault != .OK { throw AppError(exception) }
+    }
+
+    func saveSnapshot(url: URL) throws {
+
+        let exception = ExceptionWrapper()
+        saveSnapshot(to: url, exception: exception)
+        if exception.fault != .OK { throw AppError(exception) }
+    }
+    */
+
+    func loadWorkspace(url: URL) throws {
+
+        let exception = ExceptionWrapper()
+        loadWorkspace(url, exception: exception)
+        if exception.errorCode != .OK { throw AppError(exception) }
+    }
+
+    func saveWorkspace(url: URL) throws {
+
+        let exception = ExceptionWrapper()
+        saveWorkspace(url, exception: exception)
+        if exception.errorCode != .OK { throw AppError(exception) }
+    }
+}
+
 //
 // Factory extensions
 //

@@ -41,7 +41,7 @@ class MyDocument: NSDocument {
     // Gateway to the core emulator
     var emu: EmulatorProxy?
 
-    // Snapshot storage
+    // Snapshots
     static let maxSnapshots: Int = 16
     private(set) var snapshots = ManagedArray<MediaFileProxy>(maxCount: maxSnapshots)
 
@@ -54,6 +54,7 @@ class MyDocument: NSDocument {
         debug(.lifetime)
 
         super.init()
+
         // Check for OS compatibility
         if #available(macOS 27, *) {
 
@@ -84,10 +85,10 @@ class MyDocument: NSDocument {
     }
 
     override class var autosavesInPlace: Bool {
-        
+
         return false
     }
-    
+
     override open func makeWindowControllers() {
 
         debug(.lifetime)
@@ -113,7 +114,7 @@ class MyDocument: NSDocument {
     override open func read(from url: URL, ofType typeName: String) throws {
 
         debug(.media)
-        launchURL = url
+        // launchURL = url
     }
 
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
@@ -121,7 +122,7 @@ class MyDocument: NSDocument {
         debug(.media)
 
         do {
-            try mm.mount(url: url, allowedTypes: [.SNAPSHOT])
+            try mm.mount(url: url, allowedTypes: [.WORKSPACE])
 
         } catch let error as AppError {
 
@@ -133,20 +134,94 @@ class MyDocument: NSDocument {
     // Saving
     //
 
-    override func write(to url: URL, ofType typeName: String) throws {
+    override func save(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) async throws {
 
-        debug(.media)
+        debug(.media, "url = \(url)")
 
-        if typeName == UTType.snapshot.identifier {
+        if typeName == "de.dirkwhoffmann.retro.vamiga" {
 
-            if let snapshot = MediaFileProxy.make(withC64: emu) {
+            do {
+                // Save the workspace
+                try emu?.c64.saveWorkspace(url: url)
 
-                do {
-                    try snapshot.writeToFile(url: url)
+                // Add a screenshot to the workspace bundle
+                if let image = canvas.screenshot(source: .emulator, cutout: .visible) {
 
-                } catch let error as AppError {
+                    // Convert to target format
+                    let data = image.representation(using: .png)
 
-                    throw NSError(error: error)
+                    // Save to file
+                    try data?.write(to: url.appendingPathComponent("preview.png"))
+                }
+
+                // Save a plist file containing the machine properties
+                saveMachineDescription(to: url.appendingPathComponent("machine.plist"))
+
+                // Update the document's title and save status
+                self.fileURL = url
+                self.windowForSheet?.title = url.deletingPathExtension().lastPathComponent
+                self.updateChangeCount(.changeCleared)
+
+            } catch let error as AppError {
+
+                throw NSError(error: error)
+            }
+        }
+    }
+
+    func saveMachineDescription(to url: URL) {
+
+        guard let emu = emu else { return }
+
+        var dictionary: [String: Any] = [:]
+
+        let vicRev = VICIIRev(rawValue: emu.get(.VICII_REVISION))
+        let basic = emu.c64.getRomTraits(.BASIC)
+        let kernal = emu.c64.getRomTraits(.KERNAL)
+        let char = emu.c64.getRomTraits(.CHAR)
+        let vc1541 = emu.c64.getRomTraits(.VC1541)
+
+        // Collect some info about the emulated machine
+        dictionary["VICII"] = vicRev
+        dictionary["BasicRom"] = String(cString: basic.title)
+        dictionary["KernalRom"] = String(cString: kernal.title)
+        dictionary["CharRom"] = String(cString: char.title)
+        dictionary["VC1541Rom"] = String(cString: vc1541.title)
+        dictionary["Version"] = EmulatorProxy.version()
+        do {
+
+            let data = try PropertyListSerialization.data(fromPropertyList: dictionary, format: .xml, options: 0)
+            try data.write(to: url)
+
+        } catch { }
+    }
+
+    //
+    // Handling workspaces
+    //
+
+    func processWorkspaceFile(url: URL, force: Bool = false) throws {
+
+        // Swift.print("processWorkspaceFile \(url) force: \(force)")
+
+        // Load workspace
+        try emu?.c64.loadWorkspace(url: url)
+
+        // Update the document's title and save status
+        self.fileURL = url
+        self.windowForSheet?.title = url.deletingPathExtension().lastPathComponent
+        self.updateChangeCount(.changeCleared)
+
+        // Scan directory for additional media files
+        let supportedTypes: [String : FileType] =
+        ["d64": .D64, "g64": .G64, "crt": .CRT, "tap": .TAP]
+        let exclude = ["drive8", "drive9", "basic", "kernal", "char", "vc1541"]
+
+        let contents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
+        for file in contents {
+            if !exclude.contains(url.deletingPathExtension().lastPathComponent) {
+                if let type = supportedTypes[file.pathExtension.lowercased()] {
+                    // mm.noteNewRecentlyOpenedURL(file, type: type)
                 }
             }
         }
@@ -156,16 +231,15 @@ class MyDocument: NSDocument {
     // Handling snapshots
     //
 
-    /*
     func processSnapshotFile(url: URL) throws {
 
-        let file = try createMediaFileProxy(from: url, allowedTypes: [.SNAPSHOT])
+        let file = try MediaManager.createFileProxy(from: url, type: .SNAPSHOT)
         try processSnapshotFile(file: file)
     }
 
     func processSnapshotFile(file: MediaFileProxy) throws {
 
-        try emu?.amiga.loadSnapshot(file)
+        // try emu?.c64.loadSnapshot(file)
         appendSnapshot(file: file)
     }
 
@@ -181,6 +255,54 @@ class MyDocument: NSDocument {
         // Append the snapshot
         snapshots.append(file, size: file.size)
         return true
+    }
+
+    //
+    // Handling scripts
+    //
+
+    func processScriptFile(url: URL, force: Bool = false) throws {
+
+        let file = try MediaManager.createFileProxy(from: url, type: .SCRIPT)
+        try processScriptFile(file: file, force: force)
+    }
+
+    func processScriptFile(file: MediaFileProxy, force: Bool = false) throws {
+
+        console.runScript(script: file)
+    }
+
+    //
+    // Exporting disks
+    //
+
+    /*
+    func export(drive nr: Int, to url: URL) throws {
+
+        guard let dfn = emu?.df(nr) else { return }
+
+        var file: MediaFileProxy?
+        switch url.pathExtension.uppercased() {
+        case "ADF":
+            file = try MediaFileProxy.make(with: dfn, type: .ADF)
+        case "IMG", "IMA":
+            file = try MediaFileProxy.make(with: dfn, type: .IMG)
+        default:
+            warn("Invalid path extension")
+            return
+        }
+
+        try export(fileProxy: file!, to: url)
+        dfn.setFlag(.MODIFIED, value: false)
+        mm.noteNewRecentlyExportedDiskURL(url, df: nr)
+
+        debug(.media, "Disk exported successfully")
+    }
+
+    func export(fileProxy: MediaFileProxy, to url: URL) throws {
+
+        debug(.media, "Exporting to \(url)")
+        try fileProxy.writeToFile(url: url)
     }
     */
 }

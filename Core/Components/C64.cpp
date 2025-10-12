@@ -1501,6 +1501,25 @@ C64::takeSnapshot()
     return result;
 }
 
+MediaFile *
+C64::takeSnapshot(Compressor compressor, isize delay, bool repeat)
+{
+    if (delay != 0) {
+
+        i64 payload = (i64)compressor << 24 | repeat << 16 | delay;
+        scheduleRel<SLOT_SNP>(C64::sec(delay), SNP_TAKE, payload);
+        return nullptr;
+    }
+
+    // Take the snapshot
+    Snapshot *result = new Snapshot(*this);
+
+    // Compress the snapshot if requested
+    result->compress(compressor);
+
+    return result;
+}
+
 void
 C64::loadSnapshot(const MediaFile &file)
 {
@@ -1553,12 +1572,12 @@ C64::loadSnapshot(const MediaFile &file)
 void
 C64::processSNPEvent(EventID eventId)
 {
-    // Check for the main instance (ignore the run-ahead instance)
-    if (objid == 0) {
+    // Ignore the run-ahead instance
+    if (objid != 0) { cancel<SLOT_SNP>(); return; }
 
-        // Take snapshot and hand it over to GUI
-        msgQueue.put( Message { .type = Msg::SNAPSHOT_TAKEN, .snapshot = { new Snapshot(*this) } } );
-    }
+    // Take snapshot and hand it over to the GUI
+    auto *snapshot = takeSnapshot(Compressor(data[SLOT_SNP] >> 24));
+    msgQueue.put( Message { .type = Msg::SNAPSHOT_TAKEN, .snapshot = { snapshot } } );
 
     // Schedule the next event
     scheduleNextSNPEvent();
@@ -1567,6 +1586,16 @@ C64::processSNPEvent(EventID eventId)
 void 
 C64::scheduleNextSNPEvent()
 {
+    auto repeat = bool(data[SLOT_SNP] >> 16 & 0xFF);
+    auto delay = double(data[SLOT_SNP] & 0xFFFF);
+
+    if (repeat) {
+        scheduleRel<SLOT_SNP>(C64::sec(delay), SNP_TAKE, data[SLOT_SNP]);
+    } else {
+        cancel<SLOT_SNP>();
+    }
+
+    /*
     auto snapshots = emulator.get(Opt::C64_SNAP_AUTO);
     auto delay = emulator.get(Opt::C64_SNAP_DELAY);
 
@@ -1575,6 +1604,7 @@ C64::scheduleNextSNPEvent()
     } else {
         cancel<SLOT_SNP>();
     }
+    */
 }
 
 RomTraits

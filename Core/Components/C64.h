@@ -690,7 +690,8 @@ public:
 public:
 
     // Takes a snapshot
-    MediaFile *takeSnapshot();
+    [[deprecated]] MediaFile *takeSnapshot();
+    MediaFile *takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
 
     // Loads the current state from a snapshot file
     void loadSnapshot(const MediaFile &snapshot) throws;

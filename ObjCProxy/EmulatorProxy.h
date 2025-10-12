@@ -274,7 +274,14 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) RomTraits kernalRom;
 @property (readonly) RomTraits vc1541Rom;
 
-- (MediaFileProxy *) takeSnapshot;
+// - (MediaFileProxy *) takeSnapshot;
+- (MediaFileProxy *) takeSnapshot:(Compressor)compressor;
+// - (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex;
+// - (void)loadSnapshotFromUrl:(NSURL *)url exception:(ExceptionWrapper *)ex;
+// - (void)saveSnapshotToUrl:(NSURL *)url exception:(ExceptionWrapper *)ex;
+
+- (void)loadWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex;
+- (void)saveWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex;
 
 - (BOOL) getMessage:(Message *)msg;
 
@@ -659,7 +666,8 @@ struct GuardInfo {
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFile:(NSString *)path type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithC64:(EmulatorProxy *)c64proxy;
++ (instancetype)makeWithC64:(EmulatorProxy *)proxy __attribute__((deprecated));
++ (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 

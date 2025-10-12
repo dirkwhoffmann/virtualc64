@@ -9,8 +9,8 @@
         <!--Onboarding Layer View Controller-->
         <scene sceneID="0wo-sd-BhL">
             <objects>
-                <viewController storyboardIdentifier="OnboardingLayerViewController" id="2EI-pN-4NJ" customClass="OnboardingLayerViewController" customModule="vAmiga" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="Mco-Zt-9zA" customClass="OnboardingLayerView" customModule="vAmiga" customModuleProvider="target">
+                <viewController storyboardIdentifier="OnboardingLayerViewController" id="2EI-pN-4NJ" customClass="OnboardingLayerViewController" customModule="VirtualC64" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Mco-Zt-9zA" customClass="OnboardingLayerView" customModule="VirtualC64" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -44,7 +44,7 @@
                             <box fixedFrame="YES" title="Box" titlePosition="noTitle" transparent="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IpI-Dm-hsS">
                                 <rect key="frame" x="100" y="64" width="600" height="478"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" id="3sf-bE-Ihe" customClass="OnboardingPageContainerView" customModule="vAmiga" customModuleProvider="target">
+                                <view key="contentView" id="3sf-bE-Ihe" customClass="OnboardingPageContainerView" customModule="VirtualC64" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="478"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -59,7 +59,7 @@
                                                 <action selector="nextPage:" target="2EI-pN-4NJ" id="drM-Do-hPX"/>
                                             </connections>
                                         </button>
-                                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h7X-KB-SZK" customClass="PageDotsIndicator" customModule="vAmiga" customModuleProvider="target">
+                                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h7X-KB-SZK" customClass="PageDotsIndicator" customModule="VirtualC64" customModuleProvider="target">
                                             <rect key="frame" x="215" y="43" width="163" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </customView>
@@ -87,7 +87,7 @@
         <!--Onboarding View Controller1-->
         <scene sceneID="xwE-8F-bjL">
             <objects>
-                <viewController storyboardIdentifier="Step1" id="G1J-Wq-3fF" customClass="OnboardingViewController1" customModule="vAmiga" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Step1" id="G1J-Wq-3fF" customClass="OnboardingViewController1" customModule="VirtualC64" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="BDl-dk-6Qr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -133,9 +133,9 @@
                                         </textFieldCell>
                                     </textField>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAp-EQ-PC1">
-                                        <rect key="frame" x="29" y="33" width="116" height="116"/>
+                                        <rect key="frame" x="6" y="33" width="156" height="116"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="iconGeneral" id="bQT-fT-jKw"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64_1" id="bQT-fT-jKw"/>
                                     </imageView>
                                 </subviews>
                                 <userDefinedRuntimeAttributes>
@@ -163,9 +163,9 @@
                                         </textFieldCell>
                                     </textField>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ek-Bd-agI">
-                                        <rect key="frame" x="32" y="33" width="116" height="116"/>
+                                        <rect key="frame" x="14" y="33" width="156" height="116"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="iconGeneral" id="Zta-rb-T45"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64_2" id="Zta-rb-T45"/>
                                     </imageView>
                                 </subviews>
                                 <userDefinedRuntimeAttributes>
@@ -193,9 +193,9 @@
                                         </textFieldCell>
                                     </textField>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d7n-6c-iZv">
-                                        <rect key="frame" x="28" y="34" width="116" height="116"/>
+                                        <rect key="frame" x="8" y="34" width="156" height="116"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="iconGeneral" id="gqE-5X-Fky"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64_3" id="gqE-5X-Fky"/>
                                     </imageView>
                                 </subviews>
                                 <userDefinedRuntimeAttributes>
@@ -293,12 +293,12 @@
         <!--Onboarding View Controller2-->
         <scene sceneID="6xw-kU-aTh">
             <objects>
-                <viewController storyboardIdentifier="Step2" id="sj5-Aa-QdR" customClass="OnboardingViewController2" customModule="vAmiga" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Step2" id="sj5-Aa-QdR" customClass="OnboardingViewController2" customModule="VirtualC64" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="EDk-ow-yRn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ug8-iY-Nuh" customClass="OnboardingButton" customModule="vAmiga" customModuleProvider="target">
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ug8-iY-Nuh" customClass="OnboardingButton" customModule="VirtualC64" customModuleProvider="target">
                                 <rect key="frame" x="214" y="61" width="172" height="172"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -367,8 +367,10 @@
         <image name="FlagEU" width="256" height="256"/>
         <image name="FlagUSA" width="256" height="256"/>
         <image name="arrowshape.backward.circle" catalog="system" width="15" height="15"/>
-        <image name="c64bg2" width="686" height="509"/>
-        <image name="iconGeneral" width="256" height="256"/>
+        <image name="c64_1" width="768" height="432"/>
+        <image name="c64_2" width="1920" height="1200"/>
+        <image name="c64_3" width="768" height="432"/>
+        <image name="c64bg2" width="583" height="456"/>
         <image name="logoRound75" width="1025" height="1025"/>
         <image name="rom_mega65" width="130" height="157"/>
         <image name="xmark.octagon.fill" catalog="system" width="17" height="15"/>

@@ -10,6 +10,7 @@
 class CapturesSettingsViewController: SettingsViewController {
 
     // Snapshots
+    @IBOutlet weak var snapshotsCompressorPopup: NSPopUpButton!
     @IBOutlet weak var snapshotsAutoDelete: NSButton!
     @IBOutlet weak var snapshotHelp: NSTextField!
     /*
@@ -43,6 +44,7 @@ class CapturesSettingsViewController: SettingsViewController {
         super.refresh()
 
         // Snapshots
+        snapshotsCompressorPopup.selectItem(withTag: pref.snapshotCompressorIntValue)
         if pref.snapshotAutoDelete {
 
             snapshotsAutoDelete.state = .on
@@ -84,6 +86,12 @@ class CapturesSettingsViewController: SettingsViewController {
     //
     // Action methods
     //
+
+    @IBAction func snapCompressorAction(_ sender: NSPopUpButton!) {
+
+        pref.snapshotCompressorIntValue = sender.selectedTag()
+        print("pref.snapshotCompressorIntValue = \(pref.snapshotCompressorIntValue)")
+    }
 
     @IBAction func autoDeleteSnapshotAction(_ sender: NSButton!) {
 

@@ -1248,6 +1248,12 @@ NSString *EventSlotName(EventSlot slot)
     return [self make:vc64->c64.takeSnapshot()];
 }
 
++ (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c
+{
+    auto vc64 = (VirtualC64 *)proxy->obj;
+    return [self make:vc64->c64.takeSnapshot(c)];
+}
+
 + (instancetype)makeWithDrive:(DriveProxy *)proxy
                         type:(FileType)type
                    exception:(ExceptionWrapper *)ex
@@ -1689,10 +1695,30 @@ NSString *EventSlotName(EventSlot slot)
     return [self getRomTraits:RomType::VC1541];
 }
 
+/*
 - (MediaFileProxy *)takeSnapshot
 {
     MediaFile *snapshot = [self c64]->takeSnapshot();
     return [MediaFileProxy make:snapshot];
+}
+*/
+
+- (MediaFileProxy *) takeSnapshot:(Compressor)compressor
+{
+    MediaFile *snapshot = [self c64]->takeSnapshot(compressor);
+    return [MediaFileProxy make:snapshot];
+}
+
+- (void)loadWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex
+{
+    try { [self c64]->loadWorkspace([url fileSystemRepresentation]); }
+    catch (AppError &error) { [ex save:error]; }
+}
+
+- (void)saveWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex
+{
+    try { [self c64]->saveWorkspace([url fileSystemRepresentation]); }
+    catch (AppError &error) { [ex save:error]; }
 }
 
 - (BOOL)getMessage:(Message *)msg
