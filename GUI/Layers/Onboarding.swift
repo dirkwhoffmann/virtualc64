@@ -237,11 +237,16 @@ class OnboardingViewController1: OnboardingViewController {
     
     override func refresh() {
 
+        model0Button.label?.stringValue = "Early C64 " + (pal ? "(PAL)" : "(NTSC)")
+        model1Button.label?.stringValue = "C64 " + (pal ? "(PAL)" : "(NTSC)")
+        model2Button.label?.stringValue = "C64 II " + (pal ? "(PAL)" : "(NTSC)")
         model0Button.state = model == 0 ? .on : .off
         model1Button.state = model == 1 ? .on : .off
         model2Button.state = model == 2 ? .on : .off
         palButton.state = pal ? .on : .off
         ntscButton.state = !pal ? .on : .off
+        // palButton.box.isTransparent = true
+        // ntscButton.box.isTransparent = true
     }
 }
 

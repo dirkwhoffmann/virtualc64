@@ -13,7 +13,7 @@ class OnboardingButton: NSControl {
     @IBOutlet weak var icon: NSImageView?
     @IBOutlet weak var label: NSTextField?
 
-    private let box = NSBox()
+    let box = NSBox()
     private let clickButton = NSButton()
 
     var state: NSControl.StateValue = .off { didSet { update() } }
