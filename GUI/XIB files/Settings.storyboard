@@ -67,11 +67,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="220" height="362"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="dVA-9k-CoE">
-                                    <rect key="frame" x="1" y="1" width="218" height="360"/>
+                                    <rect key="frame" x="1" y="1" width="218" height="343"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="32" rowSizeStyle="automatic" headerView="7MY-3B-eVb" viewBased="YES" indentationPerLevel="13" outlineTableColumn="EUQ-eO-eBG" id="Wg2-c5-D1r" customClass="SettingsOutlineView" customModule="VirtualC64" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="219" height="332"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="219" height="315"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -547,7 +547,7 @@
                                 </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J7c-ZN-UJQ">
-                                <rect key="frame" x="115" y="143" width="191" height="26"/>
+                                <rect key="frame" x="126" y="143" width="180" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Emulator Texture" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="mHf-X2-FsF" id="B4b-vw-kid">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -571,25 +571,25 @@
                                 </connections>
                             </popUpButton>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kTg-rc-p0I">
-                                <rect key="frame" x="112" y="87" width="45" height="18"/>
+                                <rect key="frame" x="122" y="89" width="38" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Width:" id="54X-PW-nXq">
+                                <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Size:" id="54X-PW-nXq">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uoC-hY-6nU">
-                                <rect key="frame" x="207" y="87" width="51" height="18"/>
+                                <rect key="frame" x="213" y="87" width="11" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Height:" id="89R-Oi-TYL">
+                                <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="x" id="89R-Oi-TYL">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aPz-40-8B3">
-                                <rect key="frame" x="115" y="113" width="191" height="26"/>
+                                <rect key="frame" x="126" y="113" width="180" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Visible Area" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="oIJ-f1-boV" id="q2d-Zt-K5O">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -634,7 +634,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1hX-JJ-Nkr" customClass="LiveTextField" customModule="VirtualC64" customModuleProvider="target">
-                                <rect key="frame" x="161" y="86" width="45" height="21"/>
+                                <rect key="frame" x="164" y="86" width="45" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="9999" drawsBackground="YES" id="3Nc-ds-qYn">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="uSG-Z3-DS7"/>
@@ -647,7 +647,7 @@
                                 </connections>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aml-VL-ann" customClass="LiveTextField" customModule="VirtualC64" customModuleProvider="target">
-                                <rect key="frame" x="261" y="86" width="45" height="21"/>
+                                <rect key="frame" x="228" y="86" width="45" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="9999" drawsBackground="YES" id="CIe-F3-jlx">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="NKG-c8-Cy3"/>
@@ -660,7 +660,7 @@
                                 </connections>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lfc-Lb-SOl">
-                                <rect key="frame" x="115" y="173" width="191" height="26"/>
+                                <rect key="frame" x="126" y="173" width="180" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="TIFF image" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="BnP-fC-L5F" id="3tk-Cd-F39">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -768,7 +768,7 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6w-ww-nev">
-                                <rect key="frame" x="115" y="334" width="191" height="26"/>
+                                <rect key="frame" x="126" y="334" width="180" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Off" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="aYb-gV-NLZ" id="o4l-Tb-xTf">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1658,14 +1658,14 @@
                                 <rect key="frame" x="324" y="20" width="296" height="169"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" drawsBackground="NO" id="Hh0-gn-Ulv">
-                                    <rect key="frame" x="0.0" y="0.0" width="296" height="169"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="279" height="169"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Ic7-MR-4Lq">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="169"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="279" height="169"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="296" height="169"/>
+                                            <size key="minSize" width="279" height="169"/>
                                             <size key="maxSize" width="296" height="10000000"/>
                                             <connections>
                                                 <outlet property="delegate" destination="r4r-XO-jL2" id="r8R-ho-soG"/>

@@ -368,9 +368,9 @@
         <image name="FlagUSA" width="256" height="256"/>
         <image name="arrowshape.backward.circle" catalog="system" width="15" height="15"/>
         <image name="c64_1" width="768" height="432"/>
-        <image name="c64_2" width="1920" height="1200"/>
+        <image name="c64_2" width="768" height="480"/>
         <image name="c64_3" width="768" height="432"/>
-        <image name="c64bg2" width="583" height="456"/>
+        <image name="c64bg2" width="686" height="509"/>
         <image name="logoRound75" width="1025" height="1025"/>
         <image name="rom_mega65" width="130" height="157"/>
         <image name="xmark.octagon.fill" catalog="system" width="17" height="15"/>

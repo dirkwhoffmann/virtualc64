@@ -31,31 +31,20 @@ class SnapshotViewer: DialogController {
     var centerItem: Int { return numItems / 2 }
     var lastItem: Int { return numItems - 1 }
     var empty: Bool { return numItems == 0 }
-    
-    // Remembers the auto-snapshot setting
-    var takeSnapshots = false
 
     // Remembers the emulator state
     var wasRunning = false
 
-    override func windowWillLoad() {
-        
-    }
-    
     override func dialogDidShow() {
-        
+
+        super.dialogDidShow()
+
         now = Date()
 
         wasRunning = emu?.running ?? false
-
         if wasRunning { emu?.pause() }
 
-        // Don't let the emulator take snapshots while the dialog is open
-        // takeSnapshots = emu?.get(.C64_SNAP_AUTO) != 0
-        // emu?.set(.C64_SNAP_AUTO, enable: false)
-
         updateLabels()
-        
         self.carousel.type = iCarouselType.timeMachine
         self.carousel.isHidden = false
         self.updateCarousel(goto: myDocument.snapshots.count - 1, animated: false)

@@ -274,7 +274,6 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) RomTraits kernalRom;
 @property (readonly) RomTraits vc1541Rom;
 
-// - (MediaFileProxy *) takeSnapshot;
 - (MediaFileProxy *) takeSnapshot:(Compressor)compressor;
 // - (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex;
 // - (void)loadSnapshotFromUrl:(NSURL *)url exception:(ExceptionWrapper *)ex;

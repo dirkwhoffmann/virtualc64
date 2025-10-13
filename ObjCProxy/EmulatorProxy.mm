@@ -1705,8 +1705,15 @@ NSString *EventSlotName(EventSlot slot)
 
 - (MediaFileProxy *) takeSnapshot:(Compressor)compressor
 {
-    MediaFile *snapshot = [self c64]->takeSnapshot(compressor);
-    return [MediaFileProxy make:snapshot];
+    try {
+
+        MediaFile *snapshot = [self c64]->takeSnapshot(compressor);
+        return [MediaFileProxy make:snapshot];
+
+    } catch (AppError &error) {
+
+        return nil;
+    }
 }
 
 - (void)loadWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex

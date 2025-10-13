@@ -13,12 +13,6 @@ class CapturesSettingsViewController: SettingsViewController {
     @IBOutlet weak var snapshotsCompressorPopup: NSPopUpButton!
     @IBOutlet weak var snapshotsAutoDelete: NSButton!
     @IBOutlet weak var snapshotHelp: NSTextField!
-    /*
-    @IBOutlet weak var snapshotCapacity: NSSlider!
-    @IBOutlet weak var snapshotAutoDelete: NSButton!
-    @IBOutlet weak var autoSnapshots: NSButton!
-    @IBOutlet weak var snapshotInterval: NSTextField!
-    */
 
     // Screenshots
     @IBOutlet weak var screenshotFormatPopup: NSPopUpButton!
@@ -90,7 +84,6 @@ class CapturesSettingsViewController: SettingsViewController {
     @IBAction func snapCompressorAction(_ sender: NSPopUpButton!) {
 
         pref.snapshotCompressorIntValue = sender.selectedTag()
-        print("pref.snapshotCompressorIntValue = \(pref.snapshotCompressorIntValue)")
     }
 
     @IBAction func autoDeleteSnapshotAction(_ sender: NSButton!) {

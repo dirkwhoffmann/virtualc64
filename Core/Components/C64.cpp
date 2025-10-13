@@ -1523,50 +1523,20 @@ C64::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 void
 C64::loadSnapshot(const MediaFile &file)
 {
-    try {
+    const Snapshot &snap = dynamic_cast<const Snapshot &>(file);
 
-        const Snapshot &snap = dynamic_cast<const Snapshot &>(file);
+    // Make a copy so we can modify the snapshot
+    Snapshot snapshot(snap);
 
-        // Make a copy so we can modify the snapshot
-        Snapshot snapshot(snap);
+    // Uncompress the snapshot
+    snapshot.uncompress();
 
-        // Uncompress the snapshot
-        snapshot.uncompress();
-        
-        try {
-            
-            // Restore the saved state
-            load(snapshot.getSnapshotData());
-            
-            // Rectify the VICII function table (varies between PAL and NTSC)
-            vic.updateVicFunctionTable();
-            
-            // Clear the keyboard matrix to avoid constantly pressed keys
-            keyboard.releaseAll();
-            
-            // Print some debug info if requested
-            if (SNP_DEBUG) dump(Category::State);
-            
-        } catch (AppError &error) {
-            
-            /* If we reach this point, the emulator has been put into an
-             * inconsistent state due to corrupted snapshot data. We cannot
-             * continue emulation, because it would likely crash the
-             * application. Because we cannot revert to the old state either,
-             * we perform a hard reset to eliminate the inconsistency.
-             */
-            hardReset();
-            throw error;
-        }
+    // Restore the saved state
+    load(snapshot.getSnapshotData());
 
-        // Inform the GUI
-        msgQueue.put(vic.pal() ? Msg::PAL : Msg::NTSC);
-        msgQueue.put(Msg::SNAPSHOT_RESTORED);
-
-    } catch (...) {
-
-        throw AppError(Fault::FILE_TYPE_MISMATCH);
-    }
+    // Inform the GUI
+    msgQueue.put(vic.pal() ? Msg::PAL : Msg::NTSC);
+    msgQueue.put(Msg::SNAPSHOT_RESTORED);
 }
 
 void

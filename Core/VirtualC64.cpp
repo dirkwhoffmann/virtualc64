@@ -555,8 +555,25 @@ void
 C64API::loadSnapshot(const MediaFile &snapshot)
 {
     VC64_PUBLIC_SUSPEND
-    c64->loadSnapshot(snapshot);
+
     emu->markAsDirty();
+
+    try {
+
+        // Restore the saved state
+        c64->loadSnapshot(snapshot);
+
+    } catch (AppError &) {
+
+        /* If we reach this point, the emulator has been put into an
+         * inconsistent state due to corrupted snapshot data. We cannot
+         * continue emulation, because it would likely crash the
+         * application. Because we cannot revert to the old state either,
+         * we perform a hard reset to eliminate the inconsistency.
+         */
+        emu->put(Cmd::HARD_RESET);
+        throw;
+    }
 }
 
 void
