@@ -102,20 +102,11 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OdJ-60-pId">
-                                <rect key="frame" x="66" y="279" width="470" height="45"/>
+                                <rect key="frame" x="66" y="273" width="470" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" selectable="YES" alignment="center" title="We’ll have you ready in just a few steps. Start by selecting the C64 model you want to emulate." id="4Mp-o6-HCI">
                                     <font key="font" size="15" name="Optima-Regular"/>
                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rnB-yd-isk">
-                                <rect key="frame" x="208" y="343" width="235" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Getting Started" id="w6Q-2f-JbM">
-                                    <font key="font" size="36" name="Optima-Regular"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -135,7 +126,7 @@
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAp-EQ-PC1">
                                         <rect key="frame" x="6" y="33" width="156" height="116"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64_1" id="bQT-fT-jKw"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64template" id="bQT-fT-jKw"/>
                                     </imageView>
                                 </subviews>
                                 <userDefinedRuntimeAttributes>
@@ -165,7 +156,7 @@
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ek-Bd-agI">
                                         <rect key="frame" x="14" y="33" width="156" height="116"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64_2" id="Zta-rb-T45"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64template" id="Zta-rb-T45"/>
                                     </imageView>
                                 </subviews>
                                 <userDefinedRuntimeAttributes>
@@ -195,7 +186,7 @@
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d7n-6c-iZv">
                                         <rect key="frame" x="8" y="34" width="156" height="116"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64_3" id="gqE-5X-Fky"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="c64IItemplate" id="gqE-5X-Fky"/>
                                     </imageView>
                                 </subviews>
                                 <userDefinedRuntimeAttributes>
@@ -210,11 +201,11 @@
                                 </connections>
                             </customView>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AeP-9w-LGv" customClass="OnboardingButton" customModule="VirtualC64">
-                                <rect key="frame" x="211" y="208" width="84" height="64"/>
+                                <rect key="frame" x="211" y="208" width="84" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sXO-Ts-agM">
-                                        <rect key="frame" x="10" y="0.0" width="64" height="64"/>
+                                        <rect key="frame" x="21" y="7" width="42" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="FlagEU" id="bnV-1J-kcC"/>
                                     </imageView>
@@ -229,17 +220,12 @@
                                     <outlet property="icon" destination="sXO-Ts-agM" id="c5Y-da-A65"/>
                                 </connections>
                             </customView>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yb7-0Q-LYv">
-                                <rect key="frame" x="154" y="341" width="48" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="logoRound75" id="14a-hO-LZi"/>
-                            </imageView>
                             <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TCo-Gf-Ej1" customClass="OnboardingButton" customModule="VirtualC64">
-                                <rect key="frame" x="307" y="208" width="84" height="64"/>
+                                <rect key="frame" x="307" y="208" width="84" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KVV-Xk-J6a">
-                                        <rect key="frame" x="10" y="0.0" width="64" height="64"/>
+                                        <rect key="frame" x="21" y="7" width="42" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="FlagUSA" id="s89-qH-SA5"/>
                                     </imageView>
@@ -254,6 +240,20 @@
                                     <outlet property="icon" destination="KVV-Xk-J6a" id="5oN-2W-tXY"/>
                                 </connections>
                             </customView>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rnB-yd-isk">
+                                <rect key="frame" x="219" y="340" width="235" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Getting Started" id="w6Q-2f-JbM">
+                                    <font key="font" size="36" name="Optima-Regular"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yb7-0Q-LYv">
+                                <rect key="frame" x="149" y="330" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="logoRound75" id="14a-hO-LZi"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <connections>
@@ -309,7 +309,7 @@
                                 </connections>
                             </customView>
                             <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hsh-Pc-ukV">
-                                <rect key="frame" x="62" y="274" width="476" height="59"/>
+                                <rect key="frame" x="62" y="253" width="476" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" selectable="YES" alignment="center" id="0De-rT-6U6">
                                     <font key="font" size="15" name="Optima-Regular"/>
@@ -319,7 +319,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYx-5h-fFH">
-                                <rect key="frame" x="280" y="343" width="102" height="43"/>
+                                <rect key="frame" x="284" y="337" width="102" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="ROMs" id="93P-Bz-6vY">
                                     <font key="font" size="36" name="Optima-Regular"/>
@@ -328,7 +328,7 @@
                                 </textFieldCell>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MEM-Zx-5fS">
-                                <rect key="frame" x="226" y="341" width="48" height="48"/>
+                                <rect key="frame" x="214" y="327" width="64" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="logoRound75" id="5X3-JY-FFK"/>
                             </imageView>
@@ -347,10 +347,9 @@
         <image name="FlagEU" width="256" height="256"/>
         <image name="FlagUSA" width="256" height="256"/>
         <image name="arrowshape.backward.circle" catalog="system" width="15" height="15"/>
-        <image name="c64_1" width="768" height="432"/>
-        <image name="c64_2" width="768" height="480"/>
-        <image name="c64_3" width="768" height="432"/>
+        <image name="c64IItemplate" width="1736" height="970"/>
         <image name="c64bg" width="1837" height="963"/>
+        <image name="c64template" width="1746" height="1086"/>
         <image name="logoRound75" width="1025" height="1025"/>
         <image name="rom_mega65" width="130" height="157"/>
         <image name="xmark.octagon.fill" catalog="system" width="17" height="15"/>
