@@ -78,7 +78,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="646" height="526"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1409"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1083"/>
             <value key="minSize" type="size" width="646" height="526"/>
             <value key="maxSize" type="size" width="646" height="526"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -1842,7 +1842,7 @@ DQ
         </window>
     </objects>
     <resources>
-        <image name="gamepad" width="316" height="151"/>
+        <image name="gamepad" width="244" height="151"/>
         <image name="instructions3Template" width="214" height="296"/>
         <image name="instructions4Template" width="214" height="296"/>
         <image name="joystick2" width="261" height="300"/>

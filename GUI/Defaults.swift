@@ -284,6 +284,11 @@ struct Keys {
         static let keepAspectRatio        = "General.FullscreenKeepAspectRatio"
         static let exitOnEsc              = "General.FullscreenExitOnEsc"
 
+        // Mouse
+        static let retainMouseByClick    = "General.RetainMouseByClick"
+        static let retainMouseByEntering = "General.RetainMouseByEntering"
+        static let releaseMouseByShaking = "General.ReleaseMouseByShaking"
+
         // Miscellaneous
         static let ejectWithoutAsking     = "General.EjectWithoutAsking"
         static let closeWithoutAsking     = "General.CloseWithoutAsking"
@@ -301,6 +306,11 @@ extension DefaultsProxy {
         register(Keys.Gen.keepAspectRatio, false)
         register(Keys.Gen.exitOnEsc, true)
 
+        // Mouse
+        register(Keys.Gen.retainMouseByClick, true)
+        register(Keys.Gen.retainMouseByEntering, false)
+        register(Keys.Gen.releaseMouseByShaking, true)
+
         // Misc
         register(Keys.Gen.ejectWithoutAsking, false)
         register(Keys.Gen.closeWithoutAsking, false)
@@ -313,6 +323,10 @@ extension DefaultsProxy {
 
         let keys = [ Keys.Gen.keepAspectRatio,
                      Keys.Gen.exitOnEsc,
+
+                     Keys.Gen.retainMouseByClick,
+                     Keys.Gen.retainMouseByEntering,
+                     Keys.Gen.releaseMouseByShaking,
 
                      Keys.Gen.ejectWithoutAsking,
                      Keys.Gen.closeWithoutAsking,
@@ -333,6 +347,10 @@ extension Preferences {
         defaults.set(Keys.Gen.keepAspectRatio, keepAspectRatio)
         defaults.set(Keys.Gen.exitOnEsc, exitOnEsc)
 
+        defaults.set(Keys.Gen.retainMouseByClick, retainMouseByClick)
+        defaults.set(Keys.Gen.retainMouseByEntering, retainMouseByEntering)
+        defaults.set(Keys.Gen.releaseMouseByShaking, releaseMouseByShaking)
+
         defaults.set(Keys.Gen.ejectWithoutAsking, ejectWithoutAsking)
         defaults.set(Keys.Gen.closeWithoutAsking, closeWithoutAsking)
         defaults.set(Keys.Gen.pauseInBackground, pauseInBackground)
@@ -347,6 +365,10 @@ extension Preferences {
 
         keepAspectRatio = defaults.bool(Keys.Gen.keepAspectRatio)
         exitOnEsc = defaults.bool(Keys.Gen.exitOnEsc)
+
+        retainMouseByClick = defaults.bool(Keys.Gen.retainMouseByClick)
+        retainMouseByEntering = defaults.bool(Keys.Gen.retainMouseByEntering)
+        releaseMouseByShaking = defaults.bool(Keys.Gen.releaseMouseByShaking)
 
         ejectWithoutAsking = defaults.bool(Keys.Gen.ejectWithoutAsking)
         closeWithoutAsking = defaults.bool(Keys.Gen.closeWithoutAsking)
@@ -364,6 +386,7 @@ extension Keys {
     struct Cap {
 
         // Snapshots
+        static let snapshotCompressor     = "Cap.SnapshotCompressor"
         static let snapshotAutoDelete     = "Cap.SnapshotAutoDelete"
 
         // Screenshots
@@ -383,6 +406,7 @@ extension DefaultsProxy {
         debug(.defaults)
 
         // Snapshots
+        register(Keys.Cap.snapshotCompressor, Compressor.LZ4.rawValue)
         register(Keys.Cap.snapshotAutoDelete, true)
 
         // Screenshots
@@ -397,7 +421,8 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        let keys = [ Keys.Cap.snapshotAutoDelete,
+        let keys = [ Keys.Cap.snapshotCompressor,
+                     Keys.Cap.snapshotAutoDelete,
 
                      Keys.Cap.screenshotFormat,
                      Keys.Cap.screenshotSource,
@@ -418,6 +443,7 @@ extension Preferences {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
+        defaults.set(Keys.Cap.snapshotCompressor, snapshotCompressorIntValue)
         defaults.set(Keys.Cap.snapshotAutoDelete, snapshotAutoDelete)
 
         defaults.set(Keys.Cap.screenshotFormat, screenshotFormatIntValue)
@@ -434,6 +460,7 @@ extension Preferences {
         debug(.defaults)
         let defaults = EmulatorProxy.defaults!
 
+        snapshotCompressorIntValue = defaults.int(Keys.Cap.snapshotCompressor)
         snapshotAutoDelete = defaults.bool(Keys.Cap.snapshotAutoDelete)
  
         screenshotFormatIntValue = defaults.int(Keys.Cap.screenshotFormat)
@@ -457,15 +484,6 @@ extension Keys {
         static let joyKeyMap1            = "Controls.JoyKeyMap1"
         static let joyKeyMap2            = "Controls.JoyKeyMap2"
         static let disconnectJoyKeys     = "Controls.DisconnectKeys"
-        
-        // Mouse
-        static let retainMouseKeyComb    = "Controls.RetainMouseKeyComb"
-        static let retainMouseWithKeys   = "Controls.RetainMouseWithKeys"
-        static let retainMouseByClick    = "Controls.RetainMouseByClick"
-        static let retainMouseByEntering = "Controls.RetainMouseByEntering"
-        static let releaseMouseKeyComb   = "Controls.ReleaseMouseKeyComb"
-        static let releaseMouseWithKeys  = "Controls.ReleaseMouseWithKeys"
-        static let releaseMouseByShaking = "Controls.ReleaseMouseByShaking"
     }
 }
 
@@ -500,15 +518,6 @@ extension DefaultsProxy {
         register(Keys.Con.joyKeyMap1, encodable: stdKeyMap1)
         register(Keys.Con.joyKeyMap2, encodable: stdKeyMap2)
         register(Keys.Con.disconnectJoyKeys, true)
-
-        // Mouse
-        register(Keys.Con.retainMouseKeyComb, 0)
-        register(Keys.Con.retainMouseWithKeys, true)
-        register(Keys.Con.retainMouseByClick, true)
-        register(Keys.Con.retainMouseByEntering, false)
-        register(Keys.Con.releaseMouseKeyComb, 0)
-        register(Keys.Con.releaseMouseWithKeys, true)
-        register(Keys.Con.releaseMouseByShaking, true)
     }
 
     func removeControlsUserDefaults() {
@@ -518,15 +527,7 @@ extension DefaultsProxy {
         let keys = [ Keys.Con.mouseKeyMap,
                      Keys.Con.joyKeyMap1,
                      Keys.Con.joyKeyMap2,
-                     Keys.Con.disconnectJoyKeys,
-
-                     Keys.Con.retainMouseKeyComb,
-                     Keys.Con.retainMouseWithKeys,
-                     Keys.Con.retainMouseByClick,
-                     Keys.Con.retainMouseByEntering,
-                     Keys.Con.releaseMouseKeyComb,
-                     Keys.Con.releaseMouseWithKeys,
-                     Keys.Con.releaseMouseByShaking ]
+                     Keys.Con.disconnectJoyKeys ]
 
         for key in keys { removeKey(key) }
     }
@@ -544,10 +545,6 @@ extension Preferences {
         defaults.encode(Keys.Con.joyKeyMap2, keyMaps[2])
         defaults.set(Keys.Con.disconnectJoyKeys, disconnectJoyKeys)
 
-        defaults.set(Keys.Con.retainMouseByClick, retainMouseByClick)
-        defaults.set(Keys.Con.retainMouseByEntering, retainMouseByEntering)
-        defaults.set(Keys.Con.releaseMouseByShaking, releaseMouseByShaking)
-
         defaults.save()
     }
 
@@ -560,10 +557,6 @@ extension Preferences {
         defaults.decode(Keys.Con.joyKeyMap1, &keyMaps[1])
         defaults.decode(Keys.Con.joyKeyMap2, &keyMaps[2])
         disconnectJoyKeys = defaults.bool(Keys.Con.disconnectJoyKeys)
-
-        retainMouseByClick = defaults.bool(Keys.Con.retainMouseByClick)
-        retainMouseByEntering = defaults.bool(Keys.Con.retainMouseByEntering)
-        releaseMouseByShaking = defaults.bool(Keys.Con.releaseMouseByShaking)
     }
 }
 
@@ -666,11 +659,43 @@ extension Preferences {
 }
 
 //
-// Roms
+// User defaults (Roms)
 //
 
 extension Configuration {
 
+    func saveRomUserDefaults() throws {
+
+        debug(.defaults)
+
+        var url: URL?
+
+        func save(_ type: vc64.RomType) throws {
+
+            if url == nil { throw AppError(vc64.Fault.FILE_CANT_WRITE) }
+            try? FileManager.default.removeItem(at: url!)
+            try emu?.saveRom(type, url: url!)
+        }
+
+        if let emu = emu {
+
+            emu.suspend()
+
+            do {
+                url = UserDefaults.basicRomUrl;  try save(.BASIC)
+                url = UserDefaults.charRomUrl;   try save(.CHAR)
+                url = UserDefaults.kernalRomUrl; try save(.KERNAL)
+                url = UserDefaults.vc1541RomUrl; try save(.VC1541)
+
+            } catch {
+
+                emu.resume()
+                throw error
+            }
+
+            emu.resume()
+        }
+    }
 }
 
 //

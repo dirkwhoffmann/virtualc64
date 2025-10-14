@@ -649,37 +649,4 @@ class Configuration {
             emu.resume()
         }
     }
-
-    func saveRomUserDefaults() throws {
-
-        debug(.defaults)
-
-        var url: URL?
-
-        func save(_ type: vc64.RomType) throws {
-
-            if url == nil { throw AppError(vc64.Fault.FILE_CANT_WRITE) }
-            try? FileManager.default.removeItem(at: url!)
-            try emu?.saveRom(type, url: url!)
-        }
-
-        if let emu = emu {
-
-            emu.suspend()
-
-            do {
-                url = UserDefaults.basicRomUrl;  try save(.BASIC)
-                url = UserDefaults.charRomUrl;   try save(.CHAR)
-                url = UserDefaults.kernalRomUrl; try save(.KERNAL)
-                url = UserDefaults.vc1541RomUrl; try save(.VC1541)
-
-            } catch {
-
-                emu.resume()
-                throw error
-            }
-
-            emu.resume()
-        }
-    }
 }

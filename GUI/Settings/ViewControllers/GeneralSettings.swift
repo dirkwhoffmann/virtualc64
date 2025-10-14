@@ -14,10 +14,8 @@ class GeneralSettingsViewController: SettingsViewController {
     @IBOutlet weak var exitOnEscButton: NSButton!
 
     // Mouse
-    @IBOutlet weak var retainMouseKeyComb: NSPopUpButton!
     @IBOutlet weak var retainMouseByClick: NSButton!
     @IBOutlet weak var retainMouseByEntering: NSButton!
-    @IBOutlet weak var releaseMouseKeyComb: NSPopUpButton!
     @IBOutlet weak var releaseMouseByShaking: NSButton!
 
     // Misc
@@ -46,6 +44,12 @@ class GeneralSettingsViewController: SettingsViewController {
         ejectWithoutAskingButton.state = pref.ejectWithoutAsking ? .on : .off
         closeWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
         pauseInBackground.state = pref.pauseInBackground ? .on : .off
+
+        // Mouse
+        retainMouseByClick.state = pref.retainMouseByClick ? .on : .off
+        retainMouseByEntering.state = pref.retainMouseByEntering ? .on : .off
+        releaseMouseByShaking.state = pref.releaseMouseByShaking ? .on : .off
+ 
     }
 
     //
@@ -68,12 +72,6 @@ class GeneralSettingsViewController: SettingsViewController {
     // Action methods (Mouse)
     //
 
-    @IBAction func retainMouseKeyCombAction(_ sender: NSPopUpButton!) {
-
-        // pref.retainMouseKeyComb = sender.selectedTag()
-        refresh()
-    }
-
     @IBAction func retainMouseAction(_ sender: NSButton!) {
 
         switch sender.tag {
@@ -85,13 +83,7 @@ class GeneralSettingsViewController: SettingsViewController {
 
         refresh()
     }
-
-    @IBAction func releaseMouseKeyCombAction(_ sender: NSPopUpButton!) {
-
-        // pref.releaseMouseKeyComb = sender.selectedTag()
-        refresh()
-    }
-
+    
     @IBAction func releaseMouseAction(_ sender: NSButton!) {
 
         switch sender.tag {
@@ -160,8 +152,6 @@ class GeneralSettingsViewController: SettingsViewController {
     //
     
     override func preset(tag: Int) {
-
-        print("preset(tag: \(tag))")
 
         // Revert to standard settings
         EmulatorProxy.defaults.removeGeneralUserDefaults()
