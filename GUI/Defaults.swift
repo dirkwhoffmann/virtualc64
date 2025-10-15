@@ -29,7 +29,7 @@ extension DefaultsProxy {
         
         let exception = ExceptionWrapper()
         load(url, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
     
     func load() {
@@ -56,7 +56,7 @@ extension DefaultsProxy {
         
         let exception = ExceptionWrapper()
         save(url, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
     
     func save() {

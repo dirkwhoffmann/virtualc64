@@ -13,35 +13,35 @@ extension C64Proxy {
 
         let exception = ExceptionWrapper()
         loadSnapshot(proxy, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 
     func loadSnapshot(url: URL) throws {
 
         let exception = ExceptionWrapper()
         loadSnapshot(from: url, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 
     func saveSnapshot(url: URL, compressor: Compressor) throws {
 
         let exception = ExceptionWrapper()
         saveSnapshot(to: url, compressor: compressor, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 
     func loadWorkspace(url: URL) throws {
 
         let exception = ExceptionWrapper()
         loadWorkspace(url, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 
     func saveWorkspace(url: URL) throws {
 
         let exception = ExceptionWrapper()
         saveWorkspace(url, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 }
 
@@ -55,7 +55,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withBuffer: buffer, length: length, type: type, exception: exc)
-        if exc.errorCode != .OK { throw AppError(exc) }
+        if exc.fault != .OK { throw AppError(exc) }
         return obj!
     }
 
@@ -63,7 +63,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(with: data, type: type, exception: exc)
-        if exc.errorCode != .OK { throw AppError(exc) }
+        if exc.fault != .OK { throw AppError(exc) }
         return obj!
     }
 
@@ -79,7 +79,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withFile: url.path, exception: exc)
-        if exc.errorCode != .OK { throw AppError(exc) }
+        if exc.fault != .OK { throw AppError(exc) }
         return obj!
     }
 
@@ -87,7 +87,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withFile: url.path, type: type, exception: exc)
-        if exc.errorCode != .OK { throw AppError(exc) }
+        if exc.fault != .OK { throw AppError(exc) }
         return obj!
     }
 
@@ -95,7 +95,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withDrive: drive, type: type, exception: exc)
-        if exc.errorCode != .OK { throw AppError(exc) }
+        if exc.fault != .OK { throw AppError(exc) }
         return obj!
     }
 
@@ -103,7 +103,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withFileSystem: fs, type: type, exception: exc)
-        if exc.errorCode != .OK { throw AppError(exc) }
+        if exc.fault != .OK { throw AppError(exc) }
         return obj!
     }
 }
@@ -114,7 +114,7 @@ extension FileSystemProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withMediaFile: file, exception: exc)
-        if exc.errorCode != .OK { throw AppError(exc) }
+        if exc.fault != .OK { throw AppError(exc) }
         return obj!
     }
 
@@ -122,7 +122,7 @@ extension FileSystemProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withDrive: drive, exception: exc)
-        if exc.errorCode != .OK { throw AppError(exc) }
+        if exc.fault != .OK { throw AppError(exc) }
         return obj!
     }
 }
@@ -137,63 +137,63 @@ extension EmulatorProxy {
         
         let exception = ExceptionWrapper()
         launch(exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
     
     func launch(_ listener: UnsafeRawPointer, _ callback: @escaping @convention(c) (UnsafeRawPointer?, Message) -> Void) throws
     {
         let exception = ExceptionWrapper()
         launch(listener, function: callback, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
     
     func isReady() throws {
         
         let exception = ExceptionWrapper()
         isReady(exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 
     func powerOn() throws {
         
         let exception = ExceptionWrapper()
         power(on: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 
     func run() throws {
         
         let exception = ExceptionWrapper()
         run(exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 
     func exportConfig(url: URL) throws {
 
         let exception = ExceptionWrapper()
         exportConfig(url, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 
     func saveRom(_ type: vc64.RomType, url: URL) throws {
 
         let exception = ExceptionWrapper()
         save(type, url: url, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
      
     func flash(_ proxy: MediaFileProxy) throws {
 
         let exception = ExceptionWrapper()
         flash(proxy, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
     
     func flash(_ proxy: FileSystemProxy, item: Int) throws {
 
         let exception = ExceptionWrapper()
         flash(proxy, item: item, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 }
  
@@ -203,7 +203,7 @@ extension ExpansionPortProxy {
         
         let exception = ExceptionWrapper()
         attachCartridge(proxy, reset: reset, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 }
 
@@ -213,7 +213,7 @@ extension MediaFileProxy {
         
         let exception = ExceptionWrapper()
         write(toFile: url.path, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 }
 
@@ -223,7 +223,7 @@ extension FileSystemProxy {
             
         let exception = ExceptionWrapper()
         export(url.path, exception: exception)
-        if exception.errorCode != .OK { throw AppError(exception) }
+        if exception.fault != .OK { throw AppError(exception) }
     }
 }
 

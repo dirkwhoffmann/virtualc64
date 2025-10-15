@@ -26,14 +26,14 @@ NSString *EventSlotName(EventSlot slot)
 
 @implementation ExceptionWrapper
 
-@synthesize errorCode;
+@synthesize fault;
 @synthesize what;
 
 - (instancetype)init {
 
     if (self = [super init]) {
         
-        errorCode = Fault::OK;
+        fault = Fault::OK;
         what = @"";
     }
     return self;
@@ -41,7 +41,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)save:(const AppError &)exception
 {
-    errorCode = Fault(exception.data);
+    fault = Fault(exception.data);
     what = @(exception.what());
 }
 
