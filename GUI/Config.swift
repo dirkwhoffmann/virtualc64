@@ -12,7 +12,7 @@
 //
 
 struct BuildSettings {
-
+    
     // Determines how the GUI interacts with the emulator's message system.
     // If true, the GUI registers a callback function in the emulator core
     // to process messages as they arrive. If false, the GUI polls messages
@@ -26,7 +26,7 @@ struct BuildSettings {
 //
 
 public extension Int {
-
+    
     static let audio        = 0     // Audio unit
     static let config       = 0     // Configuration
     static let defaults     = 0     // User defaults

@@ -271,38 +271,4 @@ class MyDocument: NSDocument {
 
         console.runScript(script: file)
     }
-
-    //
-    // Exporting disks
-    //
-
-    /*
-    func export(drive nr: Int, to url: URL) throws {
-
-        guard let dfn = emu?.df(nr) else { return }
-
-        var file: MediaFileProxy?
-        switch url.pathExtension.uppercased() {
-        case "ADF":
-            file = try MediaFileProxy.make(with: dfn, type: .ADF)
-        case "IMG", "IMA":
-            file = try MediaFileProxy.make(with: dfn, type: .IMG)
-        default:
-            warn("Invalid path extension")
-            return
-        }
-
-        try export(fileProxy: file!, to: url)
-        dfn.setFlag(.MODIFIED, value: false)
-        mm.noteNewRecentlyExportedDiskURL(url, df: nr)
-
-        debug(.media, "Disk exported successfully")
-    }
-
-    func export(fileProxy: MediaFileProxy, to url: URL) throws {
-
-        debug(.media, "Exporting to \(url)")
-        try fileProxy.writeToFile(url: url)
-    }
-    */
 }

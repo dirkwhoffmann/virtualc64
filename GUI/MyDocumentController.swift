@@ -15,15 +15,15 @@ class MyDocumentController: NSDocumentController {
                                ofType typeName: String) throws -> NSDocument {
         
         debug(.lifetime)
-
+        
         // For media files, attach the file to a new untitled document
         if typeName.components(separatedBy: ".").last?.lowercased() != "vcsnap" {
-        // if typeName != UTType.vc64.identifier {
-
+            // if typeName != UTType.vc64.identifier {
+            
             let doc = try super.makeUntitledDocument(ofType: typeName)
-
+            
             if let mydoc = doc as? MyDocument {
-
+                
                 mydoc.launchURL = url
                 return mydoc
             }

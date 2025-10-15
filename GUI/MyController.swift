@@ -12,40 +12,40 @@ protocol MessageReceiver {
 }
 
 class MyController: NSWindowController, MessageReceiver {
-
+    
     var pref: Preferences { return myAppDelegate.pref }
-
+    
     // Reference to the connected document
     var mydocument: MyDocument!
     var initialized: Bool { return mydocument != nil }
-
+    
     // File panels
     let myOpenPanel = MyOpenPanel()
     let mySavePanel = MySavePanel()
-
+    
     // Emulator proxy (bridge between the Swift frontend and the C++ backend)
     var emu: EmulatorProxy? { return mydocument.emu }
-
+    
     // Media manager (handles the import and export of media files)
     var mm: MediaManager { return mydocument.mm }
-
+    
     // Auxiliary windows of this emulator instance
     var inspectors: [Inspector] = []
     var dashboards: [Dashboard] = []
-        
+    
     // Settings panel
     var settings: SettingsWindowController? { myAppDelegate.settingsController }
-
+    
     // Snapshot and screenshot browsers
     var snapshotBrowser: SnapshotViewer?
     var screenshotBrowser: ScreenshotViewer?
-
+    
     // The current emulator configuration
     var config: Configuration!
     
     // Audio Engine
     var macAudio: MacAudio!
-
+    
     // Game pad manager
     var gamePadManager: GamePadManager!
     var gamePad1: GamePad? { return gamePadManager.gamePads[config.gameDevice1] }
@@ -53,35 +53,35 @@ class MyController: NSWindowController, MessageReceiver {
     
     // Keyboard controller
     var keyboard: KeyboardController!
-
+    
     // Virtual keyboard
     var virtualKeyboard: VirtualKeyboardController?
     
     // Speedometer to measure clock frequence and frames per second
     var speedometer = Speedometer()
-
+    
     // Remembers if an illegal instruction has jammed the CPU
     var jammed = false
-
+    
     // Remembers if audio is muted (master volume of both channels is 0)
     var muted = false
-
+    
     // Indicates if a status bar is shown
     var statusBar = true
-
+    
     // Information message shown in the status bar
     var infoText: String?
     var infoText2: String?
-
+    
     // Small disk icon to be shown in NSMenuItems
     static let iconSize = CGSize(width: 16, height: 16)
     var smallDisk = NSImage(named: "diskTemplate")!.resize(size: iconSize)
     var smallTape = NSImage(named: "tapeTemplate")!.resize(size: iconSize)
     var smallCart = NSImage(named: "crtTemplate")!.resize(size: iconSize)
-
+    
     // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
-
+    
     //
     // Outlets
     //
@@ -90,7 +90,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var metal: MetalView!
     
     var renderer: Renderer!
-
+    
     // Status bar
     @IBOutlet weak var greenLED8: NSButton!
     @IBOutlet weak var greenLED9: NSButton!
@@ -117,16 +117,16 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var activityInfo: NSTextField!
     @IBOutlet weak var activityBar: NSLevelIndicator!
     @IBOutlet weak var speedStepper: NSStepper!
-
+    
     // Toolbar
     var toolbar: MyToolbar { (window?.toolbar as? MyToolbar)! }
 }
 
 extension MyController {
-
+    
     // Provides the undo manager
     override open var undoManager: UndoManager? { return metal.undoManager }
-
+    
     // Indicates if the emulator needs saving
     var needsSaving: Bool {
         get {
@@ -144,63 +144,63 @@ extension MyController {
     //
     // Initializing
     //
-
+    
     override open func windowDidLoad() {
-
+        
         if !initialized { commonInit() }
     }
-
+    
     func commonInit() {
-
+        
         debug(.lifetime)
         assert(!initialized, "Double-initialization of MyController")
-
+        
         mydocument = document as? MyDocument
         config = Configuration(with: self)
         macAudio = MacAudio(with: self)
-
+        
         // Create toolbar
         window?.toolbar = MyToolbar(controller: self)
-
+        
         // Create keyboard controller
         keyboard = KeyboardController(parent: self)
         assert(keyboard != nil, "Failed to create keyboard controller")
-
+        
         // Create game pad manager
         gamePadManager = GamePadManager(parent: self)
         assert(gamePadManager != nil, "Failed to create game pad manager")
-
+        
         // Setup renderer
         renderer = Renderer(view: metal,
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
-
+        
         // Setup window
         configureWindow()
-
+        
         // Launch the emulator
         launch()
-
+        
         // Apply all GUI related user defaults
         pref.applyUserDefaults()
         config.applyUserDefaults()
-
+        
         do {
             // Press the virtual power switch
             try emu?.powerOn()
-
+            
             // Start emulation
             try emu?.run()
-
+            
         } catch {
             
             // Switch off
             emu?.powerOff()
-
+            
             // Open the onboarding agent
             renderer.onboarding.open(delay: 1.0)
         }
-
+        
         // Update toolbar
         toolbar.validateVisibleItems()
         
@@ -209,7 +209,7 @@ extension MyController {
     }
     
     func configureWindow() {
-
+        
         // Add status bar
         window?.autorecalculatesContentBorderThickness(for: .minY)
         window?.setContentBorderThickness(32.0, for: .minY)
@@ -226,7 +226,7 @@ extension MyController {
     }
     
     func launch() {
-
+        
         do {
             
             // Pass in command line arguments as a RetroShell script
@@ -235,28 +235,28 @@ extension MyController {
                 script = script + arg.dropFirst() + "\n"
             }
             emu!.retroShell.execute(script)
-
+            
             if BuildSettings.msgCallback {
-
+                
                 // Convert 'self' to a void pointer
                 let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-
+                
                 try emu!.launch(myself) { (ptr, msg: Message) in
-
+                    
                     // Convert void pointer back to 'self'
                     let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
-
+                    
                     // Process message in the main thread
                     Task { @MainActor in myself.process(messsage: msg) }
                 }
-
+                
             } else {
-
+                
                 try emu?.launch()
             }
-
+            
         } catch {
-
+            
             // Something terrible happened
             shutDown()
             mydocument.showLaunchAlert(error: error)
@@ -268,12 +268,12 @@ extension MyController {
     //
     
     func update(frames: Int64) {
-
+        
         if frames % 5 == 0 {
-
+            
             // Animate the inspectors
             for inspector in inspectors { inspector.continuousRefresh() }
-
+            
             // Animate the dashboards
             for dashboard in dashboards { dashboard.continuousRefresh() }
             
@@ -287,7 +287,7 @@ extension MyController {
                 }
             }
         }
-
+        
         // Do less times...
         if (frames % 16) == 0 {
             
@@ -305,9 +305,9 @@ extension MyController {
             }
         }
     }
-
+    
     func process(messsage msg: Message) {
-
+        
         var value: Int { return Int(msg.value) }
         var nr: Int { return Int(msg.drive.nr) }
         var halftrack: Int { return Int(msg.drive.value) }
@@ -316,59 +316,46 @@ extension MyController {
         var vol: Int { return Int(msg.drive.volume) }
         var pan: Int { return Int(msg.drive.pan) }
 
-        func passToInspector() {
-            for inspector in inspectors { inspector.process(messsage: msg) }
-        }
-        func passToDashboard() {
-            for dashboard in dashboards { dashboard.process(messsage: msg) }
-        }
-        
         // Only proceed if the proxy object is still alive
         if emu == nil { return }
-
+        
         switch msg.type {
-
+            
         case .CONFIG:
-
+            
             refreshStatusBar()
-            passToInspector()
-            passToDashboard()
             settings?.refresh()
-
+            
         case .POWER:
-
+            
             if value != 0 {
-
+                
                 renderer.canvas.open(delay: 2)
                 virtualKeyboard = nil
-
+                
                 if let url = mydocument.launchURL {
-
+                    
                     try? mm.mount(url: url)
                     mydocument.launchURL = nil
                 }
             }
-
+            
             clearInfo()
-            passToInspector()
             settings?.refresh()
-
+            
         case .RUN:
             needsSaving = true
             jammed = false
             toolbar.updateToolbar()
             refreshStatusBar()
             clearInfo()
-            passToInspector()
 
         case .PAUSE:
             toolbar.updateToolbar()
             refreshStatusBar()
-            passToInspector()
 
         case .STEP:
             clearInfo()
-            passToInspector()
             needsSaving = true
             
         case .EOL_TRAP, .EOF_TRAP:
@@ -376,76 +363,74 @@ extension MyController {
             
         case .RESET:
             clearInfo()
-            passToInspector()
 
         case .SHUTDOWN:
             shutDown()
-
+            
         case .ABORT:
             debug(.shutdown, "Aborting with exit code \(value)")
             exit(Int32(value))
-
+            
         case .EASTER_EGG, .WARP, .TRACK:
             refreshStatusBar()
-
+            
         case .MUTE:
             muted = value != 0
             refreshStatusBar()
-
+            
         case .RSH_CLOSE:
             renderer.console.close(delay: 0.25)
-
+            
         case .RSH_UPDATE:
             renderer.console.isDirty = true
-            passToInspector()
 
         case .RSH_SWITCH:
             break
             
         case .RSH_DEBUGGER:
             break
-
+            
         case .RSH_WAIT:
             renderer.console.isDirty = true
-
+            
         case .RSH_ERROR:
             NSSound.beep()
             renderer.console.isDirty = true
-
+            
         case .BREAKPOINT_UPDATED, .WATCHPOINT_UPDATED:
             break
             
         case .BREAKPOINT_REACHED:
             break
-
+            
         case .WATCHPOINT_REACHED:
             break
-
+            
         case .CPU_JAMMED:
             jammed = true
             refreshStatusBar()
-
+            
         case .CPU_JUMPED:
             break
-
+            
         case .PAL, .NTSC:
             renderer.canvas.updateTextureRect()
-
+            
         case .DRIVE_STEP:
             macAudio.playStepSound(volume: vol, pan: pan)
             refreshStatusBarTracks(drive: nr)
-
+            
         case .DISK_INSERT:
             macAudio.playInsertSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: nr)
-
+            
         case .DISK_EJECT:
             macAudio.playEjectSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: nr)
-
+            
         case .FILE_FLASHED:
             break
-
+            
         case .DISK_PROTECTED,
                 .DISK_MODIFIED,
                 .DRIVE_LED,
@@ -453,72 +438,72 @@ extension MyController {
                 .SER_IDLE,
                 .DRIVE_MOTOR:
             refreshStatusBar()
-
+            
         case .MON_SETTING:
             renderer.process(messsage: msg)
-
+            
         case .DRIVE_CONNECT,
                 .DRIVE_POWER where drive.value == 0:
             hideOrShowDriveMenus()
             refreshStatusBar()
-
+            
         case .DRIVE_POWER where drive.value != 0:
             macAudio.playPowerSound(volume: vol, pan: pan)
             hideOrShowDriveMenus()
             refreshStatusBar()
-
+            
         case .DRIVE_POWER_SAVE:
             break
-
+            
         case .VC1530_CONNECT:
             hideOrShowDriveMenus()
             refreshStatusBar()
-
+            
         case .VC1530_TAPE:
             refreshStatusBar()
-
+            
         case .VC1530_PLAY:
             refreshStatusBar()
-
+            
         case .VC1530_MOTOR:
             refreshStatusBar()
-
+            
         case .VC1530_COUNTER:
             refreshStatusBar()
-
+            
         case .CRT_ATTACHED:
             refreshStatusBar()
-
+            
         case .KB_AUTO_RELEASE, .KB_AUTO_PRESS:
             if virtualKeyboard?.window?.isVisible == true {
                 virtualKeyboard!.refresh()
             }
-
+            
         case .SHAKING:
             metal.lastShake = DispatchTime(uptimeNanoseconds: 0)
             if pref.releaseMouseByShaking {
                 metal.releaseMouse()
             }
-
+            
         case .SNAPSHOT_TAKEN:
             let ptr = msg.snapshot.snapshot
             let proxy = MediaFileProxy.init(ptr)!
             mydocument.snapshots.append(proxy, size: proxy.size)
-
+            
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()
             refreshStatusBar()
             hideOrShowDriveMenus()
-
+            
         case .WORKSPACE_SAVED, .WORKSPACE_LOADED:
             break
-
+            
         case .DMA_DEBUG:
             if value != 0 { renderer.zoomTextureOut() } else { renderer.zoomTextureIn() }
-
+            
         case .ALARM:
             debug(.events, "Received Alarm \(msg.value)")
-
+            
         case .RS232_IN:
             var c = emu?.userPort.rs232.readIncomingPrintableByte() ?? -1
             while c != -1 {
@@ -526,7 +511,7 @@ extension MyController {
                 // print("IN: \(UnicodeScalar(UInt8(c)))")
                 c = emu?.userPort.rs232.readIncomingPrintableByte() ?? -1
             }
-
+            
         case .RS232_OUT:
             var c = emu?.userPort.rs232.readOutgoingPrintableByte() ?? -1
             while c != -1 {
@@ -534,10 +519,10 @@ extension MyController {
                 // print("OUT: \(UnicodeScalar(UInt8(c)))")
                 c = emu?.userPort.rs232.readOutgoingPrintableByte() ?? -1
             }
-
+            
         case .SRV_STATE:
             refreshStatusBar()
-
+            
         case .SRV_RECEIVE, .SRV_SEND:
             break
             
@@ -550,16 +535,16 @@ extension MyController {
         for inspector in inspectors { inspector.process(messsage: msg) }
         for dashboard in dashboards { dashboard.process(messsage: msg) }
     }
-
+    
     func setInfo(_ text: String?, _ text2: String? = nil) {
-
+        
         infoText = text
         infoText2 = text2
         refreshStatusBar()
     }
-
+    
     func clearInfo() {
-
+        
         infoText = nil
         infoText2 = nil
     }
