@@ -36,6 +36,7 @@ class SidebarViewController: NSViewController {
 
             SidebarItem(title: "General",       icon: "gear"),
             SidebarItem(title: "Captures",      icon: "binoculars.fill"),
+            SidebarItem(title: "Keyboard",      icon: "keyboard"),
             SidebarItem(title: "Controls",      icon: "arrowkeys"),
             SidebarItem(title: "Devices",       icon: "gamecontroller")
         ]),

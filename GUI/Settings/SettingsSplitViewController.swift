@@ -26,6 +26,7 @@ class SettingsSplitViewController: NSSplitViewController {
     }
 
     lazy var generalVC = instantiate("General") as! GeneralSettingsViewController
+    lazy var keyboardVC = instantiate("Keyboard") as! KeyboardSettingsViewController
     lazy var capturesVC = instantiate("Captures") as! CapturesSettingsViewController
     lazy var controlsVC = instantiate("Controls") as! ControlsSettingsViewController
     lazy var devicesVC = instantiate("Devices") as! DevicesSettingsViewController
@@ -73,6 +74,7 @@ class SettingsSplitViewController: NSSplitViewController {
 
         case "General":         current = generalVC
         case "Captures":        current = capturesVC
+        case "Keyboard":        current = keyboardVC
         case "Controls":        current = controlsVC
         case "Devices":         current = devicesVC
         case "Roms":            current = romsVC

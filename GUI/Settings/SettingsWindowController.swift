@@ -40,12 +40,5 @@ class SettingsWindowController: NSWindowController {
 
         currentVC?.refresh()
     }
-
-    /*
-    func refreshDeviceEvent(event: HIDEvent, nr: Int, value: Int) {
-
-        devicesVC?.refreshDeviceEvent(event: event, nr: nr, value: value)
-    }
-    */
 }
 

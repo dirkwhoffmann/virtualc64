@@ -28,6 +28,7 @@ enum SFSymbol {
     case play
     case power
     case reset
+    case revert
     case trash
 
     var systemNames: [String] {
@@ -52,6 +53,7 @@ enum SFSymbol {
         case .play:             return [ "play.circle" ]
         case .power:            return [ "power" ]
         case .reset:            return [ "arrow.counterclockwise.circle" ]
+        case .revert:           return [ "slider.horizontal.2.arrow.trianglehead.counterclockwise" ]
         case .trash:            return [ "trash" ]
         }
     }

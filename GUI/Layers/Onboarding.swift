@@ -212,8 +212,6 @@ class OnboardingViewController1: OnboardingViewController {
     @IBOutlet weak var model2Button: OnboardingButton!
     @IBOutlet weak var palButton: OnboardingButton!
     @IBOutlet weak var ntscButton: OnboardingButton!
-    @IBOutlet weak var palIcon: NSImageView!
-    @IBOutlet weak var ntscIcon: NSImageView!
 
     var model: Int {
         get { layer.onboardingVC.model }
@@ -227,7 +225,6 @@ class OnboardingViewController1: OnboardingViewController {
     @IBAction func modelAction(_ sender: NSControl) {
 
         model = sender.tag
-
     }
 
     @IBAction func palAction(_ sender: NSControl) {
@@ -245,8 +242,6 @@ class OnboardingViewController1: OnboardingViewController {
         model2Button.state = model == 2 ? .on : .off
         palButton.state = pal ? .on : .off
         ntscButton.state = !pal ? .on : .off
-        // palButton.box.isTransparent = true
-        // ntscButton.box.isTransparent = true
     }
 }
 
