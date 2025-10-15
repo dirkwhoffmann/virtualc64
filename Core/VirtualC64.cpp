@@ -538,13 +538,6 @@ C64API::saveWorkspace(const fs::path &path) const
 }
 
 MediaFile *
-C64API::takeSnapshot()
-{
-    VC64_PUBLIC_SUSPEND
-    return c64->takeSnapshot();
-}
-
-MediaFile *
 C64API::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
     VC64_PUBLIC_SUSPEND

@@ -1112,15 +1112,6 @@ struct C64API : public API {
 
     /** @brief  Takes a snapshot
      *
-     *  @return A pointer to the created Snapshot object.
-     *
-     *  @note   The function transfers the ownership to the caller. It is
-     *          his responsibility of the caller to free the object.
-     */
-    [[deprecated]] MediaFile *takeSnapshot();
-
-    /** @brief  Takes a snapshot
-     *
      *  @param  compressor   The snapshot compression method
      *  @param  delay              Optional delay in seconds
      *  @param  repeat            if true, snapshots are taken continuously

@@ -1242,12 +1242,6 @@ NSString *EventSlotName(EventSlot slot)
     catch (AppError &error) { [ex save:error]; return nil; }
 }
 
-+ (instancetype)makeWithC64:(EmulatorProxy *)proxy
-{
-    auto vc64 = (VirtualC64 *)proxy->obj;
-    return [self make:vc64->c64.takeSnapshot()];
-}
-
 + (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c
 {
     auto vc64 = (VirtualC64 *)proxy->obj;

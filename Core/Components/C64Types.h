@@ -350,15 +350,6 @@ typedef struct
     
     //! Number of run-ahead frames (0 = run-ahead is disabled)
     isize runAhead;
-    
-    //! Enable auto-snapshots
-    bool snapshots;
-    
-    //! Delay between two auto-snapshots in seconds
-    isize snapshotDelay;
-    
-    //! Selects the snapshot compression method
-    Compressor snapshotCompressor;
 }
 C64Config;
 

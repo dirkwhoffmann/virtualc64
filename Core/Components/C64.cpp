@@ -1486,21 +1486,6 @@ C64::activateWorkspace()
     msgQueue.put(Msg::WORKSPACE_LOADED);
 }
 
-
-MediaFile *
-C64::takeSnapshot()
-{
-    Snapshot *result;
-
-    // Take the snapshot
-    result = new Snapshot(*this);
-
-    // Compress the snapshot if requested
-    result->compress(config.snapshotCompressor);
-
-    return result;
-}
-
 MediaFile *
 C64::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
