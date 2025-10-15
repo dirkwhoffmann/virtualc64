@@ -9,28 +9,26 @@
 
 extension C64Proxy {
 
-    /*
     func loadSnapshot(_ proxy: MediaFileProxy) throws {
 
         let exception = ExceptionWrapper()
         loadSnapshot(proxy, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        if exception.errorCode != .OK { throw AppError(exception) }
     }
 
     func loadSnapshot(url: URL) throws {
 
         let exception = ExceptionWrapper()
         loadSnapshot(from: url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        if exception.errorCode != .OK { throw AppError(exception) }
     }
 
-    func saveSnapshot(url: URL) throws {
+    func saveSnapshot(url: URL, compressor: Compressor) throws {
 
         let exception = ExceptionWrapper()
-        saveSnapshot(to: url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        saveSnapshot(to: url, compressor: compressor, exception: exception)
+        if exception.errorCode != .OK { throw AppError(exception) }
     }
-    */
 
     func loadWorkspace(url: URL) throws {
 

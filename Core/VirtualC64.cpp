@@ -577,6 +577,21 @@ C64API::loadSnapshot(const MediaFile &snapshot)
 }
 
 void
+C64API::loadSnapshot(const fs::path &path)
+{
+    VC64_PUBLIC_SUSPEND
+    c64->loadSnapshot(path);
+}
+
+void
+C64API::saveSnapshot(const fs::path &path, Compressor compressor) const
+{
+    VC64_PUBLIC_SUSPEND
+    c64->saveSnapshot(path, compressor);
+
+}
+
+void
 C64API::loadRom(const fs::path &path)
 {
     VC64_PUBLIC_SUSPEND

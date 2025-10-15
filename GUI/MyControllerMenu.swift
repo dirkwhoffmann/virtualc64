@@ -7,8 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-import UniformTypeIdentifiers
-
 extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
@@ -22,10 +20,10 @@ extension MyController: NSMenuItemValidation {
         var driveID: Int { return item.tag }
         var drive: DriveProxy { return emu.drive(driveID) }
         
-        func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
+        func validateURLlist(_ list: [URL], image: NSImage) {
             
-            let slot = item.tag % 10
-            
+            let slot = item.tag & 0xFF
+
             if let url = MediaManager.getRecentlyUsedURL(slot, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
@@ -34,9 +32,7 @@ extension MyController: NSMenuItemValidation {
                 item.title = ""
                 item.isHidden = true
                 item.image = nil
-            }
-            
-            return true
+            }            
         }
         
         switch item.action {
@@ -69,8 +65,9 @@ extension MyController: NSMenuItemValidation {
             
             // Drive menu
         case #selector(MyController.insertRecentDiskAction(_:)):
-            return validateURLlist(MediaManager.insertedFloppyDisks, image: smallDisk)
-            
+            validateURLlist(MediaManager.insertedFloppyDisks, image: smallDisk)
+            return true
+
         case #selector(MyController.ejectDiskAction(_:)),
             #selector(MyController.exportDiskAction(_:)),
             #selector(MyController.inspectDiskAction(_:)),
@@ -86,8 +83,9 @@ extension MyController: NSMenuItemValidation {
             return emu.drive9.info.hasDisk && !empty
             
         case #selector(MyController.exportRecentDiskAction(_:)):
-            return validateURLlist(mm.exportedFloppyDisks[driveID], image: smallDisk)
-            
+            validateURLlist(mm.exportedFloppyDisks[driveID], image: smallDisk)
+            return true
+
         case #selector(MyController.writeProtectAction(_:)):
             item.state = drive.info.hasProtectedDisk ? .on : .off
             return drive.info.hasDisk
@@ -98,8 +96,9 @@ extension MyController: NSMenuItemValidation {
             
             // Tape menu
         case #selector(MyController.insertRecentTapeAction(_:)):
-            return validateURLlist(MediaManager.insertedTapes, image: smallTape)
-            
+            validateURLlist(MediaManager.insertedTapes, image: smallTape)
+            return true
+
         case #selector(MyController.ejectTapeAction(_:)):
             return emu.datasette.info.hasTape
             
@@ -112,8 +111,9 @@ extension MyController: NSMenuItemValidation {
             
             // Cartridge menu
         case #selector(MyController.attachRecentCartridgeAction(_:)):
-            return validateURLlist(MediaManager.attachedCartridges, image: smallCart)
-            
+            validateURLlist(MediaManager.attachedCartridges, image: smallCart)
+            return true
+
         case #selector(MyController.attachReuDummyAction(_:)):
             item.state = (emu.expansionport.traits.type == .REU) ? .on : .off
             
@@ -234,7 +234,7 @@ extension MyController: NSMenuItemValidation {
         renderer.onboarding.open(delay: 1.0)
     }
     
-    @IBAction func importConfigAction(_ sender: Any!) {
+    @IBAction func importScriptAction(_ sender: Any!) {
         
         // let openPanel = NSOpenPanel()
         
@@ -253,52 +253,8 @@ extension MyController: NSMenuItemValidation {
                 }
             }
         })
-        
-        // Show file panel
-        /*
-         openPanel.allowsMultipleSelection = false
-         openPanel.canChooseDirectories = true
-         openPanel.canCreateDirectories = false
-         openPanel.canChooseFiles = true
-         openPanel.prompt = "Import"
-         openPanel.allowedContentTypes = [.ini]
-         openPanel.beginSheetModal(for: window!, completionHandler: { result in
-         
-         if result == .OK, let url = openPanel.url {
-         
-         do {
-         try self.mm.addMedia(url: url, allowedTypes: [.SCRIPT])
-         } catch {
-         self.showAlert(.cantOpen(url: url), error: error, async: true)
-         }
-         }
-         })
-         */
     }
-    
-    @IBAction func exportConfigAction(_ sender: Any!) {
-        
-        let savePanel = NSSavePanel()
-        
-        // Show file panel
-        savePanel.prompt = "Export"
-        savePanel.title = "Export"
-        savePanel.nameFieldLabel = "Export As:"
-        savePanel.nameFieldStringValue = "virtualc64.ini"
-        savePanel.canCreateDirectories = true
-        savePanel.beginSheetModal(for: window!, completionHandler: { result in
-            
-            if result == .OK, let url = savePanel.url {
-                
-                do {
-                    try self.emu?.exportConfig(url: url)
-                } catch {
-                    self.showAlert(.cantExport(url: url), error: error, async: true)
-                }
-            }
-        })
-    }
-    
+
     //
     // Action methods (Machine menu)
     //
@@ -401,6 +357,43 @@ extension MyController: NSMenuItemValidation {
         snapshotBrowser?.showAsSheet()
     }
     
+    @IBAction func loadSnapshotAction(_ sender: Any!) {
+        
+        myOpenPanel.configure(types: [ .snapshot ], prompt: "Restore")
+        myOpenPanel.open(for: window, { result in
+            
+            if result == .OK, let url = self.myOpenPanel.url {
+
+                do {
+                    try self.emu?.c64.loadSnapshot(url: url)
+                } catch {
+                    self.showAlert(.cantOpen(url: url), error: error, async: true)
+                }
+            }
+        })
+    }
+
+    @IBAction func saveSnapshotAction(_ sender: Any!) {
+
+        mySavePanel.configure(types: [ .snapshot ],
+                              prompt: "Export",
+                              title: "Export",
+                              nameFieldLabel: "Export As:",
+                              nameFieldStringValue: "workspace.vasnap")
+
+        mySavePanel.open(for: window, { result in
+
+            if result == .OK, let url = self.mySavePanel.url {
+
+                do {
+                    try self.emu?.c64.saveSnapshot(url: url, compressor: self.pref.snapshotCompressor)
+                } catch {
+                    self.showAlert(.cantExport(url: url), error: error, async: true)
+                }
+            }
+        })
+    }
+
     @IBAction func takeScreenshotAction(_ sender: Any!) {
         
         // Take screenshot
@@ -419,66 +412,19 @@ extension MyController: NSMenuItemValidation {
         // Save to disk
         try? screenshot.save()
         
-        // Save to disk
-        try? screenshot.save()
-        
         // Create a visual effect
-        renderer.flash()
+        // renderer.flash()
     }
     
     @IBAction func browseScreenshotsAction(_ sender: Any!) {
         
         if screenshotBrowser == nil {
-            screenshotBrowser = ScreenshotViewer(with: self, nibName: "ScreenshotViewer")
+            screenshotBrowser = ScreenshotViewer(with: self, nibName: "ScreenshotDialog")
         }
         screenshotBrowser?.showAsSheet()
-    }
-    
-    /*
-     @IBAction func captureScreenAction(_ sender: Any!) {
-     
-     if let emu = emu {
-     
-     if emu.recorder.recording {
-     
-     emu.recorder.stopRecording()
-     exportVideoAction(self)
-     return
      }
      
-     if !emu.recorder.hasFFmpeg {
      
-     if pref.ffmpegPath != "" {
-     showAlert(.noFFmpegFound(exec: pref.ffmpegPath))
-     } else {
-     showAlert(.noFFmpegInstalled)
-     }
-     return
-     }
-     
-     var rect: CGRect
-     if pref.captureSource == 0 {
-     rect = renderer.canvas.visible
-     } else {
-     rect = renderer.canvas.entire
-     }
-     
-     do {
-     try emu.recorder.startRecording(rect: rect)
-     } catch {
-     
-     showAlert(.cantRecord, error: error)
-     }
-     }
-     }
-     
-     @IBAction func exportVideoAction(_ sender: Any!) {
-     
-     let exporter = VideoExporter(with: self, nibName: "VideoExporter")
-     exporter?.showAsSheet()
-     }
-     */
-    
     //
     // Action methods (Edit menu)
     //
@@ -487,6 +433,7 @@ extension MyController: NSMenuItemValidation {
         
         let pasteBoard = NSPasteboard.general
         guard let text = pasteBoard.string(forType: .string) else {
+            
             warn("Cannot paste. No text in pasteboard")
             return
         }
@@ -580,12 +527,9 @@ extension MyController: NSMenuItemValidation {
     //
     // Action methods (View menu)
     //
-    
-    @IBAction func toggleStatusBarAction(_ sender: Any!) {
         
-        undoManager?.registerUndo(withTarget: self) { targetSelf in
-            targetSelf.toggleStatusBarAction(sender)
-        }
+    @IBAction
+    func toggleStatusBarAction(_ sender: Any!) {
         
         showStatusBar(!statusBar)
     }
@@ -606,29 +550,7 @@ extension MyController: NSMenuItemValidation {
         }
         
         virtualKeyboard?.showAsWindow()
-    }
-    
-    /*
-     @IBAction func mapLeftCmdKeyAction(_ sender: NSMenuItem!) {
-     
-     let s = sender.state
-     let tag = sender.tag
-     print("State: \(s) Tag: \(tag)")
-     
-     myAppDelegate.mapLeftCmdKey = sender.state == .off ? C64Key(sender.tag) : nil
-     refreshStatusBar()
      }
-     
-     @IBAction func mapRightCmdKeyAction(_ sender: NSMenuItem!) {
-     
-     let s = sender.state
-     let tag = sender.tag
-     print("State: \(s) Tag: \(tag)")
-     
-     myAppDelegate.mapRightCmdKey = sender.state == .off ? C64Key(sender.tag) : nil
-     refreshStatusBar()
-     }
-     */
     
     @IBAction func mapCapsLockWarpAction(_ sender: NSMenuItem!) {
         

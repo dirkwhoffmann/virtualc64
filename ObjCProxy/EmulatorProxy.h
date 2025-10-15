@@ -275,9 +275,9 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) RomTraits vc1541Rom;
 
 - (MediaFileProxy *) takeSnapshot:(Compressor)compressor;
-// - (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex;
-// - (void)loadSnapshotFromUrl:(NSURL *)url exception:(ExceptionWrapper *)ex;
-// - (void)saveSnapshotToUrl:(NSURL *)url exception:(ExceptionWrapper *)ex;
+- (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex;
+- (void)loadSnapshotFromUrl:(NSURL *)url exception:(ExceptionWrapper *)ex;
+- (void)saveSnapshotToUrl:(NSURL *)url compressor:(Compressor)c exception:(ExceptionWrapper *)ex;
 
 - (void)loadWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)saveWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex;

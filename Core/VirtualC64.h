@@ -1138,6 +1138,18 @@ struct C64API : public API {
      */
     void loadSnapshot(const MediaFile &snapshot);
 
+    /** @brief  Loads a snapshot
+     *
+     *  @param  path    Source path
+     */
+    void loadSnapshot(const fs::path &path);
+
+    /** @brief  Saves a snapshot to disk
+     *
+     *  @param  path    Destination path
+     */
+    void saveSnapshot(const fs::path &path, Compressor compressor) const;
+
 
     /// @}
     /// @name Handling ROMs

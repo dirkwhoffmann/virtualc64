@@ -1521,6 +1521,12 @@ C64::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 }
 
 void
+C64::loadSnapshot(const fs::path &path)
+{
+    loadSnapshot(Snapshot(path));
+}
+
+void
 C64::loadSnapshot(const MediaFile &file)
 {
     const Snapshot &snap = dynamic_cast<const Snapshot &>(file);
@@ -1537,6 +1543,12 @@ C64::loadSnapshot(const MediaFile &file)
     // Inform the GUI
     msgQueue.put(vic.pal() ? Msg::PAL : Msg::NTSC);
     msgQueue.put(Msg::SNAPSHOT_RESTORED);
+}
+
+void
+C64::saveSnapshot(const fs::path &path, Compressor compressor)
+{
+    Snapshot(*this, compressor).writeToFile(path);
 }
 
 void

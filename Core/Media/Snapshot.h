@@ -81,6 +81,7 @@ public:
     Snapshot(const u8 *buf, isize len) throws { init(buf, len); }
     Snapshot(isize capacity);
     Snapshot(C64 &c64);
+    Snapshot(C64 &c64, Compressor compressor);
 
 
     //

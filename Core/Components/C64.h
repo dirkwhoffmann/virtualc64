@@ -690,8 +690,12 @@ public:
     [[deprecated]] MediaFile *takeSnapshot();
     MediaFile *takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
 
-    // Loads the current state from a snapshot file
-    void loadSnapshot(const MediaFile &snapshot) throws;
+    // Loads a snapshot from a file
+    void loadSnapshot(const fs::path &path) throws;
+    void loadSnapshot(const MediaFile &file) throws;
+
+    // Saves a snapshot to a file
+    void saveSnapshot(const fs::path &path, Compressor compressor) throws;
 
 private:
 

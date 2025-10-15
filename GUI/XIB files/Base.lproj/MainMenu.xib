@@ -185,7 +185,7 @@
                             <menuItem title="Import Script..." id="wOE-dg-0WH">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="importConfigAction:" target="-1" id="dBf-W1-X97"/>
+                                    <action selector="importScriptAction:" target="-1" id="dBf-W1-X97"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="3it-CX-KQy">

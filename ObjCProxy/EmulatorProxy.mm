@@ -1716,6 +1716,24 @@ NSString *EventSlotName(EventSlot slot)
     }
 }
 
+- (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
+{
+    try { [self c64]->loadSnapshot(*[proxy file]); }
+    catch (AppError &error) { [ex save:error]; }
+}
+
+- (void)loadSnapshotFromUrl:(NSURL *)url exception:(ExceptionWrapper *)ex
+{
+    try { [self c64]->loadSnapshot([url fileSystemRepresentation]); }
+    catch (AppError &error) { [ex save:error]; }
+}
+
+- (void)saveSnapshotToUrl:(NSURL *)url compressor:(Compressor)c exception:(ExceptionWrapper *)ex
+{
+    try { [self c64]->saveSnapshot([url fileSystemRepresentation], c); }
+    catch (AppError &error) { [ex save:error]; }
+}
+
 - (void)loadWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->loadWorkspace([url fileSystemRepresentation]); }

@@ -94,6 +94,11 @@ Snapshot::Snapshot(C64 &c64) : Snapshot(c64.size())
     c64.save(getSnapshotData());
 }
 
+Snapshot::Snapshot(C64 &c64, Compressor compressor) : Snapshot(c64)
+{
+    compress(compressor);
+}
+
 void
 Snapshot::finalizeRead()
 {
