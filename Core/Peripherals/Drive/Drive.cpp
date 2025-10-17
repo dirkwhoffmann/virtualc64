@@ -43,6 +43,14 @@ Drive::_initialize()
     if (disk) disk->clearDisk();
 }
 
+void
+Drive::_run()
+{
+    if (!canConnect()) {
+        setOption(Opt::DRV_CONNECT, false);
+    }
+}
+
 bool
 Drive::canConnect()
 {

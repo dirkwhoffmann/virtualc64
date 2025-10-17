@@ -122,6 +122,8 @@ Drive::cacheInfo(DriveInfo &result) const
 {
     result.id = objid;
 
+    result.hasRom = mem.hasRom();
+
     result.hasDisk = hasDisk();
     result.hasUnprotectedDisk = hasUnprotectedDisk();
     result.hasProtectedDisk = hasProtectedDisk();
@@ -361,7 +363,6 @@ Drive::setOption(Opt opt, i64 value)
 void
 Drive::autoConfigure()
 {
-    // switch (RomFile::identifier(mem.romFNV64())) {
     switch (mem.romFNV64()) {
 
         case 0x361A1EC48F04F5A4: // VC1541C_01

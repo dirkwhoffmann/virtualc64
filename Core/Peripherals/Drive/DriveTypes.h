@@ -213,6 +213,8 @@ typedef struct
 {
     isize id;
 
+    bool hasRom;
+
     bool hasDisk;
     bool hasUnprotectedDisk;
     bool hasProtectedDisk;

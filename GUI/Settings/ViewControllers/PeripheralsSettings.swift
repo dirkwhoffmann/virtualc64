@@ -58,8 +58,8 @@ class PeripheralsSettingsViewController: SettingsViewController {
     override func refresh() {
 
         super.refresh()
-        
-        guard let config = config else { return }
+
+        guard let emu = emu, let config = config else { return }
 
         func update(_ component: NSTextField, enable: Bool) {
             component.textColor = enable ? .controlTextColor : .disabledControlTextColor
@@ -69,10 +69,13 @@ class PeripheralsSettingsViewController: SettingsViewController {
             component.isEnabled = enable
         }
 
-        let enable8 = config.drive8Connected && !config.drive8AutoConf
-        let enable9 = config.drive9Connected && !config.drive9AutoConf
+        let info8 = emu.drive8.info
+        let info9 = emu.drive9.info
+        let enable8 = info8.hasRom && config.drive8Connected && !config.drive8AutoConf
+        let enable9 = info9.hasRom && config.drive9Connected && !config.drive9AutoConf
 
         // First drive
+        drive8Connect.isEnabled = info8.hasRom
         drive8Connect.state = config.drive8Connected ? .on : .off
         drive8Config.selectItem(withTag: config.drive8AutoConf ? 0 : 1)
         drive8Type.selectItem(withTag: config.drive8Type)
@@ -84,6 +87,7 @@ class PeripheralsSettingsViewController: SettingsViewController {
         drive8Cable.isEnabled = enable8
 
         // Second drive
+        drive9Connect.isEnabled = info9.hasRom
         drive9Connect.state = config.drive9Connected ? .on : .off
         drive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
         drive9Type.selectItem(withTag: config.drive9Type)
