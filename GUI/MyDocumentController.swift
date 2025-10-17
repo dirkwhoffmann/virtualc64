@@ -7,29 +7,29 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-import UniformTypeIdentifiers
+// import UniformTypeIdentifiers
 
 class MyDocumentController: NSDocumentController {
-    
+
     override func makeDocument(withContentsOf url: URL,
                                ofType typeName: String) throws -> NSDocument {
-        
-        debug(.lifetime)
-        
-        // For media files, attach the file to a new untitled document
-        if typeName.components(separatedBy: ".").last?.lowercased() != "vcsnap" {
-            // if typeName != UTType.vc64.identifier {
-            
-            let doc = try super.makeUntitledDocument(ofType: typeName)
-            
-            if let mydoc = doc as? MyDocument {
-                
-                mydoc.launchURL = url
-                return mydoc
-            }
+
+        var doc : NSDocument!
+
+        debug(.lifetime, "makeDocument(withContentsOf: \(url), ofType: \(typeName)")
+
+        if typeName.components(separatedBy: ".").last?.lowercased() != "vc64" {
+
+            // For media files, attach the file to a new untitled document
+            doc = try super.makeUntitledDocument(ofType: typeName)
+
+        } else {
+
+            // For workspaces, follow the standard procedure
+            doc = try super.makeDocument(withContentsOf: url, ofType: typeName)
         }
-        
-        // For snapshot files, follow the standard procedure
-        return try super.makeDocument(withContentsOf: url, ofType: typeName)
+
+        (doc as? MyDocument)?.launchURL = url
+        return doc
     }
 }

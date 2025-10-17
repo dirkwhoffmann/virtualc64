@@ -114,7 +114,6 @@ class MyDocument: NSDocument {
     override open func read(from url: URL, ofType typeName: String) throws {
 
         debug(.media)
-        // launchURL = url
     }
 
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
@@ -239,7 +238,7 @@ class MyDocument: NSDocument {
 
     func processSnapshotFile(file: MediaFileProxy) throws {
 
-        // try emu?.c64.loadSnapshot(file)
+        try emu?.c64.loadSnapshot(file)
         appendSnapshot(file: file)
     }
 

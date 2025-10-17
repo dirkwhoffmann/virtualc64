@@ -7,7 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// import Foundation
 
 extension MyController {
     
@@ -22,7 +21,6 @@ extension MyController {
     
     func restoreLatestSnapshot() throws {
         
-        let count = mydocument!.snapshots.count
-        if count > 0 { try restoreSnapshot(item: count - 1) }
+        if snapshotCount > 0 { try restoreSnapshot(item: snapshotCount - 1) }
     }
 }

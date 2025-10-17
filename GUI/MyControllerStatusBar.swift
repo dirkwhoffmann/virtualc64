@@ -367,8 +367,9 @@ extension MyController {
         myAppDelegate.settingsController?.refresh()
     }
     
-    @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {
-        
+    @IBAction
+    func activityTypeAction(_ sender: NSPopUpButton!) {
+
         var min, max, warn, crit: Double
         
         switch sender.selectedTag() {
