@@ -77,6 +77,10 @@ void
 DriveMemory::deleteRom()
 {
     memset(rom, 0, sizeof(rom));
+
+    // Update the current configuration in auto-config mode
+    if (drive.config.autoConfig) drive.autoConfigure();
+
     updateBankMap();
 }
 
@@ -110,7 +114,7 @@ DriveMemory::loadRom(const u8 *buf, isize size)
             break;
     }
     
-    // Update the current configuration in auto-update mode
+    // Update the current configuration in auto-config mode
     if (drive.config.autoConfig) drive.autoConfigure();
     
     updateBankMap();

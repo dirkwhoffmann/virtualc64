@@ -46,9 +46,7 @@ Drive::_initialize()
 void
 Drive::_run()
 {
-    if (!canConnect()) {
-        setOption(Opt::DRV_CONNECT, false);
-    }
+
 }
 
 bool

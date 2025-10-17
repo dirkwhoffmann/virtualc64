@@ -50,8 +50,6 @@ class RomSettingsViewController: SettingsViewController {
         kernalDropView.parent = self
         charDropView.parent = self
         vc1541DropView.parent = self
-
-        refreshRomSelector()
     }
 
     override func refresh() {
@@ -97,6 +95,7 @@ class RomSettingsViewController: SettingsViewController {
         let romUnknown = NSImage(named: "rom_unknown")
 
         // Lock controls if emulator is powered on
+        presetPopup.isEnabled = poweredOff
         basicDropView.isEnabled = poweredOff
         basicDeleteButton.isEnabled = poweredOff
         charDropView.isEnabled = poweredOff
@@ -169,10 +168,6 @@ class RomSettingsViewController: SettingsViewController {
         }
     }
 
-    func refreshRomSelector() {
-
-    }
-
     //
     // Action methods
     //
@@ -227,7 +222,14 @@ class RomSettingsViewController: SettingsViewController {
     // Presets and Saving
     //
     override func preset(tag: Int) {
-        
+
+        switch tag {
+
+        case 0: config?.loadRomUserDefaults()
+        case 1: emu?.installOpenRoms()
+        default: fatalError()
+        }
+        refresh()
     }
 
     override func save() {

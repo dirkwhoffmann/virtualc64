@@ -2486,6 +2486,7 @@
                         <outlet property="lockImage" destination="XFN-S1-G0b" id="Aur-mA-Of5"/>
                         <outlet property="lockInfo1" destination="0tx-ir-Ag9" id="e01-1Z-wXf"/>
                         <outlet property="lockInfo2" destination="QHA-UO-dXV" id="A31-C0-peU"/>
+                        <outlet property="presetPopup" destination="sd1-0F-HBr" id="gB8-lb-tBn"/>
                         <outlet property="romLockImage" destination="5e7-38-kZF" id="s6e-8h-hlr"/>
                         <outlet property="romLockSubText" destination="XAO-tx-2cY" id="Fke-oD-pZC"/>
                         <outlet property="romLockText" destination="vYl-DV-TBQ" id="wFn-gT-w0e"/>

@@ -363,6 +363,8 @@ Drive::setOption(Opt opt, i64 value)
 void
 Drive::autoConfigure()
 {
+    setOption(Opt::DRV_POWER_SWITCH, mem.hasRom());
+
     switch (mem.romFNV64()) {
 
         case 0x361A1EC48F04F5A4: // VC1541C_01

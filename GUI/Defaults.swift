@@ -663,7 +663,31 @@ extension Preferences {
 //
 
 extension Configuration {
-    
+
+    func loadRomUserDefaults() {
+
+        func load(_ url: URL?, type: vc64.FileType) {
+
+            if url != nil {
+                if let file = try? MediaFileProxy.make(with: url!) {
+                    if file.type == type { emu?.loadRom(file) }
+                }
+            }
+        }
+
+        debug(.defaults)
+
+        if let emu = emu {
+
+            emu.suspend()
+            load(UserDefaults.basicRomUrl, type: .BASIC_ROM)
+            load(UserDefaults.charRomUrl, type: .CHAR_ROM)
+            load(UserDefaults.kernalRomUrl, type: .KERNAL_ROM)
+            load(UserDefaults.vc1541RomUrl, type: .VC1541_ROM)
+            emu.resume()
+        }
+    }
+
     func saveRomUserDefaults() throws {
         
         debug(.defaults)
