@@ -28,7 +28,7 @@ class Memory final : public SubComponent, public Inspectable<MemInfo, MemStats> 
         .type           = Class::Memory,
         .name           = "Memory",
         .description    = "C64 Memory",
-        .shell          = "memory"
+        .shell          = "mem"
     }};
 
     Options options = {

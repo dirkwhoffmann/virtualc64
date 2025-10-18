@@ -320,6 +320,7 @@ CommanderConsole::initCommands(RSCommand &root)
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             auto path = host.makeAbsolute(args.at("path"));
+            printf("load rom: %s\n", path.string().c_str());
             c64.loadRom(path);
         }
     });
@@ -769,43 +770,7 @@ CommanderConsole::initCommands(RSCommand &root)
         
         if (i == 0) cmd = registerComponent(drive8);
         if (i == 1) cmd = registerComponent(drive9);
-        
-        root.add({
-            
-            .tokens = { cmd, "bankmap" },
-            .chelp  = { "Displays the memory layout" },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-                auto &drive = values.front() ? drive9 : drive8;
-                drive.dump(Category::BankMap, os);
-
-            }, .payload = {i}
-        });
-        
-        root.add({
-            
-            .tokens = { cmd, "connect" },
-            .chelp  = { "Connects the drive" },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                auto id = values.front() ? DRIVE9 : DRIVE8;
-                emulator.set(Opt::DRV_CONNECT, true, { id });
-                
-            }, .payload = {i}
-        });
-        
-        root.add({
-            
-            .tokens = { cmd, "disconnect" },
-            .chelp  = { "Disconnects the drive" },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                auto id = values.front() ? DRIVE9 : DRIVE8;
-                emulator.set(Opt::DRV_CONNECT, false, { id });
-                
-            }, .payload = {i}
-        });
-        
         root.add({
             
             .tokens = { cmd, "eject" },
@@ -847,6 +812,30 @@ CommanderConsole::initCommands(RSCommand &root)
                 
             }, .payload = {i}
         });
+
+        root.add({
+
+            .tokens = { cmd, "protect" },
+            .chelp  = { "Enables write protection" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.protectDisk();
+
+            }, .payload = {i}
+        });
+
+        root.add({
+
+            .tokens = { cmd, "unprotect" },
+            .chelp  = { "Disables write protection" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.unprotectDisk();
+
+            }, .payload = {i}
+        });
     }
     
     
@@ -879,8 +868,20 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     
     cmd = registerComponent(host);
+
+    root.add({
+
+        .tokens = { cmd, "searchpath" },
+        .chelp  = { "Sets the search path for media files" },
+        .args   = { { .name = { "path", "File path" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            auto path = fs::path(args.at("path"));
+            host.setSearchPath(path);
+        }
+    });
     
-    
+
     //
     // Miscellaneous (Config)
     //

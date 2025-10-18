@@ -132,7 +132,7 @@ Headless::checkArguments()
 void
 Headless::runScript(const char **script)
 {
-    auto path = std::filesystem::temp_directory_path() / "script.ini";
+    auto path = std::filesystem::temp_directory_path() / "script.retrosh";
     auto file = std::ofstream(path, std::ios::binary);
 
     for (isize i = 0; script[i] != nullptr; i++) {
@@ -298,14 +298,14 @@ Headless::smokeTestScript[] = {
     "c64 init NTSC_II",
     "c64 init NTSC_OLD",
 
-    "memory",
-    "memory set INIT_PATTERN VICE",
-    "memory set INIT_PATTERN CCS",
-    "memory set INIT_PATTERN ZEROES",
-    "memory set INIT_PATTERN ONES",
-    "memory set INIT_PATTERN RANDOM",
-    "memory set SAVE_ROMS true",
-    "memory set SAVE_ROMS false",
+    "mem",
+    "mem set INIT_PATTERN VICE",
+    "mem set INIT_PATTERN CCS",
+    "mem set INIT_PATTERN ZEROES",
+    "mem set INIT_PATTERN ONES",
+    "mem set INIT_PATTERN RANDOM",
+    "mem set SAVE_ROMS true",
+    "mem set SAVE_ROMS false",
 
     "cia1",
     "cia1 set REVISION MOS_6526",
@@ -474,8 +474,8 @@ Headless::smokeTestScript[] = {
     "drive8 set PARCABLE STANDARD",
     "drive8 set PARCABLE DOLPHIN3",
     "drive8 set PARCABLE NONE",
-    "drive8 connect",
-    "drive8 disconnect",
+    "drive8 protect",
+    "drive8 unprotect",
     "drive8 eject",
     "drive8 newdisk NODOS",
     "drive8 newdisk CBM",
@@ -492,8 +492,8 @@ Headless::smokeTestScript[] = {
     "drive9 set PARCABLE STANDARD",
     "drive9 set PARCABLE DOLPHIN3",
     "drive9 set PARCABLE NONE",
-    "drive9 connect",
-    "drive9 disconnect",
+    "drive9 protect",
+    "drive9 unprotect",
     "drive9 eject",
     "drive9 newdisk NODOS",
     "drive9 newdisk CBM",

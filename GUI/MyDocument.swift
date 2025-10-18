@@ -137,7 +137,7 @@ class MyDocument: NSDocument {
 
         debug(.media, "url = \(url)")
 
-        if typeName == "de.dirkwhoffmann.retro.vamiga" {
+        if typeName == "de.dirkwhoffmann.retro.vc64" {
 
             do {
                 // Save the workspace

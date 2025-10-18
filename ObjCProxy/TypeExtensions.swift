@@ -62,7 +62,7 @@ extension FileType {
 
     static var all: [vc64.FileType] {
         return [
-            .SNAPSHOT, .SCRIPT,
+            .WORKSPACE, .SNAPSHOT, .SCRIPT,
             .CRT,
             .T64, .PRG, .P00,
             .D64, .G64,
@@ -74,7 +74,7 @@ extension FileType {
 
     static var draggable: [vc64.FileType] {
         return [
-            .SNAPSHOT, .SCRIPT,
+            .WORKSPACE, .SNAPSHOT, .SCRIPT,
             .CRT, .T64, .PRG, .P00,
             .D64, .G64,
             .TAP,

@@ -79,7 +79,8 @@ public:
     virtual void compress(Compressor method) { }
     virtual void uncompress() { }
     
-    //
+    // Flashes the contents of the file into a buffer
+    virtual void flash(u8 *buf, isize offset, isize len) const = 0;
     virtual void flash(u8 *buf, isize offset = 0) const = 0;
 
     

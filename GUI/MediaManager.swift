@@ -256,9 +256,9 @@ class MediaManager {
         }
     }
     
-    func mount(proxy: MediaFileProxy,
-               drive: DriveProxy? = nil,
-               options: [Option] = []) throws {
+    private func mount(proxy: MediaFileProxy,
+                       drive: DriveProxy? = nil,
+                       options: [Option] = []) throws {
         
         var proceedUnsaved: Bool {
             return options.contains(.force) || proceedWithUnsavedFloppyDisk(drive: drive!)
@@ -307,8 +307,8 @@ class MediaManager {
         }
     }
     
-    func flash(proxy: MediaFileProxy, options: [Option] = []) throws {
-        
+    private func flash(proxy: MediaFileProxy, options: [Option] = []) throws {
+
         if let emu = emu {
             
             switch proxy.type {

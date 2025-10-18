@@ -16,7 +16,7 @@
 			<key>CFBundleTypeName</key>
 			<string>VirtualC64 Snapshot</string>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>

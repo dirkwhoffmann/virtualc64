@@ -22,8 +22,9 @@ namespace vc64 {
 bool
 Script::isCompatible(const fs::path &path)
 {
-    auto s = util::uppercased(path.extension().string());
-    return s == ".INI";
+    auto suffix = util::uppercased(path.extension().string());
+
+    return suffix == ".RETROSH";
 }
 
 bool

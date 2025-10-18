@@ -263,7 +263,8 @@ fs::path
 Host::makeAbsolute(const fs::path &path) const
 {
     SYNCHRONIZED
-    
+
+    printf("makeAbsolute: %s %s\n", path.string().c_str(), searchPath.string().c_str());
     return path.is_absolute() ? path : searchPath / path;
 }
 

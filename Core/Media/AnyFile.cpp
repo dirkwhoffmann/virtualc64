@@ -95,13 +95,16 @@ AnyFile::strip(isize count)
 }
 
 void
-AnyFile::flash(u8 *buffer, isize offset) const
+AnyFile::flash(u8 *buf, isize offset, isize len) const
 {
-    if (data.ptr) {
+    assert(buf);
+    std::memcpy(buf + offset, data.ptr, len);
+}
 
-        assert(buffer);
-        std::memcpy(buffer + offset, data.ptr, data.size);
-    }
+void
+AnyFile::flash(u8 *buf, isize offset) const
+{
+    flash (buf, offset, data.size);
 }
 
 bool 

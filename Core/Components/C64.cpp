@@ -1351,6 +1351,7 @@ C64::loadWorkspace(const fs::path &path)
     std::stringstream ss;
 
     // Set the search path to the workspace directoy
+    printf("loadWS: %s\n", path.string().c_str());
     host.setSearchPath(path);
 
     // Assemble the setup script
@@ -1414,8 +1415,8 @@ C64::saveWorkspace(const fs::path &path)
 
         if (hasRom(type)) {
 
-            saveRom(type, path / "rom.bin");
-            ss << "try mem load rom rom.bin\n";
+            saveRom(type, path / name);
+            ss << "try mem load rom " << name << "\n";
         }
     };
 
