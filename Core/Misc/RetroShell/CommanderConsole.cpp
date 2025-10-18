@@ -91,9 +91,9 @@ CommanderConsole::initCommands(RSCommand &root)
         .tokens = { "workspace init" },
         .chelp  = { "First command of a workspace script" },
         .flags  = releaseBuild ? rs::hidden : 0,
-        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            // c64.initWorkspace();
+            c64.initWorkspace();
         }
     });
 
@@ -102,9 +102,9 @@ CommanderConsole::initCommands(RSCommand &root)
         .tokens = { "workspace activate" },
         .chelp  = { "Last command of a workspace script" },
         .flags  = releaseBuild ? rs::hidden : 0,
-        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            // c64.activateWorkspace();
+            c64.activateWorkspace();
         }
     });
 

@@ -1471,7 +1471,6 @@ C64::initWorkspace()
 {
     /* This function is called at the beginning of a workspace script */
 
-    // Power off the Amiga to make it configurable
     emulator.powerOff();
 }
 
@@ -1480,10 +1479,7 @@ C64::activateWorkspace()
 {
     /* This function is called at the end of a workspace script */
 
-    // Power on the Amiga
     emulator.run();
-
-    // Inform the GUI
     msgQueue.put(Msg::WORKSPACE_LOADED);
 }
 

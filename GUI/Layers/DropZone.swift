@@ -198,8 +198,8 @@ class DropZone: Layer {
                 
                 switch type {
                     
-                case .SNAPSHOT:
-                    
+                case .WORKSPACE, .SNAPSHOT:
+
                     try mm.mount(url: url, allowedTypes: [type])
                     
                 case .SCRIPT:

@@ -356,6 +356,8 @@
 		5085D89D25B848940043B15C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085D89B25B848940043B15C /* Joystick.cpp */; };
 		50891C012652380A0004AC1B /* VICIISprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICIISprites.cpp */; };
 		508AB17A2E9F7CB400E226DE /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508AB1792E9F7CAC00E226DE /* KeyboardSettings.swift */; };
+		508AB17D2EA37F7E00E226DE /* Workspace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508AB17C2EA37F7E00E226DE /* Workspace.cpp */; };
+		508AB17E2EA37F7E00E226DE /* Workspace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508AB17C2EA37F7E00E226DE /* Workspace.cpp */; };
 		508C1E532C0B20610097473C /* ControlPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E522C0B20610097473C /* ControlPortBase.cpp */; };
 		508C1E542C0B20610097473C /* ControlPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E522C0B20610097473C /* ControlPortBase.cpp */; };
 		508C1E562C0B20760097473C /* ExpansionPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E552C0B20760097473C /* ExpansionPortBase.cpp */; };
@@ -965,6 +967,8 @@
 		5085D89C25B848940043B15C /* Joystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
 		50891C002652380A0004AC1B /* VICIISprites.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICIISprites.cpp; sourceTree = "<group>"; };
 		508AB1792E9F7CAC00E226DE /* KeyboardSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
+		508AB17B2EA37F7800E226DE /* Workspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Workspace.h; sourceTree = "<group>"; };
+		508AB17C2EA37F7E00E226DE /* Workspace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Workspace.cpp; sourceTree = "<group>"; };
 		508C1E522C0B20610097473C /* ControlPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ControlPortBase.cpp; sourceTree = "<group>"; };
 		508C1E552C0B20760097473C /* ExpansionPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPortBase.cpp; sourceTree = "<group>"; };
 		508C1E582C0B20EE0097473C /* SerialPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SerialPortBase.cpp; sourceTree = "<group>"; };
@@ -1698,6 +1702,8 @@
 				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CE24AF29AB00E69CAE /* AnyFile.h */,
 				504C42D624AF29AB00E69CAE /* AnyFile.cpp */,
+				508AB17B2EA37F7800E226DE /* Workspace.h */,
+				508AB17C2EA37F7E00E226DE /* Workspace.cpp */,
 				504C42D724AF29AB00E69CAE /* RomFile.h */,
 				504C42C724AF29AB00E69CAE /* RomFile.cpp */,
 				503C0C362B9A4AD400112B4B /* RomDatabase.h */,
@@ -2613,6 +2619,7 @@
 				50BD641A2C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
 				50A5B7D42C74E44C00D6DDAD /* RshServer.cpp in Sources */,
 				50726FA22961CA0D0031F2F5 /* WarpSpeed.cpp in Sources */,
+				508AB17E2EA37F7E00E226DE /* Workspace.cpp in Sources */,
 				50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */,
 				50726F702961C9C60031F2F5 /* pot.cc in Sources */,
 				50726FA92961CA1C0031F2F5 /* AnyFile.cpp in Sources */,
@@ -2871,6 +2878,7 @@
 				50D3092024C625B200B92563 /* ProxyExtensions.swift in Sources */,
 				50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */,
 				504C436D24AF29AC00E69CAE /* Rex.cpp in Sources */,
+				508AB17D2EA37F7E00E226DE /* Workspace.cpp in Sources */,
 				5058A920281D109F00C223C9 /* DiskInspector.swift in Sources */,
 				508C1E532C0B20610097473C /* ControlPortBase.cpp in Sources */,
 				505F456E2E9698B700418105 /* HardwareSettings.swift in Sources */,

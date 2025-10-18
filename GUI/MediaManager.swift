@@ -229,7 +229,7 @@ class MediaManager {
             switch file.type {
                 
             case .WORKSPACE:
-                break // try mydocument.processWorkspaceFile(url: url)
+                try mydocument.processWorkspaceFile(url: url)
                 
             case .SNAPSHOT:
                 mydocument.snapshots.append(file, size: file.size)

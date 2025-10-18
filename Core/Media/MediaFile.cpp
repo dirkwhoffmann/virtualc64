@@ -26,43 +26,29 @@
 #include "Snapshot.h"
 #include "T64File.h"
 #include "TAPFile.h"
+#include "Workspace.h"
 
 namespace vc64 {
 
 FileType
 MediaFile::type(const fs::path &path)
 {
-    Buffer<u8> buffer(path);
-    if (buffer.empty()) return FileType::UNKNOWN;
 
-    if (Snapshot::isCompatible(path) &&
-        Snapshot::isCompatible(buffer)) return FileType::SNAPSHOT;
 
-    if (Script::isCompatible(path) &&
-        Script::isCompatible(buffer)) return FileType::SCRIPT;
-
-    if (CRTFile::isCompatible(path) &&
-        CRTFile::isCompatible(buffer)) return FileType::CRT;
-
-    if (T64File::isCompatible(path) &&
-        T64File::isCompatible(buffer)) return FileType::T64;
-
-    if (P00File::isCompatible(path) &&
-        P00File::isCompatible(buffer)) return FileType::P00;
-
-    if (PRGFile::isCompatible(path) &&
-        PRGFile::isCompatible(buffer)) return FileType::PRG;
-
-    if (D64File::isCompatible(path) &&
-        D64File::isCompatible(buffer)) return FileType::D64;
-
-    if (G64File::isCompatible(path) &&
-        G64File::isCompatible(buffer)) return FileType::G64;
-
-    if (TAPFile::isCompatible(path) &&
-        TAPFile::isCompatible(buffer)) return FileType::TAP;
+    if (Workspace::isCompatible(path))  return FileType::WORKSPACE;
+    if (Snapshot::isCompatible(path))   return FileType::SNAPSHOT;
+    if (Script::isCompatible(path))     return FileType::SCRIPT;
+    if (CRTFile::isCompatible(path))    return FileType::CRT;
+    if (T64File::isCompatible(path))    return FileType::T64;
+    if (P00File::isCompatible(path))    return FileType::P00;
+    if (PRGFile::isCompatible(path))    return FileType::PRG;
+    if (D64File::isCompatible(path))    return FileType::D64;
+    if (G64File::isCompatible(path))    return FileType::G64;
+    if (TAPFile::isCompatible(path))    return FileType::TAP;
 
     if (RomFile::isCompatible(path)) {
+
+        Buffer<u8> buffer(path);
         if (RomFile::isRomBuffer(RomType::BASIC, buffer)) return FileType::BASIC_ROM;
         if (RomFile::isRomBuffer(RomType::CHAR, buffer)) return FileType::CHAR_ROM;
         if (RomFile::isRomBuffer(RomType::KERNAL, buffer)) return FileType::KERNAL_ROM;
@@ -85,6 +71,7 @@ MediaFile::make(const fs::path &path, FileType type)
 {
     switch (type) {
 
+        case FileType::WORKSPACE:  return new Workspace(path);
         case FileType::SNAPSHOT:   return new Snapshot(path);
         case FileType::SCRIPT:     return new Script(path);
         case FileType::CRT:        return new CRTFile(path);
@@ -109,7 +96,7 @@ MediaFile *
 MediaFile::make(const u8 *buf, isize len, FileType type)
 {
     switch (type) {
-            
+
         case FileType::SNAPSHOT:   return new Snapshot(buf, len);
         case FileType::SCRIPT:     return new Script(buf, len);
         case FileType::CRT:        return new CRTFile(buf, len);
