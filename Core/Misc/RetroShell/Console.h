@@ -141,8 +141,8 @@ public:
 protected:
     
     virtual void initCommands(RSCommand &root);
-    const char *registerComponent(CoreComponent &c, bool shadowed = false);
-    const char *registerComponent(CoreComponent &c, RSCommand &root, bool shadowed = false);
+    const char *registerComponent(CoreComponent &c, usize flags = 0);
+    const char *registerComponent(CoreComponent &c, RSCommand &root, usize flags = 0);
     
     
     //

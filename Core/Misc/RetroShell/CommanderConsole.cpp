@@ -115,14 +115,7 @@ CommanderConsole::initCommands(RSCommand &root)
     
     RSCommand::currentGroup = "Regression testing";
 
-    auto cmd = registerComponent(regressionTester);
-
-    root.add({
-
-        .tokens = { "regression" },
-        .ghelp  = { "Runs the regression tester" },
-        .flags  = releaseBuild ? rs::hidden : 0
-    });
+    auto cmd = registerComponent(regressionTester, releaseBuild ? rs::hidden : 0);
 
     root.add({
 
@@ -397,13 +390,6 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     
     cmd = registerComponent(vic);
-    
-    
-    //
-    // Components (DMA Debugger)
-    //
-    
-    cmd = registerComponent(vic.dmaDebugger);
 
     
     //
@@ -421,35 +407,28 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     
     RSCommand::currentGroup = "Ports";
-    
-    
+
+
     //
     // Ports (Power port)
     //
-    
+
     cmd = registerComponent(powerSupply);
-    
-    
+
+
     //
     // Ports (Audio port)
     //
-    
+
     cmd = registerComponent(audioPort);
-    
-    
-    //
-    // Ports (User port)
-    //
-    
-    cmd = registerComponent(userPort);
-    
-    
+
+
     //
     // Ports (Video port)
     //
-    
+
     cmd = registerComponent(videoPort);
-    
+
     
     //
     // Ports (Expansion port)
@@ -497,8 +476,15 @@ CommanderConsole::initCommands(RSCommand &root)
             expansionPort.attachGeoRam(parseNum(args.at("KB")));
         }
     });
-    
-    
+
+
+    //
+    // Ports (User port)
+    //
+
+    cmd = registerComponent(userPort);
+
+
     //
     // Peripherals
     //
@@ -577,24 +563,170 @@ CommanderConsole::initCommands(RSCommand &root)
             keyboard.autoType("run\n");
         }
     });
+
+
+    //
+    // Peripherals (Drives)
+    //
+
+    root.add({
+
+        .tokens = { "drive[n]" },
+        .ghelp  = { "Drive n" },
+        .chelp  = { "Commands: drive8, drive9" }
+    });
+
+    for (isize i = 0; i < 2; i++) {
+
+        if (i == 0) cmd = registerComponent(drive8, rs::shadowed);
+        if (i == 1) cmd = registerComponent(drive9, rs::shadowed);
+
+        root.add({
+
+            .tokens = { cmd, "eject" },
+            .chelp  = { "Ejects a floppy disk" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.ejectDisk();
+
+            }, .payload = {i}
+        });
+
+        root.add({
+
+            .tokens = { cmd, "insert" },
+            .chelp  = { "Inserts a floppy disk" },
+            .args   = {{ .name = { "path", "File path" } } },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto path = host.makeAbsolute(args.at("path"));
+                if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
+
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.insertDisk(path, false);
+
+            }, .payload = {i}
+        });
+
+        root.add({
+
+            .tokens = { cmd, "newdisk" },
+            .chelp  = { "Inserts a new blank disk" },
+            .args   = { { .name = { "dos", "DOS type" } } },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &drive = values.front() ? drive9 : drive8;
+                auto type = util::parseEnum <DOSType, DOSTypeEnum> (args.at("dos"));
+                drive.insertNewDisk(type, "NEW DISK");
+
+            }, .payload = {i}
+        });
+
+        root.add({
+
+            .tokens = { cmd, "protect" },
+            .chelp  = { "Enables write protection" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.protectDisk();
+
+            }, .payload = {i}
+        });
+
+        root.add({
+
+            .tokens = { cmd, "unprotect" },
+            .chelp  = { "Disables write protection" },
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                auto &drive = values.front() ? drive9 : drive8;
+                drive.unprotectDisk();
+
+            }, .payload = {i}
+        });
+    }
+
+
+    //
+    // Peripherals (Datasette)
+    //
+
+    cmd = registerComponent(datasette);
+
+    root.add({
+
+        .tokens = { cmd, "connect" },
+        .chelp  = { "Connects the datasette" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            emulator.set(Opt::DAT_CONNECT, true);
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "disconnect" },
+        .chelp  = { "Disconnects the datasette" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            emulator.set(Opt::DAT_CONNECT, false);
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "rewind" },
+        .chelp  = { "Rewinds the tape" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            datasette.rewind();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "rewind", "to" },
+        .chelp  = { "Rewinds the tape to a specific position" },
+        .args   = { { .name = { "pos", "Tape position" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            datasette.rewind(parseNum(args.at("pos")));
+        }
+    });
     
-    
+
     //
     // Peripherals (Mouse)
     //
-    
-    registerComponent(c64.port1.mouse);
-    registerComponent(c64.port2.mouse);
-    
+
+    root.add({
+
+        .tokens = { "mouse[n]" },
+        .ghelp  = { "Mouse n" },
+        .chelp  = { "Commands: mouse1, mouse2" }
+    });
+
+    registerComponent(c64.port1.mouse, rs::shadowed);
+    registerComponent(c64.port2.mouse, rs::shadowed);
+
     
     //
     // Peripherals (Joystick)
     //
-    
+
+    root.add({
+
+        .tokens = { "joystick[n]" },
+        .ghelp  = { "Joystick n" },
+        .chelp  = { "Commands: joystick1, joystick2" }
+    });
+
     for (isize i = 0; i <= 1; i++) {
         
-        if (i == 0) cmd = registerComponent(port1.joystick);
-        if (i == 1) cmd = registerComponent(port2.joystick);
+        if (i == 0) cmd = registerComponent(port1.joystick, rs::shadowed);
+        if (i == 1) cmd = registerComponent(port2.joystick, rs::shadowed);
 
         root.add({
 
@@ -709,136 +841,18 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     // Peripherals (Paddles)
     //
-    
-    cmd = registerComponent(port1.paddle);
-    cmd = registerComponent(port2.paddle);
-    
-    
-    //
-    // Peripherals (Datasette)
-    //
-    
-    cmd = registerComponent(datasette);
-    
+
     root.add({
-        
-        .tokens = { cmd, "connect" },
-        .chelp  = { "Connects the datasette" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            emulator.set(Opt::DAT_CONNECT, true);
-        }
+        .tokens = { "paddle[n]" },
+        .ghelp  = { "Paddle n" },
+        .chelp  = { "Commands: paddle1, paddle2" }
     });
-    
-    root.add({
-        
-        .tokens = { cmd, "disconnect" },
-        .chelp  = { "Disconnects the datasette" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            emulator.set(Opt::DAT_CONNECT, false);
-        }
-    });
-    
-    root.add({
-        
-        .tokens = { cmd, "rewind" },
-        .chelp  = { "Rewinds the tape" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+    cmd = registerComponent(port1.paddle, rs::shadowed);
+    cmd = registerComponent(port2.paddle, rs::shadowed);
 
-            datasette.rewind();
-        }
-    });
-    
-    root.add({
-        
-        .tokens = { cmd, "rewind", "to" },
-        .chelp  = { "Rewinds the tape to a specific position" },
-        .args   = { { .name = { "pos", "Tape position" } } },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            datasette.rewind(parseNum(args.at("pos")));
-        }
-    });
-    
-    
-    //
-    // Peripherals (Drives)
-    //
-    
-    for (isize i = 0; i < 2; i++) {
-        
-        if (i == 0) cmd = registerComponent(drive8);
-        if (i == 1) cmd = registerComponent(drive9);
-
-        root.add({
-            
-            .tokens = { cmd, "eject" },
-            .chelp  = { "Ejects a floppy disk" },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                auto &drive = values.front() ? drive9 : drive8;
-                drive.ejectDisk();
-                
-            }, .payload = {i}
-        });
-        
-        root.add({
-            
-            .tokens = { cmd, "insert" },
-            .chelp  = { "Inserts a floppy disk" },
-            .args   = {{ .name = { "path", "File path" } } },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                auto path = host.makeAbsolute(args.at("path"));
-                if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
-                
-                auto &drive = values.front() ? drive9 : drive8;
-                drive.insertDisk(path, false);
-                
-            }, .payload = {i}
-        });
-        
-        root.add({
-            
-            .tokens = { cmd, "newdisk" },
-            .chelp  = { "Inserts a new blank disk" },
-            .args   = { { .name = { "dos", "DOS type" } } },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                auto &drive = values.front() ? drive9 : drive8;
-                auto type = util::parseEnum <DOSType, DOSTypeEnum> (args.at("dos"));
-                drive.insertNewDisk(type, "NEW DISK");
-                
-            }, .payload = {i}
-        });
-
-        root.add({
-
-            .tokens = { cmd, "protect" },
-            .chelp  = { "Enables write protection" },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                auto &drive = values.front() ? drive9 : drive8;
-                drive.protectDisk();
-
-            }, .payload = {i}
-        });
-
-        root.add({
-
-            .tokens = { cmd, "unprotect" },
-            .chelp  = { "Disables write protection" },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                auto &drive = values.front() ? drive9 : drive8;
-                drive.unprotectDisk();
-
-            }, .payload = {i}
-        });
-    }
-    
-    
     //
     // Peripherals (RS232)
     //
@@ -907,7 +921,14 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
-    
+
+    //
+    // Components (DMA Debugger)
+    //
+
+    cmd = registerComponent(vic.dmaDebugger);
+
+
     //
     // Miscellaneous (Remote server)
     //

@@ -142,13 +142,13 @@
                             <menuItem title="Load Snapshot..." id="BX4-y5-PoI">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="takeSnapshotAction:" target="-1" id="jhF-O1-8rn"/>
+                                    <action selector="loadSnapshotAction:" target="-1" id="9rv-3B-jcU"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Save Snapshot..." id="fJ4-Fj-fSD">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="takeSnapshotAction:" target="-1" id="EpX-44-NwF"/>
+                                    <action selector="saveSnapshotAction:" target="-1" id="FnZ-Nb-lR4"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Take Snapshot" keyEquivalent="+" id="gpz-VL-eFm">

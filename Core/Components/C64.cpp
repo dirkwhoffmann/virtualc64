@@ -1391,7 +1391,7 @@ C64::saveWorkspace(const fs::path &path)
 
     auto exportG64 = [&](Drive& drive, string name) {
 
-        if (drive.disk != nullptr) {
+        if (drive.hasDisk()) {
 
             string file = name + ".g64";
 
