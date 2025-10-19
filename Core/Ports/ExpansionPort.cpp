@@ -255,6 +255,12 @@ ExpansionPort::detachCartridge()
     }
 }
 
+MediaFile *
+ExpansionPort::exportCRT() const
+{
+    return cartridge ? cartridge->exportCRT() : nullptr;
+}
+
 void
 ExpansionPort::pressButton(isize nr)
 {

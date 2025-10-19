@@ -56,6 +56,9 @@ public:
 
 private:
 
+    /* Cartridge name as stored in the CRT file */
+    u8 name[32] = {};
+    
     /* Initial values of the game and exrom lines. The values are read from the
      * CRT file and the game line is set to it when the cartridge is plugged
      * into the expansion port.
@@ -426,9 +429,6 @@ public:
     // Operating LEDs
     //
 
-    // Returns true if the cartridge has a LED
-    // bool hasLED() const { return traits.led; }
-
     // Switches the LED on or off
     virtual void setLED(bool value) { led = value; }
 
@@ -459,6 +459,14 @@ public:
 
     // Called after the C64 CPU has processed the NMI instruction
     virtual void nmiDidTrigger() { }
+
+
+    //
+    // Exporting
+    //
+
+    MediaFile *exportCRT() const;
+    void exportCRT(Buffer<u8> &buffer) const;
 };
 
 }

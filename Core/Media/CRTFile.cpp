@@ -43,6 +43,12 @@ CRTFile::isCompatible(const Buffer<u8> &buf)
     return isCompatible(buf.ptr, buf.size);
 }
 
+void
+CRTFile::init(class ExpansionPort &expansion)
+{
+    
+}
+
 PETName<16>
 CRTFile::getName() const
 {

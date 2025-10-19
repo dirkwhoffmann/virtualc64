@@ -1048,8 +1048,36 @@ extension MyController: NSMenuItemValidation {
     @IBAction func setSwitchDummyAction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }
-    
-    @IBAction  func inspectCartridgeAction(_ sender: Any!) {
+
+    @IBAction func exportCartridgeAction(_ sender: Any!) {
+
+        if let emu = emu {
+
+            // Ask user to continue if the cartridge contains modified data (TODO)
+            // if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
+
+            mySavePanel.configure(types: [ .crt ], prompt: "Export")
+            mySavePanel.open(for: window, { result in
+
+                if result == .OK, let url = self.mySavePanel.url {
+
+                    do {
+
+                        print("Export to \(url)")
+                        let crt = emu.expansionport.exportCRT()
+                        print("CRT = \(crt)")
+                        try crt?.writeToFile(url: url)
+
+                    } catch {
+                        
+                        self.showAlert(.cantExport(url: url), error: error, async: true)
+                    }
+                }
+            })
+        }
+    }
+
+    @IBAction func inspectCartridgeAction(_ sender: Any!) {
         
         if let emu = emu {
             

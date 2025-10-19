@@ -129,6 +129,7 @@ public:
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt opt, i64 value) override;
 
+
     //
     // Analyzing
     //
@@ -195,6 +196,13 @@ public:
 
     // Removes a cartridge from the expansion port (if any)
     void detachCartridge();
+
+
+    //
+    // Exporting
+    //
+
+    MediaFile *exportCRT() const;
 
 
     //

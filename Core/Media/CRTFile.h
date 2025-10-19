@@ -36,12 +36,13 @@ class CRTFile : public AnyFile {
     // Indicates where each chip section starts
     u8 *chips[MAX_PACKETS] = {};
 
-public:
-    
+
     //
     // Class methods
     //
-    
+
+public:
+
     static string cartridgeTypeName(CartridgeType type);
     static bool isCompatible(const fs::path &path);
     static bool isCompatible(const u8 *buf, isize len);
@@ -51,22 +52,34 @@ public:
     //
     // Initializing
     //
+
+public:
     
     CRTFile(const fs::path &path) throws { init(path); }
     CRTFile(const u8 *buf, isize len) throws { init(buf, len); }
-    
-    
+    CRTFile(class ExpansionPort &expansion) throws { init(expansion); }
+
+private:
+
+    using AnyFile::init;
+    void init(class ExpansionPort &expansion) throws;
+
+
     //
     // Methods from CoreObject
     //
-    
+
+public:
+
     const char *objectName() const override { return "CRTFile"; }
 
 
     //
     // Methods from AnyFile
     //
-    
+
+public:
+
     bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
     bool isCompatibleBuffer(const u8 *buf, isize len) override { return isCompatible(buf, len); }
     FileType type() const override { return FileType::CRT; }
@@ -77,7 +90,9 @@ public:
     //
     // Analyzing the cartridge
     //
-    
+
+public:
+
     // Returns the version number of the cartridge
     u16 cartridgeVersion() const;
 
@@ -101,7 +116,9 @@ public:
     //
     // Analyzing chip packages
     //
-    
+
+public:
+
     // Returns how many chips are contained in this cartridge
     isize chipCount() const;
 
@@ -124,6 +141,8 @@ public:
     //
     // Debugging and repairing
     //
+
+public:
 
     // Prints some information about this cartridge
     void dump() const;

@@ -488,6 +488,7 @@ struct GuardInfo {
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
 - (void)detachCartridge;
+- (MediaFileProxy *) exportCRT;
 
 @end
 

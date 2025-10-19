@@ -83,6 +83,7 @@ enum class Fault : long
     DRV_NO_DISK,          ///< Floppy drive contains no disk
 
     // Cartridges
+    CRT_NO_CARTRIDGE,     ///< No cartridge attached
     CRT_UNKNOWN,          ///< Unknown cartridge type
     CRT_UNSUPPORTED,      ///< Unsupported cartridge type
     CRT_TOO_MANY_PACKETS, ///< CRT file contains too many Rom packets
@@ -180,6 +181,7 @@ struct FaultEnum : Reflection<FaultEnum, Fault> {
             case Fault::DRV_UNCONNECTED:         return "DRV_UNCONNECTED";
             case Fault::DRV_NO_DISK:             return "DRV_NO_DISK";
 
+            case Fault::CRT_NO_CARTRIDGE:        return "CRT_NO_CARTRIDGE";
             case Fault::CRT_UNKNOWN:             return "CRT_UNKNOWN";
             case Fault::CRT_UNSUPPORTED:         return "CRT_UNSUPPORTED";
             case Fault::CRT_TOO_MANY_PACKETS:    return "CRT_TOO_MANY_PACKETS";

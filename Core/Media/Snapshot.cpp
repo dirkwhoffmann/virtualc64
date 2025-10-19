@@ -53,7 +53,8 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
 bool
 Snapshot::isCompatible(const fs::path &path)
 {
-    return true;
+    auto suffix = util::uppercased(path.extension().string());
+    return suffix == ".VCSNAP";
 }
 
 bool

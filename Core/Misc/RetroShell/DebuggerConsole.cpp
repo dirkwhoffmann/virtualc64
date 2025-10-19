@@ -140,8 +140,8 @@ DebuggerConsole::initCommands(RSCommand &root)
     root.add({
 
         .tokens = { "next" },
-        .flags  = rs::shadowed,
         .chelp  = { "Step over the next instruction" },
+        .flags  = rs::shadowed,
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             emulator.stepOver();

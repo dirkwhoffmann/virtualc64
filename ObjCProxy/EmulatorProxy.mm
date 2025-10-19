@@ -811,6 +811,19 @@ NSString *EventSlotName(EventSlot slot)
     [self eport]->detachCartridge();
 }
 
+- (MediaFileProxy *) exportCRT
+{
+    try {
+
+        MediaFile *crt = [self eport]->exportCRT();
+        return [MediaFileProxy make:crt];
+
+    } catch (AppError &error) {
+
+        return nil;
+    }
+}
+
 @end
 
 

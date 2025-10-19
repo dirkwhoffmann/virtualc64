@@ -213,6 +213,10 @@ AppError::AppError(Fault code, const string &s)
             description = "No disk in drive.";
             break;
 
+        case Fault::CRT_NO_CARTRIDGE:
+            description = "No cartridge attached.";
+            break;
+
         case Fault::CRT_UNKNOWN:
             description = "This cartridge is a type " + s + " cartridge which";
             description += " is unknown to the emulator.";

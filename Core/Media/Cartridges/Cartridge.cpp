@@ -159,6 +159,9 @@ Cartridge::makeWithCRTFile(C64 &c64, const CRTFile &file)
     // Try to create the cartridge
     Cartridge *cart = makeWithType(c64, file.cartridgeType());
 
+    // Copy the cartridge name
+    file.data.copy(cart->name, 0x20, 32);
+
     // Remember powerup values for game line and exrom line
     cart->gameLineInCrtFile = file.initialGameLine();
     cart->exromLineInCrtFile = file.initialExromLine();
@@ -527,6 +530,86 @@ void
 Cartridge::setSwitch(isize pos)
 {
     switchPos = pos;
+}
+
+MediaFile *
+Cartridge::exportCRT() const
+{
+    Buffer<u8> buffer;
+    exportCRT(buffer);
+    return new CRTFile(buffer.ptr, buffer.size);
+}
+
+void
+Cartridge::exportCRT(Buffer<u8> &buffer) const
+{
+    // Initialize the buffer with the proper size
+    isize size = 0x40;
+    for (isize i = 0; i < numPackets; i++) {
+        size += 0x10 + packet[i]->size;
+    }
+    buffer.init(size, 0);
+
+    // Cartridge signature
+    u8 *ptr = buffer.ptr;
+    strcpy((char *)ptr, "C64 CARTRIDGE   ");
+
+    // File header length
+    ptr[0x10] = 0x00; ptr[0x11] = 0x00; ptr[0x12] = 0x00; ptr[0x13] = 0x40;
+
+    // Cartridge version
+    ptr[0x14] = 0x01; ptr[0x15] = 0x00;
+
+    // Cartridge hardware type
+    ptr[0x16] = HI_BYTE((u16)getCartridgeType());
+    ptr[0x17] = LO_BYTE((u16)getCartridgeType());
+
+    // EXROM and GAME line
+    ptr[0x18] = (u8)exromLineInCrtFile;
+    ptr[0x19] = (u8)gameLineInCrtFile;
+
+    // Reserved
+    for (isize i = 0x1A; i < 0x20; i++) ptr[i] = 0x00;
+
+    // Cartridge name
+    memcpy(ptr + 0x20, name, 32);
+
+    // Packets
+    ptr += 0x40;
+    for (isize i = 0; i < numPackets; i++) {
+
+        // ROM signature
+        strcpy((char *)ptr, "CHIP");
+
+        // Length
+        isize length = packet[i]->size;
+        isize totalLength = length + 0x10;
+        ptr[0x4] = BYTE3(totalLength);
+        ptr[0x5] = BYTE2(totalLength);
+        ptr[0x6] = BYTE1(totalLength);
+        ptr[0x7] = BYTE0(totalLength);
+
+        // Chip type
+        ptr[0x8] = 0x00;
+        ptr[0x9] = 0x00;
+
+        // Bank number
+        ptr[0xA] = HI_BYTE(i);
+        ptr[0xB] = LO_BYTE(i);
+
+        // Starting load address
+        ptr[0xC] = HI_BYTE(packet[i]->loadAddress);
+        ptr[0xD] = LO_BYTE(packet[i]->loadAddress);
+
+        // ROM image size
+        ptr[0xE] = HI_BYTE(length);
+        ptr[0xF] = LO_BYTE(length);
+
+        // Data
+        memcpy(ptr + 0x10, packet[i]->rom, length);
+
+        ptr += totalLength;
+    }
 }
 
 }

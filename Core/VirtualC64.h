@@ -609,10 +609,6 @@ struct ExpansionPortAPI : API {
      */
     void attachCartridge(const MediaFile &c, bool reset = true);
 
-    /** @brief  Attaches a cartridge to the expansion port.
-     */
-    // void attachCartridge(Cartridge *c);
-
     /** @brief  Attaches a RAM Expansion Unit to the expansion port.
      */
     void attachReu(isize capacity);
@@ -628,6 +624,10 @@ struct ExpansionPortAPI : API {
     /** @brief  Detaches the currently plugged in cartridge
      */
     void detachCartridge();
+
+    /** @brief  Export cartridge
+     */
+    MediaFile *exportCRT() const;
 
     /// @}
 

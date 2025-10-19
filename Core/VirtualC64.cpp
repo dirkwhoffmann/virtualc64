@@ -1436,6 +1436,12 @@ ExpansionPortAPI::detachCartridge()
     emu->markAsDirty();
 }
 
+MediaFile *
+ExpansionPortAPI::exportCRT() const
+{
+    return expansionPort->exportCRT();
+}
+
 
 //
 // Disk
