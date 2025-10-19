@@ -94,6 +94,21 @@ DebuggerConsole::initCommands(RSCommand &root)
     
     RSCommand::currentGroup = "Program execution";
 
+    root.add({ .tokens = { "p[ause]" }, .ghelp  = { "Pause emulation" }, .chelp  = { "p or pause" } });
+
+    root.add({
+
+        .tokens = { "pause" },
+        .chelp  = { "Pause emulation" },
+        .flags  = rs::shadowed,
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            if (emulator.isRunning()) emulator.put(Cmd::PAUSE);
+        }
+    });
+
+    root.clone({ "pause" }, "p");
+
     root.add({ .tokens = { "g[oto]" }, .ghelp  = { "Goto address" }, .chelp  = { "g or goto" } });
     root.add({
 
@@ -125,6 +140,7 @@ DebuggerConsole::initCommands(RSCommand &root)
     root.add({
 
         .tokens = { "next" },
+        .flags  = rs::shadowed,
         .chelp  = { "Step over the next instruction" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
@@ -132,6 +148,16 @@ DebuggerConsole::initCommands(RSCommand &root)
         }
     });
     root.clone({ "next" }, "n");
+
+    root.add({
+
+        .tokens = { "eol" },
+        .chelp  = { "Complete the current line" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            emulator.finishLine();
+        }
+    });
 
     root.add({
 
@@ -352,7 +378,6 @@ DebuggerConsole::initCommands(RSCommand &root)
 
         .tokens = { "f" },
         .chelp  = { "Find a sequence in memory" },
-        .flags  = rs::hidden,
         .args   = {
             { .name = { "sequence", "Search string" } },
             { .name = { "address", "Start address" }, .flags = rs::opt } },
@@ -383,7 +408,6 @@ DebuggerConsole::initCommands(RSCommand &root)
 
         .tokens = { "e" },
         .chelp  = { "Erase memory" },
-        .flags  = rs::hidden,
         .args   = {
             { .name = { "address", "Start address" } },
             { .name = { "count", "Number of bytes to erase" } },

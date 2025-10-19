@@ -17,6 +17,7 @@ Script.cpp
 Snapshot.cpp
 TAPFile.cpp
 T64File.cpp
+Workspace.cpp
 
 )
 
