@@ -1171,6 +1171,12 @@ DatasetteAPI::ejectTape()
     emu->markAsDirty();
 }
 
+MediaFile *
+DatasetteAPI::exportTAP() const
+{
+    return datasette->exportTAP();
+}
+
 
 //
 // RS232

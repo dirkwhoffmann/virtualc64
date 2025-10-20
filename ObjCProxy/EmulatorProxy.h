@@ -589,6 +589,7 @@ struct GuardInfo {
 - (void)rewind;
 - (void)insertTape:(MediaFileProxy *)tape;
 - (void)ejectTape;
+- (MediaFileProxy *) exportTAP;
 
 @end
 

@@ -253,7 +253,6 @@ private:
     void advanceHead();
 
 
-
     //
     // Processing commands and events
     //
@@ -277,6 +276,15 @@ private:
 
     // Schedules the rising and falling edge of the next pulse
     void schedulePulse(isize nr);
+
+
+    //
+    // Exporting
+    //
+
+public:
+    
+    MediaFile *exportTAP() const;
 };
 
 }

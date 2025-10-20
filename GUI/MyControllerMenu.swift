@@ -919,7 +919,33 @@ extension MyController: NSMenuItemValidation {
             emu.datasette.rewind()
         }
     }
-    
+
+    @IBAction func exportTapeAction(_ sender: Any!) {
+
+        if let emu = emu {
+
+            // Ask user to continue if the tape contains modified data (TODO)
+            // if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
+
+            mySavePanel.configure(types: [ .tap ], prompt: "Export")
+            mySavePanel.open(for: window, { result in
+
+                if result == .OK, let url = self.mySavePanel.url {
+
+                    do {
+
+                        let tap = emu.datasette.exportTAP()
+                        try tap?.writeToFile(url: url)
+
+                    } catch {
+
+                        self.showAlert(.cantExport(url: url), error: error, async: true)
+                    }
+                }
+            })
+        }
+    }
+
     //
     // Action methods (Cartridge menu)
     //
@@ -1063,9 +1089,7 @@ extension MyController: NSMenuItemValidation {
 
                     do {
 
-                        print("Export to \(url)")
                         let crt = emu.expansionport.exportCRT()
-                        print("CRT = \(crt)")
                         try crt?.writeToFile(url: url)
 
                     } catch {

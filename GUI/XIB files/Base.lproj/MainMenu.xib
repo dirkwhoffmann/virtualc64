@@ -896,6 +896,13 @@ CQ
                                     <action selector="rewindAction:" target="-1" id="5Ea-fA-j9g"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="VTP-Px-CUl"/>
+                            <menuItem title="Export Tape..." id="dxf-db-6bR">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportTapeAction:" target="-1" id="x2t-79-hr8"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="phy-cT-Rp8"/>
                             <menuItem title="Press Play On Tape" id="Yck-5G-ERH">
                                 <modifierMask key="keyEquivalentModifierMask"/>

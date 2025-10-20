@@ -497,6 +497,10 @@ struct DatasetteAPI : API {
      *  This function has no effect if no tape is inserted.
      */
     void ejectTape();
+
+    /** @brief  Export cartridge
+     */
+    MediaFile *exportTAP() const;
 };
 
 

@@ -1031,6 +1031,19 @@ NSString *EventSlotName(EventSlot slot)
     [self emu]->datasette.ejectTape();
 }
 
+- (MediaFileProxy *) exportTAP
+{
+    try {
+
+        MediaFile *tap = [self emu]->datasette.exportTAP();
+        return [MediaFileProxy make:tap];
+
+    } catch (AppError &error) {
+
+        return nil;
+    }
+}
+
 @end
 
 
