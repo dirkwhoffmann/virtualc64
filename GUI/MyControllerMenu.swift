@@ -36,8 +36,11 @@ extension MyController: NSMenuItemValidation {
         }
         
         switch item.action {
-            
+
+            //
             // Edit menu
+            //
+
         case #selector(MyController.grabMouseAction(_:)):
             item.title = metal.gotMouse ? "Release Mouse" : "Retain Mouse"
             return true
@@ -49,21 +52,30 @@ extension MyController: NSMenuItemValidation {
         case #selector(MyController.powerAction(_:)):
             item.title = powered ? "Power Off" : "Power On"
             return true
-            
+
+            //
             // View menu
+            //
+
         case #selector(MyController.toggleStatusBarAction(_:)):
             item.title = statusBar ? "Hide Status Bar" : "Show Status Bar"
             return true
-            
+
+            //
             // Keyboard menu
+            //
+
         case #selector(MyController.mapCapsLockWarpAction(_:)):
             item.state = myAppDelegate.mapCapsLockWarp ? .on : .off
             return true
         case #selector(MyController.shiftLockAction(_:)):
             item.state = emu.keyboard.isPressed(.shiftLock) ? .on : .off
             return true
-            
-            // Drive menu
+
+            //
+            // Drive menus
+            //
+
         case #selector(MyController.insertRecentDiskAction(_:)):
             validateURLlist(MediaManager.insertedFloppyDisks, image: smallDisk)
             return true
@@ -93,23 +105,32 @@ extension MyController: NSMenuItemValidation {
         case #selector(MyController.drivePowerAction(_:)):
             item.title = drive.config.switchedOn ? "Switch off" : "Switch on"
             return true
-            
-            // Tape menu
+
+            //
+            // Datasette menu
+            //
+
         case #selector(MyController.insertRecentTapeAction(_:)):
             validateURLlist(MediaManager.insertedTapes, image: smallTape)
             return true
 
         case #selector(MyController.ejectTapeAction(_:)):
             return emu.datasette.info.hasTape
-            
+
+        case #selector(MyController.exportTapeAction(_:)):
+            return emu.datasette.info.hasTape
+
         case #selector(MyController.playOrStopAction(_:)):
             item.title = emu.datasette.info.playKey ? "Press Stop Key" : "Press Play On Tape"
             return emu.datasette.info.hasTape
             
         case #selector(MyController.rewindAction(_:)):
             return emu.datasette.info.hasTape
-            
+
+            //
             // Cartridge menu
+            //
+
         case #selector(MyController.attachRecentCartridgeAction(_:)):
             validateURLlist(MediaManager.attachedCartridges, image: smallCart)
             return true
@@ -133,7 +154,10 @@ extension MyController: NSMenuItemValidation {
             
         case #selector(MyController.detachCartridgeAction(_:)):
             return emu.expansionport.cartridgeAttached()
-            
+
+        case #selector(MyController.exportCartridgeAction(_:)):
+            return emu.expansionport.cartridgeAttached()
+
         case #selector(MyController.inspectCartridgeAction(_:)):
             return emu.expansionport.cartridgeAttached()
             
@@ -177,7 +201,7 @@ extension MyController: NSMenuItemValidation {
             return title != nil
             
         default:
-            return true
+            break
         }
         
         return true
