@@ -1387,27 +1387,74 @@ C64::loadWorkspace(const fs::path &path)
 void
 C64::saveWorkspace(const fs::path &path)
 {
-    std::stringstream ss, g64;
+    std::stringstream ss, tap;
 
-    auto exportG64 = [&](Drive& drive, string name) {
+    auto exportG64 = [&](Drive& drive) {
+
+        auto name = string(drive.shellName());
+        auto file = name + ".g64";
 
         if (drive.hasDisk()) {
-
-            string file = name + ".g64";
 
             try {
 
                 G64File(*drive.disk).writeToFile(path / file);
                 drive.markDiskAsUnmodified();
 
-                g64 << "try " << name << " insert " << file << "\n";
-                g64 << "try " << name << (drive.hasProtectedDisk() ? " protect\n" : " unprotect\n");
+                ss << "try " << name << " attach cartridge " << file << "\n";
+                ss << "try " << name << (drive.hasProtectedDisk() ? " protect\n" : " unprotect\n");
 
             } catch (...) { }
 
         } else {
 
-            g64 << "try " << name << " eject\n";
+            ss << "try " << name << " eject\n";
+        }
+    };
+
+    auto exportTAP = [&](Datasette& datasette) {
+
+        auto name = string(datasette.shellName());
+        auto file = name + ".tap";
+
+        if (datasette.hasTape()) {
+
+            try {
+
+                if (auto tap = datasette.exportTAP(); tap) {
+
+                    tap->writeToFile(path / file);
+                    ss << "try " << name << " insert " << file << "\n";
+                }
+
+            } catch (...) { }
+
+        } else {
+
+            ss << "try " << name << " eject\n";
+        }
+    };
+
+    auto exportCRT = [&](ExpansionPort& eport) {
+
+        auto name = string(eport.shellName());
+        auto file = name + ".crt";
+
+        if (eport.getCartridgeType() != CartridgeType::NONE) {
+
+            try {
+
+                if (auto crt = eport.exportCRT(); crt) {
+
+                    crt->writeToFile(path / file);
+                    ss << "try " << name << " attach " << file << "\n";
+                }
+
+            } catch (...) { }
+
+        } else {
+
+            ss << "try " << name << " detach\n";
         }
     };
 
@@ -1442,21 +1489,20 @@ C64::saveWorkspace(const fs::path &path)
     exportConfig(ss, false, { Class::Host } );
 
     // Export ROMs
+    ss << "\n# ROMs\n\n";
     exportRom(RomType::BASIC, "basic.rom");
     exportRom(RomType::KERNAL, "kernal.rom");
     exportRom(RomType::CHAR, "char.rom");
     exportRom(RomType::VC1541, "vc1541.rom");
 
-    // Export floppy disks
-    exportG64(drive8, "drive8");
-    exportG64(drive9, "drive9");
-
-    if (!g64.str().empty()) {
-        ss << "\n# Floppy disks\n\n";
-        ss << g64.str();
-    }
-
-    // TODO: TAP, CRT
+    // Export media
+    ss << "\n# Floppy disks\n\n";
+    exportG64(drive8);
+    exportG64(drive9);
+    ss << "\n# Tape\n\n";
+    exportTAP(datasette);
+    ss << "\n# Cartridge\n\n";
+    exportCRT(expansionport);
 
     // Write the script into the workspace bundle
     std::ofstream file(path / "config.retrosh");

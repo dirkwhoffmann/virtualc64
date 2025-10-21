@@ -90,11 +90,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="SidebarCell" id="zPj-aS-og0">
-                                                            <rect key="frame" x="8" y="0.0" width="204" height="32"/>
+                                                            <rect key="frame" x="8" y="0.0" width="205" height="32"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dMa-ed-N6l">
-                                                                    <rect key="frame" x="33" y="8" width="170" height="16"/>
+                                                                    <rect key="frame" x="33" y="8" width="171" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Maf-Tk-JZd">
                                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -123,7 +123,7 @@
                                     </subviews>
                                     <nil key="backgroundColor"/>
                                 </clipView>
-                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.25" horizontal="YES" id="YSu-PW-oeu">
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="YSu-PW-oeu">
                                     <rect key="frame" x="1" y="344" width="218" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

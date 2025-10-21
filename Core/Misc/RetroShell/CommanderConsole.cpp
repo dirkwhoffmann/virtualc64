@@ -435,26 +435,28 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     
     cmd = registerComponent(expansionPort);
-    
+
+    /*
     root.add({
         
         .tokens = { cmd, "attach" },
         .chelp  = { "Attaches a cartridge" }
     });
-    
+    */
+
     root.add({
 
-        .tokens = { cmd, "attach", "cartridge" },
+        .tokens = { cmd, "attach" },
+        .ghelp  = { "Attaches a cartridge" },
         .chelp  = { "Attaches a cartridge from a CRT file" },
         .args   = { { .name = { "path", "File path" } } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            fs::path path(args.at("path"));
-            if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
+            auto path = host.makeAbsolute(args.at("path"));
             expansionPort.attachCartridge(path);
         }
     });
-    
+
     root.add({
         
         .tokens = { cmd, "attach", "reu" },
@@ -474,6 +476,16 @@ CommanderConsole::initCommands(RSCommand &root)
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             expansionPort.attachGeoRam(parseNum(args.at("KB")));
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "detach" },
+        .chelp  = { "Detaches the current cartridge" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            expansionPort.detachCartridge();
         }
     });
 
@@ -657,21 +669,13 @@ CommanderConsole::initCommands(RSCommand &root)
 
     root.add({
 
-        .tokens = { cmd, "connect" },
-        .chelp  = { "Connects the datasette" },
+        .tokens = { cmd, "insert" },
+        .chelp  = { "Inserts a tape from a TAP file" },
+        .args   = { { .name = { "path", "File path" } } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            emulator.set(Opt::DAT_CONNECT, true);
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "disconnect" },
-        .chelp  = { "Disconnects the datasette" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            emulator.set(Opt::DAT_CONNECT, false);
+            auto path = host.makeAbsolute(args.at("path"));
+            datasette.insertTape(path);
         }
     });
 

@@ -199,6 +199,7 @@ public:
     isize getCounter() const { return (isize)counter.asSeconds(); }
 
     //Inserts a TAP archive as a virtual tape
+    void insertTape(const fs::path &path);
     void insertTape(class MediaFile &file);
 
     // Ejects the tape (if any)
@@ -283,7 +284,7 @@ private:
     //
 
 public:
-    
+
     MediaFile *exportTAP() const;
 };
 

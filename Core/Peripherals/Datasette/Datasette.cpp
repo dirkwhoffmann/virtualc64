@@ -35,6 +35,13 @@ Datasette::tapeDuration(isize pos)
 }
 
 void
+Datasette::insertTape(const fs::path &path)
+{
+    auto tap = TAPFile(path);
+    insertTape(tap);
+}
+
+void
 Datasette::insertTape(MediaFile &file)
 {
     try {

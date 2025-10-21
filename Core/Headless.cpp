@@ -500,8 +500,6 @@ Headless::smokeTestScript[] = {
 
     "datasette",
     "datasette set MODEL C1530",
-    "datasette connect",
-    "datasette disconnect",
     "datasette rewind",
     "datasette rewind to 10",
 

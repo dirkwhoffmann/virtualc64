@@ -58,7 +58,7 @@ private:
 
     /* Cartridge name as stored in the CRT file */
     u8 name[32] = {};
-    
+
     /* Initial values of the game and exrom lines. The values are read from the
      * CRT file and the game line is set to it when the cartridge is plugged
      * into the expansion port.
@@ -184,6 +184,7 @@ public:
         CLONE(offsetH)
         CLONE(led)
 
+        CLONE_ARRAY(name)
         CLONE(gameLineInCrtFile)
         CLONE(exromLineInCrtFile)
         CLONE(numPackets)
@@ -221,6 +222,7 @@ public:
 
         worker
 
+        << name
         << gameLineInCrtFile
         << exromLineInCrtFile
         << numPackets
