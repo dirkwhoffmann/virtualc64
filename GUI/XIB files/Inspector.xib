@@ -271,7 +271,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="868" height="440"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1083"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1409"/>
             <value key="minSize" type="size" width="868" height="440"/>
             <value key="maxSize" type="size" width="868" height="920"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -762,7 +762,7 @@
                                                                             </textFieldCell>
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         </tableColumn>
-                                                                        <tableColumn identifier="delete" width="24" minWidth="24" maxWidth="1000" id="ao3-Di-49W">
+                                                                        <tableColumn identifier="delete" width="33" minWidth="24" maxWidth="1000" id="ao3-Di-49W">
                                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -952,7 +952,7 @@
                                                                             </textFieldCell>
                                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                         </tableColumn>
-                                                                        <tableColumn identifier="delete" width="24" minWidth="24" maxWidth="1000" id="sLf-F8-i7D">
+                                                                        <tableColumn identifier="delete" width="33" minWidth="24" maxWidth="1000" id="sLf-F8-i7D">
                                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1314,7 +1314,7 @@
                                                                                     </textFieldCell>
                                                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                                 </tableColumn>
-                                                                                <tableColumn identifier="source" editable="NO" width="64" minWidth="64" maxWidth="1000" id="cQo-K4-DWa">
+                                                                                <tableColumn identifier="source" editable="NO" width="65" minWidth="64" maxWidth="1000" id="cQo-K4-DWa">
                                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Source">
                                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" white="0.33333299" alpha="1" colorSpace="calibratedWhite"/>
@@ -4612,7 +4612,7 @@
                     <toolbarItem implicitItemIdentifier="3951FEE3-0861-42BC-8038-86BEACC2E6A9" label="Display Format" paletteLabel="Display Format" image="NSListViewTemplate" bordered="YES" title="Hexadecimal" sizingBehavior="auto" id="RDP-OI-mIc">
                         <nil key="toolTip"/>
                         <popUpButton key="view" verticalHuggingPriority="750" id="P84-X4-1yv">
-                            <rect key="frame" x="13" y="14" width="61" height="24"/>
+                            <rect key="frame" x="12" y="14" width="62" height="24"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <popUpButtonCell key="cell" type="roundTextured" title="Hexadecimal" bezelStyle="texturedRounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" altersStateOfSelectedItem="NO" selectedItem="L82-Nh-KsP" id="Wxl-0T-57w">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
