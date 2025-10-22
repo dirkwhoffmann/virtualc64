@@ -98,9 +98,7 @@ template <class T> struct Buffer : public Allocator <T> {
     
     Buffer() : Allocator<T>(ptr) { };
     Buffer(isize bytes) : Allocator<T>(ptr) { this->init(bytes); }
-    Buffer(usize bytes) : Allocator<T>(ptr) { this->init((isize)bytes); }
     Buffer(isize bytes, T value) : Allocator<T>(ptr) { this->init(bytes, value); }
-    Buffer(usize bytes, T value) : Allocator<T>(ptr) { this->init((isize)bytes, value); }
     Buffer(const T *buf, isize len) : Allocator<T>(ptr) { this->init(buf, len); }
     Buffer(const fs::path &path) : Allocator<T>(ptr) { this->init(path); }
     Buffer(const fs::path &path, const string &name) : Allocator<T>(ptr) { this->init(path, name); }

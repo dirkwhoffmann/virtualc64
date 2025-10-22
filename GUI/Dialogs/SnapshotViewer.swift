@@ -19,7 +19,6 @@ class SnapshotViewer: DialogController {
     @IBOutlet weak var text1: NSTextField!
     @IBOutlet weak var text2: NSTextField!
     @IBOutlet weak var text3: NSTextField!
-    @IBOutlet weak var message: NSTextField!
     @IBOutlet weak var indicator: NSLevelIndicator!
     @IBOutlet weak var indicatorText: NSTextField!
     @IBOutlet weak var revert: NSButton!
@@ -68,12 +67,10 @@ class SnapshotViewer: DialogController {
             text1.stringValue = "\(rounded) MB " + compressed
             text2.stringValue = "Taken at " + timeInfo(time: takenAt)
             text3.stringValue = Date.elapsed(time: takenAt)
-            message.stringValue = ""
-            
+
         } else {
             
             nr.stringValue = "No snapshots taken"
-            message.stringValue = ""
         }
         
         let count = myDocument.snapshots.count
@@ -217,3 +214,28 @@ extension SnapshotViewer: @preconcurrency iCarouselDataSource, @preconcurrency i
         updateLabels()
     }
 }
+
+//
+// Protocols
+//
+
+extension SnapshotViewer: NSFilePromiseProviderDelegate {
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
+
+        return parent.mydocument.fileURL?.absoluteString ?? "Untitled.vcsnap"
+    }
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
+
+        if let snapshot = parent.mydocument.snapshots.element(at: currentItem) {
+
+            do {
+                try mm.export(file: snapshot, to: url)
+            } catch {
+                parent.showAlert(.cantExport(url: url), error: error, async: true, window: window)
+            }
+        }
+    }
+}
+

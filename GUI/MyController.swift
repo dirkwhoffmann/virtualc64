@@ -489,7 +489,8 @@ extension MyController {
             let ptr = msg.snapshot.snapshot
             let proxy = MediaFileProxy.init(ptr)!
             mydocument.snapshots.append(proxy, size: proxy.size)
-            
+            refreshToolbar()
+
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()
             refreshStatusBar()

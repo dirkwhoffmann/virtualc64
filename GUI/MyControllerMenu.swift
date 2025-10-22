@@ -412,7 +412,8 @@ extension MyController: NSMenuItemValidation {
                 do {
                     try self.emu?.c64.saveSnapshot(url: url, compressor: self.pref.snapshotCompressor)
                 } catch {
-                    self.showAlert(.cantExport(url: url), error: error, async: true)
+                    NSSound.beep()
+                    // self.showAlert(.cantExport(url: url), error: error, async: true)
                 }
             }
         })

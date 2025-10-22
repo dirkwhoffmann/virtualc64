@@ -19,8 +19,13 @@ extension MyController {
             return NSImage(named: emu.info.warping ? "warpOnTemplate" : "warpOffTemplate")
         }
     }
-    
-    public func refreshStatusBar() {
+
+    func refreshToolbar() {
+
+        toolbar.updateToolbar()
+    }
+
+    func refreshStatusBar() {
         
         guard let emu = emu else { return }
         

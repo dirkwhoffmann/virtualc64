@@ -337,7 +337,7 @@ Datasette::exportTAP() const
         }
     }
 
-    Buffer<u8> buffer(0x14 + pulseVec.size(), 0);
+    Buffer<u8> buffer(0x14 + (isize)pulseVec.size(), 0);
 
     // Cartridge signature
     u8 *ptr = buffer.ptr;
