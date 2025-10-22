@@ -54,8 +54,8 @@ private:
     
     FileType type() const override { return FileType::T64; }
     PETName<16> getName() const override;
-    bool isCompatiblePath(const fs::path &path) override { return isCompatible(path); }
-    bool isCompatibleBuffer(const u8 *buf, isize len) override { return isCompatible(buf, len); }
+    bool isCompatiblePath(const fs::path &path) const override { return isCompatible(path); }
+    bool isCompatibleBuffer(const u8 *buf, isize len) const override { return isCompatible(buf, len); }
     void finalizeRead() override;
 
     //

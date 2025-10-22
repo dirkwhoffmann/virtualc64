@@ -108,7 +108,7 @@ AnyFile::flash(u8 *buf, isize offset) const
 }
 
 bool 
-AnyFile::isCompatibleBuffer(const Buffer<u8> &buffer)
+AnyFile::isCompatibleBuffer(const Buffer<u8> &buffer) const
 {
     return isCompatibleBuffer(buffer.ptr, buffer.size);
 }
