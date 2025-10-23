@@ -405,6 +405,10 @@ class Inspector: DialogController {
     override func dialogDidShow() {
         
         super.dialogDidShow()
+
+        // Create toolbar
+        window?.toolbar = InspectorToolbar(inspector: self)
+
         refresh(full: true)
     }
     
@@ -450,8 +454,9 @@ class Inspector: DialogController {
     
     func selectPanel(_ nr: Int) {
         
-        if nr <  panel.numberOfTabViewItems {
+        if nr < panel.numberOfTabViewItems {
 
+            print("selectPanel \(nr)")
             panel.selectTabViewItem(at: nr)
             fullRefresh()
         }

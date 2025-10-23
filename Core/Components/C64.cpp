@@ -291,7 +291,7 @@ C64::initialize()
 {
     auto load = [&](const fs::path &path) {
 
-        msg("Trying to load Rom from %s...\n", path.string().c_str());
+        debug(RUN_DEBUG, "Trying to load Rom from %s...\n", path.string().c_str());
 
         try { loadRom(path); } catch (std::exception& e) {
             warn("Error: %s\n", e.what());

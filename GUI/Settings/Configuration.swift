@@ -165,8 +165,8 @@ class Configuration {
             
             // Try to connect the device (may disconnect the other device)
             gamePadManager.connect(slot: gameDevice1, port: 0)
-            gamePadManager.listDevices()
-            
+            if (Int.hid != 0) { gamePadManager.listDevices() }
+
             // Avoid double mappings
             if gameDevice1 != -1 && gameDevice1 == gameDevice2 {
                 gameDevice2 = -1
@@ -181,7 +181,7 @@ class Configuration {
             
             // Try to connect the device (may disconnect the other device)
             gamePadManager.connect(slot: gameDevice2, port: 1)
-            gamePadManager.listDevices()
+            if (Int.hid != 0) { gamePadManager.listDevices() }
             
             // Avoid double mappings
             if gameDevice2 != -1 && gameDevice2 == gameDevice1 {

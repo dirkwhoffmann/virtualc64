@@ -27,14 +27,14 @@ import Cocoa
 
 class MyToolbarButton: NSButton {
     
-    init(image: SFSymbol, target: Any?, action: Selector?) {
-        
+    init(image: SFSymbol?, target: Any?, action: Selector?) {
+
         super.init(frame: .zero)
         
-        self.image = SFSymbol.get(image)
+        if image != nil { self.image = SFSymbol.get(image!) }
         self.target = target as AnyObject
         self.action = action
-        
+
         self.title = ""
         self.isBordered = false
         self.bezelStyle = .smallSquare
@@ -54,13 +54,16 @@ class MyToolbarButton: NSButton {
 //
 
 class MyToolbarItem: MyToolbarItemGroup {
-    
+
+    var button: NSButton { buttons[0] }
+
     convenience init(identifier: NSToolbarItem.Identifier,
-                     image: SFSymbol, action: Selector, target: AnyObject? = nil,
+                     image: SFSymbol?, action: Selector?, target: AnyObject? = nil,
+                     size: CGSize = CGSize(width: 26, height: 26),
                      label: String, paletteLabel: String? = nil) {
-        
+
         self.init(identifier: identifier, images: [image], actions: [action],
-                  target: target, label: label, paletteLabel: paletteLabel)
+                  target: target, size: size, label: label, paletteLabel: paletteLabel)
     }
 }
 
@@ -85,7 +88,8 @@ class MyToolbarItemGroup: NSToolbarItem {
     }()
     
     init(identifier: NSToolbarItem.Identifier,
-         images: [SFSymbol], actions: [Selector], target: AnyObject? = nil,
+         images: [SFSymbol?], actions: [Selector?], target: AnyObject? = nil,
+         size: CGSize = CGSize(width: 26, height: 26),
          label: String, paletteLabel: String? = nil) {
         
         assert(images.count == actions.count, "Mismatch in images and actions")
@@ -115,18 +119,17 @@ class MyToolbarItemGroup: NSToolbarItem {
             }
         }
         
-        setupConstraints()
+        setupConstraints(size: size)
     }
     
-    private func setupConstraints() {
-        
-        let height: CGFloat = 26
+    private func setupConstraints(size: CGSize) {
+
         let padding: CGFloat = 8
         let spacing: CGFloat = 16
         
         // Container contraints
-        container.heightAnchor.constraint(equalToConstant: height).isActive = true
-        
+        container.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+
         // Button constraints
         for (index, button) in buttons.enumerated() {
             
@@ -134,6 +137,8 @@ class MyToolbarItemGroup: NSToolbarItem {
             button.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
             
             // Width
+            button.widthAnchor.constraint(equalToConstant: size.width).isActive = true
+
             if index == 0 {
                 button.leadingAnchor.constraint(equalTo: container.leadingAnchor,
                                                 constant: padding).isActive = true
