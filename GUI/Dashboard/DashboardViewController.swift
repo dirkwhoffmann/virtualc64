@@ -14,13 +14,12 @@ enum PanelType: Int {
     case Combined       = 0
     case CIA1           = 1
     case CIA2           = 2
-    case AmigaMhz       = 3
-    case AmigaFps       = 4
+    case C64Mhz         = 3
+    case C64Fps         = 4
     case HostLoad       = 5
     case HostFps        = 6
     case AudioFillLevel = 7
-    case WaveformL      = 8
-    // case WaveformR      = 9
+    case Waveform       = 8
 }
 
 @MainActor
@@ -145,13 +144,12 @@ class DashboardViewController: NSViewController {
                     
                 case .CIA1: add(cia1Panel, to: view)
                 case .CIA2: add(cia2Panel, to: view)
-                case .AmigaMhz: add(emuMhzPanel, to: view)
-                case .AmigaFps: add(emuFpsPanel, to: view)
+                case .C64Mhz: add(emuMhzPanel, to: view)
+                case .C64Fps: add(emuFpsPanel, to: view)
                 case .HostLoad: add(hostLoadPanel, to: view)
                 case .HostFps: add(hostFpsPanel, to: view)
                 case .AudioFillLevel: add(fillLevelPanel, to: view)
-                case .WaveformL: add(waveformLPanel, to: view)
-                // case .WaveformR: add(waveformRPanel, to: view)
+                case .Waveform: add(waveformLPanel, to: view)
                 
                 default:
                     fatalError()

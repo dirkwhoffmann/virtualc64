@@ -201,7 +201,7 @@
                                                 <menu key="menu" id="91i-ew-WkX">
                                                     <items>
                                                         <menuItem title="Revert to..." state="on" hidden="YES" id="267-MB-AAV">
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="o9N-cS-ZGS"/>
@@ -497,7 +497,7 @@
                                                 <menu key="menu" id="mU6-p4-458">
                                                     <items>
                                                         <menuItem title="Revert to..." state="on" hidden="YES" id="TKE-U3-gab">
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="4ns-5l-qum"/>
@@ -882,7 +882,7 @@
                                                     <items>
                                                         <menuItem title="Revert to..." hidden="YES" id="sEe-CH-gRc">
                                                             <attributedString key="attributedTitle"/>
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="mhP-2q-xcw">
                                                             <attributedString key="attributedTitle"/>
@@ -1470,7 +1470,7 @@
                                                     <items>
                                                         <menuItem title="Revert to..." hidden="YES" id="497-Sb-xsn">
                                                             <attributedString key="attributedTitle"/>
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="8zO-2r-92s">
                                                             <attributedString key="attributedTitle"/>
@@ -2189,7 +2189,7 @@
                                                 <menu key="menu" id="81c-Zj-qj8">
                                                     <items>
                                                         <menuItem title="Revert to..." state="on" hidden="YES" id="38K-hu-tL8">
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="H3J-qc-f7l"/>
@@ -2554,7 +2554,7 @@
                                                 <menu key="menu" id="yLD-1h-RHY">
                                                     <items>
                                                         <menuItem title="Revert to..." state="on" hidden="YES" id="E4Z-iN-oT1">
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="9r8-j4-zgH"/>
@@ -3011,7 +3011,7 @@
                                                 <menu key="menu" id="k4d-aL-wSi">
                                                     <items>
                                                         <menuItem title="Revert to..." state="on" hidden="YES" id="EVe-tV-HKb">
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="TP3-f4-mb6"/>
@@ -3723,7 +3723,7 @@
                                                 <menu key="menu" id="VV8-jI-wP6">
                                                     <items>
                                                         <menuItem title="Revert to..." state="on" hidden="YES" id="YAV-tF-2hl">
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="IRm-6m-Ekw"/>
@@ -4064,7 +4064,7 @@
                                                 <menu key="menu" id="Vkv-Ky-ep5">
                                                     <items>
                                                         <menuItem title="Revert to..." state="on" hidden="YES" id="LGs-by-H5P">
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="d3l-uj-6Pm"/>
@@ -4859,7 +4859,7 @@
                                                 <menu key="menu" id="wA4-q4-IxQ">
                                                     <items>
                                                         <menuItem title="Revert to..." state="on" hidden="YES" id="4Ji-NJ-UYP">
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="kSt-lR-cLD"/>
@@ -5850,7 +5850,7 @@
                                                     <items>
                                                         <menuItem title="Revert to..." hidden="YES" id="xd8-bF-9vU">
                                                             <attributedString key="attributedTitle"/>
-                                                            <imageReference key="image" image="book" catalog="system" symbolScale="large"/>
+                                                            <imageReference key="image" image="archivebox" catalog="system" symbolScale="large"/>
                                                         </menuItem>
                                                         <menuItem title="Standard Settings" id="5Yh-3R-3gF">
                                                             <attributedString key="attributedTitle"/>
@@ -5914,7 +5914,7 @@
     <resources>
         <image name="ad-rv" width="542" height="542"/>
         <image name="alertIcon" width="1024" height="1024"/>
-        <image name="book" catalog="system" width="22" height="18"/>
+        <image name="archivebox" catalog="system" width="21" height="18"/>
         <image name="devGamepad1Template" width="20" height="21"/>
         <image name="devGamepad2Template" width="20" height="21"/>
         <image name="devKeyset1Template" width="20" height="20"/>

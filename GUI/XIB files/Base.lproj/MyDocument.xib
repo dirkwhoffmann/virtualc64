@@ -40,7 +40,7 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="preferred" titlebarAppearsTransparent="YES" toolbarStyle="expanded" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="800" height="640"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1409"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1083"/>
             <value key="minSize" type="size" width="402" height="323"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="640"/>
@@ -58,7 +58,7 @@
                         </connections>
                     </button>
                     <button toolTip="Warp mode" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1052">
-                        <rect key="frame" x="692" y="4" width="18" height="18"/>
+                        <rect key="frame" x="688" y="4" width="18" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -207,7 +207,7 @@
                         </textFieldCell>
                     </textField>
                     <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tD7-Kt-2R4">
-                        <rect key="frame" x="604" y="5" width="66" height="13"/>
+                        <rect key="frame" x="601" y="5" width="66" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="00% CPU" id="9E6-Hh-KcI">
                             <font key="font" metaFont="label" size="9"/>
@@ -226,7 +226,7 @@
                         </connections>
                     </levelIndicator>
                     <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ApN-dX-M4Z">
-                        <rect key="frame" x="665" y="3" width="27" height="20"/>
+                        <rect key="frame" x="662" y="3" width="27" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <popUpButtonCell key="cell" type="bevel" title="C64 Frequency" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" state="on" transparent="YES" inset="2" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -256,7 +256,7 @@
                         </buttonCell>
                     </button>
                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="thS-H1-lgy">
-                        <rect key="frame" x="715" y="1" width="15" height="22"/>
+                        <rect key="frame" x="712" y="2" width="15" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" increment="5" minValue="50" maxValue="200" doubleValue="100" id="mUK-Lg-YYt"/>
                         <connections>
