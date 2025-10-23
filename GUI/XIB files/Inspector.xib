@@ -271,7 +271,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="868" height="440"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1409"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1083"/>
             <value key="minSize" type="size" width="868" height="440"/>
             <value key="maxSize" type="size" width="868" height="920"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -4605,129 +4605,6 @@
                     </textField>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="4E900D15-009D-4DC1-8CAA-DE7B7079E4A4" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="lxu-OI-ta0" customClass="InspectorToolbar" customModule="VirtualC64" customModuleProvider="target">
-                <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Wcx-tm-fWU"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="SAb-IT-ad5"/>
-                    <toolbarItem implicitItemIdentifier="3951FEE3-0861-42BC-8038-86BEACC2E6A9" label="Display Format" paletteLabel="Display Format" image="NSListViewTemplate" bordered="YES" title="Hexadecimal" sizingBehavior="auto" id="RDP-OI-mIc">
-                        <nil key="toolTip"/>
-                        <popUpButton key="view" verticalHuggingPriority="750" id="P84-X4-1yv">
-                            <rect key="frame" x="12" y="14" width="62" height="24"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="Hexadecimal" bezelStyle="texturedRounded" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" altersStateOfSelectedItem="NO" selectedItem="L82-Nh-KsP" id="Wxl-0T-57w">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="message"/>
-                                <menu key="menu" id="x14-eI-CUC">
-                                    <items>
-                                        <menuItem title="Hexadecimal" image="NSListViewTemplate" id="L82-Nh-KsP"/>
-                                        <menuItem title="Hexadecimal, zero padded" image="NSListViewTemplate" tag="1" id="HPG-97-h6f"/>
-                                        <menuItem title="Decimal" image="NSListViewTemplate" tag="2" id="9wh-Wr-rjX"/>
-                                        <menuItem title="Decimal, zero padded" image="NSListViewTemplate" tag="3" id="cQK-br-SqD"/>
-                                    </items>
-                                </menu>
-                            </popUpButtonCell>
-                            <connections>
-                                <action selector="formatAction:" target="lxu-OI-ta0" id="jaA-XV-CPp"/>
-                            </connections>
-                        </popUpButton>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="78FC3B94-FD42-4204-A9EE-959214D7DECD" label="Inspection Target" paletteLabel="Inspection Target" bordered="YES" title="CPU" sizingBehavior="auto" id="UsW-Au-dVO">
-                        <nil key="toolTip"/>
-                        <popUpButton key="view" verticalHuggingPriority="750" misplaced="YES" id="xib-SN-rD5">
-                            <rect key="frame" x="2" y="14" width="95" height="24"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="CPU" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="ICk-wh-Cdo" id="Xgp-wk-alw">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="message"/>
-                                <menu key="menu" id="DMa-uq-fA9">
-                                    <items>
-                                        <menuItem title="CPU" state="on" id="ICk-wh-Cdo"/>
-                                        <menuItem title="Memory" tag="1" id="iWl-lk-lGa"/>
-                                        <menuItem title="Bus" tag="2" id="5pv-M1-N81"/>
-                                        <menuItem title="CIA" tag="3" id="4lZ-t4-kDB"/>
-                                        <menuItem title="VICII" tag="4" id="gqZ-2N-PUS"/>
-                                        <menuItem title="SID" tag="5" id="HQ1-sS-LmT"/>
-                                        <menuItem title="Events" tag="6" id="lmL-HW-AXc"/>
-                                    </items>
-                                </menu>
-                            </popUpButtonCell>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="149" id="vkV-3o-AbD"/>
-                            </constraints>
-                            <connections>
-                                <action selector="panelAction:" target="lxu-OI-ta0" id="pOt-zE-NkV"/>
-                            </connections>
-                        </popUpButton>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5FE521E9-3CB0-45A1-8D5C-E34DB0537B61" label="Progress" paletteLabel="Progress" bordered="YES" title="00:00:00" sizingBehavior="auto" id="icB-kc-I0n">
-                        <nil key="toolTip"/>
-                        <button key="view" verticalHuggingPriority="750" misplaced="YES" id="FRM-lc-uX3">
-                            <rect key="frame" x="0.0" y="14" width="74" height="23"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <buttonCell key="cell" type="roundTextured" title="00:00:00" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tfJ-Rb-A43">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" size="12" name="PTMono-Bold"/>
-                            </buttonCell>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="128" id="8e1-M6-2BZ"/>
-                            </constraints>
-                        </button>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="9B0E6505-C2B2-42ED-BF6A-B751FFE92DCB" label="New" paletteLabel="New" image="plus" catalog="system" sizingBehavior="auto" id="3lD-pC-G6D">
-                        <nil key="toolTip"/>
-                        <button key="view" id="fuK-LL-L0D">
-                            <rect key="frame" x="8" y="14.5" width="14.5" height="13"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="plus" catalog="system" imagePosition="overlaps" alignment="center" inset="2" id="8yz-2j-uX7">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="plusAction:" target="lxu-OI-ta0" id="7Ey-8g-qwM"/>
-                            </connections>
-                        </button>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="92ABE73D-3950-4E59-8652-1772AFF79335" label="Program execution" paletteLabel="Program execution" sizingBehavior="auto" id="2dC-pj-rPa">
-                        <nil key="toolTip"/>
-                        <segmentedControl key="view" verticalHuggingPriority="750" id="L0z-5H-IEv">
-                            <rect key="frame" x="0.0" y="14" width="197" height="24"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="zMC-Ko-iVs">
-                                <font key="font" metaFont="system"/>
-                                <segments>
-                                    <segment image="runTemplate" width="32"/>
-                                    <segment toolTip="Step Over" image="stepOverTemplate" width="32" tag="1"/>
-                                    <segment toolTip="Step Into" image="stepIntoTemplate" width="32" tag="2"/>
-                                    <segment toolTip="Step One Cycle" image="stepCycleTemplate" width="32" tag="4"/>
-                                    <segment toolTip="Finish Line" image="stepLineTemplate" width="32"/>
-                                    <segment toolTip="Finish Frame" image="stepFrameTemplate" width="32"/>
-                                </segments>
-                            </segmentedCell>
-                            <connections>
-                                <action selector="execAction:" target="lxu-OI-ta0" id="LRY-us-Jlb"/>
-                            </connections>
-                        </segmentedControl>
-                    </toolbarItem>
-                </allowedToolbarItems>
-                <defaultToolbarItems>
-                    <toolbarItem reference="icB-kc-I0n"/>
-                    <toolbarItem reference="SAb-IT-ad5"/>
-                    <toolbarItem reference="2dC-pj-rPa"/>
-                    <toolbarItem reference="SAb-IT-ad5"/>
-                    <toolbarItem reference="UsW-Au-dVO"/>
-                    <toolbarItem reference="RDP-OI-mIc"/>
-                    <toolbarItem reference="3lD-pC-G6D"/>
-                </defaultToolbarItems>
-                <connections>
-                    <outlet property="execSegCtrl" destination="L0z-5H-IEv" id="lnO-Xl-0C2"/>
-                    <outlet property="formatPopup" destination="P84-X4-1yv" id="r6h-Vu-hcr"/>
-                    <outlet property="formatToolbarItem" destination="RDP-OI-mIc" id="jMg-fm-u53"/>
-                    <outlet property="inspector" destination="-2" id="yHs-ES-EsM"/>
-                    <outlet property="selectorPopup" destination="xib-SN-rD5" id="djZ-ox-1kV"/>
-                    <outlet property="selectorToolbarItem" destination="UsW-Au-dVO" id="eqU-zd-KeZ"/>
-                    <outlet property="timeStamp" destination="FRM-lc-uX3" id="4bg-nE-pm1"/>
-                </connections>
-            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="v3S-Mn-i2i"/>
             </connections>
@@ -4735,15 +4612,7 @@
         </window>
     </objects>
     <resources>
-        <image name="NSListViewTemplate" width="21" height="15"/>
         <image name="monitorTemplate" width="36" height="36"/>
-        <image name="plus" catalog="system" width="14" height="13"/>
-        <image name="runTemplate" width="177" height="177"/>
-        <image name="stepCycleTemplate" width="241" height="241"/>
-        <image name="stepFrameTemplate" width="242" height="241"/>
-        <image name="stepIntoTemplate" width="177" height="177"/>
-        <image name="stepLineTemplate" width="242" height="241"/>
-        <image name="stepOverTemplate" width="177" height="176"/>
         <namedColor name="warningColor">
             <color red="1" green="0.14900000393390656" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

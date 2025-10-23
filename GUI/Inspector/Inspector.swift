@@ -408,7 +408,7 @@ class Inspector: DialogController {
 
         // Create toolbar
         window?.toolbar = InspectorToolbar(inspector: self)
-
+        window?.toolbarStyle = .unifiedCompact
         refresh(full: true)
     }
     

@@ -37,7 +37,7 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
         super.init(identifier: "InspectorToolbar")
         self.delegate = self
         self.allowsUserCustomization = true
-        self.displayMode = .iconAndLabel
+        self.displayMode = .iconOnly
     }
 
     override init(identifier: NSToolbar.Identifier) {
@@ -45,7 +45,7 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
         super.init(identifier: identifier)
         self.delegate = self
         self.allowsUserCustomization = true
-        self.displayMode = .iconAndLabel
+        self.displayMode = .iconOnly
     }
 
     convenience init(inspector: Inspector) {
@@ -170,10 +170,6 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
 
     override func validateVisibleItems() {
 
-        // Take care of the global disable flag
-        for item in items { item.isEnabled = !globalDisable }
-
-
     }
 
     /*
@@ -214,6 +210,20 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
         if full {
 
             progress.button(at: 0)?.font = NSFont.monospacedSystemFont(ofSize: 14, weight: .regular)
+
+            // Take care of the global disable flag
+            for item in items { item.isEnabled = !globalDisable }
+
+            if emu.running {
+
+                execution.setToolTip("Pause", forSegment: 0)
+                execution.setImage(SFSymbol.get(.pause), forSegment: 0)
+
+            } else {
+
+                execution.setToolTip("Run", forSegment: 0)
+                execution.setImage(SFSymbol.get(.play), forSegment: 0)
+            }
         }
 
         var format = ""
