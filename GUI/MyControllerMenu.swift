@@ -444,7 +444,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func browseScreenshotsAction(_ sender: Any!) {
         
         if screenshotBrowser == nil {
-            screenshotBrowser = ScreenshotViewer(with: self, nibName: "ScreenshotDialog")
+            screenshotBrowser = ScreenshotViewer(with: self, nibName: "ScreenshotViewer")
         }
         screenshotBrowser?.showAsSheet()
      }
