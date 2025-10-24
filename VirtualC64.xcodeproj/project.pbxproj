@@ -3057,7 +3057,7 @@
 				PRODUCT_NAME = VirtualC64;
 				SWIFT_OBJC_BRIDGING_HEADER = "ObjCProxy/Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -3118,7 +3118,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "ObjCProxy/Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};

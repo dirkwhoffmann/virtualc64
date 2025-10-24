@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+@MainActor
 extension NSDraggingInfo {
 
     var url: URL? {
@@ -19,6 +20,7 @@ extension NSDraggingInfo {
     }
 }
 
+@MainActor
 class DropView: NSImageView {
 
     @IBOutlet var parent: SettingsViewController!

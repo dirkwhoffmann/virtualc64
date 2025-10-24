@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+@MainActor
 extension C64Proxy {
 
     func loadSnapshot(_ proxy: MediaFileProxy) throws {
@@ -49,6 +50,7 @@ extension C64Proxy {
 // Factory extensions
 //
 
+@MainActor
 extension MediaFileProxy {
 
     static func makeWith(buffer: UnsafeRawPointer, length: Int, type: vc64.FileType) throws -> Self {
@@ -108,6 +110,7 @@ extension MediaFileProxy {
     }
 }
 
+@MainActor
 extension FileSystemProxy {
 
     static func make(with file: MediaFileProxy) throws -> Self {
@@ -131,6 +134,7 @@ extension FileSystemProxy {
 // Exception passing
 //
 
+@MainActor
 extension EmulatorProxy {
 
     func launch() throws {
@@ -196,7 +200,8 @@ extension EmulatorProxy {
         if exception.fault != .OK { throw AppError(exception) }
     }
 }
- 
+
+@MainActor
 extension ExpansionPortProxy {
     
     func attachCartridge(_ proxy: MediaFileProxy, reset: Bool) throws {
@@ -207,6 +212,7 @@ extension ExpansionPortProxy {
     }
 }
 
+@MainActor
 extension MediaFileProxy {
     
     func writeToFile(url: URL) throws {
@@ -217,6 +223,7 @@ extension MediaFileProxy {
     }
 }
 
+@MainActor
 extension FileSystemProxy {
         
     func export(url: URL) throws {
@@ -227,6 +234,7 @@ extension FileSystemProxy {
     }
 }
 
+@MainActor
 extension RemoteManagerProxy {
 
     var icon: NSImage? {
@@ -254,7 +262,8 @@ extension RemoteManagerProxy {
 // Keyboard
 //
 
-public extension KeyboardProxy {
+@MainActor
+extension KeyboardProxy {
 
     func isPressed(_ key: C64Key) -> Bool {
 
@@ -267,7 +276,7 @@ public extension KeyboardProxy {
 //
 
 @MainActor
-public extension EmulatorProxy {
+extension EmulatorProxy {
     
     func drive(_ nr: NSInteger) -> DriveProxy {
         
@@ -316,7 +325,8 @@ public extension EmulatorProxy {
     }
 }
 
-public extension DriveProxy {
+@MainActor
+extension DriveProxy {
     
     static let ledGray = NSImage(named: "LEDgray")!
     static let ledGreen = NSImage(named: "LEDgreen")!
@@ -343,6 +353,7 @@ public extension DriveProxy {
     }
 }
 
+@MainActor
 extension MediaFileProxy {
 
     func icon(protected: Bool = false) -> NSImage {
@@ -373,6 +384,7 @@ extension MediaFileProxy {
     }
 }
 
+@MainActor
 extension FileSystemProxy {
 
     func icon(protected: Bool) -> NSImage {

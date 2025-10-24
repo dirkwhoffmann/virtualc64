@@ -83,6 +83,7 @@ struct UPSCALEDTEXTURE {
 // Base class for all compute kernels
 //
 
+@MainActor
 class ComputeKernel: NSObject {
 
     var device: MTLDevice!

@@ -42,11 +42,11 @@ public func warn(_ msg: String = "",
 // Errors
 //
 
-class AppError: Error {
+final class AppError: Error {
     
-    var errorCode: vc64.Fault
-    var what: String
-    
+    let errorCode: Fault
+    let what: String
+
     init(_ exception: ExceptionWrapper) {
 
         self.errorCode = exception.fault

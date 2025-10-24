@@ -14,7 +14,7 @@ class MyApplication: NSApplication {
     
 }
 
-@main @objc
+@MainActor @main @objc
 public class MyAppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var drive8Menu: NSMenuItem!
@@ -126,5 +126,5 @@ extension MyAppDelegate {
     }
 }
 
-var myApp: MyApplication { return NSApp as! MyApplication }
-var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
+@MainActor var myApp: MyApplication { return NSApp as! MyApplication }
+@MainActor var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }

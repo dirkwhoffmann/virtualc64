@@ -31,7 +31,7 @@ func == (lhs: Modifier, rhs: Modifier) -> Bool {
  * until it is released and restore has no key matrix representation. This key
  * is connected to the NMI line.
  */
-public struct C64Key: Codable {
+struct C64Key: Codable {
     
     // Unique key identifier (0 .. 65)
     var nr = -1
@@ -392,6 +392,7 @@ extension C64Key {
 // Virtual keyboard
 //
 
+@MainActor
 extension C64Key {
     
     static var map: [Int: [Modifier: Keycap]] = [:]
