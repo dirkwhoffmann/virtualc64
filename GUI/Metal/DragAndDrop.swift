@@ -9,14 +9,7 @@
 
 import UniformTypeIdentifiers
 
-public extension MetalView {
-
-    /*
-    func setupDragAndDrop() {
-
-        registerForDraggedTypes(acceptedTypes())
-    }
-    */
+extension MetalView {
 
     func acceptedTypes() -> [NSPasteboard.PasteboardType] {
         

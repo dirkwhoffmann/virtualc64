@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-public class MetalView: MTKView {
+class MetalView: MTKView {
     
     @IBOutlet weak var parent: MyController!
     

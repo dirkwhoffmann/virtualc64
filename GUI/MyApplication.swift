@@ -15,7 +15,7 @@ class MyApplication: NSApplication {
 }
 
 @MainActor @main @objc
-public class MyAppDelegate: NSObject, NSApplicationDelegate {
+class MyAppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var drive8Menu: NSMenuItem!
     @IBOutlet weak var drive8InsertRecent: NSMenuItem!

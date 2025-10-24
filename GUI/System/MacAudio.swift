@@ -10,7 +10,7 @@
 import AVFoundation
 
 @MainActor
-public class MacAudio: NSObject {
+class MacAudio: NSObject {
 
     var parent: MyController!
 

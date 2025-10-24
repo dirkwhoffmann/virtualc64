@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-public extension MetalView {
+extension MetalView {
 
     //
     // Keyboard events
