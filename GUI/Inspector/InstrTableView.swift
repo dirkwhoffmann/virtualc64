@@ -36,15 +36,11 @@ class InstrTableView: NSTableView {
     // Optional address to be highlighted by an alert symbol
     var alertAddr: Int?
 
-    // Number format
-    var hex = true
-    
-    // Saved program counters
-    // var breakpointPC = -1
-    // var watchpointPC = -1
+    override init(frame frameRect: NSRect) { super.init(frame: frameRect); commonInit() }
+    required init?(coder: NSCoder) { super.init(coder: coder); commonInit() }
 
-    override func awakeFromNib() {
-        
+    func commonInit() {
+
         delegate = self
         dataSource = self
         target = self
@@ -60,33 +56,31 @@ class InstrTableView: NSTableView {
     }
     
     private func cache() {
-        
-        if let cpu = cpu {
 
-            numRows = 256
-            rowForAddr = [:]
+        guard let cpu = cpu else { return }
 
-            var addr = addrInFirstRow
+        numRows = 256
+        rowForAddr = [:]
 
-            for i in 0 ..< numRows {
+        var addr = addrInFirstRow
+        for i in 0 ..< numRows {
 
-                var length = 0
-                addrInRow[i] = addr
-                addrStrInRow[i] = cpu.disassemble(addr, format: "%p", length: &length)
-                instrInRow[i] = cpu.disassemble(addr, format: "%i", length: &length)
-                dataInRow[i] = cpu.disassemble(addr, format: "%b", length: &length)
+            var length = 0
+            addrInRow[i] = addr
+            addrStrInRow[i] = cpu.disassemble(addr, format: "%p", length: &length)
+            instrInRow[i] = cpu.disassemble(addr, format: "%i", length: &length)
+            dataInRow[i] = cpu.disassemble(addr, format: "%b", length: &length)
 
-                if !cpu.hasBreakpoint(atAddr: addr) {
-                    bpInRow[i] = BreakpointType.none
-                } else if cpu.breakpoint(atAddr: addr).enabled {
-                    bpInRow[i] = BreakpointType.enabled
-                } else {
-                    bpInRow[i] = BreakpointType.disabled
-                }
-
-                rowForAddr[addr] = i
-                addr += length
+            if !cpu.hasBreakpoint(atAddr: addr) {
+                bpInRow[i] = BreakpointType.none
+            } else if cpu.breakpoint(atAddr: addr).enabled {
+                bpInRow[i] = BreakpointType.enabled
+            } else {
+                bpInRow[i] = BreakpointType.disabled
             }
+
+            rowForAddr[addr] = i
+            addr += length
         }
     }
     
@@ -181,12 +175,6 @@ class InstrTableView: NSTableView {
                 inspector.fullRefresh()
             }
         }
-    }
-    
-    func setHex(_ value: Bool) {
-        
-        hex = value
-        refresh(full: true)
     }
 }
 

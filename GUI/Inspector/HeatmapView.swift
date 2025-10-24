@@ -25,14 +25,16 @@ class HeatmapView: NSImageView {
     required init?(coder decoder: NSCoder) {
 
         super.init(coder: decoder)
+        commonInit()
     }
 
     required override init(frame frameRect: NSRect) {
 
         super.init(frame: frameRect)
+        commonInit()
     }
 
-    override func awakeFromNib() {
+    func commonInit() {
 
         let w = 256
         let h = 256

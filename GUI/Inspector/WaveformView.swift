@@ -38,7 +38,7 @@ class WaveformView: NSImageView {
         super.init(frame: frameRect)
     }
 
-    override func awakeFromNib() {
+    func resizeBuffer() {
 
         let w = inspector.sidWaveformView.visibleRect.width
         let h = inspector.sidWaveformView.visibleRect.height
@@ -53,6 +53,8 @@ class WaveformView: NSImageView {
     }
 
     override func draw(_ dirtyRect: NSRect) {
+
+        if buffer == nil { resizeBuffer() }
 
         var source = -1
         if inspector.sidWaveformSource.selectedTag() == 1 {

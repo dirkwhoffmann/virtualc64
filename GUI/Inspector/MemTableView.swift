@@ -14,8 +14,11 @@ class MemTableView: NSTableView {
     var emu: EmulatorProxy? { return inspector.parent.emu }
     var mem: MemoryProxy? { return emu?.mem }
 
-    override func awakeFromNib() {
-        
+    override init(frame frameRect: NSRect) { super.init(frame: frameRect); commonInit() }
+    required init?(coder: NSCoder) { super.init(coder: coder); commonInit() }
+
+    func commonInit() {
+
         delegate = self
         dataSource = self
         target = self

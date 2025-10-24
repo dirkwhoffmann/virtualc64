@@ -20,7 +20,10 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     // Indicates if halftracks should be shown, too
     var showHalftracks: Bool { return inspector.showHalftracks }
     
-    override func awakeFromNib() {
+    override init(frame frameRect: NSRect) { super.init(frame: frameRect); commonInit() }
+    required init?(coder: NSCoder) { super.init(coder: coder); commonInit() }
+
+    func commonInit() {
 
         delegate = self
         dataSource = self

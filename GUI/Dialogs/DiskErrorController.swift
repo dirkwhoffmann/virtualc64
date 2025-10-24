@@ -18,8 +18,10 @@ class DiskErrorController: NSWindowController {
     var logbook: String?
     var errors = [String]()
 
-    override func awakeFromNib() {
+    override func windowDidLoad() {
 
+        super.windowDidLoad()
+        
         if let ht = parent.halftrack { logbook = analyzer?.getLogbook(ht) }
         logbook?.enumerateLines { line, _ in self.errors.append(line) }
 

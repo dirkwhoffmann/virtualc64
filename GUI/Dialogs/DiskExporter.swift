@@ -44,33 +44,32 @@ class DiskExporter: DialogController {
 
     func showSheet(diskDrive nr: Int) {
 
-        if let emu = emu {
+        guard let emu = emu else { return }
 
-            drive = emu.drive(nr)
+        drive = emu.drive(nr)
 
-            if drive.info.hasDisk {
+        if drive.info.hasDisk {
 
-                // Try to extract the file system
-                vol = try? FileSystemProxy.make(with: drive)
+            // Try to extract the file system
+            vol = try? FileSystemProxy.make(with: drive)
 
-                if vol != nil {
+            if vol != nil {
 
-                    // Try to run the D64 encoder
-                    d64 = try? MediaFileProxy.make(with: vol!, type: .D64)
+                // Try to run the D64 encoder
+                d64 = try? MediaFileProxy.make(with: vol!, type: .D64)
 
-                    // Try to run the T64 encoder
-                    t64 = try? MediaFileProxy.make(with: vol!, type: .T64)
+                // Try to run the T64 encoder
+                t64 = try? MediaFileProxy.make(with: vol!, type: .T64)
 
-                    if vol!.numFiles > 0 {
+                if vol!.numFiles > 0 {
 
-                        // Try to run the PRG encoder
-                        prg = try? MediaFileProxy.make(with: vol!, type: .PRG)
-                    }
+                    // Try to run the PRG encoder
+                    prg = try? MediaFileProxy.make(with: vol!, type: .PRG)
                 }
             }
-
-            super.showAsSheet()
         }
+
+        super.showAsSheet()
     }
 
     func updateFormatPopup() {
@@ -90,9 +89,9 @@ class DiskExporter: DialogController {
         addItem("Folder", tag: Format.vol, enabled: vol != nil)
     }
 
-    override public func awakeFromNib() {
+    override func dialogWillShow() {
 
-        super.awakeFromNib()
+        super.dialogWillShow()
         updateFormatPopup()
         update()
     }

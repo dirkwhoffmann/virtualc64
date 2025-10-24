@@ -24,7 +24,10 @@ class DropView: NSImageView {
     @IBOutlet var parent: SettingsViewController!
     var emu: EmulatorProxy? { return parent.emu }
 
-    override func awakeFromNib() {
+    override init(frame frameRect: NSRect) { super.init(frame: frameRect); commonInit() }
+    required init?(coder: NSCoder) { super.init(coder: coder); commonInit() }
+
+    func commonInit() {
 
         registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
     }

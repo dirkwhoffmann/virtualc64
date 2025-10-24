@@ -20,8 +20,11 @@ class TraceTableView: NSTableView {
     var flagsInRow: [Int: String] = [:]
     var instrInRow: [Int: String] = [:]
     
-    override func awakeFromNib() {
-        
+    override init(frame frameRect: NSRect) { super.init(frame: frameRect); commonInit() }
+    required init?(coder: NSCoder) { super.init(coder: coder); commonInit() }
+
+    func commonInit() {
+
         dataSource = self
         target = self
     }

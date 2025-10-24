@@ -32,14 +32,16 @@ class DmaView: NSImageView {
     required init?(coder decoder: NSCoder) {
 
         super.init(coder: decoder)
+        commonInit()
     }
 
     required override init(frame frameRect: NSRect) {
         
         super.init(frame: frameRect)
+        commonInit()
     }
 
-    override func awakeFromNib() {
+    func commonInit() {
 
         let w = vc64.Tex.width
         let h = vc64.Tex.height

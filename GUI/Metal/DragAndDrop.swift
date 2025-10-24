@@ -11,10 +11,12 @@ import UniformTypeIdentifiers
 
 public extension MetalView {
 
+    /*
     func setupDragAndDrop() {
 
         registerForDraggedTypes(acceptedTypes())
     }
+    */
 
     func acceptedTypes() -> [NSPasteboard.PasteboardType] {
         

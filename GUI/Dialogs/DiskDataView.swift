@@ -34,10 +34,6 @@ class DiskDataView: NSScrollView {
 
     // Display font
 	var font: NSFont { return NSFont.monospaced(ofSize: 10.0, weight: .semibold) }
-	    
-    override func awakeFromNib() {
-
-    }
 
     func refresh() {
 

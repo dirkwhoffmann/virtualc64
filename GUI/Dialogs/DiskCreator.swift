@@ -34,9 +34,9 @@ class DiskCreator: DialogController {
         super.showAsSheet()
     }
 
-    override public func awakeFromNib() {
+    override func dialogWillShow() {
 
-        super.awakeFromNib()
+        super.dialogWillShow()
 
         if let emu = emu {
 
