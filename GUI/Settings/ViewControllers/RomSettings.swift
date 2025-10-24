@@ -33,7 +33,6 @@ class RomSettingsViewController: SettingsViewController {
     @IBOutlet weak var vc1541Subsubtitle: NSTextField!
     @IBOutlet weak var vc1541DeleteButton: NSButton!
 
-    @IBOutlet weak var romLockImage: NSButton!
     @IBOutlet weak var romLockText: NSTextField!
     @IBOutlet weak var romLockSubText: NSTextField!
 
@@ -158,11 +157,9 @@ class RomSettingsViewController: SettingsViewController {
 
         // Lock symbol and explanation
         if poweredOff {
-            romLockImage.image = NSImage(named: "NSInfo")
             romLockText.stringValue = "To add a Rom, drag a Rom image file onto one of the four chip icons."
             romLockSubText.stringValue = "Original Roms are protected by copyright. Please obey legal regulations."
         } else {
-            romLockImage.image = NSImage(named: "lockIcon")
             romLockText.stringValue = "The settings are locked because the emulator is running."
             romLockSubText.stringValue = "Click the lock to power down the emulator."
         }

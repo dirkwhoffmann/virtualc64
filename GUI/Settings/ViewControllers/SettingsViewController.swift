@@ -91,7 +91,7 @@ class SettingsView: NSView {
         if let layer = self.layer, bgLayer == nil {
 
             let background = CALayer()
-            background.contents = NSImage(named: "vAmigaBg")
+            background.contents = nil // NSImage(named: "settingsBg")
             background.contentsGravity = .resizeAspectFill
             background.autoresizingMask = [.layerWidthSizable, .layerHeightSizable]
             layer.insertSublayer(background, at: 0)
