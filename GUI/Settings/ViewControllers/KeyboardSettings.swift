@@ -9,7 +9,7 @@
 
 import Carbon.HIToolbox
 
-class KeyboardSettingsViewController: SettingsViewController {
+class KeyboardSettingsViewController: SettingsViewController, NSWindowDelegate {
 
     @IBOutlet weak var keyMappingText: NSTextField!
     @IBOutlet weak var keyMappingPopup: NSPopUpButton!
@@ -30,6 +30,12 @@ class KeyboardSettingsViewController: SettingsViewController {
     //
     // Methods from SettingsViewController
     //
+
+    override func activate() {
+
+        super.activate()
+        view.window?.delegate = self
+    }
 
     override func refresh() {
 
@@ -166,6 +172,15 @@ class KeyboardSettingsViewController: SettingsViewController {
         refresh()
     }
 
+    override func keyDown(with event: NSEvent) {
+
+        if !mapSelectedKey(to: MacKey(event: event)) {
+
+            // The controller isn't interested. Process it as usual
+            interpretKeyEvents([event])
+        }
+    }
+
     @IBAction func mapKeyMappingAction(_ sender: NSPopUpButton!) {
 
         let value = (sender.selectedTag() == 1) ? true : false
@@ -173,6 +188,7 @@ class KeyboardSettingsViewController: SettingsViewController {
         refresh()
     }
 
+    /*
     @IBAction func kbPresetAction(_ sender: NSPopUpButton!) {
 
         if let emu = emu {
@@ -190,6 +206,8 @@ class KeyboardSettingsViewController: SettingsViewController {
             refresh()
         }
     }
+    */
+
 
     //
     // Presets and Saving
@@ -198,15 +216,17 @@ class KeyboardSettingsViewController: SettingsViewController {
     override func preset(tag: Int) {
 
         // Revert to standard settings
-        EmulatorProxy.defaults.removeControlsUserDefaults()
+        EmulatorProxy.defaults.removeKeyboardUserDefaults()
 
         // Apply the new settings
-        pref.applyControlsUserDefaults()
+        pref.applyKeyboardUserDefaults()
+
+        selectedKey = nil
     }
 
     override func save() {
 
-        pref.saveControlsUserDefaults()
+        pref.saveKeyboardUserDefaults()
     }
 }
 

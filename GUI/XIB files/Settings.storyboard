@@ -1452,14 +1452,6 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9L8-SB-pMW">
-                                            <rect key="frame" x="301" y="8" width="48" height="48"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="n3V-RH-yPU">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
                                         <popUpButton id="jbZ-Mk-17g" userLabel="System">
                                             <rect key="frame" x="17" y="11" width="40" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -2426,32 +2418,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vYl-DV-TBQ">
-                                <rect key="frame" x="92" y="59" width="530" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Lorem ipsum dolor sit amet, consectetur adipisici elit" id="fFo-00-Xmf">
-                                    <font key="font" metaFont="systemBold"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAO-tx-2cY">
-                                <rect key="frame" x="92" y="42" width="530" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Lorem ipsum dolor sit amet, consectetur adipisici elit" id="EFK-gl-ezF">
-                                    <font key="font" metaFont="cellTitle"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5e7-38-kZF">
-                                <rect key="frame" x="38" y="35" width="48" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="alertIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="6ad-Ek-RD9">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CEt-pU-phW">
                                 <rect key="frame" x="460" y="118" width="19.5" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -2463,6 +2429,24 @@
                                     <action selector="romDeleteVC1541Action:" target="cBW-zY-3Xw" id="Ayy-L3-Dda"/>
                                 </connections>
                             </button>
+                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vYl-DV-TBQ">
+                                <rect key="frame" x="55" y="61" width="530" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Lorem ipsum dolor sit amet, consectetur adipisici elit" id="fFo-00-Xmf">
+                                    <font key="font" metaFont="systemBold"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAO-tx-2cY">
+                                <rect key="frame" x="55" y="44" width="530" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Lorem ipsum dolor sit amet, consectetur adipisici elit" id="EFK-gl-ezF">
+                                    <font key="font" metaFont="cellTitle"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qv2-qY-BE9"/>
                         <viewLayoutGuide key="layoutMargins" id="QXC-iG-iBw"/>
@@ -2487,7 +2471,6 @@
                         <outlet property="lockInfo1" destination="0tx-ir-Ag9" id="e01-1Z-wXf"/>
                         <outlet property="lockInfo2" destination="QHA-UO-dXV" id="A31-C0-peU"/>
                         <outlet property="presetPopup" destination="sd1-0F-HBr" id="gB8-lb-tBn"/>
-                        <outlet property="romLockImage" destination="5e7-38-kZF" id="s6e-8h-hlr"/>
                         <outlet property="romLockSubText" destination="XAO-tx-2cY" id="Fke-oD-pZC"/>
                         <outlet property="romLockText" destination="vYl-DV-TBQ" id="wFn-gT-w0e"/>
                         <outlet property="vc1541DeleteButton" destination="CEt-pU-phW" id="oTl-E0-W5O"/>
@@ -5832,14 +5815,6 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YpO-um-iZB">
-                                            <rect key="frame" x="301" y="8" width="48" height="48"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="eb8-bV-XHy">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
                                         <popUpButton id="cgO-s1-euI" userLabel="System">
                                             <rect key="frame" x="17" y="11" width="40" height="34"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -5913,7 +5888,6 @@
     </scenes>
     <resources>
         <image name="ad-rv" width="542" height="542"/>
-        <image name="alertIcon" width="1024" height="1024"/>
         <image name="archivebox" catalog="system" width="21" height="18"/>
         <image name="devGamepad1Template" width="20" height="21"/>
         <image name="devGamepad2Template" width="20" height="21"/>

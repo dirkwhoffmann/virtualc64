@@ -195,7 +195,6 @@
 		506A8A892B88D00200B95383 /* Configurable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506A8A862B88D00200B95383 /* Configurable.cpp */; };
 		506A8A8C2B89DAF800B95383 /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506A8A8A2B89DAF800B95383 /* SID.cpp */; };
 		506A8A8D2B89DAF800B95383 /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506A8A8A2B89DAF800B95383 /* SID.cpp */; };
-		506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506B13C124C1C40600814BB0 /* PreferencesController.swift */; };
 		506D3DCE20223E5E009742CF /* MyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* MyApplication.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* MyFormatter.swift */; };
@@ -896,7 +895,6 @@
 		506A8A872B88D00200B95383 /* Configurable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Configurable.h; sourceTree = "<group>"; };
 		506A8A8A2B89DAF800B95383 /* SID.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SID.cpp; sourceTree = "<group>"; };
 		506A8A8B2B89DAF800B95383 /* SID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID.h; sourceTree = "<group>"; };
-		506B13C124C1C40600814BB0 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* MyApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApplication.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		506D4D0C20B331A00093C5C6 /* MyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFormatter.swift; sourceTree = "<group>"; };
@@ -2033,7 +2031,6 @@
 			isa = PBXGroup;
 			children = (
 				50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */,
-				506B13C124C1C40600814BB0 /* PreferencesController.swift */,
 				5002FA7E21C2653600DA4BBC /* GeneralPrefs.swift */,
 				5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */,
 				50CCE178259DFD7800481E7F /* DevicesPrefs.swift */,
@@ -2900,7 +2897,6 @@
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,
 				50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */,
 				50BB3E912B7A232800B2D87B /* Inspectable.cpp in Sources */,
-				506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */,
 				500375062C23F26000979A1B /* C64Base.cpp in Sources */,
 				50461BBE26B522450019CEDF /* Thread.cpp in Sources */,
 				50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */,

@@ -56,11 +56,13 @@ class SettingsViewController: NSViewController {
     @IBAction func presetAction(_ sender: NSPopUpButton) {
 
         preset(tag: sender.selectedTag())
+        refresh()
     }
 
     @IBAction func presetMenuAction(_ sender: NSMenuItem!) {
 
         preset(tag: sender.tag)
+        refresh()
     }
 
     @IBAction func saveAction(_ sender: Any) {
