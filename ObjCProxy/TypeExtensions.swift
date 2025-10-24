@@ -14,7 +14,6 @@ typealias ConfigScheme = vc64.ConfigScheme
 typealias ControlPortDevice = vc64.ControlPortDevice
 typealias Compressor = vc64.Compressor
 typealias DOSType = vc64.DOSType
-typealias ErrorCode = vc64.Fault
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum
 typealias EventSlotInfo = vc64.EventSlotInfo

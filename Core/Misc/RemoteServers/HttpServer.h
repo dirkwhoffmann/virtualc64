@@ -12,28 +12,33 @@
 
 #pragma once
 
-#include "SocketServer.h"
+#include "RemoteServer.h"
+
+namespace httplib { class Server; struct Request; }
 
 namespace vc64 {
 
-class RshServer final : public SocketServer {
+class HttpServer : public RemoteServer {
 
-public:
-    
-    using SocketServer::SocketServer;
+    using RemoteServer::RemoteServer;
 
-    RshServer& operator= (const RshServer& other) {
+protected:
 
-        SocketServer::operator = (other);
+    HttpServer& operator= (const HttpServer& other) {
+
+        RemoteServer::operator = (other);
         return *this;
     }
+
+    // A simple (third-party) HTTP server
+    httplib::Server *srv = nullptr;
 
 
     //
     // Methods from CoreObject
     //
-    
-private:
+
+protected:
 
     void _dump(Category category, std::ostream &os) const override;
 
@@ -41,15 +46,10 @@ private:
     //
     // Methods from RemoteServer
     //
-    // Methods from SocketServer
-    //
 
-    
-    string doReceive() throws override;
-    void doProcess(const string &packet) throws override;
-    void doSend(const string &packet)throws  override;
-    void didStart() override;
-    void didConnect() override;
+public:
+
+    virtual void disconnect() override;
 };
 
 }

@@ -42,9 +42,7 @@ RshServer::didConnect()
         
         try {
 
-            printf("FIXME\n");
-            assert(false);
-            // retroShell.asyncExec("welcome");
+            retroShell.asyncExec("welcome");
 
         } catch (...) { };
     }

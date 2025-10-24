@@ -54,10 +54,13 @@ RemoteManager::_dump(Category category, std::ostream &os) const
 void
 RemoteManager::cacheInfo(RemoteManagerInfo &result) const
 {
-    info.numLaunching = numLaunching();
-    info.numListening = numListening();
-    info.numConnected = numConnected();
-    info.numErroneous = numErroneous();
+    {   SYNCHRONIZED
+        
+        info.numLaunching = numLaunching();
+        info.numListening = numListening();
+        info.numConnected = numConnected();
+        info.numErroneous = numErroneous();
+    }
 }
 
 isize
@@ -99,7 +102,7 @@ RemoteManager::serviceServerEvent()
 
     // Run the launch daemon
     if (rshServer.config.autoRun) {
-        rshServer.shouldRun() ? rshServer._start() : rshServer._stop();
+        rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
     }
 
     // Schedule next event
