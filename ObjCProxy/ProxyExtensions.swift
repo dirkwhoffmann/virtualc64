@@ -266,6 +266,7 @@ public extension KeyboardProxy {
 // Other extensions
 //
 
+@MainActor
 public extension EmulatorProxy {
     
     func drive(_ nr: NSInteger) -> DriveProxy {

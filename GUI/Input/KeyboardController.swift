@@ -9,6 +9,7 @@
 
 import Carbon.HIToolbox
 
+@MainActor
 class KeyboardController: NSObject {
     
     var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }

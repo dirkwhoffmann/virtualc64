@@ -13,6 +13,7 @@ import Carbon.HIToolbox
 // Proxy extensions
 //
 
+@MainActor
 extension DefaultsProxy {
     
     func resetSearchPaths() {
@@ -197,6 +198,7 @@ extension DefaultsProxy {
 // Paths
 //
 
+@MainActor
 extension UserDefaults {
     
     static func romUrl(name: String) -> URL? {
@@ -226,6 +228,7 @@ extension UserDefaults {
 // User defaults (all)
 //
 
+@MainActor
 extension DefaultsProxy {
     
     func registerUserDefaults() {
@@ -245,8 +248,9 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Preferences {
-    
+
     func applyUserDefaults() {
         
         debug(.defaults, "Applying user defaults")
@@ -258,6 +262,7 @@ extension Preferences {
     }
 }
 
+@MainActor
 extension Configuration {
     
     func applyUserDefaults() {
@@ -296,6 +301,7 @@ struct Keys {
     }
 }
 
+@MainActor
 extension DefaultsProxy {
     
     func registerGeneralUserDefaults() {
@@ -337,6 +343,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Preferences {
     
     func saveGeneralUserDefaults() {
@@ -475,6 +482,7 @@ extension Preferences {
 // User defaults (Controls)
 //
 
+@MainActor
 extension Keys {
     
     struct Con {
@@ -487,6 +495,7 @@ extension Keys {
     }
 }
 
+@MainActor
 extension DefaultsProxy {
     
     func registerControlsUserDefaults() {
@@ -533,6 +542,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Preferences {
     
     func saveControlsUserDefaults() {
@@ -564,6 +574,7 @@ extension Preferences {
 // User defaults (Devices)
 //
 
+@MainActor
 extension Keys {
     
     struct Dev {
@@ -572,6 +583,7 @@ extension Keys {
     }
 }
 
+@MainActor
 extension DefaultsProxy {
     
     func registerDevicesUserDefaults() {
@@ -583,6 +595,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Preferences {
     
     func saveDevicesUserDefaults() {
@@ -603,6 +616,7 @@ extension Preferences {
 // User defaults (Keyboard)
 //
 
+@MainActor
 extension Keys {
     
     struct Kbd {
@@ -613,6 +627,7 @@ extension Keys {
     }
 }
 
+@MainActor
 extension DefaultsProxy {
     
     func registerKeyboardUserDefaults() {
@@ -635,6 +650,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Preferences {
     
     func saveKeyboardUserDefaults() {
@@ -662,6 +678,7 @@ extension Preferences {
 // User defaults (Roms)
 //
 
+@MainActor
 extension Configuration {
 
     func loadRomUserDefaults() {
@@ -726,6 +743,7 @@ extension Configuration {
 // User defaults (Hardware)
 //
 
+@MainActor
 extension DefaultsProxy {
     
     func registerHardwareUserDefaults() {
@@ -756,6 +774,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Configuration {
     
     func saveHardwareUserDefaults() {
@@ -833,6 +852,7 @@ extension Configuration {
 // User defaults (Peripherals)
 //
 
+@MainActor
 extension Keys {
     
     struct Per {
@@ -843,6 +863,7 @@ extension Keys {
     }
 }
 
+@MainActor
 extension DefaultsProxy {
     
     func registerPeripheralsUserDefaults() {
@@ -868,6 +889,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Configuration {
     
     func savePeripheralsUserDefaults() {
@@ -941,6 +963,7 @@ extension Configuration {
 // User defaults (Performance)
 //
 
+@MainActor
 extension DefaultsProxy {
     
     func registerPerformanceUserDefaults() {
@@ -966,6 +989,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Configuration {
     
     func savePerformanceUserDefaults() {
@@ -1027,6 +1051,7 @@ extension Configuration {
 // User defaults (Audio)
 //
 
+@MainActor
 extension DefaultsProxy {
     
     func registerAudioUserDefaults() {
@@ -1061,6 +1086,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Configuration {
     
     func saveAudioUserDefaults() {
@@ -1140,6 +1166,7 @@ extension Configuration {
 // User defaults (Video)
 //
 
+@MainActor
 extension DefaultsProxy {
     
     func registerVideoUserDefaults() {
@@ -1199,6 +1226,7 @@ extension DefaultsProxy {
     }
 }
 
+@MainActor
 extension Configuration {
     
     func saveVideoUserDefaults() {

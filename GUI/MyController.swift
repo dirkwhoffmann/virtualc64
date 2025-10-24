@@ -7,10 +7,12 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+@MainActor
 protocol MessageReceiver {
     func process(messsage: Message)
 }
 
+@MainActor
 class MyController: NSWindowController, MessageReceiver {
     
     var pref: Preferences { return myAppDelegate.pref }

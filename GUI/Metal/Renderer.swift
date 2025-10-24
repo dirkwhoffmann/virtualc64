@@ -24,6 +24,7 @@ enum ScreenshotCutout: Int {
     case custom = 3
 }
 
+@MainActor
 class Renderer: NSObject, MTKViewDelegate {
     
     let view: MTKView
@@ -268,34 +269,45 @@ class Renderer: NSObject, MTKViewDelegate {
     }
     
     func draw(in view: MTKView) {
-        
+
+        MainActor.assertIsolated("Not isolated!")
+
         frames += 1
         update(frames: frames)
-        
+
+        // Wait for the next frame
         semaphore.wait()
 
-        if let drawable = metalLayer.nextDrawable() {
-                 
-            // Create the command buffer
-            let buffer = makeCommandBuffer()
-            
-            // Create the command encoder
-            guard let encoder = makeCommandEncoder(drawable, buffer) else {
+        // Get drawable
+        guard let drawable = metalLayer.nextDrawable() else {
 
-                semaphore.signal()
-                return
-            }
-            
-            // Render the scene
-            let flat = fullscreen && !prefs.keepAspectRatio
-            if canvas.isTransparent || animates != 0 { splashScreen.render(encoder) }
-            if canvas.isVisible { canvas.render(encoder, flat: flat) }
-            encoder.endEncoding()
-
-            // Commit the command buffer
-            buffer.addCompletedHandler { _ in self.semaphore.signal() }
-            buffer.present(drawable)
-            buffer.commit()
+            semaphore.signal()
+            return
         }
+
+        // Create the command buffer
+        let buffer = makeCommandBuffer()
+
+        // Create the command encoder
+        guard let encoder = makeCommandEncoder(drawable, buffer) else {
+
+            semaphore.signal()
+            return
+        }
+
+        // Render the scene
+        let flat = fullscreen && !prefs.keepAspectRatio
+        if canvas.isTransparent || animates != 0 { splashScreen.render(encoder) }
+        if canvas.isVisible { canvas.render(encoder, flat: flat) }
+        encoder.endEncoding()
+
+        // Commit the command buffer
+        buffer.addCompletedHandler { @Sendable [weak self] buffer in
+            Task { @MainActor in
+                self?.semaphore.signal()
+            }
+        }
+        buffer.present(drawable)
+        buffer.commit()
     }
 }

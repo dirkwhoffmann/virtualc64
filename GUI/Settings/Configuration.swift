@@ -14,6 +14,7 @@
  * See class "Preferences" for shared settings.
  */
 
+@MainActor
 class Configuration {
     
     var parent: MyController!

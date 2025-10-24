@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+@MainActor
 class SnapshotViewer: DialogController {
     
     var now: Date!
@@ -219,6 +220,7 @@ extension SnapshotViewer: @preconcurrency iCarouselDataSource, @preconcurrency i
 // Protocols
 //
 
+@MainActor
 extension SnapshotViewer: NSFilePromiseProviderDelegate {
 
     func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
@@ -227,6 +229,12 @@ extension SnapshotViewer: NSFilePromiseProviderDelegate {
     }
 
     func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
+
+        Task { @MainActor in export(url: url) }
+        completionHandler(nil)
+    }
+
+    func export(url: URL) {
 
         if let snapshot = parent.mydocument.snapshots.element(at: currentItem) {
 

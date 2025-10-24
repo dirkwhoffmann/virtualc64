@@ -15,6 +15,7 @@ import IOKit.hid
  * for HID events. In the latter case, it translates keyboard events to
  * GamePadAction events by utilizing a key map.
  */
+@MainActor
 class GamePad {
     
     // References

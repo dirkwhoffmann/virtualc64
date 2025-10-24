@@ -9,6 +9,7 @@
 
 import Darwin
 
+@MainActor
 class DiskCreator: DialogController {
 
     @IBOutlet weak var icon: NSImageView!
@@ -105,6 +106,7 @@ class DiskCreator: DialogController {
     }
 }
 
+@MainActor
 extension DiskCreator: NSFilePromiseProviderDelegate {
 
     func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
@@ -113,6 +115,12 @@ extension DiskCreator: NSFilePromiseProviderDelegate {
     }
 
     func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
+
+        Task { @MainActor in export(url: url) }
+        completionHandler(nil)
+    }
+
+    func export(url: URL) {
 
         if let fs = FileSystemProxy.make(with: .SS_SD, dosType: dos) {
 
@@ -124,6 +132,5 @@ extension DiskCreator: NSFilePromiseProviderDelegate {
                 warn("Can't export file to \(url)")
             }
         }
-        completionHandler(nil)
     }
 }

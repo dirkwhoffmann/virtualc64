@@ -24,6 +24,7 @@ struct InputDevice {
  * by default and represent a mouse and two keyboard emulated joysticks.
  * All remaining gamepads are added dynamically when HID devices are connected.
  */
+@MainActor
 class GamePadManager {
     
     // Reference to the main controller

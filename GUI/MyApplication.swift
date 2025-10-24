@@ -90,6 +90,7 @@ public class MyAppDelegate: NSObject, NSApplicationDelegate {
 // Personal delegation methods
 //
 
+@MainActor
 extension MyAppDelegate {
     
     var documents: [MyDocument] {
