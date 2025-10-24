@@ -366,10 +366,7 @@ class Inspector: DialogController {
     override func dialogWillShow() {
         
         super.dialogWillShow()
-        
-        // Hide the panel selector
-        // panel.tabPosition = .none
-   
+
         // Enter debug mode
         emu?.trackOn()
         emu?.set(.MEM_HEATMAP, enable: true)

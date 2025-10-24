@@ -26,6 +26,8 @@ enum SFSymbol {
     case gear
     case keyboard
     case magnifyingglass
+    case magnifyingglass2
+    case magnifyingglass3
     case mouse
     case nosign
     case pause
@@ -63,6 +65,8 @@ enum SFSymbol {
         case .gear:             return [ "gear" ]
         case .keyboard:         return [ "keyboard" ]
         case .magnifyingglass:  return [ "magnifyingglass" ]
+        case .magnifyingglass2: return [ "waveform.badge.magnifyingglass", "magnifyingglass" ]
+        case .magnifyingglass3: return [ "waveform.path.ecg.magnifyingglass", "magnifyingglass" ]
         case .mouse:            return [ "computermouse" ]
         case .nosign:           return [ "nosign" ]
         case .pause:            return [ "pause.circle" ]

@@ -21,12 +21,17 @@ class Dashboard: DialogController {
         window?.delegate = self
         
         if let viewController = contentViewController as? DashboardViewController {
-            
+
+            // Create toolbar
+            window!.toolbar = DashboardToolbar(dashboard: viewController)
+
+            /*
             // Connect the toolbar
             toolbar!.dashboard = viewController
             window!.toolbarStyle = .unifiedCompact
             window!.titlebarAppearsTransparent = true
-            
+            */
+
             // Switch to the default panel
             viewController.type = .Combined
         }

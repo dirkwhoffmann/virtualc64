@@ -172,33 +172,6 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
 
     }
 
-    /*
-     @IBOutlet weak var inspector: Inspector!
-     @IBOutlet weak var timeStamp: NSButton!
-     @IBOutlet weak var execSegCtrl: NSSegmentedControl!
-     @IBOutlet weak var selectorPopup: NSPopUpButton!
-     @IBOutlet weak var selectorToolbarItem: NSToolbarItem!
-     @IBOutlet weak var formatPopup: NSPopUpButton!
-     @IBOutlet weak var formatToolbarItem: NSToolbarItem!
-
-     var emu: EmulatorProxy! { return inspector.parent.emu }
-
-     override func validateVisibleItems() {
-
-     // Update icons
-     let running = emu.running
-     let label = running ? "Pause" : "Run"
-     let image = running ? "pauseTemplate" : "runTemplate"
-     execSegCtrl.setToolTip(label, forSegment: 0)
-     execSegCtrl.setImage(NSImage(named: image), forSegment: 0)
-     for i in 1...5 { execSegCtrl.setEnabled(!running, forSegment: i) }
-
-     // Disable shrinked popup buttons to prevent macOS from crashing
-     selectorPopup.isEnabled = selectorToolbarItem.isVisible
-     formatPopup.isEnabled = formatToolbarItem.isVisible
-     }
-     */
-
     func updateToolbar(full: Bool) {
 
         let info = emu.c64.info
