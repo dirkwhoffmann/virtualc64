@@ -403,7 +403,7 @@ extension MyController: NSMenuItemValidation {
                               prompt: "Export",
                               title: "Export",
                               nameFieldLabel: "Export As:",
-                              nameFieldStringValue: "workspace.vasnap")
+                              nameFieldStringValue: "Untitled.vcsnap")
 
         mySavePanel.open(for: window, { result in
 
