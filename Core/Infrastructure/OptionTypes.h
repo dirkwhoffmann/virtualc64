@@ -181,13 +181,6 @@ enum class Opt : long
     RS232_DEVICE,           ///< Device connected to the RS232 adapter
     RS232_BAUD,             ///< Transmission rate
 
-    // Screen recorder
-    REC_FRAME_RATE,         ///< Frame rate of the recorded video
-    REC_BIT_RATE,           ///< Bit rate of the recorded video
-    REC_SAMPLE_RATE,        ///< Audio sample rate of the recorded video
-    REC_ASPECT_X,           ///< Numerator of the video's aspect ratio
-    REC_ASPECT_Y,           ///< Denumerator of the video's aspect ratio
-
     // Remote servers
     SRV_PORT,
     SRV_PROTOCOL,
@@ -345,12 +338,6 @@ struct OptEnum : Reflection<OptEnum, Opt> {
             case Opt::RS232_DEVICE:          return "RS232.DEVICE";
             case Opt::RS232_BAUD:            return "RS232.BAUD";
 
-            case Opt::REC_FRAME_RATE:        return "REC.FRAME_RATE";
-            case Opt::REC_BIT_RATE:          return "REC.BIT_RATE";
-            case Opt::REC_SAMPLE_RATE:       return "REC.SAMPLE_RATE";
-            case Opt::REC_ASPECT_X:          return "REC.ASPECT_X";
-            case Opt::REC_ASPECT_Y:          return "REC.ASPECT_Y";
-
             case Opt::SRV_PORT:              return "SRV.PORT";
             case Opt::SRV_PROTOCOL:          return "SRV.PROTOCOL";
             case Opt::SRV_AUTORUN:           return "SRV.AUTORUN";
@@ -501,12 +488,6 @@ struct OptEnum : Reflection<OptEnum, Opt> {
 
             case Opt::RS232_DEVICE:          return "Connected RS232 device";
             case Opt::RS232_BAUD:            return "Transmission rate (baud)";
-
-            case Opt::REC_FRAME_RATE:        return "Frame rate of the recorded video";
-            case Opt::REC_BIT_RATE:          return "Bit rate of the recorded video";
-            case Opt::REC_SAMPLE_RATE:       return "Audio sample rate of the recorded video";
-            case Opt::REC_ASPECT_X:          return "Numerator of the video's aspect ratio";
-            case Opt::REC_ASPECT_Y:          return "Denumerator of the video's aspect ratio";
 
             case Opt::SRV_PORT:              return "Server port";
             case Opt::SRV_PROTOCOL:          return "Server protocol";

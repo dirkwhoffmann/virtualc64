@@ -162,12 +162,6 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::RS232_DEVICE:              return enumParser.template operator()<CommunicationDeviceEnum,CommunicationDevice>();
         case Opt::RS232_BAUD:                return numParser(" Bd");
 
-        case Opt::REC_FRAME_RATE:            return numParser(" fps");
-        case Opt::REC_BIT_RATE:              return numParser(" kBit");
-        case Opt::REC_SAMPLE_RATE:           return numParser(" Hz");
-        case Opt::REC_ASPECT_X:              return numParser();
-        case Opt::REC_ASPECT_Y:              return numParser();
-
         case Opt::SRV_PORT:                  return numParser();
         case Opt::SRV_PROTOCOL:              return enumParser.template operator()<ServerProtocolEnum,ServerProtocol>();
         case Opt::SRV_AUTORUN:               return boolParser();

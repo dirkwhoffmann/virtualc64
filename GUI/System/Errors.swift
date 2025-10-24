@@ -82,7 +82,6 @@ enum Failure {
     case cantInsert
     case cantInsertTape
     case cantOpen(url: URL)
-    case cantRecord
     case cantRestore
     case cantRun
     case cantSaveRoms
@@ -105,7 +104,6 @@ enum Failure {
 
         switch self {
 
-        case .cantRecord: return NSImage(named: "FFmpegIcon")!
         case .noMetalSupport: return NSImage(named: "metal")!
 
         default: return nil
@@ -143,9 +141,6 @@ enum Failure {
 
         case let .cantOpen(url):
             return "\"\(url.lastPathComponent)\" can't be opened."
-
-        case .cantRecord:
-            return "Failed to launch the screen recorder."
 
         case .cantRestore:
             return "Failed to restore snapshot."

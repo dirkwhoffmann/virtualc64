@@ -164,12 +164,6 @@ Defaults::Defaults()
 
     setFallback(Opt::RS232_BAUD,                 600);
 
-    setFallback(Opt::REC_FRAME_RATE,             50);
-    setFallback(Opt::REC_BIT_RATE,               512);
-    setFallback(Opt::REC_SAMPLE_RATE,            44100);
-    setFallback(Opt::REC_ASPECT_X,               768);
-    setFallback(Opt::REC_ASPECT_Y,               702);
-
     setFallback(Opt::SRV_PORT,                   8081,                   { (i64)ServerType::RSH });
     setFallback(Opt::SRV_PROTOCOL,               (i64)ServerProtocol::DEFAULT, { (i64)ServerType::RSH });
     setFallback(Opt::SRV_AUTORUN,                false,                  { (i64)ServerType::RSH });

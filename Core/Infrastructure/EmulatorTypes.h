@@ -96,7 +96,6 @@ enum class DebugFlag
 
     // Misc
     RSH_DEBUG,         ///< Retro shell
-    REC_DEBUG,         ///< Debug the screen recorder
     SCK_DEBUG,         ///< Debug the socket interface
     SRV_DEBUG,         ///< Debug the remote servers
 
@@ -110,14 +109,12 @@ enum class DebugFlag
     FORCE_SNAP_CORRUPTED,
     FORCE_CRT_UNKNOWN,
     FORCE_CRT_UNSUPPORTED,
-    FORCE_RECORDING_ERROR,
-    FORCE_NO_FFMPEG
 };
 
 struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(DebugFlag::FORCE_NO_FFMPEG);
+    static constexpr long maxVal = long(DebugFlag::FORCE_CRT_UNSUPPORTED);
 
     static const char *_key(DebugFlag value)
     {
@@ -194,7 +191,6 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
 
                 // Misc
             case DebugFlag::RSH_DEBUG:                return "RSH_DEBUG";
-            case DebugFlag::REC_DEBUG:                return "REC_DEBUG";
             case DebugFlag::SCK_DEBUG:                return "SCK_DEBUG";
             case DebugFlag::SRV_DEBUG:                return "SRV_DEBUG";
 
@@ -208,8 +204,6 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::FORCE_SNAP_CORRUPTED:     return "FORCE_SNAP_CORRUPTE";
             case DebugFlag::FORCE_CRT_UNKNOWN:        return "FORCE_CRT_UNKNOWN";
             case DebugFlag::FORCE_CRT_UNSUPPORTED:    return "FORCE_CRT_UNSUPPORTED";
-            case DebugFlag::FORCE_RECORDING_ERROR:    return "FORCE_RECORDING_ERROR";
-            case DebugFlag::FORCE_NO_FFMPEG:          return "FORCE_NO_FFMPEG";
         }
         return "???";
     }
@@ -290,7 +284,6 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
 
                 // Misc
             case DebugFlag::RSH_DEBUG:                return "RetroShell";
-            case DebugFlag::REC_DEBUG:                return "Screen recorder";
             case DebugFlag::SCK_DEBUG:                return "Sockets";
             case DebugFlag::SRV_DEBUG:                return "Remote servers";
 
@@ -304,8 +297,6 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::FORCE_SNAP_CORRUPTED:     return "Forced error condition";
             case DebugFlag::FORCE_CRT_UNKNOWN:        return "Forced error condition";
             case DebugFlag::FORCE_CRT_UNSUPPORTED:    return "Forced error condition";
-            case DebugFlag::FORCE_RECORDING_ERROR:    return "Forced error condition";
-            case DebugFlag::FORCE_NO_FFMPEG:          return "Forced error condition";
         }
         return "???";
     }    

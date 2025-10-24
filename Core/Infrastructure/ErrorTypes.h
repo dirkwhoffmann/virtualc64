@@ -69,9 +69,6 @@ enum class Fault : long
     ROM_DRIVE_MISSING,    ///< No Floppy Drive Rom installed
     ROM_MEGA65_MISMATCH,  ///< MEGA65 Roms have different version numbers
 
-    // Recorder
-    REC_LAUNCH,           ///< Can't launch the screen recorder
-
     // Snapshots
     SNAP_TOO_OLD,         ///< Snapshot was created with an older version
     SNAP_TOO_NEW,         ///< Snapshot was created with a later version
@@ -170,8 +167,6 @@ struct FaultEnum : Reflection<FaultEnum, Fault> {
             case Fault::ROM_KERNAL_MISSING:      return "ROM_KERNAL_MISSING";
             case Fault::ROM_DRIVE_MISSING:       return "ROM_DRIVE_MISSING";
             case Fault::ROM_MEGA65_MISMATCH:     return "ROM_MEGA65_MISMATCH";
-
-            case Fault::REC_LAUNCH:              return "REC_LAUNCH";
 
             case Fault::SNAP_TOO_OLD:            return "SNAP_TOO_OLD";
             case Fault::SNAP_TOO_NEW:            return "SNAP_TOO_NEW";

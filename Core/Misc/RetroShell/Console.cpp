@@ -165,12 +165,12 @@ void
 Console::welcome()
 {
     storage << "RetroShell ";
-    remoteManager.rshServer << "vAmiga RetroShell Remote Server ";
+    remoteManager.rshServer << "VirtualC64 RetroShell Remote Server ";
     *this << C64::build() << '\n';
     *this << '\n';
     
     *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-    *this << "https://github.com/dirkwhoffmann/vAmiga" << '\n';
+    *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
     *this << '\n';
     
     // *this << "    " << description() << " console" << "\n\n";

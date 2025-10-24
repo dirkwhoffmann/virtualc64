@@ -555,7 +555,6 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::USR_DEBUG:        return USR_DEBUG;
 
         case DebugFlag::RSH_DEBUG:        return RSH_DEBUG;
-        case DebugFlag::REC_DEBUG:        return REC_DEBUG;
         case DebugFlag::REU_DEBUG:        return REU_DEBUG;
         case DebugFlag::SCK_DEBUG:        return SCK_DEBUG;
         case DebugFlag::SRV_DEBUG:        return SRV_DEBUG;
@@ -569,8 +568,6 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::FORCE_SNAP_CORRUPTED:     return FORCE_SNAP_CORRUPTED;
         case DebugFlag::FORCE_CRT_UNKNOWN:        return FORCE_CRT_UNKNOWN;
         case DebugFlag::FORCE_CRT_UNSUPPORTED:    return FORCE_CRT_UNSUPPORTED;
-        case DebugFlag::FORCE_RECORDING_ERROR:    return FORCE_RECORDING_ERROR;
-        case DebugFlag::FORCE_NO_FFMPEG:          return FORCE_NO_FFMPEG;
 
         default:
             throw AppError(Fault::OPT_UNSUPPORTED,
@@ -648,7 +645,6 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::USR_DEBUG:        USR_DEBUG       = val; break;
 
         case DebugFlag::RSH_DEBUG:        RSH_DEBUG       = val; break;
-        case DebugFlag::REC_DEBUG:        REC_DEBUG       = val; break;
         case DebugFlag::REU_DEBUG:        REU_DEBUG       = val; break;
         case DebugFlag::SCK_DEBUG:        SCK_DEBUG       = val; break;
         case DebugFlag::SRV_DEBUG:        SRV_DEBUG       = val; break;
@@ -662,8 +658,6 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::FORCE_SNAP_CORRUPTED:     FORCE_SNAP_CORRUPTED = val; break;
         case DebugFlag::FORCE_CRT_UNKNOWN:        FORCE_CRT_UNKNOWN = val; break;
         case DebugFlag::FORCE_CRT_UNSUPPORTED:    FORCE_CRT_UNSUPPORTED = val; break;
-        case DebugFlag::FORCE_RECORDING_ERROR:    FORCE_RECORDING_ERROR = val; break;
-        case DebugFlag::FORCE_NO_FFMPEG:          FORCE_NO_FFMPEG = val; break;
 
         default:
             throw AppError(Fault::OPT_UNSUPPORTED,

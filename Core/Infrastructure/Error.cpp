@@ -181,10 +181,6 @@ AppError::AppError(Fault code, const string &s)
             description = "Mega65 Rom revisions do not match.";
             break;
 
-        case Fault::REC_LAUNCH:
-            description = s;
-            break;
-
         case Fault::SNAP_TOO_OLD:
             description = "The snapshot was created with an older version of VirtualC64";
             description += " and is incompatible with this release.";
