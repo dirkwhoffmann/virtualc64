@@ -310,21 +310,7 @@ VirtualC64::halt()
     emu->join();
 }
 
-void 
-VirtualC64::suspend() 
-{
-    VC64_PUBLIC
-    emu->suspend();
-}
-
-void 
-VirtualC64::resume() 
-{
-    VC64_PUBLIC
-    emu->resume();
-}
-
-void 
+void
 VirtualC64::warpOn(isize source)
 {
     VC64_PUBLIC

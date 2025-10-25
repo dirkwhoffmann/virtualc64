@@ -27,9 +27,7 @@ using peddle::DasmNumberFormat;
 // Base class for all APIs
 //
 
-class API {
-
-public:
+struct API {
 
     class Emulator *emu = nullptr;
 
@@ -42,7 +40,7 @@ public:
 
 /** Memory API
  */
-struct MemoryAPI : API {
+struct MemoryAPI : public API {
 
     class Memory *mem = nullptr;
 
@@ -69,7 +67,7 @@ struct MemoryAPI : API {
 
 /** CPU API
  */
-struct CPUAPI : API {
+struct CPUAPI : public API {
 
     class CPU *cpu = nullptr;
 
@@ -140,7 +138,7 @@ struct CPUAPI : API {
 
 /** CIA API
  */
-struct CIAAPI : API {
+struct CIAAPI : public API {
 
     class CIA *cia = nullptr;
 
@@ -161,7 +159,7 @@ struct CIAAPI : API {
 
 /** VICII API
  */
-struct VICIIAPI : API {
+struct VICIIAPI : public API {
 
     class VICII *vicii = nullptr;
 
@@ -196,7 +194,7 @@ struct VICIIAPI : API {
 
 /** SID Public API
  */
-struct SIDAPI : API {
+struct SIDAPI : public API {
 
     class SIDBridge *sidBridge = nullptr;
 
@@ -222,7 +220,7 @@ struct SIDAPI : API {
 
 /** Audio Port Public API
  */
-struct AudioPortAPI : API {
+struct AudioPortAPI : public API {
 
     class AudioPort *audioPort = nullptr;
 
@@ -280,7 +278,7 @@ struct AudioPortAPI : API {
 
 /** Video Port Public API
  */
-struct VideoPortAPI : API {
+struct VideoPortAPI : public API {
 
     class VideoPort *videoPort = nullptr;
 
@@ -323,7 +321,7 @@ struct VideoPortAPI : API {
 
 /** DMA Debugger Public API
  */
-struct DmaDebuggerAPI : API {
+struct DmaDebuggerAPI : public API {
 
     class DmaDebugger *dmaDebugger = nullptr;
 
@@ -336,7 +334,7 @@ struct DmaDebuggerAPI : API {
 
 /** Keyboard Public API
  */
-struct KeyboardAPI : API {
+struct KeyboardAPI : public API {
 
     class Keyboard *keyboard = nullptr;
 
@@ -396,7 +394,7 @@ struct KeyboardAPI : API {
 
 /** Mouse Public API
  */
-struct MouseAPI : API {
+struct MouseAPI : public API {
 
     class Mouse *mouse = nullptr;
 
@@ -449,7 +447,7 @@ struct MouseAPI : API {
 
 /** Joystick Public API
  */
-struct JoystickAPI : API {
+struct JoystickAPI : public API {
 
     class Joystick *joystick = nullptr;
 
@@ -466,7 +464,7 @@ struct JoystickAPI : API {
 
 /** Paddle Public API
  */
-struct PaddleAPI : API {
+struct PaddleAPI : public API {
 
     class Paddle *paddle = nullptr;
 
@@ -479,7 +477,7 @@ struct PaddleAPI : API {
 
 /** Datasette Public API
  */
-struct DatasetteAPI : API {
+struct DatasetteAPI : public API {
 
     class Datasette *datasette = nullptr;
 
@@ -506,7 +504,7 @@ struct DatasetteAPI : API {
 
 /** RS232 Public API
  */
-struct RS232API : API {
+struct RS232API : public API {
 
     class RS232 *rs232 = nullptr;
 
@@ -548,7 +546,7 @@ struct RS232API : API {
 
 /** Control Port API
  */
-struct ControlPortAPI : API {
+struct ControlPortAPI : public API {
 
     class ControlPort *controlPort = nullptr;
 
@@ -568,7 +566,7 @@ struct ControlPortAPI : API {
 
 /** User Port API
  */
-struct UserPortAPI : API {
+struct UserPortAPI : public API {
 
     class UserPort *userPort = nullptr;
 
@@ -580,7 +578,7 @@ struct UserPortAPI : API {
 
 /** Expansion Port Public API
  */
-struct ExpansionPortAPI : API {
+struct ExpansionPortAPI : public API {
 
     class ExpansionPort *expansionPort = nullptr;
 
@@ -642,7 +640,7 @@ struct ExpansionPortAPI : API {
 // Serial port (IEC bus)
 //
 
-struct SerialPortAPI : API {
+struct SerialPortAPI : public API {
 
     class SerialPort *serialPort = nullptr;
 
@@ -655,7 +653,7 @@ struct SerialPortAPI : API {
 
 /** Disk Public API
  */
-struct DiskAPI : API {
+struct DiskAPI : public API {
 
     class Drive *drive = nullptr;
 
@@ -672,7 +670,7 @@ struct DiskAPI : API {
 
 /** Drive Public API
  */
-struct DriveAPI : API {
+struct DriveAPI : public API {
 
     class Drive *drive = nullptr;
 
@@ -731,7 +729,7 @@ struct RemoteManagerAPI : public API {
 
 /** RetroShell Public API
  */
-struct RetroShellAPI : API {
+struct RetroShellAPI : public API {
 
     class RetroShell *retroShell = nullptr;
 
@@ -833,7 +831,7 @@ struct RetroShellAPI : API {
  *    storing shader-relevant parameters that are irrelevant to the emulation
  *    core.
  */
-struct DefaultsAPI : API {
+struct DefaultsAPI : public API {
 
     class Defaults *defaults = nullptr;
 
@@ -1106,13 +1104,13 @@ struct C64API : public API {
      *
      *  @param  path    Path to a workspace folder
      */
-    void loadWorkspace(const fs::path &path);
+    void loadWorkspace(const std::filesystem::path &path);
 
     /** @brief  Saves a workspace to disk.
      *
      *  @param  path    Destination path
      */
-    void saveWorkspace(const fs::path &path) const;
+    void saveWorkspace(const std::filesystem::path &path) const;
 
     /** @brief  Takes a snapshot
      *
@@ -1137,13 +1135,13 @@ struct C64API : public API {
      *
      *  @param  path    Source path
      */
-    void loadSnapshot(const fs::path &path);
+    void loadSnapshot(const std::filesystem::path &path);
 
     /** @brief  Saves a snapshot to disk
      *
      *  @param  path    Destination path
      */
-    void saveSnapshot(const fs::path &path, Compressor compressor) const;
+    void saveSnapshot(const std::filesystem::path &path, Compressor compressor) const;
 
 
     /// @}
@@ -1156,7 +1154,7 @@ struct C64API : public API {
      *  @throw  AppError (ROMemType::BASIC_MISSING)
      *          AppError (FILE_TYPE_MISMATCH)
      */
-    void loadRom(const fs::path &path);
+    void loadRom(const std::filesystem::path &path);
 
     /** @brief  Loads a ROM, provided by a RomFile object
      */
@@ -1215,13 +1213,45 @@ struct C64API : public API {
  * VICII API provides additional functions that interact directly with the
  * VICII graphics chip.
  */
-class VirtualC64 : API {
+class VirtualC64 : public API {
+
+public:
+
+    static DefaultsAPI defaults;
+
+    // Components
+    C64API c64;
+    MemoryAPI mem;
+    CPUAPI cpu;
+    CIAAPI cia1, cia2;
+    SIDAPI sid;
+    VICIIAPI vicii;
+
+    // Ports
+    AudioPortAPI audioPort;
+    ControlPortAPI controlPort1, controlPort2;
+    ExpansionPortAPI expansionPort;
+    SerialPortAPI serialPort;
+    UserPortAPI userPort;
+    VideoPortAPI videoPort;
+
+    // Peripherals
+    DatasetteAPI datasette;
+    DriveAPI drive8, drive9;
+    KeyboardAPI keyboard;
+
+    // Misc
+    DmaDebuggerAPI dmaDebugger;
+    RemoteManagerAPI remoteManager;
+    RetroShellAPI retroShell;
+
+    // Shortcuts
+    DriveAPI *drive[4] = { &drive8, &drive9 };
+
 
     //
     // Static methods
     //
-
-public:
 
     /** @brief  Returns a version string for this release.
      */
@@ -1235,8 +1265,6 @@ public:
     //
     // Initializing
     //
-
-public:
 
     VirtualC64();
     ~VirtualC64();
@@ -1362,20 +1390,6 @@ public:
      *  normal operation.
      */
     void halt();
-
-    /** @brief   Suspends the emulator thread
-     *
-     *  See the \ref vc64::Suspendable "Suspendable" class for a detailes
-     *  description of the suspend-resume machanism.
-     */
-    void suspend();
-
-    /** @brief   Suspends the emulator thread
-     *
-     *  See the \ref vc64::Suspendable "Suspendable" class for a detailes
-     *  description of the suspend-resume machanism.
-     */
-    void resume();
 
     /** @brief  Enables warp mode.
      */
@@ -1566,29 +1580,6 @@ public:
     void put(Cmd type, TapeCmd payload) { put(Command(type, payload)); }
     void put(Cmd type, AlarmCmd payload) { put(Command(type, payload)); }
     /// @}
-
-
-    /** @brief  Custom APIs of subcomponents
-     */
-    static DefaultsAPI defaults;
-    C64API c64;
-    MemoryAPI mem;
-    CPUAPI cpu;
-    CIAAPI cia1, cia2;
-    VICIIAPI vicii;
-    SIDAPI sid;
-    AudioPortAPI audioPort;
-    VideoPortAPI videoPort;
-    DmaDebuggerAPI dmaDebugger;
-    KeyboardAPI keyboard;
-    DatasetteAPI datasette;
-    ControlPortAPI controlPort1, controlPort2;
-    UserPortAPI userPort;
-    ExpansionPortAPI expansionPort;
-    SerialPortAPI serialPort;
-    DriveAPI drive8, drive9;
-    RemoteManagerAPI remoteManager;
-    RetroShellAPI retroShell;
 };
 
 }
