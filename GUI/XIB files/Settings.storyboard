@@ -59,19 +59,19 @@
         <scene sceneID="HCp-je-nFO">
             <objects>
                 <viewController storyboardIdentifier="SidebarViewController" id="Q7S-mt-x3K" customClass="SidebarViewController" customModule="VirtualC64" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="ZXg-N6-oJO">
-                        <rect key="frame" x="0.0" y="0.0" width="220" height="362"/>
+                    <view key="view" misplaced="YES" id="ZXg-N6-oJO">
+                        <rect key="frame" x="0.0" y="0.0" width="220" height="413"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="32" horizontalPageScroll="10" verticalLineScroll="32" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ej-5u-yUe">
-                                <rect key="frame" x="0.0" y="0.0" width="220" height="362"/>
+                                <rect key="frame" x="0.0" y="0.0" width="220" height="413"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="dVA-9k-CoE">
-                                    <rect key="frame" x="1" y="1" width="218" height="360"/>
+                                    <rect key="frame" x="1" y="1" width="218" height="411"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="32" rowSizeStyle="automatic" headerView="7MY-3B-eVb" viewBased="YES" indentationPerLevel="13" outlineTableColumn="EUQ-eO-eBG" id="Wg2-c5-D1r" customClass="SettingsOutlineView" customModule="VirtualC64" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="222" height="332"/>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="32" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="13" outlineTableColumn="EUQ-eO-eBG" id="Wg2-c5-D1r" customClass="SettingsOutlineView" customModule="VirtualC64" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="222" height="411"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -124,17 +124,13 @@
                                     <nil key="backgroundColor"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="YSu-PW-oeu">
-                                    <rect key="frame" x="1" y="344" width="218" height="17"/>
+                                    <rect key="frame" x="1" y="395" width="218" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="dRr-pt-cyE">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <tableHeaderView key="headerView" wantsLayer="YES" id="7MY-3B-eVb">
-                                    <rect key="frame" x="0.0" y="0.0" width="222" height="28"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableHeaderView>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5bp-U9-WGZ"/>

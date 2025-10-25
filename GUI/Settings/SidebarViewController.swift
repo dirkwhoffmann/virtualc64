@@ -65,11 +65,11 @@ class SidebarViewController: NSViewController {
         outlineView.usesAlternatingRowBackgroundColors = false
         outlineView.reloadData()
 
-        // Select first item by default
-        outlineView.selectRowIndexes(IndexSet(integer: 1), byExtendingSelection: false)
-
         // Expand all items
         for item in self.items { outlineView.expandItem(item, expandChildren: true) }
+
+        // Select first item by default
+        outlineView.selectRowIndexes(IndexSet(integer: 1), byExtendingSelection: false)
     }
 }
 
@@ -109,6 +109,12 @@ extension SidebarViewController: NSOutlineViewDataSource {
 
 extension SidebarViewController: NSOutlineViewDelegate {
 
+    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
+
+        guard let sidebarItem = item as? SidebarItem else { return true }
+        return sidebarItem.children.isEmpty
+    }
+
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
 
         let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("SidebarCell"), owner: self) as? NSTableCellView
@@ -132,11 +138,5 @@ extension SidebarViewController: NSOutlineViewDelegate {
                 selectionHandler?(item)
             }
         }
-        /*
-        let selectedIndex = outlineView.selectedRow
-        if selectedIndex >= 0 {
-            selectionHandler?(items[selectedIndex])
-        }
-        */
     }
 }
