@@ -863,7 +863,6 @@
 		505F45642E96961900418105 /* CapturesSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturesSettings.swift; sourceTree = "<group>"; };
 		505F45662E96962300418105 /* ControlsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsSettings.swift; sourceTree = "<group>"; };
 		505F45682E96963300418105 /* DevicesSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesSettings.swift; sourceTree = "<group>"; };
-		505F456A2E96968700418105 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		505F456B2E96989C00418105 /* RomSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomSettings.swift; sourceTree = "<group>"; };
 		505F456D2E9698AF00418105 /* HardwareSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardwareSettings.swift; sourceTree = "<group>"; };
 		505F456F2E9698BE00418105 /* PeripheralsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralsSettings.swift; sourceTree = "<group>"; };
@@ -1925,7 +1924,6 @@
 		505F45572E96954500418105 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				505F456A2E96968700418105 /* Untitled.swift */,
 				5009CF3224C0B8EF00F674FF /* Preferences.swift */,
 				50769B8924BB1B87006FE743 /* Configuration.swift */,
 				505F45552E96953000418105 /* SettingsOutlineView.swift */,
@@ -2952,7 +2950,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 251021;
+				CURRENT_PROJECT_VERSION = 251025;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -3006,7 +3004,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 251021;
+				CURRENT_PROJECT_VERSION = 251025;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";

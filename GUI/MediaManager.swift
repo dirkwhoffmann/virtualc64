@@ -176,7 +176,35 @@ class MediaManager {
         let n = drive == DRIVE8 ? 0 : 1
         exportedFloppyDisks[n] = [URL]()
     }
-    
+
+    func noteNewRecentlyOpenedURL(_ url: URL, type: FileType) {
+
+        switch type {
+
+        case .CRT:
+            MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
+        case .T64, .P00, .PRG, .D64, .G64:
+            MediaManager.noteNewRecentlyInsertedDiskURL(url)
+        case .TAP:
+            MediaManager.noteNewRecentlyInsertedTapeURL(url)
+        default:
+            break
+        }
+    }
+
+    func noteNewRecentlyExportedURL(_ url: URL, nr: Int, type: FileType) {
+
+        switch type {
+
+        case .T64, .P00, .PRG, .D64, .G64:
+            noteNewRecentlyExportedDiskURL(url, drive: nr)
+        case .TAP:
+            break
+        default:
+            break
+        }
+    }
+
     //
     // Creating media files from URLs
     //

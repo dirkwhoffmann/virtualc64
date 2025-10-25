@@ -201,8 +201,6 @@ class MyDocument: NSDocument {
 
     func processWorkspaceFile(url: URL, force: Bool = false) throws {
 
-        // Swift.print("processWorkspaceFile \(url) force: \(force)")
-
         // Load workspace
         try emu?.c64.loadWorkspace(url: url)
 
@@ -220,7 +218,7 @@ class MyDocument: NSDocument {
         for file in contents {
             if !exclude.contains(url.deletingPathExtension().lastPathComponent) {
                 if let type = supportedTypes[file.pathExtension.lowercased()] {
-                    // mm.noteNewRecentlyOpenedURL(file, type: type)
+                    mm.noteNewRecentlyOpenedURL(file, type: type)
                 }
             }
         }

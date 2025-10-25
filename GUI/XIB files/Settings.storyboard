@@ -430,10 +430,8 @@
                         <outlet property="lockInfo2" destination="cBb-Yn-6GG" id="zjA-oy-p7t"/>
                         <outlet property="pauseInBackground" destination="7bB-Bn-rfp" id="ilc-YS-Vl9"/>
                         <outlet property="releaseMouseByShaking" destination="ffJ-Iq-xNA" id="VoY-vi-2Ed"/>
-                        <outlet property="releaseMouseKeyComb" destination="gpp-BS-1z4" id="BKV-W0-6Ck"/>
                         <outlet property="retainMouseByClick" destination="PjQ-MW-rJn" id="XMi-Pg-rts"/>
                         <outlet property="retainMouseByEntering" destination="tHI-il-JpR" id="grp-uk-Tcr"/>
-                        <outlet property="retainMouseKeyComb" destination="2tZ-P2-vNB" id="lc9-o3-92M"/>
                     </connections>
                 </viewController>
                 <customObject id="YXC-Ol-OU1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
