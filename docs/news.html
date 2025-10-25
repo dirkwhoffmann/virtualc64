@@ -175,6 +175,36 @@
 									<h2>News</h2>
 								</header>
 
+								<h3><em>25.10.2025 &nbsp;</em>VirtualC64 6.0 Beta 1 released</h3>
+								<p>Originally, I had planned to release VirtualC64 versions 5.4, 5.5, and so on, gradually migrating the latest code changes from vAmiga step by step. However, I’ve changed plans and recently ported nearly all of vAmiga’s new features at once. Given the scale of these changes, I decided to bump the version number to 6.0, especially because this release introduces workspaces as the new document format for the emulator. Main Changes:</p> 
+								<ul>
+								  <li>
+								    <strong>Workspaces</strong><br>
+								    A workspace is a bundle containing ROMs, media files, and configuration scripts. When a workspace is loaded, the ROMs are automatically installed, disks and cartridges are mounted, and the configuration script is executed before the emulator reboots. Essentially, it represents a complete working environment that restores itself automatically.<br>
+								    Since the configuration script syntax is relatively stable, workspaces avoid the compatibility issues of snapshots, whose format often changes between releases, making older snapshots unusable after updates. Snapshots remain available, though, and can still be saved and loaded from the File menu.
+								  </li>
+								  <li>
+								    <strong>Unified Settings</strong><br>
+								    Until now, settings were split into Preferences (shared among emulator instances) and Virtual Machine Configurations (unique to each instance). In version 6.0, all settings are unified into a single settings dialog, simplifying configuration management.
+								  </li>
+								  <li>
+								    <strong>Enhanced RetroShell</strong><br>
+								    The RetroShell parser has been replaced by vAmiga’s latest version, offering more flexible command parsing and support for more complex syntax variants. Note that some command syntaxes have changed, so older configuration scripts may no longer be fully compatible.
+								  </li>
+								  <li>
+								    <strong>Adaptive Sample Rate (ASR)</strong><br>
+								    VirtualC64 6.0 features improved sample rate adjustment, significantly reducing buffer underflows and overflows. This allowed for a smaller audio buffer, which in turn decreases the delay between video and audio output.
+								  </li>
+								  <li>
+								    <strong>GamePad Database</strong><br>
+								    Version 6.0 now uses the SDL GamePad database to recognize connected controllers. This feature, borrowed from vAmiga, improves overall gamepad compatibility and support.
+								  </li>
+								  <li>
+								    <strong>Redesigned Toolbars</strong><br>
+								    All window toolbars are now created manually to improve compatibility with macOS Tahoe. However, Tahoe is still not officially supported, as I prefer not to invest time fixing issues on what I still consider one of Apple’s biggest missteps.
+								  </li>
+								</ul></p>
+
 								<h3><em>26.12.2024 &nbsp;</em>VirtualC64 5.1 released</h3>
 								<p>This release features massively improved REU support and fixes several minor bugs.</p>
 
