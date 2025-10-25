@@ -841,8 +841,6 @@ struct DefaultsAPI : public API {
     /// @{
     /// @name Loading and saving the key-value storage
 
-public:
-
     /** @brief  Loads a storage file from disk
      *  @throw  AppError (#FILE_NOT_FOUND)
      *  @throw  AppError (#SYNTAX)
@@ -876,8 +874,6 @@ public:
     /// @}
     /// @{
     /// @name Reading key-value pairs
-
-public:
 
     /** @brief  Queries a key-value pair.
      *  @param  key     The key.
@@ -1213,9 +1209,7 @@ struct C64API : public API {
  * VICII API provides additional functions that interact directly with the
  * VICII graphics chip.
  */
-class VirtualC64 : public API {
-
-public:
+struct VirtualC64 : public API {
 
     static DefaultsAPI defaults;
 

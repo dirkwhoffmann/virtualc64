@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class VirtualC64;
+struct VirtualC64;
 
 class Script : public AnyFile {
     
