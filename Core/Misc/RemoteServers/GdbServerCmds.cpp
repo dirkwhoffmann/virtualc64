@@ -31,11 +31,136 @@ GdbServer::process <' ', GdbCmd::CtrlC> (string arg)
     reply("OK");
 }
 
+//
+// 'j' Command
+//
+
+template <> void
+GdbServer::process <'j', GdbCmd::ThreadExtendedInfo> (string arg)
+{
+    std::string payload = ""; // {\"id\":1,\"stop_reason\":\"none\"}";
+
+    reply(payload);
+}
+
+template <> void
+GdbServer::process <'j', GdbCmd::ThreadsInfo> (string arg)
+{
+    /*
+    std::string payload = "{"
+                          "  \"threads\": ["
+                          "    {"
+                          "      \"id\": 1,"
+                          "      \"name\": \"cpu0\","
+                          "      \"stop_reason\": \"none\""
+                          "    }"
+                          "  ],"
+                          "  \"total_count\": 1"
+                          "}";
+
+    reply(payload);
+    */
+    reply("");
+}
+
+template <> void
+GdbServer::process <'j'> (string cmd)
+{
+    auto command = cmd;
+
+    if (command.starts_with("ThreadExtendedInfo")) {
+        process <'j', GdbCmd::ThreadExtendedInfo> (""); return;
+    }
+    if (command == "ThreadsInfo") {
+        process <'j', GdbCmd::ThreadsInfo> (""); return;
+    }
+
+    throw AppError(Fault::GDB_UNSUPPORTED_CMD, "v");
+}
+
+//
+// 'q' Command
+//
+
+template <> void
+GdbServer::process <'q', GdbCmd::Attached> (string arg)
+{
+    reply("0");
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::fThreadInfo> (string arg)
+{
+    reply("m1");
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::HostInfo> (string arg)
+{
+    reply("cputype:6502;"
+          "endian:little;"
+          "ptrsize:2");
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::Offset> (string arg)
+{
+    string result = "??";
+
+    reply(result);
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::ProcessInfo> (string arg)
+{
+    reply("pid:1;name:6502-emu;triple:6502-unknown-unknown;endian:little;ptrsize:2");
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::RegisterInfo> (string arg)
+{
+    string result = "";
+    auto nr = arg.substr(std::string("RegisterInfo").size());
+
+    try {
+        switch (std::stoi(nr)) {
+
+            case 0: result = "name:A;bitsize:8;encoding:uint;format:hex;"; break;
+            case 1: result = "name:X;bitsize:8;encoding:uint;format:hex;"; break;
+            case 2: result = "name:Y;bitsize:8;encoding:uint;format:hex;"; break;
+            case 3: result = "name:P;bitsize:8;encoding:uint;format:hex;"; break;
+            case 4: result = "name:S;bitsize:8;encoding:uint;format:hex;"; break;
+            case 5: result = "name:PC;bitsize:16;encoding:uint;format:hex;"; break;
+            default: break;
+        }
+    } catch (...) { }
+
+    reply(result);
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::ShlibInfoAddr> (string arg)
+{
+    reply("");
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::sThreadInfo> (string arg)
+{
+    reply("l");
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::StructuredDataPlugins> (string arg)
+{
+    reply("");
+}
+
 template <> void
 GdbServer::process <'q', GdbCmd::Supported> (string arg)
 {
-    reply("PacketSize=1ff;"
-          "multiprocess-;"
+    reply("PacketSize=4000;"
+          "qXfer:features:read+;"
           "swbreak+;"
           "QStartNoAckMode+;"
           "vContSupported+");
@@ -45,14 +170,6 @@ template <> void
 GdbServer::process <'q', GdbCmd::Symbol> (string arg)
 {
     reply("OK");
-}
-
-template <> void
-GdbServer::process <'q', GdbCmd::Offset> (string arg)
-{
-    string result = "??";
-
-    reply(result);
 }
 
 template <> void
@@ -74,27 +191,115 @@ GdbServer::process <'q', GdbCmd::TfP> (string arg)
 }
 
 template <> void
-GdbServer::process <'q', GdbCmd::fThreadInfo> (string arg)
-{
-    reply("m1");
-}
-
-template <> void
-GdbServer::process <'q', GdbCmd::sThreadInfo> (string arg)
-{
-    reply("l");
-}
-
-template <> void
-GdbServer::process <'q', GdbCmd::Attached> (string arg)
-{
-    reply("0");
-}
-
-template <> void
 GdbServer::process <'q', GdbCmd::C> (string arg)
 {
     reply("");
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::VAttachOrWaitSupported> (string arg)
+{
+    reply("");
+}
+
+template <> void
+GdbServer::process <'q', GdbCmd::Xfer> (string arg)
+{
+    string result;
+    auto tokens = util::split(arg, ':');
+
+    if (tokens.size() >= 5) {
+
+        if (tokens[1] == "features" && tokens[2] == "read") {
+
+            result =
+            "<?xml version=\"1.0\"?>"
+            "<!DOCTYPE feature SYSTEM \"gdb-target.dtd\">!"
+            "<target>"
+            "  <architecture>mos6502</architecture>"
+            "  <feature name=\"org.gnu.gdb.mos6502\">"
+            "    <reg name=\"A\" bitsize=\"8\" type=\"uint8\"/>"
+            "    <reg name=\"X\" bitsize=\"8\" type=\"uint8\"/>"
+            "    <reg name=\"Y\" bitsize=\"8\" type=\"uint8\"/>"
+            "    <reg name=\"P\" bitsize=\"8\" type=\"uint8\"/>"
+            "    <reg name=\"S\" bitsize=\"8\" type=\"uint8\"/>"
+            "    <reg name=\"PC\" bitsize=\"16\" type=\"uint16\"/>"
+            "  </feature>"
+            "</target>";
+        }
+    }
+
+    reply(result);
+}
+
+template <> void
+GdbServer::process <'q'> (string cmd)
+{
+    auto command = cmd.substr(0, cmd.find(":"));
+
+    if (command == "Attached") {
+        process <'q', GdbCmd::Attached> (""); return;
+    }
+    if (command == "C") {
+        process <'q', GdbCmd::C> (""); return;
+    }
+    if (command == "fThreadInfo") {
+        process <'q', GdbCmd::fThreadInfo> (""); return;
+    }
+    if (command == "HostInfo") {
+        process <'q', GdbCmd::HostInfo> (""); return;
+    }
+    if (command == "Offsets") {
+        process <'q', GdbCmd::Offset> (""); return;
+    }
+    if (command == "ProcessInfo") {
+        process <'q', GdbCmd::ProcessInfo> (""); return;
+    }
+    if (command.starts_with("RegisterInfo")) {
+        process <'q', GdbCmd::RegisterInfo> (command); return;
+    }
+    if (command == "ShlibInfoAddr") {
+        process <'q', GdbCmd::ShlibInfoAddr> (""); return;
+    }
+    if (command == "sThreadInfo") {
+        process <'q', GdbCmd::sThreadInfo> (""); return;
+    }
+    if (command == "StructuredDataPlugins") {
+        process <'q', GdbCmd::StructuredDataPlugins> (""); return;
+    }
+    if (command == "Supported") {
+        process <'q', GdbCmd::Supported> (""); return;
+    }
+    if (command == "Symbol::") {
+        process <'q', GdbCmd::Symbol> (""); return;
+    }
+    if (command == "TStatus") {
+        process <'q', GdbCmd::TStatus> (""); return;
+    }
+    if (command == "TfV") {
+        process <'q', GdbCmd::TfV> (""); return;
+    }
+    if (command == "TfP") {
+        process <'q', GdbCmd::TfP> (""); return;
+    }
+    if (command == "VAttachOrWaitSupported") {
+        process <'q', GdbCmd::VAttachOrWaitSupported> (""); return;
+    }
+    if (command == "Xfer") {
+        process <'q', GdbCmd::Xfer> (cmd); return;
+    }
+
+    throw AppError(Fault::GDB_UNSUPPORTED_CMD, "q");
+}
+
+//
+// 'Q' Command
+//
+
+template <> void
+GdbServer::process <'Q', GdbCmd::EnableErrorStrings> (string arg)
+{
+    reply("OK");
 }
 
 template <> void
@@ -105,6 +310,43 @@ GdbServer::process <'Q', GdbCmd::StartNoAckMode> (string arg)
 }
 
 template <> void
+GdbServer::process <'Q', GdbCmd::ThreadSuffixSupported> (string arg)
+{
+    reply("OK");
+}
+
+template <> void
+GdbServer::process <'Q', GdbCmd::ListThreadsInStopReply> (string arg)
+{
+    reply("OK");
+}
+
+template <> void
+GdbServer::process <'Q'> (string cmd)
+{
+    auto tokens = util::split(cmd, ':');
+
+    if (tokens[0] == "EnableErrorStrings") {
+        process <'Q', GdbCmd::EnableErrorStrings> (""); return;
+    }
+    if (tokens[0] == "StartNoAckMode") {
+        process <'Q', GdbCmd::StartNoAckMode> (""); return;
+    }
+    if (tokens[0] == "ThreadSuffixSupported") {
+        process <'Q', GdbCmd::ThreadSuffixSupported> (""); return;
+    }
+    if (tokens[0] == "ListThreadsInStopReply") {
+        process <'Q', GdbCmd::ListThreadsInStopReply> (""); return;
+    }
+
+    throw AppError(Fault::GDB_UNSUPPORTED_CMD, "Q");
+}
+
+//
+// 'v' Command
+//
+
+template <> void
 GdbServer::process <'v', GdbCmd::MustReplyEmpty> (string arg)
 {
     reply("");
@@ -113,7 +355,7 @@ GdbServer::process <'v', GdbCmd::MustReplyEmpty> (string arg)
 template <> void
 GdbServer::process <'v', GdbCmd::ContQ> (string arg)
 {
-    reply("vCont;cst");
+    reply("vCont;cs");
 }
 
 template <> void
@@ -127,6 +369,7 @@ GdbServer::process <'v', GdbCmd::Cont> (string arg)
     if (arg == "s") {
 
         emulator.stepInto();
+        reply("T05;01:12;02:34;03:56;05:1234;");
         return;
     }
 
@@ -163,78 +406,9 @@ GdbServer::process <'v'> (string cmd)
     throw AppError(Fault::GDB_UNSUPPORTED_CMD, "v");
 }
 
-template <> void
-GdbServer::process <'q'> (string cmd)
-{
-    auto command = cmd.substr(0, cmd.find(":"));
-
-    if (command == "Supported") {
-
-        process <'q', GdbCmd::Supported> ("");
-        return;
-    }
-    if (cmd == "Symbol::") {
-
-        process <'q', GdbCmd::Symbol> ("");
-        return;
-    }
-    if (cmd == "Offsets") {
-
-        process <'q', GdbCmd::Offset> ("");
-        return;
-    }
-    if (cmd == "TStatus") {
-
-        process <'q', GdbCmd::TStatus> ("");
-        return;
-    }
-    if (cmd == "TfV") {
-
-        process <'q', GdbCmd::TfV> ("");
-        return;
-    }
-    if (cmd == "TfP") {
-
-        process <'q', GdbCmd::TfP> ("");
-        return;
-    }
-    if (cmd == "fThreadInfo") {
-
-        process <'q', GdbCmd::fThreadInfo> ("");
-        return;
-    }
-    if (cmd == "sThreadInfo") {
-
-        process <'q', GdbCmd::sThreadInfo> ("");
-        return;
-    }
-    if (command == "Attached") {
-
-        process <'q', GdbCmd::Attached> ("");
-        return;
-    }
-    if (command == "C") {
-
-        process <'q', GdbCmd::C> ("");
-        return;
-    }
-
-    throw AppError(Fault::GDB_UNSUPPORTED_CMD, "q");
-}
-
-template <> void
-GdbServer::process <'Q'> (string cmd)
-{
-    auto tokens = util::split(cmd, ':');
-
-    if (tokens[0] == "StartNoAckMode") {
-
-        process <'Q', GdbCmd::StartNoAckMode> ("");
-        return;
-    }
-
-    throw AppError(Fault::GDB_UNSUPPORTED_CMD, "Q");
-}
+//
+// Other Command
+//
 
 template <> void
 GdbServer::process <'g'> (string cmd)
@@ -334,8 +508,11 @@ GdbServer::process <'M'> (string cmd)
 template <> void
 GdbServer::process <'p'> (string cmd)
 {
+    auto tokens = util::split(cmd, ';');
+    if (tokens.size() == 0) { reply(""); return; }
+
     isize nr;
-    util::parseHex(cmd, &nr);
+    util::parseHex(tokens[0], &nr);
     reply(readRegister(nr));
 }
 
@@ -464,6 +641,7 @@ GdbServer::process(char cmd, string package)
         case 'G' : process <'G'> (package); break;
         case '?' : process <'?'> (package); break;
         case '!' : process <'!'> (package); break;
+        case 'j' : process <'j'> (package); break;
         case 'k' : process <'k'> (package); break;
         case 'm' : process <'m'> (package); break;
         case 'M' : process <'M'> (package); break;

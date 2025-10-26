@@ -45,6 +45,8 @@ TextStorage::operator [] (isize i)
 void
 TextStorage::text(string &all)
 {
+    SYNCHRONIZED
+    
     auto count = size();
     
     all = "";
@@ -77,6 +79,8 @@ TextStorage::lastLineIsEmpty()
 void
 TextStorage::append(const string &line)
 {
+    SYNCHRONIZED
+
     storage.push_back(line);
     
     // Remove old entries if the storage grows too large

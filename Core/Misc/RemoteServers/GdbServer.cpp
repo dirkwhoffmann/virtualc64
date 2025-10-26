@@ -46,6 +46,7 @@ GdbServer::doReceive()
 
     if (config.verbose) {
         retroShell << "R: " << util::makePrintable(cmd) << "\n";
+        printf("R: %s\n", util::makePrintable(cmd).c_str());
     }
 
     latestCmd = cmd;
@@ -59,6 +60,7 @@ GdbServer::doSend(const string &payload)
 
     if (config.verbose) {
         retroShell << "T: " << util::makePrintable(payload) << "\n";
+        printf("T: %s\n", util::makePrintable(payload).c_str());
     }
 }
 
@@ -130,9 +132,16 @@ GdbServer::verifyChecksum(const string &s, const string &chk)
 string
 GdbServer::readRegister(isize nr)
 {
-    return util::hexstr <8> (0x42);
+    switch (nr) {
 
-//    return "xxxxxxxx";
+        case 0: return util::hexstr <2> (c64.cpu.reg.a);
+        case 1: return util::hexstr <2> (c64.cpu.reg.x);
+        case 2: return util::hexstr <2> (c64.cpu.reg.y);
+        case 3: return util::hexstr <2> (c64.cpu.reg.sp);
+        case 4: return util::hexstr <2> (c64.cpu.getP());
+        case 5: return util::hexstr <2> (c64.cpu.getPC0());
+        default: return "0x0";
+    }
 }
 
 string
