@@ -30,6 +30,14 @@ GdbServer::_dump(Category category, std::ostream &os) const
     RemoteServer::_dump(category, os);
 }
 
+void
+GdbServer::_pause()
+{
+    printf("GdbServer::_pause()\n");
+
+    replyT();
+}
+
 bool
 GdbServer::shouldRun()
 {
@@ -87,7 +95,7 @@ GdbServer::doProcess(const string &payload)
 void
 GdbServer::didStart()
 {
-    // emulator.pause();
+    emulator.put(Cmd::PAUSE);
 }
 
 void
@@ -114,6 +122,40 @@ GdbServer::reply(const string &payload)
     send(packet);
 }
 
+void
+GdbServer::replyJSON(const string &payload)
+{
+    string encoded;
+
+    for (char c: payload) {
+
+        if (c == '#' || c == '$' || c == '}' || c == '{' || c == '"' || c == '%') {
+
+            char buf[4];
+            snprintf(buf, sizeof(buf), "%%%02X", (unsigned char)c);
+            encoded += buf;
+
+        } else {
+
+            encoded += c;
+        }
+    }
+
+    reply(encoded);
+}
+
+void
+GdbServer::replyT()
+{
+    std::vector<string> result = { "T05" };
+
+    for (isize i = 0; i <= 5; i++) {
+        result.push_back("0" + std::to_string(i) + ":" + readRegister(i));
+    }
+
+    reply(util::concat(result, ";"));
+}
+
 string
 GdbServer::computeChecksum(const string &s)
 {
@@ -134,13 +176,13 @@ GdbServer::readRegister(isize nr)
 {
     switch (nr) {
 
-        case 0: return util::hexstr <2> (c64.cpu.reg.a);
-        case 1: return util::hexstr <2> (c64.cpu.reg.x);
-        case 2: return util::hexstr <2> (c64.cpu.reg.y);
-        case 3: return util::hexstr <2> (c64.cpu.reg.sp);
-        case 4: return util::hexstr <2> (c64.cpu.getP());
-        case 5: return util::hexstr <2> (c64.cpu.getPC0());
-        default: return "0x0";
+        case 0: return util::hexstr<2>(c64.cpu.reg.a);
+        case 1: return util::hexstr<2>(c64.cpu.reg.x);
+        case 2: return util::hexstr<2>(c64.cpu.reg.y);
+        case 3: return util::hexstr<2>(c64.cpu.reg.sp);
+        case 4: return util::hexstr<2>(c64.cpu.getP());
+        case 5: return util::hexstr<4>(c64.cpu.getPC0());
+        default: return "00";
     }
 }
 

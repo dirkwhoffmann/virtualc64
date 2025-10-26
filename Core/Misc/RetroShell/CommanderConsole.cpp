@@ -74,7 +74,7 @@ void
 CommanderConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
-    
+
     //
     // Workspace management
     //
@@ -112,7 +112,7 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     // Regression tester
     //
-    
+
     RSCommand::currentGroup = "Regression testing";
 
     auto cmd = registerComponent(regressionTester, releaseBuild ? rs::hidden : 0);
@@ -214,17 +214,17 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
-    
+
     //
     // Components
     //
-    
+
     RSCommand::currentGroup = "Components";
-    
+
     //
     // Components (C64)
     //
-    
+
     cmd = registerComponent(c64);
 
     root.add({
@@ -281,11 +281,11 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     // Components (Memory)
     //
-    
+
     cmd = registerComponent(mem);
-    
+
     root.add({
-        
+
         .tokens = { cmd, "flash" },
         .chelp  = { "Flashes a file into memory" },
         .args   = { { .name = { "path", "File path" } } },
@@ -293,12 +293,12 @@ CommanderConsole::initCommands(RSCommand &root)
 
             auto path = host.makeAbsolute(args.at("path"));
             if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
-            
+
             auto file = PRGFile(path);
             c64.flash(file, 0);
         }
     });
-    
+
     root.add({
 
         .tokens = { cmd, "load" },
@@ -334,19 +334,19 @@ CommanderConsole::initCommands(RSCommand &root)
     });
 
     root.add({
-        
+
         .tokens = { cmd, "load", "openroms" },
         .chelp  = { "Installs the MEGA65 OpenROMs" },
         .args   = {
             { .name = { "path", "File path" } },
             { .name = { "address", "Target memory address" } },
         },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            c64.installOpenRoms();
-        }
+                c64.installOpenRoms();
+            }
     });
-    
+
     root.add({
 
         .tokens = { cmd, "save" },
@@ -369,43 +369,43 @@ CommanderConsole::initCommands(RSCommand &root)
             }
     });
 
-    
+
     //
     // Components (CPU)
     //
-    
+
     cmd = registerComponent(cpu);
-    
-    
+
+
     //
     // Components (CIA)
     //
-    
+
     cmd = registerComponent(cia1);
     cmd = registerComponent(cia2);
-    
-    
+
+
     //
     // Components (VICII)
     //
-    
+
     cmd = registerComponent(vic);
 
-    
+
     //
     // Components (SID)
     //
-    
+
     cmd = registerComponent(sid0);
     cmd = registerComponent(sid1);
     cmd = registerComponent(sid2);
     cmd = registerComponent(sid3);
-    
-    
+
+
     //
     // Ports
     //
-    
+
     RSCommand::currentGroup = "Ports";
 
 
@@ -429,20 +429,20 @@ CommanderConsole::initCommands(RSCommand &root)
 
     cmd = registerComponent(videoPort);
 
-    
+
     //
     // Ports (Expansion port)
     //
-    
+
     cmd = registerComponent(expansionPort);
 
     /*
-    root.add({
-        
-        .tokens = { cmd, "attach" },
-        .chelp  = { "Attaches a cartridge" }
-    });
-    */
+     root.add({
+
+     .tokens = { cmd, "attach" },
+     .chelp  = { "Attaches a cartridge" }
+     });
+     */
 
     root.add({
 
@@ -458,7 +458,7 @@ CommanderConsole::initCommands(RSCommand &root)
     });
 
     root.add({
-        
+
         .tokens = { cmd, "attach", "reu" },
         .chelp  = { "Attaches a REU expansion cartridge" },
         .args   = { { .name = { "KB", "REU size" } } },
@@ -467,9 +467,9 @@ CommanderConsole::initCommands(RSCommand &root)
             expansionPort.attachReu(parseNum(args.at("KB")));
         }
     });
-    
+
     root.add({
-        
+
         .tokens = { cmd, "attach", "georam" },
         .chelp  = { "Attaches a GeoRAM expansion cartridge" },
         .args   = { { .name = { "KB", "REU size" } } },
@@ -500,21 +500,21 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     // Peripherals
     //
-    
+
     RSCommand::currentGroup = "Peripherals";
-    
-    
+
+
     //
     // Peripherals (Monitor)
     //
-    
+
     registerComponent(monitor);
-    
-    
+
+
     //
     // Peripherals (Keyboard)
     //
-    
+
     cmd = registerComponent(keyboard);
 
     root.add({
@@ -540,13 +540,13 @@ CommanderConsole::initCommands(RSCommand &root)
     });
 
     root.add({
-        
+
         .tokens = { cmd, "type" },
         .chelp  = { "Types text on the keyboard" }
     });
-    
+
     root.add({
-        
+
         .tokens = { cmd, "type", "text" },
         .chelp  = { "Types text on the keyboard" },
         .args   = { { .name = { "text", "Text to type" } } },
@@ -555,9 +555,9 @@ CommanderConsole::initCommands(RSCommand &root)
             keyboard.autoType(args.at("text"));
         }
     });
-    
+
     root.add({
-        
+
         .tokens = { cmd, "type", "load" },
         .chelp  = { "Types \"LOAD\"*\",8,1" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
@@ -565,9 +565,9 @@ CommanderConsole::initCommands(RSCommand &root)
             keyboard.autoType("load \"*\",8,1\n");
         }
     });
-    
+
     root.add({
-        
+
         .tokens = { cmd, "type", "run" },
         .chelp  = { "Types RUN" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
@@ -699,7 +699,7 @@ CommanderConsole::initCommands(RSCommand &root)
             datasette.rewind(parseNum(args.at("pos")));
         }
     });
-    
+
 
     //
     // Peripherals (Mouse)
@@ -715,7 +715,7 @@ CommanderConsole::initCommands(RSCommand &root)
     registerComponent(c64.port1.mouse, rs::shadowed);
     registerComponent(c64.port2.mouse, rs::shadowed);
 
-    
+
     //
     // Peripherals (Joystick)
     //
@@ -728,7 +728,7 @@ CommanderConsole::initCommands(RSCommand &root)
     });
 
     for (isize i = 0; i <= 1; i++) {
-        
+
         if (i == 0) cmd = registerComponent(port1.joystick, rs::shadowed);
         if (i == 1) cmd = registerComponent(port2.joystick, rs::shadowed);
 
@@ -860,7 +860,7 @@ CommanderConsole::initCommands(RSCommand &root)
     //
     // Peripherals (RS232)
     //
-    
+
     cmd = registerComponent(userPort.rs232);
 
     root.add({
@@ -874,17 +874,17 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
-    
+
     //
     // Miscellaneous
     //
-    
+
     RSCommand::currentGroup = "Miscellaneous";
-    
+
     //
     // Miscellaneous (Host)
     //
-    
+
     cmd = registerComponent(host);
 
     root.add({
@@ -898,12 +898,12 @@ CommanderConsole::initCommands(RSCommand &root)
             host.setSearchPath(path);
         }
     });
-    
+
 
     //
     // Miscellaneous (Config)
     //
-    
+
     root.add({
 
         .tokens = { "config" },
@@ -980,7 +980,7 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
-    cmd = registerComponent(remoteManager.gdbServer);
+    cmd = registerComponent(remoteManager.gdbServer, releaseBuild ? rs::hidden : 0);
 
     root.add({
 

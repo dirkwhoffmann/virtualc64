@@ -78,6 +78,7 @@ public:
 private:
 
     void _dump(Category category, std::ostream &os) const override;
+    void _pause() override;
 
 
     //
@@ -126,6 +127,12 @@ private:
 
     // Sends a packet with control characters and a checksum attached
     void reply(const string &payload);
+
+    // Sends a JSON packet with control characters and a checksum attached
+    void replyJSON(const string &payload);
+
+    // Sends a T response
+    void replyT();
 
 
     //

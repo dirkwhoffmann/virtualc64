@@ -38,29 +38,15 @@ GdbServer::process <' ', GdbCmd::CtrlC> (string arg)
 template <> void
 GdbServer::process <'j', GdbCmd::ThreadExtendedInfo> (string arg)
 {
-    std::string payload = ""; // {\"id\":1,\"stop_reason\":\"none\"}";
-
-    reply(payload);
+    string json = R"({\"id\":1,\"stop_reason\":\"none\"})";
+    replyJSON(json);
 }
 
 template <> void
 GdbServer::process <'j', GdbCmd::ThreadsInfo> (string arg)
 {
-    /*
-    std::string payload = "{"
-                          "  \"threads\": ["
-                          "    {"
-                          "      \"id\": 1,"
-                          "      \"name\": \"cpu0\","
-                          "      \"stop_reason\": \"none\""
-                          "    }"
-                          "  ],"
-                          "  \"total_count\": 1"
-                          "}";
-
-    reply(payload);
-    */
-    reply("");
+    string json = R"({"threads": [{"id": 1,"name": "cpu0","stop_reason": "none"},"total_count": 1})";
+    replyJSON(json);
 }
 
 template <> void
@@ -105,15 +91,14 @@ GdbServer::process <'q', GdbCmd::HostInfo> (string arg)
 template <> void
 GdbServer::process <'q', GdbCmd::Offset> (string arg)
 {
-    string result = "??";
-
-    reply(result);
+    reply("Text=0;Data=0;Bss=0");
 }
 
 template <> void
 GdbServer::process <'q', GdbCmd::ProcessInfo> (string arg)
 {
-    reply("pid:1;name:6502-emu;triple:6502-unknown-unknown;endian:little;ptrsize:2");
+    // reply("pid:1;name:6502-emu;triple:6502-unknown-unknown;endian:little;ptrsize:2");
+    reply("$pid:1;ppid:0;uid:0;gid:0;name:emulator;");
 }
 
 template <> void
@@ -175,7 +160,7 @@ GdbServer::process <'q', GdbCmd::Symbol> (string arg)
 template <> void
 GdbServer::process <'q', GdbCmd::TStatus> (string arg)
 {
-    reply("");
+    reply("T0");
 }
 
 template <> void
@@ -213,23 +198,23 @@ GdbServer::process <'q', GdbCmd::Xfer> (string arg)
         if (tokens[1] == "features" && tokens[2] == "read") {
 
             result =
-            "<?xml version=\"1.0\"?>"
-            "<!DOCTYPE feature SYSTEM \"gdb-target.dtd\">!"
-            "<target>"
-            "  <architecture>mos6502</architecture>"
-            "  <feature name=\"org.gnu.gdb.mos6502\">"
-            "    <reg name=\"A\" bitsize=\"8\" type=\"uint8\"/>"
-            "    <reg name=\"X\" bitsize=\"8\" type=\"uint8\"/>"
-            "    <reg name=\"Y\" bitsize=\"8\" type=\"uint8\"/>"
-            "    <reg name=\"P\" bitsize=\"8\" type=\"uint8\"/>"
-            "    <reg name=\"S\" bitsize=\"8\" type=\"uint8\"/>"
-            "    <reg name=\"PC\" bitsize=\"16\" type=\"uint16\"/>"
+                "<?xml version=\"1.0\"?>"
+                "<!DOCTYPE feature SYSTEM \"gdb-target.dtd\">"
+                "<target>"
+                "  <architecture>auto</architecture>"
+                "  <feature name=\"org.gnu.gdb.mos6502\">"
+                "    <reg name=\"A\" bitsize=\"8\" type=\"uint8\"/>"
+                "    <reg name=\"X\" bitsize=\"8\" type=\"uint8\"/>"
+                "    <reg name=\"Y\" bitsize=\"8\" type=\"uint8\"/>"
+                "    <reg name=\"P\" bitsize=\"8\" type=\"uint8\"/>"
+                "    <reg name=\"S\" bitsize=\"8\" type=\"uint8\"/>"
+                "    <reg name=\"PC\" bitsize=\"16\" type=\"uint16\"/>"
             "  </feature>"
             "</target>";
         }
     }
 
-    reply(result);
+    reply("l" + result);
 }
 
 template <> void
@@ -369,7 +354,7 @@ GdbServer::process <'v', GdbCmd::Cont> (string arg)
     if (arg == "s") {
 
         emulator.stepInto();
-        reply("T05;01:12;02:34;03:56;05:1234;");
+        // reply("OK");
         return;
     }
 
@@ -414,7 +399,7 @@ template <> void
 GdbServer::process <'g'> (string cmd)
 {
     string result;
-    for (int i = 0; i < 18; i++) result += readRegister(i);
+    for (int i = 0; i < 6; i++) result += readRegister(i);
     reply(result);
 }
 
@@ -445,8 +430,11 @@ GdbServer::process <'G'> (string cmd)
 template <> void
 GdbServer::process <'?'> (string cmd)
 {
+    replyT();
+    /*
     auto pc = util::hexstr <8> (cpu.getPC0());
     reply("T051:" + pc + ";");
+    */
 
     /*
      if (amiga.isRunning()) {
