@@ -168,6 +168,10 @@ Defaults::Defaults()
     setFallback(Opt::SRV_PROTOCOL,               (i64)ServerProtocol::DEFAULT, { (i64)ServerType::RSH });
     setFallback(Opt::SRV_AUTORUN,                false,                  { (i64)ServerType::RSH });
     setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::RSH });
+    setFallback(Opt::SRV_PORT,                   8083,                   { (i64)ServerType::GDB });
+    setFallback(Opt::SRV_PROTOCOL,               (i64)ServerProtocol::DEFAULT, { (i64)ServerType::GDB });
+    setFallback(Opt::SRV_AUTORUN,                true,                   { (i64)ServerType::GDB });
+    setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::GDB });
 
     setFallback(Opt::DBG_DEBUGCART,              0);
     setFallback(Opt::DBG_WATCHDOG,               0);

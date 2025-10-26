@@ -102,6 +102,13 @@ enum class Fault : long
     SERVER_NOT_RUNNING,
     SERVER_NO_CLIENT,
 
+    // GDB server
+    GDB_NO_ACK,
+    GDB_INVALID_FORMAT,
+    GDB_INVALID_CHECKSUM,
+    GDB_UNRECOGNIZED_CMD,
+    GDB_UNSUPPORTED_CMD,
+
     // File systems
     FS_UNSUPPORTED,       ///< Unsupported file system
     FS_WRONG_CAPACITY,    ///< Wrong file system capacity
@@ -196,6 +203,12 @@ struct FaultEnum : Reflection<FaultEnum, Fault> {
             case Fault::SERVER_RUNNING:          return "SERVER_RUNNING";
             case Fault::SERVER_NOT_RUNNING:      return "SERVER_NOT_RUNNING";
             case Fault::SERVER_NO_CLIENT:        return "SERVER_NO_CLIENT";
+
+            case Fault::GDB_NO_ACK:              return "GDB_NO_ACK";
+            case Fault::GDB_INVALID_FORMAT:      return "GDB_INVALID_FORMAT";
+            case Fault::GDB_INVALID_CHECKSUM:    return "GDB_INVALID_CHECKSUM";
+            case Fault::GDB_UNRECOGNIZED_CMD:    return "GDB_UNRECOGNIZED_CMD";
+            case Fault::GDB_UNSUPPORTED_CMD:     return "GDB_UNSUPPORTED_CMD";
 
             case Fault::FS_UNSUPPORTED:          return "FS_UNSUPPORTED";
             case Fault::FS_WRONG_CAPACITY:       return "FS_WRONG_CAPACITY";

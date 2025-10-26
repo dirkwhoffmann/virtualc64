@@ -127,13 +127,13 @@ extern debugflag PRT_DEBUG;
 extern debugflag EXP_DEBUG;
 extern debugflag USR_DEBUG;
 
-// Other components
+// Misc
 extern debugflag RSH_DEBUG;
 extern debugflag REC_DEBUG;
 extern debugflag REU_DEBUG;
 extern debugflag SCK_DEBUG;
 extern debugflag SRV_DEBUG;
-
+extern debugflag GDB_DEBUG;
 
 //
 // Forced error conditions

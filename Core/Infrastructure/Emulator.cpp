@@ -558,6 +558,7 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::REU_DEBUG:        return REU_DEBUG;
         case DebugFlag::SCK_DEBUG:        return SCK_DEBUG;
         case DebugFlag::SRV_DEBUG:        return SRV_DEBUG;
+        case DebugFlag::GDB_DEBUG:        return GDB_DEBUG;
 
         case DebugFlag::FORCE_LAUNCH_ERROR:       return FORCE_LAUNCH_ERROR;
         case DebugFlag::FORCE_ROM_MISSING:        return FORCE_ROM_MISSING;
@@ -648,6 +649,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::REU_DEBUG:        REU_DEBUG       = val; break;
         case DebugFlag::SCK_DEBUG:        SCK_DEBUG       = val; break;
         case DebugFlag::SRV_DEBUG:        SRV_DEBUG       = val; break;
+        case DebugFlag::GDB_DEBUG:        GDB_DEBUG       = val; break;
 
         case DebugFlag::FORCE_LAUNCH_ERROR:       FORCE_LAUNCH_ERROR = val; break;
         case DebugFlag::FORCE_ROM_MISSING:        FORCE_ROM_MISSING = val; break;

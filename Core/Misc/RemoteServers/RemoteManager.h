@@ -15,6 +15,7 @@
 #include "SubComponent.h"
 #include "RemoteManagerTypes.h"
 #include "RshServer.h"
+#include "GdbServer.h"
 
 namespace vc64 {
 
@@ -34,10 +35,11 @@ class RemoteManager : public SubComponent, public Inspectable<RemoteManagerInfo>
 public:
     
     // The remote servers
-    RshServer rshServer = RshServer(c64);
+    RshServer rshServer = RshServer(c64, isize(ServerType::RSH));
+    GdbServer gdbServer = GdbServer(c64, isize(ServerType::GDB));
 
     // Convenience wrapper
-    std::vector <RemoteServer *> servers = { &rshServer };
+    std::vector <RemoteServer *> servers = { &rshServer, &gdbServer };
 
     
     //
@@ -51,6 +53,7 @@ public:
     RemoteManager& operator= (const RemoteManager& other) {
 
         CLONE(rshServer)
+        CLONE(gdbServer)
 
         return *this;
     }

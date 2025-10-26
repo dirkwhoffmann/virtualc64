@@ -953,7 +953,7 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
 
         .tokens = { cmd, "start" },
-        .chelp  = { "Starts the retro shell server" },
+        .chelp  = { "Starts the RetroShell server" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             remoteManager.rshServer.start();
@@ -963,7 +963,7 @@ CommanderConsole::initCommands(RSCommand &root)
     root.add({
 
         .tokens = { cmd, "stop" },
-        .chelp  = { "Stops the retro shell server" },
+        .chelp  = { "Stops the RetroShell server" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             remoteManager.rshServer.stop();
@@ -977,6 +977,38 @@ CommanderConsole::initCommands(RSCommand &root)
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             remoteManager.rshServer.disconnect();
+        }
+    });
+
+    cmd = registerComponent(remoteManager.gdbServer);
+
+    root.add({
+
+        .tokens = { cmd, "start" },
+        .chelp  = { "Starts the GDB server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.gdbServer.start();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "stop" },
+        .chelp  = { "Stops the GDB server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.gdbServer.stop();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "disconnect" },
+        .chelp  = { "Disconnects a client" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.gdbServer.disconnect();
         }
     });
 }

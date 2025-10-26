@@ -21,7 +21,8 @@ RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
 {
     subComponents = std::vector<CoreComponent *> {
         
-        &rshServer
+        &rshServer,
+        &gdbServer
     };
 }
 
@@ -104,7 +105,10 @@ RemoteManager::serviceServerEvent()
     if (rshServer.config.autoRun) {
         rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
     }
-
+    if (gdbServer.config.autoRun) {
+        gdbServer.shouldRun() ? gdbServer.start() : gdbServer.stop();
+    }
+    
     // Schedule next event
     c64.scheduleInc <SLOT_SRV> (C64::sec(0.5), SRV_LAUNCH_DAEMON);
 }
