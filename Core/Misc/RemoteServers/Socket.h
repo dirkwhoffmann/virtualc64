@@ -42,7 +42,7 @@ class Socket : public CoreObject {
 public:
     
     // Size of the communication buffer
-    static constexpr isize BUFFER_SIZE = 512;
+    static constexpr isize BUFFER_SIZE = 2048;
     
     
     //

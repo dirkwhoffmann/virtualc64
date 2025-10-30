@@ -134,6 +134,7 @@ extern debugflag REU_DEBUG;
 extern debugflag SCK_DEBUG;
 extern debugflag SRV_DEBUG;
 extern debugflag GDB_DEBUG;
+extern debugflag DAP_DEBUG;
 
 //
 // Forced error conditions

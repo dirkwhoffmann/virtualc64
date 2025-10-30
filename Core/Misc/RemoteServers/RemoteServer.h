@@ -30,6 +30,10 @@ class RemoteServer : public SubComponent {
         .description    = "Remote Shell Server",
         .shell          = "server rshell"
     }, {
+        .name           = "DapServer",
+        .description    = "Debug Adaper",
+        .shell          = "server dap"
+    }, {
         .name           = "GdbServer",
         .description    = "GDB Remote Server",
         .shell          = "server gdb"

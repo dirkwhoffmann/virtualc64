@@ -102,6 +102,11 @@ enum class Fault : long
     SERVER_NOT_RUNNING,
     SERVER_NO_CLIENT,
 
+    // DAP server
+    DAP_INVALID_FORMAT,
+    DAP_UNRECOGNIZED_CMD,
+    DAP_UNSUPPORTED_CMD,
+
     // GDB server
     GDB_NO_ACK,
     GDB_INVALID_FORMAT,
@@ -203,6 +208,10 @@ struct FaultEnum : Reflection<FaultEnum, Fault> {
             case Fault::SERVER_RUNNING:          return "SERVER_RUNNING";
             case Fault::SERVER_NOT_RUNNING:      return "SERVER_NOT_RUNNING";
             case Fault::SERVER_NO_CLIENT:        return "SERVER_NO_CLIENT";
+
+            case Fault::DAP_INVALID_FORMAT:      return "DAP_INVALID_FORMAT";
+            case Fault::DAP_UNRECOGNIZED_CMD:    return "DAP_UNRECOGNIZED_CMD";
+            case Fault::DAP_UNSUPPORTED_CMD:     return "DAP_UNSUPPORTED_CMD";
 
             case Fault::GDB_NO_ACK:              return "GDB_NO_ACK";
             case Fault::GDB_INVALID_FORMAT:      return "GDB_INVALID_FORMAT";

@@ -15,6 +15,7 @@
 #include "SubComponent.h"
 #include "RemoteManagerTypes.h"
 #include "RshServer.h"
+#include "DapServer.h"
 #include "GdbServer.h"
 
 namespace vc64 {
@@ -36,10 +37,11 @@ public:
     
     // The remote servers
     RshServer rshServer = RshServer(c64, isize(ServerType::RSH));
+    DapServer dapServer = DapServer(c64, isize(ServerType::DAP));
     GdbServer gdbServer = GdbServer(c64, isize(ServerType::GDB));
 
     // Convenience wrapper
-    std::vector <RemoteServer *> servers = { &rshServer, &gdbServer };
+    std::vector <RemoteServer *> servers = { &rshServer, &dapServer, &gdbServer };
 
     
     //

@@ -980,7 +980,43 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
-    cmd = registerComponent(remoteManager.gdbServer, 0); // releaseBuild ? rs::hidden : 0);
+    cmd = registerComponent(remoteManager.dapServer, releaseBuild ? rs::hidden : 0);
+
+    root.add({
+
+        .tokens = { cmd, "start" },
+        .chelp  = { "Starts the DAP server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.dapServer.start();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "stop" },
+        .chelp  = { "Stops the DAP server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.dapServer.stop();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "disconnect" },
+        .chelp  = { "Disconnects a client" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.dapServer.disconnect();
+        }
+    });
+
+    //
+    // DEPRECATED
+    //
+
+    cmd = registerComponent(remoteManager.gdbServer, releaseBuild ? rs::hidden : 0);
 
     root.add({
 
