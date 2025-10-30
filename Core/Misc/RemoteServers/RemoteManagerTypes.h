@@ -23,6 +23,7 @@ namespace vc64 {
 enum class ServerType : long
 {
     RSH,
+    DAP,
     GDB
 };
 
@@ -36,6 +37,7 @@ struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
         switch (value) {
                 
             case ServerType::RSH:    return "RSH";
+            case ServerType::DAP:    return "DAP";
             case ServerType::GDB:    return "GDB";
         }
         return "???";
@@ -45,6 +47,7 @@ struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
         switch (value) {
                 
             case ServerType::RSH:    return "Remote shell server";
+            case ServerType::DAP:    return "Debug Adapter";
             case ServerType::GDB:    return "Debug server";
         }
         return "???";

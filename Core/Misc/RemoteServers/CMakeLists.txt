@@ -7,6 +7,8 @@ RemoteServer.cpp
 SocketServer.cpp
 HttpServer.cpp
 RshServer.cpp
+DapServer.cpp
+DapServerCmds.cpp
 GdbServer.cpp
 GdbServerCmds.cpp
 Socket.cpp

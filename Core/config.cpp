@@ -88,6 +88,7 @@ debugflag REU_DEBUG       = 0;
 debugflag SCK_DEBUG       = 0;
 debugflag SRV_DEBUG       = 0;
 debugflag GDB_DEBUG       = 0;
+debugflag DAP_DEBUG       = 0;
 
 
 //

@@ -22,6 +22,7 @@ RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
     subComponents = std::vector<CoreComponent *> {
         
         &rshServer,
+        &dapServer,
         &gdbServer
     };
 }
@@ -104,6 +105,9 @@ RemoteManager::serviceServerEvent()
     // Run the launch daemon
     if (rshServer.config.autoRun) {
         rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
+    }
+    if (dapServer.config.autoRun) {
+        dapServer.shouldRun() ? dapServer.start() : dapServer.stop();
     }
     if (gdbServer.config.autoRun) {
         gdbServer.shouldRun() ? gdbServer.start() : gdbServer.stop();

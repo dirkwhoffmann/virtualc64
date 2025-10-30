@@ -99,6 +99,7 @@ enum class DebugFlag
     SCK_DEBUG,         ///< Debug the socket interface
     SRV_DEBUG,         ///< Debug the remote servers
     GDB_DEBUG,         ///< Debug the GDB server
+    DAP_DEBUG,         ///< Debug the DAP server
 
     //! Forced error condition
     FORCE_LAUNCH_ERROR,
@@ -195,6 +196,7 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::SCK_DEBUG:                return "SCK_DEBUG";
             case DebugFlag::SRV_DEBUG:                return "SRV_DEBUG";
             case DebugFlag::GDB_DEBUG:                return "GDB_DEBUG";
+            case DebugFlag::DAP_DEBUG:                return "DAP_DEBUG";
 
                 // Forced error conditions
             case DebugFlag::FORCE_LAUNCH_ERROR:       return "FORCE_LAUNCH_ERROR";
@@ -289,6 +291,7 @@ struct DebugFlagEnum : Reflection<DebugFlagEnum, DebugFlag>
             case DebugFlag::SCK_DEBUG:                return "Sockets";
             case DebugFlag::SRV_DEBUG:                return "Remote servers";
             case DebugFlag::GDB_DEBUG:                return "GDB Server";
+            case DebugFlag::DAP_DEBUG:                return "DAP Server";
 
                 // Forced error conditions
             case DebugFlag::FORCE_LAUNCH_ERROR:       return "Forced error condition";
