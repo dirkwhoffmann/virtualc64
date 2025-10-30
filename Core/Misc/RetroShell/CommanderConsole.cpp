@@ -980,7 +980,7 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
-    cmd = registerComponent(remoteManager.gdbServer, releaseBuild ? rs::hidden : 0);
+    cmd = registerComponent(remoteManager.gdbServer, 0); // releaseBuild ? rs::hidden : 0);
 
     root.add({
 

@@ -1175,6 +1175,7 @@
 		50F0C2452EADFB0400BCC7BB /* GdbServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GdbServer.h; sourceTree = "<group>"; };
 		50F0C2462EADFB0F00BCC7BB /* GdbServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GdbServer.cpp; sourceTree = "<group>"; };
 		50F0C2492EADFB1800BCC7BB /* GdbServerCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GdbServerCmds.cpp; sourceTree = "<group>"; };
+		50F0C24C2EB148CE00BCC7BB /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
 		50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameKiller.cpp; sourceTree = "<group>"; };
 		50F0EB7925CC33B3002D0D72 /* GameKiller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameKiller.h; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -1969,6 +1970,7 @@
 				50650F392DF093B7008AD660 /* lz4.h */,
 				50650F3A2DF093B7008AD660 /* lz4.c */,
 				50D834672EAB8EF00052F98D /* httplib.h */,
+				50F0C24C2EB148CE00BCC7BB /* json.h */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";

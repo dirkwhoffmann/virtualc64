@@ -109,11 +109,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-&quot;screenshot set path \&quot;\&quot;&quot;"
+            argument = "/Users/hoff/tmp/startup.retrosh"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-&quot;regression set DEBUGCART true&quot; "
+            argument = "-&quot;mem flash /tmp/prog.prg&quot;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-&quot;keyboard type run&quot;"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
