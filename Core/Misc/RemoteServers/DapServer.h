@@ -13,19 +13,11 @@
 #pragma once
 
 #include "SocketServer.h"
+#include "DapServerCmds.h"
 
 namespace vc64 {
 
-enum class DapCmd
-{
-    Init
-};
-
 class DapServer final : public SocketServer {
-
-    // The most recently processed command string
-    // string latestCmd;
-
 
     //
     // Initializing
@@ -73,16 +65,13 @@ public:
 
 public:
 
-    // Processes an incoming DAP packet
-    void process(string packet) throws;
-
-    // Processes a checksum-free packet with the first letter stripped off
-    // void process(char letter, string packet) throws;
+    // Processes an DAP command
+    void process(const string &packet) throws;
 
 private:
 
     // Processes a single command (DapServerCmds.cpp)
-    template <DapCmd cmd> void process(string arg) throws;
+    template <int, int> void process(isize seq, const string &packet) throws;
 
     // Sends a packet to the connected client
     void reply(const string &payload);

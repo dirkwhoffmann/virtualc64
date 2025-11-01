@@ -11,7 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "GdbServer.h"
+#include "DapServer.h"
+#include "DapServerCmds.h"
 #include "Emulator.h"
 #include "CPU.h"
 #include "IOUtils.h"
@@ -19,6 +20,9 @@
 #include "MemUtils.h"
 #include "MsgQueue.h"
 #include "RetroShell.h"
+#include "json.h"
+
+using json = nlohmann::json;
 
 namespace vc64 {
 
@@ -47,16 +51,39 @@ DapServer::doReceive()
 {
     auto cmd = connection.recv();
 
-    // Remove LF and CR (if present)
-    // cmd = util::rtrim(cmd, "\n\r");
-
-    if (config.verbose) {
-        retroShell << "R: " << util::makePrintable(cmd) << "\n";
-        printf("R: %s\n", util::makePrintable(cmd).c_str());
+    // Try to find the header terminator
+    auto headerEnd = cmd.find("\r\n\r\n");
+    if (headerEnd == std::string::npos) {
+        throw AppError(Fault::DAP_INVALID_FORMAT, cmd);
     }
 
-    // latestCmd = cmd;
-    return cmd;
+    // Extract the header portion
+    auto header = cmd.substr(0, headerEnd);
+    auto contentLengthPos = header.find("Content-Length:");
+    if (contentLengthPos == std::string::npos) {
+        throw AppError(Fault::DAP_INVALID_FORMAT, cmd);
+    }
+
+    // Parse content length
+    auto lenStart = contentLengthPos + strlen("Content-Length:");
+    auto lenEnd = header.find_first_of("\r\n", lenStart);
+    auto lenStr = header.substr(lenStart, lenEnd - lenStart);
+    auto contentLength = std::stoul(lenStr);
+
+    // Check if we have the full message
+    auto messageStart = headerEnd + 4;
+    if (cmd.size() < messageStart + contentLength) {
+        throw AppError(Fault::DAP_INVALID_FORMAT, cmd);
+    }
+
+    // Extract JSON payload
+    string jsonStr = cmd.substr(messageStart, contentLength);
+
+    if (config.verbose) {
+        retroShell << "R: " << util::makePrintable(jsonStr) << "\n";
+    }
+
+    return jsonStr;
 }
 
 void
@@ -76,6 +103,15 @@ DapServer::doProcess(const string &payload)
     try {
 
         process(payload);
+        /*
+        if (auto msg = dap::Message::parse(payload); msg) {
+            if (auto str = msg->process(c64); !str.empty()) {
+                for (auto &s : str) { reply(s); }
+            }
+        } else {
+            throw AppError(Fault::DAP_INVALID_FORMAT, payload);
+        }
+        */
 
     } catch (AppError &err) {
 
@@ -109,13 +145,42 @@ DapServer::didConnect()
 }
 
 void
+DapServer::process(const string &packet)
+{
+    using namespace dap;
+    isize seq = 0;
+
+    std::unordered_map<string, std::function<void()>> handlers = {
+
+        {"initialize", [this, seq, packet](){ process<Request, Initialize>(seq, packet); }},
+        {"launch", [this, seq, packet](){ process<Request, Launch>(seq, packet); }},
+    };
+
+    json j = json::parse(packet);
+    const auto &type = j["type"];
+
+    std::cout << "Message::parse:\n" << j.dump(2) << "\n";
+
+    if (type == "request") {
+
+        // Find and dispatch
+        const auto &cmd = j["command"];
+        if (auto it = handlers.find(cmd); it != handlers.end()) {
+            it->second();
+        }
+
+    } else {
+
+        throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
+    }
+}
+
+void
 DapServer::reply(const string &payload)
 {
-    string packet = "$";
-
-    packet += payload;
-
-    send(packet);
+    std::stringstream ss;
+    ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
+    send(ss.str());
 }
 
 string
