@@ -23,10 +23,28 @@ using json = nlohmann::json;
 
 namespace vc64 {
 
+using dc = dap::Command;
+
 template <> void
-DapServer::process <dap::Request, dap::Initialize> (isize seq, const string &packet)
+DapServer::process<dap::Command::BreakpointLocations> (isize seq, const string &packet)
 {
-    printf("process <dap::Request, dap::Initialize>\n");
+    printf("dap::Command::BreakpointLocations: %ld\n", seq);
+
+    replySuccess(seq, "breakpointLocations");
+}
+
+template <> void
+DapServer::process<dap::Command::ConfigurationDone> (isize seq, const string &packet)
+{
+    printf("dap::Command::ConfigurationDone: %ld\n", seq);
+
+    replySuccess(seq, "configurationDone");
+}
+
+template <> void
+DapServer::process <dap::Command::Initialize> (isize seq, const string &packet)
+{
+    printf("dap::Command::Initialize: %ld\n", seq);
 
     json capabilities = {
 
@@ -95,37 +113,117 @@ DapServer::process <dap::Request, dap::Initialize> (isize seq, const string &pac
 }
 
 template <> void
-DapServer::process <dap::Request, dap::Launch> (isize seq, const string &packet)
+DapServer::process <dap::Command::Launch> (isize seq, const string &packet)
 {
-    printf("process <dap::Request, dap::Launch>\n");
-
-    json response = {
-
-        {"type", "response"},
-        {"seq", seq + 1},
-        {"request_seq", seq},
-        {"command", "launch"},
-        {"success", true}
-    };
-
-    reply(response.dump());
+    replySuccess(seq, "launch");
 }
 
 template <> void
-DapServer::process <dap::Request, dap::SetBreakpoints> (isize seq, const string &packet)
+DapServer::process <dap::Command::SetBreakpoints> (isize seq, const string &packet)
 {
-    printf("process <dap::Request, dap::SetBreakpoints>\n");
-
-    json response = {
-
-        {"type", "response"},
-        {"seq", seq + 1},
-        {"request_seq", seq},
-        {"command", "launch"},
-        {"success", true}
-    };
-
-    reply(response.dump());
+    replySuccess(seq, "setBreakpoints");
 }
+
+/*
+    switch (cmd) {
+
+        case dap::Command::initialize: {
+
+            //
+            // initialize
+            //
+
+            json capabilities = {
+
+                {"supportsConfigurationDoneRequest", true},
+                {"supportsFunctionBreakpoints", false},
+                {"supportsConditionalBreakpoints", false},
+                {"supportsHitConditionalBreakpoints", false},
+                {"supportsEvaluateForHovers", false},
+                {"exceptionBreakpointFilters", json::array({})}, // TODO
+                {"supportsStepBack", false},
+                {"supportsSetVariable", false},
+                {"supportsRestartFrame", false},
+                {"supportsGotoTargetsRequest", false},
+                {"supportsStepInTargetsRequest", false},
+                {"supportsCompletionsRequest", false},
+                {"completionTriggerCharacters", json::array({})}, // TODO
+                {"supportsModulesRequest", false},
+                {"additionalModuleColumns", json::array({})}, // TODO
+                {"supportedChecksumAlgorithms", json::array({})}, // TODO
+                {"supportsRestartRequest", false},
+                {"supportsExceptionOptions", false},
+                {"supportsValueFormattingOptions", false},
+                {"supportsExceptionInfoRequest", false},
+                {"supportTerminateDebuggee", false},
+                {"supportSuspendDebuggee", false},
+                {"supportsDelayedStackTraceLoading", false},
+                {"supportsLoadedSourcesRequest", false},
+                {"supportsLogPoints", false},
+                {"supportsTerminateThreadsRequest", false},
+                {"supportsSetExpression", false},
+                {"supportsTerminateRequest", false},
+                {"supportsDataBreakpoints", true},
+                {"supportsReadMemoryRequest", true},
+                {"supportsWriteMemoryRequest", true},
+                {"supportsDisassembleRequest", true},
+                {"supportsCancelRequest", true},
+                {"supportsBreakpointLocationsRequest", true},
+                {"supportsClipboardContext", false},
+                {"supportsSteppingGranularity", false},
+                {"supportsInstructionBreakpoints", false},
+                {"supportsExceptionFilterOptions", false},
+                {"supportsSingleThreadExecutionRequests", false},
+                {"supportsDataBreakpointBytes", false},
+                {"breakpointModes", json::array({})}, // TODO
+                {"supportsANSIStyling", true}
+            };
+
+            json response = {
+
+                {"seq", 0},
+                {"type", "response"},
+                {"request_seq", seq},
+                {"success", true},
+                {"command", "initialize"},
+                {"body", capabilities }
+            };
+            reply(response.dump());
+
+            json response2 = {
+
+                {"seq", 0},
+                {"type", "event"},
+                {"event", "initialized"}
+            };
+            reply(response2.dump());
+            break;
+        }
+
+        case dap::Command::launch: {
+
+            //
+            // launch
+            //
+
+            replySuccess(seq, "launch");
+            break;
+        }
+
+        case dap::Command::setBreakpoints: {
+
+            //
+            // setBreakpoints
+            //
+
+            replySuccess(seq, "setBreakpoints");
+            break;
+        }
+
+        default:
+            break;
+    }
+}
+*/
 
 }

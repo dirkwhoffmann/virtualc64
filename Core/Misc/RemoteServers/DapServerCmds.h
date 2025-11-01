@@ -16,6 +16,7 @@
 
 namespace vc64::dap {
 
+/*
 enum Type {
 
     Request,
@@ -29,5 +30,6 @@ enum Command {
     Launch,
     SetBreakpoints
 };
+*/
 
 }

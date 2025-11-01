@@ -14,6 +14,7 @@
 
 #include "SocketServer.h"
 #include "DapServerCmds.h"
+#include "DapServerTypes.h"
 
 namespace vc64 {
 
@@ -71,11 +72,13 @@ public:
 private:
 
     // Processes a single command (DapServerCmds.cpp)
-    template <int, int> void process(isize seq, const string &packet) throws;
+    template <dap::Command> void process(isize seq, const string &packet) throws;
+    // void process(dap::Command cmd, isize seq, const string &packet) throws;
 
     // Sends a packet to the connected client
     void reply(const string &payload);
 
+    void replySuccess(isize seq, const string &command);
 
     //
     // Reading the emulator state

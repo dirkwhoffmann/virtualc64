@@ -81,6 +81,7 @@ DapServer::doReceive()
 
     if (config.verbose) {
         retroShell << "R: " << util::makePrintable(jsonStr) << "\n";
+        printf("R: %s\n", util::makePrintable(jsonStr).c_str());
     }
 
     return jsonStr;
@@ -147,29 +148,31 @@ DapServer::didConnect()
 void
 DapServer::process(const string &packet)
 {
-    using namespace dap;
-    isize seq = 0;
-
-    std::unordered_map<string, std::function<void()>> handlers = {
-
-        {"initialize", [this, seq, packet](){ process<Request, Initialize>(seq, packet); }},
-        {"launch", [this, seq, packet](){ process<Request, Launch>(seq, packet); }},
-    };
-
     json j = json::parse(packet);
-    const auto &type = j["type"];
+    isize s = j.value("seq", 0);
+    string t = j.value("type", "");
+    string c = j.value("command", "");
 
-    std::cout << "Message::parse:\n" << j.dump(2) << "\n";
+    try {
 
-    if (type == "request") {
+        if (t == "request") {
 
-        // Find and dispatch
-        const auto &cmd = j["command"];
-        if (auto it = handlers.find(cmd); it != handlers.end()) {
-            it->second();
+            if (c == "breakpointLocations") { process<dap::Command::BreakpointLocations>(s, packet); }
+            if (c == "configurationDone") { process<dap::Command::ConfigurationDone>(s, packet); }
+            if (c == "initialize") { process<dap::Command::Initialize>(s, packet); }
+            if (c == "launch") { process<dap::Command::Launch>(s, packet); }
+            if (c == "setBreakpoints") { process<dap::Command::SetBreakpoints>(s, packet); }
+
+        } else if (t == "response") {
+
+        } else if (t == "event") {
+
+        } else {
+
+            throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
         }
 
-    } else {
+    } catch (...) {
 
         throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
     }
@@ -181,6 +184,21 @@ DapServer::reply(const string &payload)
     std::stringstream ss;
     ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
     send(ss.str());
+}
+
+void
+DapServer::replySuccess(isize seq, const string &command)
+{
+    json response = {
+
+        {"type", "response"},
+        {"seq", 0},
+        {"request_seq", seq},
+        {"command", command},
+        {"success", true}
+    };
+
+    reply(response.dump());
 }
 
 string
