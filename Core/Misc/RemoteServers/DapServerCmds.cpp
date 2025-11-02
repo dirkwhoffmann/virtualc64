@@ -47,23 +47,21 @@ DapServer::process <dap::Command::Initialize> (isize seq, const string &packet)
     printf("dap::Command::Initialize: %ld\n", seq);
 
     json capabilities = {
-
         {"supportsConfigurationDoneRequest", true},
         {"supportsFunctionBreakpoints", false},
         {"supportsConditionalBreakpoints", false},
         {"supportsHitConditionalBreakpoints", false},
         {"supportsEvaluateForHovers", false},
-        {"exceptionBreakpointFilters", json::array({})}, // TODO
+        {"exceptionBreakpointFilters", json::array({})},
+
         {"supportsStepBack", false},
         {"supportsSetVariable", false},
         {"supportsRestartFrame", false},
         {"supportsGotoTargetsRequest", false},
         {"supportsStepInTargetsRequest", false},
         {"supportsCompletionsRequest", false},
-        {"completionTriggerCharacters", json::array({})}, // TODO
+
         {"supportsModulesRequest", false},
-        {"additionalModuleColumns", json::array({})}, // TODO
-        {"supportedChecksumAlgorithms", json::array({})}, // TODO
         {"supportsRestartRequest", false},
         {"supportsExceptionOptions", false},
         {"supportsValueFormattingOptions", false},
@@ -71,24 +69,27 @@ DapServer::process <dap::Command::Initialize> (isize seq, const string &packet)
         {"supportTerminateDebuggee", false},
         {"supportSuspendDebuggee", false},
         {"supportsDelayedStackTraceLoading", false},
-        {"supportsLoadedSourcesRequest", false},
+        {"supportsLoadedSourcesRequest", false}, // no source files
         {"supportsLogPoints", false},
         {"supportsTerminateThreadsRequest", false},
         {"supportsSetExpression", false},
         {"supportsTerminateRequest", false},
+
+        // Features for symbol-level debugging
         {"supportsDataBreakpoints", true},
         {"supportsReadMemoryRequest", true},
         {"supportsWriteMemoryRequest", true},
         {"supportsDisassembleRequest", true},
         {"supportsCancelRequest", true},
         {"supportsBreakpointLocationsRequest", true},
+        {"supportsInstructionBreakpoints", true},
+
         {"supportsClipboardContext", false},
         {"supportsSteppingGranularity", false},
-        {"supportsInstructionBreakpoints", false},
         {"supportsExceptionFilterOptions", false},
         {"supportsSingleThreadExecutionRequests", false},
         {"supportsDataBreakpointBytes", false},
-        {"breakpointModes", json::array({})}, // TODO
+        {"breakpointModes", json::array({})},
         {"supportsANSIStyling", true}
     };
 

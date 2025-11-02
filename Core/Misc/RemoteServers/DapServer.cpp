@@ -94,7 +94,6 @@ DapServer::doSend(const string &payload)
 
     if (config.verbose) {
         retroShell << "T: " << util::makePrintable(payload) << "\n";
-        printf("T: %s\n", util::makePrintable(payload).c_str());
     }
 }
 
@@ -183,6 +182,7 @@ DapServer::reply(const string &payload)
 {
     std::stringstream ss;
     ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
+    printf("T: %s\n", util::makePrintable(payload).c_str());
     send(ss.str());
 }
 
