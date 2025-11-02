@@ -902,6 +902,7 @@
 		506E28422EB647BB003FF0D3 /* DapServerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapServerTypes.h; sourceTree = "<group>"; };
 		506E28432EB746BE003FF0D3 /* DapAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapAdapter.h; sourceTree = "<group>"; };
 		506E28442EB746C6003FF0D3 /* DapAdapter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DapAdapter.cpp; sourceTree = "<group>"; };
+		506E28472EB75882003FF0D3 /* DapAdapterTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapAdapterTypes.h; sourceTree = "<group>"; };
 		506F30382B729CE80083EAEA /* Emulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Emulator.cpp; sourceTree = "<group>"; };
 		506F30392B729CE80083EAEA /* Emulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Emulator.h; sourceTree = "<group>"; };
 		506F30402B74C1C70083EAEA /* Wakeable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Wakeable.cpp; sourceTree = "<group>"; };
@@ -2150,6 +2151,7 @@
 				506E28422EB647BB003FF0D3 /* DapServerTypes.h */,
 				506E28372EB33464003FF0D3 /* DapServer.h */,
 				506E28382EB3346C003FF0D3 /* DapServer.cpp */,
+				506E28472EB75882003FF0D3 /* DapAdapterTypes.h */,
 				506E28432EB746BE003FF0D3 /* DapAdapter.h */,
 				506E28442EB746C6003FF0D3 /* DapAdapter.cpp */,
 				50A5B7CC2C74E44C00D6DDAD /* Socket.h */,

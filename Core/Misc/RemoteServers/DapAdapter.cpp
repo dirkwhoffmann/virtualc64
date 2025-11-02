@@ -34,9 +34,80 @@ DapAdapter::_dump(Category category, std::ostream &os) const
 template <> void
 DapAdapter::process<dap::Command::BreakpointLocations> (isize seq, const string &packet)
 {
-    printf("dap::Command::BreakpointLocations: %ld\n", seq);
+    try {
+        // Parse the incoming DAP message
+        json request = json::parse(packet);
 
-    replySuccess(seq, "breakpointLocations");
+        // Prepare base DAP response
+        json response = {
+
+            {"type", "response"},
+            {"seq", nextSeq()},
+            {"request_seq", seq},
+            {"command", "breakpointLocations"},
+            {"success", true},
+            {"body", {{"breakpoints", json::array()}}}
+        };
+
+        // Extract arguments if present
+        const auto &args = request["arguments"];
+        std::string path;
+        int startLine = -1;
+        int endLine   = -1;
+
+        if (args.contains("source") && args["source"].contains("path"))
+            path = args["source"]["path"].get<std::string>();
+        if (args.contains("line"))
+            startLine = args["line"].get<int>();
+        if (args.contains("endLine"))
+            endLine = args["endLine"].get<int>();
+        if (endLine < 0)
+            endLine = startLine;
+
+        // Create BreakpointLocations object
+        BreakpointLocations locations;
+
+        // In the future, you could fill 'locations' based on .sym file info
+        // For now, just add placeholder entries for the requested range
+        for (int line = startLine; line <= endLine; line++) {
+
+            BreakpointLocation loc;
+            loc.line = line;
+            loc.column = 1;
+            loc.endLine = line;
+            loc.endColumn = 80;
+            locations.locations.push_back(loc);
+        }
+
+        // Serialize into DAP response
+        for (const auto &loc : locations.locations) {
+
+            json locJson = {
+                {"line", loc.line},
+                {"column", loc.column},
+                {"endLine", loc.endLine},
+                {"endColumn", loc.endColumn}
+            };
+            response["body"]["breakpoints"].push_back(locJson);
+        }
+
+        // Send back
+        reply(response.dump());
+
+    } catch (const std::exception &e) {
+
+        // On any parsing or logic error, send a failed response
+        json errorResponse = {
+            {"type", "response"},
+            {"seq", nextSeq()},
+            {"request_seq", seq},
+            {"command", "breakpointLocations"},
+            {"success", false},
+            {"message", std::string("Failed to process BreakpointLocations: ") + e.what()}
+        };
+        
+        reply(errorResponse.dump());
+    }
 }
 
 template <> void
@@ -128,7 +199,57 @@ DapAdapter::process <dap::Command::Launch> (isize seq, const string &packet)
 template <> void
 DapAdapter::process <dap::Command::SetBreakpoints> (isize seq, const string &packet)
 {
-    replySuccess(seq, "setBreakpoints");
+    try {
+
+        json request = json::parse(packet);
+
+        // Prepare default response
+        json response = {
+            
+            {"type", "response"},
+            {"seq", nextSeq()},
+            {"request_seq", seq},
+            {"command", "setBreakpoints"},
+            {"success", true},
+            {"body", {{"breakpoints", json::array()}}}
+        };
+
+        // Extract breakpoints
+        if (request.contains("arguments") && request["arguments"].contains("breakpoints")) {
+
+            const auto &bpArray = request["arguments"]["breakpoints"];
+
+            // Parse into our structured type
+            SourceBreakpoints sourceBreakpoints(bpArray);
+
+            // Build DAP response for each breakpoint
+            for (const auto &bp : sourceBreakpoints.breakpoints) {
+                json bpEntry = {
+
+                    {"verified", false},
+                    {"line", bp.line.value_or(-1)},
+                    {"message", "Source breakpoints not yet supported"}
+                };
+                response["body"]["breakpoints"].push_back(bpEntry);
+            }
+        }
+
+        reply(response.dump());
+
+    } catch (const std::exception &e) {
+
+        json errorResponse = {
+
+            {"type", "response"},
+            {"seq", nextSeq()},
+            {"request_seq", seq},
+            {"command", "setBreakpoints"},
+            {"success", false},
+            {"message", std::string("Failed to process SetBreakpoints: ") + e.what()}
+        };
+
+        reply(errorResponse.dump());
+    }
 }
 
 void

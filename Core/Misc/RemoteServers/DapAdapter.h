@@ -13,6 +13,7 @@
 #pragma once
 
 #include "SubComponent.h"
+#include "DapAdapterTypes.h"
 #include "DapServerTypes.h"
 #include "json.h"
 
@@ -21,6 +22,9 @@ using json = nlohmann::json;
 namespace vc64 {
 
 class DapAdapter final : public CoreObject, public References {
+
+    isize seqCounter;
+
 
     //
     // Initializing
@@ -54,6 +58,9 @@ public:
     void process(const json &j) throws;
 
 private:
+
+    // Creates a new seq number
+    isize nextSeq() { return seqCounter++; }
 
     // Processes a single command
     template <dap::Command> void process(isize seq, const string &packet) throws;
