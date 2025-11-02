@@ -13,12 +13,14 @@
 #pragma once
 
 #include "SocketServer.h"
-#include "DapServerCmds.h"
 #include "DapServerTypes.h"
 
 namespace vc64 {
 
 class DapServer final : public SocketServer {
+
+    class DapAdapter *adapter = nullptr;
+
 
     //
     // Initializing
@@ -26,7 +28,8 @@ class DapServer final : public SocketServer {
 
 public:
 
-    using SocketServer::SocketServer;
+    DapServer(C64& ref, isize id);
+    ~DapServer();
 
     DapServer& operator= (const DapServer& other) {
 
@@ -67,37 +70,16 @@ public:
 public:
 
     // Processes an DAP command
-    void process(const string &packet) throws;
+    // void process(const string &packet) throws;
 
 private:
 
     // Processes a single command (DapServerCmds.cpp)
-    template <dap::Command> void process(isize seq, const string &packet) throws;
+    // template <dap::Command> void process(isize seq, const string &packet) throws;
     // void process(dap::Command cmd, isize seq, const string &packet) throws;
 
     // Sends a packet to the connected client
     void reply(const string &payload);
-
-    void replySuccess(isize seq, const string &command);
-
-    //
-    // Reading the emulator state
-    //
-
-    // Reads a register value
-    string readRegister(isize nr);
-
-    // Reads a byte from memory
-    string readMemory(isize addr);
-
-
-    //
-    // Delegation methods
-    //
-
-public:
-
-    void breakpointReached();
 };
 
 }

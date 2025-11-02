@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "DapServer.h"
-#include "DapServerCmds.h"
+#include "DapAdapter.h"
 #include "Emulator.h"
 #include "CPU.h"
 #include "IOUtils.h"
@@ -20,11 +20,18 @@
 #include "MemUtils.h"
 #include "MsgQueue.h"
 #include "RetroShell.h"
-#include "json.h"
-
-using json = nlohmann::json;
 
 namespace vc64 {
+
+DapServer::DapServer(C64& ref, isize id) : SocketServer(ref, id) {
+
+    adapter = new DapAdapter(c64);
+}
+
+DapServer::~DapServer() {
+
+    delete adapter;
+}
 
 void
 DapServer::_dump(Category category, std::ostream &os) const
@@ -102,16 +109,7 @@ DapServer::doProcess(const string &payload)
 {
     try {
 
-        process(payload);
-        /*
-        if (auto msg = dap::Message::parse(payload); msg) {
-            if (auto str = msg->process(c64); !str.empty()) {
-                for (auto &s : str) { reply(s); }
-            }
-        } else {
-            throw AppError(Fault::DAP_INVALID_FORMAT, payload);
-        }
-        */
+        adapter->process(payload);
 
     } catch (AppError &err) {
 
@@ -144,6 +142,7 @@ DapServer::didConnect()
 
 }
 
+/*
 void
 DapServer::process(const string &packet)
 {
@@ -176,6 +175,7 @@ DapServer::process(const string &packet)
         throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
     }
 }
+*/
 
 void
 DapServer::reply(const string &payload)
@@ -186,6 +186,7 @@ DapServer::reply(const string &payload)
     send(ss.str());
 }
 
+/*
 void
 DapServer::replySuccess(isize seq, const string &command)
 {
@@ -228,5 +229,6 @@ DapServer::breakpointReached()
 {
     debug(DAP_DEBUG, "breakpointReached()\n");
 }
+*/
 
 }
