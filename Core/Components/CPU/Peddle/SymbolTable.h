@@ -34,6 +34,26 @@ struct LineEntry {
     isize seg = -1;
 };
 
+struct SegmentEntry {
+
+    isize id = -1;
+    string name;
+    u32 start = 0;
+    u32 size = 0;
+    string addrsize;
+    string type;
+    string oname;
+    u32 ooffs = 0;
+};
+
+struct SpanEntry {
+
+    isize id = -1;
+    isize seg = -1;
+    isize start = 0;
+    isize size = 0;
+};
+
 struct SymbolEntry {
 
     isize id = -1;
@@ -44,26 +64,76 @@ struct SymbolEntry {
     isize seg = -1;
 };
 
-class SymbolTable {
+template <typename T>
+class BaseMap {
 
-    unordered_map<isize, FileEntry> files;
-    unordered_map<u16, SymbolEntry> addrSymbols;
-    unordered_map<std::string, SymbolEntry> nameSymbols;
-    vector<LineEntry> lines;
+protected:
+
+    std::unordered_map<isize, T> map;
 
 public:
 
-    void clear();
-    bool loadCS65File(const std::string& path);
+    const auto &get() { return map; }
+    void clear() { map.clear(); }
+    optional<std::reference_wrapper<const T>> get(isize id) const {
+        return map.contains(id) ? map.at(id) : std::nullopt;
+    }
+};
 
-    optional<FileEntry> getFileById(isize id) const;
-    optional<SymbolEntry> findSymbolByAddress(u16 addr) const;
-    optional<SymbolEntry> findSymbolByName(const string &name) const;
-    optional<LineEntry> findLineByNr(isize nr) const;
+class FileMap: public BaseMap<FileEntry> {
+
+public:
+
+    void parse(string_view line);
+};
+
+class LineMap: public BaseMap<LineEntry> {
+
+public:
+
+    void parse(string_view line);
+};
+
+class SegmentMap : public BaseMap<SegmentEntry> {
+
+public:
+
+    void parse(string_view line);
+};
+
+class SpanMap : public BaseMap<SpanEntry> {
+
+public:
+
+    void parse(string_view line);
+};
+
+class SymbolMap: public BaseMap<SymbolEntry> {
+
+public:
+    
+    void parse(string_view line);
+
+    optional<SymbolEntry> seek(u16 addr);
+    optional<SymbolEntry> seek(const string &label);
+};
+
+class SymbolTable {
+
+public:
+
+    FileMap files;
+    LineMap lines;
+    SegmentMap segments;
+    SpanMap spans;
+    SymbolMap symbols;
+
+    void clear();
+    bool loadCS65File(const fs::path &path);
 
 private:
 
-    void parseLine(const std::string& line);
+    void parseLine(string_view line);
 
 };
 

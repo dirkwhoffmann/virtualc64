@@ -7,6 +7,8 @@
 
 #include "PeddleConfig.h"
 #include "SymbolTable.h"
+#include "StringUtils.h"
+#include "Parser.h"
 #include <fstream>
 #include <sstream>
 #include <algorithm>
@@ -14,152 +16,190 @@
 
 namespace vc64::peddle {
 
+inline u16 parseU16(string_view sv) { return (u16)util::parseNum(string(sv)); }
+inline u32 parseU32(string_view sv) { return (u32)util::parseNum(string(sv)); }
+inline u64 parseU64(string_view sv) { return (u64)util::parseNum(string(sv)); }
+inline isize parseNum(string_view sv) { return (isize)util::parseNum(string(sv)); }
+
+inline void parseKeyValueLine(string_view line, auto &&handler) {
+
+    usize start = 0;
+    while (start < line.size()) {
+
+        usize comma = line.find(',', start);
+        string_view token = line.substr(start, comma - start);
+        size_t eq = token.find('=');
+
+        if (eq != string_view::npos) {
+
+            string_view field = token.substr(0, eq);
+            string_view value = token.substr(eq + 1);
+            handler(field, util::unquote(value));
+        }
+
+        if (comma == string_view::npos) break;
+        start = comma + 1;
+    }
+}
+
+void
+FileMap::parse(string_view line)
+{
+    FileEntry entry;
+
+     parseKeyValueLine(line, [&](string_view field, string_view value) {
+
+         if (field == "id") { entry.id = parseNum(value); return; }
+         if (field == "name") { entry.name = string(value); return; }
+         if (field == "size") { entry.size = parseNum(value); return; }
+         if (field == "mtime") { entry.mtime = parseU64(value); return; }
+         if (field == "mod") { entry.mod = parseNum(value); return; }
+
+         printf("Unsupported FileEntry field: %.*s\n", (int)field.size(), field.data());
+     });
+
+    if (entry.id >= 0) map[entry.id] = std::move(entry);
+}
+
+void
+LineMap::parse(string_view line)
+{
+    LineEntry entry;
+
+    parseKeyValueLine(line, [&](string_view field, string_view value) {
+
+        if (field == "id")   { entry.id = parseNum(value); return; }
+        if (field == "file") { entry.fileId = parseU32(value); return; }
+        if (field == "line") { entry.lineNumber = parseU32(value); return; }
+        if (field == "seg")  { entry.seg = parseU32(value); return; }
+
+        printf("Unsupported LineEntry field: %.*s\n", (int)field.size(), field.data());
+    });
+
+    if (entry.id >= 0) map[entry.id] = std::move(entry);
+}
+
+void SegmentMap::parse(string_view line)
+{
+    SegmentEntry entry;
+
+    parseKeyValueLine(line, [&](string_view field, string_view value) {
+
+        if (field == "id")       { entry.id = parseNum(value); return; }
+        if (field == "name")     { entry.name = string(value); return; }
+        if (field == "start")    { entry.start = parseU32(value); return; }
+        if (field == "size")     { entry.size = parseU32(value); return; }
+        if (field == "addrsize") { entry.addrsize = string(value); return; }
+        if (field == "type")     { entry.type = string(value); return; }
+        if (field == "oname")    { entry.oname = string(value); return; }
+        if (field == "ooffs")    { entry.ooffs = parseU32(value); return; }
+
+        printf("Unsupported SegmentEntry field: %.*s\n", (int)field.size(), field.data());
+    });
+
+    if (entry.id >= 0) map[entry.id] = std::move(entry);
+}
+
+void
+SpanMap::parse(string_view line)
+{
+    SpanEntry entry;
+
+    parseKeyValueLine(line, [&](string_view field, string_view value) {
+
+        if (field == "id")    { entry.id = parseNum(value); return; }
+        if (field == "seg")   { entry.seg = parseNum(value); return; }
+        if (field == "start") { entry.start = parseNum(value); return; }
+        if (field == "size")  { entry.size = parseNum(value); return; }
+
+        printf("Unsupported SpanEntry field: %.*s\n", (int)field.size(), field.data());
+    });
+
+    if (entry.id >= 0) map[entry.id] = std::move(entry);
+}
+
+void
+SymbolMap::parse(string_view line)
+{
+    SymbolEntry entry;
+
+    parseKeyValueLine(line, [&](string_view field, string_view value) {
+
+        if (field == "id")    { entry.id = parseNum(value); return; }
+        if (field == "addr")  { entry.address = parseU16(value); return; }
+        if (field == "name")  { entry.name = string(value); return; }
+        if (field == "type")  { entry.type = parseNum(value); return; }
+        if (field == "scope") { entry.scope = parseNum(value); return; }
+        if (field == "seg")   { entry.seg = parseNum(value); return; }
+
+        printf("Unsupported SymbolEntry field: %.*s\n", (int)field.size(), field.data());
+    });
+
+    if (entry.id >= 0) map[entry.id] = std::move(entry);
+}
+
+optional<SymbolEntry>
+SymbolMap::seek(u16 addr) {
+
+    for (const auto &kv : map) {
+        if (kv.second.address == addr) return kv.second;
+    }
+    return std::nullopt;
+}
+
+optional<SymbolEntry>
+SymbolMap::seek(const string &label) {
+
+    for (const auto &kv : map) {
+        if (kv.second.name == label) return kv.second;
+    }
+    return std::nullopt;
+}
+
 void
 SymbolTable::clear()
 {
     files.clear();
-    addrSymbols.clear();
-    nameSymbols.clear();
     lines.clear();
+    symbols.clear();
 }
 
 bool
-SymbolTable::loadCS65File(const std::string& path)
+SymbolTable::loadCS65File(const fs::path &path)
 {
     clear();
 
-    // Open file
     std::ifstream in(path);
     if (!in.is_open()) return false;
 
-    // Read line by line
     std::string line;
     while (std::getline(in, line)) {
-
         if (line.empty() || line[0] == '#') continue;
+
         parseLine(line);
     }
-
-    // Sort line entries by address for binary search
-    std::sort(lines.begin(), lines.end(), [](const LineEntry& a, const LineEntry& b) {
-        return a.lineNumber < b.lineNumber;
-    });
 
     return true;
 }
 
-void SymbolTable::parseLine(const std::string& line)
+void SymbolTable::parseLine(string_view line)
 {
-    std::istringstream iss(line);
-    std::string key;
-    iss >> key;
+    // Skip leading whitespace
+    line.remove_prefix(std::min(line.find_first_not_of(" \t"), line.size()));
 
-    if (key == "file") {
+    // Split key and rest
+    size_t space = line.find(' ');
+    string_view category = line.substr(0, space);
+    string_view rest = (space == string_view::npos) ? "" : line.substr(space + 1);
 
-        FileEntry entry;
-        std::string token;
-        while (std::getline(iss, token, ',')) {
-            auto pos = token.find('=');
-            if (pos == std::string::npos)
-                continue;
+    // Dispatch
+    if (category == "file") { files.parse(rest); return; }
+    if (category == "line") { lines.parse(rest); return; }
+    if (category == "seg")  { segments.parse(rest); return; }
+    if (category == "span") { spans.parse(rest); return; }
+    if (category == "sym")  { symbols.parse(rest); return; }
 
-            std::string field = token.substr(0, pos);
-            std::string value = token.substr(pos + 1);
-
-            if (field == "id") entry.id = std::stoi(value);
-            else if (field == "name") {
-                if (value.size() > 2 && value.front() == '"' && value.back() == '"')
-                    value = value.substr(1, value.size() - 2);
-                entry.name = value;
-            } else if (field == "size") entry.size = std::stoul(value);
-            else if (field == "mtime") entry.mtime = std::stoul(value, nullptr, 0);
-            else if (field == "mod") entry.mod = std::stoi(value);
-        }
-        if (entry.id >= 0)
-            files[entry.id] = entry;
-    }
-    else if (key == "sym") {
-
-        SymbolEntry sym;
-        std::string token;
-        while (std::getline(iss, token, ',')) {
-            auto pos = token.find('=');
-            if (pos == std::string::npos)
-                continue;
-
-            std::string field = token.substr(0, pos);
-            std::string value = token.substr(pos + 1);
-
-            if (field == "addr") sym.address = (u16)std::stoul(value, nullptr, 0);
-            else if (field == "name") {
-                if (value.size() > 2 && value.front() == '"' && value.back() == '"')
-                    value = value.substr(1, value.size() - 2);
-                sym.name = value;
-            } else if (field == "type") sym.type = std::stoi(value);
-            else if (field == "scope") sym.scope = std::stoi(value);
-            else if (field == "seg") sym.seg = std::stoi(value);
-        }
-        if (!sym.name.empty()) {
-            addrSymbols[sym.address] = sym;
-            nameSymbols[sym.name] = sym;
-        }
-    }
-    else if (key == "line") {
-
-        LineEntry le;
-        std::string token;
-        while (std::getline(iss, token, ',')) {
-            auto pos = token.find('=');
-            if (pos == std::string::npos)
-                continue;
-
-            std::string field = token.substr(0, pos);
-            std::string value = token.substr(pos + 1);
-
-            if (field == "file") le.fileId = std::stoi(value);
-            else if (field == "line") le.lineNumber = std::stoi(value);
-            else if (field == "seg") le.seg = std::stoi(value);
-        }
-        lines.push_back(le);
-    }
-}
-
-optional<FileEntry>
-SymbolTable::getFileById(isize id) const
-{
-    if (auto it = files.find(id); it != files.end())
-        return it->second;
-    return std::nullopt;
-}
-
-optional<SymbolEntry>
-SymbolTable::findSymbolByAddress(uint16_t addr) const
-{
-    if (auto it = addrSymbols.find(addr); it != addrSymbols.end())
-        return it->second;
-    return std::nullopt;
-}
-
-optional<SymbolEntry>
-SymbolTable::findSymbolByName(const std::string& name) const
-{
-    if (auto it = nameSymbols.find(name); it != nameSymbols.end())
-        return it->second;
-    return std::nullopt;
-}
-
-optional<LineEntry>
-SymbolTable::findLineByNr(isize nr) const
-{
-    if (lines.empty()) return std::nullopt;
-
-    auto it = std::lower_bound(lines.begin(), lines.end(), nr,
-                               [](const LineEntry& entry, uint16_t value) {
-        return entry.lineNumber < value;
-    });
-
-    if (it != lines.begin()) --it;  // find the line covering the address
-    return *it;
+    printf("Unknown line prefix: %.*s\n", (int)category.size(), category.data());
 }
 
 }
