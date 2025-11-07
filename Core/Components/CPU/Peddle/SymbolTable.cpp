@@ -45,7 +45,7 @@ inline void parseKeyValueLine(string_view line, auto &&handler) {
 void
 FileMap::parse(string_view line)
 {
-    FileEntry entry;
+    FileEntry entry { .id = -1 };
 
      parseKeyValueLine(line, [&](string_view field, string_view value) {
 
@@ -64,14 +64,14 @@ FileMap::parse(string_view line)
 void
 LineMap::parse(string_view line)
 {
-    LineEntry entry;
+    LineEntry entry { .id = -1 };
 
     parseKeyValueLine(line, [&](string_view field, string_view value) {
 
         if (field == "id")   { entry.id = parseNum(value); return; }
-        if (field == "file") { entry.fileId = parseU32(value); return; }
-        if (field == "line") { entry.lineNumber = parseU32(value); return; }
-        if (field == "seg")  { entry.seg = parseU32(value); return; }
+        if (field == "file") { entry.file = parseNum(value); return; }
+        if (field == "line") { entry.line = parseNum(value); return; }
+        if (field == "span") { entry.span = parseNum(value); return; }
 
         printf("Unsupported LineEntry field: %.*s\n", (int)field.size(), field.data());
     });
@@ -81,7 +81,7 @@ LineMap::parse(string_view line)
 
 void SegmentMap::parse(string_view line)
 {
-    SegmentEntry entry;
+    SegmentEntry entry { .id = -1 };
 
     parseKeyValueLine(line, [&](string_view field, string_view value) {
 
@@ -103,7 +103,7 @@ void SegmentMap::parse(string_view line)
 void
 SpanMap::parse(string_view line)
 {
-    SpanEntry entry;
+    SpanEntry entry { .id = -1 };
 
     parseKeyValueLine(line, [&](string_view field, string_view value) {
 
@@ -121,16 +121,18 @@ SpanMap::parse(string_view line)
 void
 SymbolMap::parse(string_view line)
 {
-    SymbolEntry entry;
+    SymbolEntry entry { .id = -1 };
 
     parseKeyValueLine(line, [&](string_view field, string_view value) {
 
-        if (field == "id")    { entry.id = parseNum(value); return; }
-        if (field == "addr")  { entry.address = parseU16(value); return; }
-        if (field == "name")  { entry.name = string(value); return; }
-        if (field == "type")  { entry.type = parseNum(value); return; }
-        if (field == "scope") { entry.scope = parseNum(value); return; }
-        if (field == "seg")   { entry.seg = parseNum(value); return; }
+        if (field == "id")       { entry.id = parseNum(value); return; }
+        if (field == "name")     { entry.name = string(value); return; }
+        if (field == "addrsize") { entry.addrsize = string(value); return; }
+        if (field == "size")     { entry.size = parseNum(value); return; }
+        if (field == "scope")    { entry.scope = parseNum(value); return; }
+        if (field == "val")      { entry.scope = parseU16(value); return; }
+        if (field == "seg")      { entry.seg = parseNum(value); return; }
+        if (field == "type")     { entry.type = string(value); return; }
 
         printf("Unsupported SymbolEntry field: %.*s\n", (int)field.size(), field.data());
     });
@@ -142,7 +144,7 @@ optional<SymbolEntry>
 SymbolMap::seek(u16 addr) {
 
     for (const auto &kv : map) {
-        if (kv.second.address == addr) return kv.second;
+        if (kv.second.val == addr) return kv.second;
     }
     return std::nullopt;
 }
@@ -188,7 +190,7 @@ void SymbolTable::parseLine(string_view line)
     line.remove_prefix(std::min(line.find_first_not_of(" \t"), line.size()));
 
     // Split key and rest
-    size_t space = line.find(' ');
+    auto space = line.find_first_of(" \t");
     string_view category = line.substr(0, space);
     string_view rest = (space == string_view::npos) ? "" : line.substr(space + 1);
 
@@ -199,7 +201,7 @@ void SymbolTable::parseLine(string_view line)
     if (category == "span") { spans.parse(rest); return; }
     if (category == "sym")  { symbols.parse(rest); return; }
 
-    printf("Unknown line prefix: %.*s\n", (int)category.size(), category.data());
+    printf("Unknown category: %.*s\n", (int)category.size(), category.data());
 }
 
 }

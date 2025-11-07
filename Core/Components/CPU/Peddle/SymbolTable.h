@@ -19,49 +19,51 @@ namespace vc64::peddle {
 
 struct FileEntry {
 
-    isize id = -1;
+    isize id;
     string name;
-    isize size = 0;
-    u64 mtime = 0;
-    isize mod = -1;
+    isize size;
+    u64 mtime;
+    isize mod;
 };
 
 struct LineEntry {
 
-    isize id = -1;
-    isize fileId = -1;
-    isize lineNumber = 0;
-    isize seg = -1;
+    isize id;
+    isize file;
+    isize line;
+    isize span;
 };
 
 struct SegmentEntry {
 
-    isize id = -1;
+    isize id;
     string name;
-    u32 start = 0;
-    u32 size = 0;
+    u32 start;
+    u32 size;
     string addrsize;
     string type;
     string oname;
-    u32 ooffs = 0;
+    u32 ooffs;
 };
 
 struct SpanEntry {
 
-    isize id = -1;
-    isize seg = -1;
-    isize start = 0;
-    isize size = 0;
+    isize id;
+    isize seg;
+    isize start;
+    isize size;
 };
 
 struct SymbolEntry {
 
-    isize id = -1;
+    isize id;
     string name;
-    u16 address = 0;
-    isize scope = -1;
-    isize type = -1;
-    isize seg = -1;
+    string addrsize;
+    isize size;
+    isize scope;
+    u16 val;
+    isize seg;
+    string type;
 };
 
 template <typename T>
@@ -75,6 +77,7 @@ public:
 
     const auto &get() { return map; }
     void clear() { map.clear(); }
+    isize size() { return (isize)map.size(); }
     optional<std::reference_wrapper<const T>> get(isize id) const {
         return map.contains(id) ? map.at(id) : std::nullopt;
     }
