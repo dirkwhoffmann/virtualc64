@@ -196,10 +196,10 @@
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* MyFormatter.swift */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
-		506E283A2EB3347B003FF0D3 /* DapServerCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28392EB33473003FF0D3 /* DapServerCmd.cpp */; };
-		506E283B2EB3347B003FF0D3 /* DapServerCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28392EB33473003FF0D3 /* DapServerCmd.cpp */; };
 		506E283C2EB338FA003FF0D3 /* DapServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28382EB3346C003FF0D3 /* DapServer.cpp */; };
 		506E283D2EB338FA003FF0D3 /* DapServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28382EB3346C003FF0D3 /* DapServer.cpp */; };
+		506E28452EB746C7003FF0D3 /* DapAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28442EB746C6003FF0D3 /* DapAdapter.cpp */; };
+		506E28462EB746C7003FF0D3 /* DapAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28442EB746C6003FF0D3 /* DapAdapter.cpp */; };
 		506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
 		506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
 		506F30422B74C1C70083EAEA /* Wakeable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30402B74C1C70083EAEA /* Wakeable.cpp */; };
@@ -901,7 +901,9 @@
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		506E28372EB33464003FF0D3 /* DapServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapServer.h; sourceTree = "<group>"; };
 		506E28382EB3346C003FF0D3 /* DapServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DapServer.cpp; sourceTree = "<group>"; };
-		506E28392EB33473003FF0D3 /* DapServerCmd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DapServerCmd.cpp; sourceTree = "<group>"; };
+		506E28422EB647BB003FF0D3 /* DapServerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapServerTypes.h; sourceTree = "<group>"; };
+		506E28432EB746BE003FF0D3 /* DapAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapAdapter.h; sourceTree = "<group>"; };
+		506E28442EB746C6003FF0D3 /* DapAdapter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DapAdapter.cpp; sourceTree = "<group>"; };
 		506F30382B729CE80083EAEA /* Emulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Emulator.cpp; sourceTree = "<group>"; };
 		506F30392B729CE80083EAEA /* Emulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Emulator.h; sourceTree = "<group>"; };
 		506F30402B74C1C70083EAEA /* Wakeable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Wakeable.cpp; sourceTree = "<group>"; };
@@ -2149,9 +2151,11 @@
 				50F0C2452EADFB0400BCC7BB /* GdbServer.h */,
 				50F0C2462EADFB0F00BCC7BB /* GdbServer.cpp */,
 				50F0C2492EADFB1800BCC7BB /* GdbServerCmds.cpp */,
+				506E28422EB647BB003FF0D3 /* DapServerTypes.h */,
 				506E28372EB33464003FF0D3 /* DapServer.h */,
 				506E28382EB3346C003FF0D3 /* DapServer.cpp */,
-				506E28392EB33473003FF0D3 /* DapServerCmd.cpp */,
+				506E28432EB746BE003FF0D3 /* DapAdapter.h */,
+				506E28442EB746C6003FF0D3 /* DapAdapter.cpp */,
 				50A5B7CC2C74E44C00D6DDAD /* Socket.h */,
 				50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */,
 			);
@@ -2449,6 +2453,7 @@
 				50726FA72961CA1C0031F2F5 /* D64File.cpp in Sources */,
 				50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */,
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
+				506E28462EB746C7003FF0D3 /* DapAdapter.cpp in Sources */,
 				505A13302C3503EB00FF8D2C /* UserPortBase.cpp in Sources */,
 				50E5BF742BA81E710004712B /* Monitor.cpp in Sources */,
 				50726F622961C9AC0031F2F5 /* VICIITable.cpp in Sources */,
@@ -2577,7 +2582,6 @@
 				50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */,
 				50316E4D2E9A41CD00BDF90F /* AudioStream.cpp in Sources */,
 				50E17E222B8B26AC0029747D /* Option.cpp in Sources */,
-				506E283B2EB3347B003FF0D3 /* DapServerCmd.cpp in Sources */,
 				50EFB0C52C18D6200013B73C /* Dumpable.cpp in Sources */,
 				50726FB12961CA230031F2F5 /* FSDirEntry.cpp in Sources */,
 				50726F802961C9E80031F2F5 /* Mouse1351.cpp in Sources */,
@@ -2781,6 +2785,7 @@
 				50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
 				509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */,
+				506E28452EB746C7003FF0D3 /* DapAdapter.cpp in Sources */,
 				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
 				507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */,
 				50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */,
@@ -2807,7 +2812,6 @@
 				50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */,
 				50A194992BDA82720046849E /* SIDBase.cpp in Sources */,
 				504C437324AF29AC00E69CAE /* RomFile.cpp in Sources */,
-				506E283A2EB3347B003FF0D3 /* DapServerCmd.cpp in Sources */,
 				504C437E24AF29AC00E69CAE /* TAPFile.cpp in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				504C436B24AF29AC00E69CAE /* MikroAss.cpp in Sources */,

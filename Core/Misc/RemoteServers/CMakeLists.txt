@@ -8,7 +8,7 @@ SocketServer.cpp
 HttpServer.cpp
 RshServer.cpp
 DapServer.cpp
-DapServerCmds.cpp
+DapAdapter.cpp
 GdbServer.cpp
 GdbServerCmds.cpp
 Socket.cpp
