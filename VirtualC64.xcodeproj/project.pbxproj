@@ -514,6 +514,8 @@
 		50E2D9AC25991E4B009A986B /* AnyCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D9AA25991E4B009A986B /* AnyCollection.cpp */; };
 		50E5BF732BA81E710004712B /* Monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E5BF712BA81E710004712B /* Monitor.cpp */; };
 		50E5BF742BA81E710004712B /* Monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E5BF712BA81E710004712B /* Monitor.cpp */; };
+		50E99FE12EBE1F9B00633978 /* SymbolTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E99FE02EBE1F9800633978 /* SymbolTable.cpp */; };
+		50E99FE22EBE1F9B00633978 /* SymbolTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E99FE02EBE1F9800633978 /* SymbolTable.cpp */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EAFFE924B2600D00024CD2 /* MyToolbar.swift */; };
@@ -1169,6 +1171,8 @@
 		50E806BF25A1C93B00F08732 /* CIATypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CIATypes.h; sourceTree = "<group>"; };
 		50E806C025A1DE9200F08732 /* MsgQueueTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MsgQueueTypes.h; sourceTree = "<group>"; };
 		50E806C125A1F1C500F08732 /* SIDTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDTypes.h; sourceTree = "<group>"; };
+		50E99FDF2EBE1F8B00633978 /* SymbolTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolTable.h; sourceTree = "<group>"; };
+		50E99FE02EBE1F9800633978 /* SymbolTable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SymbolTable.cpp; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50EAF52A2C7A5DC5005AC890 /* OpenRoms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenRoms.h; sourceTree = "<group>"; };
@@ -2172,6 +2176,8 @@
 				50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */,
 				500C1C782965E7D300071AF3 /* PeddleDisassembler.h */,
 				500C1C772965E7D300071AF3 /* PeddleDisassembler.cpp */,
+				50E99FDF2EBE1F8B00633978 /* SymbolTable.h */,
+				50E99FE02EBE1F9800633978 /* SymbolTable.cpp */,
 				501C46BC2965C54200C4B27B /* StrWriter.h */,
 				501C46BD2965C54200C4B27B /* StrWriter.cpp */,
 			);
@@ -2498,6 +2504,7 @@
 				50726F8D2961CA0D0031F2F5 /* ActionReplay.cpp in Sources */,
 				50726FB52961CA290031F2F5 /* RetroShell.cpp in Sources */,
 				50726F6F2961C9C60031F2F5 /* wave.cc in Sources */,
+				50E99FE22EBE1F9B00633978 /* SymbolTable.cpp in Sources */,
 				50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */,
 				50726F952961CA0D0031F2F5 /* Funplay.cpp in Sources */,
 				50726F6C2961C9C60031F2F5 /* envelope.cc in Sources */,
@@ -2831,6 +2838,7 @@
 				504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */,
 				50A1949F2BDA84710046849E /* MemoryBase.cpp in Sources */,
 				508C1E692C0C507D0097473C /* CartridgeBase.cpp in Sources */,
+				50E99FE12EBE1F9B00633978 /* SymbolTable.cpp in Sources */,
 				50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */,
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
 				50A194932BDA709D0046849E /* CPUBase.cpp in Sources */,
