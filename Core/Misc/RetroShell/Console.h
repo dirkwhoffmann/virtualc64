@@ -20,7 +20,15 @@
 
 namespace vc64 {
 
-typedef std::pair<isize, string> QueuedCmd;
+
+struct QueuedCmd {
+
+    enum class Type { USER, SCRIPT, RPC };
+
+    Type type;
+    isize id;
+    string cmd;
+};
 
 struct TooFewArgumentsError : public util::ParseError {
     using ParseError::ParseError;

@@ -88,11 +88,13 @@ RetroShell::enterConsole(isize nr)
 void
 RetroShell::asyncExec(const string &command, bool append)
 {
+    QueuedCmd cmd = { .type = QueuedCmd::Type::USER, .cmd = command };
+
     // Feed the command into the command queue
     if (append) {
-        commands.push_back({ 0, command});
+        commands.push_back(cmd);
     } else {
-        commands.insert(commands.begin(), { 0, command});
+        commands.insert(commands.begin(), cmd);
     }
     
     // Process the command queue in the next update cycle
@@ -108,8 +110,9 @@ RetroShell::asyncExecScript(std::stringstream &ss)
     isize nr = 1;
     
     while (std::getline(ss, line)) {
-        
-        commands.push_back({ nr++, line });
+
+        QueuedCmd cmd = { .type = QueuedCmd::Type::SCRIPT, .id = nr++, .cmd = line };
+        commands.push_back(cmd);
     }
     
     emulator.put(Command(Cmd::RSH_EXECUTE));
@@ -171,14 +174,12 @@ RetroShell::exec()
     
     // Only proceed if there is anything to process
     if (commands.empty()) return;
-    
-    std::pair<isize, string> cmd;
-    
+
     try {
         
         while (!commands.empty()) {
             
-            cmd = commands.front();
+            QueuedCmd cmd = commands.front();
             commands.erase(commands.begin());
             exec(cmd);
         }
@@ -203,14 +204,15 @@ RetroShell::exec()
 void
 RetroShell::exec(QueuedCmd cmd)
 {
-    auto line = cmd.first;
-    auto command = cmd.second;
-    
+    auto line = cmd.id;
+    auto command = cmd.cmd;
+    auto script = cmd.type == QueuedCmd::Type::SCRIPT;
+
     try {
-        
+
         // Print the command if it comes from a script
-        if (line) *this << command << '\n';
-        
+        if (script) *this << command << '\n';
+
         // Call the interpreter
         current->exec(command);
         

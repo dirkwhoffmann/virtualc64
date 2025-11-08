@@ -20,10 +20,10 @@ void
 DebuggerConsole::_pause()
 {
     if (retroShell.inDebugShell()) {
-        
+
         *this << '\n';
-    exec("state");
-    *this << getPrompt();
+        exec("state");
+        *this << getPrompt();
     }
 }
 
