@@ -23,44 +23,59 @@ RpcServer::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 
-    HttpServer::_dump(category, os);
-}
-
-string
-RpcServer::respond(const httplib::Request& request)
-{
-    std::ostringstream output;
-
-    printf("Holla, die Waldfee\n");
-    output << "Holla, die Waldfee";
-
-    return output.str();
+    RemoteServer::_dump(category, os);
 }
 
 void
-RpcServer::main()
+RpcServer::didStart()
 {
-    try {
+    if (config.verbose) {
 
-        // Create the HTTP server
-        if (!srv) srv = new httplib::Server();
-
-        // Define the endpoint
-        srv->Post("/rpc", [this](const httplib::Request& req, httplib::Response& res) {
-
-            switchState(SrvState::CONNECTED);
-            res.set_content(respond(req), "text/plain");
-        });
-
-        // Start the server to listen on localhost
-        debug(SRV_DEBUG, "Starting RPC server\n");
-        srv->listen("localhost", (int)config.port);
-
-    } catch (std::exception &err) {
-
-        debug(SRV_DEBUG, "Server thread interrupted\n");
-        handleError(err.what());
+        *this << "Remote server is listening at port " << config.port << "\n";
     }
+}
+
+string
+RpcServer::doReceive()
+{
+    string payload = connection.recv();
+
+    // Remove LF and CR (if present)
+    payload = util::rtrim(payload, "\n\r");
+
+    if (config.verbose) {
+
+        retroShell << "R: " << util::makePrintable(payload) << "\n";
+        printf("R: %s\n", util::makePrintable(payload).c_str());
+    }
+
+    return payload;
+}
+
+void
+RpcServer::doSend(const string &payload)
+{
+    connection.send(payload);
+
+    if (config.verbose) {
+
+        retroShell << "T: " << util::makePrintable(payload) << "\n";
+        printf("T: %s\n", util::makePrintable(payload).c_str());
+    }
+}
+
+void
+RpcServer::doProcess(const string &payload)
+{
+    // TODO
+    printf("TODO: doProcess(%s)\n", payload.c_str());
+    retroShell.asyncExec(QueuedCmd { .type = QueuedCmd::Type::RPC, .id = 0, .cmd = payload });
+}
+
+void
+RpcServer::reply(const string &payload, isize id)
+{
+    send("reply: TODO");
 }
 
 }

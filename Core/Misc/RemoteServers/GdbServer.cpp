@@ -53,6 +53,7 @@ GdbServer::doReceive()
     cmd = util::rtrim(cmd, "\n\r");
 
     if (config.verbose) {
+
         retroShell << "R: " << util::makePrintable(cmd) << "\n";
         printf("R: %s\n", util::makePrintable(cmd).c_str());
     }
@@ -67,6 +68,7 @@ GdbServer::doSend(const string &payload)
     connection.send(payload);
 
     if (config.verbose) {
+        
         retroShell << "T: " << util::makePrintable(payload) << "\n";
         printf("T: %s\n", util::makePrintable(payload).c_str());
     }

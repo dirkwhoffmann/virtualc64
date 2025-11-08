@@ -41,10 +41,7 @@ private:
     //
     // Methods from RemoteServer
     //
-    // Methods from SocketServer
-    //
 
-    
     string doReceive() throws override;
     void doProcess(const string &packet) throws override;
     void doSend(const string &packet)throws  override;

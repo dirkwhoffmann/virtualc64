@@ -34,7 +34,7 @@ RetroShell::_initialize()
     current = &debugger;
     
     // Switch the console to let the welcome message appear
-    current->exec("commander");
+    current->exec(QueuedCmd {.cmd = "commander"});
 }
 
 void
@@ -70,8 +70,8 @@ RetroShell::enterConsole(isize nr)
     if (current->isEmpty()) {
         
         // Print the welcome message if entered the first time
-        current->exec("welcome"); *this << current->getPrompt();
-        
+        current->exec(QueuedCmd {.cmd = "welcome"}); *this << current->getPrompt();
+
     } else {
         
         // Otherwise, print the summary message
@@ -88,13 +88,17 @@ RetroShell::enterConsole(isize nr)
 void
 RetroShell::asyncExec(const string &command, bool append)
 {
-    QueuedCmd cmd = { .type = QueuedCmd::Type::USER, .cmd = command };
+    asyncExec(QueuedCmd { .type = QueuedCmd::Type::USER, .cmd = command });
+}
 
+void
+RetroShell::asyncExec(const QueuedCmd &command, bool append)
+{
     // Feed the command into the command queue
     if (append) {
-        commands.push_back(cmd);
+        commands.push_back(command);
     } else {
-        commands.insert(commands.begin(), cmd);
+        commands.insert(commands.begin(), command);
     }
     
     // Process the command queue in the next update cycle
@@ -105,18 +109,18 @@ void
 RetroShell::asyncExecScript(std::stringstream &ss)
 {
     {   SYNCHRONIZED
-    
-    std::string line;
-    isize nr = 1;
-    
-    while (std::getline(ss, line)) {
 
-        QueuedCmd cmd = { .type = QueuedCmd::Type::SCRIPT, .id = nr++, .cmd = line };
-        commands.push_back(cmd);
-    }
+        std::string line;
+        isize nr = 1;
+
+        while (std::getline(ss, line)) {
+
+            QueuedCmd cmd = { .type = QueuedCmd::Type::SCRIPT, .id = nr++, .cmd = line };
+            commands.push_back(cmd);
+        }
     
-    emulator.put(Command(Cmd::RSH_EXECUTE));
-}
+        emulator.put(Command(Cmd::RSH_EXECUTE));
+    }
 }
 
 void
@@ -214,8 +218,8 @@ RetroShell::exec(QueuedCmd cmd)
         if (script) *this << command << '\n';
 
         // Call the interpreter
-        current->exec(command);
-        
+        current->exec(cmd);
+
     } catch (ScriptInterruption &) {
         
         // Rethrow the exception

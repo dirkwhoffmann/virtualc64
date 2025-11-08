@@ -764,8 +764,10 @@ Console::parseSeq(const string &argv, const string &fallback) const
 }
 
 void
-Console::exec(const string& userInput, bool verbose)
+Console::exec(const QueuedCmd& cmd, bool verbose)
 {
+    string userInput = cmd.cmd;
+
     // Split the command string
     Tokens tokens = split(userInput);
     
@@ -782,8 +784,6 @@ Console::exec(const string& userInput, bool verbose)
 void
 Console::exec(const Tokens &argv, bool verbose)
 {
-    // Tokens args = argv;
-    
     // In 'verbose' mode, print the token list
     if (verbose) *this << argv << '\n';
     

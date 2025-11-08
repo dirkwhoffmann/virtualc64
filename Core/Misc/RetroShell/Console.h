@@ -340,7 +340,7 @@ public:
 protected:
     
     // Executes a single command
-    void exec(const string& userInput, bool verbose = false) throws;
+    void exec(const QueuedCmd& cmd, bool verbose = false) throws;
     void exec(const Tokens &argv, bool verbose = false) throws;
     
     // Prints a usage string for a command

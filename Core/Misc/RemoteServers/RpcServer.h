@@ -12,21 +12,21 @@
 
 #pragma once
 
-#include "HttpServer.h"
+#include "SocketServer.h"
 
 namespace vc64 {
 
-class RpcServer final : public HttpServer {
+class RpcServer final : public SocketServer {
 
 public:
 
-    using HttpServer::HttpServer;
+    using SocketServer::SocketServer;
 
 protected:
 
     RpcServer& operator= (const RpcServer& other) {
 
-        HttpServer::operator = (other);
+        SocketServer::operator = (other);
         return *this;
     }
 
@@ -44,17 +44,20 @@ protected:
     // Methods from RemoteServer
     //
 
+    string doReceive() throws override;
+    void doProcess(const string &packet) throws override;
+    void doSend(const string &packet) throws  override;
+    void didStart() override;
+    // void didConnect() override;
+
+    //
+    //
+    //
+
 public:
 
-    void main() override;
-
-
-    //
-    // Handling requests
-    //
-
-    // Generate a response
-    string respond(const httplib::Request& request);
+    // Sends a response packet
+    void reply(const string &payload, isize id);
 };
 
 }

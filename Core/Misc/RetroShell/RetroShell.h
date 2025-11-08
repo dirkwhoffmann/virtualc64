@@ -145,7 +145,8 @@ public:
     
     // Adds a command to the list of pending commands
     void asyncExec(const string &command, bool append = true);
-    
+    void asyncExec(const QueuedCmd &command, bool append = true);
+
     // Adds the commands of a shell script to the list of pending commands
     void asyncExecScript(std::stringstream &ss);
     void asyncExecScript(const std::ifstream &fs);

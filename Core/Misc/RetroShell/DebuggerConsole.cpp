@@ -22,7 +22,7 @@ DebuggerConsole::_pause()
     if (retroShell.inDebugShell()) {
 
         *this << '\n';
-        exec("state");
+        exec(QueuedCmd {.cmd = "state"});
         *this << getPrompt();
     }
 }
