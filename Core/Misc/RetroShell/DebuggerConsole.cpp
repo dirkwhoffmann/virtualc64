@@ -813,27 +813,33 @@ DebuggerConsole::initCommands(RSCommand &root)
 
     root.add({
 
-        .tokens = { "symbols" },
+        .tokens = { "import" },
+        .ghelp  = { "Import debug data" }
+    });
+
+    root.add({
+
+        .tokens = { "import", "symbols" },
         .chelp  = { "Loads a CC65 linker debug file" },
         .args   = { { .name = { "path", "Debug file" } } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             auto path = host.makeAbsolute(args.at("path"));
-            cpu.debugger.symbolTable.loadCS65File(path);
+            cpu.symbolTable.loadCS65File(path);
 
-            isize numFiles = cpu.debugger.symbolTable.files.size();
-            isize numLines = cpu.debugger.symbolTable.lines.size();
-            isize numSegments = cpu.debugger.symbolTable.segments.size();
-            isize numSpans = cpu.debugger.symbolTable.spans.size();
-            isize numSymbols = cpu.debugger.symbolTable.symbols.size();
+            isize numFiles = cpu.symbolTable.files.size();
+            isize numLines = cpu.symbolTable.lines.size();
+            isize numSegments = cpu.symbolTable.segments.size();
+            isize numSpans = cpu.symbolTable.spans.size();
+            isize numSymbols = cpu.symbolTable.symbols.size();
             isize numTotal = numFiles + numFiles + numSegments + numSpans + numSymbols;
 
-            os << "Read " << numTotal << " symbols.\n";
+            os << "Read " << numTotal << " symbols\n\n";
             os << "     Files: " << numFiles << "\n";
             os << "     Lines: " << numLines << "\n";
             os << "  Segments: " << numSegments << "\n";
             os << "     Spans: " << numSpans << "\n";
-            os << "   Symbols: " << numSymbols << "\n";
+            os << "   Symbols: " << numSymbols << "\n\n";
         }
     });
 

@@ -69,8 +69,9 @@ struct SymbolEntry {
 template <typename T>
 class BaseMap {
 
-protected:
-
+//protected:
+public:
+    
     std::unordered_map<isize, T> map;
 
 public:
@@ -78,7 +79,7 @@ public:
     const auto &get() { return map; }
     void clear() { map.clear(); }
     isize size() { return (isize)map.size(); }
-    optional<std::reference_wrapper<const T>> get(isize id) const {
+    optional<T> get(isize id) const {
         return map.contains(id) ? map.at(id) : std::nullopt;
     }
 };
@@ -117,8 +118,8 @@ public:
     
     void parse(string_view line);
 
-    const SymbolEntry *seek(u16 addr);
-    const SymbolEntry *seek(const string &label);
+    optional<SymbolEntry> seek(u16 addr) const;
+    optional<SymbolEntry> seek(const string &label) const;
 };
 
 class SymbolTable {
@@ -132,6 +133,7 @@ public:
     SymbolMap symbols;
 
     void clear();
+    void dump();
     bool loadCS65File(const fs::path &path);
 
 private:

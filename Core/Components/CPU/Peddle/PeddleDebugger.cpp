@@ -257,18 +257,27 @@ Debugger::dumpLogBuffer(std::ostream &os, isize count) const
 {
     isize num = loggedInstructions();
 
+
     char pc[16];
     char instr[16];
     char flags[16];
+
+    char buf[256];
 
     for (isize i = num - count; i < num ; i++) {
 
         if (i >= 0) {
 
+            auto &entry = cpu.debugger.logEntryAbs(i);
+
+            cpu.disassembler.disass(buf, "%14l %p  %f    %i", entry);
+            os << buf << std::endl;
+
             cpu.debugger.disassembleRecordedPC(i, pc);
             cpu.debugger.disassembleRecordedInstr(i, instr);
             cpu.debugger.disassembleRecordedFlags(i, flags);
 
+            /*
             os << std::setfill('0');
             os << "   ";
             os << std::right << std::setw(4) << pc;
@@ -277,6 +286,7 @@ Debugger::dumpLogBuffer(std::ostream &os, isize count) const
             os << "    ";
             os << instr;
             os << std::endl;
+            */
         }
     }
 }

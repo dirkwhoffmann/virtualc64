@@ -58,7 +58,7 @@ FileMap::parse(string_view line)
          printf("Unsupported FileEntry field: %.*s\n", (int)field.size(), field.data());
      });
 
-    if (entry.id >= 0) map[entry.id] = std::move(entry);
+    if (entry.id >= 0) map[entry.id] = entry;
 }
 
 void
@@ -76,7 +76,7 @@ LineMap::parse(string_view line)
         printf("Unsupported LineEntry field: %.*s\n", (int)field.size(), field.data());
     });
 
-    if (entry.id >= 0) map[entry.id] = std::move(entry);
+    if (entry.id >= 0) map[entry.id] = entry;
 }
 
 void SegmentMap::parse(string_view line)
@@ -97,7 +97,7 @@ void SegmentMap::parse(string_view line)
         printf("Unsupported SegmentEntry field: %.*s\n", (int)field.size(), field.data());
     });
 
-    if (entry.id >= 0) map[entry.id] = std::move(entry);
+    if (entry.id >= 0) map[entry.id] = entry;
 }
 
 void
@@ -115,7 +115,7 @@ SpanMap::parse(string_view line)
         printf("Unsupported SpanEntry field: %.*s\n", (int)field.size(), field.data());
     });
 
-    if (entry.id >= 0) map[entry.id] = std::move(entry);
+    if (entry.id >= 0) map[entry.id] = entry;
 }
 
 void
@@ -137,25 +137,25 @@ SymbolMap::parse(string_view line)
         printf("Unsupported SymbolEntry field: %.*s\n", (int)field.size(), field.data());
     });
 
-    if (entry.id >= 0) map[entry.id] = std::move(entry);
+    if (entry.id >= 0) map[entry.id] = entry;
 }
 
-const SymbolEntry *
-SymbolMap::seek(u16 addr) {
+optional<SymbolEntry>
+SymbolMap::seek(u16 addr) const {
 
     for (const auto &kv : map) {
-        if (kv.second.val == addr) return &kv.second;
+        if (kv.second.val == addr) return kv.second;
     }
-    return nullptr;
+    return {};
 }
 
-const SymbolEntry *
-SymbolMap::seek(const string &label) {
+optional<SymbolEntry>
+SymbolMap::seek(const string &label) const {
 
     for (const auto &kv : map) {
-        if (kv.second.name == label) return &kv.second;
+        if (kv.second.name == label) return kv.second;
     }
-    return nullptr;
+    return {};
 }
 
 void
@@ -163,8 +163,19 @@ SymbolTable::clear()
 {
     files.clear();
     lines.clear();
+    segments.clear();
+    spans.clear();
     symbols.clear();
 }
+
+void
+SymbolTable::dump()
+{
+    for (auto &sym: symbols.map) {
+        printf("%ld: %s %d\n", sym.first, sym.second.name.c_str(), sym.second.val);
+    }
+}
+
 
 bool
 SymbolTable::loadCS65File(const fs::path &path)

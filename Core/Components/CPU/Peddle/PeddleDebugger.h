@@ -9,7 +9,6 @@
 
 #include "PeddleDebuggerTypes.h"
 #include "Peddle.h"
-#include "SymbolTable.h"
 
 namespace vc64::peddle {
 
@@ -139,9 +138,6 @@ public:
 
     // Watchpoint storage (not yet supported)
     Watchpoints watchpoints = Watchpoints(cpu);
-
-    // Symbol table
-    SymbolTable symbolTable = SymbolTable();
 
     // Saved program counters
     i32 breakpointPC = -1;

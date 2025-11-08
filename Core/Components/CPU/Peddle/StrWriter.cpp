@@ -74,6 +74,14 @@ StrWriter::operator<<(const string &str)
 }
 
 StrWriter&
+StrWriter::operator<<(string_view str)
+{
+    std::memcpy(ptr, str.data(), str.size());
+    ptr += str.size();
+    return *this;
+}
+
+StrWriter&
 StrWriter::operator<<(u8 value)
 {
     auto fill = style.numberFormat.fill;
@@ -147,77 +155,121 @@ StrWriter::operator<<(Imm op)
 StrWriter&
 StrWriter::operator<<(Zp op)
 {
-    *this << op.raw;
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << *symbol;
+    } else {
+        *this << op.raw;
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Zpx op)
 {
-    *this << op.raw << ",X";
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << *symbol << ",X";
+    } else {
+        *this << op.raw << ",X";
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Zpy op)
 {
-    *this << op.raw << ",Y";
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << *symbol << ",Y";
+    } else {
+        *this << op.raw << ",Y";
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Abs op)
 {
-    *this << op.raw;
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << *symbol;
+    } else {
+        *this << op.raw;
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Absx op)
 {
-    *this << op.raw << ",X";
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << *symbol << ",X";
+    } else {
+        *this << op.raw << ",X";
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Absy op)
 {
-    *this << op.raw << ",Y";
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << *symbol << ",Y";
+    } else {
+        *this <<  op.raw << ",Y";
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Ind op)
 {
-    *this << "(" << op.raw << ")";
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << "(" << *symbol << ")";
+    } else {
+        *this << "(" << op.raw << ")";
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Indx op)
 {
-    *this << "(" << op.raw << ",X)";
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << "(" << *symbol << ",X)";
+    } else {
+        *this << "(" << op.raw << ",X)";
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Indy op)
 {
-    *this << "(" << op.raw << "),Y";
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << "(" << *symbol << "),Y";
+    } else {
+        *this << "(" << op.raw << "),Y";
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Rel op)
 {
-    *this << op.raw;
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << *symbol;
+    } else {
+        *this << op.raw;
+    }
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(Dir op)
 {
-    *this << op.raw;
+    if (auto symbol = resolveSymbol(op.raw); symbol) {
+        *this << *symbol;
+    } else {
+        *this << op.raw;
+    }
     return *this;
 }
 

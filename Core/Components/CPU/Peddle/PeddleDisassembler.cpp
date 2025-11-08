@@ -191,7 +191,7 @@ Disassembler::disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const
 isize
 Disassembler::disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const
 {
-    StrWriter writer(dst, instrStyle);
+    StrWriter writer(dst, instrStyle, cpu.symbolTable);
 
     // Write mnemonic
     writer << Ins { byte1 };
@@ -242,11 +242,16 @@ Disassembler::disassL(u16 addr, char *dst, isize tab) const
 {
     StrWriter writer(dst, instrStyle);
 
-    if (auto label = cpu.debugger.symbolTable.symbols.seek(addr); label) {
-        writer << label->name << ':';
-    }
+    if (auto label = cpu.symbolTable.symbols.seek(addr); label) {
 
-    writer.fill(tab);
+        isize len = label->name.length();
+        while (len++ < tab - 1) writer << ' ';
+        writer << label->name << ":";
+
+    } else {
+
+        writer.fill(tab);
+    }
     return writer.length();
 }
 
@@ -392,14 +397,14 @@ Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isiz
 {
     char str[256];
     u16 addr = range.first;
-    auto pc = cpu.getPC0();
+    // auto pc = cpu.getPC0();
 
     for (isize i = 0; i < max && addr <= range.second; i++) {
 
-        auto numBytes = disass(str, "%16l %p %16b %i", addr);
+        auto numBytes = disass(str, "%14l %p  %11b %i", addr);
 
         os << std::setfill(' ');
-        os << (addr == pc ? "->" : "  ");
+        // os << (addr == pc ? "->" : "  ");
         os << str;
         os << std::endl;
 

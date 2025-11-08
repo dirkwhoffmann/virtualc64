@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Peddle.h"
+#include "SymbolTable.h"
 #include <cmath>
 
 namespace vc64::peddle {
@@ -48,16 +49,32 @@ public:
     char *base;             // Start address of the destination string
     char *ptr;              // Write pointer
     const DasmStyle &style;
+    const SymbolTable *symTable;
 
 public:
 
-    StrWriter(char *p, const DasmStyle &style) : style(style) {
+    StrWriter(char *p, const DasmStyle &style) : style(style), symTable(nullptr) {
 
         base = ptr = p;
     };
 
+    StrWriter(char *p, const DasmStyle &style, const SymbolTable &st) : StrWriter(p, style) {
+
+        symTable = &st;
+    };
+
     isize length() { return isize(ptr - base); }
     void fill(isize tab) { while (ptr < base + tab) *ptr++ = ' '; }
+
+    optional<string_view> resolveSymbol(u16 addr) {
+
+        if (symTable) {
+            if (auto symbol = symTable->symbols.seek(addr); symbol) {
+                return symbol->name;
+            }
+        }
+        return {};
+    }
 
 private:
 
@@ -75,6 +92,7 @@ public:
     StrWriter& operator<<(char);
     StrWriter& operator<<(const char *);
     StrWriter& operator<<(const string &);
+    StrWriter& operator<<(string_view);
     StrWriter& operator<<(u8);
     StrWriter& operator<<(u16);
 
