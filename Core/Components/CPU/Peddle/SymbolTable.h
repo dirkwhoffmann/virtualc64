@@ -117,8 +117,8 @@ public:
     
     void parse(string_view line);
 
-    optional<SymbolEntry> seek(u16 addr);
-    optional<SymbolEntry> seek(const string &label);
+    const SymbolEntry *seek(u16 addr);
+    const SymbolEntry *seek(const string &label);
 };
 
 class SymbolTable {

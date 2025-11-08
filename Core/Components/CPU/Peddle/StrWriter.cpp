@@ -68,6 +68,12 @@ StrWriter::operator<<(const char *str)
 }
 
 StrWriter&
+StrWriter::operator<<(const string &str)
+{
+    return *this << str.c_str();
+}
+
+StrWriter&
 StrWriter::operator<<(u8 value)
 {
     auto fill = style.numberFormat.fill;

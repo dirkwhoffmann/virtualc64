@@ -74,6 +74,7 @@ public:
 
     StrWriter& operator<<(char);
     StrWriter& operator<<(const char *);
+    StrWriter& operator<<(const string &);
     StrWriter& operator<<(u8);
     StrWriter& operator<<(u16);
 

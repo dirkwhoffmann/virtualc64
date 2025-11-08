@@ -130,7 +130,7 @@ SymbolMap::parse(string_view line)
         if (field == "addrsize") { entry.addrsize = string(value); return; }
         if (field == "size")     { entry.size = parseNum(value); return; }
         if (field == "scope")    { entry.scope = parseNum(value); return; }
-        if (field == "val")      { entry.scope = parseU16(value); return; }
+        if (field == "val")      { entry.val = parseU16(value); return; }
         if (field == "seg")      { entry.seg = parseNum(value); return; }
         if (field == "type")     { entry.type = string(value); return; }
 
@@ -140,22 +140,22 @@ SymbolMap::parse(string_view line)
     if (entry.id >= 0) map[entry.id] = std::move(entry);
 }
 
-optional<SymbolEntry>
+const SymbolEntry *
 SymbolMap::seek(u16 addr) {
 
     for (const auto &kv : map) {
-        if (kv.second.val == addr) return kv.second;
+        if (kv.second.val == addr) return &kv.second;
     }
-    return std::nullopt;
+    return nullptr;
 }
 
-optional<SymbolEntry>
+const SymbolEntry *
 SymbolMap::seek(const string &label) {
 
     for (const auto &kv : map) {
-        if (kv.second.name == label) return kv.second;
+        if (kv.second.name == label) return &kv.second;
     }
-    return std::nullopt;
+    return nullptr;
 }
 
 void
