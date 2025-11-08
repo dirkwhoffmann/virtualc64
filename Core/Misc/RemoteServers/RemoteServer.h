@@ -26,9 +26,9 @@ class RemoteServer : public SubComponent {
 
     Descriptions descriptions = {{
 
-        .name           = "RshServer",
-        .description    = "Remote Shell Server",
-        .shell          = "server rshell"
+        .name           = "RpcServer",
+        .description    = "JSON RPC Server",
+        .shell          = "server rpc"
     }, {
         .name           = "DapServer",
         .description    = "Debug Adaper",
@@ -37,6 +37,10 @@ class RemoteServer : public SubComponent {
         .name           = "GdbServer",
         .description    = "GDB Remote Server",
         .shell          = "server gdb"
+    }, {
+        .name           = "RshServer",
+        .description    = "Remote Shell Server",
+        .shell          = "server rshell"
     }};
 
     Options options = {

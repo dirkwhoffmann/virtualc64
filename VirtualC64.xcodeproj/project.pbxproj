@@ -516,6 +516,8 @@
 		50E5BF742BA81E710004712B /* Monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E5BF712BA81E710004712B /* Monitor.cpp */; };
 		50E99FE12EBE1F9B00633978 /* SymbolTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E99FE02EBE1F9800633978 /* SymbolTable.cpp */; };
 		50E99FE22EBE1F9B00633978 /* SymbolTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E99FE02EBE1F9800633978 /* SymbolTable.cpp */; };
+		50E99FE62EBF872600633978 /* RpcServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E99FE52EBF872500633978 /* RpcServer.cpp */; };
+		50E99FE72EBF872600633978 /* RpcServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E99FE52EBF872500633978 /* RpcServer.cpp */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
 		50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EAFFE924B2600D00024CD2 /* MyToolbar.swift */; };
@@ -1176,6 +1178,8 @@
 		50E99FDF2EBE1F8B00633978 /* SymbolTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolTable.h; sourceTree = "<group>"; };
 		50E99FE02EBE1F9800633978 /* SymbolTable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SymbolTable.cpp; sourceTree = "<group>"; };
 		50E99FE32EBF48F900633978 /* json_fwd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_fwd.h; sourceTree = "<group>"; };
+		50E99FE42EBF871D00633978 /* RpcServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RpcServer.h; sourceTree = "<group>"; };
+		50E99FE52EBF872500633978 /* RpcServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RpcServer.cpp; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50EAF52A2C7A5DC5005AC890 /* OpenRoms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenRoms.h; sourceTree = "<group>"; };
@@ -2148,6 +2152,8 @@
 				50D834602EAB8B920052F98D /* SocketServer.cpp */,
 				50D834632EAB8BBF0052F98D /* HttpServer.h */,
 				50D834642EAB8BC60052F98D /* HttpServer.cpp */,
+				50E99FE42EBF871D00633978 /* RpcServer.h */,
+				50E99FE52EBF872500633978 /* RpcServer.cpp */,
 				50A5B7CA2C74E44C00D6DDAD /* RshServer.h */,
 				50A5B7C92C74E44C00D6DDAD /* RshServer.cpp */,
 				50F0C2452EADFB0400BCC7BB /* GdbServer.h */,
@@ -2620,6 +2626,7 @@
 				50BD640B2C01FADC007CD347 /* VideoPort.cpp in Sources */,
 				50726F962961CA0D0031F2F5 /* Westermann.cpp in Sources */,
 				50726F6B2961C9C60031F2F5 /* extfilt.cc in Sources */,
+				50E99FE62EBF872600633978 /* RpcServer.cpp in Sources */,
 				50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */,
 				50A5B7D62C74E44C00D6DDAD /* Socket.cpp in Sources */,
 				506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */,
@@ -2872,6 +2879,7 @@
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
 				50A5B7D52C74E44C00D6DDAD /* Socket.cpp in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
+				50E99FE72EBF872600633978 /* RpcServer.cpp in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
 				50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */,
 				505F45762E9698EF00418105 /* AudioSettings.swift in Sources */,

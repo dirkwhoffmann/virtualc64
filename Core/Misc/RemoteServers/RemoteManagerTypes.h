@@ -22,23 +22,25 @@ namespace vc64 {
 
 enum class ServerType : long
 {
-    RSH,
+    RPC,
     DAP,
-    GDB
+    GDB,
+    RSH
 };
 
 struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(ServerType::GDB);
+    static constexpr long maxVal = long(ServerType::RSH);
 
     static const char *_key(ServerType value)
     {
         switch (value) {
                 
-            case ServerType::RSH:    return "RSH";
+            case ServerType::RPC:    return "RPC";
             case ServerType::DAP:    return "DAP";
             case ServerType::GDB:    return "GDB";
+            case ServerType::RSH:    return "RSH";
         }
         return "???";
     }
@@ -46,9 +48,10 @@ struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
     {
         switch (value) {
                 
-            case ServerType::RSH:    return "Remote shell server";
-            case ServerType::DAP:    return "Debug Adapter";
+            case ServerType::RPC:    return "JSON RPC server";
+            case ServerType::DAP:    return "Debug adapter";
             case ServerType::GDB:    return "Debug server";
+            case ServerType::RSH:    return "Remote shell server";
         }
         return "???";
     }

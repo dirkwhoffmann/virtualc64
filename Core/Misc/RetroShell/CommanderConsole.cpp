@@ -948,15 +948,15 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
-    cmd = registerComponent(remoteManager.rshServer);
+    cmd = registerComponent(remoteManager.rpcServer);
 
     root.add({
 
         .tokens = { cmd, "start" },
-        .chelp  = { "Starts the RetroShell server" },
+        .chelp  = { "Starts the RPC server" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            remoteManager.rshServer.start();
+            remoteManager.rpcServer.start();
         }
     });
 
@@ -966,7 +966,7 @@ CommanderConsole::initCommands(RSCommand &root)
         .chelp  = { "Stops the RetroShell server" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            remoteManager.rshServer.stop();
+            remoteManager.rpcServer.stop();
         }
     });
 
@@ -976,7 +976,7 @@ CommanderConsole::initCommands(RSCommand &root)
         .chelp  = { "Disconnects a client" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            remoteManager.rshServer.disconnect();
+            remoteManager.rpcServer.disconnect();
         }
     });
 
@@ -1011,6 +1011,39 @@ CommanderConsole::initCommands(RSCommand &root)
             remoteManager.dapServer.disconnect();
         }
     });
+
+    cmd = registerComponent(remoteManager.rshServer);
+
+    root.add({
+
+        .tokens = { cmd, "start" },
+        .chelp  = { "Starts the RetroShell server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.rshServer.start();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "stop" },
+        .chelp  = { "Stops the RetroShell server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.rshServer.stop();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "disconnect" },
+        .chelp  = { "Disconnects a client" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.rshServer.disconnect();
+        }
+    });
+
 
     //
     // DEPRECATED

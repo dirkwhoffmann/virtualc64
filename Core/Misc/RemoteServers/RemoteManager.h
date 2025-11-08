@@ -14,9 +14,10 @@
 
 #include "SubComponent.h"
 #include "RemoteManagerTypes.h"
-#include "RshServer.h"
+#include "RpcServer.h"
 #include "DapServer.h"
 #include "GdbServer.h"
+#include "RshServer.h"
 
 namespace vc64 {
 
@@ -36,12 +37,13 @@ class RemoteManager : public SubComponent, public Inspectable<RemoteManagerInfo>
 public:
     
     // The remote servers
-    RshServer rshServer = RshServer(c64, isize(ServerType::RSH));
+    RpcServer rpcServer = RpcServer(c64, isize(ServerType::RPC));
     DapServer dapServer = DapServer(c64, isize(ServerType::DAP));
     GdbServer gdbServer = GdbServer(c64, isize(ServerType::GDB));
+    RshServer rshServer = RshServer(c64, isize(ServerType::RSH));
 
     // Convenience wrapper
-    std::vector <RemoteServer *> servers = { &rshServer, &dapServer, &gdbServer };
+    std::vector <RemoteServer *> servers = { &rpcServer, &dapServer, &gdbServer, &rshServer };
 
     
     //

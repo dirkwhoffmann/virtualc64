@@ -20,10 +20,11 @@ namespace vc64 {
 RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
 {
     subComponents = std::vector<CoreComponent *> {
-        
-        &rshServer,
+
+        &rpcServer,
         &dapServer,
-        &gdbServer
+        &gdbServer,
+        &rshServer
     };
 }
 
@@ -103,8 +104,8 @@ RemoteManager::serviceServerEvent()
     assert(c64.eventid[SLOT_SRV] == SRV_LAUNCH_DAEMON);
 
     // Run the launch daemon
-    if (rshServer.config.autoRun) {
-        rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
+    if (rpcServer.config.autoRun) {
+        rpcServer.shouldRun() ? rpcServer.start() : rpcServer.stop();
     }
     if (dapServer.config.autoRun) {
         dapServer.shouldRun() ? dapServer.start() : dapServer.stop();
@@ -112,7 +113,10 @@ RemoteManager::serviceServerEvent()
     if (gdbServer.config.autoRun) {
         gdbServer.shouldRun() ? gdbServer.start() : gdbServer.stop();
     }
-    
+    if (rshServer.config.autoRun) {
+        rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
+    }
+
     // Schedule next event
     c64.scheduleInc <SLOT_SRV> (C64::sec(0.5), SRV_LAUNCH_DAEMON);
 }
