@@ -70,8 +70,8 @@ struct SymbolEntry {
 template <typename T>
 class BaseMap {
 
-//protected:
-public:
+protected:
+// public:
     
     std::unordered_map<isize, T> map;
 
@@ -79,8 +79,14 @@ public:
 
     const auto &get() { return map; }
     isize size() { return (isize)map.size(); }
+
+    /*
     optional<T> get(isize id) const {
-        return map.contains(id) ? map.at(id) : std::nullopt;
+        return map.contains(id) ? std::optional<T>(map.at(id)) : std::nullopt;
+    }
+    */
+    optional<T> operator[](isize id) const {
+        return map.contains(id) ? std::optional<T>(map.at(id)) : std::nullopt;
     }
 };
 
@@ -90,6 +96,8 @@ public:
 
     void clear() { map.clear(); }
     void parse(string_view line);
+
+    optional<FileEntry> seek(const string &name) const;
 };
 
 class LineMap: public BaseMap<LineEntry> {
@@ -98,6 +106,8 @@ public:
 
     void clear() { map.clear(); }
     void parse(string_view line);
+
+    optional<LineEntry> seek(isize lineId, isize fileId);
 };
 
 class SegmentMap : public BaseMap<SegmentEntry> {
@@ -124,6 +134,7 @@ class SymbolMap: public BaseMap<SymbolEntry> {
 public:
 
     void clear() { map.clear(); valToId.clear(); nameToId.clear(); }
+    void dump();
     void parse(string_view line);
 
     optional<SymbolEntry> seek(u16 addr) const;
@@ -141,8 +152,8 @@ public:
     SymbolMap symbols;
 
     void clear();
-    void dump();
     bool loadCS65File(const fs::path &path);
+    optional<u16> resolveAddr(const string &file, isize line);
 
 private:
 

@@ -61,6 +61,15 @@ FileMap::parse(string_view line)
     if (entry.id >= 0) map[entry.id] = entry;
 }
 
+optional<FileEntry>
+FileMap::seek(const string &name) const {
+
+    for (const auto &[id, entry] : map) {
+        if (entry.name == name) return entry;
+    }
+    return std::nullopt;
+}
+
 void
 LineMap::parse(string_view line)
 {
@@ -79,7 +88,17 @@ LineMap::parse(string_view line)
     if (entry.id >= 0) map[entry.id] = entry;
 }
 
-void SegmentMap::parse(string_view line)
+optional<LineEntry>
+LineMap::seek(isize line, isize file)
+{
+    for (const auto &[id, entry] : map) {
+        if (entry.line == line && entry.file == file) return entry;
+    }
+    return std::nullopt;
+}
+
+void
+SegmentMap::parse(string_view line)
 {
     SegmentEntry entry { .id = -1 };
 
@@ -145,6 +164,14 @@ SymbolMap::parse(string_view line)
     }
 }
 
+void
+SymbolMap::dump()
+{
+    for (auto &sym: map) {
+        printf("%ld: %s %d\n", sym.first, sym.second.name.c_str(), sym.second.val);
+    }
+}
+
 optional<SymbolEntry>
 SymbolMap::seek(u16 addr) const {
 
@@ -177,15 +204,6 @@ SymbolTable::clear()
     symbols.clear();
 }
 
-void
-SymbolTable::dump()
-{
-    for (auto &sym: symbols.map) {
-        printf("%ld: %s %d\n", sym.first, sym.second.name.c_str(), sym.second.val);
-    }
-}
-
-
 bool
 SymbolTable::loadCS65File(const fs::path &path)
 {
@@ -204,7 +222,8 @@ SymbolTable::loadCS65File(const fs::path &path)
     return true;
 }
 
-void SymbolTable::parseLine(string_view line)
+void
+SymbolTable::parseLine(string_view line)
 {
     // Skip leading whitespace
     line.remove_prefix(std::min(line.find_first_not_of(" \t"), line.size()));
@@ -222,6 +241,19 @@ void SymbolTable::parseLine(string_view line)
     if (category == "sym")  { symbols.parse(rest); return; }
 
     printf("Unknown category: %.*s\n", (int)category.size(), category.data());
+}
+
+optional<u16>
+SymbolTable::resolveAddr(const string &file, isize line)
+{
+    if (auto fileEntry = files.seek(file); fileEntry) {
+        if (auto lineEntry = lines.seek(line, fileEntry->id); lineEntry) {
+            if (auto spanEntry = spans[lineEntry->span]; spanEntry) {
+                return (u16)spanEntry->start;
+            }
+        }
+    }
+    return {};
 }
 
 }
