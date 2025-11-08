@@ -11,6 +11,7 @@
 #pragma once
 
 #include "PeddleTypes.h"
+#include "json_fwd.h"
 #include <unordered_map>
 
 using std::unordered_map;
@@ -77,7 +78,6 @@ public:
 public:
 
     const auto &get() { return map; }
-    void clear() { map.clear(); }
     isize size() { return (isize)map.size(); }
     optional<T> get(isize id) const {
         return map.contains(id) ? map.at(id) : std::nullopt;
@@ -88,6 +88,7 @@ class FileMap: public BaseMap<FileEntry> {
 
 public:
 
+    void clear() { map.clear(); }
     void parse(string_view line);
 };
 
@@ -95,6 +96,7 @@ class LineMap: public BaseMap<LineEntry> {
 
 public:
 
+    void clear() { map.clear(); }
     void parse(string_view line);
 };
 
@@ -102,6 +104,7 @@ class SegmentMap : public BaseMap<SegmentEntry> {
 
 public:
 
+    void clear() { map.clear(); }
     void parse(string_view line);
 };
 
@@ -109,13 +112,18 @@ class SpanMap : public BaseMap<SpanEntry> {
 
 public:
 
+    void clear() { map.clear(); }
     void parse(string_view line);
 };
 
 class SymbolMap: public BaseMap<SymbolEntry> {
 
+    std::unordered_map<u16, isize> valToId;
+    std::unordered_map<string, isize> nameToId;
+
 public:
-    
+
+    void clear() { map.clear(); valToId.clear(); nameToId.clear(); }
     void parse(string_view line);
 
     optional<SymbolEntry> seek(u16 addr) const;

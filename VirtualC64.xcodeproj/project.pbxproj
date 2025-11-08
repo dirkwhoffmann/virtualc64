@@ -1175,6 +1175,7 @@
 		50E806C125A1F1C500F08732 /* SIDTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDTypes.h; sourceTree = "<group>"; };
 		50E99FDF2EBE1F8B00633978 /* SymbolTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolTable.h; sourceTree = "<group>"; };
 		50E99FE02EBE1F9800633978 /* SymbolTable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SymbolTable.cpp; sourceTree = "<group>"; };
+		50E99FE32EBF48F900633978 /* json_fwd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json_fwd.h; sourceTree = "<group>"; };
 		50E9B92C201F299500065A89 /* MyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50EAF52A2C7A5DC5005AC890 /* OpenRoms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenRoms.h; sourceTree = "<group>"; };
@@ -1984,6 +1985,7 @@
 				50650F3A2DF093B7008AD660 /* lz4.c */,
 				50D834672EAB8EF00052F98D /* httplib.h */,
 				50F0C24C2EB148CE00BCC7BB /* json.h */,
+				50E99FE32EBF48F900633978 /* json_fwd.h */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";

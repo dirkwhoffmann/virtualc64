@@ -137,14 +137,21 @@ SymbolMap::parse(string_view line)
         printf("Unsupported SymbolEntry field: %.*s\n", (int)field.size(), field.data());
     });
 
-    if (entry.id >= 0) map[entry.id] = entry;
+    if (entry.id >= 0) {
+
+        map[entry.id] = entry;
+        valToId[entry.val] = entry.id;
+        nameToId[entry.name] = entry.id;
+    }
 }
 
 optional<SymbolEntry>
 SymbolMap::seek(u16 addr) const {
 
-    for (const auto &kv : map) {
-        if (kv.second.val == addr) return kv.second;
+    if (auto it = valToId.find(addr); it != valToId.end()) {
+        if (auto mit = map.find(it->second); mit != map.end()) {
+            return mit->second;
+        }
     }
     return {};
 }
@@ -152,8 +159,10 @@ SymbolMap::seek(u16 addr) const {
 optional<SymbolEntry>
 SymbolMap::seek(const string &label) const {
 
-    for (const auto &kv : map) {
-        if (kv.second.name == label) return kv.second;
+    if (auto it = nameToId.find(label); it != nameToId.end()) {
+        if (auto mit = map.find(it->second); mit != map.end()) {
+            return mit->second;
+        }
     }
     return {};
 }
