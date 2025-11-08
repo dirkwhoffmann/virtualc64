@@ -175,64 +175,46 @@ void
 RetroShell::exec()
 {
     {   SYNCHRONIZED
-    
-    // Only proceed if there is anything to process
-    if (commands.empty()) return;
 
-    try {
-        
-        while (!commands.empty()) {
-            
-            QueuedCmd cmd = commands.front();
-            commands.erase(commands.begin());
-            exec(cmd);
+        // Only proceed if there is anything to process
+        if (commands.empty()) return;
+
+        try {
+
+            while (!commands.empty()) {
+
+                QueuedCmd cmd = commands.front();
+                commands.erase(commands.begin());
+                exec(cmd);
+            }
+
+        } catch (ScriptInterruption &) {
+
+            msgQueue.put(Msg::RSH_WAIT);
+
+        } catch (...) {
+
+            // Remove all remaining commands
+            commands = { };
+
+            msgQueue.put(Msg::RSH_ERROR);
         }
-        
-    } catch (ScriptInterruption &) {
-        
-        msgQueue.put(Msg::RSH_WAIT);
-        
-    } catch (...) {
-        
-        // Remove all remaining commands
-        commands = { };
-        
-        msgQueue.put(Msg::RSH_ERROR);
-    }
-    
-    // Print prompt
-    if (current->lastLineIsEmpty()) *this << current->getPrompt();
+
+        // Print prompt
+        if (current->lastLineIsEmpty()) *this << current->getPrompt();
     }
 }
 
 void
 RetroShell::exec(QueuedCmd cmd)
 {
-    auto line = cmd.id;
-    auto command = cmd.cmd;
     auto script = cmd.type == QueuedCmd::Type::SCRIPT;
 
-    try {
+    // Print the command if it comes from a script
+    if (script) *this << cmd.cmd << '\n';
 
-        // Print the command if it comes from a script
-        if (script) *this << command << '\n';
-
-        // Call the interpreter
-        current->exec(cmd);
-
-    } catch (ScriptInterruption &) {
-        
-        // Rethrow the exception
-        throw;
-        
-    } catch (std::exception &err) {
-        
-        // Print error message
-        current->describe(err, line, command);
-        
-        // Rethrow the exception if the command is not prefixed with 'try'
-        if (command.rfind("try", 0)) throw;
-    }
+    // Call the interpreter
+    current->exec(cmd);
 }
 
 RetroShell &

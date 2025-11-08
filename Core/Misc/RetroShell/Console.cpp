@@ -767,48 +767,54 @@ void
 Console::exec(const QueuedCmd& cmd, bool verbose)
 {
     string userInput = cmd.cmd;
+    std::stringstream ss;
 
-    // Split the command string
-    Tokens tokens = split(userInput);
-    
-    // Skip empty lines
-    if (tokens.empty()) return;
-    
-    // Remove the 'try' keyword
-    if (tokens.front() == "try") tokens.erase(tokens.begin());
-    
-    // Process the command
-    exec(tokens, verbose);
-}
+    try {
 
-void
-Console::exec(const Tokens &argv, bool verbose)
-{
-    // In 'verbose' mode, print the token list
-    if (verbose) *this << argv << '\n';
-    
-    // Skip empty lines
-    if (argv.empty()) return;
-    
-    // Find the command in the command tree
-    if (auto [cmd, args] = seekCommand(argv); cmd) {
-    
-        // Check if a command has been found
-        if (cmd == nullptr || cmd == &root) throw util::ParseError(argv[0]);
-        
-        // Parse arguments
-        Arguments parsedArgs = parse(*cmd, args);
-    
-        // Call the command handler
-        std::stringstream ss;
-        cmd->callback(ss, parsedArgs, cmd->payload);
-    
-        // Dump the output to the console
-        if (ss.peek() != EOF) { *this << vdelim << ss << vdelim; }
-    
-    } else {
-        
-        throw util::ParseError(util::concat(argv));
+        // Split the command string
+        Tokens tokens = split(userInput);
+
+        // Remove the 'try' keyword
+        if (!tokens.empty() && tokens.front() == "try") tokens.erase(tokens.begin());
+
+        // In 'verbose' mode, print the token list
+        if (verbose) *this << tokens << '\n';
+
+        // Skip empty lines
+        if (tokens.empty()) return;
+
+        // Find the command in the command tree
+        if (auto [cmd, args] = seekCommand(tokens); cmd) {
+
+            // Check if a command has been found
+            if (cmd == nullptr || cmd == &root) throw util::ParseError(tokens[0]);
+
+            // Parse arguments
+            Arguments parsedArgs = parse(*cmd, args);
+
+            // Call the command handler
+            cmd->callback(ss, parsedArgs, cmd->payload);
+
+            // Dump the output to the console
+            if (ss.peek() != EOF) { *this << vdelim << ss << vdelim; }
+
+        } else {
+
+            throw util::ParseError(util::concat(tokens));
+        }
+
+    } catch (ScriptInterruption &) {
+
+        // Rethrow the exception
+        throw;
+
+    } catch (std::exception &err) {
+
+        // Print error message
+        describe(err, cmd.id, cmd.cmd);
+
+        // Rethrow the exception if the command is not prefixed with 'try'
+        if (cmd.cmd.rfind("try", 0)) throw;
     }
 }
 
