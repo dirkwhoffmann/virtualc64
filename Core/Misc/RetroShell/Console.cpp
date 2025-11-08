@@ -723,12 +723,18 @@ Console::parseNum(const Arguments &argv, const string &token, long fallback) con
 u16
 Console::parseAddr(const string &argv) const
 {
+    if (auto resolved = cpu.symbolTable.symbols.seek(argv); resolved) {
+        return resolved->val;
+    }
     return (u16)parseNum(argv);
 }
 
 u16
 Console::parseAddr(const string &argv, long fallback) const
 {
+    if (auto resolved = cpu.symbolTable.symbols.seek(argv); resolved) {
+        return resolved->val;
+    }
     return (u16)parseNum(argv, fallback);
 }
 
@@ -736,13 +742,13 @@ u16
 Console::parseAddr(const Arguments &argv, const string &key) const
 {
     assert(argv.contains(key));
-    return (u16)parseNum(argv, key);
+    return parseAddr(argv.at(key));
 }
 
 u16
 Console::parseAddr(const Arguments &argv, const string &key, long fallback) const
 {
-    return (u16)parseNum(argv, key, fallback);
+    return argv.contains(key) ? parseAddr(argv.at(key)) : (u16)fallback;
 }
 
 string
