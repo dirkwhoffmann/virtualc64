@@ -73,7 +73,16 @@ CommanderConsole::pressReturn(bool shift)
 void
 CommanderConsole::didActivate()
 {
+    if (!activated) {
 
+        *this << "RetroShell " << C64::build() << '\n';
+        *this << '\n';
+        *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+        *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+        *this << '\n';
+    }
+
+    activated = true;
 }
 
 void

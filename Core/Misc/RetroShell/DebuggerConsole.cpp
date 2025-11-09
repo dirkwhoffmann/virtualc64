@@ -86,13 +86,23 @@ DebuggerConsole::pressReturn(bool shift)
 void
 DebuggerConsole::didActivate()
 {
+    emulator.trackOn(1);
 
+    /*
+    std::stringstream ss;
+    c64.dump(Category::Current, ss);
+
+    string line;
+    *this << vspace{1};
+    while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
+    *this << vspace{1};
+    */
 }
 
 void
 DebuggerConsole::didDeactivate()
 {
-
+    emulator.trackOff(1);
 }
 
 void

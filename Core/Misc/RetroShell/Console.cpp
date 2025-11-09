@@ -998,8 +998,12 @@ Console::initCommands(RSCommand &root)
             .chelp  = { "Enter or command console" },
 
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-                
-            retroShell.enterCommander();
+
+                retroShell.enterCommander();
+
+                os << "RetroShell Commander" << " " << C64::version() << "\n\n";
+                os << string(4, ' ') << "Type 'help' or press 'Tab' twice for help.\n";
+                os << string(4, ' ') << "Press 'Shift+Tab' to switch consoles.\n";
         }
     });
 
@@ -1011,6 +1015,17 @@ Console::initCommands(RSCommand &root)
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
                 retroShell.enterDebugger();
+                c64.dump(Category::Current, os);
+
+                /*
+                std::stringstream ss;
+                c64.dump(Category::Current, ss);
+
+                string line;
+                *this << vspace{1};
+                while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
+                *this << vspace{1};
+                */
             }
         });
 

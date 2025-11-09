@@ -387,6 +387,8 @@ protected:
 
 class CommanderConsole final : public Console
 {
+    bool activated = false;
+
     using Console::Console;
 
     //

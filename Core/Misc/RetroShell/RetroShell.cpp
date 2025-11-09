@@ -30,11 +30,7 @@ RetroShell::RetroShell(C64& ref) : SubComponent(ref)
 void
 RetroShell::_initialize()
 {
-    // Set a console
-    current = &debugger;
-    
-    // Switch the console to let the welcome message appear
-    current->exec(InputLine {.input = "commander"});
+
 }
 
 void
@@ -51,7 +47,7 @@ void
 RetroShell::enterConsole(isize nr)
 {
     Console *newConsole = nullptr;
-    
+
     switch (nr) {
             
         case 0: newConsole = &commander; break;
@@ -62,13 +58,11 @@ RetroShell::enterConsole(isize nr)
     }
 
     // Switch to the new console
-    if (current) current->didActivate();
+    if (current) current->didDeactivate();
     current = newConsole;
-    current->didDeactivate();
+    current->didActivate();
 
-    // Enter Leave tracking mode (MOVE TO ::enter(), ::leave())
-    nr == 1 ? emulator.trackOn(1) : emulator.trackOff(1);
-    
+    /*
     if (current->isEmpty()) {
         
         // Print the welcome message if entered the first time
@@ -79,9 +73,10 @@ RetroShell::enterConsole(isize nr)
         // Otherwise, print the summary message
         current->summary();
     }
+    */
     
     // Update prompt
-    *this << '\r' << current->getPrompt();
+    // *this << '\r' << current->getPrompt();
     
     // Inform the GUI about the change
     msgQueue.put(Msg::RSH_SWITCH, nr);
@@ -212,7 +207,7 @@ RetroShell::exec()
 }
 
 void
-RetroShell::exec(InputLine &cmd)
+RetroShell::exec(const InputLine &cmd)
 {
     try {
 

@@ -66,10 +66,10 @@ public:
 private:
     
     // Command queue (stores all pending commands)
-    std::vector<InputLine> commands;
-    
+    std::vector<InputLine> commands = { InputLine {.input = "commander"}};
+
     // The currently active console
-    Console *current = nullptr;
+    Console *current = &debugger; //  nullptr;
 
 public:
     
@@ -162,7 +162,7 @@ public:
 private:
     
     // Executes a single pending command
-    void exec(InputLine &cmd) throws;
+    void exec(const InputLine &cmd) throws;
     
     
     //
