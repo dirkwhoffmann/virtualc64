@@ -219,7 +219,7 @@ RetroShell::exec(const InputLine &cmd)
         // Rethrow the exception
         throw;
 
-    } catch (std::exception &err) {
+    } catch (std::exception &) {
 
         // Rethrow the exception if the command is not prefixed with 'try'
         if (cmd.input.rfind("try", 0)) throw;

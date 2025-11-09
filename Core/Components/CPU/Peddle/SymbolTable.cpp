@@ -26,9 +26,9 @@ inline void parseKeyValueLine(string_view line, auto &&handler) {
     usize start = 0;
     while (start < line.size()) {
 
-        usize comma = line.find(',', start);
+        auto comma = line.find(',', start);
         string_view token = line.substr(start, comma - start);
-        size_t eq = token.find('=');
+        auto eq = token.find('=');
 
         if (eq != string_view::npos) {
 

@@ -244,7 +244,7 @@ Disassembler::disassL(u16 addr, char *dst, isize tab) const
 
     if (auto label = cpu.symbolTable.symbols.seek(addr); label) {
 
-        isize len = label->name.length();
+        isize len = (isize)label->name.length();
         while (len++ < tab - 1) writer << ' ';
         writer << label->name << ":";
 

@@ -105,7 +105,7 @@ RpcServer::doProcess(const string &payload)
             .type = InputLine::Source::RPC,
             .input = request["params"] });
 
-    } catch (const json::parse_error &exc) {
+    } catch (const json::parse_error &) {
 
         json response = {
 
@@ -115,12 +115,12 @@ RpcServer::doProcess(const string &payload)
         };
         send(response.dump());
 
-    } catch (const AppException &exc) {
+    } catch (const AppException &e) {
 
         json response = {
 
             {"jsonrpc", "2.0"},
-            {"error", {{"code", exc.data}, {"message", exc.what()}}},
+            {"error", {{"code", e.data}, {"message", e.what()}}},
             {"id", nullptr}
         };
         send(response.dump());
