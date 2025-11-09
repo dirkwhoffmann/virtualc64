@@ -86,26 +86,24 @@ RpcServer::doProcess(const string &payload)
         if (!request["params"].is_string()) {
             throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
         }
-
-        // Extract required fields
-        string method = request["method"];
-        string params = request["params"];
-        int id = request.value("id", 0);
+        if (request["method"] != "retroshell") {
+            throw AppException(RPC::INVALID_PARAMS, "method  must be 'retroshell'");
+        }
 
         // Feed the command into the command queue
         retroShell.asyncExec(InputLine {
 
-            .id = id,
+            .id = request.value("id", 0),
             .type = InputLine::Source::RPC,
             .echo = true,
-            .input = params });
+            .input = request["params"] });
 
     } catch (const json::parse_error &exc) {
 
         json response = {
 
             {"jsonrpc", "2.0"},
-            {"error", {{"code", RPC::PARSE_ERROR}, {"message", payload}}},
+            {"error", {{"code", RPC::PARSE_ERROR}, {"message", "Parse error: " + payload}}},
             {"id", nullptr}
         };
         send(response.dump());

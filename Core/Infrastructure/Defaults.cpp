@@ -164,9 +164,9 @@ Defaults::Defaults()
 
     setFallback(Opt::RS232_BAUD,                 600);
 
-    setFallback(Opt::SRV_PORT,                   8088,                   { (i64)ServerType::RPC });
+    setFallback(Opt::SRV_PORT,                   8081,                   { (i64)ServerType::RPC });
     setFallback(Opt::SRV_PROTOCOL,               (i64)ServerProtocol::DEFAULT, { (i64)ServerType::RPC });
-    setFallback(Opt::SRV_AUTORUN,                true,                   { (i64)ServerType::RPC });
+    setFallback(Opt::SRV_AUTORUN,                false,                  { (i64)ServerType::RPC });
     setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::RPC });
 
     setFallback(Opt::SRV_PORT,                   8082,                   { (i64)ServerType::DAP });

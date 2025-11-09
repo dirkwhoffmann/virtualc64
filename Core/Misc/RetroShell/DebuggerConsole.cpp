@@ -289,9 +289,7 @@ DebuggerConsole::initCommands(RSCommand &root)
         .args   = { { .name = { "address", "Memory address" }, .flags = rs::opt } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            // std::stringstream ss;
             cpu.disassembler.disassembleRange(os, parseAddr(args, "address", cpu.getPC0()), 16);
-            // retroShell << '\n' << ss << '\n';
         }
     });
 
@@ -304,9 +302,7 @@ DebuggerConsole::initCommands(RSCommand &root)
 
             if (args.contains("address")) { current = parseAddr(args, "address"); }
 
-            std::stringstream ss;
-            current += (u16)mem.debugger.ascDump(ss, current, 16);
-            retroShell << '\n' << ss << '\n';
+            current += (u16)mem.debugger.ascDump(os, current, 16);
         }
     });
 
@@ -319,9 +315,7 @@ DebuggerConsole::initCommands(RSCommand &root)
 
             if (args.contains("address")) { current = parseAddr(args, "address"); }
 
-            std::stringstream ss;
-            current += (u16)mem.debugger.memDump(ss, current, 16);
-            retroShell << '\n' << ss << '\n';
+            current += (u16)mem.debugger.memDump(os, current, 16);
         }
     });
 
@@ -390,16 +384,12 @@ DebuggerConsole::initCommands(RSCommand &root)
 
                 if (found >= 0) {
 
-                    std::stringstream ss;
-                    mem.debugger.memDump(ss, u16(found), 1);
-                    retroShell << ss;
+                    mem.debugger.memDump(os, u16(found), 1);
                     current = u16(found);
 
                 } else {
 
-                    std::stringstream ss;
-                    ss << "Not found";
-                    retroShell << ss;
+                    os << "Not found";
                 }
             }
     });
@@ -907,16 +897,13 @@ DebuggerConsole::initCommands(RSCommand &root)
         },
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-                std::stringstream ss;
                 auto value = args.at("value");
 
                 if (isNum(value)) {
-                    mem.debugger.convertNumeric(ss, (u32)parseNum(value));
+                    mem.debugger.convertNumeric(os, (u32)parseNum(value));
                 } else {
-                    mem.debugger.convertNumeric(ss, value);
+                    mem.debugger.convertNumeric(os, value);
                 }
-
-                retroShell << '\n' << ss << '\n';
             }
     });
 }
