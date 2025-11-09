@@ -14,6 +14,7 @@
 
 #include "SocketServer.h"
 #include "RetroShellTypes.h"
+#include "Console.h"
 
 namespace vc64 {
 
@@ -28,7 +29,7 @@ const long SERVER_ERROR     = -32000; // Reserved for implementation-defined ser
 
 }
 
-class RpcServer final : public SocketServer {
+class RpcServer final : public SocketServer, public ConsoleDelegate {
 
 public:
 
@@ -49,6 +50,7 @@ protected:
 
 protected:
 
+    void _initialize() override;
     void _dump(Category category, std::ostream &os) const override;
 
 
@@ -60,17 +62,14 @@ protected:
     void doProcess(const string &packet) throws override;
     void doSend(const string &packet) throws  override;
     void didStart() override;
-    // void didConnect() override;
 
+    
     //
-    //
+    // Methods from ConsoleDelegate
     //
 
-public:
-
-    // Sends a response to the client
-    void reply(const InputLine& cmd, std::stringstream &ss);
-    void reply(const InputLine& cmd, std::stringstream &ss, std::exception &exc);
+    void response(const InputLine &input, std::stringstream &ss) override;
+    void response(const InputLine &input, std::stringstream &ss, std::exception &e) override;
 };
 
 }

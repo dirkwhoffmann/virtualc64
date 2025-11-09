@@ -810,7 +810,9 @@ Console::dispatchOutput(const InputLine& cmd, std::stringstream &ss)
     if (ss.peek() != EOF) {
         *this << vdelim << ss.str() << vdelim;
     }
-    remoteManager.rpcServer.reply(cmd, ss);
+
+    // Hand over the response to all registered delegates
+    for (auto &delegate: delegates) delegate->response(cmd, ss);
 }
 
 void
@@ -821,7 +823,9 @@ Console::dispatchOutput(const InputLine& cmd, std::stringstream &ss, std::except
     if (ss.peek() != EOF) {
         *this << vdelim << ss.str() << vdelim;
     }
-    remoteManager.rpcServer.reply(cmd, ss, exc);
+
+    // Hand over the response to all registered delegates
+    for (auto &delegate: delegates) delegate->response(cmd, ss);
 }
 
 void

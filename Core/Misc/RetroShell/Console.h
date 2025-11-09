@@ -20,6 +20,15 @@
 
 namespace vc64 {
 
+class ConsoleDelegate {
+
+public:
+
+    virtual ~ConsoleDelegate() { }
+    virtual void response(const InputLine &input, std::stringstream &ss) = 0;
+    virtual void response(const InputLine &input, std::stringstream &ss, std::exception &e) = 0;
+};
+
 struct TooFewArgumentsError : public util::ParseError {
     using ParseError::ParseError;
 };
@@ -84,8 +93,13 @@ class Console : public SubComponent {
         
     };
     
+public:
+
+    // Delegates
+    std::vector<ConsoleDelegate *> delegates;
+
 protected:
-    
+
     // Root node of the command tree
     RSCommand root;
 

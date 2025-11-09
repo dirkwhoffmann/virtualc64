@@ -21,6 +21,14 @@ namespace vc64 {
 using nlohmann::json;
 
 void
+RpcServer::_initialize()
+{
+    retroShell.commander.delegates.push_back(this);
+    retroShell.debugger.delegates.push_back(this);
+}
+
+
+void
 RpcServer::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
@@ -121,7 +129,7 @@ RpcServer::doProcess(const string &payload)
 }
 
 void
-RpcServer::reply(const InputLine& input, std::stringstream &ss)
+RpcServer::response(const InputLine& input, std::stringstream &ss)
 {
     if (!input.isRpcCommand()) return;
 
@@ -136,7 +144,7 @@ RpcServer::reply(const InputLine& input, std::stringstream &ss)
 }
 
 void
-RpcServer::reply(const InputLine& input, std::stringstream &ss, std::exception &exc)
+RpcServer::response(const InputLine& input, std::stringstream &ss, std::exception &exc)
 {
     if (!input.isRpcCommand()) return;
 
