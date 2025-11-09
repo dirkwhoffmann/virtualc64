@@ -183,7 +183,7 @@ public:
     RetroShell &operator<<(std::stringstream &stream);
     RetroShell &operator<<(const vspace &value);
 
-    string prompt() { return current ? current->getPrompt() : ""; }
+    string prompt() { return current ? current->prompt() : ""; }
     const char *text();
     isize cursorRel();
     void press(RSKey key, bool shift = false);

@@ -186,7 +186,7 @@ RetroShell::exec()
         }
 
         // Print prompt
-        if (current->lastLineIsEmpty()) *this << current->getPrompt();
+        if (current->lastLineIsEmpty()) *this << current->prompt();
     }
 }
 

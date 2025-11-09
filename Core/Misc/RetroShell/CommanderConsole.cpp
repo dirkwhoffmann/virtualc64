@@ -24,7 +24,7 @@ CommanderConsole::_pause()
 }
 
 string
-CommanderConsole::getPrompt()
+CommanderConsole::prompt()
 {
     return "C64% ";
 }

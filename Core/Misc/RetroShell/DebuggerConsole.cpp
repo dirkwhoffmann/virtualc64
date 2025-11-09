@@ -23,12 +23,12 @@ DebuggerConsole::_pause()
 
         *this << '\n';
         exec(InputLine {.input = "state"});
-        *this << getPrompt();
+        *this << prompt();
     }
 }
 
 string
-DebuggerConsole::getPrompt()
+DebuggerConsole::prompt()
 {
     std::stringstream ss;
     

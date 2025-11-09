@@ -223,7 +223,7 @@ public:
     Console &operator<<(const vspace &value);
     
     // Returns the prompt
-    virtual string getPrompt() = 0;
+    virtual string prompt() = 0;
     
     // Returns the contents of the whole storage as a single C string
     const char *text();
@@ -388,7 +388,7 @@ class CommanderConsole final : public Console
 
     virtual void initCommands(RSCommand &root) override;
     void _pause() override;
-    string getPrompt() override;
+    string prompt() override;
 
 
     //
@@ -409,7 +409,7 @@ class DebuggerConsole final : public Console
 
     virtual void initCommands(RSCommand &root) override;
     void _pause() override;
-    string getPrompt() override;
+    string prompt() override;
 
 
     //
