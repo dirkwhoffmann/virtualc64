@@ -236,7 +236,10 @@ public:
     
     // Marks the text storage as dirty
     void needsDisplay();
-    
+
+    // Prints the ping message
+    virtual void ping(std::ostream &os) = 0;
+
 protected:
     
     // Clears the console window
@@ -399,9 +402,10 @@ class CommanderConsole final : public Console
     void _pause() override;
     string getPrompt() override;
     void welcome() override;
+    void ping(std::ostream &os) override;
     void summary() override;
     void printHelp(isize tab = 0) override;
-    void pressReturn(bool shift) override;
+    // void pressReturn(bool shift) override;
 
     //
     // Methods from ConsoleDelegate
@@ -418,6 +422,12 @@ class DebuggerConsole final : public Console
     //
     // Methods from Console
     //
+
+public:
+
+    void ping(std::ostream &os) override;
+
+private:
     
     virtual void initCommands(RSCommand &root) override;
     void _pause() override;
@@ -425,11 +435,14 @@ class DebuggerConsole final : public Console
     void welcome() override;
     void summary() override;
     void printHelp(isize tab = 0) override;
-    void pressReturn(bool shift) override;
+    // void pressReturn(bool shift) override;
+
 
     //
     // Methods from ConsoleDelegate
     //
+
+private:
 
     void didActivate() override;
     void didDeactivate() override;

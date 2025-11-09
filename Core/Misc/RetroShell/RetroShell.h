@@ -69,7 +69,7 @@ private:
     std::vector<InputLine> commands = { InputLine {.input = "commander"}};
 
     // The currently active console
-    Console *current = &debugger; //  nullptr;
+    Console *current = &debugger;
 
 public:
     

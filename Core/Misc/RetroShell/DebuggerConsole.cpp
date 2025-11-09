@@ -50,6 +50,16 @@ DebuggerConsole::welcome()
 }
 
 void
+DebuggerConsole::ping(std::ostream &os)
+{
+    std::stringstream ss;
+    c64.dump(Category::Current, ss);
+
+    string line;
+    while(std::getline(ss, line)) { os << "    " << line << '\n'; }
+}
+
+void
 DebuggerConsole::summary()
 {
     std::stringstream ss;
@@ -70,6 +80,7 @@ DebuggerConsole::printHelp(isize tab)
     Console::printHelp(tab);
 }
 
+/*
 void
 DebuggerConsole::pressReturn(bool shift)
 {
@@ -82,6 +93,7 @@ DebuggerConsole::pressReturn(bool shift)
         Console::pressReturn(shift);
     }
 }
+*/
 
 void
 DebuggerConsole::didActivate()
@@ -109,7 +121,29 @@ void
 DebuggerConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
-    
+
+
+    //
+    // Empty command
+    //
+
+    root.add({
+
+        .tokens = { "return" },
+        .chelp  = { "Print status information" },
+        .flags  = rs::hidden,
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            if (emulator.isPaused()) {
+                emulator.stepInto();
+            } else {
+                os << std::endl;
+                c64.dump(Category::Current, os);
+            }
+        }
+    });
+
+
     //
     // Program execution
     //

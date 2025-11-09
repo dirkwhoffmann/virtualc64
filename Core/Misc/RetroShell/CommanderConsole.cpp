@@ -36,6 +36,12 @@ CommanderConsole::welcome()
 }
 
 void
+CommanderConsole::ping(std::ostream &os)
+{
+    os << "RetroShell Commander" << std::endl;
+}
+
+void
 CommanderConsole::summary()
 {
     std::stringstream ss;
@@ -64,11 +70,13 @@ CommanderConsole::printHelp(isize tab)
     Console::printHelp(tab);
 }
 
+/*
 void
 CommanderConsole::pressReturn(bool shift)
 {
         Console::pressReturn(shift);
 }
+*/
 
 void
 CommanderConsole::didActivate()
@@ -95,6 +103,23 @@ void
 CommanderConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
+
+
+    //
+    // Empty command
+    //
+
+    root.add({
+
+        .tokens = { "return" },
+        .chelp  = { "Print status information" },
+        .flags  = rs::hidden,
+        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            os << "\nRetroShell Commander\n";
+        }
+    });
+
 
     //
     // Workspace management

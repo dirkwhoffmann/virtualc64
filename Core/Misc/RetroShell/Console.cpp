@@ -421,18 +421,29 @@ Console::cursorRel()
 void
 Console::pressReturn(bool shift)
 {
+    if (!input.empty()) {
+
+        // Add the command to the text storage
+        *this << input << '\n';
+    }
+
+    // Feed the command into the command queue
+    retroShell.asyncExec(input);
+
+    // Clear the input line
+    input = "";
+    cursor = 0;
+
+    /*
     if (input.empty()) {
-        
-        retroShell.asyncExec("helpstring");
-        
+
+        retroShell.asyncExec("ping");
+
     } else {
         
         // Add the command to the text storage
         *this << input << '\n';
-        
-        // Remember the command
-        // historyBuffer.add(input);
-        
+                
         // Feed the command into the command queue
         retroShell.asyncExec(input);
         
@@ -440,6 +451,7 @@ Console::pressReturn(bool shift)
         input = "";
         cursor = 0;
     }
+    */
 }
 
 Tokens
@@ -783,6 +795,9 @@ Console::exec(const InputLine& cmd)
 {
     std::stringstream ss;
 
+    // Skip empty script lines
+    if (cmd.isScriptCommand() && cmd.input.empty()) return;
+
     // Inform the delegates
     for (auto &delegate: delegates) delegate->willExecute(cmd);
 
@@ -794,8 +809,8 @@ Console::exec(const InputLine& cmd)
         // Remove the 'try' keyword
         if (!tokens.empty() && tokens.front() == "try") tokens.erase(tokens.begin());
 
-        // Skip empty lines
-        if (tokens.empty()) return;
+        // Reroute empty commands to the hidden "return" command
+        if (tokens.empty()) tokens = { "return" };
 
         // Find the command in the command tree
         auto [c, args] = seekCommand(tokens);
@@ -982,20 +997,20 @@ Console::initCommands(RSCommand &root)
         
         root.add({
             
-            .tokens = { "helpstring" },
-            .chelp  = { "Prints how to get help" },
+            .tokens = { "ping" },
+            .chelp  = { "Print a status message" },
             .flags  = rs::hidden,
             
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
                 
-                printHelp(0);
+                ping(os);
         }
     });
     
     root.add({
         
         .tokens = { "commander" },
-            .chelp  = { "Enter or command console" },
+            .chelp  = { "Enter the command console" },
 
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
@@ -1010,22 +1025,12 @@ Console::initCommands(RSCommand &root)
         root.add({
 
             .tokens = { "debugger" },
-            .chelp  = { "Enter or debug console" },
+            .chelp  = { "Enter the debug console" },
 
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
                 retroShell.enterDebugger();
                 c64.dump(Category::Current, os);
-
-                /*
-                std::stringstream ss;
-                c64.dump(Category::Current, ss);
-
-                string line;
-                *this << vspace{1};
-                while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
-                *this << vspace{1};
-                */
             }
         });
 
