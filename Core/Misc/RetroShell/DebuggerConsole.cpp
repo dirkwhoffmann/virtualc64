@@ -44,18 +44,6 @@ DebuggerConsole::getPrompt()
 }
 
 void
-DebuggerConsole::welcome()
-{
-    Console::welcome();
-}
-
-void
-DebuggerConsole::printHelp(isize tab)
-{
-    Console::printHelp(tab);
-}
-
-void
 DebuggerConsole::didActivate()
 {
     emulator.trackOn(1);

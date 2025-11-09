@@ -30,18 +30,6 @@ CommanderConsole::getPrompt()
 }
 
 void
-CommanderConsole::welcome()
-{
-    Console::welcome();
-}
-
-void
-CommanderConsole::printHelp(isize tab)
-{
-    Console::printHelp(tab);
-}
-
-void
 CommanderConsole::didActivate()
 {
     if (!activated) {

@@ -186,18 +186,6 @@ Console::operator<<(const vspace &value)
     return *this;
 }
 
-void
-Console::welcome()
-{
-    *this << "RetroShell " << C64::build() << '\n';
-    *this << '\n';
-    *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-    *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
-    *this << '\n';
-
-    printHelp(0);
-}
-
 const char *
 Console::text()
 {
@@ -256,6 +244,7 @@ Console::lastLineIsEmpty()
     return storage.lastLineIsEmpty();
 }
 
+/*
 void
 Console::printHelp(isize tab)
 {
@@ -265,6 +254,7 @@ Console::printHelp(isize tab)
     *this << string(tab + 4, ' ') << "Press 'Shift+Tab' to switch consoles.";
     *this << vspace{1};
 }
+*/
 
 void
 Console::press(RSKey key, bool shift)
@@ -963,18 +953,6 @@ Console::initCommands(RSCommand &root)
     //
 
     {   RSCommand::currentGroup = "Shell commands";
-
-        root.add({
-
-            .tokens = { "welcome" },
-            .chelp  = { "Prints the welcome message" },
-            .flags  = rs::hidden,
-
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                welcome();
-            }
-        });
 
         root.add({
 
