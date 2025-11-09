@@ -20,16 +20,6 @@
 
 namespace vc64 {
 
-
-struct QueuedCmd {
-
-    enum class Type { USER, SCRIPT, RPC };
-
-    Type type;
-    isize id;
-    string cmd;
-};
-
 struct TooFewArgumentsError : public util::ParseError {
     using ParseError::ParseError;
 };
@@ -340,9 +330,12 @@ public:
 protected:
     
     // Executes a single command
-    void exec(const QueuedCmd& cmd, bool verbose = false) throws;
-    // void exec(const Tokens &argv, bool verbose = false) throws;
-    
+    void exec(const InputLine& cmd) throws;
+
+    // Dispatches the command output to the console and connected servers
+    void dispatchOutput(const InputLine& cmd, std::stringstream &ss);
+    void dispatchOutput(const InputLine& cmd, std::stringstream &ss, std::exception &exc);
+
     // Prints a usage string for a command
     void cmdUsage(const RSCommand &cmd, const string &prefix);
     void argUsage(const RSCommand &cmd, const string &prefix);

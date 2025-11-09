@@ -66,7 +66,7 @@ public:
 private:
     
     // Command queue (stores all pending commands)
-    std::vector<QueuedCmd> commands;
+    std::vector<InputLine> commands;
     
     // The currently active console
     Console *current = nullptr;
@@ -145,7 +145,7 @@ public:
     
     // Adds a command to the list of pending commands
     void asyncExec(const string &command, bool append = true);
-    void asyncExec(const QueuedCmd &command, bool append = true);
+    void asyncExec(const InputLine &command, bool append = true);
 
     // Adds the commands of a shell script to the list of pending commands
     void asyncExecScript(std::stringstream &ss);
@@ -162,7 +162,7 @@ public:
 private:
     
     // Executes a single pending command
-    void exec(QueuedCmd cmd) throws;
+    void exec(InputLine &cmd) throws;
     
     
     //

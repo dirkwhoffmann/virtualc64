@@ -34,7 +34,7 @@ RetroShell::_initialize()
     current = &debugger;
     
     // Switch the console to let the welcome message appear
-    current->exec(QueuedCmd {.cmd = "commander"});
+    current->exec(InputLine {.input = "commander"});
 }
 
 void
@@ -70,7 +70,7 @@ RetroShell::enterConsole(isize nr)
     if (current->isEmpty()) {
         
         // Print the welcome message if entered the first time
-        current->exec(QueuedCmd {.cmd = "welcome"}); *this << current->getPrompt();
+        current->exec(InputLine {.input = "welcome"}); *this << current->getPrompt();
 
     } else {
         
@@ -88,11 +88,11 @@ RetroShell::enterConsole(isize nr)
 void
 RetroShell::asyncExec(const string &command, bool append)
 {
-    asyncExec(QueuedCmd { .type = QueuedCmd::Type::USER, .cmd = command });
+    asyncExec(InputLine { .type = InputLine::Source::USER, .input = command });
 }
 
 void
-RetroShell::asyncExec(const QueuedCmd &command, bool append)
+RetroShell::asyncExec(const InputLine &command, bool append)
 {
     // Feed the command into the command queue
     if (append) {
@@ -115,8 +115,13 @@ RetroShell::asyncExecScript(std::stringstream &ss)
 
         while (std::getline(ss, line)) {
 
-            QueuedCmd cmd = { .type = QueuedCmd::Type::SCRIPT, .id = nr++, .cmd = line };
-            commands.push_back(cmd);
+            commands.push_back(InputLine {
+
+                .id    = nr++,
+                .type  = InputLine::Source::SCRIPT,
+                .echo  = true,
+                .input = line
+            });
         }
     
         emulator.put(Command(Cmd::RSH_EXECUTE));
@@ -183,7 +188,7 @@ RetroShell::exec()
 
             while (!commands.empty()) {
 
-                QueuedCmd cmd = commands.front();
+                InputLine cmd = commands.front();
                 commands.erase(commands.begin());
                 exec(cmd);
             }
@@ -206,15 +211,26 @@ RetroShell::exec()
 }
 
 void
-RetroShell::exec(QueuedCmd cmd)
+RetroShell::exec(InputLine &cmd)
 {
-    auto script = cmd.type == QueuedCmd::Type::SCRIPT;
+    // Echo the command if requested
+    if (cmd.echo) *this << cmd.input << '\n';
 
-    // Print the command if it comes from a script
-    if (script) *this << cmd.cmd << '\n';
+    try {
 
-    // Call the interpreter
-    current->exec(cmd);
+        // Call the interpreter
+        current->exec(cmd);
+
+    } catch (ScriptInterruption &) {
+
+        // Rethrow the exception
+        throw;
+
+    } catch (std::exception &err) {
+
+        // Rethrow the exception if the command is not prefixed with 'try'
+        if (cmd.input.rfind("try", 0)) throw;
+    }
 }
 
 RetroShell &

@@ -22,7 +22,7 @@ DebuggerConsole::_pause()
     if (retroShell.inDebugShell()) {
 
         *this << '\n';
-        exec(QueuedCmd {.cmd = "state"});
+        exec(InputLine {.input = "state"});
         *this << getPrompt();
     }
 }
@@ -289,9 +289,9 @@ DebuggerConsole::initCommands(RSCommand &root)
         .args   = { { .name = { "address", "Memory address" }, .flags = rs::opt } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            std::stringstream ss;
-            cpu.disassembler.disassembleRange(ss, parseAddr(args, "address", cpu.getPC0()), 16);
-            retroShell << '\n' << ss << '\n';
+            // std::stringstream ss;
+            cpu.disassembler.disassembleRange(os, parseAddr(args, "address", cpu.getPC0()), 16);
+            // retroShell << '\n' << ss << '\n';
         }
     });
 

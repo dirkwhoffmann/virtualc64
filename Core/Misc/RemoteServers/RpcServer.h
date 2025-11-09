@@ -13,8 +13,20 @@
 #pragma once
 
 #include "SocketServer.h"
+#include "RetroShellTypes.h"
 
 namespace vc64 {
+
+namespace RPC {
+
+const long PARSE_ERROR      = -32700; // Invalid JSON was received by the server
+const long INVALID_REQUEST  = -32600; // The JSON sent is not a valid Request object
+const long METHOD_NOT_FOUND = -32601; // The method does not exist / is not available
+const long INVALID_PARAMS   = -32602; // Invalid method parameter(s)
+const long INTERNAL_ERROR   = -32603; // Internal JSON-RPC error
+const long SERVER_ERROR     = -32000; // Reserved for implementation-defined server-errors
+
+}
 
 class RpcServer final : public SocketServer {
 
@@ -56,8 +68,9 @@ protected:
 
 public:
 
-    // Sends a response packet
-    void reply(const string &payload, isize id);
+    // Sends a response to the client
+    void reply(const InputLine& cmd, std::stringstream &ss);
+    void reply(const InputLine& cmd, std::stringstream &ss, std::exception &exc);
 };
 
 }

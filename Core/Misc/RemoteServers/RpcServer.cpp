@@ -13,10 +13,12 @@
 #include "config.h"
 #include "RpcServer.h"
 #include "Emulator.h"
-#include "httplib.h"
+#include "json.h"
 #include <thread>
 
 namespace vc64 {
+
+using nlohmann::json;
 
 void
 RpcServer::_dump(Category category, std::ostream &os) const
@@ -67,15 +69,103 @@ RpcServer::doSend(const string &payload)
 void
 RpcServer::doProcess(const string &payload)
 {
-    // TODO
-    printf("TODO: doProcess(%s)\n", payload.c_str());
-    retroShell.asyncExec(QueuedCmd { .type = QueuedCmd::Type::RPC, .id = 0, .cmd = payload });
+    try {
+
+        json request = json::parse(payload);
+
+        // Check input format
+        if (!request.contains("method")) {
+            throw AppException(RPC::INVALID_REQUEST, "Missing 'method'");
+        }
+        if (!request.contains("params")) {
+            throw AppException(RPC::INVALID_REQUEST, "Missing 'params'");
+        }
+        if (!request["method"].is_string()) {
+            throw AppException(RPC::INVALID_PARAMS, "'method' must be a string");
+        }
+        if (!request["params"].is_string()) {
+            throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
+        }
+
+        // Extract required fields
+        string method = request["method"];
+        string params = request["params"];
+        int id = request.value("id", 0);
+
+        // Feed the command into the command queue
+        retroShell.asyncExec(InputLine {
+
+            .id = id,
+            .type = InputLine::Source::RPC,
+            .echo = true,
+            .input = params });
+
+    } catch (const json::parse_error &exc) {
+
+        json response = {
+
+            {"jsonrpc", "2.0"},
+            {"error", {{"code", RPC::PARSE_ERROR}, {"message", payload}}},
+            {"id", nullptr}
+        };
+        send(response.dump());
+
+    } catch (const AppException &exc) {
+
+        json response = {
+
+            {"jsonrpc", "2.0"},
+            {"error", {{"code", exc.data}, {"message", exc.what()}}},
+            {"id", nullptr}
+        };
+        send(response.dump());
+    }
 }
 
 void
-RpcServer::reply(const string &payload, isize id)
+RpcServer::reply(const InputLine& input, std::stringstream &ss)
 {
-    send("reply: TODO");
+    if (!input.isRpcCommand()) return;
+
+    json response = {
+
+        {"jsonrpc", "2.0"},
+        {"result", ss.str()},
+        {"id", input.id}
+    };
+
+    send(response.dump());
+}
+
+void
+RpcServer::reply(const InputLine& input, std::stringstream &ss, std::exception &exc)
+{
+    if (!input.isRpcCommand()) return;
+
+    // By default, signal an internal error
+    i64 code = -32603;
+
+    // For parse errors, use a value from the server-defined error range
+    if (dynamic_cast<const util::ParseError *>(&exc)) {
+        code = -32000;
+    }
+
+    // For application errors, use the fault identifier
+    if (const auto *error = dynamic_cast<const AppError *>(&exc)) {
+        code = error->data;
+    }
+
+    json response = {
+
+        {"jsonrpc", "2.0"},
+        {"error", {
+            {"code", code},
+            {"message", exc.what()}
+        }},
+        {"id", input.id}
+    };
+
+    send(response.dump());
 }
 
 }

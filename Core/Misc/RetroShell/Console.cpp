@@ -764,58 +764,64 @@ Console::parseSeq(const string &argv, const string &fallback) const
 }
 
 void
-Console::exec(const QueuedCmd& cmd, bool verbose)
+Console::exec(const InputLine& cmd)
 {
-    string userInput = cmd.cmd;
     std::stringstream ss;
 
     try {
 
         // Split the command string
-        Tokens tokens = split(userInput);
+        Tokens tokens = split(cmd.input);
 
         // Remove the 'try' keyword
         if (!tokens.empty() && tokens.front() == "try") tokens.erase(tokens.begin());
-
-        // In 'verbose' mode, print the token list
-        if (verbose) *this << tokens << '\n';
 
         // Skip empty lines
         if (tokens.empty()) return;
 
         // Find the command in the command tree
-        if (auto [cmd, args] = seekCommand(tokens); cmd) {
+        auto [c, args] = seekCommand(tokens);
 
-            // Check if a command has been found
-            if (cmd == nullptr || cmd == &root) throw util::ParseError(tokens[0]);
+        // Only proceed if a command has been found
+        if (c == &root) throw util::ParseError(tokens[0]);
 
-            // Parse arguments
-            Arguments parsedArgs = parse(*cmd, args);
+        // Parse arguments
+        Arguments parsedArgs = parse(*c, args);
 
-            // Call the command handler
-            cmd->callback(ss, parsedArgs, cmd->payload);
+        // Call the command handler
+        c->callback(ss, parsedArgs, c->payload);
 
-            // Dump the output to the console
-            if (ss.peek() != EOF) { *this << vdelim << ss << vdelim; }
-
-        } else {
-
-            throw util::ParseError(util::concat(tokens));
-        }
-
-    } catch (ScriptInterruption &) {
-
-        // Rethrow the exception
-        throw;
+        // Print output
+        dispatchOutput(cmd, ss);
 
     } catch (std::exception &err) {
 
         // Print error message
-        describe(err, cmd.id, cmd.cmd);
+        dispatchOutput(cmd, ss, err);
 
-        // Rethrow the exception if the command is not prefixed with 'try'
-        if (cmd.cmd.rfind("try", 0)) throw;
+        // Rethrow exception
+        throw;
     }
+}
+
+void
+Console::dispatchOutput(const InputLine& cmd, std::stringstream &ss)
+{
+    if (ss.peek() != EOF) {
+        *this << vdelim << ss.str() << vdelim;
+    }
+    remoteManager.rpcServer.reply(cmd, ss);
+}
+
+void
+Console::dispatchOutput(const InputLine& cmd, std::stringstream &ss, std::exception &exc)
+{
+    describe(ss, exc, cmd.id, cmd.input);
+
+    if (ss.peek() != EOF) {
+        *this << vdelim << ss.str() << vdelim;
+    }
+    remoteManager.rpcServer.reply(cmd, ss, exc);
 }
 
 void
