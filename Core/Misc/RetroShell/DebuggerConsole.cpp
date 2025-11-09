@@ -50,65 +50,15 @@ DebuggerConsole::welcome()
 }
 
 void
-DebuggerConsole::ping(std::ostream &os)
-{
-    std::stringstream ss;
-    c64.dump(Category::Current, ss);
-
-    string line;
-    while(std::getline(ss, line)) { os << "    " << line << '\n'; }
-}
-
-void
-DebuggerConsole::summary()
-{
-    std::stringstream ss;
-
-    // ss << "RetroShell Debugger" << std::endl << std::endl;
-    c64.dump(Category::Current, ss);
-
-    *this << vspace{1};
-    string line;
-    while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
-    // *this << ss;
-    *this << vspace{1};
-}
-
-void
 DebuggerConsole::printHelp(isize tab)
 {
     Console::printHelp(tab);
 }
 
-/*
-void
-DebuggerConsole::pressReturn(bool shift)
-{
-    if (emulator.isPaused() && !shift && input.empty()) {
-        
-        emulator.stepInto();
-        
-    } else {
-        
-        Console::pressReturn(shift);
-    }
-}
-*/
-
 void
 DebuggerConsole::didActivate()
 {
     emulator.trackOn(1);
-
-    /*
-    std::stringstream ss;
-    c64.dump(Category::Current, ss);
-
-    string line;
-    *this << vspace{1};
-    while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
-    *this << vspace{1};
-    */
 }
 
 void
@@ -121,7 +71,6 @@ void
 DebuggerConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
-
 
     //
     // Empty command

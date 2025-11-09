@@ -36,47 +36,10 @@ CommanderConsole::welcome()
 }
 
 void
-CommanderConsole::ping(std::ostream &os)
-{
-    os << "RetroShell Commander" << std::endl;
-}
-
-void
-CommanderConsole::summary()
-{
-    std::stringstream ss;
-
-    // ss << "RetroShell Commander" << std::endl << std::endl;
-    /*
-    ss << "Model   Chip    Slow    Fast    Agnus   Denise  ROM" << std::endl;
-    ss << std::setw(8) << std::left << BankMapEnum::key(BankMap(amiga.get(Opt::MEM_BANKMAP)));
-    ss << std::setw(8) << std::left << (std::to_string(amiga.get(Opt::MEM_CHIP_RAM)) + " MB");
-    ss << std::setw(8) << std::left << (std::to_string(amiga.get(Opt::MEM_SLOW_RAM)) + " MB");
-    ss << std::setw(8) << std::left << (std::to_string(amiga.get(Opt::MEM_FAST_RAM)) + " MB");
-    ss << std::setw(8) << std::left << (agnus.isECS() ? "ECS" : "OCS");
-    ss << std::setw(8) << std::left << (denise.isECS() ? "ECS" : "OCS");
-    ss << mem.getRomTraits().title << std::endl;
-
-    *this << vspace{1};
-    string line;
-    while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
-    */
-    *this << vspace{1};
-}
-
-void
 CommanderConsole::printHelp(isize tab)
 {
     Console::printHelp(tab);
 }
-
-/*
-void
-CommanderConsole::pressReturn(bool shift)
-{
-        Console::pressReturn(shift);
-}
-*/
 
 void
 CommanderConsole::didActivate()

@@ -237,9 +237,6 @@ public:
     // Marks the text storage as dirty
     void needsDisplay();
 
-    // Prints the ping message
-    virtual void ping(std::ostream &os) = 0;
-
 protected:
     
     // Clears the console window
@@ -253,9 +250,6 @@ protected:
     
     // Prints the welcome message
     virtual void welcome() = 0;
-
-    // Prints the status summary
-    virtual void summary() = 0;
 
     // Prints the help line
     virtual void printHelp(isize tab = 0);
@@ -402,8 +396,6 @@ class CommanderConsole final : public Console
     void _pause() override;
     string getPrompt() override;
     void welcome() override;
-    void ping(std::ostream &os) override;
-    void summary() override;
     void printHelp(isize tab = 0) override;
     // void pressReturn(bool shift) override;
 
@@ -423,19 +415,11 @@ class DebuggerConsole final : public Console
     // Methods from Console
     //
 
-public:
-
-    void ping(std::ostream &os) override;
-
-private:
-    
     virtual void initCommands(RSCommand &root) override;
     void _pause() override;
     string getPrompt() override;
     void welcome() override;
-    void summary() override;
     void printHelp(isize tab = 0) override;
-    // void pressReturn(bool shift) override;
 
 
     //

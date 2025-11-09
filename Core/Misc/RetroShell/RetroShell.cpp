@@ -61,22 +61,6 @@ RetroShell::enterConsole(isize nr)
     if (current) current->didDeactivate();
     current = newConsole;
     current->didActivate();
-
-    /*
-    if (current->isEmpty()) {
-        
-        // Print the welcome message if entered the first time
-        current->exec(InputLine {.input = "welcome"}); *this << current->getPrompt();
-
-    } else {
-        
-        // Otherwise, print the summary message
-        current->summary();
-    }
-    */
-    
-    // Update prompt
-    // *this << '\r' << current->getPrompt();
     
     // Inform the GUI about the change
     msgQueue.put(Msg::RSH_SWITCH, nr);
