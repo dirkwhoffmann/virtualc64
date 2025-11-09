@@ -21,8 +21,25 @@
 
 namespace vc64 {
 
-HistoryBuffer
-Console::historyBuffer;
+HistoryBuffer Console::historyBuffer;
+
+void
+Console::response(const InputLine& input, std::stringstream &ss)
+{
+    if (ss.peek() != EOF) {
+        *this << vdelim << ss.str() << vdelim;
+    }
+}
+
+void
+Console::response(const InputLine& input, std::stringstream &ss, std::exception &exc)
+{
+    describe(ss, exc, input.id, input.input);
+
+    if (ss.peek() != EOF) {
+        *this << vdelim << ss.str() << vdelim;
+    }
+}
 
 void
 HistoryBuffer::up(string &input, isize &cursor)
@@ -65,6 +82,9 @@ Console::_initialize()
     
     // Initialize the text storage
     clear();
+
+    // Register as delegate to receive command output
+    delegates.push_back(this);
 }
 
 Console&
@@ -791,41 +811,17 @@ Console::exec(const InputLine& cmd)
         // Call the command handler
         c->callback(ss, parsedArgs, c->payload);
 
-        // Print output
-        dispatchOutput(cmd, ss);
+        // Dispatch output
+        for (auto &delegate: delegates) delegate->response(cmd, ss);
 
     } catch (std::exception &err) {
 
-        // Print error message
-        dispatchOutput(cmd, ss, err);
+        // Dispatch error message
+        for (auto &delegate: delegates) delegate->response(cmd, ss, err);
 
         // Rethrow exception
         throw;
     }
-}
-
-void
-Console::dispatchOutput(const InputLine& cmd, std::stringstream &ss)
-{
-    if (ss.peek() != EOF) {
-        *this << vdelim << ss.str() << vdelim;
-    }
-
-    // Hand over the response to all registered delegates
-    for (auto &delegate: delegates) delegate->response(cmd, ss);
-}
-
-void
-Console::dispatchOutput(const InputLine& cmd, std::stringstream &ss, std::exception &exc)
-{
-    describe(ss, exc, cmd.id, cmd.input);
-
-    if (ss.peek() != EOF) {
-        *this << vdelim << ss.str() << vdelim;
-    }
-
-    // Hand over the response to all registered delegates
-    for (auto &delegate: delegates) delegate->response(cmd, ss);
 }
 
 void

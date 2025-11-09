@@ -70,7 +70,7 @@ public:
     void add(const string &input);
 };
 
-class Console : public SubComponent {
+class Console : public SubComponent, public ConsoleDelegate {
 
     friend class RetroShell;
     friend class RshServer;
@@ -187,8 +187,16 @@ protected:
 public:
     
     const Options &getOptions() const override { return options; }
+
+
+    //
+    // Methods from ConsoleDelegate
+    //
+
+    void response(const InputLine &input, std::stringstream &ss) override;
+    void response(const InputLine &input, std::stringstream &ss, std::exception &e) override;
     
-    
+
     //
     // Working with the text storage
     //
@@ -345,10 +353,6 @@ protected:
     
     // Executes a single command
     void exec(const InputLine& cmd) throws;
-
-    // Dispatches the command output to the console and connected servers
-    void dispatchOutput(const InputLine& cmd, std::stringstream &ss);
-    void dispatchOutput(const InputLine& cmd, std::stringstream &ss, std::exception &exc);
 
     // Prints a usage string for a command
     void cmdUsage(const RSCommand &cmd, const string &prefix);
