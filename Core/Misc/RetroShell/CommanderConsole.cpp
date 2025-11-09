@@ -71,6 +71,18 @@ CommanderConsole::pressReturn(bool shift)
 }
 
 void
+CommanderConsole::didActivate()
+{
+
+}
+
+void
+CommanderConsole::didDeactivate()
+{
+    
+}
+
+void
 CommanderConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);

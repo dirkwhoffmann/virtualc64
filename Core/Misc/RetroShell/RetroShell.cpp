@@ -60,11 +60,13 @@ RetroShell::enterConsole(isize nr)
         default:
             fatalError;
     }
-    
-    // Assign the new console
+
+    // Switch to the new console
+    if (current) current->didActivate();
     current = newConsole;
-    
-    // Enter Leave tracking mode
+    current->didDeactivate();
+
+    // Enter Leave tracking mode (MOVE TO ::enter(), ::leave())
     nr == 1 ? emulator.trackOn(1) : emulator.trackOff(1);
     
     if (current->isEmpty()) {
@@ -119,7 +121,6 @@ RetroShell::asyncExecScript(std::stringstream &ss)
 
                 .id    = nr++,
                 .type  = InputLine::Source::SCRIPT,
-                .echo  = true,
                 .input = line
             });
         }
@@ -213,9 +214,6 @@ RetroShell::exec()
 void
 RetroShell::exec(InputLine &cmd)
 {
-    // Echo the command if requested
-    if (cmd.echo) *this << cmd.input << '\n';
-
     try {
 
         // Call the interpreter

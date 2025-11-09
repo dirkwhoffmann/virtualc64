@@ -84,6 +84,18 @@ DebuggerConsole::pressReturn(bool shift)
 }
 
 void
+DebuggerConsole::didActivate()
+{
+
+}
+
+void
+DebuggerConsole::didDeactivate()
+{
+
+}
+
+void
 DebuggerConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);

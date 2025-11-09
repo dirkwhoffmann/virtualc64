@@ -25,8 +25,16 @@ class ConsoleDelegate {
 public:
 
     virtual ~ConsoleDelegate() { }
-    virtual void response(const InputLine &input, std::stringstream &ss) = 0;
-    virtual void response(const InputLine &input, std::stringstream &ss, std::exception &e) = 0;
+
+    // Called when the console is entered or left
+    virtual void didActivate() { };
+    virtual void didDeactivate() { };
+
+    // Provides the output of an executed RetroShell command
+    virtual void willExecute(const InputLine &input) = 0;
+
+    virtual void didExecute(const InputLine &input, std::stringstream &ss) = 0; // DEPRECATED
+    virtual void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) = 0; // DEPRECATED
 };
 
 struct TooFewArgumentsError : public util::ParseError {
@@ -73,7 +81,6 @@ public:
 class Console : public SubComponent, public ConsoleDelegate {
 
     friend class RetroShell;
-    friend class RshServer;
     friend class Interpreter;
     
     Descriptions descriptions = {
@@ -143,13 +150,10 @@ protected:
     //
     
 public:
-    
-    // using SubComponent::SubComponent;
-    
-    Console(C64 &c64, isize id, TextStorage &storage) : SubComponent(c64, id), storage(storage) { };
 
+    Console(C64 &c64, isize id, TextStorage &storage) : SubComponent(c64, id), storage(storage) { };
     Console& operator= (const Console& other) { return *this; }
-    
+
 protected:
     
     virtual void initCommands(RSCommand &root);
@@ -193,8 +197,9 @@ public:
     // Methods from ConsoleDelegate
     //
 
-    void response(const InputLine &input, std::stringstream &ss) override;
-    void response(const InputLine &input, std::stringstream &ss, std::exception &e) override;
+    void willExecute(const InputLine &input) override;
+    void didExecute(const InputLine &input, std::stringstream &ss) override;
+    void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) override;
     
 
     //
@@ -383,7 +388,11 @@ protected:
 class CommanderConsole final : public Console
 {
     using Console::Console;
-    
+
+    //
+    // Methods from Console
+    //
+
     virtual void initCommands(RSCommand &root) override;
     void _pause() override;
     string getPrompt() override;
@@ -391,6 +400,13 @@ class CommanderConsole final : public Console
     void summary() override;
     void printHelp(isize tab = 0) override;
     void pressReturn(bool shift) override;
+
+    //
+    // Methods from ConsoleDelegate
+    //
+
+    void didActivate() override;
+    void didDeactivate() override;
 };
 
 class DebuggerConsole final : public Console
@@ -408,6 +424,13 @@ class DebuggerConsole final : public Console
     void summary() override;
     void printHelp(isize tab = 0) override;
     void pressReturn(bool shift) override;
+
+    //
+    // Methods from ConsoleDelegate
+    //
+
+    void didActivate() override;
+    void didDeactivate() override;
 };
 
 }

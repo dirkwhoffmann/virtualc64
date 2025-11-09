@@ -24,7 +24,14 @@ namespace vc64 {
 HistoryBuffer Console::historyBuffer;
 
 void
-Console::response(const InputLine& input, std::stringstream &ss)
+Console::willExecute(const InputLine &input)
+{
+    // Echo the command if it came from somewhere else
+    if (!input.isUserCommand()) { *this << input.input << '\n'; }
+}
+
+void
+Console::didExecute(const InputLine& input, std::stringstream &ss)
 {
     if (ss.peek() != EOF) {
         *this << vdelim << ss.str() << vdelim;
@@ -32,7 +39,7 @@ Console::response(const InputLine& input, std::stringstream &ss)
 }
 
 void
-Console::response(const InputLine& input, std::stringstream &ss, std::exception &exc)
+Console::didExecute(const InputLine& input, std::stringstream &ss, std::exception &exc)
 {
     describe(ss, exc, input.id, input.input);
 
@@ -91,7 +98,6 @@ Console&
 Console::operator<<(char value)
 {
     storage << value;
-    remoteManager.rshServer << value;
     needsDisplay();
     return *this;
 }
@@ -100,7 +106,6 @@ Console&
 Console::operator<<(const string& value)
 {
     storage << value;
-    remoteManager.rshServer << value;
     needsDisplay();
     return *this;
 }
@@ -184,17 +189,12 @@ Console::operator<<(const vspace &value)
 void
 Console::welcome()
 {
-    storage << "RetroShell ";
-    remoteManager.rshServer << "VirtualC64 RetroShell Remote Server ";
-    *this << C64::build() << '\n';
+    *this << "RetroShell " << C64::build() << '\n';
     *this << '\n';
-    
     *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
     *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
     *this << '\n';
-    
-    // *this << "    " << description() << " console" << "\n\n";
-    
+
     printHelp(0);
 }
 
@@ -221,7 +221,6 @@ Console::tab(isize pos)
         
         std::string fill(count, ' ');
         storage << fill;
-        remoteManager.rshServer << fill;
         needsDisplay();
     }
 }
@@ -261,13 +260,9 @@ void
 Console::printHelp(isize tab)
 {
     *this << vspace{1};
-
     *this << "RetroShell " << description() << " " << C64::version() << "\n\n";
-    storage << string(tab + 4, ' ') << "Type 'help' or press 'Tab' twice for help.\n";
-    storage << string(tab + 4, ' ') << "Press 'Shift+Tab' to switch consoles.";
-
-    remoteManager.rshServer << "Type 'help' for help.\n";
-
+    *this << string(tab + 4, ' ') << "Type 'help' or press 'Tab' twice for help.\n";
+    *this << string(tab + 4, ' ') << "Press 'Shift+Tab' to switch consoles.";
     *this << vspace{1};
 }
 
@@ -788,6 +783,9 @@ Console::exec(const InputLine& cmd)
 {
     std::stringstream ss;
 
+    // Inform the delegates
+    for (auto &delegate: delegates) delegate->willExecute(cmd);
+
     try {
 
         // Split the command string
@@ -812,12 +810,12 @@ Console::exec(const InputLine& cmd)
         c->callback(ss, parsedArgs, c->payload);
 
         // Dispatch output
-        for (auto &delegate: delegates) delegate->response(cmd, ss);
+        for (auto &delegate: delegates) delegate->didExecute(cmd, ss);
 
     } catch (std::exception &err) {
 
         // Dispatch error message
-        for (auto &delegate: delegates) delegate->response(cmd, ss, err);
+        for (auto &delegate: delegates) delegate->didExecute(cmd, ss, err);
 
         // Rethrow exception
         throw;

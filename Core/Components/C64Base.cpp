@@ -174,7 +174,6 @@ C64::_dump(Category category, std::ostream &os) const
         dump(Category::Current, os);
         os << "\n";
         cpu.disassembler.disassembleRange(os, cpu.getPC0(), 8);
-        os << "\n";
     }
 }
 

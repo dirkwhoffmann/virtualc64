@@ -39,7 +39,7 @@ namespace vc64 {
 
 class RetroShell final : public SubComponent, public Inspectable<RetroShellInfo> {
     
-    friend class RshServer;
+    // friend class RshServer;
     
     Descriptions descriptions = {{
         
@@ -182,7 +182,8 @@ public:
     RetroShell &operator<<(unsigned long long value);
     RetroShell &operator<<(std::stringstream &stream);
     RetroShell &operator<<(const vspace &value);
-    
+
+    string prompt() { return current ? current->getPrompt() : ""; }
     const char *text();
     isize cursorRel();
     void press(RSKey key, bool shift = false);

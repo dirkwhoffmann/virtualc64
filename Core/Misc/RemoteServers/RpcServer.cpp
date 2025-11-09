@@ -103,7 +103,6 @@ RpcServer::doProcess(const string &payload)
 
             .id = request.value("id", 0),
             .type = InputLine::Source::RPC,
-            .echo = true,
             .input = request["params"] });
 
     } catch (const json::parse_error &exc) {
@@ -129,7 +128,13 @@ RpcServer::doProcess(const string &payload)
 }
 
 void
-RpcServer::response(const InputLine& input, std::stringstream &ss)
+RpcServer::willExecute(const InputLine &input)
+{
+
+}
+
+void
+RpcServer::didExecute(const InputLine& input, std::stringstream &ss)
 {
     if (!input.isRpcCommand()) return;
 
@@ -144,7 +149,7 @@ RpcServer::response(const InputLine& input, std::stringstream &ss)
 }
 
 void
-RpcServer::response(const InputLine& input, std::stringstream &ss, std::exception &exc)
+RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::exception &exc)
 {
     if (!input.isRpcCommand()) return;
 

@@ -13,10 +13,11 @@
 #pragma once
 
 #include "SocketServer.h"
+#include "Console.h"
 
 namespace vc64 {
 
-class RshServer final : public SocketServer {
+class RshServer final : public SocketServer, public ConsoleDelegate {
 
 public:
     
@@ -35,6 +36,7 @@ public:
     
 private:
 
+    void _initialize() override;
     void _dump(Category category, std::ostream &os) const override;
 
 
@@ -47,6 +49,17 @@ private:
     void doSend(const string &packet)throws  override;
     void didStart() override;
     void didConnect() override;
+
+
+    //
+    // Methods from ConsoleDelegate
+    //
+
+    void didActivate() override;
+    void didDeactivate() override;
+    void willExecute(const InputLine &input) override;
+    void didExecute(const InputLine &input, std::stringstream &ss) override;
+    void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) override;
 };
 
 }

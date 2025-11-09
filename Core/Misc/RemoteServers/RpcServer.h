@@ -68,8 +68,9 @@ protected:
     // Methods from ConsoleDelegate
     //
 
-    void response(const InputLine &input, std::stringstream &ss) override;
-    void response(const InputLine &input, std::stringstream &ss, std::exception &e) override;
+    void willExecute(const InputLine &input) override;
+    void didExecute(const InputLine &input, std::stringstream &ss) override;
+    void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) override;
 };
 
 }
