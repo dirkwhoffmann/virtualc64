@@ -16,17 +16,17 @@
 
 @MainActor
 class Configuration {
-    
+
     var parent: MyController!
     var emu: EmulatorProxy? { return parent.emu }
     var renderer: Renderer { return parent.renderer }
     var gamePadManager: GamePadManager { return parent.gamePadManager }
     var ressourceManager: RessourceManager { return renderer.ressourceManager }
-    
+
     //
     // Hardware
     //
-    
+
     var vicRevision: Int {
         get { return emu?.get(.VICII_REVISION) ?? 0 }
         set { emu?.set(.VICII_REVISION, value: newValue) }
@@ -36,42 +36,42 @@ class Configuration {
         get { return emu?.get(.VICII_GRAY_DOT_BUG) != 0 }
         set { emu?.set(.VICII_GRAY_DOT_BUG, enable: newValue) }
     }
-    
+
     var vicHideSprites: Bool {
         get { return emu?.get(.VICII_HIDE_SPRITES) != 0 }
         set { emu?.set(.VICII_HIDE_SPRITES, enable: newValue) }
     }
-        
+
     var vicCutLayers: Int {
         get { return emu?.get(.VICII_CUT_LAYERS) ?? 0 }
         set { emu?.set(.VICII_CUT_LAYERS, value: newValue) }
     }
-    
+
     var vicCutOpacity: Int {
         get { return emu?.get(.VICII_CUT_OPACITY) ?? 0 }
         set { emu?.set(.VICII_CUT_OPACITY, value: newValue) }
     }
-        
+
     var ciaRevision: Int {
         get { return emu?.get(.CIA_REVISION) ?? 0 }
         set { emu?.set(.CIA_REVISION, value: newValue) }
     }
-    
+
     var ciaTimerBBug: Bool {
         get { return emu?.get(.CIA_TIMER_B_BUG) != 0}
         set { emu?.set(.CIA_TIMER_B_BUG, enable: newValue) }
     }
-    
+
     var sidRevision: Int {
         get { return emu?.get(.SID_REV, id: 0) ?? 0 }
         set { emu?.set(.SID_REV, value: newValue) }
     }
-    
+
     var sidFilter: Bool {
         get { return emu?.get(.SID_FILTER, id: 0) != 0 }
         set { emu?.set(.SID_FILTER, enable: newValue) }
     }
-    
+
     var glueLogic: Int {
         get { return emu?.get(.GLUE_LOGIC) ?? 0 }
         set { emu?.set(.GLUE_LOGIC, value: newValue) }
@@ -86,16 +86,16 @@ class Configuration {
         get { return emu?.get(.MEM_INIT_PATTERN) ?? 0 }
         set { emu?.set(.MEM_INIT_PATTERN, value: newValue) }
     }
-    
+
     //
     // Peripherals
     //
-    
+
     var drive8Connected: Bool {
         get { return emu?.get(.DRV_CONNECT, drive: DRIVE8) != 0 }
         set { emu?.set(.DRV_CONNECT, drive: DRIVE8, enable: newValue ) }
     }
-    
+
     var drive9Connected: Bool {
         get { return emu?.get(.DRV_CONNECT, drive: DRIVE9) != 0 }
         set { emu?.set(.DRV_CONNECT, drive: DRIVE9, enable: newValue ) }
@@ -105,17 +105,17 @@ class Configuration {
         get { return emu?.get(.DRV_AUTO_CONFIG, drive: DRIVE8) != 0 }
         set { emu?.set(.DRV_AUTO_CONFIG, drive: DRIVE8, enable: newValue ) }
     }
-    
+
     var drive9AutoConf: Bool {
         get { return emu?.get(.DRV_AUTO_CONFIG, drive: DRIVE9) != 0}
         set { emu?.set(.DRV_AUTO_CONFIG, drive: DRIVE9, enable: newValue ) }
     }
-    
+
     var drive8Type: Int {
         get { return emu?.get(.DRV_TYPE, drive: DRIVE8) ?? 0 }
         set { emu?.set(.DRV_TYPE, drive: DRIVE8, value: newValue )}
     }
-    
+
     var drive9Type: Int {
         get { return emu?.get(.DRV_TYPE, drive: DRIVE9) ?? 0 }
         set { emu?.set(.DRV_TYPE, drive: DRIVE9, value: newValue )}
@@ -140,12 +140,12 @@ class Configuration {
         get { return emu?.get(.DRV_PARCABLE, drive: DRIVE9) ?? 0 }
         set { emu?.set(.DRV_PARCABLE, drive: DRIVE9, value: newValue ) }
     }
-    
+
     var drive8PowerSwitch: Bool {
         get { return emu?.get(.DRV_POWER_SWITCH, drive: DRIVE8) != 0 }
         set { emu?.set(.DRV_POWER_SWITCH, drive: DRIVE8, enable: newValue )}
     }
-    
+
     var drive9PowerSwitch: Bool {
         get { return emu?.get(.DRV_POWER_SWITCH, drive: DRIVE9) != 0 }
         set { emu?.set(.DRV_POWER_SWITCH, drive: DRIVE9, enable: newValue )}
@@ -163,7 +163,7 @@ class Configuration {
 
     var gameDevice1 = -1 {
         didSet {
-            
+
             // Try to connect the device (may disconnect the other device)
             gamePadManager.connect(slot: gameDevice1, port: 0)
             if (Int.hid != 0) { gamePadManager.listDevices() }
@@ -172,27 +172,27 @@ class Configuration {
             if gameDevice1 != -1 && gameDevice1 == gameDevice2 {
                 gameDevice2 = -1
             }
-            
+
             parent.toolbar.validateVisibleItems()
         }
     }
-    
+
     var gameDevice2 = -2 {
         didSet {
-            
+
             // Try to connect the device (may disconnect the other device)
             gamePadManager.connect(slot: gameDevice2, port: 1)
             if (Int.hid != 0) { gamePadManager.listDevices() }
-            
+
             // Avoid double mappings
             if gameDevice2 != -1 && gameDevice2 == gameDevice1 {
                 gameDevice1 = -1
             }
-            
+
             parent.toolbar.validateVisibleItems()
         }
     }
-    
+
     var mouseModel: Int {
         get { return emu?.get(.MOUSE_MODEL, id: 1) ?? 0 }
         set { emu?.set(.MOUSE_MODEL, value: newValue) }
@@ -284,7 +284,7 @@ class Configuration {
     //
     // Audio
     //
-    
+
     var sidEnable1: Bool {
         get { return emu?.get(.SID_ENABLE, id: 1) != 0 }
         set { emu?.set(.SID_ENABLE, id: 1, enable: newValue) }
@@ -385,7 +385,7 @@ class Configuration {
         get { return emu?.get(.AUD_BUFFER_SIZE) ?? 0 }
         set { emu?.set(.AUD_BUFFER_SIZE, value: newValue) }
     }
-    
+
     //
     // Video
     //
@@ -413,113 +413,51 @@ class Configuration {
     var hCenter: Int {
         get { return emu?.get(.MON_HCENTER) ?? 0 }
         set { emu?.set(.MON_HCENTER, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_HCENTER, value: newValue)
-            renderer.canvas.updateTextureRect()
-        }
-        */
     }
+
     var vCenter: Int {
         get { return emu?.get(.MON_VCENTER) ?? 0 }
         set { emu?.set(.MON_VCENTER, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_VCENTER, value: newValue)
-            renderer.canvas.updateTextureRect()
-        }
-        */
     }
 
     var hZoom: Int {
         get { return emu?.get(.MON_HZOOM) ?? 0 }
         set { emu?.set(.MON_HZOOM, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_HZOOM, value: newValue)
-            renderer.canvas.updateTextureRect()
-        }
-        */
     }
 
     var vZoom: Int {
         get { return emu?.get(.MON_VZOOM) ?? 0 }
         set { emu?.set(.MON_VZOOM, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_VZOOM, value: newValue)
-            renderer.canvas.updateTextureRect()
-        }
-        */
     }
 
     var upscaler: Int {
         get { return emu?.get(.MON_UPSCALER) ?? 0 }
         set { emu?.set(.MON_UPSCALER, value: newValue) }
-        /*
-        set {
-            if ressourceManager.selectUpscaler(newValue) {
-                emu?.set(.MON_UPSCALER, value: newValue)
-            }
-        }
-        */
     }
 
     var blur: Int {
         get { return emu?.get(.MON_BLUR) ?? 0 }
         set { emu?.set(.MON_BLUR, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_BLUR, value: newValue)
-            renderer.shaderOptions.blur = Int32(newValue)
-        }
-        */
     }
 
     var blurRadius: Int {
         get { return emu?.get(.MON_BLUR_RADIUS) ?? 0 }
         set { emu?.set(.MON_BLUR_RADIUS, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_BLUR_RADIUS, value: newValue)
-            renderer.shaderOptions.blurRadius = Float(newValue) / 1000.0
-        }
-        */
     }
 
     var bloom: Int {
         get { return emu?.get(.MON_BLOOM) ?? 0 }
         set { emu?.set(.MON_BLOOM, value: newValue) }
-        /*
-        set {
-            if ressourceManager.selectBloomFilter(newValue) {
-                emu?.set(.MON_BLOOM, value: newValue)
-                renderer.shaderOptions.bloom = Int32(bloom)
-            }
-        }
-        */
     }
 
     var bloomRadius: Int {
         get { return emu?.get(.MON_BLOOM_RADIUS) ?? 0 }
         set { emu?.set(.MON_BLOOM_RADIUS, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_BLOOM_RADIUS, value: newValue)
-            renderer.shaderOptions.bloomRadius = Float(newValue) / 1000.0
-        }
-        */
     }
 
     var bloomBrightness: Int {
         get { return emu?.get(.MON_BLOOM_BRIGHTNESS) ?? 0 }
         set { emu?.set(.MON_BLOOM_BRIGHTNESS, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_BLOOM_BRIGHTNESS, value: newValue)
-            renderer.shaderOptions.bloomBrightness = Float(newValue) / 1000.0
-        }
-        */
     }
 
     var bloomWeight: Int {
@@ -530,96 +468,79 @@ class Configuration {
     var dotMask: Int {
         get { return emu?.get(.MON_DOTMASK) ?? 0 }
         set { emu?.set(.MON_DOTMASK, value: newValue) }
-        /*
-        set {
-            renderer.shaderOptions.dotMask = Int32(newValue)
-            ressourceManager.buildDotMasks()
-            if ressourceManager.selectDotMask(newValue) {
-                emu?.set(.MON_DOTMASK, value: newValue)
-            }
-        }
-        */
     }
 
     var dotMaskBrightness: Int {
         get { return emu?.get(.MON_DOTMASK_BRIGHTNESS) ?? 0 }
         set { emu?.set(.MON_DOTMASK_BRIGHTNESS, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_DOTMASK_BRIGHTNESS, value: newValue)
-            renderer.shaderOptions.dotMaskBrightness = Float(newValue) / 1000.0
-            ressourceManager.buildDotMasks()
-            ressourceManager.selectDotMask(dotMask)
-        }
-        */
     }
 
     var scanlines: Int {
         get { return emu?.get(.MON_SCANLINES) ?? 0 }
         set { emu?.set(.MON_SCANLINES, value: newValue) }
-        /*
-        set {
-            renderer.shaderOptions.scanlines = Int32(newValue)
-            if ressourceManager.selectScanlineFilter(newValue) {
-                emu?.set(.MON_SCANLINES, value: newValue)
-            }
-        }
-        */
     }
 
     var scanlineBrightness: Int {
         get { return emu?.get(.MON_SCANLINE_BRIGHTNESS) ?? 0 }
         set { emu?.set(.MON_SCANLINE_BRIGHTNESS, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_SCANLINE_BRIGHTNESS, value: newValue)
-            renderer.shaderOptions.scanlineBrightness = Float(newValue) / 1000.0
-        }
-        */
     }
 
     var scanlineWeight: Int {
         get { return emu?.get(.MON_SCANLINE_WEIGHT) ?? 0 }
         set { emu?.set(.MON_SCANLINE_WEIGHT, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_SCANLINE_WEIGHT, value: newValue)
-            renderer.shaderOptions.scanlineWeight = Float(newValue) / 1000.0
-        }
-        */
     }
 
     var disalignment: Int {
         get { return emu?.get(.MON_DISALIGNMENT) ?? 0 }
         set { emu?.set(.MON_DISALIGNMENT, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_DISALIGNMENT, value: newValue)
-            renderer.shaderOptions.disalignment = Int32(newValue)
-        }
-        */
     }
 
     var disalignmentH: Int {
         get { return emu?.get(.MON_DISALIGNMENT_H) ?? 0 }
         set { emu?.set(.MON_DISALIGNMENT_H, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_DISALIGNMENT_H, value: newValue)
-            renderer.shaderOptions.disalignmentH = Float(newValue) / 1000000.0
-        }
-        */
     }
-    
+
     var disalignmentV: Int {
         get { return emu?.get(.MON_DISALIGNMENT_V) ?? 0 }
         set { emu?.set(.MON_DISALIGNMENT_V, value: newValue) }
-        /*
-        set {
-            emu?.set(.MON_DISALIGNMENT_V, value: newValue)
-            renderer.shaderOptions.disalignmentV = Float(newValue) / 1000000.0
-        }
-        */
     }
     init(with controller: MyController) { parent = controller }
+
+    //
+    // Servers
+    //
+
+    var rshSeverAutorun: Bool {
+        get { return emu?.get(.SRV_AUTORUN, id: 0) != 0 }
+        set { emu?.set(.SRV_AUTORUN, id: 0, enable: newValue ) }
+    }
+    var rshSeverPort: Int {
+        get { return emu?.get(.SRV_PORT, id: 0) ?? 0 }
+        set { emu?.set(.SRV_PORT, id: 0, value: newValue ) }
+    }
+    var rpcSeverAutorun: Bool {
+        get { return emu?.get(.SRV_AUTORUN, id: 1) != 0 }
+        set { emu?.set(.SRV_AUTORUN, id: 1, enable: newValue ) }
+    }
+    var rpcSeverPort: Int {
+        get { return emu?.get(.SRV_PORT, id: 1) ?? 0 }
+        set { emu?.set(.SRV_PORT, id: 1, value: newValue ) }
+    }
+    var dapSeverAutorun: Bool {
+        get { return emu?.get(.SRV_AUTORUN, id: 2) != 0 }
+        set { emu?.set(.SRV_AUTORUN, id: 2, enable: newValue ) }
+    }
+    var dapSeverPort: Int {
+        get { return emu?.get(.SRV_PORT, id: 2) ?? 0 }
+        set { emu?.set(.SRV_PORT, id: 2, value: newValue ) }
+    }
+    var promSeverAutorun: Bool {
+        get { return emu?.get(.SRV_AUTORUN, id: 3) != 0 }
+        set { emu?.set(.SRV_AUTORUN, id: 3, enable: newValue ) }
+    }
+    var promSeverPort: Int {
+        get { return emu?.get(.SRV_PORT, id: 3) ?? 0 }
+        set { emu?.set(.SRV_PORT, id: 3, value: newValue ) }
+    }
+
 }

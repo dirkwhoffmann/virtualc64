@@ -99,4 +99,10 @@ typedef struct
 }
 ServerConfig;
 
+typedef struct
+{
+    SrvState state;
+}
+RemoteServerInfo;
+
 }

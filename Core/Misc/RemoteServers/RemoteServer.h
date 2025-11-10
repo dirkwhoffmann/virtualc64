@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class RemoteServer : public SubComponent {
+class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo> {
 
     friend class RemoteManager;
 
@@ -135,6 +135,15 @@ public:
     i64 getOption(Opt option) const override;
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt option, i64 value) override;
+
+
+    //
+    // Methods from Inspectable
+    //
+
+public:
+
+    void cacheInfo(RemoteServerInfo &result) const override;
 
 
     //

@@ -63,6 +63,11 @@ RemoteManager::cacheInfo(RemoteManagerInfo &result) const
         info.numListening = numListening();
         info.numConnected = numConnected();
         info.numErroneous = numErroneous();
+
+        info.rshInfo = rshServer.getInfo();
+        info.rpcInfo = rpcServer.getInfo();
+        info.dapInfo = dapServer.getInfo();
+        info.promInfo = promServer.getInfo();
     }
 }
 

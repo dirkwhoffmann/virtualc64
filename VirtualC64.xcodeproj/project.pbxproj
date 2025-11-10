@@ -196,6 +196,7 @@
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* MyFormatter.swift */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
+		506D57B52EC23E7400E21501 /* ServerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D57B42EC23E7400E21501 /* ServerSettings.swift */; };
 		506E283C2EB338FA003FF0D3 /* DapServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28382EB3346C003FF0D3 /* DapServer.cpp */; };
 		506E283D2EB338FA003FF0D3 /* DapServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28382EB3346C003FF0D3 /* DapServer.cpp */; };
 		506E28452EB746C7003FF0D3 /* DapAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28442EB746C6003FF0D3 /* DapAdapter.cpp */; };
@@ -899,6 +900,7 @@
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		506D4D0C20B331A00093C5C6 /* MyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFormatter.swift; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
+		506D57B42EC23E7400E21501 /* ServerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerSettings.swift; sourceTree = "<group>"; };
 		506E28372EB33464003FF0D3 /* DapServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapServer.h; sourceTree = "<group>"; };
 		506E28382EB3346C003FF0D3 /* DapServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DapServer.cpp; sourceTree = "<group>"; };
 		506E28422EB647BB003FF0D3 /* DapServerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapServerTypes.h; sourceTree = "<group>"; };
@@ -1973,6 +1975,7 @@
 				505F45712E9698CE00418105 /* PerformanceSettings.swift */,
 				505F45752E9698EA00418105 /* AudioSettings.swift */,
 				505F45772E9698F300418105 /* VideoSettings.swift */,
+				506D57B42EC23E7400E21501 /* ServerSettings.swift */,
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
 			);
 			path = ViewControllers;
@@ -2683,6 +2686,7 @@
 				50A5B7CF2C74E44C00D6DDAD /* RemoteManager.cpp in Sources */,
 				5085D89D25B848940043B15C /* Joystick.cpp in Sources */,
 				500E2D662824EC140015C46F /* CartridgeInspector.swift in Sources */,
+				506D57B52EC23E7400E21501 /* ServerSettings.swift in Sources */,
 				505F45722E9698D300418105 /* PerformanceSettings.swift in Sources */,
 				500E34172615C40D006A38DA /* Parser.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,

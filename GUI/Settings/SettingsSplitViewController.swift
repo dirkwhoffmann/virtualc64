@@ -36,6 +36,7 @@ class SettingsSplitViewController: NSSplitViewController {
     lazy var performanceVC = instantiate("Performance") as! PerformanceSettingsViewController
     lazy var audioVC = instantiate("Audio") as! AudioSettingsViewController
     lazy var videoVC = instantiate("Video") as! VideoSettingsViewController
+    lazy var serversVC = instantiate("Servers") as! ServerSettingsViewController
 
     var current: SettingsViewController?
 
@@ -83,6 +84,7 @@ class SettingsSplitViewController: NSSplitViewController {
         case "Performance":     current = performanceVC
         case "Audio":           current = audioVC
         case "Video":           current = videoVC
+        case "Servers":         current = serversVC
 
         default:            fatalError()
         }

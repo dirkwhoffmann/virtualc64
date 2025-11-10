@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Reflection.h"
+#include "RemoteServerTypes.h"
 
 namespace vc64 {
 
@@ -68,6 +69,11 @@ typedef struct
     isize numListening;
     isize numConnected;
     isize numErroneous;
+
+    RemoteServerInfo rshInfo;
+    RemoteServerInfo rpcInfo;
+    RemoteServerInfo dapInfo;
+    RemoteServerInfo promInfo;
 }
 RemoteManagerInfo;
 

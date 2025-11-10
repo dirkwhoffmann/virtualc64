@@ -128,6 +128,12 @@ RemoteServer::setOption(Opt option, i64 value)
 }
 
 void
+RemoteServer::cacheInfo(RemoteServerInfo &result) const
+{
+    info.state = state;
+}
+
+void
 RemoteServer::start()
 {
     if (isOff()) {

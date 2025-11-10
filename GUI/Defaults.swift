@@ -274,6 +274,7 @@ extension Configuration {
         applyPerformanceUserDefaults()
         applyAudioUserDefaults()
         applyVideoUserDefaults()
+        applyServerUserDefaults()
     }
 }
 
@@ -1378,6 +1379,96 @@ extension Configuration {
             disalignmentH = defaults.get(.MON_DISALIGNMENT_H)
             disalignmentV = defaults.get(.MON_DISALIGNMENT_V)
             
+            emu.resume()
+        }
+    }
+}
+
+//
+// User defaults (Server)
+//
+
+@MainActor
+extension Keys {
+
+    struct Ser {
+
+        static let rshConnect       = "Server.Rsh.Connect"
+        static let rshPort          = "Server.Rsh.Port"
+        static let rpcConnect       = "Server.Rpc.Connect"
+        static let rpcPort          = "Server.Rpc.Port"
+        static let dapConnect       = "Server.Dap.Connect"
+        static let dapPort          = "Server.Rsh.Port"
+        static let promConnect      = "Server.Prom.Connect"
+        static let promPort         = "Server.Prom.Port"
+    }
+}
+
+@MainActor
+extension DefaultsProxy {
+
+    func registerServerUserDefaults() {
+
+        debug(.defaults)
+        // No GUI related items in this sections    }
+    }
+
+    func removeServerUserDefaults() {
+
+        debug(.defaults)
+
+        remove(.SRV_AUTORUN, [0, 1, 2, 3])
+        remove(.SRV_PORT, [0, 1, 2, 3])
+    }
+}
+
+@MainActor
+extension Configuration {
+
+    func saveServerUserDefaults() {
+
+        debug(.defaults)
+
+        if let emu = emu {
+
+            emu.suspend()
+
+            let defaults = EmulatorProxy.defaults!
+
+            defaults.set(.SRV_AUTORUN, 0, rshSeverAutorun)
+            defaults.set(.SRV_PORT, 0, rshSeverPort)
+            defaults.set(.SRV_AUTORUN, 1, rpcSeverAutorun)
+            defaults.set(.SRV_PORT, 1, rpcSeverPort)
+            defaults.set(.SRV_AUTORUN, 2, dapSeverAutorun)
+            defaults.set(.SRV_PORT, 2, dapSeverPort)
+            defaults.set(.SRV_AUTORUN, 3, promSeverAutorun)
+            defaults.set(.SRV_PORT, 3, promSeverPort)
+
+            defaults.save()
+
+            emu.resume()
+        }
+    }
+
+    func applyServerUserDefaults() {
+
+        debug(.defaults)
+
+        if let emu = emu {
+
+            emu.suspend()
+
+            let defaults = EmulatorProxy.defaults!
+
+            rshSeverAutorun = defaults.get(.SRV_AUTORUN, 0) != 0
+            rshSeverPort = defaults.get(.SRV_PORT, 0)
+            rpcSeverAutorun = defaults.get(.SRV_AUTORUN, 1) != 0
+            rpcSeverPort = defaults.get(.SRV_PORT, 1)
+            dapSeverAutorun = defaults.get(.SRV_AUTORUN, 2) != 0
+            dapSeverPort = defaults.get(.SRV_PORT, 2)
+            promSeverAutorun = defaults.get(.SRV_AUTORUN, 3) != 0
+            promSeverPort = defaults.get(.SRV_PORT, 3)
+
             emu.resume()
         }
     }
