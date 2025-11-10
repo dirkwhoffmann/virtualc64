@@ -21,10 +21,10 @@ RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
 {
     subComponents = std::vector<CoreComponent *> {
 
+        &rshServer,
         &rpcServer,
         &dapServer,
-        &gdbServer,
-        &rshServer
+        &promServer,
     };
 }
 
@@ -104,17 +104,17 @@ RemoteManager::serviceServerEvent()
     assert(c64.eventid[SLOT_SRV] == SRV_LAUNCH_DAEMON);
 
     // Run the launch daemon
+    if (rshServer.config.autoRun) {
+        rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
+    }
     if (rpcServer.config.autoRun) {
         rpcServer.shouldRun() ? rpcServer.start() : rpcServer.stop();
     }
     if (dapServer.config.autoRun) {
         dapServer.shouldRun() ? dapServer.start() : dapServer.stop();
     }
-    if (gdbServer.config.autoRun) {
-        gdbServer.shouldRun() ? gdbServer.start() : gdbServer.stop();
-    }
-    if (rshServer.config.autoRun) {
-        rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
+    if (promServer.config.autoRun) {
+        promServer.shouldRun() ? promServer.start() : promServer.stop();
     }
 
     // Schedule next event

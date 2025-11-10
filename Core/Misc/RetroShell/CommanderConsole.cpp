@@ -945,69 +945,7 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
-    cmd = registerComponent(remoteManager.rpcServer);
-
-    root.add({
-
-        .tokens = { cmd, "start" },
-        .chelp  = { "Starts the RPC server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.rpcServer.start();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "stop" },
-        .chelp  = { "Stops the RetroShell server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.rpcServer.stop();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "disconnect" },
-        .chelp  = { "Disconnects a client" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.rpcServer.disconnect();
-        }
-    });
-
-    cmd = registerComponent(remoteManager.dapServer, releaseBuild ? rs::hidden : 0);
-
-    root.add({
-
-        .tokens = { cmd, "start" },
-        .chelp  = { "Starts the DAP server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.dapServer.start();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "stop" },
-        .chelp  = { "Stops the DAP server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.dapServer.stop();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "disconnect" },
-        .chelp  = { "Disconnects a client" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.dapServer.disconnect();
-        }
-    });
+    // RSH Server
 
     cmd = registerComponent(remoteManager.rshServer);
 
@@ -1041,30 +979,27 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
+    // RPC Server
 
-    //
-    // DEPRECATED
-    //
-
-    cmd = registerComponent(remoteManager.gdbServer, releaseBuild ? rs::hidden : 0);
+    cmd = registerComponent(remoteManager.rpcServer);
 
     root.add({
 
         .tokens = { cmd, "start" },
-        .chelp  = { "Starts the GDB server" },
+        .chelp  = { "Starts the RPC server" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            remoteManager.gdbServer.start();
+            remoteManager.rpcServer.start();
         }
     });
 
     root.add({
 
         .tokens = { cmd, "stop" },
-        .chelp  = { "Stops the GDB server" },
+        .chelp  = { "Stops the RetroShell server" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            remoteManager.gdbServer.stop();
+            remoteManager.rpcServer.stop();
         }
     });
 
@@ -1074,7 +1009,75 @@ CommanderConsole::initCommands(RSCommand &root)
         .chelp  = { "Disconnects a client" },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            remoteManager.gdbServer.disconnect();
+            remoteManager.rpcServer.disconnect();
+        }
+    });
+
+    // DAP Server
+
+    cmd = registerComponent(remoteManager.dapServer, releaseBuild ? rs::hidden : 0);
+
+    root.add({
+
+        .tokens = { cmd, "start" },
+        .chelp  = { "Starts the DAP server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.dapServer.start();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "stop" },
+        .chelp  = { "Stops the DAP server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.dapServer.stop();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "disconnect" },
+        .chelp  = { "Disconnects a client" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.dapServer.disconnect();
+        }
+    });
+
+    // PROM Server
+
+    cmd = registerComponent(remoteManager.promServer, releaseBuild ? rs::hidden : 0);
+
+    root.add({
+
+        .tokens = { cmd, "start" },
+        .chelp  = { "Starts the Prometheus server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.promServer.start();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "stop" },
+        .chelp  = { "Stops the Prometheus server" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.promServer.stop();
+        }
+    });
+
+    root.add({
+
+        .tokens = { cmd, "disconnect" },
+        .chelp  = { "Disconnects a client" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            remoteManager.promServer.disconnect();
         }
     });
 }

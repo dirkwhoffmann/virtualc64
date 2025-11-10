@@ -10,8 +10,7 @@ RshServer.cpp
 DapServer.cpp
 DapAdapter.cpp
 RpcServer.cpp
-GdbServer.cpp
-GdbServerCmds.cpp
+PromServer.cpp
 Socket.cpp
 
 )
