@@ -45,9 +45,9 @@ class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo> {
 
     Options options = {
 
+        Opt::SRV_ENABLE,
         Opt::SRV_PORT,
         Opt::SRV_PROTOCOL,
-        Opt::SRV_AUTORUN,
         Opt::SRV_VERBOSE
     };
 
@@ -111,7 +111,7 @@ protected:
 
         << config.port
         << config.protocol
-        << config.autoRun
+        << config.enable
         << config.verbose;
 
     };
@@ -153,6 +153,7 @@ public:
 public:
 
     bool isOff() const { return state == SrvState::OFF; }
+    bool isSurveilling() const { return state == SrvState::SURVEILLING; }
     bool isStarting() const { return state == SrvState::STARTING; }
     bool isListening() const { return state == SrvState::LISTENING; }
     bool isConnected() const { return state == SrvState::CONNECTED; }
@@ -164,7 +165,7 @@ public:
     // Starting and stopping the server
     //
     
-public:
+private: // public:
 
     // Launch the remote server
     virtual void start() throws;
@@ -182,8 +183,8 @@ protected:
     
 private:
     
-    // Used by the launch daemon to determine if actions should be taken
-    virtual bool shouldRun() { return true; }
+    // Indicates if the server is ready to launch
+    virtual bool canRun() { return true; }
 
 
     //

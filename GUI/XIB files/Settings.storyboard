@@ -5975,7 +5975,7 @@
                                     <font key="font" metaFont="systemBold"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="connectAction:" target="CIO-tC-01H" id="sI5-yZ-jPy"/>
+                                    <action selector="enableAction:" target="CIO-tC-01H" id="sI5-yZ-jPy"/>
                                 </connections>
                             </button>
                             <button tag="2" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8G-38-sWe">
@@ -5986,7 +5986,7 @@
                                     <font key="font" metaFont="systemBold"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="driveConnectAction:" target="CIO-tC-01H" id="ZUD-TM-KNg"/>
+                                    <action selector="enableAction:" target="CIO-tC-01H" id="dgq-s0-EYl"/>
                                 </connections>
                             </button>
                             <button tag="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BRj-W2-nbE">
@@ -5997,7 +5997,7 @@
                                     <font key="font" metaFont="systemBold"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="connectAction:" target="CIO-tC-01H" id="20d-d4-qEg"/>
+                                    <action selector="enableAction:" target="CIO-tC-01H" id="20d-d4-qEg"/>
                                 </connections>
                             </button>
                             <button tag="3" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4cw-fe-Tb7">
@@ -6008,7 +6008,7 @@
                                     <font key="font" metaFont="systemBold"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="driveConnectAction:" target="CIO-tC-01H" id="dpq-iz-SGj"/>
+                                    <action selector="enableAction:" target="CIO-tC-01H" id="mMc-5X-Cax"/>
                                 </connections>
                             </button>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Gq-nL-X6d">
@@ -6084,7 +6084,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <action selector="portAction:" target="CIO-tC-01H" id="T1k-75-km7"/>
+                                    <action selector="portAction:" target="CIO-tC-01H" id="GhC-In-2Tg"/>
                                 </connections>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D8a-N9-i4T">
@@ -6128,7 +6128,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <action selector="autofireBulletsAction:" target="CIO-tC-01H" id="K72-om-LE8"/>
+                                    <action selector="portAction:" target="CIO-tC-01H" id="2IJ-TO-pQi"/>
                                 </connections>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NWd-I2-wCR">
@@ -6150,7 +6150,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <action selector="autofireBulletsAction:" target="CIO-tC-01H" id="g00-3E-b1H"/>
+                                    <action selector="portAction:" target="CIO-tC-01H" id="X7H-Ak-wK8"/>
                                 </connections>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8h-ga-vh8">
@@ -6216,16 +6216,20 @@
                         <viewLayoutGuide key="layoutMargins" id="Lqw-U1-SrB"/>
                     </view>
                     <connections>
-                        <outlet property="autofireBullets" destination="ZhW-jN-iF7" id="V8N-vV-2uf"/>
                         <outlet property="autofireBulletsText" destination="5Gq-nL-X6d" id="7Lt-0g-nb2"/>
-                        <outlet property="drive8Connect" destination="5pG-cv-zPI" id="4EU-am-8hc"/>
+                        <outlet property="dapEnable" destination="v8G-38-sWe" id="OM2-VN-bp6"/>
+                        <outlet property="dapPort" destination="A89-Vv-nP6" id="oTS-A4-Ndx"/>
+                        <outlet property="dapStatus" destination="ZWQ-R6-Y9f" id="ZxA-Ph-xrQ"/>
                         <outlet property="lockImage" destination="U9t-zh-qDV" id="xr1-3I-yKx"/>
                         <outlet property="lockInfo1" destination="DM2-zM-VOB" id="vsb-Jg-Kcb"/>
                         <outlet property="lockInfo2" destination="l3I-r9-yUU" id="QuU-22-EwY"/>
-                        <outlet property="rpcConnect" destination="BRj-W2-nbE" id="P62-JN-Nhu"/>
+                        <outlet property="promEnable" destination="4cw-fe-Tb7" id="4AX-2d-vvD"/>
+                        <outlet property="promPort" destination="lyx-eK-oH6" id="Fou-xj-aVs"/>
+                        <outlet property="promStatus" destination="uV9-cT-Qz7" id="wyZ-lM-9ax"/>
+                        <outlet property="rpcEnable" destination="BRj-W2-nbE" id="P62-JN-Nhu"/>
                         <outlet property="rpcPort" destination="YZg-E7-OUp" id="3hW-70-L1I"/>
                         <outlet property="rpcStatus" destination="5Os-s6-Vwg" id="cv3-hB-8mH"/>
-                        <outlet property="rshConnect" destination="5pG-cv-zPI" id="f4m-Az-fbU"/>
+                        <outlet property="rshEnable" destination="5pG-cv-zPI" id="f4m-Az-fbU"/>
                         <outlet property="rshPort" destination="ZhW-jN-iF7" id="ZEK-mV-bGL"/>
                         <outlet property="rshStatus" destination="tn3-jv-buQ" id="ADw-YB-bAq"/>
                     </connections>

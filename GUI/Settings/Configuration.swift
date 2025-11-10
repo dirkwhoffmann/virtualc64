@@ -510,33 +510,33 @@ class Configuration {
     // Servers
     //
 
-    var rshSeverAutorun: Bool {
-        get { return emu?.get(.SRV_AUTORUN, id: 0) != 0 }
-        set { emu?.set(.SRV_AUTORUN, id: 0, enable: newValue ) }
+    var rshSeverEnable: Bool {
+        get { return emu?.get(.SRV_ENABLE, id: 0) != 0 }
+        set { emu?.set(.SRV_ENABLE, id: 0, enable: newValue ) }
     }
     var rshSeverPort: Int {
         get { return emu?.get(.SRV_PORT, id: 0) ?? 0 }
         set { emu?.set(.SRV_PORT, id: 0, value: newValue ) }
     }
-    var rpcSeverAutorun: Bool {
-        get { return emu?.get(.SRV_AUTORUN, id: 1) != 0 }
-        set { emu?.set(.SRV_AUTORUN, id: 1, enable: newValue ) }
+    var rpcSeverEnable: Bool {
+        get { return emu?.get(.SRV_ENABLE, id: 1) != 0 }
+        set { emu?.set(.SRV_ENABLE, id: 1, enable: newValue ) }
     }
     var rpcSeverPort: Int {
         get { return emu?.get(.SRV_PORT, id: 1) ?? 0 }
         set { emu?.set(.SRV_PORT, id: 1, value: newValue ) }
     }
-    var dapSeverAutorun: Bool {
-        get { return emu?.get(.SRV_AUTORUN, id: 2) != 0 }
-        set { emu?.set(.SRV_AUTORUN, id: 2, enable: newValue ) }
+    var dapSeverEnable: Bool {
+        get { return emu?.get(.SRV_ENABLE, id: 2) != 0 }
+        set { emu?.set(.SRV_ENABLE, id: 2, enable: newValue ) }
     }
     var dapSeverPort: Int {
         get { return emu?.get(.SRV_PORT, id: 2) ?? 0 }
         set { emu?.set(.SRV_PORT, id: 2, value: newValue ) }
     }
-    var promSeverAutorun: Bool {
-        get { return emu?.get(.SRV_AUTORUN, id: 3) != 0 }
-        set { emu?.set(.SRV_AUTORUN, id: 3, enable: newValue ) }
+    var promSeverEnable: Bool {
+        get { return emu?.get(.SRV_ENABLE, id: 3) != 0 }
+        set { emu?.set(.SRV_ENABLE, id: 3, enable: newValue ) }
     }
     var promSeverPort: Int {
         get { return emu?.get(.SRV_PORT, id: 3) ?? 0 }

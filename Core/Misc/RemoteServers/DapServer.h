@@ -54,7 +54,7 @@ private:
 
 public:
 
-    bool shouldRun() override;
+    bool canRun() override;
     string doReceive() throws override;
     void doSend(const string &payload) throws override;
     void doProcess(const string &payload) throws override;

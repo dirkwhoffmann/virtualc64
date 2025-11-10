@@ -58,9 +58,9 @@ RemoteServer::getOption(Opt option) const
 {
     switch (option) {
             
+        case Opt::SRV_ENABLE:    return config.enable;
         case Opt::SRV_PORT:      return config.port;
         case Opt::SRV_PROTOCOL:  return (i64)config.protocol;
-        case Opt::SRV_AUTORUN:   return config.autoRun;
         case Opt::SRV_VERBOSE:   return config.verbose;
 
         default:
@@ -73,9 +73,9 @@ RemoteServer::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
+        case Opt::SRV_ENABLE:
         case Opt::SRV_PORT:
         case Opt::SRV_PROTOCOL:
-        case Opt::SRV_AUTORUN:
         case Opt::SRV_VERBOSE:
 
             return;
@@ -89,6 +89,11 @@ void
 RemoteServer::setOption(Opt option, i64 value)
 {
     switch (option) {
+
+        case Opt::SRV_ENABLE:
+
+            config.enable = (bool)value;
+            return;
 
         case Opt::SRV_PORT:
             
@@ -111,11 +116,6 @@ RemoteServer::setOption(Opt option, i64 value)
             
             config.protocol = (ServerProtocol)value;
             return;
-            
-        case Opt::SRV_AUTORUN:
-            
-            config.autoRun = (bool)value;
-            return;
 
         case Opt::SRV_VERBOSE:
             
@@ -136,7 +136,7 @@ RemoteServer::cacheInfo(RemoteServerInfo &result) const
 void
 RemoteServer::start()
 {
-    if (isOff()) {
+    if (isOff() || isSurveilling()) {
 
         debug(SRV_DEBUG, "Starting server...\n");
         switchState(SrvState::STARTING);

@@ -949,6 +949,7 @@ CommanderConsole::initCommands(RSCommand &root)
 
     cmd = registerComponent(remoteManager.rshServer);
 
+    /*
     root.add({
 
         .tokens = { cmd, "start" },
@@ -978,11 +979,13 @@ CommanderConsole::initCommands(RSCommand &root)
             remoteManager.rshServer.disconnect();
         }
     });
+    */
 
     // RPC Server
 
     cmd = registerComponent(remoteManager.rpcServer);
 
+    /*
     root.add({
 
         .tokens = { cmd, "start" },
@@ -1012,11 +1015,13 @@ CommanderConsole::initCommands(RSCommand &root)
             remoteManager.rpcServer.disconnect();
         }
     });
+    */
 
     // DAP Server
 
     cmd = registerComponent(remoteManager.dapServer, releaseBuild ? rs::hidden : 0);
 
+    /*
     root.add({
 
         .tokens = { cmd, "start" },
@@ -1046,11 +1051,13 @@ CommanderConsole::initCommands(RSCommand &root)
             remoteManager.dapServer.disconnect();
         }
     });
+    */
 
     // PROM Server
 
     cmd = registerComponent(remoteManager.promServer, releaseBuild ? rs::hidden : 0);
 
+    /*
     root.add({
 
         .tokens = { cmd, "start" },
@@ -1080,6 +1087,7 @@ CommanderConsole::initCommands(RSCommand &root)
             remoteManager.promServer.disconnect();
         }
     });
+    */
 }
 
 }

@@ -182,9 +182,9 @@ enum class Opt : long
     RS232_BAUD,             ///< Transmission rate
 
     // Remote servers
+    SRV_ENABLE,
     SRV_PORT,
     SRV_PROTOCOL,
-    SRV_AUTORUN,
     SRV_VERBOSE,
 
     // Regression tester
@@ -338,9 +338,9 @@ struct OptEnum : Reflection<OptEnum, Opt> {
             case Opt::RS232_DEVICE:          return "RS232.DEVICE";
             case Opt::RS232_BAUD:            return "RS232.BAUD";
 
+            case Opt::SRV_ENABLE:            return "SRV.ENABLE";
             case Opt::SRV_PORT:              return "SRV.PORT";
             case Opt::SRV_PROTOCOL:          return "SRV.PROTOCOL";
-            case Opt::SRV_AUTORUN:           return "SRV.AUTORUN";
             case Opt::SRV_VERBOSE:           return "SRV.VERBOSE";
 
             case Opt::DBG_DEBUGCART:         return "DBG.DEBUGCART";
@@ -489,9 +489,9 @@ struct OptEnum : Reflection<OptEnum, Opt> {
             case Opt::RS232_DEVICE:          return "Connected RS232 device";
             case Opt::RS232_BAUD:            return "Transmission rate (baud)";
 
+            case Opt::SRV_ENABLE:            return "Server enable status";
             case Opt::SRV_PORT:              return "Server port";
             case Opt::SRV_PROTOCOL:          return "Server protocol";
-            case Opt::SRV_AUTORUN:           return "Auto run";
             case Opt::SRV_VERBOSE:           return "Verbose mode";
 
             case Opt::DBG_DEBUGCART:         return "VICE debug cartridge";

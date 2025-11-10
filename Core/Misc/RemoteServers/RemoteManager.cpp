@@ -108,19 +108,40 @@ RemoteManager::serviceServerEvent()
 {
     assert(c64.eventid[SLOT_SRV] == SRV_LAUNCH_DAEMON);
 
-    // Run the launch daemon
+    auto launchDaemon = [&](RemoteServer &server, ServerConfig &config) {
+
+        if (config.enable) {
+            if (server.isOff()) server.switchState(SrvState::SURVEILLING);
+        } else {
+            if (!server.isOff()) rshServer.stop();
+        }
+
+        if (server.canRun()) {
+            if (server.isSurveilling()) server.start();
+        } else {
+            if (!server.isOff()) rshServer.stop();
+        }
+    };
+
+    launchDaemon(rshServer, rshServer.config);
+    launchDaemon(rpcServer, rpcServer.config);
+    launchDaemon(dapServer, dapServer.config);
+    launchDaemon(promServer, promServer.config);
+
+    /*
     if (rshServer.config.autoRun) {
-        rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
+        rshServer.canRun() ? rshServer.start() : rshServer.stop();
     }
     if (rpcServer.config.autoRun) {
-        rpcServer.shouldRun() ? rpcServer.start() : rpcServer.stop();
+        rpcServer.canRun() ? rpcServer.start() : rpcServer.stop();
     }
     if (dapServer.config.autoRun) {
-        dapServer.shouldRun() ? dapServer.start() : dapServer.stop();
+        dapServer.canRun() ? dapServer.start() : dapServer.stop();
     }
     if (promServer.config.autoRun) {
-        promServer.shouldRun() ? promServer.start() : promServer.stop();
+        promServer.canRun() ? promServer.start() : promServer.stop();
     }
+    */
 
     // Schedule next event
     c64.scheduleInc <SLOT_SRV> (C64::sec(0.5), SRV_LAUNCH_DAEMON);

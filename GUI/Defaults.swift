@@ -1417,7 +1417,7 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        remove(.SRV_AUTORUN, [0, 1, 2, 3])
+        remove(.SRV_ENABLE, [0, 1, 2, 3])
         remove(.SRV_PORT, [0, 1, 2, 3])
     }
 }
@@ -1435,13 +1435,13 @@ extension Configuration {
 
             let defaults = EmulatorProxy.defaults!
 
-            defaults.set(.SRV_AUTORUN, 0, rshSeverAutorun)
+            defaults.set(.SRV_ENABLE, 0, rshSeverEnable)
             defaults.set(.SRV_PORT, 0, rshSeverPort)
-            defaults.set(.SRV_AUTORUN, 1, rpcSeverAutorun)
+            defaults.set(.SRV_ENABLE, 1, rpcSeverEnable)
             defaults.set(.SRV_PORT, 1, rpcSeverPort)
-            defaults.set(.SRV_AUTORUN, 2, dapSeverAutorun)
+            defaults.set(.SRV_ENABLE, 2, dapSeverEnable)
             defaults.set(.SRV_PORT, 2, dapSeverPort)
-            defaults.set(.SRV_AUTORUN, 3, promSeverAutorun)
+            defaults.set(.SRV_ENABLE, 3, promSeverEnable)
             defaults.set(.SRV_PORT, 3, promSeverPort)
 
             defaults.save()
@@ -1460,13 +1460,13 @@ extension Configuration {
 
             let defaults = EmulatorProxy.defaults!
 
-            rshSeverAutorun = defaults.get(.SRV_AUTORUN, 0) != 0
+            rshSeverEnable = defaults.get(.SRV_ENABLE, 0) != 0
             rshSeverPort = defaults.get(.SRV_PORT, 0)
-            rpcSeverAutorun = defaults.get(.SRV_AUTORUN, 1) != 0
+            rpcSeverEnable = defaults.get(.SRV_ENABLE, 1) != 0
             rpcSeverPort = defaults.get(.SRV_PORT, 1)
-            dapSeverAutorun = defaults.get(.SRV_AUTORUN, 2) != 0
+            dapSeverEnable = defaults.get(.SRV_ENABLE, 2) != 0
             dapSeverPort = defaults.get(.SRV_PORT, 2)
-            promSeverAutorun = defaults.get(.SRV_AUTORUN, 3) != 0
+            promSeverEnable = defaults.get(.SRV_ENABLE, 3) != 0
             promSeverPort = defaults.get(.SRV_PORT, 3)
 
             emu.resume()
