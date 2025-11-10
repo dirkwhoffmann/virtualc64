@@ -30,43 +30,58 @@ class ServerSettingsViewController: SettingsViewController {
 
     override func refresh() {
 
-        func prettyPrint(state: SrvState) -> String {
+        func prettyPrint(state: SrvState) -> (String, NSColor) {
 
             switch state {
-            case .OFF:          return "Disconnected"
-            case .SURVEILLING:  return "Surveilling"
-            case .STARTING:     return "Starting"
-            case .LISTENING:    return "Listening"
-            case .CONNECTED:    return "Connected"
-            case .STOPPING:     return "Stopping"
-            case .INVALID:      return "Invalid"
-            default:            return "???"
+            case .OFF:          return ("Disconnected", .systemRed)
+            case .SURVEILLING:  return ("Surveilling",  .systemYellow)
+            case .STARTING:     return ("Starting",     .systemYellow)
+            case .LISTENING:    return ("Listening",    .systemYellow)
+            case .CONNECTED:    return ("Connected",    .systemGreen)
+            case .STOPPING:     return ("Stopping",     .systemYellow)
+            case .INVALID:      return ("Invalid",      .systemRed)
+            default:            return ("???",          .textColor)
             }
+        }
+
+        func update(_ component: NSTextField, state: SrvState) {
+
+            let format = prettyPrint(state: state)
+
+            component.stringValue = format.0
+            component.textColor = format.1
+            component.font = NSFont.boldSystemFont(ofSize: component.font?.pointSize ?? NSFont.systemFontSize)
+
+        }
+        func update(_ component: NSControl, enable: Bool) {
+            component.isEnabled = enable
         }
 
         super.refresh()
 
         guard let emu = emu, let config = config else { return }
 
-        func update(_ component: NSTextField, enable: Bool) {
-            component.textColor = enable ? .controlTextColor : .disabledControlTextColor
-            component.isEnabled = enable
-        }
-        func update(_ component: NSControl, enable: Bool) {
-            component.isEnabled = enable
-        }
-
         let serverInfo = emu.remoteManager.info
 
         // RSH server
         rshEnable.state = config.rshSeverEnable ? .on : .off
         rshPort.integerValue = Int(config.rshSeverPort)
-        rshStatus.stringValue = prettyPrint(state: serverInfo.rshInfo.state)
+        update(rshStatus, state: serverInfo.rshInfo.state)
 
         // RPC server
         rpcEnable.state = config.rpcSeverEnable ? .on : .off
         rpcPort.integerValue = Int(config.rpcSeverPort)
-        rpcStatus.stringValue = prettyPrint(state: serverInfo.rpcInfo.state)
+        update(rpcStatus, state: serverInfo.rpcInfo.state)
+
+        // DAP server
+        dapEnable.state = config.dapSeverEnable ? .on : .off
+        dapPort.integerValue = Int(config.dapSeverPort)
+        update(dapStatus, state: serverInfo.dapInfo.state)
+
+        // Prom server
+        promEnable.state = config.promSeverEnable ? .on : .off
+        promPort.integerValue = Int(config.promSeverPort)
+        update(promStatus, state: serverInfo.promInfo.state)
     }
 
     @IBAction func enableAction(_ sender: NSButton!) {

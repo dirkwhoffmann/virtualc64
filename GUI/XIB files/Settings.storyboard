@@ -6030,7 +6030,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tn3-jv-buQ">
-                                <rect key="frame" x="104" y="325" width="88" height="17"/>
+                                <rect key="frame" x="104" y="325" width="182" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Disconnected" id="jIb-3M-xmA">
                                     <font key="font" metaFont="system"/>
@@ -6048,7 +6048,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Os-s6-Vwg">
-                                <rect key="frame" x="395" y="324" width="88" height="17"/>
+                                <rect key="frame" x="395" y="324" width="181" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Disconnected" id="GcQ-rJ-0YW">
                                     <font key="font" metaFont="system"/>
@@ -6066,7 +6066,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWQ-R6-Y9f">
-                                <rect key="frame" x="104" y="141" width="88" height="17"/>
+                                <rect key="frame" x="104" y="141" width="182" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Disconnected" id="67e-jb-gsv">
                                     <font key="font" metaFont="system"/>
@@ -6163,7 +6163,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uV9-cT-Qz7">
-                                <rect key="frame" x="395" y="139" width="88" height="17"/>
+                                <rect key="frame" x="395" y="139" width="181" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Disconnected" id="DS5-Tj-kD7">
                                     <font key="font" metaFont="system"/>
