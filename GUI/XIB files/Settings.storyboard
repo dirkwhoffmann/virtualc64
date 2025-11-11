@@ -67,11 +67,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="220" height="413"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="dVA-9k-CoE">
-                                    <rect key="frame" x="1" y="1" width="218" height="411"/>
+                                    <rect key="frame" x="1" y="1" width="218" height="394"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="32" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="13" outlineTableColumn="EUQ-eO-eBG" id="Wg2-c5-D1r" customClass="SettingsOutlineView" customModule="VirtualC64" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="222" height="411"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="222" height="394"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -5740,14 +5740,14 @@
                                 <rect key="frame" x="324" y="20" width="296" height="169"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" drawsBackground="NO" id="vj1-oJ-DXM">
-                                    <rect key="frame" x="0.0" y="0.0" width="296" height="169"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="279" height="169"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Dl8-Ck-YhO">
-                                            <rect key="frame" x="0.0" y="0.0" width="296" height="169"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="279" height="169"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="296" height="169"/>
+                                            <size key="minSize" width="279" height="169"/>
                                             <size key="maxSize" width="296" height="10000000"/>
                                             <connections>
                                                 <outlet property="delegate" destination="9Hz-UT-SZl" id="xT3-T3-fDX"/>
@@ -5979,7 +5979,7 @@
                                 </connections>
                             </button>
                             <button tag="2" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8G-38-sWe">
-                                <rect key="frame" x="34" y="203" width="250" height="18"/>
+                                <rect key="frame" x="34" y="201" width="250" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="DAP Adapter" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="f2p-lM-X5o">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -6020,17 +6020,8 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XaI-nM-46B">
-                                <rect key="frame" x="53" y="326" width="47" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Status:" id="mjl-0q-bu3">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tn3-jv-buQ">
-                                <rect key="frame" x="104" y="325" width="182" height="17"/>
+                                <rect key="frame" x="168" y="356" width="134" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Disconnected" id="jIb-3M-xmA">
                                     <font key="font" metaFont="system"/>
@@ -6038,17 +6029,8 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gYx-4S-bg6">
-                                <rect key="frame" x="344" y="325" width="47" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Status:" id="qI4-m2-zLW">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Os-s6-Vwg">
-                                <rect key="frame" x="395" y="324" width="181" height="17"/>
+                                <rect key="frame" x="460" y="358" width="134" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Disconnected" id="GcQ-rJ-0YW">
                                     <font key="font" metaFont="system"/>
@@ -6056,17 +6038,8 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ssS-rF-pLG">
-                                <rect key="frame" x="53" y="141" width="47" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Status:" id="vJH-5h-zgX">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWQ-R6-Y9f">
-                                <rect key="frame" x="104" y="141" width="182" height="17"/>
+                                <rect key="frame" x="168" y="172" width="134" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Disconnected" id="67e-jb-gsv">
                                     <font key="font" metaFont="system"/>
@@ -6075,7 +6048,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZhW-jN-iF7" customClass="RangeField" customModule="VirtualC64" customModuleProvider="target">
-                                <rect key="frame" x="106" y="351" width="67" height="24"/>
+                                <rect key="frame" x="106" y="351" width="56" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7iL-6R-ZUQ">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="icm-Oi-AGM"/>
@@ -6097,7 +6070,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="YZg-E7-OUp" customClass="RangeField" customModule="VirtualC64" customModuleProvider="target">
-                                <rect key="frame" x="398" y="353" width="67" height="24"/>
+                                <rect key="frame" x="398" y="353" width="56" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="32c-o8-CON">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="uY4-4K-hll"/>
@@ -6119,7 +6092,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="lyx-eK-oH6" customClass="RangeField" customModule="VirtualC64" customModuleProvider="target">
-                                <rect key="frame" x="396" y="167" width="67" height="24"/>
+                                <rect key="frame" x="396" y="167" width="56" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="vAl-Sz-XQY">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="GxN-1L-Vun"/>
@@ -6132,7 +6105,7 @@
                                 </connections>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NWd-I2-wCR">
-                                <rect key="frame" x="66" y="171" width="34" height="17"/>
+                                <rect key="frame" x="66" y="172" width="34" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Port:" id="Puj-HL-cmt">
                                     <font key="font" metaFont="system"/>
@@ -6141,7 +6114,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="A89-Vv-nP6" customClass="RangeField" customModule="VirtualC64" customModuleProvider="target">
-                                <rect key="frame" x="106" y="167" width="67" height="24"/>
+                                <rect key="frame" x="106" y="168" width="56" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="14V-p8-tCa">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="Oq9-0s-27S"/>
@@ -6153,17 +6126,29 @@
                                     <action selector="portAction:" target="CIO-tC-01H" id="X7H-Ak-wK8"/>
                                 </connections>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W8h-ga-vh8">
-                                <rect key="frame" x="344" y="140" width="47" height="17"/>
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6vX-2b-thO">
+                                <rect key="frame" x="54" y="250" width="249" height="96"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Status:" id="A77-Wi-fEi">
+                                <textFieldCell key="cell" selectable="YES" id="dAv-OF-J1Z">
                                     <font key="font" metaFont="system"/>
+                                    <string key="title">Provides TCP access to RetroShell for interactive command execution. Connect easily using Telnet or Netcat to control and monitor the emulator remotely.
+</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tt4-mv-AOR">
+                                <rect key="frame" x="345" y="249" width="248" height="93"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" selectable="YES" id="I5K-vX-sOT">
+                                    <font key="font" metaFont="system"/>
+                                    <string key="title">Enables structured communication with RetroShell using RPC packages. Ideal for automation, scripting, or integrating external tools with the emulator’s internal APIs.</string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uV9-cT-Qz7">
-                                <rect key="frame" x="395" y="139" width="181" height="17"/>
+                                <rect key="frame" x="460" y="172" width="134" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Disconnected" id="DS5-Tj-kD7">
                                     <font key="font" metaFont="system"/>
@@ -6171,42 +6156,22 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6vX-2b-thO">
-                                <rect key="frame" x="53" y="224" width="249" height="93"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" selectable="YES" id="dAv-OF-J1Z">
-                                    <font key="font" metaFont="system"/>
-                                    <string key="title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </string>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O5S-1R-2T8">
-                                <rect key="frame" x="53" y="36" width="249" height="93"/>
+                                <rect key="frame" x="54" y="66" width="249" height="93"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" selectable="YES" id="8g8-l1-CmQ">
                                     <font key="font" metaFont="system"/>
-                                    <string key="title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </string>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tt4-mv-AOR">
-                                <rect key="frame" x="344" y="223" width="248" height="93"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" selectable="YES" id="I5K-vX-sOT">
-                                    <font key="font" metaFont="system"/>
-                                    <string key="title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </string>
+                                    <string key="title">Offers a Debug Adapter Protocol interface for connecting external debug clients, enabling source-level debugging and runtime inspection of the emulated system.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H2j-nz-XwC">
-                                <rect key="frame" x="343" y="36" width="249" height="93"/>
+                                <rect key="frame" x="344" y="66" width="249" height="93"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" selectable="YES" id="33W-50-hVY">
                                     <font key="font" metaFont="system"/>
-                                    <string key="title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. </string>
+                                    <string key="title">Exposes real-time emulation metrics for Prometheus-compatible clients, allowing performance monitoring, visualization, and analysis through Grafana or similar tools.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

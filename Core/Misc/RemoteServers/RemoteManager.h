@@ -34,6 +34,9 @@ class RemoteManager : public SubComponent, public Inspectable<RemoteManagerInfo>
 
     };
 
+    // Frame counter
+    usize frame = 0;
+
 public:
     
     // The remote servers
@@ -114,11 +117,13 @@ public:
 
 
     //
-    // Servicing events
+    // Running the launch daemon
     //
     
 public:
-    
+
+    void update();
+
     void serviceServerEvent();
 };
 

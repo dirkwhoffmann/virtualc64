@@ -152,19 +152,18 @@ RemoteServer::start()
 void
 RemoteServer::stop()
 {
-    if (!isOff()) {
+    if (isOff() || isStopping()) return;
 
-        debug(SRV_DEBUG, "Stopping server...\n");
-        switchState(SrvState::STOPPING);
-        
-        // Interrupt the server thread
-        disconnect();
-        
-        // Wait until the server thread has terminated
-        if (serverThread.joinable()) serverThread.join();
-        
-        switchState(SrvState::OFF);
-    }
+    debug(SRV_DEBUG, "Stopping server...\n");
+    switchState(SrvState::STOPPING);
+
+    // Interrupt the server thread
+    disconnect();
+
+    // Wait until the server thread has terminated
+    if (serverThread.joinable()) serverThread.join();
+
+    switchState(SrvState::OFF);
 }
 
 void
