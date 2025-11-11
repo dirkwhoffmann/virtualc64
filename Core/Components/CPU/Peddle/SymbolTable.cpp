@@ -38,7 +38,7 @@ inline void parseKeyValueLine(string_view line, auto &&handler) {
         }
 
         if (comma == string_view::npos) break;
-        start = comma + 1;
+        start = usize(comma) + 1;
     }
 }
 

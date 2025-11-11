@@ -197,6 +197,7 @@
 		506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* MyFormatter.swift */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		506D57B52EC23E7400E21501 /* ServerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D57B42EC23E7400E21501 /* ServerSettings.swift */; };
+		506D57B72EC27E6200E21501 /* RangeField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D57B62EC27E5E00E21501 /* RangeField.swift */; };
 		506E283C2EB338FA003FF0D3 /* DapServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28382EB3346C003FF0D3 /* DapServer.cpp */; };
 		506E283D2EB338FA003FF0D3 /* DapServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28382EB3346C003FF0D3 /* DapServer.cpp */; };
 		506E28452EB746C7003FF0D3 /* DapAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28442EB746C6003FF0D3 /* DapAdapter.cpp */; };
@@ -901,6 +902,7 @@
 		506D4D0C20B331A00093C5C6 /* MyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFormatter.swift; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		506D57B42EC23E7400E21501 /* ServerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerSettings.swift; sourceTree = "<group>"; };
+		506D57B62EC27E5E00E21501 /* RangeField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeField.swift; sourceTree = "<group>"; };
 		506E28372EB33464003FF0D3 /* DapServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapServer.h; sourceTree = "<group>"; };
 		506E28382EB3346C003FF0D3 /* DapServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DapServer.cpp; sourceTree = "<group>"; };
 		506E28422EB647BB003FF0D3 /* DapServerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapServerTypes.h; sourceTree = "<group>"; };
@@ -2235,6 +2237,7 @@
 		50B114B72E8FB0EE00EC854D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				506D57B62EC27E5E00E21501 /* RangeField.swift */,
 				50B114BA2E8FB14400EC854D /* PageDotsIndicator.swift */,
 				50B114B82E8FB12E00EC854D /* LiveTextField.swift */,
 				50B114B52E8FB0C200EC854D /* OnboardingButton.swift */,
@@ -2721,6 +2724,7 @@
 				5007E1E826A70170000E7344 /* ParallelCable.cpp in Sources */,
 				505F455B2E96957200418105 /* SettingsViewController.swift in Sources */,
 				50A22A252618723200C9FB1E /* Canvas.swift in Sources */,
+				506D57B72EC27E6200E21501 /* RangeField.swift in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
 				5055D5B42615886E005D3DA6 /* Error.cpp in Sources */,
 				5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */,

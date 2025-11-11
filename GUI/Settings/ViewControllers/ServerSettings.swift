@@ -12,20 +12,21 @@ class ServerSettingsViewController: SettingsViewController {
     // Drive
     @IBOutlet weak var rshEnable: NSButton!
     @IBOutlet weak var rshStatus: NSTextField!
-    @IBOutlet weak var rshPort: NSTextField!
+    @IBOutlet weak var rshPort: RangeField!
     @IBOutlet weak var rpcEnable: NSButton!
     @IBOutlet weak var rpcStatus: NSTextField!
-    @IBOutlet weak var rpcPort: NSTextField!
+    @IBOutlet weak var rpcPort: RangeField!
     @IBOutlet weak var dapEnable: NSButton!
     @IBOutlet weak var dapStatus: NSTextField!
-    @IBOutlet weak var dapPort: NSTextField!
+    @IBOutlet weak var dapPort: RangeField!
     @IBOutlet weak var promEnable: NSButton!
     @IBOutlet weak var promStatus: NSTextField!
-    @IBOutlet weak var promPort: NSTextField!
+    @IBOutlet weak var promPort: RangeField!
 
     override func viewDidLoad() {
 
         log(.lifetime)
+        [rshPort, rpcPort, dapPort, promPort].forEach { $0.setRange(0...65535) }
     }
 
     override func refresh() {
@@ -96,6 +97,8 @@ class ServerSettingsViewController: SettingsViewController {
     }
 
     @IBAction func portAction(_ sender: NSTextField!) {
+
+        print("portAction \(sender.integerValue)")
 
         switch sender.tag {
         case 0: config?.rshSeverPort = sender.integerValue
