@@ -35,7 +35,7 @@ class ServerSettingsViewController: SettingsViewController {
 
             switch state {
             case .OFF:          return ("Disconnected", .systemRed)
-            case .SURVEILLING:  return ("Surveilling",  .systemYellow)
+            case .WAITING:      return ("Waiting",      .systemYellow)
             case .STARTING:     return ("Starting",     .systemYellow)
             case .LISTENING:    return ("Listening",    .systemYellow)
             case .CONNECTED:    return ("Connected",    .systemGreen)

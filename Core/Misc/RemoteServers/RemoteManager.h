@@ -21,7 +21,7 @@
 
 namespace vc64 {
 
-class RemoteManager : public SubComponent, public Inspectable<RemoteManagerInfo> {
+class RemoteManager final : public SubComponent, public Inspectable<RemoteManagerInfo> {
 
     Descriptions descriptions = {{
 

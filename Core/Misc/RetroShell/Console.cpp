@@ -244,23 +244,10 @@ Console::lastLineIsEmpty()
     return storage.lastLineIsEmpty();
 }
 
-/*
-void
-Console::printHelp(isize tab)
-{
-    *this << vspace{1};
-    *this << "RetroShell " << description() << " " << C64::version() << "\n\n";
-    *this << string(tab + 4, ' ') << "Type 'help' or press 'Tab' twice for help.\n";
-    *this << string(tab + 4, ' ') << "Press 'Shift+Tab' to switch consoles.";
-    *this << vspace{1};
-}
-*/
-
 void
 Console::press(RSKey key, bool shift)
 {
     assert_enum(RSKey, key);
-    // assert(ipos >= 0 && ipos < historyLength());
     assert(cursor >= 0 && cursor <= inputLength());
 
     switch(key) {

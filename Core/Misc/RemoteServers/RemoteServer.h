@@ -109,9 +109,9 @@ protected:
 
         worker
 
+        << config.enable
         << config.port
         << config.protocol
-        << config.enable
         << config.verbose;
 
     };
@@ -153,7 +153,7 @@ public:
 public:
 
     bool isOff() const { return state == SrvState::OFF; }
-    bool isSurveilling() const { return state == SrvState::SURVEILLING; }
+    bool isWaiting() const { return state == SrvState::WAITING; }
     bool isStarting() const { return state == SrvState::STARTING; }
     bool isListening() const { return state == SrvState::LISTENING; }
     bool isConnected() const { return state == SrvState::CONNECTED; }

@@ -136,17 +136,16 @@ RemoteServer::cacheInfo(RemoteServerInfo &result) const
 void
 RemoteServer::start()
 {
-    if (isOff() || isSurveilling()) {
+    if (!(isOff() || isWaiting())) return;
 
-        debug(SRV_DEBUG, "Starting server...\n");
-        switchState(SrvState::STARTING);
-        
-        // Make sure we continue with a terminated server thread
-        if (serverThread.joinable()) serverThread.join();
-        
-        // Spawn a new thread
-        serverThread = std::thread(&RemoteServer::main, this);
-    }
+    debug(SRV_DEBUG, "Starting server...\n");
+    switchState(SrvState::STARTING);
+
+    // Make sure we continue with a terminated server thread
+    if (serverThread.joinable()) serverThread.join();
+
+    // Spawn a new thread
+    serverThread = std::thread(&RemoteServer::main, this);
 }
 
 void

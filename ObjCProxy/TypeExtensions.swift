@@ -25,6 +25,7 @@ typealias FSUsage = vc64.FSUsage
 typealias GamePadAction = vc64.GamePadAction
 typealias Message = vc64.Message
 typealias Opt = vc64.Opt
+typealias RemoteServerInfo = vc64.RemoteServerInfo
 typealias RomType = vc64.RomType
 typealias SrvState = vc64.SrvState
 typealias TAPVersion = vc64.TAPVersion

@@ -239,20 +239,23 @@ extension RemoteManagerProxy {
 
     var icon: NSImage? {
 
-        let info = info
+        var numActive = 0
+        var numConnected = 0
 
-        if info.numConnected > 0 {
-            return NSImage(named: "srvConnectTemplate")!
+        func count(_ info: RemoteServerInfo) {
+
+            if info.state != .OFF { numActive += 1 }
+            if info.state == .CONNECTED { numConnected += 1 }
         }
-        if info.numListening > 0 {
-            return NSImage(named: "srvListenTemplate")!
-        }
-        if info.numLaunching > 0 {
-            return NSImage(named: "srvLaunchTemplate")!
-        }
-        if info.numErroneous > 0 {
-            return NSImage(named: "srvErrorTemplate")!
-        }
+
+        let info = info
+        count(info.rshInfo)
+        count(info.rpcInfo)
+        count(info.dapInfo)
+        count(info.promInfo)
+
+        if numConnected > 0 { return SFSymbol.get(.serverConnected) }
+        if numActive > 0 { return SFSymbol.get(.serverListening) }
 
         return nil
     }

@@ -111,13 +111,13 @@ RemoteManager::update()
     auto launchDaemon = [&](RemoteServer &server, ServerConfig &config) {
 
         if (config.enable) {
-            if (server.isOff()) server.switchState(SrvState::SURVEILLING);
+            if (server.isOff()) server.switchState(SrvState::WAITING);
         } else {
             if (!server.isOff()) server.stop();
         }
 
         if (server.canRun()) {
-            if (server.isSurveilling()) server.start();
+            if (server.isWaiting()) server.start();
         } else {
             if (!server.isOff()) server.stop();
         }
@@ -132,7 +132,8 @@ RemoteManager::update()
 void
 RemoteManager::serviceServerEvent()
 {
-    // The server event slot is no longer used. Can be removed eventually...
+    // The server event slot is no longer used, as the launch demon is
+    // now run in update(). It is safe to remove the SRV_SLOT.
 }
 
 }
