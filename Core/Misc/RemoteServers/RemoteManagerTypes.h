@@ -65,11 +65,6 @@ struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
 
 typedef struct
 {
-    isize numLaunching;
-    isize numListening;
-    isize numConnected;
-    isize numErroneous;
-
     RemoteServerInfo rshInfo;
     RemoteServerInfo rpcInfo;
     RemoteServerInfo dapInfo;

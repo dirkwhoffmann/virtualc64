@@ -1398,7 +1398,7 @@ extension Keys {
         static let rpcConnect       = "Server.Rpc.Connect"
         static let rpcPort          = "Server.Rpc.Port"
         static let dapConnect       = "Server.Dap.Connect"
-        static let dapPort          = "Server.Rsh.Port"
+        static let dapPort          = "Server.Dap.Port"
         static let promConnect      = "Server.Prom.Connect"
         static let promPort         = "Server.Prom.Port"
     }
@@ -1435,14 +1435,14 @@ extension Configuration {
 
             let defaults = EmulatorProxy.defaults!
 
-            defaults.set(.SRV_ENABLE, 0, rshSeverEnable)
-            defaults.set(.SRV_PORT, 0, rshSeverPort)
-            defaults.set(.SRV_ENABLE, 1, rpcSeverEnable)
-            defaults.set(.SRV_PORT, 1, rpcSeverPort)
-            defaults.set(.SRV_ENABLE, 2, dapSeverEnable)
-            defaults.set(.SRV_PORT, 2, dapSeverPort)
-            defaults.set(.SRV_ENABLE, 3, promSeverEnable)
-            defaults.set(.SRV_PORT, 3, promSeverPort)
+            defaults.set(.SRV_ENABLE, 0, rshServerEnable)
+            defaults.set(.SRV_PORT, 0, rshServerPort)
+            defaults.set(.SRV_ENABLE, 1, rpcServerEnable)
+            defaults.set(.SRV_PORT, 1, rpcServerPort)
+            defaults.set(.SRV_ENABLE, 2, dapServerEnable)
+            defaults.set(.SRV_PORT, 2, dapServerPort)
+            defaults.set(.SRV_ENABLE, 3, promServerEnable)
+            defaults.set(.SRV_PORT, 3, promServerPort)
 
             defaults.save()
 
@@ -1460,14 +1460,14 @@ extension Configuration {
 
             let defaults = EmulatorProxy.defaults!
 
-            rshSeverEnable = defaults.get(.SRV_ENABLE, 0) != 0
-            rshSeverPort = defaults.get(.SRV_PORT, 0)
-            rpcSeverEnable = defaults.get(.SRV_ENABLE, 1) != 0
-            rpcSeverPort = defaults.get(.SRV_PORT, 1)
-            dapSeverEnable = defaults.get(.SRV_ENABLE, 2) != 0
-            dapSeverPort = defaults.get(.SRV_PORT, 2)
-            promSeverEnable = defaults.get(.SRV_ENABLE, 3) != 0
-            promSeverPort = defaults.get(.SRV_PORT, 3)
+            rshServerEnable = defaults.get(.SRV_ENABLE, 0) != 0
+            rshServerPort = defaults.get(.SRV_PORT, 0)
+            rpcServerEnable = defaults.get(.SRV_ENABLE, 1) != 0
+            rpcServerPort = defaults.get(.SRV_PORT, 1)
+            dapServerEnable = defaults.get(.SRV_ENABLE, 2) != 0
+            dapServerPort = defaults.get(.SRV_PORT, 2)
+            promServerEnable = defaults.get(.SRV_ENABLE, 3) != 0
+            promServerPort = defaults.get(.SRV_PORT, 3)
 
             emu.resume()
         }

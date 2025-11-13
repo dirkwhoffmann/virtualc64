@@ -59,11 +59,6 @@ RemoteManager::cacheInfo(RemoteManagerInfo &result) const
 {
     {   SYNCHRONIZED
 
-        info.numLaunching = numLaunching();
-        info.numListening = numListening();
-        info.numConnected = numConnected();
-        info.numErroneous = numErroneous();
-
         info.rshInfo = rshServer.getInfo();
         info.rpcInfo = rpcServer.getInfo();
         info.dapInfo = dapServer.getInfo();
@@ -119,7 +114,7 @@ RemoteManager::update()
         if (server.canRun()) {
             if (server.isWaiting()) server.start();
         } else {
-            if (!server.isOff()) server.stop();
+            if (!server.isOff() && !server.isWaiting()) server.stop();
         }
     };
 

@@ -492,14 +492,16 @@ CIA::executeOneCycle()
     
     // Write back local copy
     this->delay = delay;
-    
+
     // Sleep when threshold is reached
     if (tiredness > 8 && config.idleSleep) {
+
         sleep();
-        scheduleWakeUp();
-    } else {
-        scheduleNextExecution();
+        if (sleeping) { scheduleWakeUp(); return; }
     }
+
+    // Schedule the next event
+    scheduleNextExecution();
 }
 
 void

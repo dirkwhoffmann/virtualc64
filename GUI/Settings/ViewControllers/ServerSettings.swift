@@ -65,33 +65,33 @@ class ServerSettingsViewController: SettingsViewController {
         let serverInfo = emu.remoteManager.info
 
         // RSH server
-        rshEnable.state = config.rshSeverEnable ? .on : .off
-        rshPort.integerValue = Int(config.rshSeverPort)
+        rshEnable.state = config.rshServerEnable ? .on : .off
+        rshPort.integerValue = Int(config.rshServerPort)
         update(rshStatus, state: serverInfo.rshInfo.state)
 
         // RPC server
-        rpcEnable.state = config.rpcSeverEnable ? .on : .off
-        rpcPort.integerValue = Int(config.rpcSeverPort)
+        rpcEnable.state = config.rpcServerEnable ? .on : .off
+        rpcPort.integerValue = Int(config.rpcServerPort)
         update(rpcStatus, state: serverInfo.rpcInfo.state)
 
         // DAP server
-        dapEnable.state = config.dapSeverEnable ? .on : .off
-        dapPort.integerValue = Int(config.dapSeverPort)
+        dapEnable.state = config.dapServerEnable ? .on : .off
+        dapPort.integerValue = Int(config.dapServerPort)
         update(dapStatus, state: serverInfo.dapInfo.state)
 
-        // Prom server
-        promEnable.state = config.promSeverEnable ? .on : .off
-        promPort.integerValue = Int(config.promSeverPort)
+        // PROM server
+        promEnable.state = config.promServerEnable ? .on : .off
+        promPort.integerValue = Int(config.promServerPort)
         update(promStatus, state: serverInfo.promInfo.state)
     }
 
     @IBAction func enableAction(_ sender: NSButton!) {
 
         switch sender.tag {
-        case 0: config?.rshSeverEnable = sender.state == .on
-        case 1: config?.rpcSeverEnable = sender.state == .on
-        case 2: config?.dapSeverEnable = sender.state == .on
-        case 3: config?.promSeverEnable = sender.state == .on
+        case 0: config?.rshServerEnable = sender.state == .on
+        case 1: config?.rpcServerEnable = sender.state == .on
+        case 2: config?.dapServerEnable = sender.state == .on
+        case 3: config?.promServerEnable = sender.state == .on
         default: fatalError()
         }
     }
@@ -101,10 +101,10 @@ class ServerSettingsViewController: SettingsViewController {
         print("portAction \(sender.integerValue)")
 
         switch sender.tag {
-        case 0: config?.rshSeverPort = sender.integerValue
-        case 1: config?.rpcSeverPort = sender.integerValue
-        case 2: config?.dapSeverPort = sender.integerValue
-        case 3: config?.promSeverPort = sender.integerValue
+        case 0: config?.rshServerPort = sender.integerValue
+        case 1: config?.rpcServerPort = sender.integerValue
+        case 2: config?.dapServerPort = sender.integerValue
+        case 3: config?.promServerPort = sender.integerValue
         default: fatalError()
         }
     }

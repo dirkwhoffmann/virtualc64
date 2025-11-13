@@ -67,11 +67,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="220" height="413"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="dVA-9k-CoE">
-                                    <rect key="frame" x="1" y="1" width="218" height="394"/>
+                                    <rect key="frame" x="1" y="1" width="218" height="411"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="32" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="13" outlineTableColumn="EUQ-eO-eBG" id="Wg2-c5-D1r" customClass="SettingsOutlineView" customModule="VirtualC64" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="222" height="394"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="222" height="411"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -5740,14 +5740,14 @@
                                 <rect key="frame" x="324" y="20" width="296" height="169"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" drawsBackground="NO" id="vj1-oJ-DXM">
-                                    <rect key="frame" x="0.0" y="0.0" width="279" height="169"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="296" height="169"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView wantsLayer="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Dl8-Ck-YhO">
-                                            <rect key="frame" x="0.0" y="0.0" width="279" height="169"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="296" height="169"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="279" height="169"/>
+                                            <size key="minSize" width="296" height="169"/>
                                             <size key="maxSize" width="296" height="10000000"/>
                                             <connections>
                                                 <outlet property="delegate" destination="9Hz-UT-SZl" id="xT3-T3-fDX"/>
@@ -5992,7 +5992,7 @@
                             <button tag="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BRj-W2-nbE">
                                 <rect key="frame" x="324" y="390" width="250" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="RPC Sever" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="KJM-Z7-iUr">
+                                <buttonCell key="cell" type="check" title="RPC Server" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="KJM-Z7-iUr">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="systemBold"/>
                                 </buttonCell>
