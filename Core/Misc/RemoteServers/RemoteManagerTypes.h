@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Reflection.h"
+#include "RemoteServerTypes.h"
 
 namespace vc64 {
 
@@ -23,22 +24,24 @@ namespace vc64 {
 enum class ServerType : long
 {
     RSH,
+    RPC,
     DAP,
-    GDB
+    PROM
 };
 
 struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(ServerType::GDB);
+    static constexpr long maxVal = long(ServerType::PROM);
 
     static const char *_key(ServerType value)
     {
         switch (value) {
                 
             case ServerType::RSH:    return "RSH";
+            case ServerType::RPC:    return "RPC";
             case ServerType::DAP:    return "DAP";
-            case ServerType::GDB:    return "GDB";
+            case ServerType::PROM:   return "PROM";
         }
         return "???";
     }
@@ -47,8 +50,9 @@ struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
         switch (value) {
                 
             case ServerType::RSH:    return "Remote shell server";
-            case ServerType::DAP:    return "Debug Adapter";
-            case ServerType::GDB:    return "Debug server";
+            case ServerType::RPC:    return "JSON RPC server";
+            case ServerType::DAP:    return "Debug adapter";
+            case ServerType::PROM:   return "Prometheus server";
         }
         return "???";
     }
@@ -61,10 +65,10 @@ struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
 
 typedef struct
 {
-    isize numLaunching;
-    isize numListening;
-    isize numConnected;
-    isize numErroneous;
+    RemoteServerInfo rshInfo;
+    RemoteServerInfo rpcInfo;
+    RemoteServerInfo dapInfo;
+    RemoteServerInfo promInfo;
 }
 RemoteManagerInfo;
 

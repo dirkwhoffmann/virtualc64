@@ -6,5 +6,6 @@ Peddle.cpp
 PeddleDebugger.cpp
 PeddleDisassembler.cpp
 StrWriter.cpp
+SymbolTable.cpp
 
 )

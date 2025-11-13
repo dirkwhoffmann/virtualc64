@@ -83,6 +83,11 @@ Disassembler::disass(char *dst, const char *fmt, const RecordedInstruction &inst
 
         switch (c) {
 
+            case 'l': // Label
+
+                dst += disassL(instr.pc, dst, tab);
+                break;
+
             case 'p': // Program counter (instruction address)
 
                 dst += disass16(instr.pc, dst, tab);
@@ -186,7 +191,7 @@ Disassembler::disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const
 isize
 Disassembler::disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const
 {
-    StrWriter writer(dst, instrStyle);
+    StrWriter writer(dst, instrStyle, cpu.symbolTable);
 
     // Write mnemonic
     writer << Ins { byte1 };
@@ -230,6 +235,24 @@ Disassembler::disassF(u8 flags, char *dst, isize tab) const
     dst[7] = (flags & C_FLAG) ? 'C' : 'c';
 
     return 8;
+}
+
+isize
+Disassembler::disassL(u16 addr, char *dst, isize tab) const
+{
+    StrWriter writer(dst, instrStyle);
+
+    if (auto label = cpu.symbolTable.symbols.seek(addr); label) {
+
+        isize len = (isize)label->name.length();
+        while (len++ < tab - 1) writer << ' ';
+        writer << label->name << ":";
+
+    } else {
+
+        writer.fill(tab);
+    }
+    return writer.length();
 }
 
 isize
@@ -372,13 +395,33 @@ Disassembler::disassembleRange(std::ostream &os, u16 addr, isize count) const
 void
 Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max) const
 {
+    char str[256];
+    u16 addr = range.first;
+    // auto pc = cpu.getPC0();
+
+    for (isize i = 0; i < max && addr <= range.second; i++) {
+
+        auto numBytes = disass(str, "%14l %p  %11b %i", addr);
+
+        os << std::setfill(' ');
+        // os << (addr == pc ? "->" : "  ");
+        os << str;
+        os << std::endl;
+
+        U16_INC(addr, numBytes);
+    }
+}
+
+/*
+void
+Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max) const
+{
     char data[16];
     char instr[16];
     char address[16];
 
     u16 addr = range.first;
     auto pc = cpu.getPC0();
-
 
     for (isize i = 0; i < max && addr <= range.second; i++) {
 
@@ -390,17 +433,7 @@ Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isiz
 
         os << (addr == pc ? "->" : "  ");
 
-        /*
-         if (breakpoints.isDisabledAt(addr)) {
-         os << "b";
-         } else if (breakpoints.isSetAt(addr)) {
-         os << "B";
-         } else {
-         os << " ";
-         }
-         */
         os << " ";
-
         os << std::right << std::setw(4) << address;
         os << "   ";
         os << std::left << std::setw(9) << data;
@@ -411,5 +444,6 @@ Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isiz
         U16_INC(addr, numBytes);
     }
 }
+*/
 
 }

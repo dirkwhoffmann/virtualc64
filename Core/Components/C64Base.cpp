@@ -145,7 +145,9 @@ C64::_dump(Category category, std::ostream &os) const
     if (category == Category::Current) {
 
         os << std::setfill('0') << std::uppercase << std::hex << std::left;
+        os << string(15, ' ');
         os << " PC  SR AC XR YR SP  NV-BDIZC" << std::endl;
+        os << string(15, ' ');
         os << std::setw(4) << isize(cpu.reg.pc0) << " ";
         os << std::setw(2) << isize(cpu.getP()) << " ";
         os << std::setw(2) << isize(cpu.reg.a) << " ";
@@ -172,7 +174,6 @@ C64::_dump(Category category, std::ostream &os) const
         dump(Category::Current, os);
         os << "\n";
         cpu.disassembler.disassembleRange(os, cpu.getPC0(), 8);
-        os << "\n";
     }
 }
 

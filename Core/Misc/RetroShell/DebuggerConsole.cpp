@@ -20,15 +20,15 @@ void
 DebuggerConsole::_pause()
 {
     if (retroShell.inDebugShell()) {
-        
+
         *this << '\n';
-    exec("state");
-    *this << getPrompt();
+        exec(InputLine {.input = "state"});
+        *this << prompt();
     }
 }
 
 string
-DebuggerConsole::getPrompt()
+DebuggerConsole::prompt()
 {
     std::stringstream ss;
     
@@ -44,50 +44,43 @@ DebuggerConsole::getPrompt()
 }
 
 void
-DebuggerConsole::welcome()
+DebuggerConsole::didActivate()
 {
-    Console::welcome();
+    emulator.trackOn(1);
 }
 
 void
-DebuggerConsole::summary()
+DebuggerConsole::didDeactivate()
 {
-    std::stringstream ss;
-
-    // ss << "RetroShell Debugger" << std::endl << std::endl;
-    c64.dump(Category::Current, ss);
-
-    *this << vspace{1};
-    string line;
-    while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
-    // *this << ss;
-    *this << vspace{1};
-}
-
-void
-DebuggerConsole::printHelp(isize tab)
-{
-    Console::printHelp(tab);
-}
-
-void
-DebuggerConsole::pressReturn(bool shift)
-{
-    if (emulator.isPaused() && !shift && input.empty()) {
-        
-        emulator.stepInto();
-        
-    } else {
-        
-        Console::pressReturn(shift);
-    }
+    emulator.trackOff(1);
 }
 
 void
 DebuggerConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
-    
+
+    //
+    // Empty command
+    //
+
+    root.add({
+
+        .tokens = { "return" },
+        .chelp  = { "Print status information" },
+        .flags  = rs::hidden,
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            if (emulator.isPaused()) {
+                emulator.stepInto();
+            } else {
+                os << std::endl;
+                c64.dump(Category::Current, os);
+            }
+        }
+    });
+
+
     //
     // Program execution
     //
@@ -289,9 +282,7 @@ DebuggerConsole::initCommands(RSCommand &root)
         .args   = { { .name = { "address", "Memory address" }, .flags = rs::opt } },
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            std::stringstream ss;
-            cpu.disassembler.disassembleRange(ss, parseAddr(args, "address", cpu.getPC0()), 16);
-            retroShell << '\n' << ss << '\n';
+            cpu.disassembler.disassembleRange(os, parseAddr(args, "address", cpu.getPC0()), 16);
         }
     });
 
@@ -304,9 +295,7 @@ DebuggerConsole::initCommands(RSCommand &root)
 
             if (args.contains("address")) { current = parseAddr(args, "address"); }
 
-            std::stringstream ss;
-            current += (u16)mem.debugger.ascDump(ss, current, 16);
-            retroShell << '\n' << ss << '\n';
+            current += (u16)mem.debugger.ascDump(os, current, 16);
         }
     });
 
@@ -319,9 +308,7 @@ DebuggerConsole::initCommands(RSCommand &root)
 
             if (args.contains("address")) { current = parseAddr(args, "address"); }
 
-            std::stringstream ss;
-            current += (u16)mem.debugger.memDump(ss, current, 16);
-            retroShell << '\n' << ss << '\n';
+            current += (u16)mem.debugger.memDump(os, current, 16);
         }
     });
 
@@ -390,16 +377,12 @@ DebuggerConsole::initCommands(RSCommand &root)
 
                 if (found >= 0) {
 
-                    std::stringstream ss;
-                    mem.debugger.memDump(ss, u16(found), 1);
-                    retroShell << ss;
+                    mem.debugger.memDump(os, u16(found), 1);
                     current = u16(found);
 
                 } else {
 
-                    std::stringstream ss;
-                    ss << "Not found";
-                    retroShell << ss;
+                    os << "Not found";
                 }
             }
     });
@@ -594,8 +577,6 @@ DebuggerConsole::initCommands(RSCommand &root)
             dump(os, expansionPort, Category::State );
         }
     });
-
-    RSCommand::currentGroup = "Miscellaneous";
 
     root.add({
 
@@ -812,7 +793,39 @@ DebuggerConsole::initCommands(RSCommand &root)
     //
     
     RSCommand::currentGroup = "Miscellaneous";
-    
+
+    root.add({
+
+        .tokens = { "import" },
+        .ghelp  = { "Import debug data" }
+    });
+
+    root.add({
+
+        .tokens = { "import", "symbols" },
+        .chelp  = { "Loads a CC65 linker debug file" },
+        .args   = { { .name = { "path", "Debug file" } } },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            auto path = host.makeAbsolute(args.at("path"));
+            cpu.symbolTable.loadCS65File(path);
+
+            isize numFiles = cpu.symbolTable.files.size();
+            isize numLines = cpu.symbolTable.lines.size();
+            isize numSegments = cpu.symbolTable.segments.size();
+            isize numSpans = cpu.symbolTable.spans.size();
+            isize numSymbols = cpu.symbolTable.symbols.size();
+            isize numTotal = numFiles + numFiles + numSegments + numSpans + numSymbols;
+
+            os << "Read " << numTotal << " symbols\n\n";
+            os << "     Files: " << numFiles << "\n";
+            os << "     Lines: " << numLines << "\n";
+            os << "  Segments: " << numSegments << "\n";
+            os << "     Spans: " << numSpans << "\n";
+            os << "   Symbols: " << numSymbols << "\n\n";
+        }
+    });
+
     root.add({
         
         .tokens = { "checksums" },
@@ -877,16 +890,13 @@ DebuggerConsole::initCommands(RSCommand &root)
         },
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-                std::stringstream ss;
                 auto value = args.at("value");
 
                 if (isNum(value)) {
-                    mem.debugger.convertNumeric(ss, (u32)parseNum(value));
+                    mem.debugger.convertNumeric(os, (u32)parseNum(value));
                 } else {
-                    mem.debugger.convertNumeric(ss, value);
+                    mem.debugger.convertNumeric(os, value);
                 }
-
-                retroShell << '\n' << ss << '\n';
             }
     });
 }

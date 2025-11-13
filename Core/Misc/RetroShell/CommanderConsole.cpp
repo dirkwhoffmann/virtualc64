@@ -24,56 +24,53 @@ CommanderConsole::_pause()
 }
 
 string
-CommanderConsole::getPrompt()
+CommanderConsole::prompt()
 {
     return "C64% ";
 }
 
 void
-CommanderConsole::welcome()
+CommanderConsole::didActivate()
 {
-    Console::welcome();
+    if (!activated) {
+
+        *this << "RetroShell " << C64::build() << '\n';
+        *this << '\n';
+        *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+        *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+        *this << '\n';
+    }
+
+    activated = true;
 }
 
 void
-CommanderConsole::summary()
+CommanderConsole::didDeactivate()
 {
-    std::stringstream ss;
-
-    // ss << "RetroShell Commander" << std::endl << std::endl;
-    /*
-    ss << "Model   Chip    Slow    Fast    Agnus   Denise  ROM" << std::endl;
-    ss << std::setw(8) << std::left << BankMapEnum::key(BankMap(amiga.get(Opt::MEM_BANKMAP)));
-    ss << std::setw(8) << std::left << (std::to_string(amiga.get(Opt::MEM_CHIP_RAM)) + " MB");
-    ss << std::setw(8) << std::left << (std::to_string(amiga.get(Opt::MEM_SLOW_RAM)) + " MB");
-    ss << std::setw(8) << std::left << (std::to_string(amiga.get(Opt::MEM_FAST_RAM)) + " MB");
-    ss << std::setw(8) << std::left << (agnus.isECS() ? "ECS" : "OCS");
-    ss << std::setw(8) << std::left << (denise.isECS() ? "ECS" : "OCS");
-    ss << mem.getRomTraits().title << std::endl;
-
-    *this << vspace{1};
-    string line;
-    while(std::getline(ss, line)) { *this << "    " << line << '\n'; }
-    */
-    *this << vspace{1};
-}
-
-void
-CommanderConsole::printHelp(isize tab)
-{
-    Console::printHelp(tab);
-}
-
-void
-CommanderConsole::pressReturn(bool shift)
-{
-        Console::pressReturn(shift);
+    
 }
 
 void
 CommanderConsole::initCommands(RSCommand &root)
 {
     Console::initCommands(root);
+
+    
+    //
+    // Empty command
+    //
+
+    root.add({
+
+        .tokens = { "return" },
+        .chelp  = { "Print status information" },
+        .flags  = rs::hidden,
+        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            os << "\nRetroShell Commander\n";
+        }
+    });
+
 
     //
     // Workspace management
@@ -949,104 +946,9 @@ CommanderConsole::initCommands(RSCommand &root)
     });
 
     cmd = registerComponent(remoteManager.rshServer);
-
-    root.add({
-
-        .tokens = { cmd, "start" },
-        .chelp  = { "Starts the RetroShell server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.rshServer.start();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "stop" },
-        .chelp  = { "Stops the RetroShell server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.rshServer.stop();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "disconnect" },
-        .chelp  = { "Disconnects a client" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.rshServer.disconnect();
-        }
-    });
-
-    cmd = registerComponent(remoteManager.dapServer, releaseBuild ? rs::hidden : 0);
-
-    root.add({
-
-        .tokens = { cmd, "start" },
-        .chelp  = { "Starts the DAP server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.dapServer.start();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "stop" },
-        .chelp  = { "Stops the DAP server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.dapServer.stop();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "disconnect" },
-        .chelp  = { "Disconnects a client" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.dapServer.disconnect();
-        }
-    });
-
-    //
-    // DEPRECATED
-    //
-
-    cmd = registerComponent(remoteManager.gdbServer, releaseBuild ? rs::hidden : 0);
-
-    root.add({
-
-        .tokens = { cmd, "start" },
-        .chelp  = { "Starts the GDB server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.gdbServer.start();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "stop" },
-        .chelp  = { "Stops the GDB server" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.gdbServer.stop();
-        }
-    });
-
-    root.add({
-
-        .tokens = { cmd, "disconnect" },
-        .chelp  = { "Disconnects a client" },
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-            remoteManager.gdbServer.disconnect();
-        }
-    });
+    cmd = registerComponent(remoteManager.rpcServer);
+    cmd = registerComponent(remoteManager.dapServer);
+    cmd = registerComponent(remoteManager.promServer);
 }
 
 }

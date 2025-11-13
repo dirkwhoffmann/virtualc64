@@ -10,12 +10,11 @@
 #include "PeddleConfig.h"
 #include "PeddleTypes.h"
 #include "PeddleDisassembler.h"
+#include "SymbolTable.h"
 #include "PeddleDebugger.h"
 #include "SubComponent.h"
 #include "PeddleUtils.h"
 #include "TimeDelayed.h"
-
-// using namespace vc64;
 
 namespace vc64::peddle {
 
@@ -63,6 +62,7 @@ public:
 
     Debugger debugger = Debugger(*this);
     Disassembler disassembler = Disassembler(*this);
+    SymbolTable symbolTable = SymbolTable();
 
 
     //

@@ -44,7 +44,7 @@ typedef unsigned long      usize;
 
 #include <string>
 #include <cstring>
-namespace vc64 { using std::string; }
+namespace vc64 { using std::string; using std::string_view; }
 
 
 //

@@ -22,12 +22,13 @@ namespace vc64 {
 
 enum class SrvState : long
 {
-    OFF,        // The server is inactive
-    STARTING,   // The server is starting up
-    LISTENING,  // The server is waiting for a client to connect
-    CONNECTED,  // The server is connected to a client
-    STOPPING,   // The server is shutting down
-    INVALID     // The server is in an error state
+    OFF,            // The server is inactive
+    WAITING,        // The server is waiting for the launch condition to be met
+    STARTING,       // The server is starting up
+    LISTENING,      // The server is waiting for a client to connect
+    CONNECTED,      // The server is connected to a client
+    STOPPING,       // The server is shutting down
+    INVALID         // The server is in an error state
 };
 
 struct SrvStateEnum : Reflection<SrvStateEnum, SrvState>
@@ -40,6 +41,7 @@ struct SrvStateEnum : Reflection<SrvStateEnum, SrvState>
         switch (value) {
                 
             case SrvState::OFF:         return "OFF";
+            case SrvState::WAITING:     return "WAITING";
             case SrvState::STARTING:    return "STARTING";
             case SrvState::LISTENING:   return "LISTENING";
             case SrvState::CONNECTED:   return "CONNECTED";
@@ -85,18 +87,24 @@ struct ServerProtocolEnum : Reflection<ServerProtocolEnum, ServerProtocol>
 
 typedef struct
 {
+    // Enable status
+    bool enable;
+
     // The socket port number of this server
     u16 port;
 
     // Indicates special operation modes (if not DEFAULT)
     ServerProtocol protocol;
 
-    // If true, the lauch manager starts and stops the server automatically
-    bool autoRun;
-
     // If true, transmitted packets are shown in RetroShell
     bool verbose;
 }
 ServerConfig;
+
+typedef struct
+{
+    SrvState state;
+}
+RemoteServerInfo;
 
 }

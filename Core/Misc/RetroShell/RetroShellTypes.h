@@ -76,6 +76,31 @@ struct RSKeyEnum : Reflection<RSKeyEnum, RSKey>
 // Structures
 //
 
+struct InputLine {
+
+    enum class Source {
+
+        USER,       // User-typed command
+        SCRIPT,     // Script command
+        RPC,        // JSON RPC request
+        RSH         // RemoteShell request
+    };
+
+    // Line number, RPC identifier, etc.
+    isize id;
+
+    // Indicates where the command comes from
+    Source type;
+
+    // The command to execute
+    string input;
+
+    bool isUserCommand() const { return type == Source::USER; }
+    bool isScriptCommand() const { return type == Source::SCRIPT; }
+    bool isRpcCommand() const { return type == Source::RPC; }
+    bool isRshCommand() const { return type == Source::RSH; }
+};
+
 typedef struct
 {
     // Active console

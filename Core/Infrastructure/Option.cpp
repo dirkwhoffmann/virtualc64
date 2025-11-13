@@ -162,9 +162,9 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::RS232_DEVICE:              return enumParser.template operator()<CommunicationDeviceEnum,CommunicationDevice>();
         case Opt::RS232_BAUD:                return numParser(" Bd");
 
+        case Opt::SRV_ENABLE:                return boolParser();
         case Opt::SRV_PORT:                  return numParser();
         case Opt::SRV_PROTOCOL:              return enumParser.template operator()<ServerProtocolEnum,ServerProtocol>();
-        case Opt::SRV_AUTORUN:               return boolParser();
         case Opt::SRV_VERBOSE:               return boolParser();
 
         case Opt::DBG_DEBUGCART:             return boolParser();

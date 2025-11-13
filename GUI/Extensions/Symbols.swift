@@ -29,6 +29,8 @@ enum SFSymbol {
     case magnifyingglass2
     case magnifyingglass3
     case mouse
+    case serverListening
+    case serverConnected
     case nosign
     case pause
     case play
@@ -68,6 +70,8 @@ enum SFSymbol {
         case .magnifyingglass2: return [ "waveform.badge.magnifyingglass", "magnifyingglass" ]
         case .magnifyingglass3: return [ "waveform.path.ecg.magnifyingglass", "magnifyingglass" ]
         case .mouse:            return [ "computermouse" ]
+        case .serverListening:  return [ "point.3.connected.trianglepath.dotted" ]
+        case .serverConnected:  return [ "point.3.filled.connected.trianglepath.dotted" ]
         case .nosign:           return [ "nosign" ]
         case .pause:            return [ "pause.circle" ]
         case .play:             return [ "play.circle" ]

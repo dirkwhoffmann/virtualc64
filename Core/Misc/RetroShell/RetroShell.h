@@ -39,7 +39,7 @@ namespace vc64 {
 
 class RetroShell final : public SubComponent, public Inspectable<RetroShellInfo> {
     
-    friend class RshServer;
+    // friend class RshServer;
     
     Descriptions descriptions = {{
         
@@ -66,10 +66,10 @@ public:
 private:
     
     // Command queue (stores all pending commands)
-    std::vector<QueuedCmd> commands;
-    
+    std::vector<InputLine> commands = { InputLine {.input = "commander"}};
+
     // The currently active console
-    Console *current = nullptr;
+    Console *current = &debugger;
 
 public:
     
@@ -145,7 +145,8 @@ public:
     
     // Adds a command to the list of pending commands
     void asyncExec(const string &command, bool append = true);
-    
+    void asyncExec(const InputLine &command, bool append = true);
+
     // Adds the commands of a shell script to the list of pending commands
     void asyncExecScript(std::stringstream &ss);
     void asyncExecScript(const std::ifstream &fs);
@@ -161,7 +162,7 @@ public:
 private:
     
     // Executes a single pending command
-    void exec(QueuedCmd cmd) throws;
+    void exec(const InputLine &cmd) throws;
     
     
     //
@@ -181,7 +182,8 @@ public:
     RetroShell &operator<<(unsigned long long value);
     RetroShell &operator<<(std::stringstream &stream);
     RetroShell &operator<<(const vspace &value);
-    
+
+    string prompt() { return current ? current->prompt() : ""; }
     const char *text();
     isize cursorRel();
     void press(RSKey key, bool shift = false);

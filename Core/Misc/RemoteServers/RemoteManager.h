@@ -14,13 +14,14 @@
 
 #include "SubComponent.h"
 #include "RemoteManagerTypes.h"
+#include "RpcServer.h"
 #include "RshServer.h"
 #include "DapServer.h"
-#include "GdbServer.h"
+#include "PromServer.h"
 
 namespace vc64 {
 
-class RemoteManager : public SubComponent, public Inspectable<RemoteManagerInfo> {
+class RemoteManager final : public SubComponent, public Inspectable<RemoteManagerInfo> {
 
     Descriptions descriptions = {{
 
@@ -33,15 +34,19 @@ class RemoteManager : public SubComponent, public Inspectable<RemoteManagerInfo>
 
     };
 
+    // Frame counter
+    usize frame = 0;
+
 public:
     
     // The remote servers
     RshServer rshServer = RshServer(c64, isize(ServerType::RSH));
+    RpcServer rpcServer = RpcServer(c64, isize(ServerType::RPC));
     DapServer dapServer = DapServer(c64, isize(ServerType::DAP));
-    GdbServer gdbServer = GdbServer(c64, isize(ServerType::GDB));
+    PromServer promServer = PromServer(c64, isize(ServerType::PROM));
 
     // Convenience wrapper
-    std::vector <RemoteServer *> servers = { &rshServer, &dapServer, &gdbServer };
+    std::vector <RemoteServer *> servers = { &rshServer, &rpcServer, &dapServer, &promServer };
 
     
     //
@@ -53,9 +58,6 @@ public:
     RemoteManager(C64& ref);
     
     RemoteManager& operator= (const RemoteManager& other) {
-
-        CLONE(rshServer)
-        CLONE(gdbServer)
 
         return *this;
     }
@@ -115,11 +117,13 @@ public:
 
 
     //
-    // Servicing events
+    // Running the launch daemon
     //
     
 public:
-    
+
+    void update();
+
     void serviceServerEvent();
 };
 

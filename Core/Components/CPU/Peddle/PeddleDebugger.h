@@ -12,32 +12,6 @@
 
 namespace vc64::peddle {
 
-/*
-// Base structure for a single breakpoint or watchpoint
-struct Guard {
-    
-    // The observed address
-    u32 addr;
-    
-    // Disabled guards never trigger
-    bool enabled;
-    
-    // Counts the number of hits
-    long hits;
-    
-    // Ignore counter
-    long ignore;
-    
-public:
-    
-    // Returns true if the guard hits
-    bool eval(u32 addr);
-
-    // Replaces the address by another
-    void moveTo(u32 newAddr);
-};
-*/
-
 // Base class for a collection of guards
 class Guards {
 
@@ -164,7 +138,7 @@ public:
 
     // Watchpoint storage (not yet supported)
     Watchpoints watchpoints = Watchpoints(cpu);
-    
+
     // Saved program counters
     i32 breakpointPC = -1;
     i32 watchpointPC = -1;

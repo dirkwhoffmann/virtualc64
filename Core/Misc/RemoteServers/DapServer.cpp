@@ -48,7 +48,7 @@ DapServer::_pause()
 }
 
 bool
-DapServer::shouldRun()
+DapServer::canRun()
 {
     return true;
 }

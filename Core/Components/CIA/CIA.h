@@ -55,12 +55,14 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
     static constexpr u64 CIACountA1 =   (1ULL << 1);
     static constexpr u64 CIACountA2 =   (1ULL << 2);
     static constexpr u64 CIACountA3 =   (1ULL << 3);
-    
+    static constexpr u64 CIACountA =   (15ULL << 0);
+
     // Decrements timer B
     static constexpr u64 CIACountB0 =   (1ULL << 4);
     static constexpr u64 CIACountB1 =   (1ULL << 5);
     static constexpr u64 CIACountB2 =   (1ULL << 6);
     static constexpr u64 CIACountB3 =   (1ULL << 7);
+    static constexpr u64 CIACountB =   (15ULL << 4);
     
     // Loads timer A
     static constexpr u64 CIALoadA0 =    (1ULL << 8);

@@ -20,10 +20,11 @@ namespace vc64 {
 RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
 {
     subComponents = std::vector<CoreComponent *> {
-        
+
         &rshServer,
+        &rpcServer,
         &dapServer,
-        &gdbServer
+        &promServer,
     };
 }
 
@@ -31,18 +32,18 @@ void
 RemoteManager::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
-    
+
     if (category == Category::State) {
 
         os << "Remote server status: " << std::endl << std::endl;
 
         for (auto server : servers) {
-            
+
             auto name = server->objectName();
             auto port = server->config.port;
-            
+
             os << tab(string(name));
-            
+
             if (server->isOff()) {
                 os << "Off" << std::endl;
             } else {
@@ -57,11 +58,11 @@ void
 RemoteManager::cacheInfo(RemoteManagerInfo &result) const
 {
     {   SYNCHRONIZED
-        
-        info.numLaunching = numLaunching();
-        info.numListening = numListening();
-        info.numConnected = numConnected();
-        info.numErroneous = numErroneous();
+
+        info.rshInfo = rshServer.getInfo();
+        info.rpcInfo = rpcServer.getInfo();
+        info.dapInfo = dapServer.getInfo();
+        info.promInfo = promServer.getInfo();
     }
 }
 
@@ -98,23 +99,36 @@ RemoteManager::numErroneous() const
 }
 
 void
+RemoteManager::update()
+{
+    if (frame++ % 32 != 0) return;
+
+    auto launchDaemon = [&](RemoteServer &server, ServerConfig &config) {
+
+        if (config.enable) {
+            if (server.isOff()) server.switchState(SrvState::WAITING);
+        } else {
+            if (!server.isOff()) server.stop();
+        }
+
+        if (server.canRun()) {
+            if (server.isWaiting()) server.start();
+        } else {
+            if (!server.isOff() && !server.isWaiting()) server.stop();
+        }
+    };
+
+    launchDaemon(rshServer, rshServer.config);
+    launchDaemon(rpcServer, rpcServer.config);
+    launchDaemon(dapServer, dapServer.config);
+    launchDaemon(promServer, promServer.config);
+}
+
+void
 RemoteManager::serviceServerEvent()
 {
-    assert(c64.eventid[SLOT_SRV] == SRV_LAUNCH_DAEMON);
-
-    // Run the launch daemon
-    if (rshServer.config.autoRun) {
-        rshServer.shouldRun() ? rshServer.start() : rshServer.stop();
-    }
-    if (dapServer.config.autoRun) {
-        dapServer.shouldRun() ? dapServer.start() : dapServer.stop();
-    }
-    if (gdbServer.config.autoRun) {
-        gdbServer.shouldRun() ? gdbServer.start() : gdbServer.stop();
-    }
-    
-    // Schedule next event
-    c64.scheduleInc <SLOT_SRV> (C64::sec(0.5), SRV_LAUNCH_DAEMON);
+    // The server event slot is no longer used, as the launch demon is
+    // now run in update(). It is safe to remove the SRV_SLOT.
 }
 
 }

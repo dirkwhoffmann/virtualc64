@@ -67,6 +67,7 @@ private:
     isize disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const;
     isize disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const;
     isize disassF(u8 flags, char *dst, isize tab) const;
+    isize disassL(u16 addr, char *dst, isize tab) const;
 
 public:
 
