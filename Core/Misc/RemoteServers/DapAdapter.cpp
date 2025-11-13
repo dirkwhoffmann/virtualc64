@@ -119,11 +119,31 @@ DapAdapter::process<dap::Command::ConfigurationDone> (isize seq, const string &p
 }
 
 template <> void
+DapAdapter::process<dap::Command::Disconnect> (isize seq, const string &packet)
+{
+    printf("dap::Command::Disconnect: %ld\n", seq);
+
+    replySuccess(seq, "disconnect");
+
+    json response = {
+
+        {"type", "event"},
+        {"event", "terminated"}
+    };
+
+    reply(response.dump());
+
+    // remoteManager.dapServer.disconnect();
+    // sleep(1);
+}
+
+template <> void
 DapAdapter::process <dap::Command::Initialize> (isize seq, const string &packet)
 {
     printf("dap::Command::Initialize: %ld\n", seq);
 
     json capabilities = {
+
         {"supportsConfigurationDoneRequest", true},
         {"supportsFunctionBreakpoints", false},
         {"supportsConditionalBreakpoints", false},
@@ -143,14 +163,17 @@ DapAdapter::process <dap::Command::Initialize> (isize seq, const string &packet)
         {"supportsExceptionOptions", false},
         {"supportsValueFormattingOptions", false},
         {"supportsExceptionInfoRequest", false},
-        {"supportTerminateDebuggee", false},
-        {"supportSuspendDebuggee", false},
+
+        // Important for launch tests
+        {"supportsLaunchRequest", true},
+        {"supportsTerminateRequest", true},
+        {"supportSuspendDebuggee", false},  // optional, leave as false
+
         {"supportsDelayedStackTraceLoading", false},
         {"supportsLoadedSourcesRequest", false}, // no source files
         {"supportsLogPoints", false},
         {"supportsTerminateThreadsRequest", false},
         {"supportsSetExpression", false},
-        {"supportsTerminateRequest", false},
 
         // Features for symbol-level debugging
         {"supportsDataBreakpoints", true},
@@ -188,6 +211,7 @@ DapAdapter::process <dap::Command::Initialize> (isize seq, const string &packet)
         {"event", "initialized"}
     };
     reply(response2.dump());
+
 }
 
 template <> void
@@ -252,6 +276,12 @@ DapAdapter::process <dap::Command::SetBreakpoints> (isize seq, const string &pac
     }
 }
 
+template <> void
+DapAdapter::process <dap::Command::SetExceptionBreakpoints> (isize seq, const string &packet)
+{
+    replySuccess(seq, "SetExceptionBreakpoints");
+}
+
 void
 DapAdapter::process(const string &packet)
 {
@@ -264,19 +294,27 @@ DapAdapter::process(const string &packet)
 
         if (t == "request") {
 
-            if (c == "breakpointLocations") { process<dap::Command::BreakpointLocations>(s, packet); }
-            if (c == "configurationDone") { process<dap::Command::ConfigurationDone>(s, packet); }
-            if (c == "initialize") { process<dap::Command::Initialize>(s, packet); }
-            if (c == "launch") { process<dap::Command::Launch>(s, packet); }
-            if (c == "setBreakpoints") { process<dap::Command::SetBreakpoints>(s, packet); }
+            if (c == "breakpointLocations") {
+                process<dap::Command::BreakpointLocations>(s, packet);
+            } else if (c == "configurationDone") {
+                process<dap::Command::ConfigurationDone>(s, packet);
+            } else if (c == "disconnect") {
+                process<dap::Command::Disconnect>(s, packet);
+            } else if (c == "initialize") {
+                process<dap::Command::Initialize>(s, packet);
+            } else if (c == "launch") {
+                process<dap::Command::Launch>(s, packet);
+            } else if (c == "setBreakpoints") {
+                process<dap::Command::SetBreakpoints>(s, packet);
+            } else if (c == "setExceptionBreakpoints") {
+                process<dap::Command::SetExceptionBreakpoints>(s, packet);
+            } else if (t == "response") {
 
-        } else if (t == "response") {
+            } else if (t == "event") {
 
-        } else if (t == "event") {
-
-        } else {
-
-            throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
+            } else {
+                throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
+            }
         }
 
     } catch (...) {
@@ -300,7 +338,7 @@ DapAdapter::replySuccess(isize seq, const string &command)
     json response = {
 
         {"type", "response"},
-        {"seq", 0},
+        {"seq", nextSeq()},
         {"request_seq", seq},
         {"command", command},
         {"success", true}

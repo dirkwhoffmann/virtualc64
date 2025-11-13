@@ -27,9 +27,11 @@ enum Command {
 
     BreakpointLocations,
     ConfigurationDone,
+    Disconnect,
     Initialize,
     Launch,
-    SetBreakpoints
+    SetBreakpoints,
+    SetExceptionBreakpoints
 };
 
 }
