@@ -49,6 +49,15 @@ private:
 
 
     //
+    // Methods from Configurable
+    //
+
+private:
+
+    void checkOption(Opt opt, i64 value) override;
+    
+
+    //
     // Methods from RemoteServer
     //
 

@@ -35,6 +35,16 @@ RpcHttpServer::_dump(Category category, std::ostream &os) const
     HttpServer::_dump(category, os);
 }
 
+void
+RpcHttpServer::checkOption(Opt opt, i64 value)
+{
+    if (opt == Opt::SRV_TRANSPORT && value == i64(TransportProtocol::TCP)) {
+        throw AppError(Fault::OPT_UNSUPPORTED, "This server requires a HTTP connection.");
+    }
+
+    RemoteServer::checkOption(opt, value);
+}
+
 string
 RpcHttpServer::respond(const httplib::Request& payload)
 {
@@ -181,7 +191,7 @@ RpcHttpServer::didExecute(const InputLine& input, std::stringstream &ss, std::ex
     };
 
     printf("Error response: %s\n", response.dump().c_str());
-    
+
     // Return the shell output through the promise
     if (input.promise) input.promise->set_value(response.dump());
 

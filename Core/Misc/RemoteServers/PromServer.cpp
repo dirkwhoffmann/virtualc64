@@ -26,6 +26,16 @@ PromServer::_dump(Category category, std::ostream &os) const
     HttpServer::_dump(category, os);
 }
 
+void
+PromServer::checkOption(Opt opt, i64 value)
+{
+    if (opt == Opt::SRV_TRANSPORT && value == i64(TransportProtocol::TCP)) {
+        throw AppError(Fault::OPT_UNSUPPORTED, "This server requires a HTTP connection.");
+    }
+
+    RemoteServer::checkOption(opt, value);
+}
+
 string
 PromServer::respond(const httplib::Request& request)
 {

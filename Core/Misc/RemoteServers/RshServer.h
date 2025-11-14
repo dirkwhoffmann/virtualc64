@@ -39,6 +39,16 @@ private:
     void _initialize() override;
     void _dump(Category category, std::ostream &os) const override;
 
+
+    //
+    // Methods from Configurable
+    //
+
+private:
+
+    void checkOption(Opt opt, i64 value) override;
+
+    
     //
     // Methods from RemoteServer
     //

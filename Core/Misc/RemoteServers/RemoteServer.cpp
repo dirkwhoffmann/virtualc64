@@ -60,7 +60,7 @@ RemoteServer::getOption(Opt option) const
             
         case Opt::SRV_ENABLE:    return config.enable;
         case Opt::SRV_PORT:      return config.port;
-        case Opt::SRV_PROTOCOL:  return (i64)config.protocol;
+        case Opt::SRV_TRANSPORT:  return (i64)config.transport;
         case Opt::SRV_VERBOSE:   return config.verbose;
 
         default:
@@ -75,7 +75,7 @@ RemoteServer::checkOption(Opt opt, i64 value)
 
         case Opt::SRV_ENABLE:
         case Opt::SRV_PORT:
-        case Opt::SRV_PROTOCOL:
+        case Opt::SRV_TRANSPORT:
         case Opt::SRV_VERBOSE:
 
             return;
@@ -86,9 +86,11 @@ RemoteServer::checkOption(Opt opt, i64 value)
 }
 
 void
-RemoteServer::setOption(Opt option, i64 value)
+RemoteServer::setOption(Opt opt, i64 value)
 {
-    switch (option) {
+    checkOption(opt, value);
+
+    switch (opt) {
 
         case Opt::SRV_ENABLE:
 
@@ -112,9 +114,9 @@ RemoteServer::setOption(Opt option, i64 value)
             }
             return;
             
-        case Opt::SRV_PROTOCOL:
+        case Opt::SRV_TRANSPORT:
             
-            config.protocol = (ServerProtocol)value;
+            config.transport = (TransportProtocol)value;
             return;
 
         case Opt::SRV_VERBOSE:

@@ -164,7 +164,7 @@ OptionParser::create(Opt opt, i64 arg)
 
         case Opt::SRV_ENABLE:                return boolParser();
         case Opt::SRV_PORT:                  return numParser();
-        case Opt::SRV_PROTOCOL:              return enumParser.template operator()<ServerProtocolEnum,ServerProtocol>();
+        case Opt::SRV_TRANSPORT:              return enumParser.template operator()<TransportProtocolEnum,TransportProtocol>();
         case Opt::SRV_VERBOSE:               return boolParser();
 
         case Opt::DBG_DEBUGCART:             return boolParser();

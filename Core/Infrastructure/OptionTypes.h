@@ -184,7 +184,7 @@ enum class Opt : long
     // Remote servers
     SRV_ENABLE,
     SRV_PORT,
-    SRV_PROTOCOL,
+    SRV_TRANSPORT,
     SRV_VERBOSE,
 
     // Regression tester
@@ -340,7 +340,7 @@ struct OptEnum : Reflection<OptEnum, Opt> {
 
             case Opt::SRV_ENABLE:            return "SRV.ENABLE";
             case Opt::SRV_PORT:              return "SRV.PORT";
-            case Opt::SRV_PROTOCOL:          return "SRV.PROTOCOL";
+            case Opt::SRV_TRANSPORT:         return "SRV.TRANSPORT";
             case Opt::SRV_VERBOSE:           return "SRV.VERBOSE";
 
             case Opt::DBG_DEBUGCART:         return "DBG.DEBUGCART";
@@ -491,7 +491,7 @@ struct OptEnum : Reflection<OptEnum, Opt> {
 
             case Opt::SRV_ENABLE:            return "Server enable status";
             case Opt::SRV_PORT:              return "Server port";
-            case Opt::SRV_PROTOCOL:          return "Server protocol";
+            case Opt::SRV_TRANSPORT:         return "Server transport protocol";
             case Opt::SRV_VERBOSE:           return "Verbose mode";
 
             case Opt::DBG_DEBUGCART:         return "VICE debug cartridge";

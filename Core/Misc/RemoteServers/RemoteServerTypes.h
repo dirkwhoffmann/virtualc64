@@ -56,25 +56,27 @@ struct SrvStateEnum : Reflection<SrvStateEnum, SrvState>
     }
 };
 
-enum class ServerProtocol
+enum class TransportProtocol
 {
-    DEFAULT
+    TCP,
+    HTTP
 };
 
-struct ServerProtocolEnum : Reflection<ServerProtocolEnum, ServerProtocol>
+struct TransportProtocolEnum : Reflection<TransportProtocolEnum, TransportProtocol>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(ServerProtocol::DEFAULT);
+    static constexpr long maxVal = long(TransportProtocol::HTTP);
     
-    static const char *_key(ServerProtocol value)
+    static const char *_key(TransportProtocol value)
     {
         switch (value) {
                 
-            case ServerProtocol::DEFAULT:   return "DEFAULT";
+            case TransportProtocol::TCP:    return "TCP";
+            case TransportProtocol::HTTP:   return "HTTP";
         }
         return "???";
     }
-    static const char *help(ServerProtocol value)
+    static const char *help(TransportProtocol value)
     {
         return "";
     }
@@ -90,11 +92,11 @@ typedef struct
     // Enable status
     bool enable;
 
-    // The socket port number of this server
+    // The socket port of this server
     u16 port;
 
-    // Indicates special operation modes (if not DEFAULT)
-    ServerProtocol protocol;
+    // The transport protocol of this server
+    TransportProtocol transport;
 
     // If true, transmitted packets are shown in RetroShell
     bool verbose;

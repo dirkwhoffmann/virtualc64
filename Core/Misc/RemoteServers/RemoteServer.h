@@ -47,7 +47,7 @@ class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo> {
 
         Opt::SRV_ENABLE,
         Opt::SRV_PORT,
-        Opt::SRV_PROTOCOL,
+        Opt::SRV_TRANSPORT,
         Opt::SRV_VERBOSE
     };
 
@@ -111,7 +111,7 @@ protected:
 
         << config.enable
         << config.port
-        << config.protocol
+        << config.transport
         << config.verbose;
 
     };
