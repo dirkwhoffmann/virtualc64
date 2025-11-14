@@ -21,8 +21,7 @@ namespace vc64 {
 void
 RshServer::_initialize()
 {
-    retroShell.commander.delegates.push_back(this);
-    retroShell.debugger.delegates.push_back(this);
+    retroShell.registerDelegate(*this);
 }
 
 void

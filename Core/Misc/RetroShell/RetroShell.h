@@ -85,8 +85,10 @@ public:
     
     RetroShell(C64& ref);
     RetroShell& operator= (const RetroShell& other) { return *this; }
-    
-    
+
+    void registerDelegate(ConsoleDelegate &delegate);
+
+
     //
     // Methods from Serializable
     //

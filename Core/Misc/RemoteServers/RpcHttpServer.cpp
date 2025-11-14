@@ -11,8 +11,9 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "RpcServer.h"
+#include "RpcHttpServer.h"
 #include "Emulator.h"
+#include "httplib.h"
 #include "json.h"
 #include <thread>
 
@@ -21,63 +22,27 @@ namespace vc64 {
 using nlohmann::json;
 
 void
-RpcServer::_initialize()
+RpcHttpServer::_initialize()
 {
     retroShell.registerDelegate(*this);
 }
 
 void
-RpcServer::_dump(Category category, std::ostream &os) const
+RpcHttpServer::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 
-    RemoteServer::_dump(category, os);
-}
-
-void
-RpcServer::didStart()
-{
-    if (config.verbose) {
-
-        *this << "Remote server is listening at port " << config.port << "\n";
-    }
+    HttpServer::_dump(category, os);
 }
 
 string
-RpcServer::doReceive()
-{
-    string payload = connection.recv();
-
-    // Remove LF and CR (if present)
-    payload = util::rtrim(payload, "\n\r");
-
-    if (config.verbose) {
-
-        retroShell << "R: " << util::makePrintable(payload) << "\n";
-        printf("R: %s\n", util::makePrintable(payload).c_str());
-    }
-
-    return payload;
-}
-
-void
-RpcServer::doSend(const string &payload)
-{
-    connection.send(payload);
-
-    if (config.verbose) {
-
-        retroShell << "T: " << util::makePrintable(payload) << "\n";
-        printf("T: %s\n", util::makePrintable(payload).c_str());
-    }
-}
-
-void
-RpcServer::doProcess(const string &payload)
+RpcHttpServer::respond(const httplib::Request& payload)
 {
     try {
 
-        json request = json::parse(payload);
+        printf("body = %s\n", payload.body.c_str());
+
+        json request = json::parse(payload.body);
 
         // Check input format
         if (!request.contains("method")) {
@@ -96,22 +61,34 @@ RpcServer::doProcess(const string &payload)
             throw AppException(RPC::INVALID_PARAMS, "method  must be 'retroshell'");
         }
 
+        // Create shared promise
+        auto promise = std::make_shared<std::promise<std::string>>();
+        auto future = promise->get_future();
+
         // Feed the command into the command queue
         retroShell.asyncExec(InputLine {
 
             .id = request.value("id", 0),
             .type = InputLine::Source::RPC,
-            .input = request["params"] });
+            .input = request["params"],
+            .promise = promise
+        });
+
+        printf("Waiting for the result...\n");
+        auto result = future.get();
+        printf("Got result %s\n", result.c_str());
+
+        return result;
 
     } catch (const json::parse_error &) {
 
         json response = {
 
             {"jsonrpc", "2.0"},
-            {"error", {{"code", RPC::PARSE_ERROR}, {"message", "Parse error: " + payload}}},
+            {"error", {{"code", RPC::PARSE_ERROR}, {"message", "Parse error: " + payload.body}}},
             {"id", nullptr}
         };
-        send(response.dump());
+        return response.dump();
 
     } catch (const AppException &e) {
 
@@ -121,18 +98,44 @@ RpcServer::doProcess(const string &payload)
             {"error", {{"code", e.data}, {"message", e.what()}}},
             {"id", nullptr}
         };
-        send(response.dump());
+        return response.dump();
     }
 }
 
 void
-RpcServer::willExecute(const InputLine &input)
+RpcHttpServer::main()
+{
+    try {
+
+        // Create the HTTP server
+        if (!srv) srv = new httplib::Server();
+
+        // Define the "/metrics" endpoint where Prometheus will scrape metrics
+        srv->Post("/jsonrpc", [this](const httplib::Request& req, httplib::Response& res) {
+
+            switchState(SrvState::CONNECTED);
+            res.set_content(respond(req), "text/plain");
+        });
+
+        // Start the server to listen on localhost
+        debug(SRV_DEBUG, "Starting RPC HTTP data provider\n");
+        srv->listen("localhost", (int)config.port);
+
+    } catch (std::exception &err) {
+
+        debug(SRV_DEBUG, "Server thread interrupted\n");
+        handleError(err.what());
+    }
+}
+
+void
+RpcHttpServer::willExecute(const InputLine &input)
 {
 
 }
 
 void
-RpcServer::didExecute(const InputLine& input, std::stringstream &ss)
+RpcHttpServer::didExecute(const InputLine& input, std::stringstream &ss)
 {
     if (!input.isRpcCommand()) return;
 
@@ -143,11 +146,14 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss)
         {"id", input.id}
     };
 
-    send(response.dump());
+    printf("Response: %s\n", response.dump().c_str());
+
+    // Return the shell output through the promise
+    if (input.promise) input.promise->set_value(response.dump());
 }
 
 void
-RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::exception &exc)
+RpcHttpServer::didExecute(const InputLine& input, std::stringstream &ss, std::exception &exc)
 {
     if (!input.isRpcCommand()) return;
 
@@ -174,7 +180,11 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::except
         {"id", input.id}
     };
 
-    send(response.dump());
+    printf("Error response: %s\n", response.dump().c_str());
+    
+    // Return the shell output through the promise
+    if (input.promise) input.promise->set_value(response.dump());
+
 }
 
 }

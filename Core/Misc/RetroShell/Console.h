@@ -100,8 +100,6 @@ class Console : public SubComponent, public ConsoleDelegate {
         
     };
     
-public:
-
     // Delegates
     std::vector<ConsoleDelegate *> delegates;
 

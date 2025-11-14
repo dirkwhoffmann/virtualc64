@@ -28,6 +28,13 @@ RetroShell::RetroShell(C64& ref) : SubComponent(ref)
 }
 
 void
+RetroShell::registerDelegate(ConsoleDelegate &delegate)
+{
+    commander.delegates.push_back(&delegate);
+    debugger.delegates.push_back(&delegate);
+}
+
+void
 RetroShell::_initialize()
 {
 
