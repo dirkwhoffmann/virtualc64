@@ -43,12 +43,48 @@ RshServer::checkOption(Opt opt, i64 value)
 }
 
 void
+RshServer::switchState(SrvState newState)
+{
+    tcp.switchState(newState);
+    
+    // Inform the GUI
+    msgQueue.put(Msg::SRV_STATE, (i64)newState);
+}
+
+void
+RshServer::start()
+{
+    tcp.start(config.port);
+}
+
+void
+RshServer::stop()
+{
+    tcp.stop();
+}
+
+void
+RshServer::disconnect()
+{
+    tcp.disconnect();
+}
+
+void
+RshServer::main()
+{
+    tcp.main(config.port);
+}
+
+void
 RshServer::didStart()
 {
-    if (config.verbose) {
 
-        *this << "Remote server is listening at port " << config.port << "\n";
-    }
+}
+
+void
+RshServer::didStop()
+{
+
 }
 
 void
@@ -58,23 +94,45 @@ RshServer::didConnect()
         
         try {
 
-            *this << "VirtualC64 RetroShell Remote Server ";
-            *this << C64::build() << '\n';
-            *this << '\n';
+            tcp << "VirtualC64 RetroShell Remote Server ";
+            tcp << C64::build() << '\n';
+            tcp << '\n';
 
-            *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-            *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
-            *this << '\n';
+            tcp << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+            tcp << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+            tcp << '\n';
 
-            *this << "Type 'help' for help.\n";
-            *this << '\n';
+            tcp << "Type 'help' for help.\n";
+            tcp << '\n';
 
-            *this << retroShell.prompt();
+            tcp << retroShell.prompt();
 
         } catch (...) { };
     }
 }
 
+void
+RshServer::didDisconnect()
+{
+    
+}
+
+void
+RshServer::didReceive(const string &payload)
+{
+    // Remove LF and CR (if present)
+    auto trimmed = util::rtrim(payload, "\n\r");
+
+    debug(1, "didReceive: %s\n", trimmed.c_str());
+
+    retroShell.asyncExec(InputLine {
+
+        .type = InputLine::Source::RSH,
+        .input = trimmed
+    });
+}
+
+/*
 string
 RshServer::doReceive()
 {
@@ -88,7 +146,9 @@ RshServer::doReceive()
 
     return payload;
 }
+*/
 
+/*
 void
 RshServer::doSend(const string &payload)
 {
@@ -117,7 +177,9 @@ RshServer::doSend(const string &payload)
     
     connection.send(mapped);
 }
+*/
 
+/*
 void
 RshServer::doProcess(const string &payload)
 {
@@ -127,6 +189,7 @@ RshServer::doProcess(const string &payload)
         .input = payload
     });
 }
+*/
 
 void
 RshServer::didActivate()
@@ -144,24 +207,24 @@ void
 RshServer::willExecute(const InputLine &input)
 {
     // Echo the command if it came from somewhere else
-    if (!input.isRshCommand()) { *this << input.input << '\n'; }
+    if (!input.isRshCommand()) {tcp << input.input << '\n'; }
 }
 
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss)
 {
-    *this << '\n' << ss.str() << '\n';
-    *this << retroShell.prompt();
+    tcp << '\n' << ss.str() << '\n';
+    tcp << retroShell.prompt();
 }
 
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss, std::exception &e)
 {
     // Echo the command if it came from somewhere else
-    if (!input.isRpcCommand()) { *this << input.input << '\n'; }
+    if (!input.isRpcCommand()) { tcp << input.input << '\n'; }
 
-    *this << '\n' << ss.str() << e.what() << '\n';
-    *this << retroShell.prompt();
+    tcp << '\n' << ss.str() << e.what() << '\n';
+    tcp << retroShell.prompt();
 }
 
 }

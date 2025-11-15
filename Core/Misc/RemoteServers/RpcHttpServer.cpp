@@ -120,7 +120,7 @@ RpcHttpServer::main()
         // Create the HTTP server
         if (!srv) srv = new httplib::Server();
 
-        // Define the "/metrics" endpoint where Prometheus will scrape metrics
+        // Setup the endpoint
         srv->Post("/jsonrpc", [this](const httplib::Request& req, httplib::Response& res) {
 
             switchState(SrvState::CONNECTED);

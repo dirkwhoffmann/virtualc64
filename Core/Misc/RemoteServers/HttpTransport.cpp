@@ -10,36 +10,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#pragma once
-
-#include "TransportTypes.h"
+#include "config.h"
+#include "HttpTransport.h"
+#include "httplib.h"
 
 namespace vc64 {
 
-//
-// Structures
-//
-
-typedef struct
+void
+HttpTransport::disconnect()
 {
-    // Enable status
-    bool enable;
-
-    // The socket port of this server
-    u16 port;
-
-    // The transport protocol of this server
-    TransportProtocol transport;
-
-    // If true, transmitted packets are shown in RetroShell
-    bool verbose;
+    if (srv) srv->stop();
+    delegate.didDisconnect();
 }
-ServerConfig;
-
-typedef struct
-{
-    SrvState state;
-}
-RemoteServerInfo;
 
 }

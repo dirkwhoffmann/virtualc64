@@ -16,9 +16,8 @@
 
 namespace vc64 {
 
-void
-RemoteServer::shutDownServer()
-{
+RemoteServer::~RemoteServer() {
+
     debug(SRV_DEBUG, "Shutting down\n");
     try { stop(); } catch(...) { }
 }
@@ -43,7 +42,7 @@ RemoteServer::_dump(Category category, std::ostream &os) const
 void
 RemoteServer::_powerOff()
 {
-    shutDownServer();
+    try { stop(); } catch(...) { }
 }
 
 void
@@ -132,7 +131,7 @@ RemoteServer::setOption(Opt opt, i64 value)
 void
 RemoteServer::cacheInfo(RemoteServerInfo &result) const
 {
-    info.state = state;
+    info.state = getState();
 }
 
 void

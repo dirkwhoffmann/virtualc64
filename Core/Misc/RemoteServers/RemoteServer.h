@@ -70,9 +70,8 @@ protected:
 public:
     
     using SubComponent::SubComponent;
-    ~RemoteServer() { shutDownServer(); }
-    void shutDownServer();
-    
+    ~RemoteServer();
+
     RemoteServer& operator= (const RemoteServer& other) {
 
         CLONE(config)
@@ -88,16 +87,16 @@ public:
 protected:
 
     void _dump(Category category, std::ostream &os) const override;
-    
-public:
-
-    const Descriptions &getDescriptions() const override { return descriptions; }
 
 
     //
     // Methods from CoreComponent
     //
-    
+
+public:
+
+    const Descriptions &getDescriptions() const override { return descriptions; }
+
 protected:
     
     void _powerOff() override;
@@ -152,13 +151,14 @@ public:
     
 public:
 
-    bool isOff() const { return state == SrvState::OFF; }
-    bool isWaiting() const { return state == SrvState::WAITING; }
-    bool isStarting() const { return state == SrvState::STARTING; }
-    bool isListening() const { return state == SrvState::LISTENING; }
-    bool isConnected() const { return state == SrvState::CONNECTED; }
-    bool isStopping() const { return state == SrvState::STOPPING; }
-    bool isErroneous() const { return state == SrvState::INVALID; }
+    virtual SrvState getState() const { return state; }
+    virtual bool isOff() const { return state == SrvState::OFF; }
+    virtual bool isWaiting() const { return state == SrvState::WAITING; }
+    virtual bool isStarting() const { return state == SrvState::STARTING; }
+    virtual bool isListening() const { return state == SrvState::LISTENING; }
+    virtual bool isConnected() const { return state == SrvState::CONNECTED; }
+    virtual bool isStopping() const { return state == SrvState::STOPPING; }
+    virtual bool isErroneous() const { return state == SrvState::INVALID; }
 
     
     //
@@ -179,8 +179,8 @@ private: // public:
 protected:
 
     // Switches the internal state
-    void switchState(SrvState newState);
-    
+    virtual void switchState(SrvState newState);
+
 private:
     
     // Indicates if the server is ready to launch

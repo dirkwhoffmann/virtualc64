@@ -12,22 +12,23 @@
 
 #pragma once
 
-#include "RemoteServer.h"
+#include "Transport.h"
+#include "Socket.h"
 
 namespace vc64 {
 
-class SocketServer : public RemoteServer {
+class TcpTransport : public Transport {
 
-    using RemoteServer::RemoteServer;
+    using Transport::Transport;
 
 protected:
 
-    SocketServer& operator= (const SocketServer& other) {
+    TcpTransport& operator= (const TcpTransport& other) {
 
-        RemoteServer::operator = (other);
+        Transport::operator = (other);
         return *this;
     }
-    
+
     // Sockets
     Socket listener;
     Socket connection;
@@ -38,16 +39,7 @@ protected:
 
 
     //
-    // Methods from CoreObject
-    //
-
-protected:
-
-    void _dump(Category category, std::ostream &os) const override;
-
-
-    //
-    // Methods from RemoteServer
+    // Methods from Transport
     //
 
 public:
@@ -59,13 +51,15 @@ public:
     // Running the server
     //
 
-private:
+public:
 
     // The main thread function
-    void main() override;
+    void main(u16 port) override;
 
+private:
+    
     // Inner loops (called from main)
-    void mainLoop() throws;
+    void mainLoop(u16 port) throws;
     void sessionLoop();
 
 
@@ -76,7 +70,7 @@ private:
 public:
 
     // Receives a packet
-    string receive() throws;
+    // string receive() throws;
 
     // Sends a packet
     void send(const string &payload) throws;
@@ -86,33 +80,10 @@ public:
     void send(std::stringstream &payload) throws;
 
     // Operator overloads
-    using RemoteServer::operator<<;
-    SocketServer &operator<<(char payload) { send(payload); return *this; }
-    SocketServer &operator<<(const string &payload) { send(payload); return *this; }
-    SocketServer &operator<<(int payload) { send(payload); return *this; }
-    SocketServer &operator<<(long payload) { send(payload); return *this; }
-    SocketServer &operator<<(std::stringstream &payload) { send(payload); return *this; }
-
-    // Processes a package
-    void process(const string &payload) throws;
-
-
-    //
-    // Subclass specific implementations
-    //
-
-private:
-
-    virtual string doReceive() throws = 0;
-    virtual void doSend(const string &payload) throws = 0;
-    virtual void doProcess(const string &payload) throws = 0;
-
-
-    //
-    // Delegation methods
-    //
-
-
+    TcpTransport &operator<<(char payload) { send(payload); return *this; }
+    TcpTransport &operator<<(const string &payload) { send(payload); return *this; }
+    TcpTransport &operator<<(int payload) { send(payload); return *this; }
+    TcpTransport &operator<<(long payload) { send(payload); return *this; }
+    TcpTransport &operator<<(std::stringstream &payload) { send(payload); return *this; }
 };
-
 }

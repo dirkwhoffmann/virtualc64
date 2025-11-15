@@ -416,6 +416,12 @@
 		50A5B7D62C74E44C00D6DDAD /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */; };
 		50A92A1B2EC753F000F90519 /* RpcHttpServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A1A2EC753EF00F90519 /* RpcHttpServer.cpp */; };
 		50A92A1C2EC753F000F90519 /* RpcHttpServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A1A2EC753EF00F90519 /* RpcHttpServer.cpp */; };
+		50A92A1F2EC85E1B00F90519 /* Transport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A1E2EC85E1A00F90519 /* Transport.cpp */; };
+		50A92A202EC85E1B00F90519 /* Transport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A1E2EC85E1A00F90519 /* Transport.cpp */; };
+		50A92A232EC85E2B00F90519 /* HttpTransport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A222EC85E2A00F90519 /* HttpTransport.cpp */; };
+		50A92A242EC85E2B00F90519 /* HttpTransport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A222EC85E2A00F90519 /* HttpTransport.cpp */; };
+		50A92A272EC85E3D00F90519 /* TcpTransport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A262EC85E3C00F90519 /* TcpTransport.cpp */; };
+		50A92A282EC85E3D00F90519 /* TcpTransport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A262EC85E3C00F90519 /* TcpTransport.cpp */; };
 		50A9443B2DD7594700A242B0 /* DmaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A9443A2DD7594300A242B0 /* DmaView.swift */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
 		50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
@@ -1028,6 +1034,13 @@
 		50A5B7CC2C74E44C00D6DDAD /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Socket.h; sourceTree = "<group>"; };
 		50A92A192EC753E500F90519 /* RpcHttpServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RpcHttpServer.h; sourceTree = "<group>"; };
 		50A92A1A2EC753EF00F90519 /* RpcHttpServer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RpcHttpServer.cpp; sourceTree = "<group>"; };
+		50A92A1D2EC85E1400F90519 /* Transport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Transport.h; sourceTree = "<group>"; };
+		50A92A1E2EC85E1A00F90519 /* Transport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transport.cpp; sourceTree = "<group>"; };
+		50A92A212EC85E1D00F90519 /* HttpTransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HttpTransport.h; sourceTree = "<group>"; };
+		50A92A222EC85E2A00F90519 /* HttpTransport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HttpTransport.cpp; sourceTree = "<group>"; };
+		50A92A252EC85E2D00F90519 /* TcpTransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TcpTransport.h; sourceTree = "<group>"; };
+		50A92A262EC85E3C00F90519 /* TcpTransport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TcpTransport.cpp; sourceTree = "<group>"; };
+		50A92A292EC860F300F90519 /* TransportTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransportTypes.h; sourceTree = "<group>"; };
 		50A9443A2DD7594300A242B0 /* DmaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmaView.swift; sourceTree = "<group>"; };
 		50A9A086250DE90900723D32 /* PageFox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFox.cpp; sourceTree = "<group>"; };
 		50A9A087250DE90900723D32 /* PageFox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFox.h; sourceTree = "<group>"; };
@@ -2173,6 +2186,13 @@
 				506E28472EB75882003FF0D3 /* DapAdapterTypes.h */,
 				506E28432EB746BE003FF0D3 /* DapAdapter.h */,
 				506E28442EB746C6003FF0D3 /* DapAdapter.cpp */,
+				50A92A292EC860F300F90519 /* TransportTypes.h */,
+				50A92A1D2EC85E1400F90519 /* Transport.h */,
+				50A92A1E2EC85E1A00F90519 /* Transport.cpp */,
+				50A92A252EC85E2D00F90519 /* TcpTransport.h */,
+				50A92A262EC85E3C00F90519 /* TcpTransport.cpp */,
+				50A92A212EC85E1D00F90519 /* HttpTransport.h */,
+				50A92A222EC85E2A00F90519 /* HttpTransport.cpp */,
 				50A5B7CC2C74E44C00D6DDAD /* Socket.h */,
 				50A5B7CB2C74E44C00D6DDAD /* Socket.cpp */,
 			);
@@ -2580,6 +2600,7 @@
 				50A1947F2BDA597A0046849E /* CIABase.cpp in Sources */,
 				50726F812961C9E80031F2F5 /* NeosMouse.cpp in Sources */,
 				50726F5B2961C9AC0031F2F5 /* VICIICycles.cpp in Sources */,
+				50A92A272EC85E3D00F90519 /* TcpTransport.cpp in Sources */,
 				50726FA62961CA1C0031F2F5 /* G64File.cpp in Sources */,
 				50726F6E2961C9C60031F2F5 /* dac.cc in Sources */,
 				50316E512E9A425400BDF90F /* SampleRateDetector.cpp in Sources */,
@@ -2603,6 +2624,7 @@
 				50726FB12961CA230031F2F5 /* FSDirEntry.cpp in Sources */,
 				50726F802961C9E80031F2F5 /* Mouse1351.cpp in Sources */,
 				50726F9A2961CA0D0031F2F5 /* FinalIII.cpp in Sources */,
+				50A92A1F2EC85E1B00F90519 /* Transport.cpp in Sources */,
 				50726F482961C9940031F2F5 /* Defaults.cpp in Sources */,
 				50726F6A2961C9C60031F2F5 /* sid.cc in Sources */,
 				50726F7A2961C9DC0031F2F5 /* DiskAnalyzer.cpp in Sources */,
@@ -2624,6 +2646,7 @@
 				50726FA22961CA0D0031F2F5 /* WarpSpeed.cpp in Sources */,
 				508AB17E2EA37F7E00E226DE /* Workspace.cpp in Sources */,
 				50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */,
+				50A92A242EC85E2B00F90519 /* HttpTransport.cpp in Sources */,
 				50726F702961C9C60031F2F5 /* pot.cc in Sources */,
 				50726FA92961CA1C0031F2F5 /* AnyFile.cpp in Sources */,
 				500C1C7A2965E7D300071AF3 /* PeddleDisassembler.cpp in Sources */,
@@ -2668,6 +2691,7 @@
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
 				501C46BE2965C54200C4B27B /* StrWriter.h in Sources */,
+				50A92A282EC85E3D00F90519 /* TcpTransport.cpp in Sources */,
 				504C436624AF29AC00E69CAE /* Kcs.cpp in Sources */,
 				5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */,
 				504C438724AF29AC00E69CAE /* C64.cpp in Sources */,
@@ -2808,6 +2832,7 @@
 				509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */,
 				506E28452EB746C7003FF0D3 /* DapAdapter.cpp in Sources */,
 				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
+				50A92A232EC85E2B00F90519 /* HttpTransport.cpp in Sources */,
 				507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */,
 				50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */,
 				50B114B92E8FB13400EC854D /* LiveTextField.swift in Sources */,
@@ -2938,6 +2963,7 @@
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				5077AC682B5ACC5100EFAC85 /* config.cpp in Sources */,
 				5036E0B7261AEF000048E66A /* Console.cpp in Sources */,
+				50A92A202EC85E1B00F90519 /* Transport.cpp in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,
 				506A8A8C2B89DAF800B95383 /* SID.cpp in Sources */,
 				5095C81C2BA09DE800A83825 /* MemoryDebugger.cpp in Sources */,

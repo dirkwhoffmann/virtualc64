@@ -48,7 +48,7 @@ RemoteManager::_dump(Category category, std::ostream &os) const
                 os << "Off" << std::endl;
             } else {
                 os << "Port " << dec(port);
-                os << " (" << SrvStateEnum::key(server->state) << ")" << std::endl;
+                os << " (" << SrvStateEnum::key(server->getState()) << ")" << std::endl;
             }
         }
     }
@@ -112,7 +112,9 @@ RemoteManager::update()
         }
 
         if (server.canRun()) {
-            if (server.isWaiting()) server.start();
+            if (server.isWaiting()) {
+                server.start();
+            }
         } else {
             if (!server.isOff() && !server.isWaiting()) server.stop();
         }
