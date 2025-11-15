@@ -13,8 +13,9 @@
 #pragma once
 
 #include "SocketServer.h"
-#include "RetroShellTypes.h"
 #include "Console.h"
+#include "TcpTransport.h"
+#include "HttpTransport.h"
 
 namespace vc64 {
 
@@ -29,17 +30,20 @@ const long SERVER_ERROR     = -32000; // Reserved for implementation-defined ser
 
 }
 
-class RpcServer final : public SocketServer, public ConsoleDelegate {
+class RpcServer final : public RemoteServer, public ConsoleDelegate, public TransportDelegate {
 
 public:
 
-    using SocketServer::SocketServer;
+    using RemoteServer::RemoteServer;
+    TcpTransport tcp = TcpTransport(*this);
+    // HttpTransport http = HttpTransport(*this);
+
 
 protected:
 
     RpcServer& operator= (const RpcServer& other) {
 
-        SocketServer::operator = (other);
+        RemoteServer::operator = (other);
         return *this;
     }
 
@@ -67,10 +71,34 @@ private:
     // Methods from RemoteServer
     //
 
-    string doReceive() throws override;
-    void doProcess(const string &packet) throws override;
-    void doSend(const string &packet) throws  override;
-    void didStart() override;
+    virtual SrvState getState() const override { return tcp.getState(); }
+    virtual void switchState(SrvState newState) override;
+    virtual bool isOff() const override { return tcp.isOff(); }
+    virtual bool isWaiting() const override { return tcp.isWaiting(); }
+    virtual bool isStarting() const override { return tcp.isStarting(); }
+    virtual bool isListening() const override { return tcp.isListening(); }
+    virtual bool isConnected() const override { return tcp.isConnected(); }
+    virtual bool isStopping() const override { return tcp.isStopping(); }
+    virtual bool isErroneous() const override { return tcp.isErroneous(); }
+
+    virtual void start() override;
+    virtual void stop() override;
+    virtual void disconnect() override;
+    virtual bool canRun() override { return true; }
+    virtual void main() override;
+
+    
+    //
+    // Methods from TransportDelegate
+    //
+
+    virtual void didStart() override;
+    virtual void didStop() override;
+    virtual void didConnect() override;
+    virtual void didDisconnect() override;
+
+    // Provides the output of an executed RetroShell command
+    void didReceive(const string &payload) override;
 
     
     //

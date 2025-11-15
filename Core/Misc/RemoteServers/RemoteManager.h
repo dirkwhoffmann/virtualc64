@@ -43,7 +43,7 @@ public:
     // The remote servers
     RshServer rshServer = RshServer(c64, isize(ServerType::RSH));
     // RpcServer rpcServer = RpcServer(c64, isize(ServerType::RPC));
-    RpcHttpServer rpcServer = RpcHttpServer(c64, isize(ServerType::RPC));
+    RpcServer rpcServer = RpcServer(c64, isize(ServerType::RPC));
     DapServer dapServer = DapServer(c64, isize(ServerType::DAP));
     PromServer promServer = PromServer(c64, isize(ServerType::PROM));
 

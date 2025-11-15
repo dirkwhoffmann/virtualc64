@@ -171,7 +171,7 @@ Defaults::Defaults()
 
     setFallback(Opt::SRV_ENABLE,                 false,                  { (i64)ServerType::RPC });
     setFallback(Opt::SRV_PORT,                   8082,                   { (i64)ServerType::RPC });
-    setFallback(Opt::SRV_TRANSPORT,               (i64)TransportProtocol::HTTP, { (i64)ServerType::RPC });
+    setFallback(Opt::SRV_TRANSPORT,               (i64)TransportProtocol::TCP, { (i64)ServerType::RPC });
     setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::RPC });
 
     setFallback(Opt::SRV_ENABLE,                 false,                  { (i64)ServerType::DAP });

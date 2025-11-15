@@ -15,7 +15,6 @@
 #include "SocketServer.h"
 #include "Console.h"
 #include "TcpTransport.h"
-#include "HttpTransport.h"
 
 namespace vc64 {
 
@@ -74,17 +73,6 @@ private:
 
 
     //
-    // Methods from SocketServer
-    //
-
-    // string doReceive() throws override;
-    // void doProcess(const string &packet) throws override;
-    // void doSend(const string &packet)throws  override;
-    // void didStart() override;
-    // void didConnect() override;
-
-
-    //
     // Methods from TransportDelegate
     //
 
@@ -92,12 +80,6 @@ private:
     virtual void didStop() override;
     virtual void didConnect() override;
     virtual void didDisconnect() override;
-    /*
-    virtual void didSwitch(SrvState from, SrvState to) { };
-
-    // Error notifications
-    virtual void didTerminate(const string &error) { };
-    */
 
     // Provides the output of an executed RetroShell command
     void didReceive(const string &payload) override;
@@ -107,8 +89,6 @@ private:
     // Methods from ConsoleDelegate
     //
 
-    void didActivate() override;
-    void didDeactivate() override;
     void willExecute(const InputLine &input) override;
     void didExecute(const InputLine &input, std::stringstream &ss) override;
     void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) override;

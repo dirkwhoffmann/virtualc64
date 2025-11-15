@@ -45,14 +45,116 @@ RpcServer::checkOption(Opt opt, i64 value)
 }
 
 void
+RpcServer::switchState(SrvState newState)
+{
+    tcp.switchState(newState);
+
+    // Inform the GUI
+    msgQueue.put(Msg::SRV_STATE, (i64)newState);
+}
+
+void
+RpcServer::start()
+{
+    tcp.start(config.port);
+}
+
+void
+RpcServer::stop()
+{
+    tcp.stop();
+}
+
+void
+RpcServer::disconnect()
+{
+    tcp.disconnect();
+}
+
+void
+RpcServer::main()
+{
+    tcp.main(config.port);
+}
+
+void
 RpcServer::didStart()
 {
-    if (config.verbose) {
 
-        *this << "Remote server is listening at port " << config.port << "\n";
+}
+
+void
+RpcServer::didStop()
+{
+
+}
+
+void
+RpcServer::didConnect()
+{
+
+}
+
+void
+RpcServer::didDisconnect()
+{
+
+}
+
+void
+RpcServer::didReceive(const string &payload)
+{
+    try {
+
+        json request = json::parse(payload);
+
+        // Check input format
+        if (!request.contains("method")) {
+            throw AppException(RPC::INVALID_REQUEST, "Missing 'method'");
+        }
+        if (!request.contains("params")) {
+            throw AppException(RPC::INVALID_REQUEST, "Missing 'params'");
+        }
+        if (!request["method"].is_string()) {
+            throw AppException(RPC::INVALID_PARAMS, "'method' must be a string");
+        }
+        if (!request["params"].is_string()) {
+            throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
+        }
+        if (request["method"] != "retroshell") {
+            throw AppException(RPC::INVALID_PARAMS, "method  must be 'retroshell'");
+        }
+
+        // Feed the command into the command queue
+        retroShell.asyncExec(InputLine {
+
+            .id = request.value("id", 0),
+            .type = InputLine::Source::RPC,
+            .input = request["params"] });
+
+    } catch (const json::parse_error &) {
+
+        json response = {
+
+            {"jsonrpc", "2.0"},
+            {"error", {{"code", RPC::PARSE_ERROR}, {"message", "Parse error: " + payload}}},
+            {"id", nullptr}
+        };
+        tcp.send(response.dump());
+
+    } catch (const AppException &e) {
+
+        json response = {
+
+            {"jsonrpc", "2.0"},
+            {"error", {{"code", e.data}, {"message", e.what()}}},
+            {"id", nullptr}
+        };
+        tcp.send(response.dump());
     }
 }
 
+/*
 string
 RpcServer::doReceive()
 {
@@ -81,7 +183,9 @@ RpcServer::doSend(const string &payload)
         printf("T: %s\n", util::makePrintable(payload).c_str());
     }
 }
+*/
 
+/*
 void
 RpcServer::doProcess(const string &payload)
 {
@@ -134,6 +238,7 @@ RpcServer::doProcess(const string &payload)
         send(response.dump());
     }
 }
+*/
 
 void
 RpcServer::willExecute(const InputLine &input)
@@ -153,7 +258,7 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss)
         {"id", input.id}
     };
 
-    send(response.dump());
+    tcp << response.dump();
 }
 
 void
@@ -184,7 +289,7 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::except
         {"id", input.id}
     };
 
-    send(response.dump());
+    tcp << response.dump();
 }
 
 }

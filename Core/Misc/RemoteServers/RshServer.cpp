@@ -192,18 +192,6 @@ RshServer::doProcess(const string &payload)
 */
 
 void
-RshServer::didActivate()
-{
-
-}
-
-void
-RshServer::didDeactivate()
-{
-
-}
-
-void
 RshServer::willExecute(const InputLine &input)
 {
     // Echo the command if it came from somewhere else
