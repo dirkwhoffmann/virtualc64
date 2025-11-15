@@ -74,7 +74,7 @@ public:
 public:
     
     // Launch the remote server
-    virtual void start(u16 port) throws;
+    virtual void start(u16 port, const string &endpoint = "") throws;
 
     // Shuts down the remote server
     virtual void stop() throws;
@@ -98,7 +98,7 @@ private:
 public:
 
     // The main thread function
-    virtual void main(u16 port) throws = 0;
+    virtual void main(u16 port, const string &endpoint = "") throws { };
 };
 
 }

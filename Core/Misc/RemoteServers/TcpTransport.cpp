@@ -26,7 +26,7 @@ TcpTransport::disconnect()
 }
 
 void
-TcpTransport::main(u16 port)
+TcpTransport::main(u16 port, const string &endpoint)
 {
     try {
 

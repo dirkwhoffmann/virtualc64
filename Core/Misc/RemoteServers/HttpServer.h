@@ -30,7 +30,7 @@ protected:
         return *this;
     }
 
-    // A simple (third-party) HTTP server
+    // The (third-party) HTTP server
     httplib::Server *srv = nullptr;
 
 

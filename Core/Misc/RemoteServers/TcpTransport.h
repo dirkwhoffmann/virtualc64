@@ -45,16 +45,7 @@ protected:
 public:
 
     virtual void disconnect() override;
-
-
-    //
-    // Running the server
-    //
-
-public:
-
-    // The main thread function
-    void main(u16 port) override;
+    void main(u16 port, const string &endpoint = "") override;
 
 private:
     

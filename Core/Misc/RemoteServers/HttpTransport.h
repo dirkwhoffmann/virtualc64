@@ -50,6 +50,7 @@ protected:
 public:
 
     virtual void disconnect() override;
+    void main(u16 port, const string &endpoint) override;
 };
 
 }

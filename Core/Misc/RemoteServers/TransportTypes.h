@@ -14,6 +14,8 @@
 
 #include "Reflection.h"
 
+namespace httplib { struct Request; struct Response; }
+
 namespace vc64 {
 
 //
@@ -102,8 +104,9 @@ public:
     // Error notifications
     virtual void didTerminate(const string &error) { };
 
-    // Provides the output of an executed RetroShell command
-    virtual void didReceive(const string &payload) = 0;
+    // Reception callbacks
+    virtual void didReceive(const string &payload) { };
+    virtual void didReceive(const httplib::Request &req, httplib::Response &res) { };
 };
 
 }

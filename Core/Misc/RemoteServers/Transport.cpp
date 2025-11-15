@@ -22,7 +22,7 @@ Transport::~Transport() {
 }
 
 void
-Transport::start(u16 port)
+Transport::start(u16 port, const string &endpoint)
 {
     if (!(isOff() || isWaiting())) return;
 
@@ -33,7 +33,7 @@ Transport::start(u16 port)
     if (serverThread.joinable()) serverThread.join();
 
     // Spawn a new thread
-    serverThread = std::thread(&Transport::main, this, port);
+    serverThread = std::thread(&Transport::main, this, port, endpoint);
 }
 
 void
