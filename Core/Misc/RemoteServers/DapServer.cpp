@@ -23,7 +23,7 @@
 
 namespace vc64 {
 
-DapServer::DapServer(C64& ref, isize id) : SocketServer(ref, id) {
+DapServer::DapServer(C64& ref, isize id) : RemoteServer(ref, id) {
 
     adapter = new DapAdapter(c64);
 }
@@ -57,17 +57,84 @@ DapServer::_pause()
     printf("DapServer::_pause()\n");
 }
 
-bool
-DapServer::canRun()
+void
+DapServer::switchState(SrvState newState)
 {
-    return true;
+    tcp.switchState(newState);
+
+    // Inform the GUI
+    msgQueue.put(Msg::SRV_STATE, (i64)newState);
 }
 
-string
-DapServer::doReceive()
+void
+DapServer::start()
 {
-    auto cmd = connection.recv();
+    tcp.start(config.port);
+}
 
+void
+DapServer::stop()
+{
+    tcp.stop();
+}
+
+void
+DapServer::disconnect()
+{
+    tcp.disconnect();
+}
+
+void
+DapServer::main()
+{
+    tcp.main(config.port);
+}
+
+void
+DapServer::didStart()
+{
+
+}
+
+void
+DapServer::didStop()
+{
+
+}
+
+void
+DapServer::didConnect()
+{
+    if (config.verbose) {
+
+        try {
+
+            tcp << "VirtualC64 RetroShell Remote Server ";
+            tcp << C64::build() << '\n';
+            tcp << '\n';
+
+            tcp << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+            tcp << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+            tcp << '\n';
+
+            tcp << "Type 'help' for help.\n";
+            tcp << '\n';
+
+            tcp << retroShell.prompt();
+
+        } catch (...) { };
+    }
+}
+
+void
+DapServer::didDisconnect()
+{
+
+}
+
+void
+DapServer::didReceive(const string &cmd)
+{
     // Try to find the header terminator
     auto headerEnd = cmd.find("\r\n\r\n");
     if (headerEnd == std::string::npos) {
@@ -101,9 +168,24 @@ DapServer::doReceive()
         printf("R: %s\n", util::makePrintable(jsonStr).c_str());
     }
 
-    return jsonStr;
+    try {
+
+        adapter->process(jsonStr);
+
+    } catch (AppError &err) {
+
+        auto msg = "DAP server error: " + string(err.what());
+        debug(SRV_DEBUG, "%s\n", msg.c_str());
+
+        // Display the error message in RetroShell
+        retroShell << msg << '\n';
+
+        // Disconnect the client
+        disconnect();
+    }
 }
 
+/*
 void
 DapServer::doSend(const string &payload)
 {
@@ -113,7 +195,9 @@ DapServer::doSend(const string &payload)
         retroShell << "T: " << util::makePrintable(payload) << "\n";
     }
 }
+*/
 
+/*
 void
 DapServer::doProcess(const string &payload)
 {
@@ -133,24 +217,7 @@ DapServer::doProcess(const string &payload)
         disconnect();
     }
 }
-
-void
-DapServer::didStart()
-{
-    emulator.put(Cmd::PAUSE);
-}
-
-void
-DapServer::didStop()
-{
-
-}
-
-void
-DapServer::didConnect()
-{
-
-}
+*/
 
 /*
 void
@@ -193,7 +260,7 @@ DapServer::reply(const string &payload)
     std::stringstream ss;
     ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
     printf("T: %s\n", util::makePrintable(payload).c_str());
-    send(ss.str());
+    tcp << ss.str();
 }
 
 /*

@@ -12,14 +12,21 @@
 
 #pragma once
 
-#include "SocketServer.h"
+#include "RemoteServer.h"
 #include "DapServerTypes.h"
+// #include "Console.h"
+#include "TcpTransport.h"
 
 namespace vc64 {
 
-class DapServer final : public SocketServer {
+class DapServer final : public RemoteServer, public TransportDelegate {
 
     class DapAdapter *adapter = nullptr;
+    TcpTransport tcp = TcpTransport(*this);
+
+public:
+
+    using RemoteServer::RemoteServer;
 
 
     //
@@ -33,7 +40,7 @@ public:
 
     DapServer& operator= (const DapServer& other) {
 
-        SocketServer::operator = (other);
+        RemoteServer::operator = (other);
         return *this;
     }
 
@@ -61,15 +68,32 @@ private:
     // Methods from RemoteServer
     //
 
-public:
+    virtual SrvState getState() const override { return tcp.getState(); }
+    virtual void switchState(SrvState newState) override;
+    virtual bool isOff() const override { return tcp.isOff(); }
+    virtual bool isWaiting() const override { return tcp.isWaiting(); }
+    virtual bool isStarting() const override { return tcp.isStarting(); }
+    virtual bool isListening() const override { return tcp.isListening(); }
+    virtual bool isConnected() const override { return tcp.isConnected(); }
+    virtual bool isStopping() const override { return tcp.isStopping(); }
+    virtual bool isErroneous() const override { return tcp.isErroneous(); }
 
-    bool canRun() override;
-    string doReceive() throws override;
-    void doSend(const string &payload) throws override;
-    void doProcess(const string &payload) throws override;
-    void didStart() override;
-    void didStop() override;
-    void didConnect() override;
+    virtual void start() override;
+    virtual void stop() override;
+    virtual void disconnect() override;
+    virtual bool canRun() override { return true; }
+    virtual void main() override;
+
+
+    //
+    // Methods from TransportDelegate
+    //
+
+    virtual void didStart() override;
+    virtual void didStop() override;
+    virtual void didConnect() override;
+    virtual void didDisconnect() override;
+    virtual void didReceive(const string &payload) override;
 
 
     //
@@ -77,11 +101,6 @@ public:
     //
 
 public:
-
-    // Processes an DAP command
-    // void process(const string &packet) throws;
-
-private:
 
     // Processes a single command (DapServerCmds.cpp)
     // template <dap::Command> void process(isize seq, const string &packet) throws;

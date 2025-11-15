@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "RemoteServer.h"
+#include "SocketServer.h"
 #include "Emulator.h"
 #include "CPU.h"
 #include "IOUtils.h"

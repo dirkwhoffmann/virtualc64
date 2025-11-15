@@ -326,10 +326,10 @@ DapAdapter::process(const string &packet)
 void
 DapAdapter::reply(const string &payload)
 {
-    std::stringstream ss;
-    ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
-    printf("T: %s\n", util::makePrintable(payload).c_str());
-    remoteManager.dapServer.send(ss.str());
+    // std::stringstream ss;
+    // ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
+    // printf("T: %s\n", util::makePrintable(payload).c_str());
+    remoteManager.dapServer.reply(payload);
 }
 
 void

@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "SocketServer.h"
+#include "RemoteServer.h"
 #include "Console.h"
 #include "TcpTransport.h"
 #include "HttpTransport.h"
@@ -32,12 +32,12 @@ const long SERVER_ERROR     = -32000; // Reserved for implementation-defined ser
 
 class RpcServer final : public RemoteServer, public ConsoleDelegate, public TransportDelegate {
 
-public:
-
-    using RemoteServer::RemoteServer;
     TcpTransport tcp = TcpTransport(*this);
     // HttpTransport http = HttpTransport(*this);
 
+public:
+
+    using RemoteServer::RemoteServer;
 
 protected:
 
@@ -96,9 +96,7 @@ private:
     virtual void didStop() override;
     virtual void didConnect() override;
     virtual void didDisconnect() override;
-
-    // Provides the output of an executed RetroShell command
-    void didReceive(const string &payload) override;
+    virtual void didReceive(const string &payload) override;
 
     
     //

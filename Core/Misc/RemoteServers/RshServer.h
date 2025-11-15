@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "SocketServer.h"
+#include "RemoteServer.h"
 #include "Console.h"
 #include "TcpTransport.h"
 
@@ -80,9 +80,7 @@ private:
     virtual void didStop() override;
     virtual void didConnect() override;
     virtual void didDisconnect() override;
-
-    // Provides the output of an executed RetroShell command
-    void didReceive(const string &payload) override;
+    virtual void didReceive(const string &payload) override;
 
 
     //
