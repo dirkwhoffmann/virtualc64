@@ -134,6 +134,7 @@ RemoteServer::cacheInfo(RemoteServerInfo &result) const
     info.state = getState();
 }
 
+/*
 void
 RemoteServer::start()
 {
@@ -165,6 +166,7 @@ RemoteServer::stop()
 
     switchState(SrvState::OFF);
 }
+*/
 
 void
 RemoteServer::disconnect()

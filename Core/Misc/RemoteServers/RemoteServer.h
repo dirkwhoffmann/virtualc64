@@ -168,10 +168,10 @@ public:
 private: // public:
 
     // Launch the remote server
-    virtual void start() throws;
+    virtual void start() = 0;
 
     // Shuts down the remote server
-    virtual void stop() throws;
+    virtual void stop() = 0;
 
     // Disconnects the client
     virtual void disconnect() throws = 0;
