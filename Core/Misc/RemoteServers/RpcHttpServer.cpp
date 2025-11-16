@@ -10,6 +10,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #include "config.h"
 #include "RpcHttpServer.h"
 #include "Emulator.h"
@@ -198,3 +200,5 @@ RpcHttpServer::didExecute(const InputLine& input, std::stringstream &ss, std::ex
 }
 
 }
+
+#endif

@@ -23,7 +23,7 @@ PromServer::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
 
-    HttpServer::_dump(category, os);
+    RemoteServer::_dump(category, os);
 }
 
 void
@@ -36,8 +36,8 @@ PromServer::checkOption(Opt opt, i64 value)
     RemoteServer::checkOption(opt, value);
 }
 
-string
-PromServer::respond(const httplib::Request& request)
+void
+PromServer::didReceive(const httplib::Request &req, httplib::Response &res)
 {
     std::ostringstream output;
 
@@ -133,9 +133,26 @@ PromServer::respond(const httplib::Request& request)
                   {{"component","audio"}});
     }
 
-    return output.str();
+    res.set_content(output.str(), "text/plain");
 }
 
+void
+PromServer::switchState(SrvState newState)
+{
+    http.switchState(newState);
+
+    // Inform the GUI
+    msgQueue.put(Msg::SRV_STATE, (i64)newState);
+}
+
+/*
+void
+PromServer::main()
+{
+    http.main(config.port, "/metrics");
+}
+*/
+/*
 void
 PromServer::main()
 {
@@ -161,5 +178,6 @@ PromServer::main()
         handleError(err.what());
     }
 }
+*/
 
 }

@@ -12,21 +12,24 @@
 
 #pragma once
 
-#include "HttpServer.h"
+#include "RemoteServer.h"
+#include "HttpTransport.h"
 
 namespace vc64 {
 
-class PromServer final : public HttpServer {
+class PromServer final : public RemoteServer, public TransportDelegate {
+
+    HttpTransport http = HttpTransport(*this);
 
 public:
 
-    using HttpServer::HttpServer;
+    using RemoteServer::RemoteServer;
 
 protected:
 
     PromServer& operator= (const PromServer& other) {
 
-        HttpServer::operator = (other);
+        RemoteServer::operator = (other);
         return *this;
     }
 
@@ -53,9 +56,32 @@ private:
     // Methods from RemoteServer
     //
 
-public:
+    virtual SrvState getState() const override { return http.getState(); }
+    virtual void switchState(SrvState newState) override;
+    virtual bool isOff() const override { return http.isOff(); }
+    virtual bool isWaiting() const override { return http.isWaiting(); }
+    virtual bool isStarting() const override { return http.isStarting(); }
+    virtual bool isListening() const override { return http.isListening(); }
+    virtual bool isConnected() const override { return http.isConnected(); }
+    virtual bool isStopping() const override { return http.isStopping(); }
+    virtual bool isErroneous() const override { return http.isErroneous(); }
 
-    void main() override;
+    virtual void start() override { http.start(config.port, "/metrics"); }
+    virtual void stop() override { http.stop(); }
+    virtual void disconnect() override { http.disconnect(); }
+    virtual bool canRun() override { return true; }
+    // virtual void main() override;
+
+
+    //
+    // Methods from TransportDelegate
+    //
+
+    // virtual void didStart() override;
+    // virtual void didStop() override;
+    // virtual void didConnect() override;
+    // virtual void didDisconnect() override;
+    virtual void didReceive(const httplib::Request &req, httplib::Response &res) override;
 
 
     //
@@ -63,7 +89,7 @@ public:
     //
 
     // Generate a response
-    string respond(const httplib::Request& request);
+    // string respond(const httplib::Request& request);
 };
 
 }

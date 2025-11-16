@@ -31,21 +31,20 @@ HttpTransport::main(u16 port, const string &endpoint)
         // Create the HTTP server
         if (!srv) srv = new httplib::Server();
 
-        // Define the "/metrics" endpoint where Prometheus will scrape metrics
+        // Define the endpoint
         srv->Get(endpoint, [this](const httplib::Request& req, httplib::Response& res) {
 
             switchState(SrvState::CONNECTED);
             delegate.didReceive(req, res);
-            // res.set_content("Holla, die Waldfee", "text/plain");
         });
 
         // Start the server to listen on localhost
-        debug(SRV_DEBUG, "Starting Prometheus data provider\n");
+        debug(SRV_DEBUG, "Starting HTTP server thread\n");
         srv->listen("localhost", port);
 
     } catch (std::exception &err) {
 
-        debug(SRV_DEBUG, "Server thread interrupted\n");
+        debug(SRV_DEBUG, "HTTP server thread interrupted\n");
         delegate.didTerminate(err.what());
     }
 }

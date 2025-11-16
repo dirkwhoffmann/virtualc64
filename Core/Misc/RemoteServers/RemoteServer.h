@@ -194,7 +194,7 @@ private:
 protected:
 
     // The main thread function
-    virtual void main() throws = 0;
+    virtual void main() throws { };
 
     // Reports an error to the GUI
     void handleError(const char *description);
