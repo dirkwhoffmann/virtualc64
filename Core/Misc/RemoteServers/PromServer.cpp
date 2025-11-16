@@ -44,7 +44,7 @@ PromServer::respond(const httplib::Request& request)
     auto translate = [&](const string& metric,
                          const string& help,
                          const string& type,
-                         auto value,
+                         const string& value,
                          const std::map<string, string>& labels = {}) {
 
         if (!help.empty()) {
@@ -72,107 +72,64 @@ PromServer::respond(const httplib::Request& request)
     {   auto stats = emulator.getStats();
 
         translate("vc64_cpu_load", "",
-                  "gauge", stats.cpuLoad,
+                  "gauge", std::to_string(stats.cpuLoad),
                   {{"component","emulator"}});
 
         translate("vc64_fps", "",
-                  "gauge", stats.fps,
+                  "gauge", std::to_string(stats.fps),
                   {{"component","emulator"}});
 
         translate("vc64_resyncs", "",
-                  "gauge", stats.resyncs,
+                  "gauge", std::to_string(stats.resyncs),
                   {{"component","emulator"}});
     }
-
-    /*
-    {   auto stats = agnus.getStats();
-
-        translate("vamiga_activity_copper", "",
-                  "gauge", stats.copperActivity,
-                  {{"component","agnus"}});
-
-        translate("vamiga_activity_blitter", "",
-                  "gauge", stats.blitterActivity,
-                  {{"component","agnus"}});
-
-        translate("vamiga_activity_disk", "",
-                  "gauge", stats.diskActivity,
-                  {{"component","agnus"}});
-
-        translate("vamiga_activity_disk", "",
-                  "gauge", stats.diskActivity,
-                  {{"component","agnus"}});
-
-        translate("vamiga_activity_audio", "",
-                  "gauge", stats.audioActivity,
-                  {{"component","agnus"}});
-
-        translate("vamiga_activity_sprite", "",
-                  "gauge", stats.spriteActivity,
-                  {{"component","agnus"}});
-
-        translate("vamiga_activity_bitplane", "",
-                  "gauge", stats.bitplaneActivity,
-                  {{"component","agnus"}});
-    }
-    */
 
     {   auto stats_1 = cia1.getStats();
         auto stats_2 = cia2.getStats();
 
         translate("vc64_ciaa_idle_sec", "",
-                  "gauge", stats_1.idleCycles,
+                  "gauge", std::to_string(stats_1.idleCycles),
                   {{"component","cia1"}});
         translate("vc64_ciab_idle_sec", "",
-                  "gauge", stats_2.idleCycles,
+                  "gauge", std::to_string(stats_2.idleCycles),
                   {{"component","cia2"}});
 
         translate("vc64_cia_idle_sec_total", "",
-                  "gauge", stats_1.totalCycles,
+                  "gauge", std::to_string(stats_1.totalCycles),
                   {{"component","cia1"}});
         translate("vc64_cia_idle_sec_total", "",
-                  "gauge", stats_2.totalCycles,
+                  "gauge", std::to_string(stats_2.totalCycles),
                   {{"component","cia2"}});
 
         translate("vc64_cia_idle_percentage", "",
-                  "gauge", stats_1.idlePercentage,
+                  "gauge", std::to_string(stats_1.idlePercentage),
                   {{"component","cia1"}});
         translate("vc64_cia_idle_percentage", "",
-                  "gauge", stats_2.idlePercentage,
+                  "gauge", std::to_string(stats_2.idlePercentage),
                   {{"component","cia2"}});
-    }
-
-    {   auto stats = mem.getStats();
-
-        translate("vc64_mem_accesses", "",
-                  "gauge", stats.reads,
-                  {{"component","memory"},{"type","read"}});
-        translate("vc64_mem_accesses", "",
-                  "gauge", stats.writes,
-                  {{"component","memory"},{"type","write"}});
     }
 
     {   auto stats = audioPort.getStats();
 
         translate("vc64_audio_buffer_exceptions", "",
-                  "gauge", stats.bufferOverflows,
+                  "gauge", std::to_string(stats.bufferOverflows),
                   {{"component","audio"},{"type","overflow"}});
         translate("vc64_audio_buffer_exceptions", "",
-                  "gauge", stats.bufferUnderflows,
+                  "gauge", std::to_string(stats.bufferUnderflows),
                   {{"component","audio"},{"type","underflow"}});
 
         translate("vc64_audio_samples", "",
-                  "gauge", stats.consumedSamples,
+                  "gauge", std::to_string(stats.consumedSamples),
                   {{"component","audio"},{"type","consumed"}});
         translate("vc64_audio_samples", "",
-                  "gauge", stats.producedSamples,
+                  "gauge", std::to_string(stats.producedSamples),
                   {{"component","audio"},{"type","produced"}});
         translate("vc64_audio_samples", "",
-                  "gauge", stats.idleSamples,
+                  "gauge", std::to_string(stats.idleSamples),
                   {{"component","audio"},{"type","idle"}});
 
         translate("vc64_audio_fill_level", "",
-                  "gauge", stats.fillLevel,
+                  "gauge", std::to_string(stats.fillLevel),
                   {{"component","audio"}});
     }
 
