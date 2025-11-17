@@ -76,15 +76,9 @@ DapServer::disconnect()
 }
 
 void
-DapServer::didStart()
+DapServer::didSwitch(SrvState from, SrvState to)
 {
-
-}
-
-void
-DapServer::didStop()
-{
-
+    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
 }
 
 void
@@ -109,12 +103,6 @@ DapServer::didConnect()
 
         } catch (...) { };
     }
-}
-
-void
-DapServer::didDisconnect()
-{
-
 }
 
 void

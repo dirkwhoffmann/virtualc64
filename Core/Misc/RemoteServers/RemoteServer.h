@@ -56,12 +56,6 @@ protected:
     // Current configuration
     ServerConfig config = {};
 
-    // The server thread
-    std::thread serverThread;
-
-    // The current server state
-    SrvState state = SrvState::OFF;
-    
 
     //
     // Initializing
@@ -151,6 +145,7 @@ public:
 public:
 
     virtual SrvState getState() const = 0;
+
     bool isOff() const { return getState() == SrvState::OFF; }
     bool isStarting() const { return getState() == SrvState::STARTING; }
     bool isListening() const { return getState() == SrvState::LISTENING; }
@@ -171,12 +166,12 @@ private:
     // Shuts down the remote server
     virtual void stop() = 0;
 
-    // Disconnects the client
+    // Disconnects the client (if any)
     virtual void disconnect() throws = 0;
 
 
     //
-    // Delegation methods
+    // Delegation methods (called by the transpart layer)
     //
 
     void didSwitch(SrvState from, SrvState to);

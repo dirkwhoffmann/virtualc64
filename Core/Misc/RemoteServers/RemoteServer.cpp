@@ -29,7 +29,7 @@ RemoteServer::_dump(Category category, std::ostream &os) const
     if (category == Category::State) {
         
         os << tab("State");
-        os << SrvStateEnum::key(state) << std::endl;
+        os << SrvStateEnum::key(getState()) << std::endl;
     }
 }
 
@@ -42,8 +42,7 @@ RemoteServer::_powerOff()
 void
 RemoteServer::_didLoad()
 {
-    // Stop the server (will be restarted by the launch daemon in auto-run mode)
-    stop();
+    config.enable ? start() : stop();
 }
 
 i64

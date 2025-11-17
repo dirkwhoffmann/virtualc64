@@ -63,27 +63,9 @@ RpcServer::disconnect()
 }
 
 void
-RpcServer::didStart()
+RpcServer::didSwitch(SrvState from, SrvState to)
 {
-
-}
-
-void
-RpcServer::didStop()
-{
-
-}
-
-void
-RpcServer::didConnect()
-{
-
-}
-
-void
-RpcServer::didDisconnect()
-{
-
+    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
 }
 
 void

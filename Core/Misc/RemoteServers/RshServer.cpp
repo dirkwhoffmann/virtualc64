@@ -43,6 +43,12 @@ RshServer::checkOption(Opt opt, i64 value)
 }
 
 void
+RshServer::didSwitch(SrvState from, SrvState to)
+{
+    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
+}
+
+void
 RshServer::start()
 {
     tcp.start(config.port);

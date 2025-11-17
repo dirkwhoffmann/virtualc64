@@ -73,10 +73,11 @@ private:
     // Methods from TransportDelegate
     //
 
-    // virtual void didStart() override;
-    // virtual void didStop() override;
-    // virtual void didConnect() override;
-    // virtual void didDisconnect() override;
+    virtual void didSwitch(SrvState from, SrvState to) override;
+    virtual void didStart() override { }
+    virtual void didStop() override { }
+    virtual void didConnect() override { }
+    virtual void didDisconnect() override { }
     virtual void didReceive(const httplib::Request &req, httplib::Response &res) override;
 
 

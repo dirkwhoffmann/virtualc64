@@ -37,6 +37,12 @@ PromServer::checkOption(Opt opt, i64 value)
 }
 
 void
+PromServer::didSwitch(SrvState from, SrvState to)
+{
+    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
+}
+
+void
 PromServer::didReceive(const httplib::Request &req, httplib::Response &res)
 {
     std::ostringstream output;
