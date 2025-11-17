@@ -754,9 +754,6 @@ C64::update(CmdQueue &queue)
 
     // Inform the GUI about new RetroShell content
     if (retroShell.isDirty) { retroShell.isDirty = false; msgQueue.put(Msg::RSH_UPDATE); }
-
-    // Update subcomponents
-    remoteManager.update();
 }
 
 void

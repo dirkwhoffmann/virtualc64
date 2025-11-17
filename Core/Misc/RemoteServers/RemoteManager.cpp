@@ -99,40 +99,9 @@ RemoteManager::numErroneous() const
 }
 
 void
-RemoteManager::update()
-{
-    /*
-    if (frame++ % 32 != 0) return;
-
-    auto launchDaemon = [&](RemoteServer &server, ServerConfig &config) {
-
-        if (config.enable) {
-            if (server.isOff()) server.switchState(SrvState::WAITING);
-        } else {
-            if (!server.isOff()) server.stop();
-        }
-
-        if (server.canRun()) {
-            if (server.isWaiting()) {
-                server.start();
-            }
-        } else {
-            if (!server.isOff() && !server.isWaiting()) server.stop();
-        }
-    };
-
-    launchDaemon(rshServer, rshServer.config);
-    launchDaemon(rpcServer, rpcServer.config);
-    launchDaemon(dapServer, dapServer.config);
-    launchDaemon(promServer, promServer.config);
-    */
-}
-
-void
 RemoteManager::serviceServerEvent()
 {
-    // The server event slot is no longer used, as the launch demon is
-    // now run in update(). It is safe to remove the SRV_SLOT.
+    // The server event slot is not utilized, yet.
 }
 
 }

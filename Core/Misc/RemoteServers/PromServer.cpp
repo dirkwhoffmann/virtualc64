@@ -136,6 +136,7 @@ PromServer::didReceive(const httplib::Request &req, httplib::Response &res)
     res.set_content(output.str(), "text/plain");
 }
 
+/*
 void
 PromServer::switchState(SrvState newState)
 {
@@ -145,14 +146,12 @@ PromServer::switchState(SrvState newState)
     msgQueue.put(Msg::SRV_STATE, (i64)newState);
 }
 
-/*
 void
 PromServer::main()
 {
     http.main(config.port, "/metrics");
 }
-*/
-/*
+
 void
 PromServer::main()
 {

@@ -169,6 +169,7 @@ RemoteServer::disconnect()
 
 }
 
+/*
 void
 RemoteServer::switchState(SrvState newState)
 {
@@ -189,28 +190,35 @@ RemoteServer::switchState(SrvState newState)
         msgQueue.put(Msg::SRV_STATE, (i64)newState);
     }
 }
-
+*/
+/*
 void
 RemoteServer::handleError(const char *description)
 {
     switchState(SrvState::INVALID);
     retroShell << "Server Error: " << string(description) << '\n';
 }
+*/
 
 void
 RemoteServer::didSwitch(SrvState from, SrvState to)
 {
-    if (from == SrvState::STARTING && to == SrvState::LISTENING) {
-        didStart();
-    }
-    if (to == SrvState::OFF) {
-        didStop();
-    }
-    if (to == SrvState::CONNECTED) {
-        didConnect();
-    }
-    if (from == SrvState::CONNECTED) {
-        didDisconnect();
+    if (from != to) {
+
+        if (from == SrvState::STARTING && to == SrvState::LISTENING) {
+            didStart();
+        }
+        if (to == SrvState::OFF) {
+            didStop();
+        }
+        if (to == SrvState::CONNECTED) {
+            didConnect();
+        }
+        if (from == SrvState::CONNECTED) {
+            didDisconnect();
+        }
+
+        msgQueue.put(Msg::SRV_STATE, (i64)to);
     }
 }
 

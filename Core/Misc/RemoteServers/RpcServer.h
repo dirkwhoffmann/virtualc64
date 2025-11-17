@@ -79,9 +79,7 @@ private:
     //
 
     virtual SrvState getState() const override { return tcp.getState(); }
-    virtual void switchState(SrvState newState) override;
     virtual bool isOff() const override { return tcp.isOff(); }
-   // virtual bool isWaiting() const override { return tcp.isWaiting(); }
     virtual bool isStarting() const override { return tcp.isStarting(); }
     virtual bool isListening() const override { return tcp.isListening(); }
     virtual bool isConnected() const override { return tcp.isConnected(); }

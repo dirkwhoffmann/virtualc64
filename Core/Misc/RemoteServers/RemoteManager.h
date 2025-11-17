@@ -35,14 +35,10 @@ class RemoteManager final : public SubComponent, public Inspectable<RemoteManage
 
     };
 
-    // Frame counter
-    usize frame = 0;
-
 public:
     
     // The remote servers
     RshServer rshServer = RshServer(c64, isize(ServerType::RSH));
-    // RpcServer rpcServer = RpcServer(c64, isize(ServerType::RPC));
     RpcServer rpcServer = RpcServer(c64, isize(ServerType::RPC));
     DapServer dapServer = DapServer(c64, isize(ServerType::DAP));
     PromServer promServer = PromServer(c64, isize(ServerType::PROM));
@@ -123,8 +119,6 @@ public:
     //
     
 public:
-
-    void update();
 
     void serviceServerEvent();
 };

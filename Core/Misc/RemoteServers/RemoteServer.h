@@ -164,7 +164,7 @@ public:
     // Starting and stopping the server
     //
     
-private: // public:
+private:
 
     // Launch the remote server
     virtual void start() = 0;
@@ -175,11 +175,6 @@ private: // public:
     // Disconnects the client
     virtual void disconnect() throws = 0;
 
-protected:
-
-    // Switches the internal state
-    virtual void switchState(SrvState newState);
-
 
     //
     // Running the server
@@ -189,9 +184,6 @@ protected:
 
     // The main thread function
     virtual void main() throws { };
-
-    // Reports an error to the GUI
-    void handleError(const char *description);
 
 
     //

@@ -58,15 +58,6 @@ DapServer::_pause()
 }
 
 void
-DapServer::switchState(SrvState newState)
-{
-    tcp.switchState(newState);
-
-    // Inform the GUI
-    msgQueue.put(Msg::SRV_STATE, (i64)newState);
-}
-
-void
 DapServer::start()
 {
     tcp.start(config.port);
