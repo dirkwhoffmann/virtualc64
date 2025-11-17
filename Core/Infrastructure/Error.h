@@ -14,6 +14,7 @@
 #pragma once
 
 #include "ErrorTypes.h"
+#include "Macros.h"
 
 namespace vc64 {
 

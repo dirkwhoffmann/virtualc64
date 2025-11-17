@@ -18,7 +18,7 @@ namespace vc64 {
 void
 TcpTransport::disconnect()
 {
-    debug(SRV_DEBUG, "Disconnecting...\n");
+    debug(SRV_DEBUG, "Disconnecting TCP transport...\n");
 
     // Trigger an exception inside the server thread
     connection.close();
@@ -36,7 +36,6 @@ TcpTransport::main(u16 port, const string &endpoint)
 
         debug(SRV_DEBUG, "Server thread interrupted\n");
         delegate.didTerminate(err.what());
-        // handleError(err.what());
     }
 }
 
@@ -79,7 +78,7 @@ TcpTransport::mainLoop(u16 port)
             debug(SRV_DEBUG, "Main loop interrupted\n");
 
             // Handle error if we haven't been interrupted purposely
-            if (!isStopping()) delegate.didTerminate(err.what()); // handleError(err.what());
+            if (!isStopping()) delegate.didTerminate(err.what());
         }
     }
 

@@ -55,7 +55,7 @@ private:
 
 
     //
-    // Transmitting and processing packets
+    // Sending
     //
 
 public:

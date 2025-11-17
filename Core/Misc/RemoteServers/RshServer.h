@@ -14,6 +14,7 @@
 
 #include "RemoteServer.h"
 #include "Console.h"
+#include "StdioTransport.h"
 #include "TcpTransport.h"
 
 namespace vc64 {
@@ -23,7 +24,8 @@ class RshServer final : public RemoteServer, public ConsoleDelegate, public Tran
 public:
     
     using RemoteServer::RemoteServer;
-    TcpTransport tcp = TcpTransport(*this);
+    // TcpTransport tcp = TcpTransport(*this);
+    StdioTransport tcp = StdioTransport(*this);
 
     RshServer& operator= (const RshServer& other) {
 

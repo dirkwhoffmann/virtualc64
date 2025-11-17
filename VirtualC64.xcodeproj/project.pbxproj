@@ -14,6 +14,8 @@
 		500634622C0EF1A400D60D96 /* DatasetteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500634612C0EF1A400D60D96 /* DatasetteBase.cpp */; };
 		500634632C0EF1A400D60D96 /* DatasetteBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500634612C0EF1A400D60D96 /* DatasetteBase.cpp */; };
 		5007E1E826A70170000E7344 /* ParallelCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParallelCable.cpp */; };
+		5008784B2ECB680A0077F45F /* StdioTransport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5008784A2ECB68040077F45F /* StdioTransport.cpp */; };
+		5008784C2ECB680A0077F45F /* StdioTransport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5008784A2ECB68040077F45F /* StdioTransport.cpp */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
 		500A52B12DD4F93C00B06D23 /* BusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500A52B02DD4F93800B06D23 /* BusPanel.swift */; };
 		500C1C752965D10F00071AF3 /* StrWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BD2965C54200C4B27B /* StrWriter.cpp */; };
@@ -589,6 +591,8 @@
 		5007E1E626A70170000E7344 /* ParallelCable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ParallelCable.cpp; sourceTree = "<group>"; };
 		5007E1E726A70170000E7344 /* ParallelCable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParallelCable.h; sourceTree = "<group>"; };
 		5007E1E926A7029A000E7344 /* ParallelCableTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParallelCableTypes.h; sourceTree = "<group>"; };
+		500878492ECB67FA0077F45F /* StdioTransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StdioTransport.h; sourceTree = "<group>"; };
+		5008784A2ECB68040077F45F /* StdioTransport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StdioTransport.cpp; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		500A52B02DD4F93800B06D23 /* BusPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusPanel.swift; sourceTree = "<group>"; };
 		500C1C772965E7D300071AF3 /* PeddleDisassembler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleDisassembler.cpp; sourceTree = "<group>"; };
@@ -2177,6 +2181,8 @@
 				50A92A292EC860F300F90519 /* TransportTypes.h */,
 				50A92A1D2EC85E1400F90519 /* Transport.h */,
 				50A92A1E2EC85E1A00F90519 /* Transport.cpp */,
+				500878492ECB67FA0077F45F /* StdioTransport.h */,
+				5008784A2ECB68040077F45F /* StdioTransport.cpp */,
 				50A92A252EC85E2D00F90519 /* TcpTransport.h */,
 				50A92A262EC85E3C00F90519 /* TcpTransport.cpp */,
 				50A92A212EC85E1D00F90519 /* HttpTransport.h */,
@@ -2529,6 +2535,7 @@
 				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
 				508C1E732C0C59A20097473C /* PaddleBase.cpp in Sources */,
 				50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */,
+				5008784C2ECB680A0077F45F /* StdioTransport.cpp in Sources */,
 				50A194942BDA709D0046849E /* CPUBase.cpp in Sources */,
 				50726F532961C9940031F2F5 /* SerialPort.cpp in Sources */,
 				50726F8D2961CA0D0031F2F5 /* ActionReplay.cpp in Sources */,
@@ -2781,6 +2788,7 @@
 				50D20B752508F6D70088E8F2 /* VICIICycles.cpp in Sources */,
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
 				504C439124AF29AC00E69CAE /* VICIIMemory.cpp in Sources */,
+				5008784B2ECB680A0077F45F /* StdioTransport.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				505F456C2E9698A200418105 /* RomSettings.swift in Sources */,
 				505184DE24F23484002C6124 /* MyControllerSnapshots.swift in Sources */,
