@@ -168,17 +168,6 @@ private:
 
     // Disconnects the client (if any)
     virtual void disconnect() throws = 0;
-
-
-    //
-    // Delegation methods (called by the transpart layer)
-    //
-
-    void didSwitch(SrvState from, SrvState to);
-    virtual void didStart() { };
-    virtual void didStop() { };
-    virtual void didConnect() { };
-    virtual void didDisconnect() { };
 };
 
 }

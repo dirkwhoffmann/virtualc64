@@ -20,17 +20,13 @@ namespace vc64 {
 
 class Transport : public CoreObject {
 
-protected:
+    // The server thread
+    std::thread serverThread;
 
-    virtual const char *objectName() const { return "Transport"; }
+protected:
 
     // Transport delegate
     TransportDelegate &delegate;
-
-private:
-
-    // The server thread
-    std::thread serverThread;
 
     // The current server state
     SrvState state = SrvState::OFF;
@@ -44,6 +40,8 @@ public:
 
     Transport(TransportDelegate &delegate) : delegate(delegate) { }
     ~Transport();
+
+    virtual const char *objectName() const override { return "Transport"; }
 
     Transport& operator= (const Transport& other) {
 

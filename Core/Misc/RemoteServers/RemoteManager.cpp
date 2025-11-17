@@ -15,6 +15,8 @@
 #include "IOUtils.h"
 #include "C64.h"
 
+#include <util.h>
+
 namespace vc64 {
 
 RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
@@ -26,6 +28,17 @@ RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
         &dapServer,
         &promServer,
     };
+
+    // REMOVE ASAP
+    /*
+    if (c64.objid == 0) {
+    int master = posix_openpt(O_RDWR);
+    grantpt(master);
+    unlockpt(master);
+    char *slave = ptsname(master);
+    printf("Connect via: screen %s\n", slave);
+    }
+    */
 }
 
 void

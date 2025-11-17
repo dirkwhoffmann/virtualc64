@@ -35,31 +35,55 @@ RpcServer::_dump(Category category, std::ostream &os) const
 }
 
 void
-RpcServer::checkOption(Opt opt, i64 value)
+RpcServer::setOption(Opt opt, i64 value)
 {
-    if (opt == Opt::SRV_TRANSPORT && value == i64(TransportProtocol::HTTP)) {
-        throw AppError(Fault::OPT_UNSUPPORTED, "This server requires a raw TCP connection.");
+    switch (opt) {
+
+        case Opt::SRV_TRANSPORT:
+
+            // Stop the server if the transport protocol changes
+            if (TransportProtocol(value) != config.transport) { stop(); }
+            break;
+
+        default:
+            break;
     }
 
-    RemoteServer::checkOption(opt, value);
+    RemoteServer::setOption(opt, value);
 }
 
 void
 RpcServer::start()
 {
-    tcp.start(config.port);
+    switch (config.transport) {
+
+        case TransportProtocol::TCP:
+
+            tcp.start(config.port);
+            break;
+
+        case TransportProtocol::HTTP:
+
+            http.start(config.port);
+            break;
+
+        default:
+            break;
+    }
 }
 
 void
 RpcServer::stop()
 {
     tcp.stop();
+    http.stop();
 }
 
 void
 RpcServer::disconnect()
 {
     tcp.disconnect();
+    http.disconnect();
 }
 
 void

@@ -33,7 +33,7 @@ const long SERVER_ERROR     = -32000; // Reserved for implementation-defined ser
 class RpcServer final : public RemoteServer, public ConsoleDelegate, public TransportDelegate {
 
     TcpTransport tcp = TcpTransport(*this);
-    // HttpTransport http = HttpTransport(*this);
+    HttpTransport http = HttpTransport(*this);
 
 public:
 
@@ -71,7 +71,7 @@ protected:
 
 private:
 
-    void checkOption(Opt opt, i64 value) override;
+    void setOption(Opt opt, i64 value) override;
 
 
     //
@@ -79,7 +79,6 @@ private:
     //
 
     virtual SrvState getState() const override { return tcp.getState(); }
-
     virtual void start() override;
     virtual void stop() override;
     virtual void disconnect() override;

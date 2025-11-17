@@ -60,9 +60,6 @@ private:
 
 public:
 
-    // Receives a packet
-    // string receive() throws;
-
     // Sends a packet
     void send(const string &payload) throws;
     void send(char payload) throws;
