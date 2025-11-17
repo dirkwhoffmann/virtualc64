@@ -25,7 +25,6 @@ namespace vc64 {
 enum class SrvState : long
 {
     OFF,            // The server is inactive
-    // WAITING,        // The server is waiting for the launch condition to be met
     STARTING,       // The server is starting up
     LISTENING,      // The server is waiting for a client to connect
     CONNECTED,      // The server is connected to a client
@@ -60,6 +59,7 @@ struct SrvStateEnum : Reflection<SrvStateEnum, SrvState>
 
 enum class TransportProtocol
 {
+    STDIO,
     TCP,
     HTTP
 };
@@ -73,6 +73,7 @@ struct TransportProtocolEnum : Reflection<TransportProtocolEnum, TransportProtoc
     {
         switch (value) {
 
+            case TransportProtocol::STDIO:  return "STDIO";
             case TransportProtocol::TCP:    return "TCP";
             case TransportProtocol::HTTP:   return "HTTP";
         }

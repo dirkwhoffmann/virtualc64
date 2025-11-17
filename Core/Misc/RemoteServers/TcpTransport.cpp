@@ -90,9 +90,6 @@ TcpTransport::sessionLoop()
 {
     switchState(SrvState::CONNECTED);
 
-    numReceived = 0;
-    numSent = 0;
-
     try {
 
         // Receive and process packets
@@ -109,9 +106,6 @@ TcpTransport::sessionLoop()
             switchState(SrvState::LISTENING);
         }
     }
-
-    numReceived = 0;
-    numSent = 0;
 
     connection.close();
 }
@@ -138,9 +132,6 @@ TcpTransport::send(const string &payload)
     if (isConnected()) {
 
         connection.send(payload);
-
-        // doSend(packet);
-        // msgQueue.put(Msg::SRV_SEND, ++numSent);
     }
 }
 

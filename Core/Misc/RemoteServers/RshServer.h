@@ -22,10 +22,15 @@ namespace vc64 {
 class RshServer final : public RemoteServer, public ConsoleDelegate, public TransportDelegate {
 
 public:
-    
+
+    // Supported protocol
+    StdioTransport stdio = StdioTransport(*this);
+    TcpTransport tcp = TcpTransport(*this);
+
+    // Returns the currently selected protocol
+    Transport &transport();
+
     using RemoteServer::RemoteServer;
-    // TcpTransport tcp = TcpTransport(*this);
-    StdioTransport tcp = StdioTransport(*this);
 
     RshServer& operator= (const RshServer& other) {
 
@@ -59,7 +64,7 @@ private:
 
     void checkOption(Opt opt, i64 value) override;
 
-    
+
     //
     // Methods from RemoteServer
     //

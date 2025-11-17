@@ -19,24 +19,21 @@ namespace vc64 {
 
 class TcpTransport : public Transport {
 
-    using Transport::Transport;
-
-protected:
-
-    TcpTransport& operator= (const TcpTransport& other) {
-
-        Transport::operator = (other);
-        return *this;
-    }
-
     // Sockets
     Socket listener;
     Socket connection;
 
     // Number of transmitted packages
-    isize numSent = 0;
-    isize numReceived = 0;
+    // isize numSent = 0;
+    // isize numReceived = 0;
 
+    using Transport::Transport;
+
+    TcpTransport& operator=(const TcpTransport& other) {
+
+        Transport::operator=(other);
+        return *this;
+    }
 
     //
     // Methods from Transport

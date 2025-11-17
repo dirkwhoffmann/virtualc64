@@ -18,6 +18,19 @@
 
 namespace vc64 {
 
+Transport &
+RshServer::transport()
+{
+    switch (config.transport) {
+
+        case TransportProtocol::STDIO: return stdio;
+        case TransportProtocol::TCP:   return tcp;
+
+        default:
+            fatalError;
+    }
+}
+
 void
 RshServer::_initialize()
 {
@@ -35,8 +48,11 @@ RshServer::_dump(Category category, std::ostream &os) const
 void
 RshServer::checkOption(Opt opt, i64 value)
 {
-    if (opt == Opt::SRV_TRANSPORT && value == i64(TransportProtocol::HTTP)) {
-        throw AppError(Fault::OPT_UNSUPPORTED, "This server requires a raw TCP connection.");
+    if (opt == Opt::SRV_TRANSPORT) {
+
+        if (value == i64(TransportProtocol::HTTP)) {
+            throw AppError(Fault::OPT_UNSUPPORTED, "Unsupported protocol: HTTP");
+        }
     }
 
     RemoteServer::checkOption(opt, value);
@@ -51,19 +67,19 @@ RshServer::didSwitch(SrvState from, SrvState to)
 void
 RshServer::start()
 {
-    tcp.start(config.port);
+    transport().start(config.port);
 }
 
 void
 RshServer::stop()
 {
-    tcp.stop();
+    transport().stop();
 }
 
 void
 RshServer::disconnect()
 {
-    tcp.disconnect();
+    transport().disconnect();
 }
 
 void
@@ -82,21 +98,23 @@ void
 RshServer::didConnect()
 {
     if (config.verbose) {
-        
+
+        auto &out = tcp; //  transport();
+
         try {
 
-            tcp << "VirtualC64 RetroShell Remote Server ";
-            tcp << C64::build() << '\n';
-            tcp << '\n';
+            out << "VirtualC64 RetroShell Remote Server ";
+            out << C64::build() << '\n';
+            out << '\n';
 
-            tcp << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-            tcp << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
-            tcp << '\n';
+            out << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+            out << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+            out << '\n';
 
-            tcp << "Type 'help' for help.\n";
-            tcp << '\n';
+            out << "Type 'help' for help.\n";
+            out << '\n';
 
-            tcp << retroShell.prompt();
+            out << retroShell.prompt();
 
         } catch (...) { };
     }
@@ -122,65 +140,6 @@ RshServer::didReceive(const string &payload)
         .input = trimmed
     });
 }
-
-/*
-string
-RshServer::doReceive()
-{
-    string payload = connection.recv();
-    
-    // Remove LF and CR (if present)
-    payload = util::rtrim(payload, "\n\r");
-
-    // Ask the client to delete the input (will be replicated by RetroShell)
-    // connection.send("\033[A\33[2K\r");
-
-    return payload;
-}
-*/
-
-/*
-void
-RshServer::doSend(const string &payload)
-{
-    string mapped;
-    
-    for (auto c : payload) {
-        
-        switch (c) {
-                
-            case '\r':
-
-                mapped += "\33[2K\r";
-                break;
-
-            case '\n':
-
-                mapped += "\n";
-                break;
-
-            default:
-                
-                if (isprint(c)) mapped += c;
-                break;
-        }
-    }
-    
-    connection.send(mapped);
-}
-*/
-
-/*
-void
-RshServer::doProcess(const string &payload)
-{
-    retroShell.asyncExec(InputLine {
-
-        .type = InputLine::Source::RSH,
-        .input = payload
-    });
-}
-*/
 
 void
 RshServer::willExecute(const InputLine &input)

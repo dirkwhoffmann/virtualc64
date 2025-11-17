@@ -128,7 +128,11 @@ public:
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt option, i64 value) override;
 
+    bool useStdio() { return config.transport == TransportProtocol::STDIO; }
+    bool useTcp() { return config.transport == TransportProtocol::TCP; }
+    bool useHttp() { return config.transport == TransportProtocol::HTTP; }
 
+    
     //
     // Methods from Inspectable
     //

@@ -99,13 +99,14 @@ StdioTransport::main(u16 port, const string &endpoint)
     try {
 
         sessionLoop();
-        switchState(SrvState::OFF);
 
     } catch (std::exception &err) {
 
         debug(SRV_DEBUG, "Stdio server thread interrupted\n");
         delegate.didTerminate(err.what());
     }
+
+    switchState(SrvState::OFF);
 }
 
 void

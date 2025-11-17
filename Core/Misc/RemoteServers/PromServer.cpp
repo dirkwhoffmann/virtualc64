@@ -29,8 +29,10 @@ PromServer::_dump(Category category, std::ostream &os) const
 void
 PromServer::checkOption(Opt opt, i64 value)
 {
-    if (opt == Opt::SRV_TRANSPORT && value == i64(TransportProtocol::TCP)) {
-        throw AppError(Fault::OPT_UNSUPPORTED, "This server requires a HTTP connection.");
+    if (opt == Opt::SRV_TRANSPORT && value != i64(TransportProtocol::HTTP)) {
+
+        auto protocol = TransportProtocolEnum::key(TransportProtocol(value));
+        throw AppError(Fault::OPT_UNSUPPORTED, protocol);
     }
 
     RemoteServer::checkOption(opt, value);

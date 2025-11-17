@@ -34,6 +34,7 @@ RpcServer::_dump(Category category, std::ostream &os) const
     RemoteServer::_dump(category, os);
 }
 
+/*
 void
 RpcServer::setOption(Opt opt, i64 value)
 {
@@ -51,6 +52,7 @@ RpcServer::setOption(Opt opt, i64 value)
 
     RemoteServer::setOption(opt, value);
 }
+*/
 
 void
 RpcServer::start()

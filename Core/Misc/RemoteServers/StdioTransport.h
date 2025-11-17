@@ -48,8 +48,6 @@ class StdioTransport : public Transport {
     Stdio stdio;
 
     using Transport::Transport;
-    
-protected:
 
     StdioTransport& operator=(const StdioTransport &other) {
 
@@ -57,25 +55,29 @@ protected:
         return *this;
     }
 
-public:
 
     //
     // Methods from Transport
     //
+
+public:
 
     virtual void disconnect() override;
     void main(u16 port = 0, const string &endpoint = "") override;
 
 private:
 
+    // Inner loop (called from main)
     void sessionLoop();
 
-public:
 
     //
     // Sending
     //
 
+public:
+
+    // Sends a packet
     void send(const string &payload) throws;
     void send(char payload) throws;
     void send(int payload) throws;

@@ -108,8 +108,20 @@ RemoteServer::setOption(Opt opt, i64 value)
             return;
             
         case Opt::SRV_TRANSPORT:
-            
-            config.transport = (TransportProtocol)value;
+
+            if (config.transport != (TransportProtocol)value) {
+
+                if (isOff()) {
+
+                    config.transport = (TransportProtocol)value;
+
+                } else {
+
+                    stop();
+                    config.transport = (TransportProtocol)value;
+                    start();
+                }
+            }
             return;
 
         case Opt::SRV_VERBOSE:

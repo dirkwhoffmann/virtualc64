@@ -12,7 +12,7 @@ RpcHttpServer.cpp
 PromServer.cpp
 Socket.cpp
 Transport.cpp
+StdioTransport.cpp
 TcpTransport.cpp
 HttpTransport.cpp
-
 )

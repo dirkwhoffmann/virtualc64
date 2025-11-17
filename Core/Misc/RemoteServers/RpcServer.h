@@ -71,7 +71,7 @@ protected:
 
 private:
 
-    void setOption(Opt opt, i64 value) override;
+    // void setOption(Opt opt, i64 value) override;
 
 
     //
