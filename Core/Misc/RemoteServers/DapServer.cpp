@@ -76,12 +76,6 @@ DapServer::disconnect()
 }
 
 void
-DapServer::main()
-{
-    tcp.main(config.port);
-}
-
-void
 DapServer::didStart()
 {
 

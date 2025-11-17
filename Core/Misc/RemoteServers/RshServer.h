@@ -63,17 +63,9 @@ private:
     //
 
     virtual SrvState getState() const override { return tcp.getState(); }
-    virtual bool isOff() const override { return tcp.isOff(); }
-    virtual bool isStarting() const override { return tcp.isStarting(); }
-    virtual bool isListening() const override { return tcp.isListening(); }
-    virtual bool isConnected() const override { return tcp.isConnected(); }
-    virtual bool isStopping() const override { return tcp.isStopping(); }
-    virtual bool isErroneous() const override { return tcp.isErroneous(); }
-
     virtual void start() override;
     virtual void stop() override;
     virtual void disconnect() override;
-    virtual void main() override;
 
 
     //

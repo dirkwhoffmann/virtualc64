@@ -150,14 +150,13 @@ public:
     
 public:
 
-    virtual SrvState getState() const { return state; }
-    virtual bool isOff() const { return state == SrvState::OFF; }
-    // virtual bool isWaiting() const { return state == SrvState::WAITING; }
-    virtual bool isStarting() const { return state == SrvState::STARTING; }
-    virtual bool isListening() const { return state == SrvState::LISTENING; }
-    virtual bool isConnected() const { return state == SrvState::CONNECTED; }
-    virtual bool isStopping() const { return state == SrvState::STOPPING; }
-    virtual bool isErroneous() const { return state == SrvState::INVALID; }
+    virtual SrvState getState() const = 0;
+    bool isOff() const { return getState() == SrvState::OFF; }
+    bool isStarting() const { return getState() == SrvState::STARTING; }
+    bool isListening() const { return getState() == SrvState::LISTENING; }
+    bool isConnected() const { return getState() == SrvState::CONNECTED; }
+    bool isStopping() const { return getState() == SrvState::STOPPING; }
+    bool isErroneous() const { return getState() == SrvState::INVALID; }
 
     
     //
@@ -174,16 +173,6 @@ private:
 
     // Disconnects the client
     virtual void disconnect() throws = 0;
-
-
-    //
-    // Running the server
-    //
-
-protected:
-
-    // The main thread function
-    virtual void main() throws { };
 
 
     //

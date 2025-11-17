@@ -64,13 +64,6 @@ private:
     //
 
     virtual SrvState getState() const override { return http.getState(); }
-    virtual bool isOff() const override { return http.isOff(); }
-    virtual bool isStarting() const override { return http.isStarting(); }
-    virtual bool isListening() const override { return http.isListening(); }
-    virtual bool isConnected() const override { return http.isConnected(); }
-    virtual bool isStopping() const override { return http.isStopping(); }
-    virtual bool isErroneous() const override { return http.isErroneous(); }
-
     virtual void start() override { http.start(config.port, "/metrics"); }
     virtual void stop() override { http.stop(); }
     virtual void disconnect() override { http.disconnect(); }

@@ -63,12 +63,6 @@ RpcServer::disconnect()
 }
 
 void
-RpcServer::main()
-{
-    tcp.main(config.port);
-}
-
-void
 RpcServer::didStart()
 {
 

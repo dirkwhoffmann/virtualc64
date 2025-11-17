@@ -61,12 +61,6 @@ RshServer::disconnect()
 }
 
 void
-RshServer::main()
-{
-    tcp.main(config.port);
-}
-
-void
 RshServer::didStart()
 {
 
