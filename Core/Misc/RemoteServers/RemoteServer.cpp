@@ -16,12 +16,6 @@
 
 namespace vc64 {
 
-RemoteServer::~RemoteServer() {
-
-    debug(SRV_DEBUG, "Shutting down\n");
-    try { stop(); } catch(...) { }
-}
-
 void
 RemoteServer::_dump(Category category, std::ostream &os) const
 {
@@ -94,6 +88,7 @@ RemoteServer::setOption(Opt opt, i64 value)
         case Opt::SRV_ENABLE:
 
             config.enable = (bool)value;
+            config.enable ? start() : stop();
             return;
 
         case Opt::SRV_PORT:

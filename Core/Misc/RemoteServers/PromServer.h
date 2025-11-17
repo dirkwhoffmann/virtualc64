@@ -44,6 +44,13 @@ protected:
 
 
     //
+    // Methods from CoreComponent
+    //
+
+    void _halt() override { try { stop(); } catch(...) { } };
+
+
+    //
     // Methods from Configurable
     //
 
@@ -59,7 +66,7 @@ private:
     virtual SrvState getState() const override { return http.getState(); }
     virtual void switchState(SrvState newState) override;
     virtual bool isOff() const override { return http.isOff(); }
-    virtual bool isWaiting() const override { return http.isWaiting(); }
+    // virtual bool isWaiting() const override { return http.isWaiting(); }
     virtual bool isStarting() const override { return http.isStarting(); }
     virtual bool isListening() const override { return http.isListening(); }
     virtual bool isConnected() const override { return http.isConnected(); }
@@ -69,7 +76,6 @@ private:
     virtual void start() override { http.start(config.port, "/metrics"); }
     virtual void stop() override { http.stop(); }
     virtual void disconnect() override { http.disconnect(); }
-    virtual bool canRun() override { return true; }
     // virtual void main() override;
 
 

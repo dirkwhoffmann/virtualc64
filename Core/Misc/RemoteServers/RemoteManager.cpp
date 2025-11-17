@@ -101,6 +101,7 @@ RemoteManager::numErroneous() const
 void
 RemoteManager::update()
 {
+    /*
     if (frame++ % 32 != 0) return;
 
     auto launchDaemon = [&](RemoteServer &server, ServerConfig &config) {
@@ -124,6 +125,7 @@ RemoteManager::update()
     launchDaemon(rpcServer, rpcServer.config);
     launchDaemon(dapServer, dapServer.config);
     launchDaemon(promServer, promServer.config);
+    */
 }
 
 void

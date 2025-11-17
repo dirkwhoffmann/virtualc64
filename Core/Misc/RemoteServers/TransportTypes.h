@@ -25,7 +25,7 @@ namespace vc64 {
 enum class SrvState : long
 {
     OFF,            // The server is inactive
-    WAITING,        // The server is waiting for the launch condition to be met
+    // WAITING,        // The server is waiting for the launch condition to be met
     STARTING,       // The server is starting up
     LISTENING,      // The server is waiting for a client to connect
     CONNECTED,      // The server is connected to a client
@@ -43,7 +43,7 @@ struct SrvStateEnum : Reflection<SrvStateEnum, SrvState>
         switch (value) {
 
             case SrvState::OFF:         return "OFF";
-            case SrvState::WAITING:     return "WAITING";
+            // case SrvState::WAITING:     return "WAITING";
             case SrvState::STARTING:    return "STARTING";
             case SrvState::LISTENING:   return "LISTENING";
             case SrvState::CONNECTED:   return "CONNECTED";

@@ -38,7 +38,7 @@ class RpcServer final : public RemoteServer, public ConsoleDelegate, public Tran
 public:
 
     using RemoteServer::RemoteServer;
-
+    
 protected:
 
     RpcServer& operator= (const RpcServer& other) {
@@ -59,6 +59,13 @@ protected:
 
 
     //
+    // Methods from CoreComponent
+    //
+
+    void _halt() override { try { stop(); } catch(...) { } };
+
+    
+    //
     // Methods from Configurable
     //
 
@@ -74,7 +81,7 @@ private:
     virtual SrvState getState() const override { return tcp.getState(); }
     virtual void switchState(SrvState newState) override;
     virtual bool isOff() const override { return tcp.isOff(); }
-    virtual bool isWaiting() const override { return tcp.isWaiting(); }
+   // virtual bool isWaiting() const override { return tcp.isWaiting(); }
     virtual bool isStarting() const override { return tcp.isStarting(); }
     virtual bool isListening() const override { return tcp.isListening(); }
     virtual bool isConnected() const override { return tcp.isConnected(); }
@@ -84,7 +91,6 @@ private:
     virtual void start() override;
     virtual void stop() override;
     virtual void disconnect() override;
-    virtual bool canRun() override { return true; }
     virtual void main() override;
 
     

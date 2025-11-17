@@ -79,7 +79,7 @@ protected:
     //
     
 private:
-    
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
         
 public:

@@ -70,7 +70,6 @@ protected:
 public:
     
     using SubComponent::SubComponent;
-    ~RemoteServer();
 
     RemoteServer& operator= (const RemoteServer& other) {
 
@@ -153,7 +152,7 @@ public:
 
     virtual SrvState getState() const { return state; }
     virtual bool isOff() const { return state == SrvState::OFF; }
-    virtual bool isWaiting() const { return state == SrvState::WAITING; }
+    // virtual bool isWaiting() const { return state == SrvState::WAITING; }
     virtual bool isStarting() const { return state == SrvState::STARTING; }
     virtual bool isListening() const { return state == SrvState::LISTENING; }
     virtual bool isConnected() const { return state == SrvState::CONNECTED; }
@@ -180,11 +179,6 @@ protected:
 
     // Switches the internal state
     virtual void switchState(SrvState newState);
-
-private:
-    
-    // Indicates if the server is ready to launch
-    virtual bool canRun() { return true; }
 
 
     //

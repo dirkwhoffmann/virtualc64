@@ -24,7 +24,7 @@ Transport::~Transport() {
 void
 Transport::start(u16 port, const string &endpoint)
 {
-    if (!(isOff() || isWaiting())) return;
+    if (!isOff()) return;
 
     debug(SRV_DEBUG, "Starting server...\n");
     switchState(SrvState::STARTING);

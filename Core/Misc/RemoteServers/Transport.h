@@ -59,7 +59,7 @@ public:
 
     SrvState getState() const { return state; }
     bool isOff() const { return state == SrvState::OFF; }
-    bool isWaiting() const { return state == SrvState::WAITING; }
+    // bool isWaiting() const { return state == SrvState::WAITING; }
     bool isStarting() const { return state == SrvState::STARTING; }
     bool isListening() const { return state == SrvState::LISTENING; }
     bool isConnected() const { return state == SrvState::CONNECTED; }
@@ -84,11 +84,6 @@ public:
 
     // Switches the internal state
     void switchState(SrvState newState);
-
-private:
-
-    // Indicates if the server is ready to launch
-    virtual bool canRun() { return true; }
 
 
     //
