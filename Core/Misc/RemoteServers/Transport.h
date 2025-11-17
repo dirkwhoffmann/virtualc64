@@ -63,13 +63,13 @@ public:
     bool isStopping() const { return state == SrvState::STOPPING; }
     bool isErroneous() const { return state == SrvState::INVALID; }
 
-    
+
     //
     // Starting and stopping the server
     //
 
 public:
-    
+
     // Launch the remote server
     virtual void start(u16 port, const string &endpoint = "") throws;
 
@@ -82,15 +82,30 @@ public:
     // Switches the internal state
     void switchState(SrvState newState);
 
+    // The main thread function
+    virtual void main(u16 port, const string &endpoint = "") throws { };
+
 
     //
-    // Running the server
+    // Sending packets
     //
 
 public:
 
-    // The main thread function
-    virtual void main(u16 port, const string &endpoint = "") throws { };
+    // Sends a packet
+    virtual void send(const string &payload) = 0;
+    void send(char payload);
+    void send(int payload);
+    void send(long payload);
+    void send(std::stringstream &payload);
+
+    // Operator overloads
+    Transport &operator<<(char payload) { send(payload); return *this; }
+    Transport &operator<<(const string &payload) { send(payload); return *this; }
+    Transport &operator<<(int payload) { send(payload); return *this; }
+    Transport &operator<<(long payload) { send(payload); return *this; }
+    Transport &operator<<(std::stringstream &payload) { send(payload); return *this; }
+
 };
 
 }

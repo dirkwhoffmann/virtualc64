@@ -58,17 +58,7 @@ private:
 public:
 
     // Sends a packet
-    void send(const string &payload) throws;
-    void send(char payload) throws;
-    void send(int payload) throws;
-    void send(long payload) throws;
-    void send(std::stringstream &payload) throws;
-
-    // Operator overloads
-    TcpTransport &operator<<(char payload) { send(payload); return *this; }
-    TcpTransport &operator<<(const string &payload) { send(payload); return *this; }
-    TcpTransport &operator<<(int payload) { send(payload); return *this; }
-    TcpTransport &operator<<(long payload) { send(payload); return *this; }
-    TcpTransport &operator<<(std::stringstream &payload) { send(payload); return *this; }
+    void send(const string &payload) override;
 };
+
 }

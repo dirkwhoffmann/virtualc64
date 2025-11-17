@@ -97,27 +97,24 @@ RshServer::didStop()
 void
 RshServer::didConnect()
 {
-    if (config.verbose) {
+    auto &out = transport();
 
-        auto &out = tcp; //  transport();
+    try {
 
-        try {
+        out << "VirtualC64 RetroShell Remote Server ";
+        out << C64::build() << '\n';
+        out << '\n';
 
-            out << "VirtualC64 RetroShell Remote Server ";
-            out << C64::build() << '\n';
-            out << '\n';
+        out << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+        out << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+        out << '\n';
 
-            out << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-            out << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
-            out << '\n';
+        out << "Type 'help' for help.\n";
+        out << '\n';
 
-            out << "Type 'help' for help.\n";
-            out << '\n';
+        out << retroShell.prompt();
 
-            out << retroShell.prompt();
-
-        } catch (...) { };
-    }
+    } catch (...) { };
 }
 
 void
@@ -144,25 +141,31 @@ RshServer::didReceive(const string &payload)
 void
 RshServer::willExecute(const InputLine &input)
 {
+    auto &out = transport();
+
     // Echo the command if it came from somewhere else
-    if (!input.isRshCommand()) {tcp << input.input << '\n'; }
+    if (!input.isRshCommand()) { out << input.input << '\n'; }
 }
 
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss)
 {
-    tcp << '\n' << ss.str() << '\n';
-    tcp << retroShell.prompt();
+    auto &out = transport();
+
+    out << '\n' << ss.str() << '\n';
+    out << retroShell.prompt();
 }
 
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss, std::exception &e)
 {
-    // Echo the command if it came from somewhere else
-    if (!input.isRpcCommand()) { tcp << input.input << '\n'; }
+    auto &out = transport();
 
-    tcp << '\n' << ss.str() << e.what() << '\n';
-    tcp << retroShell.prompt();
+    // Echo the command if it came from somewhere else
+    if (!input.isRpcCommand()) { out << input.input << '\n'; }
+
+    out << '\n' << ss.str() << e.what() << '\n';
+    out << retroShell.prompt();
 }
 
 }

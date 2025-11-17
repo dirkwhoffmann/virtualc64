@@ -15,8 +15,6 @@
 #include "IOUtils.h"
 #include "C64.h"
 
-#include <util.h>
-
 namespace vc64 {
 
 RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)

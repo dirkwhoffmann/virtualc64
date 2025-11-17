@@ -135,32 +135,4 @@ TcpTransport::send(const string &payload)
     }
 }
 
-void
-TcpTransport::send(char payload)
-{
-    send(string(1, payload));
-}
-
-void
-TcpTransport::send(int payload)
-{
-    send(std::to_string(payload));
-}
-
-void
-TcpTransport::send(long payload)
-{
-    send(std::to_string(payload));
-}
-
-
-void
-TcpTransport::send(std::stringstream &payload)
-{
-    string line;
-    while(std::getline(payload, line)) {
-        send(line + "\n");
-    }
-}
-
 }

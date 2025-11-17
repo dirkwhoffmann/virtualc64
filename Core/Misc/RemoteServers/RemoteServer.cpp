@@ -50,10 +50,10 @@ RemoteServer::getOption(Opt option) const
 {
     switch (option) {
             
-        case Opt::SRV_ENABLE:    return config.enable;
-        case Opt::SRV_PORT:      return config.port;
-        case Opt::SRV_TRANSPORT:  return (i64)config.transport;
-        case Opt::SRV_VERBOSE:   return config.verbose;
+        case Opt::SRV_ENABLE:       return (i64)config.enable;
+        case Opt::SRV_PORT:         return (i64)config.port;
+        case Opt::SRV_TRANSPORT:    return (i64)config.transport;
+        case Opt::SRV_VERBOSE:      return (i64)config.verbose;
 
         default:
             fatalError;

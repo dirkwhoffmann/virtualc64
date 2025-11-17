@@ -96,6 +96,8 @@ StdioTransport::disconnect()
 void
 StdioTransport::main(u16 port, const string &endpoint)
 {
+    printf("StdioTransport::main\n");
+
     try {
 
         sessionLoop();

@@ -69,7 +69,9 @@ private:
     // Methods from RemoteServer
     //
 
-    virtual SrvState getState() const override { return tcp.getState(); }
+    SrvState getState() const override {
+        return const_cast<RshServer*>(this)->transport().getState();
+    }
     virtual void start() override;
     virtual void stop() override;
     virtual void disconnect() override;

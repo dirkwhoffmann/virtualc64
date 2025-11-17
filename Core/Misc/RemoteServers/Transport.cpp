@@ -93,6 +93,31 @@ Transport::switchState(SrvState newState)
     }
 }
 
+void
+Transport::send(char payload)
+{
+    send(string(1, payload));
+}
 
+void
+Transport::send(int payload)
+{
+    send(std::to_string(payload));
+}
+
+void
+Transport::send(long payload)
+{
+    send(std::to_string(payload));
+}
+
+void
+Transport::send(std::stringstream &payload)
+{
+    string line;
+    while(std::getline(payload, line)) {
+        send(line + "\n");
+    }
+}
 
 }

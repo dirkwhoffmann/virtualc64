@@ -49,8 +49,9 @@ protected:
 
 public:
 
-    virtual void disconnect() override;
+    void disconnect() override;
     void main(u16 port, const string &endpoint) override;
+    void send(const string &payload) override { fatalError; }
 };
 
 }
