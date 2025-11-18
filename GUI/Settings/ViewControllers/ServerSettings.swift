@@ -9,19 +9,41 @@
 
 class ServerSettingsViewController: SettingsViewController {
 
-    // Drive
+    // Remote Shell server
     @IBOutlet weak var rshEnable: NSButton!
-    @IBOutlet weak var rshStatus: NSTextField!
+    @IBOutlet weak var rshTransport: NSPopUpButton!
     @IBOutlet weak var rshPort: RangeField!
+    @IBOutlet weak var rshPath: NSTextField!
+    @IBOutlet weak var rshStatusIcon: NSImageView!
+    @IBOutlet weak var rshStatusText: NSTextField!
+    @IBOutlet weak var rshInfo: NSTextField!
+
+    // RPC server
     @IBOutlet weak var rpcEnable: NSButton!
-    @IBOutlet weak var rpcStatus: NSTextField!
+    @IBOutlet weak var rpcTransport: NSPopUpButton!
     @IBOutlet weak var rpcPort: RangeField!
+    @IBOutlet weak var rpcPath: NSTextField!
+    @IBOutlet weak var rpcStatusIcon: NSImageView!
+    @IBOutlet weak var rpcStatusText: NSTextField!
+    @IBOutlet weak var rpcInfo: NSTextField!
+
+    // DAP server
     @IBOutlet weak var dapEnable: NSButton!
-    @IBOutlet weak var dapStatus: NSTextField!
+    @IBOutlet weak var dapTransport: NSPopUpButton!
     @IBOutlet weak var dapPort: RangeField!
+    @IBOutlet weak var dapPath: NSTextField!
+    @IBOutlet weak var dapStatusIcon: NSImageView!
+    @IBOutlet weak var dapStatusText: NSTextField!
+    @IBOutlet weak var dapInfo: NSTextField!
+
+    // PROM server
     @IBOutlet weak var promEnable: NSButton!
-    @IBOutlet weak var promStatus: NSTextField!
+    @IBOutlet weak var promTransport: NSPopUpButton!
     @IBOutlet weak var promPort: RangeField!
+    @IBOutlet weak var promPath: NSTextField!
+    @IBOutlet weak var promStatusIcon: NSImageView!
+    @IBOutlet weak var promStatusText: NSTextField!
+    @IBOutlet weak var promInfo: NSTextField!
 
     override func viewDidLoad() {
 
@@ -35,7 +57,6 @@ class ServerSettingsViewController: SettingsViewController {
 
             switch state {
             case .OFF:          return ("Disconnected", .systemRed)
-            // case .WAITING:      return ("Waiting",      .systemYellow)
             case .STARTING:     return ("Starting",     .systemYellow)
             case .LISTENING:    return ("Listening",    .systemYellow)
             case .CONNECTED:    return ("Connected",    .systemGreen)
@@ -45,44 +66,68 @@ class ServerSettingsViewController: SettingsViewController {
             }
         }
 
-        func update(_ component: NSTextField, state: SrvState) {
+        func update(_ icon: NSImageView, _ text: NSTextField, state: SrvState) {
 
             let format = prettyPrint(state: state)
-
-            component.stringValue = format.0
-            component.textColor = format.1
-            component.font = NSFont.boldSystemFont(ofSize: component.font?.pointSize ?? NSFont.systemFontSize)
-
-        }
-        func update(_ component: NSControl, enable: Bool) {
-            component.isEnabled = enable
+            icon.contentTintColor = format.1
+            text.stringValue = format.0
+            // text.font = NSFont.boldSystemFont(ofSize: text.font?.pointSize ?? NSFont.systemFontSize)
         }
 
         super.refresh()
 
         guard let emu = emu, let config = config else { return }
-
         let serverInfo = emu.remoteManager.info
 
-        // RSH server
+        // Enable
         rshEnable.state = config.rshServerEnable ? .on : .off
-        rshPort.integerValue = Int(config.rshServerPort)
-        update(rshStatus, state: serverInfo.rshInfo.state)
-
-        // RPC server
         rpcEnable.state = config.rpcServerEnable ? .on : .off
-        rpcPort.integerValue = Int(config.rpcServerPort)
-        update(rpcStatus, state: serverInfo.rpcInfo.state)
-
-        // DAP server
         dapEnable.state = config.dapServerEnable ? .on : .off
-        dapPort.integerValue = Int(config.dapServerPort)
-        update(dapStatus, state: serverInfo.dapInfo.state)
-
-        // PROM server
         promEnable.state = config.promServerEnable ? .on : .off
+
+        // Transport
+        rshTransport.selectItem(withTag: config.rshServerTransport)
+        rpcTransport.selectItem(withTag: config.rpcServerTransport)
+        dapTransport.selectItem(withTag: config.dapServerTransport)
+        promTransport.selectItem(withTag: config.promServerTransport)
+
+        // Port
+        rshPort.integerValue = Int(config.rshServerPort)
+        rpcPort.integerValue = Int(config.rpcServerPort)
+        dapPort.integerValue = Int(config.dapServerPort)
         promPort.integerValue = Int(config.promServerPort)
-        update(promStatus, state: serverInfo.promInfo.state)
+        rshPort.isEnabled = config.rshServerEnable
+        rpcPort.isEnabled = config.rpcServerEnable
+        dapPort.isEnabled = config.dapServerEnable
+        promPort.isEnabled = config.promServerEnable
+        rshPort.isHidden = config.rshServerTransport == 0
+        rpcPort.isHidden = config.rpcServerTransport == 0
+        dapPort.isHidden = config.dapServerTransport == 0
+        promPort.isHidden = config.promServerTransport == 0
+
+        // Path
+        rpcPath.stringValue = "/  rpc"
+        promPath.stringValue = "/  metrics"
+        rshPath.isHidden = config.rshServerTransport != 2
+        rpcPath.isHidden = config.rpcServerTransport != 2
+        dapPath.isHidden = config.dapServerTransport != 2
+        promPath.isHidden = config.promServerTransport != 2
+        rshPath.textColor = config.rshServerEnable ? .textColor : .secondaryLabelColor
+        rpcPath.textColor = config.rpcServerEnable ? .textColor : .secondaryLabelColor
+        dapPath.textColor = config.dapServerEnable ? .textColor : .secondaryLabelColor
+        promPath.textColor = config.promServerEnable ? .textColor : .secondaryLabelColor
+
+        // Connection status
+        update(rshStatusIcon, rshStatusText, state: serverInfo.rshInfo.state)
+        update(rpcStatusIcon, rpcStatusText, state: serverInfo.rpcInfo.state)
+        update(dapStatusIcon, dapStatusText, state: serverInfo.dapInfo.state)
+        update(promStatusIcon, promStatusText, state: serverInfo.promInfo.state)
+
+        // Server description
+        rshInfo.textColor = config.rshServerEnable ? .textColor : .secondaryLabelColor
+        rpcInfo.textColor = config.rpcServerEnable ? .textColor : .secondaryLabelColor
+        dapInfo.textColor = config.dapServerEnable ? .textColor : .secondaryLabelColor
+        promInfo.textColor = config.promServerEnable ? .textColor : .secondaryLabelColor
     }
 
     @IBAction func enableAction(_ sender: NSButton!) {
@@ -96,9 +141,18 @@ class ServerSettingsViewController: SettingsViewController {
         }
     }
 
-    @IBAction func portAction(_ sender: NSTextField!) {
+    @IBAction func transportAction(_ sender: NSButton!) {
 
-        print("portAction \(sender.integerValue)")
+        switch sender.tag {
+        case 0: config?.rshServerTransport = sender.selectedTag()
+        case 1: config?.rpcServerTransport = sender.selectedTag()
+        case 2: config?.dapServerTransport = sender.selectedTag()
+        case 3: config?.promServerTransport = sender.selectedTag()
+        default: fatalError()
+        }
+    }
+
+    @IBAction func portAction(_ sender: NSTextField!) {
 
         switch sender.tag {
         case 0: config?.rshServerPort = sender.integerValue

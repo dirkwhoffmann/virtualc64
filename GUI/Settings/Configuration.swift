@@ -514,6 +514,10 @@ class Configuration {
         get { return emu?.get(.SRV_ENABLE, id: 0) != 0 }
         set { emu?.set(.SRV_ENABLE, id: 0, enable: newValue ) }
     }
+    var rshServerTransport: Int {
+        get { return emu?.get(.SRV_TRANSPORT, id: 0) ?? 0 }
+        set { emu?.set(.SRV_TRANSPORT, id: 0, value: newValue ) }
+    }
     var rshServerPort: Int {
         get { return emu?.get(.SRV_PORT, id: 0) ?? 0 }
         set { emu?.set(.SRV_PORT, id: 0, value: newValue ) }
@@ -521,6 +525,10 @@ class Configuration {
     var rpcServerEnable: Bool {
         get { return emu?.get(.SRV_ENABLE, id: 1) != 0 }
         set { emu?.set(.SRV_ENABLE, id: 1, enable: newValue ) }
+    }
+    var rpcServerTransport: Int {
+        get { return emu?.get(.SRV_TRANSPORT, id: 1) ?? 0 }
+        set { emu?.set(.SRV_TRANSPORT, id: 1, value: newValue ) }
     }
     var rpcServerPort: Int {
         get { return emu?.get(.SRV_PORT, id: 1) ?? 0 }
@@ -530,6 +538,10 @@ class Configuration {
         get { return emu?.get(.SRV_ENABLE, id: 2) != 0 }
         set { emu?.set(.SRV_ENABLE, id: 2, enable: newValue ) }
     }
+    var dapServerTransport: Int {
+        get { return emu?.get(.SRV_TRANSPORT, id: 2) ?? 0 }
+        set { emu?.set(.SRV_TRANSPORT, id: 2, value: newValue ) }
+    }
     var dapServerPort: Int {
         get { return emu?.get(.SRV_PORT, id: 2) ?? 0 }
         set { emu?.set(.SRV_PORT, id: 2, value: newValue ) }
@@ -537,6 +549,10 @@ class Configuration {
     var promServerEnable: Bool {
         get { return emu?.get(.SRV_ENABLE, id: 3) != 0 }
         set { emu?.set(.SRV_ENABLE, id: 3, enable: newValue ) }
+    }
+    var promServerTransport: Int {
+        get { return emu?.get(.SRV_TRANSPORT, id: 3) ?? 0 }
+        set { emu?.set(.SRV_TRANSPORT, id: 3, value: newValue ) }
     }
     var promServerPort: Int {
         get { return emu?.get(.SRV_PORT, id: 3) ?? 0 }

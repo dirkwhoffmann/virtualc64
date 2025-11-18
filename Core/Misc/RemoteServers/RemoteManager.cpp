@@ -41,15 +41,23 @@ RemoteManager::_dump(Category category, std::ostream &os) const
 
             auto name = server->objectName();
             auto port = server->config.port;
+            auto transport = server->config.transport;
 
             os << tab(string(name));
 
-            if (server->isOff()) {
-                os << "Off" << std::endl;
-            } else {
-                os << "Port " << dec(port);
-                os << " (" << SrvStateEnum::key(server->getState()) << ")" << std::endl;
-            }
+            os << TransportProtocolEnum::key(transport);
+            if (transport != TransportProtocol::STDIO) { os << ":" << dec(port); }
+            os << " (" << SrvStateEnum::key(server->getState()) << ")" << std::endl;
+
+            /*
+             if (server->isOff()) {
+             os << "Off" << std::endl;
+             } else {
+             os << TransportProtocolEnum::key(transport);
+             if (transport != TransportProtocol::STDIO) { os << ":" << dec(port);
+             os << " (" << SrvStateEnum::key(server->getState()) << ")" << std::endl;
+             }
+             */
         }
     }
 }

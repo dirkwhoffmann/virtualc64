@@ -19,11 +19,14 @@ namespace vc64 {
 void
 HttpTransport::disconnect()
 {
-    if (state == SrvState::CONNECTED) {
+    if (srv) {
 
-        if (srv) srv->stop();
-        delegate.didDisconnect();
+        srv->stop();
+        delete srv;
+        srv = nullptr;
     }
+
+    delegate.didDisconnect();
 }
 
 void

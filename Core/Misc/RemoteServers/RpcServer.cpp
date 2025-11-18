@@ -23,7 +23,6 @@ using nlohmann::json;
 void
 RpcServer::_initialize()
 {
-    config.endpoint = "/rpc";
     retroShell.registerDelegate(*this);
 }
 
@@ -68,40 +67,6 @@ RpcServer::isSupported(TransportProtocol protocol) const
             fatalError;
     }
 }
-
-/*
-SrvState
-RpcServer::getState() const
-{
-    return transport().getState();
-}
-
-void
-RpcServer::start()
-{
-    transport().start(config.port);
-}
-
-void
-RpcServer::stop()
-{
-    tcp.stop();
-    http.stop();
-}
-
-void
-RpcServer::disconnect()
-{
-    tcp.disconnect();
-    http.disconnect();
-}
-
-void
-RpcServer::send(const string &payload)
-{
-    transport().send(payload);
-}
-*/
 
 void
 RpcServer::didSwitch(SrvState from, SrvState to)

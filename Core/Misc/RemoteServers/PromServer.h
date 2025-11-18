@@ -52,12 +52,9 @@ protected:
     Transport &transport() override;
     const Transport &transport() const override;
     bool isSupported(TransportProtocol protocol) const override;
-    // void start() override { transport().start(config.port, "/metrics"); }
-    // SrvState getState() const override { return http.getState(); }
-    // void stop() override { http.stop(); }
-    // void disconnect() override { http.disconnect(); }
-    // void send(const string &payload) override { fatalError; }
+    void start() override { transport().start(config.port, "/metrics"); }
 
+    
     //
     // Methods from TransportDelegate
     //

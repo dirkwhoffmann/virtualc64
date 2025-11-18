@@ -68,14 +68,7 @@ protected:
     Transport &transport() override;
     const Transport &transport() const override;
     bool isSupported(TransportProtocol protocol) const override;
-    // void start() override { transport().start(config.port, "/rpc"); }
-    /*
-    SrvState getState() const override;
-    void start() override;
-    void stop() override;
-    void disconnect() override;
-    void send(const string &payload) override;
-    */
+    void start() override { transport().start(config.port, "/rpc"); }
 
 
     //

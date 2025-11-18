@@ -22,7 +22,6 @@ void
 PromServer::_initialize()
 {
     config.transport = TransportProtocol::HTTP;
-    config.endpoint = "/metrics";
 }
 
 void

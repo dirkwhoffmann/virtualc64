@@ -47,8 +47,8 @@ class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo> {
     Options options = {
 
         Opt::SRV_ENABLE,
-        Opt::SRV_PORT,
         Opt::SRV_TRANSPORT,
+        Opt::SRV_PORT,
         Opt::SRV_VERBOSE
     };
 
@@ -129,11 +129,6 @@ public:
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt option, i64 value) override;
 
-    /*
-    bool useStdio() { return config.transport == TransportProtocol::STDIO; }
-    bool useTcp() { return config.transport == TransportProtocol::TCP; }
-    bool useHttp() { return config.transport == TransportProtocol::HTTP; }
-    */
     
     //
     // Methods from Inspectable
@@ -173,7 +168,7 @@ public:
 public:
 
     // Launch the remote server
-    virtual void start() { transport().start(config.port, config.endpoint); }
+    virtual void start() { transport().start(config.port); }
 
     // Shuts down the remote server
     virtual void stop() { transport().stop(); }

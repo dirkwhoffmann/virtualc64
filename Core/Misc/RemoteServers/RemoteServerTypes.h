@@ -31,9 +31,6 @@ typedef struct
     // The socket port of this server
     u16 port;
 
-    // The name of the endpoint of this server (if HTTP)
-    string endpoint;
-
     // If true, transmitted packets are shown in RetroShell
     bool verbose;
 }
