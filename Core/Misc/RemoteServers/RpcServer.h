@@ -100,16 +100,13 @@ protected:
 private:
 
     // Processes a received command
-    optional<string> process(const string &payload);
+    optional<string> process(const string &payload, bool blocking = false);
 
     // Executes a RetroShell command asynchroneously (non blocking)
-    void execNonBlocking(const string &command, isize id);
+    optional<string> execNonBlocking(const string &command, isize id);
 
     // Executes a RetroShell command synchroneously (blocking)
-    string execBlocking(const string &command, isize id);
-
-    // Generate a response
-    // string respond(const httplib::Request& request); // DEPRECATED
+    optional<string> execBlocking(const string &command, isize id);
 };
 
 }
