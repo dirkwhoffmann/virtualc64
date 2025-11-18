@@ -42,67 +42,32 @@ DapServer::_dump(Category category, std::ostream &os) const
 }
 
 void
-DapServer::checkOption(Opt opt, i64 value)
-{
-    if (opt == Opt::SRV_TRANSPORT && value == i64(TransportProtocol::HTTP)) {
-        throw AppError(Fault::OPT_UNSUPPORTED, "This server requires a raw TCP connection.");
-    }
-
-    RemoteServer::checkOption(opt, value);
-}
-
-void
 DapServer::_pause()
 {
     printf("DapServer::_pause()\n");
 }
 
-void
-DapServer::start()
+Transport &
+DapServer::transport()
 {
-    tcp.start(config.port);
+    return tcp;
 }
 
-void
-DapServer::stop()
-{
-    tcp.stop();
+const Transport &
+DapServer::transport() const {
+    return const_cast<DapServer *>(this)->transport();
 }
 
-void
-DapServer::disconnect()
+bool
+DapServer::isSupported(TransportProtocol protocol) const
 {
-    tcp.disconnect();
+    return protocol == TransportProtocol::TCP;
 }
 
 void
 DapServer::didSwitch(SrvState from, SrvState to)
 {
     if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
-}
-
-void
-DapServer::didConnect()
-{
-    if (config.verbose) {
-
-        try {
-
-            tcp << "VirtualC64 RetroShell Remote Server ";
-            tcp << C64::build() << '\n';
-            tcp << '\n';
-
-            tcp << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-            tcp << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
-            tcp << '\n';
-
-            tcp << "Type 'help' for help.\n";
-            tcp << '\n';
-
-            tcp << retroShell.prompt();
-
-        } catch (...) { };
-    }
 }
 
 void

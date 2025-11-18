@@ -23,18 +23,20 @@ class RshServer final : public RemoteServer, public ConsoleDelegate, public Tran
 
 public:
 
-    // Supported protocol
+    // Supported transport protocols
     StdioTransport stdio = StdioTransport(*this);
     TcpTransport tcp = TcpTransport(*this);
 
-    // Returns the currently selected protocol
-    Transport &transport();
+
+    //
+    // Methods
+    //
 
     using RemoteServer::RemoteServer;
 
-    RshServer& operator= (const RshServer& other) {
+    RshServer& operator=(const RshServer& other) {
 
-        RemoteServer::operator = (other);
+        RemoteServer::operator=(other);
         return *this;
     }
 
@@ -50,43 +52,29 @@ private:
 
 
     //
-    // Methods from CoreComponent
-    //
-
-    void _halt() override { try { stop(); } catch(...) { } };
-
-
-    //
-    // Methods from Configurable
-    //
-
-private:
-
-    void checkOption(Opt opt, i64 value) override;
-
-
-    //
     // Methods from RemoteServer
     //
 
-    SrvState getState() const override {
-        return const_cast<RshServer*>(this)->transport().getState();
-    }
-    virtual void start() override;
-    virtual void stop() override;
-    virtual void disconnect() override;
+    Transport &transport() override;
+    const Transport &transport() const override;
+    bool isSupported(TransportProtocol protocol) const override;
+    // SrvState getState() const override;
+    // void start() override;
+    // void stop() override;
+    // void disconnect() override;
+    // void send(const string &payload) override;
 
 
     //
     // Methods from TransportDelegate
     //
 
-    virtual void didSwitch(SrvState from, SrvState to) override;
-    virtual void didStart() override;
-    virtual void didStop() override;
-    virtual void didConnect() override;
-    virtual void didDisconnect() override;
-    virtual void didReceive(const string &payload) override;
+    void didSwitch(SrvState from, SrvState to) override;
+    void didStart() override { }
+    void didStop() override { }
+    void didConnect() override;
+    void didDisconnect() override { }
+    void didReceive(const string &payload) override;
 
 
     //

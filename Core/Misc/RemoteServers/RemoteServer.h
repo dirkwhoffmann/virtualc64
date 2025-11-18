@@ -16,6 +16,7 @@
 #include "SubComponent.h"
 #include "Socket.h"
 #include "Thread.h"
+#include "Transport.h"
 #include <thread>
 
 namespace vc64 {
@@ -58,7 +59,7 @@ protected:
 
 
     //
-    // Initializing
+    // Methods
     //
     
 public:
@@ -68,7 +69,6 @@ public:
     RemoteServer& operator= (const RemoteServer& other) {
 
         CLONE(config)
-        
         return *this;
     }
 
@@ -86,8 +86,9 @@ protected:
     // Methods from CoreComponent
     //
 
-public:
+private:
 
+    void _halt() override { try { stop(); } catch(...) { } };
     const Descriptions &getDescriptions() const override { return descriptions; }
 
 protected:
@@ -128,10 +129,11 @@ public:
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt option, i64 value) override;
 
+    /*
     bool useStdio() { return config.transport == TransportProtocol::STDIO; }
     bool useTcp() { return config.transport == TransportProtocol::TCP; }
     bool useHttp() { return config.transport == TransportProtocol::HTTP; }
-
+    */
     
     //
     // Methods from Inspectable
@@ -143,13 +145,19 @@ public:
 
 
     //
-    // Examining state
+    // Examining the server
     //
-    
+
+private:
+
+    // Returns a reference to the currently selected transport layer
+    virtual Transport &transport() = 0;
+    virtual const Transport &transport() const = 0;
+
 public:
 
-    virtual SrvState getState() const = 0;
-
+    virtual bool isSupported(TransportProtocol protocol) const = 0;
+    virtual SrvState getState() const { return transport().getState(); }
     bool isOff() const { return getState() == SrvState::OFF; }
     bool isStarting() const { return getState() == SrvState::STARTING; }
     bool isListening() const { return getState() == SrvState::LISTENING; }
@@ -157,21 +165,42 @@ public:
     bool isStopping() const { return getState() == SrvState::STOPPING; }
     bool isErroneous() const { return getState() == SrvState::INVALID; }
 
-    
+
     //
-    // Starting and stopping the server
+    // Running the server
     //
-    
-private:
+
+public:
 
     // Launch the remote server
-    virtual void start() = 0;
+    virtual void start() { transport().start(config.port, config.endpoint); }
 
     // Shuts down the remote server
-    virtual void stop() = 0;
+    virtual void stop() { transport().stop(); }
 
     // Disconnects the client (if any)
-    virtual void disconnect() throws = 0;
+    virtual void disconnect() { transport().disconnect(); }
+
+
+    //
+    // Sending packets
+    //
+
+public:
+
+    // Sends a packet
+    virtual void send(const string &payload) { transport().send(payload); }
+    void send(char payload);
+    void send(int payload);
+    void send(long payload);
+    void send(std::stringstream &payload);
+
+    // Operator overloads
+    RemoteServer &operator<<(char payload) { send(payload); return *this; }
+    RemoteServer &operator<<(const string &payload) { send(payload); return *this; }
+    RemoteServer &operator<<(int payload) { send(payload); return *this; }
+    RemoteServer &operator<<(long payload) { send(payload); return *this; }
+    RemoteServer &operator<<(std::stringstream &payload) { send(payload); return *this; }
 };
 
 }

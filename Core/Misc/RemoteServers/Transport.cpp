@@ -18,7 +18,6 @@ namespace vc64 {
 Transport::~Transport() {
 
     debug(SRV_DEBUG, "Shutting down\n");
-    try { stop(); } catch(...) { }
 }
 
 void
@@ -93,6 +92,7 @@ Transport::switchState(SrvState newState)
     }
 }
 
+/*
 void
 Transport::send(char payload)
 {
@@ -119,5 +119,6 @@ Transport::send(std::stringstream &payload)
         send(line + "\n");
     }
 }
+*/
 
 }

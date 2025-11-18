@@ -67,9 +67,17 @@ RemoteServer::checkOption(Opt opt, i64 value)
 
         case Opt::SRV_ENABLE:
         case Opt::SRV_PORT:
-        case Opt::SRV_TRANSPORT:
         case Opt::SRV_VERBOSE:
 
+            return;
+
+        case Opt::SRV_TRANSPORT:
+
+            if (!isSupported(TransportProtocol(value))) {
+
+                auto name = string(TransportProtocolEnum::key(TransportProtocol(value)));
+                throw AppError(Fault::OPT_UNSUPPORTED, "Unsupported protocol: " + name);
+            }
             return;
 
         default:
@@ -86,8 +94,11 @@ RemoteServer::setOption(Opt opt, i64 value)
 
         case Opt::SRV_ENABLE:
 
-            config.enable = (bool)value;
-            config.enable ? start() : stop();
+            if (config.enable != (bool)value) {
+                
+                config.enable = (bool)value;
+                config.enable ? start() : stop();
+            }
             return;
 
         case Opt::SRV_PORT:
@@ -138,6 +149,33 @@ void
 RemoteServer::cacheInfo(RemoteServerInfo &result) const
 {
     info.state = getState();
+}
+
+void
+RemoteServer::send(char payload)
+{
+    send(string(1, payload));
+}
+
+void
+RemoteServer::send(int payload)
+{
+    send(std::to_string(payload));
+}
+
+void
+RemoteServer::send(long payload)
+{
+    send(std::to_string(payload));
+}
+
+void
+RemoteServer::send(std::stringstream &payload)
+{
+    string line;
+    while(std::getline(payload, line)) {
+        send(line + "\n");
+    }
 }
 
 }

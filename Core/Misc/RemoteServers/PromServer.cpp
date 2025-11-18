@@ -19,6 +19,13 @@
 namespace vc64 {
 
 void
+PromServer::_initialize()
+{
+    config.transport = TransportProtocol::HTTP;
+    config.endpoint = "/metrics";
+}
+
+void
 PromServer::_dump(Category category, std::ostream &os) const
 {
     using namespace util;
@@ -26,16 +33,27 @@ PromServer::_dump(Category category, std::ostream &os) const
     RemoteServer::_dump(category, os);
 }
 
-void
-PromServer::checkOption(Opt opt, i64 value)
+Transport &
+PromServer::transport()
 {
-    if (opt == Opt::SRV_TRANSPORT && value != i64(TransportProtocol::HTTP)) {
+    switch (config.transport) {
 
-        auto protocol = TransportProtocolEnum::key(TransportProtocol(value));
-        throw AppError(Fault::OPT_UNSUPPORTED, protocol);
+        case TransportProtocol::HTTP: return http;
+
+        default:
+            fatalError;
     }
+}
 
-    RemoteServer::checkOption(opt, value);
+const Transport &
+PromServer::transport() const {
+    return const_cast<PromServer *>(this)->transport();
+}
+
+bool
+PromServer::isSupported(TransportProtocol protocol) const
+{
+    return protocol == TransportProtocol::HTTP;
 }
 
 void

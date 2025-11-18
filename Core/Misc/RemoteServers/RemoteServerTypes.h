@@ -25,11 +25,14 @@ typedef struct
     // Enable status
     bool enable;
 
+    // The transport protocol of this server
+    TransportProtocol transport;
+
     // The socket port of this server
     u16 port;
 
-    // The transport protocol of this server
-    TransportProtocol transport;
+    // The name of the endpoint of this server (if HTTP)
+    string endpoint;
 
     // If true, transmitted packets are shown in RetroShell
     bool verbose;

@@ -18,19 +18,6 @@
 
 namespace vc64 {
 
-Transport &
-RshServer::transport()
-{
-    switch (config.transport) {
-
-        case TransportProtocol::STDIO: return stdio;
-        case TransportProtocol::TCP:   return tcp;
-
-        default:
-            fatalError;
-    }
-}
-
 void
 RshServer::_initialize()
 {
@@ -45,23 +32,42 @@ RshServer::_dump(Category category, std::ostream &os) const
     RemoteServer::_dump(category, os);
 }
 
-void
-RshServer::checkOption(Opt opt, i64 value)
+Transport &
+RshServer::transport()
 {
-    if (opt == Opt::SRV_TRANSPORT) {
+    switch (config.transport) {
 
-        if (value == i64(TransportProtocol::HTTP)) {
-            throw AppError(Fault::OPT_UNSUPPORTED, "Unsupported protocol: HTTP");
-        }
+        case TransportProtocol::STDIO: return stdio;
+        case TransportProtocol::TCP:   return tcp;
+
+        default:
+            fatalError;
     }
-
-    RemoteServer::checkOption(opt, value);
 }
 
-void
-RshServer::didSwitch(SrvState from, SrvState to)
+const Transport &
+RshServer::transport() const {
+    return const_cast<RshServer *>(this)->transport();
+}
+
+bool
+RshServer::isSupported(TransportProtocol protocol) const
 {
-    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
+    switch (config.transport) {
+
+        case TransportProtocol::STDIO:  return true;
+        case TransportProtocol::TCP:    return true;
+
+        default:
+            return false;
+    }
+}
+
+/*
+SrvState
+RshServer::getState() const
+{
+    return transport().getState();
 }
 
 void
@@ -83,44 +89,37 @@ RshServer::disconnect()
 }
 
 void
-RshServer::didStart()
+RshServer::send(const string &payload)
 {
-
+    transport().send(payload);
 }
+*/
 
 void
-RshServer::didStop()
+RshServer::didSwitch(SrvState from, SrvState to)
 {
-
+    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
 }
 
 void
 RshServer::didConnect()
 {
-    auto &out = transport();
-
     try {
 
-        out << "VirtualC64 RetroShell Remote Server ";
-        out << C64::build() << '\n';
-        out << '\n';
+        *this << "VirtualC64 RetroShell Remote Server ";
+        *this << C64::build() << '\n';
+        *this << '\n';
 
-        out << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-        out << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
-        out << '\n';
+        *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+        *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+        *this << '\n';
 
-        out << "Type 'help' for help.\n";
-        out << '\n';
+        *this << "Type 'help' for help.\n";
+        *this << '\n';
 
-        out << retroShell.prompt();
+        *this << retroShell.prompt();
 
     } catch (...) { };
-}
-
-void
-RshServer::didDisconnect()
-{
-    
 }
 
 void
@@ -141,31 +140,25 @@ RshServer::didReceive(const string &payload)
 void
 RshServer::willExecute(const InputLine &input)
 {
-    auto &out = transport();
-
     // Echo the command if it came from somewhere else
-    if (!input.isRshCommand()) { out << input.input << '\n'; }
+    if (!input.isRshCommand()) { *this << input.input << '\n'; }
 }
 
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss)
 {
-    auto &out = transport();
-
-    out << '\n' << ss.str() << '\n';
-    out << retroShell.prompt();
+    *this << '\n' << ss.str() << '\n';
+    *this << retroShell.prompt();
 }
 
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss, std::exception &e)
 {
-    auto &out = transport();
-
     // Echo the command if it came from somewhere else
-    if (!input.isRpcCommand()) { out << input.input << '\n'; }
+    if (!input.isRpcCommand()) { *this << input.input << '\n'; }
 
-    out << '\n' << ss.str() << e.what() << '\n';
-    out << retroShell.prompt();
+    *this << '\n' << ss.str() << e.what() << '\n';
+    *this << retroShell.prompt();
 }
 
 }

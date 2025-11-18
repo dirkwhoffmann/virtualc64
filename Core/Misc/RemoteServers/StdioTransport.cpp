@@ -12,6 +12,24 @@
 
 #include "config.h"
 #include "StdioTransport.h"
+
+#ifdef _WIN32
+
+// stdio transport is not supported on Windows
+namespace vc64 {
+Stdio::Stdio() { }
+Stdio::~Stdio() { }
+void Stdio::terminate() { }
+string Stdio::get() { return ""; }
+void Stdio::put(const string &) { }
+void StdioTransport::disconnect() { }
+void StdioTransport::main(u16, const string &) { }
+void StdioTransport::sessionLoop() { }
+void StdioTransport::send(const string &) { }
+}
+#else
+
+#include <unistd.h>
 #include <stdexcept>
 #include <errno.h>
 #include <string.h>
@@ -20,7 +38,7 @@ namespace vc64 {
 
 Stdio::Stdio() {
 
-    // Create a pipe for the termination signaling
+    // Create a pipe for signaling termination
     if (pipe(term) < 0) {
         throw std::runtime_error("Failed to create termination pipe");
     }
@@ -96,8 +114,6 @@ StdioTransport::disconnect()
 void
 StdioTransport::main(u16 port, const string &endpoint)
 {
-    printf("StdioTransport::main\n");
-
     try {
 
         sessionLoop();
@@ -131,27 +147,6 @@ StdioTransport::send(const string &payload) throws
     if (isConnected()) { stdio << payload; }
 }
 
-void StdioTransport::send(char payload)
-{
-    send(string(1, payload));
 }
 
-void StdioTransport::send(int payload)
-{
-    send(std::to_string(payload));
-}
-
-void StdioTransport::send(long payload)
-{
-    send(std::to_string(payload));
-}
-
-void StdioTransport::send(std::stringstream &payload)
-{
-    string line;
-    while (std::getline(payload, line)) {
-        send(line + "\n");
-    }
-}
-
-}
+#endif

@@ -21,15 +21,16 @@ class PromServer final : public RemoteServer, public TransportDelegate {
 
     HttpTransport http = HttpTransport(*this);
 
-public:
+
+    //
+    // Methods
+    //
 
     using RemoteServer::RemoteServer;
 
-protected:
+    PromServer& operator=(const PromServer& other) {
 
-    PromServer& operator= (const PromServer& other) {
-
-        RemoteServer::operator = (other);
+        RemoteServer::operator=(other);
         return *this;
     }
 
@@ -40,53 +41,33 @@ protected:
 
 protected:
 
+    void _initialize() override;
     void _dump(Category category, std::ostream &os) const override;
 
-
-    //
-    // Methods from CoreComponent
-    //
-
-    void _halt() override { try { stop(); } catch(...) { } };
-
-
-    //
-    // Methods from Configurable
-    //
-
-private:
-
-    void checkOption(Opt opt, i64 value) override;
-    
 
     //
     // Methods from RemoteServer
     //
 
-    virtual SrvState getState() const override { return http.getState(); }
-    virtual void start() override { http.start(config.port, "/metrics"); }
-    virtual void stop() override { http.stop(); }
-    virtual void disconnect() override { http.disconnect(); }
-
+    Transport &transport() override;
+    const Transport &transport() const override;
+    bool isSupported(TransportProtocol protocol) const override;
+    // void start() override { transport().start(config.port, "/metrics"); }
+    // SrvState getState() const override { return http.getState(); }
+    // void stop() override { http.stop(); }
+    // void disconnect() override { http.disconnect(); }
+    // void send(const string &payload) override { fatalError; }
 
     //
     // Methods from TransportDelegate
     //
 
-    virtual void didSwitch(SrvState from, SrvState to) override;
-    virtual void didStart() override { }
-    virtual void didStop() override { }
-    virtual void didConnect() override { }
-    virtual void didDisconnect() override { }
-    virtual void didReceive(const httplib::Request &req, httplib::Response &res) override;
-
-
-    //
-    // Handling requests
-    //
-
-    // Generate a response
-    // string respond(const httplib::Request& request);
+    void didSwitch(SrvState from, SrvState to) override;
+    void didStart() override { }
+    void didStop() override { }
+    void didConnect() override { }
+    void didDisconnect() override { }
+    void didReceive(const httplib::Request &req, httplib::Response &res) override;
 };
 
 }

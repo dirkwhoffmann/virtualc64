@@ -14,6 +14,7 @@
 
 #include "RemoteServer.h"
 #include "Console.h"
+#include "StdioTransport.h"
 #include "TcpTransport.h"
 #include "HttpTransport.h"
 
@@ -32,18 +33,20 @@ const long SERVER_ERROR     = -32000; // Reserved for implementation-defined ser
 
 class RpcServer final : public RemoteServer, public ConsoleDelegate, public TransportDelegate {
 
+    StdioTransport stdio = StdioTransport(*this);
     TcpTransport tcp = TcpTransport(*this);
     HttpTransport http = HttpTransport(*this);
 
-public:
+
+    //
+    // Methods
+    //
 
     using RemoteServer::RemoteServer;
-    
-protected:
 
-    RpcServer& operator= (const RpcServer& other) {
+    RpcServer& operator=(const RpcServer& other) {
 
-        RemoteServer::operator = (other);
+        RemoteServer::operator=(other);
         return *this;
     }
 
@@ -59,48 +62,39 @@ protected:
 
 
     //
-    // Methods from CoreComponent
-    //
-
-    void _halt() override { try { stop(); } catch(...) { } };
-
-    
-    //
-    // Methods from Configurable
-    //
-
-private:
-
-    // void setOption(Opt opt, i64 value) override;
-
-
-    //
     // Methods from RemoteServer
     //
 
-    virtual SrvState getState() const override { return tcp.getState(); }
-    virtual void start() override;
-    virtual void stop() override;
-    virtual void disconnect() override;
+    Transport &transport() override;
+    const Transport &transport() const override;
+    bool isSupported(TransportProtocol protocol) const override;
+    // void start() override { transport().start(config.port, "/rpc"); }
+    /*
+    SrvState getState() const override;
+    void start() override;
+    void stop() override;
+    void disconnect() override;
+    void send(const string &payload) override;
+    */
 
-    
+
     //
     // Methods from TransportDelegate
     //
 
-    virtual void didSwitch(SrvState from, SrvState to) override;
-    virtual void didStart() override { }
-    virtual void didStop() override { }
-    virtual void didConnect() override { }
-    virtual void didDisconnect() override { }
-    virtual void didReceive(const string &payload) override;
+    void didSwitch(SrvState from, SrvState to) override;
+    void didStart() override { }
+    void didStop() override { }
+    void didConnect() override { }
+    void didDisconnect() override { }
+    void didReceive(const string &payload) override;
 
     
     //
     // Methods from ConsoleDelegate
     //
 
-    void willExecute(const InputLine &input) override;
+    void willExecute(const InputLine &input) override { };
     void didExecute(const InputLine &input, std::stringstream &ss) override;
     void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) override;
 };

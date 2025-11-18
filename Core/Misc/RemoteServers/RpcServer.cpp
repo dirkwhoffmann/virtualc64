@@ -23,6 +23,7 @@ using nlohmann::json;
 void
 RpcServer::_initialize()
 {
+    config.endpoint = "/rpc";
     retroShell.registerDelegate(*this);
 }
 
@@ -34,44 +35,51 @@ RpcServer::_dump(Category category, std::ostream &os) const
     RemoteServer::_dump(category, os);
 }
 
-/*
-void
-RpcServer::setOption(Opt opt, i64 value)
+Transport &
+RpcServer::transport()
 {
-    switch (opt) {
+    switch (config.transport) {
 
-        case Opt::SRV_TRANSPORT:
-
-            // Stop the server if the transport protocol changes
-            if (TransportProtocol(value) != config.transport) { stop(); }
-            break;
+        case TransportProtocol::STDIO: return stdio;
+        case TransportProtocol::TCP:   return tcp;
+        case TransportProtocol::HTTP:  return http;
 
         default:
-            break;
+            fatalError;
     }
-
-    RemoteServer::setOption(opt, value);
 }
-*/
+
+const Transport &
+RpcServer::transport() const
+{
+    return const_cast<RpcServer *>(this)->transport();
+}
+
+bool
+RpcServer::isSupported(TransportProtocol protocol) const
+{
+    switch (config.transport) {
+
+        case TransportProtocol::STDIO:  return true;
+        case TransportProtocol::TCP:    return true;
+        case TransportProtocol::HTTP:   return true;
+
+        default:
+            fatalError;
+    }
+}
+
+/*
+SrvState
+RpcServer::getState() const
+{
+    return transport().getState();
+}
 
 void
 RpcServer::start()
 {
-    switch (config.transport) {
-
-        case TransportProtocol::TCP:
-
-            tcp.start(config.port);
-            break;
-
-        case TransportProtocol::HTTP:
-
-            http.start(config.port);
-            break;
-
-        default:
-            break;
-    }
+    transport().start(config.port);
 }
 
 void
@@ -87,6 +95,13 @@ RpcServer::disconnect()
     tcp.disconnect();
     http.disconnect();
 }
+
+void
+RpcServer::send(const string &payload)
+{
+    transport().send(payload);
+}
+*/
 
 void
 RpcServer::didSwitch(SrvState from, SrvState to)
@@ -145,98 +160,6 @@ RpcServer::didReceive(const string &payload)
         };
         tcp.send(response.dump());
     }
-}
-
-/*
-string
-RpcServer::doReceive()
-{
-    string payload = connection.recv();
-
-    // Remove LF and CR (if present)
-    payload = util::rtrim(payload, "\n\r");
-
-    if (config.verbose) {
-
-        retroShell << "R: " << util::makePrintable(payload) << "\n";
-        printf("R: %s\n", util::makePrintable(payload).c_str());
-    }
-
-    return payload;
-}
-
-void
-RpcServer::doSend(const string &payload)
-{
-    connection.send(payload);
-
-    if (config.verbose) {
-
-        retroShell << "T: " << util::makePrintable(payload) << "\n";
-        printf("T: %s\n", util::makePrintable(payload).c_str());
-    }
-}
-*/
-
-/*
-void
-RpcServer::doProcess(const string &payload)
-{
-    try {
-
-        json request = json::parse(payload);
-
-        // Check input format
-        if (!request.contains("method")) {
-            throw AppException(RPC::INVALID_REQUEST, "Missing 'method'");
-        }
-        if (!request.contains("params")) {
-            throw AppException(RPC::INVALID_REQUEST, "Missing 'params'");
-        }
-        if (!request["method"].is_string()) {
-            throw AppException(RPC::INVALID_PARAMS, "'method' must be a string");
-        }
-        if (!request["params"].is_string()) {
-            throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
-        }
-        if (request["method"] != "retroshell") {
-            throw AppException(RPC::INVALID_PARAMS, "method  must be 'retroshell'");
-        }
-
-        // Feed the command into the command queue
-        retroShell.asyncExec(InputLine {
-
-            .id = request.value("id", 0),
-            .type = InputLine::Source::RPC,
-            .input = request["params"] });
-
-    } catch (const json::parse_error &) {
-
-        json response = {
-
-            {"jsonrpc", "2.0"},
-            {"error", {{"code", RPC::PARSE_ERROR}, {"message", "Parse error: " + payload}}},
-            {"id", nullptr}
-        };
-        send(response.dump());
-
-    } catch (const AppException &e) {
-
-        json response = {
-
-            {"jsonrpc", "2.0"},
-            {"error", {{"code", e.data}, {"message", e.what()}}},
-            {"id", nullptr}
-        };
-        send(response.dump());
-    }
-}
-*/
-
-void
-RpcServer::willExecute(const InputLine &input)
-{
-
 }
 
 void

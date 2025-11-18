@@ -13,9 +13,6 @@
 #pragma once
 
 #include "Transport.h"
-#include <unistd.h>
-#include <string>
-#include <sstream>
 
 namespace vc64 {
 
@@ -78,18 +75,7 @@ private:
 public:
 
     // Sends a packet
-    void send(const string &payload) throws;
-    void send(char payload) throws;
-    void send(int payload) throws;
-    void send(long payload) throws;
-    void send(std::stringstream &payload) throws;
-
-    // Operator overloads
-    StdioTransport &operator<<(char payload) { send(payload); return *this; }
-    StdioTransport &operator<<(const string &payload) { send(payload); return *this; }
-    StdioTransport &operator<<(int payload) { send(payload); return *this; }
-    StdioTransport &operator<<(long payload) { send(payload); return *this; }
-    StdioTransport &operator<<(std::stringstream &payload) { send(payload); return *this; }
+    void send(const string &payload) override;
 };
 
 }

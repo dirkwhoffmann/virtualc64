@@ -94,18 +94,21 @@ public:
 
     // Sends a packet
     virtual void send(const string &payload) = 0;
+    /*
     void send(char payload);
     void send(int payload);
     void send(long payload);
     void send(std::stringstream &payload);
+    */
 
     // Operator overloads
-    Transport &operator<<(char payload) { send(payload); return *this; }
     Transport &operator<<(const string &payload) { send(payload); return *this; }
+    /*
+    Transport &operator<<(char payload) { send(payload); return *this; }
     Transport &operator<<(int payload) { send(payload); return *this; }
     Transport &operator<<(long payload) { send(payload); return *this; }
     Transport &operator<<(std::stringstream &payload) { send(payload); return *this; }
-
+    */
 };
 
 }

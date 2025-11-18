@@ -32,9 +32,8 @@ public:
 
     // Provides the output of an executed RetroShell command
     virtual void willExecute(const InputLine &input) = 0;
-
-    virtual void didExecute(const InputLine &input, std::stringstream &ss) = 0; // DEPRECATED
-    virtual void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) = 0; // DEPRECATED
+    virtual void didExecute(const InputLine &input, std::stringstream &ss) = 0;
+    virtual void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) = 0;
 };
 
 struct TooFewArgumentsError : public util::ParseError {

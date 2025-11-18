@@ -14,7 +14,6 @@
 
 #include "RemoteServer.h"
 #include "DapServerTypes.h"
-// #include "Console.h"
 #include "TcpTransport.h"
 
 namespace vc64 {
@@ -24,23 +23,20 @@ class DapServer final : public RemoteServer, public TransportDelegate {
     class DapAdapter *adapter = nullptr;
     TcpTransport tcp = TcpTransport(*this);
 
-public:
-
-    using RemoteServer::RemoteServer;
-
-
     //
-    // Initializing
+    // Methods
     //
 
 public:
+
+    // using RemoteServer::RemoteServer;
 
     DapServer(C64& ref, isize id);
     ~DapServer();
 
-    DapServer& operator= (const DapServer& other) {
+    DapServer& operator=(const DapServer& other) {
 
-        RemoteServer::operator = (other);
+        RemoteServer::operator=(other);
         return *this;
     }
 
@@ -61,24 +57,22 @@ private:
 
     void _halt() override { try { stop(); } catch(...) { } };
 
-
-    //
-    // Methods from Configurable
-    //
-
-private:
-
-    void checkOption(Opt opt, i64 value) override;
-    
+  
 
     //
     // Methods from RemoteServer
     //
 
-    virtual SrvState getState() const override { return tcp.getState(); }
-    virtual void start() override;
-    virtual void stop() override;
-    virtual void disconnect() override;
+    Transport &transport() override;
+    const Transport &transport() const override;
+    bool isSupported(TransportProtocol protocol) const override;
+    /*
+    SrvState getState() const override { return tcp.getState(); }
+    void start() override;
+    void stop() override;
+    void disconnect() override;
+    void send(const string &payload) override;
+    */
 
 
     //
@@ -88,7 +82,7 @@ private:
     virtual void didSwitch(SrvState from, SrvState to) override;
     virtual void didStart() override { }
     virtual void didStop() override { }
-    virtual void didConnect() override;
+    virtual void didConnect() override { }
     virtual void didDisconnect() override { }
     virtual void didReceive(const string &payload) override;
 
