@@ -81,8 +81,9 @@ protected:
     void didConnect() override { }
     void didDisconnect() override { }
     void didReceive(const string &payload) override;
+    void didReceive(const struct httplib::Request &req, struct httplib::Response &res) override;
 
-    
+
     //
     // Methods from ConsoleDelegate
     //
@@ -90,6 +91,25 @@ protected:
     void willExecute(const InputLine &input) override { };
     void didExecute(const InputLine &input, std::stringstream &ss) override;
     void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) override;
+
+
+    //
+    // Handling requests
+    //
+
+private:
+
+    // Processes a received command
+    optional<string> process(const string &payload);
+
+    // Executes a RetroShell command asynchroneously (non blocking)
+    void execNonBlocking(const string &command, isize id);
+
+    // Executes a RetroShell command synchroneously (blocking)
+    string execBlocking(const string &command, isize id);
+
+    // Generate a response
+    // string respond(const httplib::Request& request); // DEPRECATED
 };
 
 }

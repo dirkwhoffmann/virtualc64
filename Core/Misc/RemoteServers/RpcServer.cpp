@@ -14,6 +14,7 @@
 #include "RpcServer.h"
 #include "Emulator.h"
 #include "json.h"
+#include "httplib.h"
 #include <thread>
 
 namespace vc64 {
@@ -77,6 +78,11 @@ RpcServer::didSwitch(SrvState from, SrvState to)
 void
 RpcServer::didReceive(const string &payload)
 {
+    if (auto response = process(payload); response) {
+        tcp << *response;
+    }
+
+    /*
     try {
 
         json request = json::parse(payload);
@@ -125,7 +131,194 @@ RpcServer::didReceive(const string &payload)
         };
         tcp.send(response.dump());
     }
+    */
 }
+
+void
+RpcServer::didReceive(const struct httplib::Request &req, struct httplib::Response &res)
+{
+    if (auto response = process(req.body); response) {
+        res.set_content(*response, "text/plain");
+    }
+}
+
+optional<string>
+RpcServer::process(const string &payload)
+{
+    try {
+
+        json request = json::parse(payload);
+
+        // Check input format
+        if (!request.contains("method")) {
+            throw AppException(RPC::INVALID_REQUEST, "Missing 'method'");
+        }
+        if (!request.contains("params")) {
+            throw AppException(RPC::INVALID_REQUEST, "Missing 'params'");
+        }
+        if (!request["method"].is_string()) {
+            throw AppException(RPC::INVALID_PARAMS, "'method' must be a string");
+        }
+        if (!request["params"].is_string()) {
+            throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
+        }
+        if (request["method"] != "retroshell") {
+            throw AppException(RPC::INVALID_PARAMS, "method  must be 'retroshell'");
+        }
+
+        if (config.transport == TransportProtocol::HTTP) {
+
+            return execBlocking(request["params"], request.value("id", 0));
+
+        } else {
+
+            execNonBlocking(request["params"], request.value("id", 0));
+            return {};
+        }
+
+        /*
+        // Create shared promise
+        auto promise = std::make_shared<std::promise<std::string>>();
+        auto future = promise->get_future();
+
+        // Feed the command into the command queue
+        retroShell.asyncExec(InputLine {
+
+            .id = request.value("id", 0),
+            .type = InputLine::Source::RPC,
+            .input = request["params"],
+            .promise = promise
+        });
+
+        printf("Waiting for the result...\n");
+        auto result = future.get();
+        printf("Got result %s\n", result.c_str());
+
+        return result;
+        */
+
+    } catch (const json::parse_error &) {
+
+        json response = {
+
+            {"jsonrpc", "2.0"},
+            {"error", {{"code", RPC::PARSE_ERROR}, {"message", "Parse error: " + payload}}},
+            {"id", nullptr}
+        };
+        return response.dump();
+
+    } catch (const AppException &e) {
+
+        json response = {
+
+            {"jsonrpc", "2.0"},
+            {"error", {{"code", e.data}, {"message", e.what()}}},
+            {"id", nullptr}
+        };
+        return response.dump();
+    }
+}
+
+void
+RpcServer::execNonBlocking(const string &command, isize id)
+{
+    // Feed the command into the command queue
+    retroShell.asyncExec(InputLine {
+
+        .id = id,
+        .type = InputLine::Source::RPC,
+        .input = command
+    });
+}
+
+string
+RpcServer::execBlocking(const string &command, isize id)
+{
+    // To block the thread, we pass a promise to RetroShell
+    auto promise = std::make_shared<std::promise<std::string>>();
+    auto future = promise->get_future();
+
+    // Feed the command into the command queue
+    retroShell.asyncExec(InputLine {
+
+        .id = id,
+        .type = InputLine::Source::RPC,
+        .input = command,
+        .promise = promise
+    });
+
+    // Wait for the result
+    return future.get();
+}
+
+/*
+string
+RpcServer::respond(const httplib::Request& payload)
+{
+    try {
+
+        printf("body = %s\n", payload.body.c_str());
+
+        json request = json::parse(payload.body);
+
+        // Check input format
+        if (!request.contains("method")) {
+            throw AppException(RPC::INVALID_REQUEST, "Missing 'method'");
+        }
+        if (!request.contains("params")) {
+            throw AppException(RPC::INVALID_REQUEST, "Missing 'params'");
+        }
+        if (!request["method"].is_string()) {
+            throw AppException(RPC::INVALID_PARAMS, "'method' must be a string");
+        }
+        if (!request["params"].is_string()) {
+            throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
+        }
+        if (request["method"] != "retroshell") {
+            throw AppException(RPC::INVALID_PARAMS, "method  must be 'retroshell'");
+        }
+
+        // Create shared promise
+        auto promise = std::make_shared<std::promise<std::string>>();
+        auto future = promise->get_future();
+
+        // Feed the command into the command queue
+        retroShell.asyncExec(InputLine {
+
+            .id = request.value("id", 0),
+            .type = InputLine::Source::RPC,
+            .input = request["params"],
+            .promise = promise
+        });
+
+        printf("Waiting for the result...\n");
+        auto result = future.get();
+        printf("Got result %s\n", result.c_str());
+
+        return result;
+
+    } catch (const json::parse_error &) {
+
+        json response = {
+
+            {"jsonrpc", "2.0"},
+            {"error", {{"code", RPC::PARSE_ERROR}, {"message", "Parse error: " + payload.body}}},
+            {"id", nullptr}
+        };
+        return response.dump();
+
+    } catch (const AppException &e) {
+
+        json response = {
+
+            {"jsonrpc", "2.0"},
+            {"error", {{"code", e.data}, {"message", e.what()}}},
+            {"id", nullptr}
+        };
+        return response.dump();
+    }
+}
+*/
 
 void
 RpcServer::didExecute(const InputLine& input, std::stringstream &ss)
@@ -139,7 +332,12 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss)
         {"id", input.id}
     };
 
-    tcp << response.dump();
+    // In HTTP mode, return the shell output through the promise
+    if (config.transport == TransportProtocol::HTTP) {
+        if (input.promise) input.promise->set_value(response.dump());
+    } else {
+        tcp << response.dump();
+    }
 }
 
 void
@@ -148,11 +346,11 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::except
     if (!input.isRpcCommand()) return;
 
     // By default, signal an internal error
-    i64 code = -32603;
+    i64 code = RPC::INTERNAL_ERROR;
 
     // For parse errors, use a value from the server-defined error range
     if (dynamic_cast<const util::ParseError *>(&exc)) {
-        code = -32000;
+        code = RPC::SERVER_ERROR;
     }
 
     // For application errors, use the fault identifier
@@ -170,7 +368,12 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::except
         {"id", input.id}
     };
 
-    tcp << response.dump();
+    // In HTTP mode, return the shell output through the promise
+    if (config.transport == TransportProtocol::HTTP) {
+        if (input.promise) input.promise->set_value(response.dump());
+    } else {
+        tcp << response.dump();
+    }
 }
 
 }
