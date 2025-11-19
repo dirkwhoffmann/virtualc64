@@ -46,7 +46,8 @@ RshServer::transport()
 }
 
 const Transport &
-RshServer::transport() const {
+RshServer::transport() const
+{
     return const_cast<RshServer *>(this)->transport();
 }
 

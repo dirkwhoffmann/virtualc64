@@ -67,7 +67,6 @@ private:
 
     // Sends a packet to the connected client
     void reply(const string &payload);
-
     void replySuccess(isize seq, const string &command);
 
     

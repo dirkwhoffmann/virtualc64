@@ -14,14 +14,18 @@
 
 #include "RemoteServer.h"
 #include "DapServerTypes.h"
+#include "StdioTransport.h"
 #include "TcpTransport.h"
 
 namespace vc64 {
 
 class DapServer final : public RemoteServer, public TransportDelegate {
 
-    class DapAdapter *adapter = nullptr;
+    StdioTransport stdio = StdioTransport(*this);
     TcpTransport tcp = TcpTransport(*this);
+
+    class DapAdapter *adapter = nullptr;
+
 
     //
     // Methods
@@ -66,13 +70,6 @@ private:
     Transport &transport() override;
     const Transport &transport() const override;
     bool isSupported(TransportProtocol protocol) const override;
-    /*
-    SrvState getState() const override { return tcp.getState(); }
-    void start() override;
-    void stop() override;
-    void disconnect() override;
-    void send(const string &payload) override;
-    */
 
 
     //

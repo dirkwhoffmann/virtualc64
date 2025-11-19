@@ -50,18 +50,33 @@ DapServer::_pause()
 Transport &
 DapServer::transport()
 {
-    return tcp;
+    switch (config.transport) {
+
+        case TransportProtocol::STDIO: return stdio;
+        case TransportProtocol::TCP:   return tcp;
+
+        default:
+            fatalError;
+    }
 }
 
 const Transport &
-DapServer::transport() const {
+DapServer::transport() const
+{
     return const_cast<DapServer *>(this)->transport();
 }
 
 bool
 DapServer::isSupported(TransportProtocol protocol) const
 {
-    return protocol == TransportProtocol::TCP;
+    switch (config.transport) {
+
+        case TransportProtocol::STDIO:  return true;
+        case TransportProtocol::TCP:    return true;
+
+        default:
+            return false;
+    }
 }
 
 void
@@ -123,127 +138,15 @@ DapServer::didReceive(const string &cmd)
     }
 }
 
-/*
-void
-DapServer::doSend(const string &payload)
-{
-    connection.send(payload);
-
-    if (config.verbose) {
-        retroShell << "T: " << util::makePrintable(payload) << "\n";
-    }
-}
-*/
-
-/*
-void
-DapServer::doProcess(const string &payload)
-{
-    try {
-
-        adapter->process(payload);
-
-    } catch (AppError &err) {
-
-        auto msg = "DAP server error: " + string(err.what());
-        debug(SRV_DEBUG, "%s\n", msg.c_str());
-
-        // Display the error message in RetroShell
-        retroShell << msg << '\n';
-
-        // Disconnect the client
-        disconnect();
-    }
-}
-*/
-
-/*
-void
-DapServer::process(const string &packet)
-{
-    json j = json::parse(packet);
-    isize s = j.value("seq", 0);
-    string t = j.value("type", "");
-    string c = j.value("command", "");
-
-    try {
-
-        if (t == "request") {
-
-            if (c == "breakpointLocations") { process<dap::Command::BreakpointLocations>(s, packet); }
-            if (c == "configurationDone") { process<dap::Command::ConfigurationDone>(s, packet); }
-            if (c == "initialize") { process<dap::Command::Initialize>(s, packet); }
-            if (c == "launch") { process<dap::Command::Launch>(s, packet); }
-            if (c == "setBreakpoints") { process<dap::Command::SetBreakpoints>(s, packet); }
-
-        } else if (t == "response") {
-
-        } else if (t == "event") {
-
-        } else {
-
-            throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
-        }
-
-    } catch (...) {
-
-        throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
-    }
-}
-*/
-
 void
 DapServer::reply(const string &payload)
 {
     std::stringstream ss;
+
     ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
     printf("T: %s\n", util::makePrintable(payload).c_str());
-    tcp << ss.str();
+
+    *this << ss.str();
 }
-
-/*
-void
-DapServer::replySuccess(isize seq, const string &command)
-{
-    json response = {
-
-        {"type", "response"},
-        {"seq", 0},
-        {"request_seq", seq},
-        {"command", command},
-        {"success", true}
-    };
-
-    reply(response.dump());
-}
-
-string
-DapServer::readRegister(isize nr)
-{
-    switch (nr) {
-
-        case 0: return util::hexstr<2>(c64.cpu.reg.a);
-        case 1: return util::hexstr<2>(c64.cpu.reg.x);
-        case 2: return util::hexstr<2>(c64.cpu.reg.y);
-        case 3: return util::hexstr<2>(c64.cpu.reg.sp);
-        case 4: return util::hexstr<2>(c64.cpu.getP());
-        case 5: return util::hexstr<4>(c64.cpu.getPC0());
-        default: return "00";
-    }
-}
-
-string
-DapServer::readMemory(isize addr)
-{
-    auto byte = mem.spypeek((u16)addr);
-    return util::hexstr <2> (byte);
-}
-
-void
-DapServer::breakpointReached()
-{
-    debug(DAP_DEBUG, "breakpointReached()\n");
-}
-*/
 
 }
