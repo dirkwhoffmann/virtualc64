@@ -96,9 +96,7 @@ struct FSDeviceDescriptor : CoreObject {
     //
     // Ordering blocks
     //
-    
-public:
-    
+        
     bool nextBlock(Block b, Block *nb) const;
     TSLink nextBlockRef(TSLink b) const;
 };

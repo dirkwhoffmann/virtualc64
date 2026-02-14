@@ -520,14 +520,19 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
     // Encode tracks
     HeadPos start;
     for (Track t = 1; t <= numTracks; t++) {
-        
+
+        // REMOVE ASAP
+        alignTracks = true;
+
         auto zone = speedZoneOfTrack(t);
         if (alignTracks) {
             start = (HeadPos)(length.track[t][0] * trackDefaults[t].stagger);
         } else {
             start = 0;
         }
-        encodeTrack(fs, t, tailGap[zone], start);
+        isize total = encodeTrack(fs, t, tailGap[zone], start);
+
+        printf("Length: %ld total: %ld Checksum: %x\n", length.track[t][0], total, util::fnv32(data.track[t], length.track[t][0] / 8));
     }
 
     // Do some consistency checking
@@ -541,7 +546,7 @@ isize
 Disk::encodeTrack(const FileSystem &fs, Track t, isize gap, HeadPos start)
 {
     assert(isTrackNumber(t));
-    trace(GCR_DEBUG, "Encoding track %ld\n", t);
+    trace(GCR_DEBUG, "Encoding track %ld (%ld)\n", t, start);
 
     isize totalEncodedBits = 0;
     
@@ -566,8 +571,8 @@ Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize
     HeadPos offset = start;
     u8 errorCode = fs.getErrorCode(ts);
 
-    trace(GCR_DEBUG, "  Encoding track/sector %ld/%ld\n", t, s);
-    
+    // trace(GCR_DEBUG, "  Encoding track/sector %ld/%ld (%ld)\n", t, s, start);
+
     // Get disk id and compute checksum
     u8 id1 = fs.diskId1();
     u8 id2 = fs.diskId2();

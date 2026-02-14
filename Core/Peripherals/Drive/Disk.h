@@ -238,6 +238,7 @@ public:
         return _readBitFromHalftrack(ht, wrap(ht, pos));
     }
     void _writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit) {
+        if (pos >= length.halftrack[ht]) pos -= length.halftrack[ht];
         assert(isValidHeadPos(ht, pos));
         if (bit) {
             data.halftrack[ht][pos >> 3] |= (0x0080 >> (pos & 7));

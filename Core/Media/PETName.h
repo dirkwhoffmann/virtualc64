@@ -109,7 +109,7 @@ public:
         return name;
     }
     
-    void write(u8 *p, isize length)
+    void write(u8 *p, isize length = len) const
     {
         assert(p);
         assert(length <= len);
@@ -117,7 +117,7 @@ public:
         for (isize i = 0; i < length; i++) p[i] = pet[i];
     }
     
-    void write(u8 *p) { write(p, len); }
+    // void write(u8 *p) { write(p, len); }
     
     const char *c_str() { return asc; }
     string str() { return string(asc); }

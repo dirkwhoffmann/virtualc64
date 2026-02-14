@@ -117,8 +117,8 @@ enum SFSymbol {
 
     static func get(name: String, size: CGFloat = 25) -> NSImage? {
 
-        let img = NSImage(named: name)!
-        return img.resize(size: CGSize(width: size, height: size));
+        guard let img = NSImage(named: name) else { return nil }
+        return img.resize(size: CGSize(width: size, height: size))
     }
 
 }
