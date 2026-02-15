@@ -13,7 +13,8 @@
 #pragma once
 
 #include "SubComponent.h"
-#include "Chrono.h"
+// #include "Chrono.h"
+#include "Utilities/Chrono.h"
 
 namespace vc64 {
 

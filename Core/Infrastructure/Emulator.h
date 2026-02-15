@@ -21,7 +21,7 @@
 
 namespace vc64 {
 
-class Emulator : public Thread, public Synchronizable, public Inspectable<EmulatorInfo, EmulatorStats> {
+class Emulator : public Thread, public utl::Synchronizable, public Inspectable<EmulatorInfo, EmulatorStats> {
 
     friend struct API;
     friend struct VirtualC64;

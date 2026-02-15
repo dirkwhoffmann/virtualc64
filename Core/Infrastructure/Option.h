@@ -15,6 +15,7 @@
 
 #include "OptionTypes.h"
 #include "Parser.h"
+#include "Utilities/Parser.h" // DEPRECATED
 #include <memory>
 
 namespace vc64 {

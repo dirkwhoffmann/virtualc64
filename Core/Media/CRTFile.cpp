@@ -148,11 +148,11 @@ CRTFile::chipAddr(isize nr) const
 void
 CRTFile::dump() const
 {
-    msg("Cartridge: %s\n", getName().c_str());
-    msg("   Header: %08X bytes (normally 0x40)\n", headerSize());
-    msg("   Type:   %ld\n", (long)cartridgeType());
-    msg("   Game:   %d\n", initialGameLine());
-    msg("   Exrom:  %d\n", initialExromLine());
+    printf("Cartridge: %s\n", getName().c_str());
+    printf("   Header: %08X bytes (normally 0x40)\n", headerSize());
+    printf("   Type:   %ld\n", (long)cartridgeType());
+    printf("   Game:   %d\n", initialGameLine());
+    printf("   Exrom:  %d\n", initialExromLine());
 }
 
 void

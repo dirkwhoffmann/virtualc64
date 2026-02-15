@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Buffer.h"
+#include "Utilities/Buffer.h" // DEPRECATED
 #include "Constants.h"
 
 namespace vc64 {

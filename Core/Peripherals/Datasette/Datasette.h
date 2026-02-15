@@ -18,6 +18,7 @@
 #include "SubComponent.h"
 #include "Constants.h"
 #include "Chrono.h"
+#include "Utilities/Chrono.h" // DEPRECATED
 
 namespace vc64 {
 

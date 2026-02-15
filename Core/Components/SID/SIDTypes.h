@@ -15,6 +15,7 @@
 
 #include "Reflection.h"
 #include "RingBuffer.h"
+#include "Utilities/RingBuffer.h" // DEPRECATED
 
 namespace vc64 {
 

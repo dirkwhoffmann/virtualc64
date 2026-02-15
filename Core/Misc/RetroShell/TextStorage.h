@@ -13,13 +13,13 @@
 #pragma once
 
 #include "BasicTypes.h"
-#include "Synchronizable.h"
+#include "utl/abilities/Synchronizable.h"
 #include <sstream>
 #include <fstream>
 
 namespace vc64 {
 
-class TextStorage: Synchronizable {
+class TextStorage: utl::Synchronizable {
 
     // Maximum number of stored lines
     static constexpr usize capacity = 512;

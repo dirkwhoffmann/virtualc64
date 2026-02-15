@@ -71,8 +71,10 @@ public:
  * be performed when variadic functions are used.
  */
 
+/*
 #define msg(format, ...) \
 fprintf(stderr, format __VA_OPT__(,) __VA_ARGS__);
+*/
 
 #define warn(format, ...) \
 fprintf(stderr, "Warning: " format __VA_OPT__(,) __VA_ARGS__);

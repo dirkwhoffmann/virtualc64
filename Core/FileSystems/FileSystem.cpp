@@ -233,8 +233,8 @@ FileSystem::dump() const
     
     for (isize i = 0; i < blocksSize; i++)  {
         
-        msg("\nBlock %ld (%ld):", i, blocks[i]->nr);
-        msg(" %s\n", FSBlockTypeEnum::key(blocks[i]->type()));
+        debug(true, "\nBlock %ld (%ld):", i, blocks[i]->nr);
+        debug(true, " %s\n", FSBlockTypeEnum::key(blocks[i]->type()));
         
         blocks[i]->dump();
     }
@@ -247,7 +247,7 @@ FileSystem::printDirectory()
 
     for (auto &item : dir) {
 
-        msg("%3ld \"%-16s\" %s (%5ld bytes)\n",
+        debug(true, "%3ld \"%-16s\" %s (%5ld bytes)\n",
             fileBlocks(item),
             item->getName().c_str(),
             item->typeString().c_str(),

@@ -165,7 +165,7 @@ RomFile::finalizeRead()
     
     // Remove the padding bytes
     if (pads) {
-        msg("Removing %ld padding bytes from Rom file\n", pads);
+        debug(true, "Removing %ld padding bytes from Rom file\n", pads);
         strip(pads & ~0x3FF);
     }
 }

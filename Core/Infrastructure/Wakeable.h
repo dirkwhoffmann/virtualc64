@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Concurrency.h"
+#include "Utilities/Concurrency.h"
 
 namespace vc64 {
 

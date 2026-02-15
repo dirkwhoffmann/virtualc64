@@ -14,12 +14,13 @@
 
 #include "MsgQueueTypes.h"
 #include "CoreObject.h"
-#include "Synchronizable.h"
+#include "utl/abilities/Synchronizable.h"
 #include "RingBuffer.h"
+#include "Utilities/RingBuffer.h" // DEPRECATED
 
 namespace vc64 {
 
-class MsgQueue final : CoreObject, Synchronizable {
+class MsgQueue final : CoreObject, utl::Synchronizable {
 
     // Ring buffer storing all pending messages
     util::RingBuffer <Message, 512> queue;

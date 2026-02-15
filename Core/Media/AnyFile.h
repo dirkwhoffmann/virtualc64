@@ -15,6 +15,7 @@
 #include "CoreObject.h"
 #include "MediaFile.h"
 #include "Buffer.h"
+#include "Utilities/Buffer.h" // DEPRECATED
 #include "PETName.h"
 
 #include <sstream>

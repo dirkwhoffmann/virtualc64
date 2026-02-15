@@ -16,9 +16,8 @@
 #include "SIDTypes.h"
 #include "SubComponent.h"
 #include "Animated.h"
+#include "Utilities/Animated.h" // DEPRECATED
 #include "AudioStream.h"
-// #include "Concurrency.h"
-// #include "Volume.h"
 #include "SampleRateDetector.h"
 
 namespace vc64 {

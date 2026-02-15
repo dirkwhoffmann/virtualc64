@@ -15,12 +15,12 @@
 #include "CoreObject.h"
 #include "OptionTypes.h"
 #include "Concurrency.h"
-#include "Synchronizable.h"
+#include "utl/abilities/Synchronizable.h"
 #include <map>
 
 namespace vc64 {
 
-class Defaults final : public CoreObject, public Synchronizable {
+class Defaults final : public CoreObject, public utl::Synchronizable {
 
     // The key-value storage
     std::map <string, string> values;

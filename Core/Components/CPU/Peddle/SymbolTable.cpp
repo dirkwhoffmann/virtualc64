@@ -9,6 +9,7 @@
 #include "SymbolTable.h"
 #include "StringUtils.h"
 #include "Parser.h"
+#include "Utilities/Parser.h" // DEPRECATED
 #include <fstream>
 #include <sstream>
 #include <algorithm>

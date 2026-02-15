@@ -207,26 +207,26 @@ Headless::process(Message msg)
 void
 Headless::reportSize()
 {
-    msg("               C64 : %zu bytes\n", sizeof(C64));
-    msg("            Memory : %zu bytes\n", sizeof(Memory));
-    msg("       DriveMemory : %zu bytes\n", sizeof(DriveMemory));
-    msg("               CPU : %zu bytes\n", sizeof(CPU));
-    msg("               CIA : %zu bytes\n", sizeof(CIA));
-    msg("             VICII : %zu bytes\n", sizeof(VICII));
-    msg("         SIDBridge : %zu bytes\n", sizeof(SIDBridge));
-    msg("         PowerPort : %zu bytes\n", sizeof(PowerPort));
-    msg("       ControlPort : %zu bytes\n", sizeof(ControlPort));
-    msg("     ExpansionPort : %zu bytes\n", sizeof(ExpansionPort));
-    msg("        SerialPort : %zu bytes\n", sizeof(SerialPort));
-    msg("          Keyboard : %zu bytes\n", sizeof(Keyboard));
-    msg("             Drive : %zu bytes\n", sizeof(Drive));
-    msg("          ParCable : %zu bytes\n", sizeof(ParCable));
-    msg("         Datasette : %zu bytes\n", sizeof(Datasette));
-    msg("        RetroShell : %zu bytes\n", sizeof(RetroShell));
-    msg("  RegressionTester : %zu bytes\n", sizeof(RegressionTester));
-    msg("          MsgQueue : %zu bytes\n", sizeof(MsgQueue));
-    msg("          CmdQueue : %zu bytes\n", sizeof(CmdQueue));
-    msg("\n");
+    printf("               C64 : %zu bytes\n", sizeof(C64));
+    printf("            Memory : %zu bytes\n", sizeof(Memory));
+    printf("       DriveMemory : %zu bytes\n", sizeof(DriveMemory));
+    printf("               CPU : %zu bytes\n", sizeof(CPU));
+    printf("               CIA : %zu bytes\n", sizeof(CIA));
+    printf("             VICII : %zu bytes\n", sizeof(VICII));
+    printf("         SIDBridge : %zu bytes\n", sizeof(SIDBridge));
+    printf("         PowerPort : %zu bytes\n", sizeof(PowerPort));
+    printf("       ControlPort : %zu bytes\n", sizeof(ControlPort));
+    printf("     ExpansionPort : %zu bytes\n", sizeof(ExpansionPort));
+    printf("        SerialPort : %zu bytes\n", sizeof(SerialPort));
+    printf("          Keyboard : %zu bytes\n", sizeof(Keyboard));
+    printf("             Drive : %zu bytes\n", sizeof(Drive));
+    printf("          ParCable : %zu bytes\n", sizeof(ParCable));
+    printf("         Datasette : %zu bytes\n", sizeof(Datasette));
+    printf("        RetroShell : %zu bytes\n", sizeof(RetroShell));
+    printf("  RegressionTester : %zu bytes\n", sizeof(RegressionTester));
+    printf("          MsgQueue : %zu bytes\n", sizeof(MsgQueue));
+    printf("          CmdQueue : %zu bytes\n", sizeof(CmdQueue));
+    printf("\n");
 }
 
 const char *

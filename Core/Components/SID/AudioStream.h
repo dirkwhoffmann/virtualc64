@@ -15,7 +15,9 @@
 #include "CoreObject.h"
 #include "Concurrency.h"
 #include "RingBuffer.h"
-#include "Synchronizable.h"
+#include "utl/abilities/Synchronizable.h"
+#include "Utilities/Concurrency.h" // DEPRECATED
+#include "Utilities/RingBuffer.h" // DEPRECATED
 
 namespace vc64 {
 
@@ -40,7 +42,7 @@ struct SamplePair
 // AudioStream
 //
 
-class AudioStream : public CoreObject, public Synchronizable, public util::ResizableRingBuffer<SamplePair> {
+class AudioStream : public CoreObject, public utl::Synchronizable, public util::ResizableRingBuffer<SamplePair> {
 
 public:
 

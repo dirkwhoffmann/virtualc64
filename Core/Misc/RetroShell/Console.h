@@ -16,6 +16,7 @@
 #include "SubComponent.h"
 #include "RSCommand.h"
 #include "Parser.h"
+#include "Utilities/Parser.h"
 #include "TextStorage.h"
 
 namespace vc64 {

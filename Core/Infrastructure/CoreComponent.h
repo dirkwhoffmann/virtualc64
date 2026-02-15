@@ -19,7 +19,7 @@
 #include "Configurable.h"
 #include "Inspectable.h"
 #include "Serializable.h"
-#include "Synchronizable.h"
+#include "utl/abilities/Synchronizable.h"
 #include <functional>
 
 namespace vc64 {
@@ -36,7 +36,7 @@ struct Description {
 typedef std::vector<Description> Descriptions;
 
 class CoreComponent :
-public CoreObject, public Serializable, public Synchronizable, public Configurable {
+public CoreObject, public Serializable, public utl::Synchronizable, public Configurable {
 
 public:
 

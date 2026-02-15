@@ -16,6 +16,9 @@
 #include "MemUtils.h"
 #include "Buffer.h"
 #include "RingBuffer.h"
+#include "Utilities/MemUtils.h" // DEPRECATED
+#include "Utilities/Buffer.h"  // DEPRECATED
+#include "Utilities/RingBuffer.h"  // DEPRECATED
 #include <concepts>
 
 namespace vc64 {

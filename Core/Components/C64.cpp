@@ -598,7 +598,7 @@ C64::overrideOption(Opt opt, i64 value) const
 
     if (overrides.find(opt) != overrides.end()) {
 
-        msg("Overriding option: %s = %lld\n", OptEnum::key(opt), value);
+        debug(true, "Overriding option: %s = %lld\n", OptEnum::key(opt), value);
         return overrides[opt];
     }
 

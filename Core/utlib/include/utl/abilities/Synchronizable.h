@@ -1,20 +1,17 @@
 // -----------------------------------------------------------------------------
-// This file is part of VirtualC64
+// This file is part of utlib - A lightweight utility library
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// This FILE is dual-licensed. You are free to choose between:
+// Licensed under the Mozilla Public License v2
 //
-//     - The GNU General Public License v3 (or any later version)
-//     - The Mozilla Public License v2
-//
-// SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #pragma once
 
-#include "Concurrency.h"
+#include "utl/concurrency/AutoMutex.h"
 
-namespace vc64 {
+namespace utl {
 
 class Synchronizable {
 
@@ -24,7 +21,7 @@ public:
      * to prevent multiple threads to enter the same code block. It mimics the
      * behaviour of the well known Java construct 'synchronized(this) { }'.
      */
-    mutable util::ReentrantMutex mutex;
+    mutable ReentrantMutex mutex;
 
 };
 
@@ -38,6 +35,6 @@ public:
  *          ...
  *     }
  */
-#define SYNCHRONIZED util::AutoMutex _am(mutex);
+#define SYNCHRONIZED utl::AutoMutex _am(mutex);
 
 }
