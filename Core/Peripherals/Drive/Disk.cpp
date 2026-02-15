@@ -13,7 +13,7 @@
 #include "config.h"
 #include "C64.h"
 #include "IOUtils.h"
-#include "Checksum.h"
+#include "utl/abilities/Hashable.h"
 
 #include <stdarg.h>
 
@@ -190,7 +190,7 @@ Disk::_dump(Category category, std::ostream &os) const
     
     if (category == Category::Disk) {
 
-        auto checksum = util::fnv32((const u8 *)data.track, sizeof(data.track));
+        auto checksum = utl::Hashable::fnv32((const u8 *)data.track, sizeof(data.track));
 
         os << tab("Write protected") << bol(writeProtected) << std::endl;
         os << tab("Modified") << bol(modified) << std::endl;
@@ -532,7 +532,7 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
         }
         isize total = encodeTrack(fs, t, tailGap[zone], start);
 
-        printf("Length: %ld total: %ld Checksum: %x\n", length.track[t][0], total, util::fnv32(data.track[t], length.track[t][0] / 8));
+        printf("Length: %ld total: %ld Checksum: %x\n", length.track[t][0], total, utl::Hashable::fnv32(data.track[t], length.track[t][0] / 8));
     }
 
     // Do some consistency checking

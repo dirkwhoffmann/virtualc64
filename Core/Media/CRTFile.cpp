@@ -13,7 +13,6 @@
 #include "config.h"
 #include "CRTFile.h"
 #include "Cartridge.h"
-#include "Checksum.h"
 #include "IOUtils.h"
 
 namespace vc64 {

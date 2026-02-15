@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "AnyFile.h"
-#include "Checksum.h"
 #include "IOUtils.h"
 #include "CRTFile.h"
 #include "D64File.h"

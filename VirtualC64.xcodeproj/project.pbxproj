@@ -151,7 +151,6 @@
 		50549B49257D288E006FE39C /* AudioPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* AudioPort.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		5055D5B42615886E005D3DA6 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
-		5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B526158ABC005D3DA6 /* Checksum.cpp */; };
 		5058A918281D03D200C223C9 /* DiskInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A917281D03D200C223C9 /* DiskInspector.xib */; };
 		5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A919281D041400C223C9 /* DiskExporter.xib */; };
 		5058A91C281D042D00C223C9 /* VolumeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A91B281D042D00C223C9 /* VolumeInspector.xib */; };
@@ -182,8 +181,6 @@
 		505F45762E9698EF00418105 /* AudioSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45752E9698EA00418105 /* AudioSettings.swift */; };
 		505F45782E9698F600418105 /* VideoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F45772E9698F300418105 /* VideoSettings.swift */; };
 		505F457E2E96A42100418105 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F457D2E96A41E00418105 /* CGRect.swift */; };
-		50650F3E2DF094A3008AD660 /* Compression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3D2DF094A3008AD660 /* Compression.cpp */; };
-		50650F3F2DF094A3008AD660 /* Compression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F3D2DF094A3008AD660 /* Compression.cpp */; };
 		50650F422DF0C7A5008AD660 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 50650F412DF0C7A5008AD660 /* libz.tbd */; };
 		50650F462DF23C8D008AD660 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F452DF23C8A008AD660 /* Texture.cpp */; };
 		50650F472DF23C8D008AD660 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50650F452DF23C8A008AD660 /* Texture.cpp */; };
@@ -215,7 +212,6 @@
 		50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B579B5281436F6001D8621 /* StringUtils.cpp */; };
 		50726F402961C97B0031F2F5 /* IOUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IOUtils.cpp */; };
 		50726F412961C97B0031F2F5 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
-		50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B526158ABC005D3DA6 /* Checksum.cpp */; };
 		50726F462961C9940031F2F5 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
 		50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
 		50726F482961C9940031F2F5 /* Defaults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD369A2817D69000E40BFC /* Defaults.cpp */; };
@@ -876,8 +872,6 @@
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		5055D5B226158849005D3DA6 /* ErrorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorTypes.h; sourceTree = "<group>"; };
 		5055D5B32615886E005D3DA6 /* Error.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Error.cpp; sourceTree = "<group>"; };
-		5055D5B526158ABC005D3DA6 /* Checksum.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Checksum.cpp; sourceTree = "<group>"; };
-		5055D5B626158ABC005D3DA6 /* Checksum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Checksum.h; sourceTree = "<group>"; };
 		5058A917281D03D200C223C9 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
 		5058A919281D041400C223C9 /* DiskExporter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskExporter.xib; sourceTree = "<group>"; };
 		5058A91B281D042D00C223C9 /* VolumeInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VolumeInspector.xib; sourceTree = "<group>"; };
@@ -910,8 +904,6 @@
 		505F45752E9698EA00418105 /* AudioSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSettings.swift; sourceTree = "<group>"; };
 		505F45772E9698F300418105 /* VideoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
 		505F457D2E96A41E00418105 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
-		50650F3C2DF094A3008AD660 /* Compression.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Compression.h; sourceTree = "<group>"; };
-		50650F3D2DF094A3008AD660 /* Compression.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compression.cpp; sourceTree = "<group>"; };
 		50650F412DF0C7A5008AD660 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		50650F432DF0E715008AD660 /* DumpableTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DumpableTypes.h; sourceTree = "<group>"; };
 		50650F442DF23C81008AD660 /* Texture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
@@ -1455,10 +1447,6 @@
 				50975A5D2DE05AA10016118E /* Annotations.h */,
 				500FAA63261376C50062488E /* BasicTypes.h */,
 				500FAA64261377050062488E /* Macros.h */,
-				5055D5B626158ABC005D3DA6 /* Checksum.h */,
-				5055D5B526158ABC005D3DA6 /* Checksum.cpp */,
-				50650F3C2DF094A3008AD660 /* Compression.h */,
-				50650F3D2DF094A3008AD660 /* Compression.cpp */,
 				50B579B6281436F6001D8621 /* StringUtils.h */,
 				50B579B5281436F6001D8621 /* StringUtils.cpp */,
 				500E34132615BF5E006A38DA /* IOUtils.h */,
@@ -2754,14 +2742,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50650F3F2DF094A3008AD660 /* Compression.cpp in Sources */,
 				50726F852961C9F10031F2F5 /* CartridgeRom.cpp in Sources */,
 				50726FAD2961CA1C0031F2F5 /* CRTFile.cpp in Sources */,
 				50726FB62961CA290031F2F5 /* Console.cpp in Sources */,
 				50726F502961C9940031F2F5 /* CoreComponent.cpp in Sources */,
 				50A194A02BDA84710046849E /* MemoryBase.cpp in Sources */,
 				50726FA72961CA1C0031F2F5 /* D64File.cpp in Sources */,
-				50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */,
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
 				506E28462EB746C7003FF0D3 /* DapAdapter.cpp in Sources */,
 				505A13302C3503EB00FF8D2C /* UserPortBase.cpp in Sources */,
@@ -3207,7 +3193,6 @@
 				50A5B7D52C74E44C00D6DDAD /* Socket.cpp in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				50E99FE72EBF872600633978 /* RpcServer.cpp in Sources */,
-				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
 				50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */,
 				505F45762E9698EF00418105 /* AudioSettings.swift in Sources */,
 				505A132B2C3503B400FF8D2C /* UserPort.cpp in Sources */,
@@ -3261,7 +3246,6 @@
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507E7AA024FB881500AB433C /* ScreenshotViewer.swift in Sources */,
 				50F420CA250BA3460043DE56 /* Colors.cpp in Sources */,
-				50650F3E2DF094A3008AD660 /* Compression.cpp in Sources */,
 				50995F2A24DBCDE400F40713 /* PeddleDebugger.cpp in Sources */,
 				505F45562E96953F00418105 /* SettingsOutlineView.swift in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,

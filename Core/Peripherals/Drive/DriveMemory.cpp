@@ -13,7 +13,7 @@
 #include "config.h"
 #include "DriveMemory.h"
 #include "Emulator.h"
-#include "Checksum.h"
+#include "utl/abilities/Hashable.h"
 #include "IOUtils.h"
 
 namespace vc64 {
@@ -61,7 +61,7 @@ DriveMemory::romCRC32() const
     isize size = romSize();
     isize offset = romAddr() & 0x7FFF;
     
-    return size ? util::crc32(rom + offset, size) : 0;
+    return size ? utl::Hashable::crc32(rom + offset, size) : 0;
 }
 
 u64
@@ -70,7 +70,7 @@ DriveMemory::romFNV64() const
     isize size = romSize();
     isize offset = romAddr() & 0x7FFF;
     
-    return size ? util::fnv64(rom + offset, size) : 0;
+    return size ? utl::Hashable::fnv64(rom + offset, size) : 0;
 }
 
 void

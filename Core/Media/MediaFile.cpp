@@ -14,7 +14,6 @@
 #include "MediaFile.h"
 #include "VirtualC64.h"
 #include "StringUtils.h"
-#include "Checksum.h"
 #include "CRTFile.h"
 #include "D64File.h"
 #include "Folder.h"
