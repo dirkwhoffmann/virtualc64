@@ -14,9 +14,11 @@
 
 #include "ThreadTypes.h"
 #include "CoreComponent.h"
-#include "Concurrency.h"
-#include "Chrono.h"
-#include "Wakeable.h"
+// #include "utl/chrono.h"
+// #include "utl/concurrency.h"
+#include "utl/abilities/Wakeable.h"
+#include <thread>
+#include <latch>
 
 namespace vc64 {
 
@@ -32,7 +34,7 @@ typedef AppException StateChangeException;
  *  the basic functionality to manage the execution state. It provides functions
  *  to launch the emulator thread, to query it's current state, and to switch
  *  to another state. */
-class Thread : public CoreObject, public Wakeable {
+class Thread : public CoreObject, public utl::Wakeable {
 
 protected:
 
@@ -46,8 +48,8 @@ protected:
     std::latch initLatch {1};
 
     // Synchronization mutex
-    mutable util::ReentrantMutex lock;
-    mutable util::ReentrantMutex suspensionLock;
+    mutable utl::ReentrantMutex lock;
+    mutable utl::ReentrantMutex suspensionLock;
     
     // Warp and track state
     u8 warp = 0;
@@ -59,11 +61,11 @@ protected:
     isize statsCounter = 0;
 
     // Time stamps
-    util::Time baseTime;
+    utl::Time baseTime;
     
     // Clocks for measuring the CPU load
-    util::Clock nonstopClock;
-    util::Clock loadClock;
+    utl::Clock nonstopClock;
+    utl::Clock loadClock;
 
     // Statistical information (CPU load, frames per second, thread resyncs)
     double cpuLoad = 0.0;
@@ -71,7 +73,7 @@ protected:
     isize resyncs = 0;
 
     // Debug clocks
-    util::Clock wakeupClock;
+    utl::Clock wakeupClock;
 
     
     //

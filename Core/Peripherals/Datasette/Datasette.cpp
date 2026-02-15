@@ -16,16 +16,16 @@
 
 namespace vc64 {
 
-util::Time
+utl::Time
 Pulse::delay() const
 {
-    return util::Time((i64)cycles * 1000000000 / PAL::CLOCK_FREQUENCY);
+    return utl::Time((i64)cycles * 1000000000 / PAL::CLOCK_FREQUENCY);
 }
 
-util::Time
+utl::Time
 Datasette::tapeDuration(isize pos)
 {
-    util::Time result;
+    utl::Time result;
     
     for (isize i = 0; i < pos && i < numPulses; i++) {
         result += pulses[i].delay();
@@ -98,7 +98,7 @@ Datasette::rewind(isize seconds)
     i64 old = (i64)counter.asSeconds();
 
     // Start at the beginning
-    counter = util::Time(0);
+    counter = utl::Time(0);
     head = 0;
     
     // Fast forward to the requested position

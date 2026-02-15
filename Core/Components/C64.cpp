@@ -1484,7 +1484,7 @@ C64::saveWorkspace(const fs::path &path)
 
     // Prepare the config script
     auto now = std::time(nullptr);
-    auto local = util::Time::local(now);
+    auto local = utl::Time::local(now);
     ss << "# Workspace setup (" << std::put_time(&local, "%c") << ")\n";
     ss << "# Generated with VirtualC64 " << C64::build() << "\n";
     ss << "\n";

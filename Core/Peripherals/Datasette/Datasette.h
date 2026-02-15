@@ -18,7 +18,6 @@
 #include "SubComponent.h"
 #include "Constants.h"
 #include "Chrono.h"
-#include "Utilities/Chrono.h" // DEPRECATED
 
 namespace vc64 {
 
@@ -33,7 +32,7 @@ public:
     Pulse() : cycles(0) { };
     Pulse(i32 value) : cycles(value) { };
     
-    util::Time delay() const;
+    utl::Time delay() const;
 };
 
 class Datasette final : public SubComponent, public Inspectable<DatasetteInfo> {
@@ -84,7 +83,7 @@ class Datasette final : public SubComponent, public Inspectable<DatasetteInfo> {
     isize head = 0;
 
     // The tape counter (time between start and the current head position)
-    util::Time counter;
+    utl::Time counter;
     
     // State of the play key
     bool playKey = false;
@@ -191,10 +190,10 @@ public:
     bool hasTape() const { return numPulses != 0; }
 
     // Returns the duration from the tape start and the specified position
-    util::Time tapeDuration(isize pos);
+    utl::Time tapeDuration(isize pos);
 
     // Returns the duration of the entire tape
-    util::Time tapeDuration() { return tapeDuration(numPulses); }
+    utl::Time tapeDuration() { return tapeDuration(numPulses); }
 
     // Returns the current tape counter in (truncated) seconds
     isize getCounter() const { return (isize)counter.asSeconds(); }

@@ -63,7 +63,7 @@ class AudioPort final : public SubComponent, public Inspectable<AudioPortInfo, A
     double sampleRateCorrection = 0.0;
 
     // Time stamp of the last write pointer alignment
-    util::Time lastAlignment = util::Time::now();
+    utl::Time lastAlignment = utl::Time::now();
 
     // Channel volumes
     float vol[4] = { };

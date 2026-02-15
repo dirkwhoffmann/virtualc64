@@ -37,7 +37,7 @@ void
 Thread::resync()
 {
     resyncs++;
-    baseTime = util::Time::now();
+    baseTime = utl::Time::now();
     frameCounter = 0;
 }
 
@@ -105,7 +105,7 @@ Thread::sleep()
     */
 
     // Set a timeout to prevent the thread from stalling
-    auto timeout = util::Time::milliseconds(50);
+    auto timeout = utl::Time::milliseconds(50);
 
     // Wait for the next pulse
     waitForWakeUp(timeout);

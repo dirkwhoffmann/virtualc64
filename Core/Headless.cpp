@@ -163,7 +163,7 @@ Headless::runScript(const fs::path &path)
     c64.launch(this, vc64::process);
 
     // Execute script
-    const auto timeout = util::Time::seconds(500.0);
+    const auto timeout = utl::Time::seconds(500.0);
     c64.retroShell.execScript(script);
     waitForWakeUp(timeout);
 }

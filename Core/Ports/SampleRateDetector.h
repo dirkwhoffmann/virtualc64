@@ -13,8 +13,7 @@
 #pragma once
 
 #include "SubComponent.h"
-// #include "Chrono.h"
-#include "Utilities/Chrono.h"
+#include "Chrono.h"
 
 namespace vc64 {
 
@@ -36,10 +35,10 @@ class SampleRateDetector final : public SubComponent {
     isize count = 0;
 
     // Measured timespan between two requests
-    util::Clock delta;
+    utl::Clock delta;
 
     // Ring buffer storing the latest measurements
-    util::RingBuffer<double, 256> buffer;
+    utl::RingBuffer<double, 256> buffer;
 
     // Number of filtered out outliers at both ends
     const isize trash = 6;

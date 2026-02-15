@@ -237,8 +237,8 @@ AudioPort::handleBufferUnderflow()
     stream.alignWritePtr();
 
     // Determine the elapsed seconds since the last pointer adjustment
-    auto elapsedTime = util::Time::now() - lastAlignment;
-    lastAlignment = util::Time::now();
+    auto elapsedTime = utl::Time::now() - lastAlignment;
+    lastAlignment = utl::Time::now();
 
     // Adjust the sample rate if the emulator runs under normal conditions
     if (emulator.isRunning() && !emulator.isWarping()) {
@@ -259,8 +259,8 @@ AudioPort::handleBufferOverflow()
     stream.alignWritePtr();
 
     // Determine the number of elapsed seconds since the last adjustment
-    auto elapsedTime = util::Time::now() - lastAlignment;
-    lastAlignment = util::Time::now();
+    auto elapsedTime = utl::Time::now() - lastAlignment;
+    lastAlignment = utl::Time::now();
 
     // Adjust the sample rate if the emulator runs under normal conditions
     if (emulator.isRunning() && !emulator.isWarping()) {

@@ -57,7 +57,7 @@ Emulator::launch(const void *listener, Callback *func)
 void
 Emulator::initialize()
 {
-    baseTime = util::Time::now();
+    baseTime = utl::Time::now();
 
     // Make sure this function is only called once
     if (isInitialized()) throw AppError(Fault::LAUNCH, "The emulator is already initialized.");
@@ -261,7 +261,7 @@ Emulator::missingFrames() const
     if (config.vsync) return 1;
 
     // Compute the elapsed time
-    auto elapsed = util::Time::now() - baseTime;
+    auto elapsed = utl::Time::now() - baseTime;
 
     // Compute which frame should be reached by now
     auto target = elapsed.asNanoseconds() * i64(main.refreshRate()) / 1000000000;
@@ -331,7 +331,7 @@ Emulator::recreateRunAheadInstance()
 
     // Clone the main instance
     if (RUA_DEBUG) {
-        util::StopWatch watch("Run-ahead: Clone");
+        utl::StopWatch watch("Run-ahead: Clone");
         cloneRunAheadInstance();
     } else {
         cloneRunAheadInstance();
@@ -339,7 +339,7 @@ Emulator::recreateRunAheadInstance()
 
     // Advance to the proper frame
     if (RUA_DEBUG) {
-        util::StopWatch watch("Run-ahead: Fast-forward");
+        utl::StopWatch watch("Run-ahead: Fast-forward");
         ahead.fastForward(config.runAhead - 1);
     } else {
         ahead.fastForward(config.runAhead - 1);

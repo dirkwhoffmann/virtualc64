@@ -191,7 +191,7 @@ Snapshot::compress(Compressor compressor)
 
         debug(SNP_DEBUG, "Compressing %ld bytes (hash: 0x%x)...", data.size, data.fnv32());
 
-        {   auto watch = util::StopWatch(SNP_DEBUG, "");
+        {   auto watch = utl::StopWatch(SNP_DEBUG, "");
             
             switch (compressor) {
                     
@@ -230,7 +230,7 @@ Snapshot::uncompress()
         
         debug(SNP_DEBUG, "Uncompressing %ld bytes...", data.size);
         
-        {   auto watch = util::StopWatch(SNP_DEBUG, "");
+        {   auto watch = utl::StopWatch(SNP_DEBUG, "");
         
             switch (compressor()) {
                     

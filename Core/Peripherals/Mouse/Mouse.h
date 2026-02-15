@@ -16,7 +16,6 @@
 #include "JoystickTypes.h"
 #include "SubComponent.h"
 #include "Chrono.h"
-#include "Utilities/Chrono.h" // DEPRECATED
 #include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"
@@ -39,7 +38,7 @@ class ShakeDetector {
     
     // Time stamps
     u64 lastTurn = 0;
-    util::Time lastShake;
+    utl::Time lastShake;
     
 public:
     
