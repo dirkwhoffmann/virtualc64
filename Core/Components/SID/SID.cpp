@@ -80,7 +80,7 @@ SID::executeUntil(Cycle targetCycle)
 
             // Compute the missing samples
             auto numSamples = resid.executeCycles(isize(missing), stream);
-            debug(SID_EXEC, "%ld: target: %lld missing: %lld generated: %ld", objid, targetCycle, missing, numSamples);
+            loginfo(SID_EXEC, "%ld: target: %lld missing: %lld generated: %ld", objid, targetCycle, missing, numSamples);
         }
     } else {
 

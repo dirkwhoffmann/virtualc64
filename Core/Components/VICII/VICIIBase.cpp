@@ -175,17 +175,17 @@ VICII::clearStats()
         double spriteTotal = stats.spriteFastPath + stats.spriteSlowPath;
         double exitTotal = stats.quickExitHit + stats.quickExitMiss;
 
-        debug(true, "Canvas: Fast path: %ld Slow path: %ld Ratio: %f\n",
+        loginfo(STDERR, "Canvas: Fast path: %ld Slow path: %ld Ratio: %f\n",
             stats.canvasFastPath,
             stats.canvasSlowPath,
             canvasTotal != 0 ? stats.canvasFastPath / canvasTotal : -1);
 
-        debug(true, "Sprites: Fast path: %ld Slow path: %ld Ratio: %f\n",
+        loginfo(STDERR, "Sprites: Fast path: %ld Slow path: %ld Ratio: %f\n",
             stats.spriteFastPath,
             stats.spriteSlowPath,
             spriteTotal != 0 ? stats.spriteFastPath / spriteTotal : -1);
 
-        debug(true, "Exits: Hit: %ld Miss: %ld Ratio: %f\n",
+        loginfo(STDERR, "Exits: Hit: %ld Miss: %ld Ratio: %f\n",
             stats.quickExitHit,
             stats.quickExitMiss,
             exitTotal != 0 ? stats.quickExitHit / exitTotal : -1);

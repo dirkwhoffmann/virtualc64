@@ -157,7 +157,7 @@ Reu::peekIO2(u16 addr)
             break;
     }
 
-    debug(REU_DEBUG >= 2, "peekIO2(%x) = %02X\n", addr, result);
+    loginfo(REU_DEBUG, "peekIO2(%x) = %02X\n", addr, result);
     return result;
 }
 
@@ -234,7 +234,7 @@ Reu::spypeekIO2(u16 addr) const
 void
 Reu::pokeIO2(u16 addr, u8 value)
 {
-    debug(REU_DEBUG >= 2, "pokeIO2(%x,%x)\n", addr, value);
+    loginfo(REU_DEBUG >= 2, "pokeIO2(%x,%x)\n", addr, value);
 
     switch (addr & 0x1F) {
 
@@ -248,11 +248,11 @@ Reu::pokeIO2(u16 addr, u8 value)
 
             if (GET_BIT(cr,7) && ff00Enabled()) {
 
-                // debug(REU_DEBUG, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
+                // loginfo(REU_DEBUG, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
             }
             if (GET_BIT(cr,7) && ff00Disabled()) {
 
-                // debug(REU_DEBUG, "Initiating DMA [Mode %d]...\n", cr & 0x3);
+                // loginfo(REU_DEBUG, "Initiating DMA [Mode %d]...\n", cr & 0x3);
                 initiateDma();
             }
             break;
@@ -348,18 +348,18 @@ Reu::poke(u16 addr, u8 value)
 
         if (isActive()) {
 
-            debug(REU_DEBUG, "Ignoring write to $FF00. REU already active\n");
+            loginfo(REU_DEBUG, "Ignoring write to $FF00. REU already active\n");
             return;
         }
 
         if (!isArmed()) {
 
-            debug(REU_DEBUG, "Ignoring write to $FF00. REU not armed\n");
+            loginfo(REU_DEBUG, "Ignoring write to $FF00. REU not armed\n");
             mem.poke(addr, value, memTypeF);
             return;
         }
 
-        debug(REU_DEBUG, "Starting REU via FF00 trigger\n");
+        loginfo(REU_DEBUG, "Starting REU via FF00 trigger\n");
         if (memTypeF != MemType::RAM) mem.poke(addr, value, memTypeF);
 
         initiateDma();
@@ -541,7 +541,7 @@ Reu::execute(EventID id)
 
             if (autoloadEnabled()) {
 
-                debug(REU_DEBUG, "Autoloading...\n");
+                loginfo(REU_DEBUG, "Autoloading...\n");
 
                 // Reload values from shadow registers
                 c64Base = c64BaseLatched;
@@ -672,7 +672,7 @@ Reu::doDma(EventID id)
 
             if (c64Val != reuVal) {
 
-                debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
+                loginfo(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
                       c64Base, c64Val, (u32)reuBank << 16 | reuBase, reuVal);
 
                 // Set the Fault bit
@@ -718,7 +718,7 @@ Reu::triggerEndOfBlockIrq()
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
 
-        debug(REU_DEBUG, "End-of-block IRQ triggered (sr = %02x)\n", sr);
+        loginfo(REU_DEBUG, "End-of-block IRQ triggered (sr = %02x)\n", sr);
     }
 }
 
@@ -730,7 +730,7 @@ Reu::triggerVerifyErrorIrq()
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
 
-        debug(REU_DEBUG, "Verify-error IRQ triggered (sr = %02x)\n", sr);
+        loginfo(REU_DEBUG, "Verify-error IRQ triggered (sr = %02x)\n", sr);
     }
 }
 

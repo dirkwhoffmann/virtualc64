@@ -49,7 +49,7 @@ FileSystem::~FileSystem()
 void
 FileSystem::init(isize capacity)
 {
-    debug(FS_DEBUG, "Creating device with %ld blocks\n", capacity);
+    loginfo(FS_DEBUG, "Creating device with %ld blocks\n", capacity);
 
     // Initialize the block storage
     blocks.reserve(capacity);
@@ -232,8 +232,8 @@ FileSystem::dump() const
     
     for (isize i = 0; i < blocksSize; i++)  {
         
-        debug(true, "\nBlock %ld (%ld):", i, blocks[i]->nr);
-        debug(true, " %s\n", FSBlockTypeEnum::key(blocks[i]->type()));
+        loginfo(STDERR, "\nBlock %ld (%ld):", i, blocks[i]->nr);
+        loginfo(STDERR, " %s\n", FSBlockTypeEnum::key(blocks[i]->type()));
         
         blocks[i]->dump();
     }
@@ -246,7 +246,7 @@ FileSystem::printDirectory()
 
     for (auto &item : dir) {
 
-        debug(true, "%3ld \"%-16s\" %s (%5ld bytes)\n",
+        loginfo(STDERR, "%3ld \"%-16s\" %s (%5ld bytes)\n",
             fileBlocks(item),
             item->getName().c_str(),
             item->typeString().c_str(),
@@ -802,7 +802,7 @@ FileSystem::importVolume(const u8 *src, isize size, Fault *err)
 {
     assert(src != nullptr);
 
-    debug(FS_DEBUG, "Importing file system (%ld bytes)...\n", size);
+    loginfo(FS_DEBUG, "Importing file system (%ld bytes)...\n", size);
 
     // Only proceed if the buffer size matches
     if ((isize)blocks.size() * 256 > size) {
@@ -855,7 +855,7 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
         // Skip all hidden files
         if (name.c_str()[0] == '.') continue;
 
-        debug(FS_DEBUG, "Importing %s\n", path.string().c_str());
+        loginfo(FS_DEBUG, "Importing %s\n", path.string().c_str());
 
         if (entry.is_regular_file()) {
 
@@ -895,7 +895,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, Fault *er
     
     isize count = last - first + 1;
     
-    debug(FS_DEBUG, "Exporting %ld blocks (%ld - %ld)\n", count, first, last);
+    loginfo(FS_DEBUG, "Exporting %ld blocks (%ld - %ld)\n", count, first, last);
 
     // Only proceed if the source buffer contains the right amount of data
     if (count * 256 != size) {
@@ -912,7 +912,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, Fault *er
         blocks[first + i]->exportBlock(dst + i * 256);
     }
 
-    debug(FS_DEBUG, "Success\n");
+    loginfo(FS_DEBUG, "Success\n");
     
     if (err) *err = Fault::OK;
     return true;
@@ -943,21 +943,21 @@ FileSystem::exportDirectory(const fs::path &path, bool createDir)
     for (auto const &entry : dir) {
 
         if (entry->getFileType() != FSFileType::PRG) {
-            debug(FS_DEBUG, "Skipping file %s\n", entry->getName().c_str());
+            loginfo(FS_DEBUG, "Skipping file %s\n", entry->getName().c_str());
             continue;
         }
         
         exportFile(entry, path);
     }
     
-    debug(FS_DEBUG, "Exported %zu items", dir.size());
+    loginfo(FS_DEBUG, "Exported %zu items", dir.size());
 }
 
 void
 FileSystem::exportFile(FSDirEntry *entry, const fs::path &path)
 {
     auto name = path / entry->getFileSystemRepresentation();
-    debug(FS_DEBUG, "Exporting file to %s\n", name.string().c_str());
+    loginfo(FS_DEBUG, "Exporting file to %s\n", name.string().c_str());
 
     std::ofstream stream(name);
     if (!stream.is_open()) throw AppError(Fault::FILE_CANT_CREATE);

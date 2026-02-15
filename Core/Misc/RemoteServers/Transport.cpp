@@ -17,7 +17,7 @@ namespace vc64 {
 
 Transport::~Transport() {
 
-    debug(SRV_DEBUG, "Shutting down\n");
+    loginfo(SRV_DEBUG, "Shutting down\n");
 }
 
 void
@@ -25,7 +25,7 @@ Transport::start(u16 port, const string &endpoint)
 {
     if (!isOff()) return;
 
-    debug(SRV_DEBUG, "Starting server...\n");
+    loginfo(SRV_DEBUG, "Starting server...\n");
     switchState(SrvState::STARTING);
 
     // Make sure we continue with a terminated server thread
@@ -40,7 +40,7 @@ Transport::stop()
 {
     if (isOff() || isStopping()) return;
 
-    debug(SRV_DEBUG, "Stopping server...\n");
+    loginfo(SRV_DEBUG, "Stopping server...\n");
     switchState(SrvState::STOPPING);
 
     // Interrupt the server thread
@@ -65,7 +65,7 @@ Transport::switchState(SrvState newState)
 
     if (oldState != newState) {
 
-        debug(SRV_DEBUG, "Switching state: %s -> %s\n",
+        loginfo(SRV_DEBUG, "Switching state: %s -> %s\n",
               SrvStateEnum::key(state), SrvStateEnum::key(newState));
 
         // Switch state

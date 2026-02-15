@@ -126,7 +126,7 @@ DapServer::didReceive(const string &cmd)
     } catch (AppError &err) {
 
         auto msg = "DAP server error: " + string(err.what());
-        debug(SRV_DEBUG, "%s\n", msg.c_str());
+        loginfo(SRV_DEBUG, "%s\n", msg.c_str());
 
         // Display the error message in RetroShell
         retroShell << msg << '\n';

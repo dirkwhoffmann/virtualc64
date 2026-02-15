@@ -19,7 +19,7 @@ namespace vc64 {
 void
 AudioPort::clear()
 {
-    debug(AUDBUF_DEBUG, "Clearing the audio sample buffer\n");
+    loginfo(AUDBUF_DEBUG, "Clearing the audio sample buffer\n");
 
     // Wipe out the ringbuffer
     stream.wipeOut();

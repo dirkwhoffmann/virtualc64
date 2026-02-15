@@ -66,7 +66,7 @@ public:
     SubComponent(C64& ref, isize id);
 
     bool isRunAheadInstance() const;
-    void prefix(isize level, const char *component, isize line) const override;
+    string prefix(LogLevel, const std::source_location &) const override;
 };
 
 }

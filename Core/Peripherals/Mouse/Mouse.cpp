@@ -156,7 +156,7 @@ Mouse::detectShakeDxDy(double dx, double dy)
 void
 Mouse::setXY(double x, double y)
 {
-    debug(PRT_DEBUG, "setXY(%f,%f)\n", x, y);
+    loginfo(PRT_DEBUG, "setXY(%f,%f)\n", x, y);
 
     switch(config.model) {
 
@@ -189,7 +189,7 @@ Mouse::setXY(double x, double y)
 void
 Mouse::setDxDy(double dx, double dy)
 {
-    debug(PRT_DEBUG, "setDxDy(%f,%f)\n", dx, dy);
+    loginfo(PRT_DEBUG, "setDxDy(%f,%f)\n", dx, dy);
 
     switch(config.model) {
 
@@ -222,7 +222,7 @@ Mouse::setDxDy(double dx, double dy)
 void
 Mouse::setLeftButton(bool value)
 {
-    debug(PRT_DEBUG, "setLeftButton(%d)\n", value);
+    loginfo(PRT_DEBUG, "setLeftButton(%d)\n", value);
     
     switch(config.model) {
             
@@ -242,7 +242,7 @@ Mouse::setLeftButton(bool value)
 void
 Mouse::setRightButton(bool value)
 {
-    debug(PRT_DEBUG, "setRightButton(%d)\n", value);
+    loginfo(PRT_DEBUG, "setRightButton(%d)\n", value);
 
     switch(config.model) {
             
@@ -261,7 +261,7 @@ Mouse::trigger(GamePadAction event)
 {
     assert(GamePadActionEnum::isValid(event));
     
-    debug(PRT_DEBUG, "trigger(%s)\n", GamePadActionEnum::key(event));
+    loginfo(PRT_DEBUG, "trigger(%s)\n", GamePadActionEnum::key(event));
     
     switch (event) {
 

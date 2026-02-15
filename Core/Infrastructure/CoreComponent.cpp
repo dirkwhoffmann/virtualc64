@@ -275,12 +275,12 @@ CoreComponent::load(const u8 *buf)
         // Check integrity
         if (size != count || hash != c->checksum(false) || FORCE_SNAP_CORRUPTED) {
 
-            debug(true, "Loaded %llu bytes (expected %llu)\n", count, size);
-            debug(true, "Hash: %llx (expected %llx)\n", hash, c->checksum(false));
+            loginfo(STDERR, "Loaded %llu bytes (expected %llu)\n", count, size);
+            loginfo(STDERR, "Hash: %llx (expected %llx)\n", hash, c->checksum(false));
             if (SNP_DEBUG) { fatalError; } else { throw AppError(Fault::SNAP_CORRUPTED); }
         }
 
-        debug(SNP_DEBUG >= 2, "Loaded %llu bytes (expected %llu)\n", count, size);
+        loginfo(SNP_DEBUG >= 2, "Loaded %llu bytes (expected %llu)\n", count, size);
         result += isize(count);
     });
 
@@ -311,11 +311,11 @@ CoreComponent::save(u8 *buffer)
         // Check integrity
         if (count != c->size(false) || FORCE_SNAP_CORRUPTED) {
 
-            debug(true, "Saved %ld bytes (expected %ld)\n", count, c->size(false));
+            loginfo(STDERR, "Saved %ld bytes (expected %ld)\n", count, c->size(false));
             if (SNP_DEBUG) { fatalError; } else { throw AppError(Fault::SNAP_CORRUPTED); }
         }
 
-        debug(SNP_DEBUG >= 2, "Saved %ld bytes (expected %ld)\n", count, c->size(false));
+        loginfo(SNP_DEBUG >= 2, "Saved %ld bytes (expected %ld)\n", count, c->size(false));
         result += count;
     });
 
@@ -366,7 +366,7 @@ CoreComponent::diff(CoreComponent &other)
 
     // Compare this component
     if (auto check1 = checksum(false), check2 = other.checksum(false); check1 != check2) {
-        debug(true, "Checksum mismatch: %llx != %llx\n", check1, check2);
+        loginfo(STDERR, "Checksum mismatch: %llx != %llx\n", check1, check2);
     }
 }
 

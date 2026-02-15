@@ -57,7 +57,7 @@ HttpTransport::main(u16 port, const string &endpoint)
 
     } catch (std::exception &err) {
 
-        debug(SRV_DEBUG, "HTTP server thread interrupted\n");
+        loginfo(SRV_DEBUG, "HTTP server thread interrupted\n");
         delegate.didTerminate(err.what());
     }
 }

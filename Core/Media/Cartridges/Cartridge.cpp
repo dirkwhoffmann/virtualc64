@@ -489,17 +489,17 @@ Cartridge::bankIn(isize nr)
 
         bankInROML(nr, 0x2000, 0); // chip covers ROML and (part of) ROMH
         bankInROMH(nr, packet[nr]->size - 0x2000, 0x2000);
-        debug(CRT_DEBUG, "Banked in chip %ld in ROML and ROMH\n", nr);
+        loginfo(CRT_DEBUG, "Banked in chip %ld in ROML and ROMH\n", nr);
 
     } else if (packet[nr]->mapsToL()) {
 
         bankInROML(nr, packet[nr]->size, 0); // chip covers (part of) ROML
-        debug(CRT_DEBUG, "Banked in chip %ld in ROML\n", nr);
+        loginfo(CRT_DEBUG, "Banked in chip %ld in ROML\n", nr);
 
     } else if (packet[nr]->mapsToH()) {
 
         bankInROMH(nr, packet[nr]->size, 0); // chip covers (part of) ROMH
-        debug(CRT_DEBUG, "Banked in chip %ld to ROMH\n", nr);
+        loginfo(CRT_DEBUG, "Banked in chip %ld to ROMH\n", nr);
 
     } else {
 

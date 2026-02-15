@@ -19,14 +19,18 @@ namespace vc64 {
 isize
 CoreObject::verbosity = 3;
 
-void
-CoreObject::prefix(isize level, const char *component, isize line) const
+string
+CoreObject::prefix(LogLevel level, const std::source_location &loc) const
 {
-    if (level == 1) {
-        fprintf(stderr, "%s: ", component);
-    }
-    if (level >= 2) {
-        fprintf(stderr, "%s:%ld ", component, line);
+    const isize verbosity = 2;
+
+    switch (verbosity) {
+
+        case 0:  return "";
+        case 1:  return std::format("{}: ", objectName());
+
+        default:
+            return std::format("{}:{}: ", objectName(), loc.line());
     }
 }
 

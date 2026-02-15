@@ -105,7 +105,7 @@ Stdio::put(const string &str)
 void
 StdioTransport::disconnect()
 {
-    debug(SRV_DEBUG, "Disconnecting stdio transport...\n");
+    loginfo(SRV_DEBUG, "Disconnecting stdio transport...\n");
 
     switchState(SrvState::STOPPING);
     stdio.terminate();
@@ -120,7 +120,7 @@ StdioTransport::main(u16 port, const string &endpoint)
 
     } catch (std::exception &err) {
 
-        debug(SRV_DEBUG, "Stdio server thread interrupted\n");
+        loginfo(SRV_DEBUG, "Stdio server thread interrupted\n");
         delegate.didTerminate(err.what());
     }
 

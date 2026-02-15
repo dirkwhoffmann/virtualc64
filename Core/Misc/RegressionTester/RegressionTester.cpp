@@ -114,7 +114,7 @@ RegressionTester::dumpTexture(C64 &c64, std::ostream &os)
 void 
 RegressionTester::processEvent(EventID id)
 {
-    debug(true, "Watchdog triggerd: Shutting down the emulator\n");
+    loginfo(STDERR, "Watchdog triggerd: Shutting down the emulator\n");
     msgQueue.put(Msg::ABORT, 1);
 }
 

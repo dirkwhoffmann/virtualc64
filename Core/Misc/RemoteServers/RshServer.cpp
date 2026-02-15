@@ -128,7 +128,7 @@ RshServer::didReceive(const string &payload)
     // Remove LF and CR (if present)
     auto trimmed = utl::rtrim(payload, "\n\r");
 
-    debug(1, "didReceive: %s\n", trimmed.c_str());
+    loginfo(STDERR, "didReceive: %s\n", trimmed.c_str());
 
     retroShell.asyncExec(InputLine {
 

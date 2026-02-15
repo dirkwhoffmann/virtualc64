@@ -370,7 +370,7 @@ Drive::autoConfigure()
         case 0x361A1EC48F04F5A4: // VC1541C_01
         case 0xB938E2DA07F4FE40: // VC1541C_02
 
-            debug(CNF_DEBUG, "autoConfigure: VC1541C\n");
+            loginfo(CNF_DEBUG, "autoConfigure: VC1541C\n");
             setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541C);
             setOption(Opt::DRV_RAM,      (i64)DriveRam::NONE);
             setOption(Opt::DRV_PARCABLE, (i64)ParCableType::NONE);
@@ -383,7 +383,7 @@ Drive::autoConfigure()
         case 0xF7F4D931219DBB5D: // VC1541_II_JIFFY_V600
         case 0xB4027D6D9D61378A: // VC1541_64ER_V3
 
-            debug(CNF_DEBUG, "autoConfigure: VC1541 II\n");
+            loginfo(CNF_DEBUG, "autoConfigure: VC1541 II\n");
             setOption(Opt::DRV_TYPE,    (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM,     (i64)DriveRam::NONE);
             setOption(Opt::DRV_PARCABLE,(i64)ParCableType::NONE);
@@ -392,7 +392,7 @@ Drive::autoConfigure()
         case 0xC50EAFCBA50C4B63: // VC1541_SPEEDDOS_PLUS
         case 0x92ADEBA1BCCD8D31: // VC1541_SPEEDDOS_27
 
-            debug(CNF_DEBUG, "autoConfigure: VC1541 SpeedDOS\n");
+            loginfo(CNF_DEBUG, "autoConfigure: VC1541 SpeedDOS\n");
             setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM,      (i64)DriveRam::NONE);
             setOption(Opt::DRV_PARCABLE, (i64)ParCableType::STANDARD);
@@ -401,7 +401,7 @@ Drive::autoConfigure()
         case 0x28CD4E47A40C41CA: // VC1541_DOLPHIN_20
         case 0x1C1DDD64E02CAD32: // VC1541_DOLPHIN_20_SLVDR
 
-            debug(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
+            loginfo(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
             setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM,      (i64)DriveRam::RANGE_8000_9FFF);
             setOption(Opt::DRV_PARCABLE, (i64)ParCableType::STANDARD);
@@ -409,7 +409,7 @@ Drive::autoConfigure()
 
         case 0x682b5c77e7535b4a: // Dolphin DOS2 (donnchawp) 1.1
 
-            debug(CNF_DEBUG, "autoConfig: Dolphin DOS (donnchawp)\n");
+            loginfo(CNF_DEBUG, "autoConfig: Dolphin DOS (donnchawp)\n");
             setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM,      (i64)DriveRam::RANGE_4000_7FFF);
             setOption(Opt::DRV_PARCABLE, (i64)ParCableType::STANDARD);
@@ -418,7 +418,7 @@ Drive::autoConfigure()
         case 0x09D8FBAB61E59FF0: // VC1541_DOLPHIN_30
         case 0xF684F72388EE5364: // VC1541_DOLPHIN_30_SLVDR
 
-            debug(CNF_DEBUG, "autoConfig: Dolphin DOS 3\n");
+            loginfo(CNF_DEBUG, "autoConfig: Dolphin DOS 3\n");
             setOption(Opt::DRV_TYPE,     (i64)DriveType::VC1541II);
             setOption(Opt::DRV_RAM,      (i64)DriveRam::RANGE_6000_7FFF);
             setOption(Opt::DRV_PARCABLE, (i64)ParCableType::DOLPHIN3);
@@ -426,7 +426,7 @@ Drive::autoConfigure()
 
         default:
 
-            debug( CNF_DEBUG, "AutoConfig: Rom not recognized\n");
+            loginfo(CNF_DEBUG, "AutoConfig: Rom not recognized\n");
     }
 }
 

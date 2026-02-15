@@ -222,7 +222,7 @@ Defaults::load(const fs::path &path)
         throw AppError(Fault::FILE_NOT_FOUND);
     }
 
-    debug(DEF_DEBUG, "Loading user defaults from %s...\n", path.string().c_str());
+    loginfo(DEF_DEBUG, "Loading user defaults from %s...\n", path.string().c_str());
     load(fs);
 }
 
@@ -246,7 +246,7 @@ Defaults::load(std::stringstream &stream)
         string input;
         string section;
 
-        debug(DEF_DEBUG, "Loading user defaults from string stream...\n");
+        loginfo(DEF_DEBUG, "Loading user defaults from string stream...\n");
 
         while(std::getline(stream, input)) {
 
@@ -301,7 +301,7 @@ Defaults::load(std::stringstream &stream)
         }
 
         if (accepted || skipped) {
-            debug(DEF_DEBUG, "%ld keys accepted, %ld ignored\n", accepted, skipped);
+            loginfo(DEF_DEBUG, "%ld keys accepted, %ld ignored\n", accepted, skipped);
         }
     }
 }
@@ -332,7 +332,7 @@ Defaults::save(std::stringstream &stream)
 {
     {   SYNCHRONIZED
 
-        debug(DEF_DEBUG, "Saving user defaults...\n");
+        loginfo(DEF_DEBUG, "Saving user defaults...\n");
 
         std::map <string, std::map <string, string>> groups;
 
@@ -455,7 +455,7 @@ Defaults::set(const string &key, const string &value)
 {
     {   SYNCHRONIZED
 
-        debug(DEF_DEBUG, "%s = %s\n", key.c_str(), value.c_str());
+        loginfo(DEF_DEBUG, "%s = %s\n", key.c_str(), value.c_str());
 
         if (!fallbacks.contains(key)) {
 
@@ -501,7 +501,7 @@ Defaults::setFallback(const string &key, const string &value)
 {
     {   SYNCHRONIZED
 
-        debug(DEF_DEBUG, "Fallback: %s = %s\n", key.c_str(), value.c_str());
+        // loginfo(DEF_DEBUG, "Fallback: %s = %s\n", key.c_str(), value.c_str());
         fallbacks[key] = value;
     }
 }

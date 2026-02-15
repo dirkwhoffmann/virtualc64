@@ -14,33 +14,45 @@
 
 #include "Error.h"
 #include "Dumpable.h"
+#include "utl/abilities/Loggable.h"
+#include "utl/abilities/Reportable.h"
 
 namespace vc64 {
 
-class CoreObject : public Dumpable {
-
+class CoreObject : public Loggable, Reportable, public Dumpable {
+    
 protected:
-
+    
     // Verbosity level
     static isize verbosity;
-
+    
     
     //
     // Initializing
     //
-
+    
 public:
-
+    
     virtual ~CoreObject() = default;
-
+    
     // Returns the name for this component
     virtual const char *objectName() const = 0;
-
+    
     // Returns a textual description for this component
     virtual const char *description() const { return ""; }
     
-    // Called by debug() and trace() to produce a detailed debug output
-    virtual void prefix(isize level, const char *component, isize line) const;
+    // Called by logging functions to produce detailed debug output
+    virtual string prefix(LogLevel, const std::source_location &) const override;
+
+    
+    //
+    // Reporting state
+    //
+
+protected:
+
+    const Report makeReport(isize category) const override { return {{ "Name", objectName() }}; }
+
 };
 
 /* This file provides several macros for printing messages:
@@ -78,22 +90,27 @@ fprintf(stderr, format __VA_OPT__(,) __VA_ARGS__);
 #define warn(format, ...) \
 fprintf(stderr, "Warning: " format __VA_OPT__(,) __VA_ARGS__);
 
+/*
 #define fatal(format, ...) \
 { fprintf(stderr, "Fatal: " format __VA_OPT__(,) __VA_ARGS__); assert(false); exit(1); }
+*/
 
+/*
 #define debug(enable, format, ...) \
 if (enable) { if (verbosity) { \
 prefix(verbosity, objectName(), __LINE__); \
 fprintf(stderr, format __VA_OPT__(,) __VA_ARGS__); }}
+*/
 
 #define trace(enable, format, ...) \
 if (enable) { if (verbosity) { \
-prefix(5, objectName(), __LINE__); \
 fprintf(stderr, format __VA_OPT__(,) __VA_ARGS__); }}
 
+/*
 #define xfiles(format, ...) \
 if (XFILES) { if (verbosity) { \
 prefix(verbosity, objectName(), __LINE__); \
 fprintf(stderr, "XFILES: " format __VA_OPT__(,) __VA_ARGS__); }}
+*/
 
 }

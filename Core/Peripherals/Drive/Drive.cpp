@@ -384,7 +384,7 @@ Drive::insertDisk(const fs::path &path, bool wp)
 void
 Drive::insertDisk(std::unique_ptr<Disk> disk)
 {
-    debug(DSKCHG_DEBUG, "insertDisk\n");
+    loginfo(DSKCHG_DEBUG, "insertDisk\n");
     
     if (!diskToInsert) {
         
@@ -453,7 +453,7 @@ Drive::insertCollection(AnyCollection &collection, bool wp)
 void 
 Drive::ejectDisk()
 {
-    debug(DSKCHG_DEBUG, "ejectDisk()\n");
+    loginfo(DSKCHG_DEBUG, "ejectDisk()\n");
     
     if (insertionStatus == InsertionStatus::FULLY_INSERTED && !diskToInsert) {
         

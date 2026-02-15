@@ -367,7 +367,7 @@ DapAdapter::readMemory(isize addr)
 void
 DapAdapter::breakpointReached()
 {
-    debug(DAP_DEBUG, "breakpointReached()\n");
+    loginfo(DAP_DEBUG, "breakpointReached()\n");
 }
 
 }

@@ -52,7 +52,7 @@ Datasette::insertTape(MediaFile &file)
         isize numPulses = tapFile.numPulses();
         alloc(numPulses);
         
-        debug(TAP_DEBUG, "Inserting tape (%ld pulses)...\n", numPulses);
+        loginfo(TAP_DEBUG, "Inserting tape (%ld pulses)...\n", numPulses);
         
         // Read pulses
         tapFile.seek(0);
@@ -83,7 +83,7 @@ Datasette::ejectTape()
     // Only proceed if a tape is present
     if (!hasTape()) return;
     
-    debug(TAP_DEBUG, "Ejecting tape...\n");
+    loginfo(TAP_DEBUG, "Ejecting tape...\n");
     
     pressStop();
     rewind();
@@ -131,7 +131,7 @@ Datasette::advanceHead()
 void
 Datasette::pressPlay()
 {
-    debug(TAP_DEBUG, "pressPlay\n");
+    loginfo(TAP_DEBUG, "pressPlay\n");
 
     // Only proceed if the device is connected
     if (!config.connected) return;
@@ -165,7 +165,7 @@ Datasette::play()
 void
 Datasette::pressStop()
 {
-    debug(TAP_DEBUG, "pressStop\n");
+    loginfo(TAP_DEBUG, "pressStop\n");
 
     // Only proceed if the device is connected
     if (!config.connected) return;

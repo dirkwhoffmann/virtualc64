@@ -61,10 +61,10 @@ SubComponent::isRunAheadInstance() const
     return c64.isRunAheadInstance();
 }
 
-void
-SubComponent::prefix(isize level, const char *component, isize line) const
+string
+SubComponent::prefix(LogLevel level, const std::source_location &loc) const
 {
-    c64.prefix(level, component, line);
+    return c64.prefix(level, loc);
 }
 
 }

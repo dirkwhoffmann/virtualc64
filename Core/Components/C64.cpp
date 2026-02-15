@@ -237,29 +237,49 @@ C64::eventName(EventSlot slot, EventID id)
     }
 }
 
-void
-C64::prefix(isize level, const char *component, isize line) const
+string
+C64::prefix(LogLevel level, const std::source_location &loc) const
 {
-    if (level) {
-
-        if (objid == 1) fprintf(stderr, "[Run-ahead] ");
-
-        if (level >= 3) {
-
-            fprintf(stderr, "[%lld] (%3d,%3d) ", frame, scanline, rasterCycle);
+    constexpr isize verbosity = 5;
+    
+    std::string result;
+    result.reserve(256);
+    
+    if (level == LogLevel::LOG_DEBUG && verbosity) {
+        
+        // Run-ahead prefix
+        if (isRunAheadInstance()) {
+            result += "[Run-ahead] ";
         }
-        if (level >= 4) {
 
-            fprintf(stderr, "%04X ", cpu.getPC0());
+        // verbosity >= 3: frame & position
+        if constexpr (verbosity >= 3) {
+            std::format_to(std::back_inserter(result),
+                           "[{}] ({:3},{:3}) ",
+                           frame, scanline, rasterCycle);
         }
-        if (level >= 5) {
 
-            fprintf(stderr, "<%s%s> ", (cpu.irqLine ? "I" : "i"), (cpu.nmiLine ? "N" : "n"));
+        // verbosity >= 4: CPU PC
+        if constexpr (verbosity >= 4) {
+            std::format_to(std::back_inserter(result),
+                           "{:06X} ",
+                           cpu.getPC0());
         }
-        if (level >= 2) {
 
-            fprintf(stderr, "%s:%ld ", component, line);
+        // verbosity >= 5: Interrupt lines
+        if constexpr (verbosity >= 5) {
+            
+            // DMACON bitfield characters
+            std::format_to(std::back_inserter(result),
+                           "{}{} ",
+                           cpu.irqLine ? "I" : "i", cpu.nmiLine ? "N" : "n");
         }
+        
+        return result;
+
+    } else {
+    
+        return CoreObject::prefix(level, loc);
     }
 }
 
@@ -290,7 +310,7 @@ C64::initialize()
 {
     auto load = [&](const fs::path &path) {
 
-        debug(RUN_DEBUG, "Trying to load Rom from %s...\n", path.string().c_str());
+        loginfo(RUN_DEBUG, "Trying to load Rom from %s...\n", path.string().c_str());
 
         try { loadRom(path); } catch (std::exception& e) {
             warn("Error: %s\n", e.what());
@@ -410,7 +430,7 @@ C64::exportConfig(std::ostream &stream) const
 i64
 C64::get(Opt opt, isize objid) const
 {
-    debug(CNF_DEBUG, "get(%s, %ld)\n", OptEnum::key(opt), objid);
+    loginfo(CNF_DEBUG, "get(%s, %ld)\n", OptEnum::key(opt), objid);
 
     auto target = routeOption(opt, objid);
     if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
@@ -429,13 +449,13 @@ C64::check(Opt opt, i64 value, const std::vector<isize> objids)
             auto target = routeOption(opt, objid);
             if (target == nullptr) break;
 
-            debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
+            loginfo(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
             target->checkOption(opt, value);
         }
     }
     for (auto &objid : objids) {
 
-        debug(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
+        loginfo(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
         if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
@@ -458,13 +478,13 @@ C64::set(Opt opt, i64 value, const std::vector<isize> objids)
             auto target = routeOption(opt, objid);
             if (target == nullptr) break;
 
-            debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
+            loginfo(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
             target->setOption(opt, value);
         }
     }
     for (auto &objid : objids) {
 
-        debug(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
+        loginfo(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
         if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
@@ -597,7 +617,7 @@ C64::overrideOption(Opt opt, i64 value) const
 
     if (overrides.find(opt) != overrides.end()) {
 
-        debug(true, "Overriding option: %s = %lld\n", OptEnum::key(opt), value);
+        loginfo(STDERR, "Overriding option: %s = %lld\n", OptEnum::key(opt), value);
         return overrides[opt];
     }
 
@@ -614,7 +634,7 @@ C64::update(CmdQueue &queue)
 
     while (queue.poll(cmd)) {
 
-        debug(CMD_DEBUG, "Command: %s\n", CmdEnum::key(cmd.type));
+        loginfo(CMD_DEBUG, "Command: %s\n", CmdEnum::key(cmd.type));
 
         switch (cmd.type) {
 
@@ -972,7 +992,7 @@ C64::_isReady() const
 void
 C64::_powerOn()
 {
-    debug(RUN_DEBUG, "_powerOn\n");
+    loginfo(RUN_DEBUG, "_powerOn\n");
     
     hardReset();
     msgQueue.put(Msg::POWER, 1);
@@ -981,7 +1001,7 @@ C64::_powerOn()
 void
 C64::_powerOff()
 {
-    debug(RUN_DEBUG, "_powerOff\n");
+    loginfo(RUN_DEBUG, "_powerOff\n");
 
     msgQueue.put(Msg::POWER, 0);
 }
@@ -989,7 +1009,7 @@ C64::_powerOff()
 void
 C64::_run()
 {
-    debug(RUN_DEBUG, "_run\n");
+    loginfo(RUN_DEBUG, "_run\n");
     // assert(cpu.inFetchPhase());
 
     msgQueue.put(Msg::RUN);
@@ -998,7 +1018,7 @@ C64::_run()
 void
 C64::_pause()
 {
-    debug(RUN_DEBUG, "_pause\n");
+    loginfo(RUN_DEBUG, "_pause\n");
     // assert(cpu.inFetchPhase());
 
     // Clear pending runloop flags
@@ -1010,7 +1030,7 @@ C64::_pause()
 void
 C64::_halt()
 {
-    debug(RUN_DEBUG, "_halt\n");
+    loginfo(RUN_DEBUG, "_halt\n");
 
     msgQueue.put(Msg::SHUTDOWN);
 }
@@ -1018,7 +1038,7 @@ C64::_halt()
 void
 C64::_warpOn()
 {
-    debug(RUN_DEBUG, "_warpOn\n");
+    loginfo(RUN_DEBUG, "_warpOn\n");
 
     msgQueue.put(Msg::WARP, 1);
 }
@@ -1026,7 +1046,7 @@ C64::_warpOn()
 void
 C64::_warpOff()
 {
-    debug(RUN_DEBUG, "_warpOff\n");
+    loginfo(RUN_DEBUG, "_warpOff\n");
 
     msgQueue.put(Msg::WARP, 0);
 }
@@ -1034,7 +1054,7 @@ C64::_warpOff()
 void
 C64::_trackOn()
 {
-    debug(RUN_DEBUG, "_trackOn\n");
+    loginfo(RUN_DEBUG, "_trackOn\n");
 
     msgQueue.put(Msg::TRACK, 1);
 }
@@ -1042,7 +1062,7 @@ C64::_trackOn()
 void
 C64::_trackOff()
 {
-    debug(RUN_DEBUG, "_trackOff\n");
+    loginfo(RUN_DEBUG, "_trackOff\n");
 
     msgQueue.put(Msg::TRACK, 0);
 }
@@ -1790,30 +1810,30 @@ C64::loadRom(const MediaFile &file)
         case FileType::BASIC_ROM:
             
             file.flash(mem.rom, 0xA000);
-            debug(MEM_DEBUG, "Basic Rom flashed\n");
-            debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::BASIC));
-            debug(MEM_DEBUG, "mega65BasicRev() = %s\n", mega65BasicRev());
+            loginfo(MEM_DEBUG, "Basic Rom flashed\n");
+            loginfo(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::BASIC));
+            loginfo(MEM_DEBUG, "mega65BasicRev() = %s\n", mega65BasicRev());
             break;
             
         case FileType::CHAR_ROM:
             
             file.flash(mem.rom, 0xD000);
-            debug(MEM_DEBUG, "Character Rom flashed\n");
+            loginfo(MEM_DEBUG, "Character Rom flashed\n");
             break;
             
         case FileType::KERNAL_ROM:
             
             file.flash(mem.rom, 0xE000);
-            debug(MEM_DEBUG, "Kernal Rom flashed\n");
-            debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::KERNAL));
-            debug(MEM_DEBUG, "mega65KernalRev() = %s\n", mega65KernalRev());
+            loginfo(MEM_DEBUG, "Kernal Rom flashed\n");
+            loginfo(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::KERNAL));
+            loginfo(MEM_DEBUG, "mega65KernalRev() = %s\n", mega65KernalRev());
             break;
             
         case FileType::VC1541_ROM:
             
             drive8.mem.loadRom(file.getData(), file.getSize());
             drive9.mem.loadRom(file.getData(), file.getSize());
-            debug(MEM_DEBUG, "VC1541 Rom flashed\n");
+            loginfo(MEM_DEBUG, "VC1541 Rom flashed\n");
             break;
             
         default:

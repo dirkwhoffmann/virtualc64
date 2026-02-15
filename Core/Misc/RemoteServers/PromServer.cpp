@@ -193,12 +193,12 @@ PromServer::main()
         });
 
         // Start the server to listen on localhost
-        debug(SRV_DEBUG, "Starting Prometheus data provider\n");
+        loginfo(SRV_DEBUG, "Starting Prometheus data provider\n");
         srv->listen("localhost", (int)config.port);
 
     } catch (std::exception &err) {
 
-        debug(SRV_DEBUG, "Server thread interrupted\n");
+        loginfo(SRV_DEBUG, "Server thread interrupted\n");
         handleError(err.what());
     }
 }

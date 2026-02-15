@@ -56,10 +56,10 @@ PageFox::peekRomL(u16 addr)
 
     if (ramIsVisible()) {
         result = peekRAM(ramAddrL(addr));
-        debug(CRT_DEBUG, "peekRomL(%x) [RAM] = %x\n", addr, result);
+        loginfo(CRT_DEBUG, "peekRomL(%x) [RAM] = %x\n", addr, result);
     } else {
         result = Cartridge::peekRomL(addr);
-        debug(CRT_DEBUG, "peekRomL(%x) = %x\n", addr, result);
+        loginfo(CRT_DEBUG, "peekRomL(%x) = %x\n", addr, result);
     }
 
     return result;
@@ -86,10 +86,10 @@ PageFox::peekRomH(u16 addr)
 
     if (ramIsVisible()) {
         result = peekRAM(ramAddrH(addr));
-        debug(CRT_DEBUG, "peekRomH(%x) [RAM] = %x\n", addr, result);
+        loginfo(CRT_DEBUG, "peekRomH(%x) [RAM] = %x\n", addr, result);
     } else {
         result = Cartridge::peekRomH(addr);
-        debug(CRT_DEBUG, "peekRomH(%x) = %x\n", addr, result);
+        loginfo(CRT_DEBUG, "peekRomH(%x) = %x\n", addr, result);
     }
 
     return result;
@@ -114,10 +114,10 @@ PageFox::pokeRomL(u16 addr, u8 value)
 {
 
     if (ramIsVisible()) {
-        debug(CRT_DEBUG, "pokeRomL [RAM] (%x, %x)\n", addr, value);
+        loginfo(CRT_DEBUG, "pokeRomL [RAM] (%x, %x)\n", addr, value);
         pokeRAM(ramAddrL(addr), value);
     } else {
-        debug(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
+        loginfo(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
     }
     mem.ram[0x8000 + addr] = value;
 }
@@ -126,10 +126,10 @@ void
 PageFox::pokeRomH(u16 addr, u8 value)
 {
     if (ramIsVisible()) {
-        debug(CRT_DEBUG, "pokeRomH [RAM] (%x, %x)\n", addr, value);
+        loginfo(CRT_DEBUG, "pokeRomH [RAM] (%x, %x)\n", addr, value);
         pokeRAM(ramAddrH(addr), value);
     } else {
-        debug(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
+        loginfo(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
     }
     mem.ram[0xA000 + addr] = value;
 }
@@ -149,16 +149,16 @@ PageFox::spypeekIO1(u16 addr) const
 void
 PageFox::pokeIO1(u16 addr, u8 value)
 {
-    debug(CRT_DEBUG, "pokeIO1(%x, %x)\n", addr, value);
+    loginfo(CRT_DEBUG, "pokeIO1(%x, %x)\n", addr, value);
 
     ctrlReg = value;
 
     if (disabled()) {
         expansionPort.setCartridgeMode(CRTMode::OFF);
-        debug(CRT_DEBUG, "CRT disabled\n");
+        loginfo(CRT_DEBUG, "CRT disabled\n");
     } else {
         expansionPort.setCartridgeMode(CRTMode::MODE16K);
-        debug(CRT_DEBUG, "16K mode\n");
+        loginfo(CRT_DEBUG, "16K mode\n");
     }
 
     bankIn(bank());

@@ -125,7 +125,7 @@ DriveMemory::saveRom(const fs::path &path)
     u16 addr = romAddr();
     u16 size = romSize();
 
-    debug(true, "Saving Rom at %x (%x bytes)\n", addr, size);
+    loginfo(STDERR, "Saving Rom at %x (%x bytes)\n", addr, size);
     
     RomFile file = RomFile(rom + (addr & 0x7FFF), size);
     file.writeToFile(path);

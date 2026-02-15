@@ -77,9 +77,9 @@ Thread::execute()
 
         // The emulator is out of sync
         if (missing > 0) {
-            debug(RUN_DEBUG, "Emulation is way too slow (%ld frames behind)\n", missing);
+            loginfo(RUN_DEBUG, "Emulation is way too slow (%ld frames behind)\n", missing);
         } else {
-            debug(RUN_DEBUG, "Emulation is way too fast (%ld time slices ahead)\n", -missing);
+            loginfo(RUN_DEBUG, "Emulation is way too fast (%ld time slices ahead)\n", -missing);
         }
 
         resync();
@@ -163,7 +163,7 @@ Thread::switchState(ExecState newState)
               ExecStateEnum::key(state), ExecStateEnum::key(newState));
     };
 
-    debug(RUN_DEBUG,
+    loginfo(RUN_DEBUG,
           "switchState: %s -> %s\n",
           ExecStateEnum::key(state), ExecStateEnum::key(newState));
 
@@ -231,14 +231,14 @@ Thread::switchState(ExecState newState)
         }
     }
 
-    debug(RUN_DEBUG, "switchState: %s\n", ExecStateEnum::key(state));
+    loginfo(RUN_DEBUG, "switchState: %s\n", ExecStateEnum::key(state));
     assert(state == newState);
 }
 
 void
 Thread::powerOn()
 {
-    debug(RUN_DEBUG, "powerOn()\n");
+    loginfo(RUN_DEBUG, "powerOn()\n");
 
     if (isPoweredOff()) {
 
@@ -249,7 +249,7 @@ Thread::powerOn()
 void
 Thread::powerOff()
 {
-    debug(RUN_DEBUG, "powerOff()\n");
+    loginfo(RUN_DEBUG, "powerOff()\n");
 
     if (!isPoweredOff()) {
 
@@ -260,7 +260,7 @@ Thread::powerOff()
 void
 Thread::run()
 {
-    debug(RUN_DEBUG, "run()\n");
+    loginfo(RUN_DEBUG, "run()\n");
 
     if (!isRunning()) {
 
@@ -274,7 +274,7 @@ Thread::run()
 void
 Thread::pause()
 {
-    debug(RUN_DEBUG, "pause()\n");
+    loginfo(RUN_DEBUG, "pause()\n");
 
     if (isRunning()) {
 
@@ -285,7 +285,7 @@ Thread::pause()
 void
 Thread::halt()
 {
-    debug(RUN_DEBUG, "halt()\n");
+    loginfo(RUN_DEBUG, "halt()\n");
 
     if (state != ExecState::HALTED) {
 
@@ -355,7 +355,7 @@ Thread::wakeUp()
 void
 Thread::suspend() const
 {
-    debug(RUN_DEBUG, "Suspending (%ld)...\n", suspendCounter);
+    loginfo(RUN_DEBUG, "Suspending (%ld)...\n", suspendCounter);
     assert(isUserThread());
 
     if (suspendCounter++ == 0) {
@@ -368,7 +368,7 @@ Thread::suspend() const
 void
 Thread::resume() const
 {
-    debug(RUN_DEBUG, "Resuming (%ld)...\n", suspendCounter);
+    loginfo(RUN_DEBUG, "Resuming (%ld)...\n", suspendCounter);
     assert(isUserThread());
 
     if (suspendCounter <= 0) {

@@ -387,8 +387,8 @@ public:
 public:
 
     const Descriptions &getDescriptions() const override { return descriptions; }
-    void prefix(isize level, const char *component, isize line) const override;
-
+    string prefix(LogLevel, const std::source_location &) const override;
+    
 private:
 
     void _dump(Category category, std::ostream &os) const override;

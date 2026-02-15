@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include <source_location>
+
 namespace utl::debug {
 
 //
@@ -98,6 +100,7 @@ constexpr long SRV_DEBUG       = 1;
 constexpr long GDB_DEBUG       = 0;
 constexpr long DAP_DEBUG       = 0;
 
+}
 
 //
 // Forced error conditions
@@ -284,4 +287,3 @@ do { \
 
 #define xfiles(format, ...) \
     logMsg(XFILES, LogLevel::LOG_INFO, format __VA_OPT__(,) __VA_ARGS__)
-}
