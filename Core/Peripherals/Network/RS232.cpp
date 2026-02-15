@@ -107,7 +107,7 @@ RS232::getPin(isize nr) const
 {
     assert(nr >= 1 && nr <= 25);
 
-    // trace(SER_DEBUG, "getPin(%d) = %d, port = %04X\n", nr, GET_BIT(port, nr), port);
+    // logdebug(SER_DEBUG, "getPin(%d) = %d, port = %04X\n", nr, GET_BIT(port, nr), port);
     return GET_BIT(port, nr);
 }
 
@@ -116,7 +116,7 @@ RS232::setPin(isize nr, bool value)
 {
     assert(nr >= 1 && nr <= 25);
 
-    // trace(SER_DEBUG, "setPin(%d,%d), port = %04X\n", nr, value, port);
+    // logdebug(SER_DEBUG, "setPin(%d,%d), port = %04X\n", nr, value, port);
     setPort(1 << nr, value);
 }
 
@@ -282,9 +282,9 @@ RS232::recordIncomingPacket(u16 packet)
     {   SYNCHRONIZED
 
         if (isprint((char(packet)))) {
-            trace(USR_DEBUG, "Incoming: '%c'\n", char(packet));
+            logdebug(USR_DEBUG, "Incoming: '%c'\n", char(packet));
         } else {
-            trace(USR_DEBUG, "Incoming: %02X\n", packet);
+            logdebug(USR_DEBUG, "Incoming: %02X\n", packet);
         }
 
         // Record the incoming packet
@@ -304,9 +304,9 @@ RS232::recordOutgoingPacket(u16 packet)
     {   SYNCHRONIZED
 
         if (isprint((char(packet)))) {
-            trace(USR_DEBUG, "Outgoing: '%c'\n", char(packet));
+            logdebug(USR_DEBUG, "Outgoing: '%c'\n", char(packet));
         } else {
-            trace(USR_DEBUG, "Outgoing: %02X\n", packet);
+            logdebug(USR_DEBUG, "Outgoing: %02X\n", packet);
         }
 
         // Record the incoming packet
@@ -357,7 +357,7 @@ RS232::dumpPacket(u16 packet)
 void 
 RS232::processTxdEvent()
 {
-    trace(USR_DEBUG, "processTxdEvent()\n");
+    logdebug(USR_DEBUG, "processTxdEvent()\n");
     assert(c64.eventid[SLOT_TXD] == TXD_BIT);
 
     bool value = c64.data[SLOT_TXD];
@@ -366,23 +366,23 @@ RS232::processTxdEvent()
 
         if (value == 1) {
 
-            trace(USR_DEBUG, "Ignoring invalid start bit (%d)\n", value);
+            logdebug(USR_DEBUG, "Ignoring invalid start bit (%d)\n", value);
 
         } else {
 
-            trace(USR_DEBUG, "Start bit received (%d)\n", value);
+            logdebug(USR_DEBUG, "Start bit received (%d)\n", value);
             txdCnt++;
         }
 
     } else if (txdCnt < 9) {
 
-        trace(USR_DEBUG, "Data bit %d reveived (%d)\n", txdCnt, value);
+        logdebug(USR_DEBUG, "Data bit %d reveived (%d)\n", txdCnt, value);
         value ? SET_BIT(txdShr, txdCnt - 1) : CLR_BIT(txdShr, txdCnt - 1);
         txdCnt++;
 
     } else if (txdCnt == 9) {
 
-        trace(USR_DEBUG, "Stop bit reveived (%d)\n", value);
+        logdebug(USR_DEBUG, "Stop bit reveived (%d)\n", value);
         recordOutgoingPacket(txdShr);
         txdCnt = 0;
         txdShr = 0;
@@ -396,13 +396,13 @@ RS232::processRxdEvent()
 {
     SYNCHRONIZED
 
-    trace(USR_DEBUG, "processRxdEvent()\n");
+    logdebug(USR_DEBUG, "processRxdEvent()\n");
     assert(c64.eventid[SLOT_RXD] == RXD_BIT);
 
     // Stop sending, if there are no characters left
     if (input.empty()) {
 
-        trace(USR_DEBUG, "All characters sent.\n");
+        logdebug(USR_DEBUG, "All characters sent.\n");
         c64.cancel<SLOT_RXD>();
         return;
     }
@@ -410,7 +410,7 @@ RS232::processRxdEvent()
     // Put the next bit on the RXD line
     if (rxdCnt == 0) {
 
-        trace(USR_DEBUG, "Sending start bit 0...\n");
+        logdebug(USR_DEBUG, "Sending start bit 0...\n");
         setRXD(0);
         rxdCnt++;
     }
@@ -418,14 +418,14 @@ RS232::processRxdEvent()
     else if (rxdCnt >= 1 && rxdCnt <= 8) {
 
         bool bit = GET_BIT(input[0], rxdCnt - 1);
-        trace(USR_DEBUG, "Sending data bit %d...\n", bit);
+        logdebug(USR_DEBUG, "Sending data bit %d...\n", bit);
         REPLACE_BIT(rxdShr, rxdCnt - 1, bit);
         setRXD(bit);
         rxdCnt++;
 
     } else if (rxdCnt >= 9) {
 
-        trace(USR_DEBUG, "Sending stop bit 1...\n");
+        logdebug(USR_DEBUG, "Sending stop bit 1...\n");
         recordIncomingPacket(rxdShr);
         setRXD(1);
         input.erase(0, 1);

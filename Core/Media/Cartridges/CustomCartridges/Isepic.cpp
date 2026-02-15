@@ -157,7 +157,7 @@ Isepic::setSwitch(isize pos)
 
         if (newVisible) {
 
-            trace(CRT_DEBUG, "Activating Ipsec cartridge\n");
+            logdebug(CRT_DEBUG, "Activating Ipsec cartridge\n");
 
             // Trigger NMI
             cpu.pullDownNmiLine(INTSRC_EXP);
@@ -165,7 +165,7 @@ Isepic::setSwitch(isize pos)
 
         } else {
 
-            trace(CRT_DEBUG, "Hiding Ipsec cartridge\n");
+            logdebug(CRT_DEBUG, "Hiding Ipsec cartridge\n");
         }
     }
 }

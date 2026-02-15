@@ -269,8 +269,8 @@ T64File::finalizeRead()
         isize noOfItemsStatedInHeader = collectionCount();
         if (noOfItems != noOfItemsStatedInHeader) {
             
-            warn("T64: Changing number of items from %ld to %ld.\n",
-                 noOfItemsStatedInHeader, noOfItems);
+            logwarn("T64: Changing number of items from %ld to %ld.\n",
+                    noOfItemsStatedInHeader, noOfItems);
             
             data[0x24] = LO_BYTE(noOfItems);
             data[0x25] = HI_BYTE(noOfItems);
@@ -290,7 +290,7 @@ T64File::finalizeRead()
         isize startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
 
         if (startAddrInContainer >= data.size) {
-            warn("T64: Offset mismatch. Sorry, can't repair.\n");
+            logwarn("T64: Offset mismatch. Sorry, can't repair.\n");
             return;
         }
 
@@ -311,8 +311,8 @@ T64File::finalizeRead()
             // Let's assume that the rest of the file data belongs to this file ...
             isize fixedEndAddrInMemory = startAddrInMemory + (data.size - startAddrInContainer);
 
-            warn("T64: Changing end address of item %ld from %04lX to %04lX.\n",
-                 i, endAddrInMemory, fixedEndAddrInMemory);
+            logwarn("T64: Changing end address of item %ld from %04lX to %04lX.\n",
+                    i, endAddrInMemory, fixedEndAddrInMemory);
 
             data[n] = LO_BYTE(fixedEndAddrInMemory);
             data[n+1] = HI_BYTE(fixedEndAddrInMemory);

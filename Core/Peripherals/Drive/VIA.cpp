@@ -306,7 +306,7 @@ VIA6522::peek(u16 addr)
     }
     
     if (drive.cpu.getPC0() < 0xE000 && addr != 0) {
-        trace(VIA_DEBUG, "peek(%x) = %x\n", addr, result);
+        logdebug(VIA_DEBUG, "peek(%x) = %x\n", addr, result);
     }
     
     return result;
@@ -1051,7 +1051,7 @@ VIA2::updatePB()
      } else if ((pb & 0x03) == ((oldPb - 1) & 0x03)) {
      drive->moveHeadDown();
      } else {
-     warn("Unexpected stepper motor control sequence\n");
+     logwarn("Unexpected stepper motor control sequence\n");
      }
      }
      */
@@ -1074,7 +1074,7 @@ VIA2::updatePB()
                 drive.moveHeadDown();
                 // assert(newPos == ((drive->getHalftrack() - 1) & 0x03));
             } else {
-                trace(VIA_DEBUG, "Unexpected stepper motor control sequence\n");
+                logdebug(VIA_DEBUG, "Unexpected stepper motor control sequence\n");
             }
         }
     }

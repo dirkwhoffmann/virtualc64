@@ -300,7 +300,7 @@ VICII::peek(u16 addr)
     
     dataBusPhi2 = result;
 
-    trace(VICII_REG_DEBUG, "peek(%x) = %x\n", addr, result);
+    logdebug(VICII_REG_DEBUG, "peek(%x) = %x\n", addr, result);
     return result;
 }
 
@@ -454,7 +454,7 @@ VICII::spypeek(u16 addr) const
 void
 VICII::poke(u16 addr, u8 value)
 {
-    trace(VICII_REG_DEBUG, "poke(%x, %x)\n", addr, value);
+    logdebug(VICII_REG_DEBUG, "poke(%x, %x)\n", addr, value);
     assert(addr < 0x40);
 
     dataBusPhi2 = value;

@@ -178,12 +178,12 @@ Cartridge::makeWithCRTFile(C64 &c64, const CRTFile &file)
 
 Cartridge::Cartridge(C64 &ref) : SubComponent(ref)
 {
-    trace(CRT_DEBUG, "Creating cartridge at address %p...\n", (void *)this);
+    logdebug(CRT_DEBUG, "Creating cartridge at address %p...\n", (void *)this);
 }
 
 Cartridge::~Cartridge()
 {
-    trace(CRT_DEBUG, "Releasing cartridge...\n");
+    logdebug(CRT_DEBUG, "Releasing cartridge...\n");
     dealloc();
 }
 
@@ -209,7 +209,7 @@ void
 Cartridge::init()
 {
     auto &traits = getCartridgeTraits();
-    trace(CRT_DEBUG, "Initializing cartridge %s...\n", traits.title);
+    logdebug(CRT_DEBUG, "Initializing cartridge %s...\n", traits.title);
 
     // Allocate external memory (if any)
     setRamCapacity(traits.memory);
@@ -276,7 +276,7 @@ Cartridge::getRomInfo(isize nr) const
 
     } else {
 
-        warn("Packet %ld does not exist\n", nr);
+        logwarn("Packet %ld does not exist\n", nr);
     }
 
     return result;
@@ -422,11 +422,11 @@ Cartridge::loadChip(isize nr, const CRTFile &crt)
 
     // Perform some consistency checks
     if (start < 0x8000) {
-        warn("Ignoring chip %ld: Start address too low (%04X)\n", nr, start);
+        logwarn("Ignoring chip %ld: Start address too low (%04X)\n", nr, start);
         return;
     }
     if (0x10000 - start < size) {
-        warn("Ignoring chip %ld: Invalid size (start: %04X size: %04X)/n", nr, start, size);
+        logwarn("Ignoring chip %ld: Invalid size (start: %04X size: %04X)/n", nr, start, size);
         return;
     }
 
@@ -443,16 +443,16 @@ Cartridge::loadChip(isize nr, const CRTFile &crt)
             break;
 
         case 1: // RAM
-            warn("Ignoring chip %ld, because it has type RAM.\n", nr);
+            logwarn("Ignoring chip %ld, because it has type RAM.\n", nr);
             return;
 
         case 2: // Flash ROM
-            warn("Chip %ld is a Flash Rom. Creating a Rom instead.\n", nr);
+            logwarn("Chip %ld is a Flash Rom. Creating a Rom instead.\n", nr);
             packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
             break;
 
         default:
-            warn("Ignoring chip %ld, because it has unknown type %d.\n", nr, type);
+            logwarn("Ignoring chip %ld, because it has unknown type %d.\n", nr, type);
             return;
     }
 
@@ -503,7 +503,7 @@ Cartridge::bankIn(isize nr)
 
     } else {
 
-        warn("Cannot map chip %ld. Invalid start address.\n", nr);
+        logwarn("Cannot map chip %ld. Invalid start address.\n", nr);
     }
 }
 

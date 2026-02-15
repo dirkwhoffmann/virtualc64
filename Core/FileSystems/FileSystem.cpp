@@ -806,7 +806,7 @@ FileSystem::importVolume(const u8 *src, isize size, Fault *err)
 
     // Only proceed if the buffer size matches
     if ((isize)blocks.size() * 256 > size) {
-        warn("BUFFER SIZE MISMATCH (%zu %zu)\n", blocks.size(), blocks.size() * 256);
+        logwarn("BUFFER SIZE MISMATCH (%zu %zu)\n", blocks.size(), blocks.size() * 256);
         if (err) *err = Fault::FS_WRONG_CAPACITY;
         return false;
     }

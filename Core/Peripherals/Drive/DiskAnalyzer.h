@@ -100,7 +100,7 @@ private:
     void analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trackInfo);
 
     // Writes an error message into the error log
-    void log(Halftrack ht, isize begin, isize length, const char *fmt, ...);
+    void finding(Halftrack ht, isize begin, isize length, const char *fmt, ...);
     
 public:
     

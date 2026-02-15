@@ -313,7 +313,7 @@ C64::initialize()
         loginfo(RUN_DEBUG, "Trying to load Rom from %s...\n", path.string().c_str());
 
         try { loadRom(path); } catch (std::exception& e) {
-            warn("Error: %s\n", e.what());
+            logwarn("Error: %s\n", e.what());
         }
     };
 

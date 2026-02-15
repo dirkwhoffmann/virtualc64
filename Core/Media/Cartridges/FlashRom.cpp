@@ -200,7 +200,7 @@ FlashRom::poke(u32 addr, u8 value)
             if (firstCommandAddr(addr) && value == 0xAA) {
 
                 state = FlashState::MAGIC_1;
-                trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                 return;
             }
             return;
@@ -210,12 +210,12 @@ FlashRom::poke(u32 addr, u8 value)
             if (secondCommandAddr(addr) && value == 0x55) {
 
                 state = FlashState::MAGIC_2;
-                trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                 return;
             }
 
             state = baseState;
-            trace(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
+            logdebug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
             return;
 
         case FlashState::MAGIC_2:
@@ -228,30 +228,30 @@ FlashRom::poke(u32 addr, u8 value)
 
                         state = FlashState::READ;
                         baseState = FlashState::READ;
-                        trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                        logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                         return;
 
                     case 0x90:
 
                         state = FlashState::AUTOSELECT;
                         baseState = FlashState::AUTOSELECT;
-                        trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                        logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                         return;
 
                     case 0xA0:
                         state = FlashState::BYTE_PROGRAM;
-                        trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                        logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                         return;
 
                     case 0x80:
                         state = FlashState::ERASE_MAGIC_1;
-                        trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                        logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                         return;
                 }
             }
 
             state = baseState;
-            trace(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
+            logdebug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
             break;
 
         case FlashState::BYTE_PROGRAM:
@@ -259,12 +259,12 @@ FlashRom::poke(u32 addr, u8 value)
             if (!doByteProgram(addr, value)) {
 
                 state = FlashState::BYTE_PROGRAM_ERROR;
-                trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                 return;
             }
 
             state = baseState;
-            trace(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
+            logdebug(CRT_DEBUG, "Back to %s\n", getStateAsString(state));
             return;
 
         case FlashState::ERASE_MAGIC_1:
@@ -303,14 +303,14 @@ FlashRom::poke(u32 addr, u8 value)
             if (addr == 0x5555 && value == 0xAA) {
 
                 state = FlashState::MAGIC_1;
-                trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                 return;
             }
             if (value == 0xF0) {
 
                 state = FlashState::READ;
                 baseState = FlashState::READ;
-                trace(CRT_DEBUG, "%s\n", getStateAsString(state));
+                logdebug(CRT_DEBUG, "%s\n", getStateAsString(state));
                 return;
             }
             return;
@@ -349,7 +349,7 @@ FlashRom::doByteProgram(isize bank, u16 addr, u8 value)
 void
 FlashRom::doChipErase() {
 
-    trace(CRT_DEBUG, "Erasing chip ...\n");
+    logdebug(CRT_DEBUG, "Erasing chip ...\n");
     memset(rom, 0xFF, romSize);
 }
 
@@ -358,7 +358,7 @@ FlashRom::doSectorErase(u32 addr)
 {
     assert(addr < romSize);
 
-    trace(CRT_DEBUG, "Erasing sector %d\n", addr >> 4);
+    logdebug(CRT_DEBUG, "Erasing sector %d\n", addr >> 4);
     memset(rom + (addr & 0x0000), 0xFF, sectorSize);
 }
 

@@ -24,7 +24,7 @@ Gmod2::peekIO1(u16 addr)
 void
 Gmod2::pokeIO1(u16 addr, u8 value)
 {
-    trace(CRT_DEBUG, "pokeIO1(%x, %x)\n", addr, value);
+    logdebug(CRT_DEBUG, "pokeIO1(%x, %x)\n", addr, value);
 
     control = value;
 

@@ -58,12 +58,12 @@ Expert::loadChip(isize nr, const CRTFile &crt)
 
     // Check file integrity
     if (nr != 0 || chipSize != 0x2000 || chipAddr != 0x8000) {
-        warn("Corrupted CRT file. Aborting.");
+        logwarn("Corrupted CRT file. Aborting.");
         return;
     }
 
     // Initialize RAM with data from CRT file
-    trace(CRT_DEBUG, "Copying file contents into Expert RAM\n");
+    logdebug(CRT_DEBUG, "Copying file contents into Expert RAM\n");
     assert(getRamCapacity() == chipSize);
     for (isize i = 0; i < chipSize; i++) pokeRAM((u16)i, chipData[i]);
 }
@@ -120,7 +120,7 @@ Expert::pokeIO1(u16 addr, u8 value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
 
-    trace(CRT_DEBUG, "Expert::pokeIO1\n");
+    logdebug(CRT_DEBUG, "Expert::pokeIO1\n");
 
     // Any IO1 access disabled the cartridge
     active = false;
@@ -136,7 +136,7 @@ void
 Expert::pressButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
+    logdebug(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
 
     switch (nr) {
 

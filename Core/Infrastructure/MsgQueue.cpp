@@ -66,7 +66,7 @@ MsgQueue::put(const Message &msg)
             if (!queue.isFull()) {
                 queue.write(msg);
             } else {
-                warn("Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
+                logwarn("Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
             }
         }
     }

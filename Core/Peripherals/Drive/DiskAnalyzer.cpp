@@ -136,11 +136,11 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
             sync[i] = decodeGcr(ht, i);
             
             if (sync[i] == 0x08) {
-                trace(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
+                logdebug(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
             } else if (sync[i] == 0x07) {
-                trace(GCR_DEBUG, "Sector data block found at offset %ld\n", i);
+                logdebug(GCR_DEBUG, "Sector data block found at offset %ld\n", i);
             } else {
-                log(ht, i, 10, "Invalid sector ID %02X at index %d. Should be 0x07 or 0x08.", sync[i], i);
+                finding(ht, i, 10, "Invalid sector ID %02X at index %d. Should be 0x07 or 0x08.", sync[i], i);
             }
         }
         noOfOnes = data[ht][i] ? (noOfOnes + 1) : 0;
@@ -155,7 +155,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     }
     if (startOffset == trackInfo.length) {
         
-        log(ht, 0, trackInfo.length, "This track contains no sector header block.");
+        finding(ht, 0, trackInfo.length, "This track contains no sector header block.");
         return trackInfo;
 
     } else {
@@ -174,7 +174,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
                     trackInfo.sectorInfo[sector].headerBegin = i;
                     trackInfo.sectorInfo[sector].headerEnd = i + headerBlockSize;
                 } else {
-                    log(ht, i + 20, 10, "Header block at index %d contains an invalid sector number (%d).", i, sector);
+                    finding(ht, i + 20, 10, "Header block at index %d contains an invalid sector number (%d).", i, sector);
                 }
                 
             } else if (sync[i] == 0x07) {
@@ -183,7 +183,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
                     trackInfo.sectorInfo[sector].dataBegin = i;
                     trackInfo.sectorInfo[sector].dataEnd = i + dataBlockSize;
                 } else {
-                    log(ht, i + 20, 10, "Data block at index %d contains an invalid sector number (%d).", i, sector);
+                    finding(ht, i + 20, 10, "Data block at index %d contains an invalid sector number (%d).", i, sector);
                 }
             }
         }
@@ -205,20 +205,20 @@ DiskAnalyzer::analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo)
         bool hasData = info.dataBegin != info.dataEnd;
 
         if (!hasHeader && !hasData) {
-            log(ht, 0, 0, "Sector %d is missing.\n", s);
+            finding(ht, 0, 0, "Sector %d is missing.\n", s);
             continue;
         }
         
         if (hasHeader) {
             analyzeSectorHeaderBlock(ht, info.headerBegin, trackInfo);
         } else {
-            log(ht, 0, 0, "Sector %d has no header block.\n", s);
+            finding(ht, 0, 0, "Sector %d has no header block.\n", s);
         }
         
         if (hasData) {
             analyzeSectorDataBlock(ht, info.dataBegin, trackInfo);
         } else {
-            log(ht, 0, 0, "Sector %d has no data block.\n", s);
+            finding(ht, 0, 0, "Sector %d has no data block.\n", s);
         }
     }
 }
@@ -238,7 +238,7 @@ DiskAnalyzer::analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &tr
     u8 checksum = id1 ^ id2 ^ t ^ s;
 
     if (checksum != decodeGcr(ht, offset)) {
-        log(ht, offset, 10, "Header block at index %d contains an invalid checksum.\n", offset);
+        finding(ht, offset, 10, "Header block at index %d contains an invalid checksum.\n", offset);
     }
 }
 
@@ -255,7 +255,7 @@ DiskAnalyzer::analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trac
     }
     
     if (checksum != decodeGcr(ht, offset)) {
-        log(ht, offset, 10, "Data block at index %d contains an invalid checksum.\n", offset);
+        finding(ht, offset, 10, "Data block at index %d contains an invalid checksum.\n", offset);
     }
 }
 
@@ -269,7 +269,7 @@ DiskAnalyzer::sectorLayout(Halftrack ht, Sector nr) {
 }
 
 void
-DiskAnalyzer::log(Halftrack ht, isize begin, isize length, const char *fmt, ...)
+DiskAnalyzer::finding(Halftrack ht, isize begin, isize length, const char *fmt, ...)
 {
     char buf[256];
     

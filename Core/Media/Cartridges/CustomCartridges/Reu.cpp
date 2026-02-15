@@ -344,7 +344,7 @@ Reu::poke(u16 addr, u8 value)
 
     } else {
 
-        trace(REU_DEBUG, "poke($FF00,%02X)\n", value);
+        logdebug(REU_DEBUG, "poke($FF00,%02X)\n", value);
 
         if (isActive()) {
 
@@ -480,7 +480,7 @@ Reu::execute(EventID id)
 
         case EXP_REU_INITIATE:
 
-            if (REU_DEBUG) { trace(true, ""); dump(Category::Dma, std::cout); }
+            if (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
             // Update control register bits
             cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
@@ -510,7 +510,7 @@ Reu::execute(EventID id)
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
         {
-            trace(REU_DEBUG > 3, "%d%d : ", ba[1], ba[0]);
+            lognull(REU_DEBUG, "%d%d : ", ba[1], ba[0]);
 
             // Only proceed if the bus is available
             if (busIsBlocked(id)) {

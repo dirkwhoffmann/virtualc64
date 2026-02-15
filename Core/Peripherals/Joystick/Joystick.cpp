@@ -148,7 +148,7 @@ Joystick::startAutofire()
 void
 Joystick::stopAutofire()
 {
-    trace(JOY_DEBUG, "stopAutofire()\n");
+    loginfo(JOY_DEBUG, "stopAutofire()\n");
 
     // Release button and empty the bullet counter
     button = false;

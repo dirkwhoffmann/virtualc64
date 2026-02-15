@@ -273,6 +273,8 @@ do { \
 #define logdebug(channel, format, ...) \
     logMsg(channel, LogLevel::LOG_DEBUG, format __VA_OPT__(,) __VA_ARGS__)
 
+#define lognull(channel, format, ...)
+
 
 //
 // Convenience wrappers

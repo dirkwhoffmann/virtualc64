@@ -246,7 +246,7 @@ Snapshot::uncompress()
         
         if (getHeader()->rawSize != expectedSize) {
          
-            warn("Snaphot size: %ld. Expected: %ld\n", data.size, expectedSize);
+            logwarn("Snaphot size: %ld. Expected: %ld\n", data.size, expectedSize);
             fatalError;
         }
     }

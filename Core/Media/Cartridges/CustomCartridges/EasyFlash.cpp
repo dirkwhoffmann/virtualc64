@@ -75,25 +75,25 @@ EasyFlash::loadChip(isize nr, const CRTFile &crt)
     u8 *chipData = crt.chipData(nr);
 
     if(chipSize != 0x2000) {
-        warn("Package %ld has chip size %04X. Expected 0x2000.\n", nr, chipSize);
+        logwarn("Package %ld has chip size %04X. Expected 0x2000.\n", nr, chipSize);
         return;
     }
 
     if (isROMLaddr(chipAddr)) {
 
-        trace(CRT_DEBUG, "Loading Rom bank %dL ...\n", chipBank);
+        logdebug(CRT_DEBUG, "Loading Rom bank %dL ...\n", chipBank);
         flashRomL.loadBank(chipBank, chipData);
         bank++;
 
     } else if (isROMHaddr(chipAddr)) {
 
-        trace(CRT_DEBUG, "Loading Rom bank %dH ...\n", bank / 2);
+        logdebug(CRT_DEBUG, "Loading Rom bank %dH ...\n", bank / 2);
         flashRomH.loadBank(chipBank, chipData);
         bank++;
 
     } else {
 
-        warn("Package %ld has an invalid load address (%04X).", nr, chipAddr);
+        logwarn("Package %ld has an invalid load address (%04X).", nr, chipAddr);
         return;
     }
 }
@@ -145,14 +145,14 @@ EasyFlash::poke(u16 addr, u8 value)
 void
 EasyFlash::pokeRomL(u16 addr, u8 value)
 {
-    trace(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
+    logdebug(CRT_DEBUG, "pokeRomL(%x, %x)\n", addr, value);
     flashRomL.poke(bank, addr & 0x1FFF, value);
 }
 
 void
 EasyFlash::pokeRomH(u16 addr, u8 value)
 {
-    trace(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
+    logdebug(CRT_DEBUG, "pokeRomH(%x, %x)\n", addr, value);
     flashRomH.poke(bank, addr & 0x1FFF, value);
 }
 
@@ -160,7 +160,7 @@ u8
 EasyFlash::peekIO1(u16 addr)
 {
     u8 result = (addr & 2) ? (modeReg & 0x87) : bankReg;
-    trace(CRT_DEBUG, "peekIO1(%x): %x\n", addr & 0xFF, result);
+    logdebug(CRT_DEBUG, "peekIO1(%x): %x\n", addr & 0xFF, result);
     return result;
 }
 
@@ -175,7 +175,7 @@ u8
 EasyFlash::peekIO2(u16 addr)
 {
     u8 result = peekRAM(addr & 0xFF);
-    trace(CRT_DEBUG, "peekIO2(%x): %x\n", addr & 0xFF, result);
+    logdebug(CRT_DEBUG, "peekIO2(%x): %x\n", addr & 0xFF, result);
     return result;
 }
 
@@ -189,14 +189,14 @@ EasyFlash::spypeekIO2(u16 addr) const
 void
 EasyFlash::pokeIO1(u16 addr, u8 value)
 {
-    trace(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr & 0xFF, value);
+    logdebug(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr & 0xFF, value);
     (addr & 2) ? pokeModeReg(value) : pokeBankReg(value);
 }
 
 void
 EasyFlash::pokeIO2(u16 addr, u8 value)
 {
-    trace(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr & 0xFF, value);
+    logdebug(CRT_DEBUG, "pokeIO2(%x,%x)\n", addr & 0xFF, value);
     pokeRAM(addr & 0xFF, value);
 }
 

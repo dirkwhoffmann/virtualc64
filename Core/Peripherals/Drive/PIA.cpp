@@ -184,19 +184,19 @@ PIA6821::peek(bool rs1, bool rs0)
                     setCA2Internal(1);
                     break;
             }
-            trace(PIA_DEBUG, "peekPRB() = %x\n", result);
+            logdebug(PIA_DEBUG, "peekPRB() = %x\n", result);
             break;
             
         case 0x0: case 0x1: // DDRA
             
             result = ddra;
-            trace(PIA_DEBUG, "peekDDRA() = %x\n", result);
+            logdebug(PIA_DEBUG, "peekDDRA() = %x\n", result);
             break;
             
         case 0x4: case 0x5: case 0x6: case 0x7: // CRA
             
             result = cra;
-            trace(PIA_DEBUG, "peekCRA() = %x\n", result);
+            logdebug(PIA_DEBUG, "peekCRA() = %x\n", result);
             break;
             
         case 0x9: case 0xb: // PRB
@@ -206,7 +206,7 @@ PIA6821::peek(bool rs1, bool rs0)
             // Clear interrupt bits
             crb &= 0x3F;
 
-            trace(PIA_DEBUG, "peekPRB() = %x\n", result);
+            logdebug(PIA_DEBUG, "peekPRB() = %x\n", result);
             break;
             
         case 0x8: case 0xa: // DDRB
@@ -217,7 +217,7 @@ PIA6821::peek(bool rs1, bool rs0)
         case 0xc: case 0xd: case 0xe: case 0xf: // CRB
             
             result = crb;
-            trace(PIA_DEBUG, "peekCRB() = %x\n", result);
+            logdebug(PIA_DEBUG, "peekCRB() = %x\n", result);
             break;
             
         default:
@@ -225,7 +225,7 @@ PIA6821::peek(bool rs1, bool rs0)
             fatalError;
     }
     
-    // trace(PIA_DEBUG, "peek(%x) = %x\n", addr, result);
+    // logdebug(PIA_DEBUG, "peek(%x) = %x\n", addr, result);
     return result;
 }
 
@@ -248,19 +248,19 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             
         case 0x2: case 0x3: // PRA
             
-            trace(PIA_DEBUG, "pokePRA(%x)\n", value);
+            logdebug(PIA_DEBUG, "pokePRA(%x)\n", value);
             ora = value;
             break;
             
         case 0x0: case 0x1: // DDRA
             
-            trace(PIA_DEBUG, "pokeDDRA(%x)\n", value);
+            logdebug(PIA_DEBUG, "pokeDDRA(%x)\n", value);
             ddra = value;
             break;
             
         case 0x4: case 0x5: case 0x6: case 0x7: // CRA
         {
-            trace(PIA_DEBUG, "pokeCRA(%x)\n", value);
+            logdebug(PIA_DEBUG, "pokeCRA(%x)\n", value);
 
             bool pendingIrq =
             (GET_BIT(cra, 7) && RISING_EDGE_BIT(cra, value, 0)) ||
@@ -286,7 +286,7 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
         }
         case 0x9: case 0xb: // PRB
             
-            trace(PIA_DEBUG, "pokePRB(%x)\n", value);
+            logdebug(PIA_DEBUG, "pokePRB(%x)\n", value);
             orb = value;
             
             switch (cb2Control()) {
@@ -306,13 +306,13 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             
         case 0x8: case 0xa: // DDRB
             
-            trace(PIA_DEBUG, "pokeDDRB(%x)\n", value);
+            logdebug(PIA_DEBUG, "pokeDDRB(%x)\n", value);
             ddrb = value;
             break;
             
         case 0xc: case 0xd: case 0xe: case 0xf: // CRB
         {
-            trace(PIA_DEBUG, "pokeCRB(%x)\n", value);
+            logdebug(PIA_DEBUG, "pokeCRB(%x)\n", value);
 
             bool pendingIrq =
             (GET_BIT(crb, 7) && RISING_EDGE_BIT(crb, value, 0)) ||
@@ -362,7 +362,7 @@ PIA6821::updatePB()
 void
 PiaDolphin::ca2HasChangedTo(bool value)
 {
-    trace(PIA_DEBUG, "ca2HasChangedTo(%d)\n", value);
+    logdebug(PIA_DEBUG, "ca2HasChangedTo(%d)\n", value);
     
     if (value) {
         parCable.driveHandshake();
@@ -372,19 +372,19 @@ PiaDolphin::ca2HasChangedTo(bool value)
 void
 PiaDolphin::cb2HasChangedTo(bool value)
 {
-    trace(PIA_DEBUG, "cb2HasChangedTo(%d)\n", value);
+    logdebug(PIA_DEBUG, "cb2HasChangedTo(%d)\n", value);
 }
 
 void
 PiaDolphin::irqAHasOccurred() const
 {
-    trace(PIA_DEBUG, "irqAHasOccurred\n");
+    logdebug(PIA_DEBUG, "irqAHasOccurred\n");
 }
 
 void
 PiaDolphin::irqBHasOccurred() const
 {
-    trace(PIA_DEBUG, "irqBHasOccurred\n");
+    logdebug(PIA_DEBUG, "irqBHasOccurred\n");
 }
 
 u8

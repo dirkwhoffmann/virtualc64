@@ -216,7 +216,7 @@ Drive::setZone(isize value)
     assert(value < 4);
     
     if (value != zone) {
-        trace(DRV_DEBUG, "Switching zone: %ld --> %ld\n", zone, value);
+        logdebug(DRV_DEBUG, "Switching zone: %ld --> %ld\n", zone, value);
         zone = value;
     }
 }
@@ -271,7 +271,7 @@ Drive::wakeUp(isize awakeness)
 {
     if (isIdle()) {
         
-        trace(DRV_DEBUG, "Exiting power-safe mode\n");
+        logdebug(DRV_DEBUG, "Exiting power-safe mode\n");
         msgQueue.put(Msg::DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 0 } );
         needsEmulation = true;
     }
@@ -298,7 +298,7 @@ Drive::moveHeadUp()
             offset = 0;
         }
         
-        trace(DRV_DEBUG, "Moving head up to halftrack %ld (track %2.1f) (offset %ld)\n",
+        logdebug(DRV_DEBUG, "Moving head up to halftrack %ld (track %2.1f) (offset %ld)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
     }
 
@@ -326,7 +326,7 @@ Drive::moveHeadDown()
             offset = 0;
         }
         
-        trace(DRV_DEBUG, "Moving head down to halftrack %ld (track %2.1f)\n",
+        logdebug(DRV_DEBUG, "Moving head down to halftrack %ld (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
     }
 
@@ -473,7 +473,7 @@ Drive::vsyncHandler()
 
         if (--watchdog == 0) {
 
-            trace(DRV_DEBUG, "Entering power-save mode\n");
+            logdebug(DRV_DEBUG, "Entering power-save mode\n");
             needsEmulation = false;
             msgQueue.put(Msg::DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 1 } );
         }
@@ -526,7 +526,7 @@ Drive::processDiskChangeEvent(EventID id)
 
         case InsertionStatus::FULLY_INSERTED:
 
-            trace(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
+            logdebug(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
 
             // Pull the disk half out (blocks the light barrier)
             insertionStatus = InsertionStatus::PARTIALLY_EJECTED;
@@ -540,7 +540,7 @@ Drive::processDiskChangeEvent(EventID id)
 
         case InsertionStatus::PARTIALLY_EJECTED:
 
-            trace(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
+            logdebug(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
 
             // Take the disk out (unblocks the light barrier)
             insertionStatus = InsertionStatus::FULLY_EJECTED;
@@ -556,7 +556,7 @@ Drive::processDiskChangeEvent(EventID id)
 
         case InsertionStatus::FULLY_EJECTED:
 
-            trace(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
+            logdebug(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
 
             // Only proceed if a new disk is waiting for insertion
             if (!diskToInsert) break;
@@ -570,7 +570,7 @@ Drive::processDiskChangeEvent(EventID id)
 
         case InsertionStatus::PARTIALLY_INSERTED:
 
-            trace(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
+            logdebug(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
 
             // Fully insert the disk (unblocks the light barrier)
             insertionStatus = InsertionStatus::FULLY_INSERTED;
