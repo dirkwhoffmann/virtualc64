@@ -70,7 +70,7 @@ Configurable::resetConfigItems(const Defaults &defaults, isize objid)
 void
 Configurable::dumpConfig(std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     for (auto &opt: getOptions()) {
 

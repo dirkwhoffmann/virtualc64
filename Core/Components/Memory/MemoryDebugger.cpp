@@ -220,7 +220,7 @@ MemoryDebugger::save(fs::path &path, u16 addr, isize count)
 void
 MemoryDebugger::convertNumeric(std::ostream &os, u8 value) const
 {
-    using namespace util;
+    using namespace utl;
 
     os << std::setw(10) << std::right << std::setfill(' ') << dec(value) << " | ";
     os << hex(value) << " | ";
@@ -231,7 +231,7 @@ MemoryDebugger::convertNumeric(std::ostream &os, u8 value) const
 void
 MemoryDebugger::convertNumeric(std::ostream &os, u16 value) const
 {
-    using namespace util;
+    using namespace utl;
 
     os << std::setw(10) << std::right << std::setfill(' ') << dec(value) << " | ";
     os << hex(value) << " | ";
@@ -242,7 +242,7 @@ MemoryDebugger::convertNumeric(std::ostream &os, u16 value) const
 void
 MemoryDebugger::convertNumeric(std::ostream &os, u32 value) const
 {
-    using namespace util;
+    using namespace utl;
 
     os << std::setw(10) << std::right << std::setfill(' ') << dec(value) << " | ";
     os << hex(value) << " | ";

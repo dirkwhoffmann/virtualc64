@@ -186,7 +186,7 @@ Disk::init(SerReader &reader)
 void
 Disk::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
     
     if (category == Category::Disk) {
 

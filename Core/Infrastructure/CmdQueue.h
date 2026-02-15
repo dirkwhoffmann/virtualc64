@@ -16,8 +16,7 @@
 #include "CmdQueueTypes.h"
 #include "CoreObject.h"
 #include "utl/abilities/Synchronizable.h"
-#include "RingBuffer.h"
-#include "Utilities/RingBuffer.h" // DEPRECATED
+#include "utl/storage/RingBuffer.h"
 #include <atomic>
 
 namespace vc64 {
@@ -26,7 +25,7 @@ namespace vc64 {
 class CmdQueue final : CoreObject, utl::Synchronizable {
 
     /// Ring buffer storing all pending commands
-    util::RingBuffer <Command, 256> queue;
+    utl::RingBuffer <Command, 256> queue;
 
 public:
     

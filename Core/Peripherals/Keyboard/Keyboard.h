@@ -46,7 +46,7 @@ class Keyboard final : public SubComponent {
     bool shiftLock = false;
 
     // Delayed keyboard commands (used, e.g., for auto-typing)
-    util::SortedRingBuffer<Command, 1024> pending;
+    utl::SortedRingBuffer<Command, 1024> pending;
 
 
     //

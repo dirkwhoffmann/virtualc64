@@ -24,7 +24,7 @@ ParCable::ParCable(C64& ref) : SubComponent(ref)
 void
 ParCable::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     if (category == Category::State) {
         

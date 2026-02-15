@@ -27,7 +27,7 @@ namespace vc64 {
 void
 DapAdapter::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 }
 
 template <> void

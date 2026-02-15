@@ -55,7 +55,7 @@ ReSID::_didReset(bool hard)
 void
 ReSID::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
     
     auto filter = [&](u8 bits) {
 

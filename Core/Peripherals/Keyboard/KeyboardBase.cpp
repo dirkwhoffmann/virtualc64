@@ -26,7 +26,7 @@ Keyboard::_didReset(bool hard)
 void
 Keyboard::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     if (category == Category::State) {
 

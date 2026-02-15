@@ -38,7 +38,7 @@ void VIA6522::_didReset(bool hard)
 void
 VIA6522::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
     
     u16 t1Latch = LO_HI(t1_latch_lo, t1_latch_hi);
     u16 t2Latch = LO_HI(t2_latch_lo, 0);

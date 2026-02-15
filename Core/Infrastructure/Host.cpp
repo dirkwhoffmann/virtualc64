@@ -90,7 +90,7 @@ Host::resetConfigItems(const class Defaults &defaults, isize objid)
 void
 Host::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     if (category == Category::Config) {
 

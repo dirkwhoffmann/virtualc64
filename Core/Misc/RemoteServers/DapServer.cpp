@@ -35,7 +35,7 @@ DapServer::~DapServer() {
 void
 DapServer::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     RemoteServer::_dump(category, os);
 }

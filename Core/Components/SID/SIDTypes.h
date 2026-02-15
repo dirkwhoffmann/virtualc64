@@ -14,8 +14,7 @@
 #pragma once
 
 #include "Reflection.h"
-#include "RingBuffer.h"
-#include "Utilities/RingBuffer.h" // DEPRECATED
+#include "utl/storage/RingBuffer.h"
 
 namespace vc64 {
 
@@ -23,7 +22,7 @@ namespace vc64 {
 // Aliases
 //
 
-typedef util::RingBuffer<short, 2048> SampleStream;
+typedef utl::RingBuffer<short, 2048> SampleStream;
 
 
 //

@@ -32,7 +32,7 @@ RpcHttpServer::_initialize()
 void
 RpcHttpServer::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     HttpServer::_dump(category, os);
 }

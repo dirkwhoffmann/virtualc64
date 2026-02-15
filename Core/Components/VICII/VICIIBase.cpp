@@ -94,7 +94,7 @@ VICII::cacheStats(VICIIStats &result) const
 void
 VICII::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     if (category == Category::Config) {
 

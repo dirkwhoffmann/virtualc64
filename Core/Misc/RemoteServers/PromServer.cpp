@@ -27,7 +27,7 @@ PromServer::_initialize()
 void
 PromServer::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     RemoteServer::_dump(category, os);
 }

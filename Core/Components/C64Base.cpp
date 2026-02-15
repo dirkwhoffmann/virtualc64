@@ -65,7 +65,7 @@ C64::~C64()
 void
 C64::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
     auto append = [&](const string &s1, const string &s2) {
         return s1.empty() ? s2 : s1 + ", " + s2;
     };

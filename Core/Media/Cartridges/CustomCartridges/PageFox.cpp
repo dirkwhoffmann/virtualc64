@@ -24,7 +24,7 @@ PageFox::_didReset(bool hard)
 void
 PageFox::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     Cartridge::_dump(category, os);
 

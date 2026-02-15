@@ -51,7 +51,7 @@ Reu::_didLoad()
 void
 Reu::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
 

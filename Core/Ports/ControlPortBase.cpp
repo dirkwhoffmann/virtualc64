@@ -31,7 +31,7 @@ ControlPort::ControlPort(C64 &ref, isize id) : SubComponent(ref, id)
 void
 ControlPort::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     if (category == Category::State) {
 

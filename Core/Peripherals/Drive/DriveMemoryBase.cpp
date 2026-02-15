@@ -46,7 +46,7 @@ DriveMemory::operator << (SerWriter &worker)
 void
 DriveMemory::_dump(Category category, std::ostream &os) const
 {
-    using namespace util;
+    using namespace utl;
 
     if (category == Category::BankMap) {
 
