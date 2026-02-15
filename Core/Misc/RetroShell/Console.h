@@ -15,9 +15,8 @@
 #include "RetroShellTypes.h"
 #include "SubComponent.h"
 #include "RSCommand.h"
-#include "Parser.h"
-#include "Utilities/Parser.h"
 #include "TextStorage.h"
+#include "utl/io/Parser.h"
 
 namespace vc64 {
 

@@ -7,8 +7,7 @@
 
 #include "PeddleConfig.h"
 #include "SymbolTable.h"
-#include "Parser.h"
-#include "Utilities/Parser.h" // DEPRECATED
+#include "utl/io/Parser.h"
 #include "utl/support/Strings.h"
 #include <fstream>
 #include <sstream>

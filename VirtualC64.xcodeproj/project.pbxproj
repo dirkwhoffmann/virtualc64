@@ -24,7 +24,6 @@
 		500C1C7A2965E7D300071AF3 /* PeddleDisassembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500C1C772965E7D300071AF3 /* PeddleDisassembler.cpp */; };
 		500E2D642824EBE30015C46F /* CartridgeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500E2D632824EBE30015C46F /* CartridgeInspector.xib */; };
 		500E2D662824EC140015C46F /* CartridgeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E2D652824EC130015C46F /* CartridgeInspector.swift */; };
-		500E34172615C40D006A38DA /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
 		500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500F7CC5281EAB64003F1A7C /* DiskCreator.xib */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
@@ -208,7 +207,6 @@
 		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
 		50726F3D2961C96B0031F2F5 /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
-		50726F412961C97B0031F2F5 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		50726F462961C9940031F2F5 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
 		50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
 		50726F482961C9940031F2F5 /* Defaults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD369A2817D69000E40BFC /* Defaults.cpp */; };
@@ -614,8 +612,6 @@
 		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
 		500E2D632824EBE30015C46F /* CartridgeInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartridgeInspector.xib; sourceTree = "<group>"; };
 		500E2D652824EC130015C46F /* CartridgeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartridgeInspector.swift; sourceTree = "<group>"; };
-		500E34152615C40D006A38DA /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
-		500E34162615C40D006A38DA /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* SubComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SubComponent.cpp; sourceTree = "<group>"; };
 		500EA6C624B09037009AA7D7 /* SubComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubComponent.h; sourceTree = "<group>"; };
 		500F7CC5281EAB64003F1A7C /* DiskCreator.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskCreator.xib; sourceTree = "<group>"; };
@@ -939,7 +935,6 @@
 		5077AC672B5ACC5100EFAC85 /* config.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = config.cpp; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		5078BEA5264D064600EDA161 /* PowerPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPortTypes.h; sourceTree = "<group>"; };
-		5078BEA8264D6F9E00EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5078BEAA264D70AC00EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5078BEAC264D72C000EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5078BEAE264D731600EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1434,18 +1429,6 @@
 			path = Keyboard;
 			sourceTree = "<group>";
 		};
-		500FAA62261376980062488E /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				5078BEA8264D6F9E00EDA161 /* CMakeLists.txt */,
-				500FAA63261376C50062488E /* BasicTypes.h */,
-				500E34162615C40D006A38DA /* Parser.h */,
-				500E34152615C40D006A38DA /* Parser.cpp */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-			usesTabs = 0;
-		};
 		50157EF62825B01D000E9DDD /* System */ = {
 			isa = PBXGroup;
 			children = (
@@ -1650,7 +1633,6 @@
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,
 				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				50AC258E2F41A8760016265E /* utlib */,
-				500FAA62261376980062488E /* Utilities */,
 				50A2D7AF24AF945200671F38 /* Infrastructure */,
 				50E56AF529D489EA00EBCE76 /* Components */,
 				50ACF4DC256EB451003B5690 /* Ports */,
@@ -2137,6 +2119,7 @@
 			isa = PBXGroup;
 			children = (
 				5078BEAC264D72C000EDA161 /* CMakeLists.txt */,
+				500FAA63261376C50062488E /* BasicTypes.h */,
 				506F30442B7578870083EAEA /* EmulatorTypes.h */,
 				506F30392B729CE80083EAEA /* Emulator.h */,
 				506F30382B729CE80083EAEA /* Emulator.cpp */,
@@ -2888,7 +2871,6 @@
 				50726F7A2961C9DC0031F2F5 /* DiskAnalyzer.cpp in Sources */,
 				50AC25B52F420CF60016265E /* RSError.cpp in Sources */,
 				50726F7B2961C9DC0031F2F5 /* Drive.cpp in Sources */,
-				50726F412961C97B0031F2F5 /* Parser.cpp in Sources */,
 				50726F8A2961CA0D0031F2F5 /* GameKiller.cpp in Sources */,
 				505A132C2C3503B400FF8D2C /* UserPort.cpp in Sources */,
 				50726FAB2961CA1C0031F2F5 /* P00File.cpp in Sources */,
@@ -2995,7 +2977,6 @@
 				500E2D662824EC140015C46F /* CartridgeInspector.swift in Sources */,
 				506D57B52EC23E7400E21501 /* ServerSettings.swift in Sources */,
 				505F45722E9698D300418105 /* PerformanceSettings.swift in Sources */,
-				500E34172615C40D006A38DA /* Parser.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
 				504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */,
