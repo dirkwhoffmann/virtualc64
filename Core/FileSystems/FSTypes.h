@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 #include "DriveTypes.h"
 
 namespace vc64 {
@@ -29,7 +29,7 @@ enum class DOSType : long
     CBM    ///< C64 CBM file system
 };
 
-struct DOSTypeEnum : Reflection<DOSTypeEnum, DOSType> {
+struct DOSTypeEnum : Reflectable<DOSTypeEnum, DOSType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DOSType::CBM);

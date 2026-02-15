@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 #include "C64Types.h"
 #include "TODTypes.h"
 
@@ -26,7 +26,7 @@ enum class CIARev : long
     MOS_8521
 };
 
-struct CIARevisionEnum : Reflection<CIARevisionEnum, CIARev> {
+struct CIARevisionEnum : Reflectable<CIARevisionEnum, CIARev> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CIARev::MOS_8521);

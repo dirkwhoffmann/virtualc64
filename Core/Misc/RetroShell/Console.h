@@ -37,6 +37,7 @@ public:
     virtual void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) = 0;
 };
 
+/*
 struct TooFewArgumentsError : public util::ParseError {
     using ParseError::ParseError;
 };
@@ -56,6 +57,7 @@ struct UnknownKeyValueError : public util::ParseError {
 struct ScriptInterruption: AppException {
     using AppException::AppException;
 };
+*/
 
 class HistoryBuffer {
     
@@ -321,16 +323,16 @@ protected:
     string parseSeq(const string &argv, const string &fallback) const;
     
     template <typename T> long parseEnum(const string &argv) {
-        return util::parseEnum<T>(argv);
+        return utl::parseEnum<T>(argv);
     }
     template <typename T> long parseEnum(const string &argv, long fallback) {
-        try { return util::parseEnum<T>(argv); } catch(...) { return fallback; }
+        try { return utl::parseEnum<T>(argv); } catch(...) { return fallback; }
     }
     template <typename E, typename T> E parseEnum(const string &argv) {
-        return (E)util::parseEnum<T>(argv);
+        return (E)utl::parseEnum<T>(argv);
     }
     template <typename E, typename T> long parseEnum(const string &argv, E fallback) {
-        try { return (E)util::parseEnum<T>(argv); } catch(...) { return fallback; }
+        try { return (E)utl::parseEnum<T>(argv); } catch(...) { return fallback; }
     }
     
     

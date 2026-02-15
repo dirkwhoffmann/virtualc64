@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "Console.h"
+#include "RSError.h"
 #include "Emulator.h"
 #include "Parser.h"
 #include "Option.h"
@@ -516,7 +517,7 @@ Console::parse(const RSCommand &cmd, const Tokens &args)
     std::vector<string> std;
 
     // Check if a command handler is present
-    if (!cmd.callback)  { throw TooFewArgumentsError(cmd.fullName); }
+    if (!cmd.callback) { throw RSError(RSError::TOO_MANY_ARGUMENTS, cmd.fullName); }
 
     // Sort input tokens by type
     for (usize i = 0; i < args.size(); i++) {
@@ -554,7 +555,7 @@ Console::parse(const RSCommand &cmd, const Tokens &args)
                 }
             }
             if (!found && descr.isRequired()){
-                throw util::ParseError("Missing flag " + keyStr);
+                throw RSError(RSError::MISSING_FLAG, keyStr);
             }
             continue;
         }
@@ -578,7 +579,7 @@ Console::parse(const RSCommand &cmd, const Tokens &args)
                 }
             }
             if (!found && descr.isRequired()) {
-                throw util::ParseError("Missing key-value pair " + descr.keyValueStr());
+                throw RSError(RSError::MISSING_KEY_VALUE, descr.keyValueStr());
             }
             continue;
         }
@@ -593,7 +594,7 @@ Console::parse(const RSCommand &cmd, const Tokens &args)
 
             } else if (descr.isRequired()) {
 
-                throw TooFewArgumentsError(cmd.fullName);
+                throw RSError(RSError::TOO_FEW_ARGUMENTS, cmd.fullName);
             }
             continue;
         }
@@ -605,9 +606,9 @@ Console::parse(const RSCommand &cmd, const Tokens &args)
     for (auto &it : map) debug(RSH_DEBUG, "arg['%s']='%s'\n", it.first.c_str(), it.second.c_str());
 
     // Check for invalid or extra arguments
-    if (!flags.empty()) { throw UnknownFlagError(flags.front()); }
-    if (!keyVal.empty()) { throw UnknownKeyValueError(keyVal.front()); }
-    if (!std.empty()) { throw TooManyArgumentsError(cmd.fullName); }
+    if (!flags.empty()) { throw RSError(RSError::UNKNOWN_FLAG, flags.front()); }
+    if (!keyVal.empty()) { throw RSError(RSError::UNKNOWN_KEY_VALUE, keyVal.front()); }
+    if (!std.empty()) { throw RSError(RSError::TOO_MANY_ARGUMENTS, cmd.fullName); }
 
     return map;
 }
@@ -615,25 +616,25 @@ Console::parse(const RSCommand &cmd, const Tokens &args)
 bool
 Console::isBool(const string &argv) const
 {
-    return util::isBool(argv);
+    return utl::isBool(argv);
 }
 
 bool
 Console::isOnOff(const string  &argv) const
 {
-    return util::isOnOff(argv);
+    return utl::isOnOff(argv);
 }
 
 long
 Console::isNum(const string &argv) const
 {
-    return util::isNum(argv);
+    return utl::isNum(argv);
 }
 
 bool
 Console::parseBool(const string &argv) const
 {
-    return util::parseBool(argv);
+    return utl::parseBool(argv);
 }
 
 bool
@@ -658,7 +659,7 @@ Console::parseBool(const Arguments &argv, const string &key, long fallback) cons
 bool
 Console::parseOnOff(const string &argv) const
 {
-    return util::parseOnOff(argv);
+    return utl::parseOnOff(argv);
 }
 
 bool
@@ -683,7 +684,7 @@ Console::parseOnOff(const Arguments &argv, const string &key) const
 long
 Console::parseNum(const string &argv) const
 {
-    return util::parseNum(argv);
+    return utl::parseNum(argv);
 }
 
 long
@@ -739,7 +740,7 @@ Console::parseAddr(const Arguments &argv, const string &key, long fallback) cons
 string
 Console::parseSeq(const string &argv) const
 {
-    return util::parseSeq(argv);
+    return utl::parseSeq(argv);
 }
 
 string
@@ -774,7 +775,7 @@ Console::exec(const InputLine& cmd)
         auto [c, args] = seekCommand(tokens);
 
         // Only proceed if a command has been found
-        if (c == &root) throw util::ParseError(tokens[0]);
+        if (c == &root) throw RSError(RSError::SYNTAX_ERROR, tokens[0]);
 
         // Parse arguments
         Arguments parsedArgs = parse(*c, args);
@@ -829,71 +830,6 @@ Console::describe(std::ostream &ss, const std::exception &e, isize line, const s
     if (line) {
         ss << "Line " << line << ": " << cmd << '\n';
     }
-    // ss << "Error: ";
-
-    if (auto err = dynamic_cast<const TooFewArgumentsError *>(&e)) {
-
-        ss << err->what() << ": Too few arguments.";
-        ss << '\n';
-        return;
-    }
-    if (auto err = dynamic_cast<const TooManyArgumentsError *>(&e)) {
-
-        ss << err->what() << ": Too many arguments.";
-        ss << '\n';
-        return;
-    }
-    if (auto err = dynamic_cast<const UnknownFlagError *>(&e)) {
-
-        ss << err->what() << " is not a valid flag.";
-        ss << '\n';
-        return;
-    }
-    if (auto err = dynamic_cast<const UnknownKeyValueError *>(&e)) {
-
-        ss << err->what() << " is not a valid key-value pair.";
-        ss << '\n';
-        return;
-    }
-    if (auto err = dynamic_cast<const util::EnumParseError *>(&e)) {
-
-        ss << err->token << " is not a valid key." << '\n';
-        ss << "Expected: " << err->expected << '\n';
-        return;
-    }
-    if (auto err = dynamic_cast<const util::ParseNumError *>(&e)) {
-
-        ss << err->token << " is not a number.";
-        ss << '\n';
-        return;
-    }
-    if (auto err = dynamic_cast<const util::ParseBoolError *>(&e)) {
-
-        ss << err->token << " must be true or false.";
-        ss << '\n';
-        return;
-    }
-    if (auto err = dynamic_cast<const util::ParseOnOffError *>(&e)) {
-
-        ss << "'" << err->token << "' must be on or off.";
-        ss << '\n';
-        return;
-    }
-    if (auto err = dynamic_cast<const util::ParseError *>(&e)) {
-
-        if (auto what = string(err->what()); !what.empty()) {
-            ss << err->what() << ": ";
-        }
-        ss << "Syntax error\n";
-        return;
-    }
-    if (auto err = dynamic_cast<const AppError *>(&e)) {
-
-        ss << err->what();
-        ss << '\n';
-        return;
-    }
-
     ss << e.what();
 }
 

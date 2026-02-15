@@ -10,6 +10,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
+/*
+ 
 #include "config.h"
 #include "Parser.h"
 
@@ -111,3 +113,4 @@ parseSeq(const string& token)
 }
 
 }
+*/

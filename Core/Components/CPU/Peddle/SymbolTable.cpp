@@ -17,10 +17,10 @@
 
 namespace vc64::peddle {
 
-inline u16 parseU16(string_view sv) { return (u16)util::parseNum(string(sv)); }
-inline u32 parseU32(string_view sv) { return (u32)util::parseNum(string(sv)); }
-inline u64 parseU64(string_view sv) { return (u64)util::parseNum(string(sv)); }
-inline isize parseNum(string_view sv) { return (isize)util::parseNum(string(sv)); }
+inline u16 parseU16(string_view sv) { return (u16)utl::parseNum(string(sv)); }
+inline u32 parseU32(string_view sv) { return (u32)utl::parseNum(string(sv)); }
+inline u64 parseU64(string_view sv) { return (u64)utl::parseNum(string(sv)); }
+inline isize parseNum(string_view sv) { return (isize)utl::parseNum(string(sv)); }
 
 inline void parseKeyValueLine(string_view line, auto &&handler) {
 

@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -194,7 +194,7 @@ enum class Opt : long
     COUNT
 };
 
-struct OptEnum : Reflection<OptEnum, Opt> {
+struct OptEnum : Reflectable<OptEnum, Opt> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Opt::DBG_WATCHDOG);

@@ -28,6 +28,7 @@ typedef i64 Cycle;
 // Enumerations
 //
 
+/*
 enum class Compressor : long
 {
     NONE,
@@ -67,6 +68,7 @@ struct CompressorEnum : Reflection<CompressorEnum, Compressor>
         return "???";
     }
 };
+*/
 
 /// C64 model
 enum class ConfigScheme : long

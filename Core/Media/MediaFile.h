@@ -14,6 +14,7 @@
 
 #include "MediaFileTypes.h"
 #include "C64Types.h"
+#include "utl/abilities/Compressible.h"
 #include <sstream>
 #include <fstream>
 

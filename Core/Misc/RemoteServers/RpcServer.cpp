@@ -204,7 +204,7 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::except
     i64 code = RPC::INTERNAL_ERROR;
 
     // For parse errors, use a value from the server-defined error range
-    if (dynamic_cast<const util::ParseError *>(&exc)) {
+    if (dynamic_cast<const utl::NewParseError *>(&exc)) {
         code = RPC::SERVER_ERROR;
     }
 

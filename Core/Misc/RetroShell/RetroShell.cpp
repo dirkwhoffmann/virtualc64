@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "RetroShell.h"
+#include "RSError.h"
 #include "Emulator.h"
 #include <istream>
 #include <sstream>

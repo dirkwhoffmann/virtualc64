@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-using namespace util;
+using namespace utl;
 
 bool
 Configurable::isValidOption(Opt opt) const
@@ -40,7 +40,7 @@ Configurable::checkOption(Opt opt, const string &value)
 void
 Configurable::checkOption(const string &opt, const string &value)
 {
-    checkOption(Opt(util::parseEnum<OptEnum>(opt)), value);
+    checkOption(Opt(utl::parseEnum<OptEnum>(opt)), value);
 }
 
 void
@@ -52,7 +52,7 @@ Configurable::setOption(Opt opt, const string &value)
 void
 Configurable::setOption(const string &opt, const string &value)
 {
-    setOption(Opt(util::parseEnum<OptEnum>(opt)), value);
+    setOption(Opt(utl::parseEnum<OptEnum>(opt)), value);
 }
 
 void

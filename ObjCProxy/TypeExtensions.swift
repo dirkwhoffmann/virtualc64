@@ -7,12 +7,15 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+// 'utl' namespace
+typealias Compressor = utl.Compressor
+
+// 'vc64' namespace
 typealias AppClass = vc64.AppError
 typealias CartridgeType = vc64.CartridgeType
 typealias Class = vc64.Class
 typealias ConfigScheme = vc64.ConfigScheme
 typealias ControlPortDevice = vc64.ControlPortDevice
-typealias Compressor = vc64.Compressor
 typealias DOSType = vc64.DOSType
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum

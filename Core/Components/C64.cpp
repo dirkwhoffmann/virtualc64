@@ -482,7 +482,7 @@ C64::set(Opt opt, const string &value, const std::vector<isize> objids)
 void
 C64::set(const string &opt, const string &value, const std::vector<isize> objids)
 {
-    set(Opt(util::parseEnum<OptEnum>(opt)), value, objids);
+    set(Opt(utl::parseEnum<OptEnum>(opt)), value, objids);
 }
 
 void

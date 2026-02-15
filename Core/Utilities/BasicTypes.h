@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include "utl/types.h"
+#include "utl/abilities/Reflectable.h"
 #include <sys/types.h>
 #include <stdint.h>
 
@@ -21,6 +23,8 @@
 
 namespace vc64 {
 
+using namespace utl;
+/*
 // Signed integers
 typedef signed char        i8;
 typedef signed short       i16;
@@ -34,8 +38,17 @@ typedef unsigned short     u16;
 typedef unsigned int       u32;
 typedef unsigned long long u64;
 typedef unsigned long      usize;
+*/
 
 }
+
+
+//
+// Pointers
+//
+
+#include <memory>
+namespace vamiga { using std::unique_ptr, std::make_unique; }
 
 
 //

@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "Console.h"
+#include "RSError.h"
 #include "Emulator.h"
 #include "Option.h"
         
@@ -132,7 +133,7 @@ CommanderConsole::initCommands(RSCommand &root)
 
                 // Pause the script to give the C64 some time to boot
                 c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
-                throw ScriptInterruption("");
+                throw ScriptInterruption();
 
             }, .payload = { isize(it) }
         });
@@ -626,7 +627,7 @@ CommanderConsole::initCommands(RSCommand &root)
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
                 auto &drive = values.front() ? drive9 : drive8;
-                auto type = util::parseEnum <DOSType, DOSTypeEnum> (args.at("dos"));
+                auto type = utl::parseEnum <DOSType, DOSTypeEnum> (args.at("dos"));
                 drive.insertNewDisk(type, "NEW DISK");
 
             }, .payload = {i}

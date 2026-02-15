@@ -15,6 +15,7 @@
 #include "BasicTypes.h"
 #include <functional>
 
+/*
 namespace vc64::util {
 
 struct ParseError : public std::exception {
@@ -95,3 +96,5 @@ template <typename R, typename Enum> R parsePartialEnum(const string& key, std::
 }
 
 }
+*/
+
