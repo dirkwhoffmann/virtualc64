@@ -23,7 +23,7 @@ class Expert final : public Cartridge {
         .type           = CartridgeType::EXPERT,
         .title          = "Expert",
 
-        .memory         = KB(8),
+        .memory         = 8_KB,
         .battery        = true,
 
         .buttons        = 2,

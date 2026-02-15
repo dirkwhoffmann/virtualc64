@@ -301,7 +301,7 @@ bool
 Disk::halftrackIsEmpty(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
-    for (isize i = 0; i < isizeof(data.halftrack[ht]); i++)
+    for (usize i = 0; i < sizeof(data.halftrack[ht]); i++)
         if (data.halftrack[ht][i] != 0x55) return false;
     return true;
 }
@@ -537,7 +537,7 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
     // Do some consistency checking
     for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
         assert(length.halftrack[ht] >= 0);
-        assert(length.halftrack[ht] <= isizeof(data.halftrack[ht]) * 8);
+        assert(length.halftrack[ht] <= isize(sizeof(data.halftrack[ht])) * 8);
     }
 }
 

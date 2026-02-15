@@ -109,7 +109,7 @@ Memory::_didReset(bool hard)
         
         // Initialize color RAM with random numbers
         u32 seed = 0;
-        for (isize i = 0; i < isizeof(colorRam); i++) {
+        for (isize i = 0; i < isize(sizeof(colorRam)); i++) {
             
             seed = c64.random(seed);
             colorRam[i] = u8(seed);
@@ -158,11 +158,11 @@ Memory::eraseWithPattern(RamPattern pattern)
         case RamPattern::VICE:
             
             // $00 $00 $FF $FF $FF $FF $00 $00 ...
-            for (isize i = 0; i < isizeof(ram); i++)
+            for (usize i = 0; i < sizeof(ram); i++)
                 ram[i] = (i & 0x6) == 0x2 || (i & 0x6) == 0x4 ? 0xFF : 0x00;
             
             // In addition, the 2nd and 3rd 16K bank are inverted
-            for (isize i = 0; i < isizeof(ram); i++)
+            for (usize i = 0; i < sizeof(ram); i++)
                 ram[i] ^= (i & 0x4000) ? 0xFF : 0x00;
             
             break;
@@ -170,21 +170,21 @@ Memory::eraseWithPattern(RamPattern pattern)
         case RamPattern::CCS:
             
             // (64 x $FF) (64 x $00) ...
-            for (isize i = 0; i < isizeof(ram); i++)
+            for (usize i = 0; i < sizeof(ram); i++)
                 ram[i] = (i & 0x40) ? 0x00 : 0xFF;
             
             break;
             
         case RamPattern::ZEROES:
             
-            for (isize i = 0; i < isizeof(ram); i++)
+            for (usize i = 0; i < sizeof(ram); i++)
                 ram[i] = 0;
             
             break;
             
         case RamPattern::ONES:
             
-            for (isize i = 0; i < isizeof(ram); i++)
+            for (usize i = 0; i < sizeof(ram); i++)
                 ram[i] = 0xFF;
             
             break;
@@ -195,7 +195,7 @@ Memory::eraseWithPattern(RamPattern pattern)
             std::mt19937 gen(rd());
             std::uniform_int_distribution<> distrib(0, 0xFF);
             
-            for (isize i = 0; i < isizeof(ram); i++)
+            for (usize i = 0; i < sizeof(ram); i++)
                 ram[i] = (u8)distrib(gen);
             
             break;

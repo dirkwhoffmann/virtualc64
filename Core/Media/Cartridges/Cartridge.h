@@ -16,6 +16,7 @@
 #include "SubComponent.h"
 #include "CartridgeRom.h"
 #include "CRTFile.h"
+#include "utl/types/Literals.h"
 
 namespace vc64 {
 

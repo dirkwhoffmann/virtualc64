@@ -22,7 +22,7 @@ class Isepic final : public Cartridge {
 
         .type           = CartridgeType::ISEPIC,
         .title          = "Isepic",
-        .memory         = KB(2),
+        .memory         = 2_KB,
         .switches       = 1,
         .switchLeft     = "Off",
         .switchRight    = "On"

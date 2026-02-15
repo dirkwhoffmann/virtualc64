@@ -28,7 +28,7 @@ class GeoRAM final : public Cartridge {
             .battery    = true
         };
 
-        traits.memory = KB(kb);
+        traits.memory = kb << 10;
         return traits;
     }
 

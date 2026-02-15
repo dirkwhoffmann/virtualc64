@@ -12,8 +12,6 @@
 
 #pragma once
 
-#include "Macros.h"
-#include "Buffer.h"
 #include "utl/storage.h"
 #include "utl/abilities/Hashable.h"
 #include <concepts>

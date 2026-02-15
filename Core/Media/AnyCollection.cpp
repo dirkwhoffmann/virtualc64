@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "AnyCollection.h"
-#include "Macros.h"
 
 namespace vc64 {
 

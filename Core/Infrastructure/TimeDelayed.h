@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "Macros.h"
 #include "Serializable.h"
 #include <algorithm>
 

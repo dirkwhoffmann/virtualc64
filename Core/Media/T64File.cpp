@@ -13,7 +13,6 @@
 #include "config.h"
 #include "T64File.h"
 #include "FileSystem.h"
-#include "Macros.h"
 
 namespace vc64 {
 

@@ -23,7 +23,7 @@ class PageFox final : public Cartridge {
         .type       = CartridgeType::PAGEFOX,
         .title      = "Pagefox",
 
-        .memory     = KB(32)
+        .memory     = 32_KB
     };
 
     virtual const CartridgeTraits &getCartridgeTraits() const override { return traits; }

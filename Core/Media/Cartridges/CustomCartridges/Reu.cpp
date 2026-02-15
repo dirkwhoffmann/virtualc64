@@ -22,8 +22,8 @@ Reu::Reu(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
         throw AppError(Fault::OPT_INV_ARG, "128, 256, 512, ..., 16384");
     }
 
-    traits.memory = KB(kb);
-    setRamCapacity(KB(kb));
+    traits.memory = kb << 10;
+    setRamCapacity(kb << 10);
 }
 
 void
@@ -45,7 +45,7 @@ Reu::_didReset(bool hard)
 void
 Reu::_didLoad()
 {
-    traits.memory = KB(kb);
+    traits.memory = kb << 10;
 }
 
 void
@@ -288,14 +288,14 @@ Reu::pokeIO2(u16 addr, u8 value)
 
             switch (getRamCapacity()) {
 
-                case KB(128):   upperBankBits = 0; break;
-                case KB(256):   upperBankBits = 0; break;
-                case KB(512):   upperBankBits = 0; break;
-                case KB(1024):  upperBankBits = (value & 0b00001000) << 16; break;
-                case KB(2048):  upperBankBits = (value & 0b00011000) << 16; break;
-                case KB(4096):  upperBankBits = (value & 0b00111000) << 16; break;
-                case KB(8192):  upperBankBits = (value & 0b01111000) << 16; break;
-                case KB(16384): upperBankBits = (value & 0b11111000) << 16; break;
+                case 128_KB:   upperBankBits = 0; break;
+                case 256_KB:   upperBankBits = 0; break;
+                case 512_KB:   upperBankBits = 0; break;
+                case 1024_KB:  upperBankBits = (value & 0b00001000) << 16; break;
+                case 2048_KB:  upperBankBits = (value & 0b00011000) << 16; break;
+                case 4096_KB:  upperBankBits = (value & 0b00111000) << 16; break;
+                case 8192_KB:  upperBankBits = (value & 0b01111000) << 16; break;
+                case 16384_KB: upperBankBits = (value & 0b11111000) << 16; break;
 
                 default:
                     dump(Category::State);
@@ -419,7 +419,7 @@ Reu::floating(u32 addr) const
 
     switch (getRamCapacity()) {
 
-        case KB(256):   return (bank(addr) % 8) >= 4;
+        case 256_KB:    return (bank(addr) % 8) >= 4;
         default:        return false;
     }
 }
@@ -431,7 +431,7 @@ Reu::mapAddr(u32 addr) const
 
     switch (capacity) {
 
-        case KB(256):   return addr & 0x07FFFF;
+        case 256_KB:    return addr & 0x07FFFF;
         default:        return addr & (capacity - 1);
     }
 }

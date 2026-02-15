@@ -618,7 +618,6 @@
 		500EA6C624B09037009AA7D7 /* SubComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubComponent.h; sourceTree = "<group>"; };
 		500F7CC5281EAB64003F1A7C /* DiskCreator.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskCreator.xib; sourceTree = "<group>"; };
 		500FAA63261376C50062488E /* BasicTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicTypes.h; sourceTree = "<group>"; };
-		500FAA64261377050062488E /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		50157EEA28256035000E9DDD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		5016F02629574FDF00F2063B /* Reu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reu.cpp; sourceTree = "<group>"; };
@@ -1436,7 +1435,6 @@
 			children = (
 				5078BEA8264D6F9E00EDA161 /* CMakeLists.txt */,
 				500FAA63261376C50062488E /* BasicTypes.h */,
-				500FAA64261377050062488E /* Macros.h */,
 				500E34162615C40D006A38DA /* Parser.h */,
 				500E34152615C40D006A38DA /* Parser.cpp */,
 			);

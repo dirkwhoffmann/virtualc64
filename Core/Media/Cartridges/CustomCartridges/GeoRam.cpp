@@ -22,7 +22,7 @@ GeoRAM::GeoRAM(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
         throw AppError(Fault::OPT_INV_ARG, "64, 128, 256, ..., 4096");
     }
 
-    setRamCapacity(KB(kb));
+    setRamCapacity(kb << 10);
 }
 
 void

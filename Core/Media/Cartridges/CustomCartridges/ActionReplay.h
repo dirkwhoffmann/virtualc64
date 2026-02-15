@@ -13,10 +13,13 @@
 #pragma once
 
 #include "Cartridge.h"
+#include "utl/types/Literals.h"
 
 //
 // Action Replay (hardware version 3)
 //
+
+using namespace utl;
 
 namespace vc64 {
 
@@ -81,7 +84,7 @@ class ActionReplay : public Cartridge {
 
         .type       = CartridgeType::ACTION_REPLAY,
         .title      = "Action Replay",
-        .memory     = KB(8),
+        .memory     = 8_KB, //  KB(8),
         .buttons    = 2,
         .button1    = "Freeze",
         .button2    = "Reset"
@@ -144,7 +147,7 @@ class AtomicPower final : public ActionReplay {
 
         .type       = CartridgeType::ATOMIC_POWER,
         .title      = "Atomic Power",
-        .memory     = KB(8),
+        .memory     = 8_KB,
         .buttons    = 2,
         .button1    = "Freeze",
         .button2    = "Reset"

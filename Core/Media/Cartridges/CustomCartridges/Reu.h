@@ -225,9 +225,9 @@ public:
 
 public:
 
-    bool isREU1700() const { return getRamCapacity() == KB(128); }
-    bool isREU1764() const { return getRamCapacity() == KB(256); }
-    bool isREU1750() const { return getRamCapacity() >= KB(512); }
+    bool isREU1700() const { return getRamCapacity() == 128_KB; }
+    bool isREU1764() const { return getRamCapacity() == 256_KB; }
+    bool isREU1750() const { return getRamCapacity() >= 512_KB; }
 
     // Returns the bitmask of the REU address register
     u32 wrapMask() const { return isREU1700() ? 0x1FFFF : 0x7FFFF; }

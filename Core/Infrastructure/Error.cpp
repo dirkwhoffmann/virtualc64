@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Error.h"
-#include "Macros.h"
+#include "utl/hints.h"
 
 namespace vc64 {
 

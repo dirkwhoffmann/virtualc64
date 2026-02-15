@@ -59,7 +59,7 @@ Snapshot::isCompatible(const fs::path &path)
 bool
 Snapshot::isCompatible(const u8 *buf, isize len)
 {
-    if (len < isizeof(SnapshotHeader)) return false;
+    if (len < isize(sizeof(SnapshotHeader))) return false;
     return utl::matchingBufferHeader(buf, string("VC64"));
 }
 
