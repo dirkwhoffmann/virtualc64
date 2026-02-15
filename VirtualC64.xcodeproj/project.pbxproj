@@ -1102,7 +1102,6 @@
 		50AC256C2F41A8760016265E /* primitives.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = primitives.h; sourceTree = "<group>"; };
 		50AC256D2F41A8760016265E /* storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = storage.h; sourceTree = "<group>"; };
 		50AC256E2F41A8760016265E /* support.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = support.h; sourceTree = "<group>"; };
-		50AC256F2F41A8760016265E /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		50AC25702F41A8760016265E /* wrappers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrappers.h; sourceTree = "<group>"; };
 		50AC25732F41A8760016265E /* Compressible.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Compressible.cpp; sourceTree = "<group>"; };
 		50AC25742F41A8760016265E /* Dumpable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dumpable.cpp; sourceTree = "<group>"; };
@@ -2357,7 +2356,6 @@
 				50AC256C2F41A8760016265E /* primitives.h */,
 				50AC256D2F41A8760016265E /* storage.h */,
 				50AC256E2F41A8760016265E /* support.h */,
-				50AC256F2F41A8760016265E /* types.h */,
 				50AC25702F41A8760016265E /* wrappers.h */,
 			);
 			path = utl;
