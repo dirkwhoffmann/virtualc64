@@ -4,7 +4,6 @@ target_sources(VC64Core PRIVATE
 
   Buffer.cpp
   Compression.cpp
-  Concurrency.cpp
   MemUtils.cpp
   Checksum.cpp
   StringUtils.cpp

@@ -11,7 +11,7 @@
 
 #include "utl/abilities/Synchronizable.h"
 
-namespace utl::wrappers {
+namespace utl {
 
 template <typename T> class Cached : utl::Synchronizable {
 

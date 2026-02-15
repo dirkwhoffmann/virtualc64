@@ -12,7 +12,7 @@
 #include "utl/abilities/Synchronizable.h"
 #include <functional>
 
-namespace utl::wrappers {
+namespace utl {
 
 template <typename T> class Backed : utl::Synchronizable {
 

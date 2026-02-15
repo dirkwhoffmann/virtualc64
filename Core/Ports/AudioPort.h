@@ -16,7 +16,6 @@
 #include "SIDTypes.h"
 #include "SubComponent.h"
 #include "Animated.h"
-#include "Utilities/Animated.h" // DEPRECATED
 #include "AudioStream.h"
 #include "SampleRateDetector.h"
 
@@ -72,8 +71,8 @@ class AudioPort final : public SubComponent, public Inspectable<AudioPortInfo, A
     float pan[4] = { };
 
     // Master volumes (fadable)
-    util::Animated<float> volL;
-    util::Animated<float> volR;
+    utl::Animated<float> volL;
+    utl::Animated<float> volR;
 
     // Used to determine if Msg::MUTE should be send
     bool wasMuted = false;

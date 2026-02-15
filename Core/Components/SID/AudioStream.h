@@ -16,7 +16,6 @@
 #include "Concurrency.h"
 #include "RingBuffer.h"
 #include "utl/abilities/Synchronizable.h"
-#include "Utilities/Concurrency.h" // DEPRECATED
 #include "Utilities/RingBuffer.h" // DEPRECATED
 
 namespace vc64 {

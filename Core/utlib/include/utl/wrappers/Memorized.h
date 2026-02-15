@@ -11,7 +11,7 @@
 
 #include "utl/common.h"
 
-namespace utl::wrappers {
+namespace utl {
 
 template <typename T> class Memorized {
 
