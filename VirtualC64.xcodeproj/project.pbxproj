@@ -456,6 +456,8 @@
 		50AC25B22F41A8760016265E /* Formatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC257E2F41A8760016265E /* Formatter.cpp */; };
 		50AC25B52F420CF60016265E /* RSError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B42F420CF50016265E /* RSError.cpp */; };
 		50AC25B62F420CF60016265E /* RSError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B42F420CF50016265E /* RSError.cpp */; };
+		50AC25B92F4221780016265E /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B82F4221770016265E /* debug.cpp */; };
+		50AC25BA2F4221780016265E /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B82F4221770016265E /* debug.cpp */; };
 		50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerPort.cpp */; };
 		50AE19392632B787005A5898 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE19372632B787005A5898 /* Script.cpp */; };
 		50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
@@ -1123,6 +1125,8 @@
 		50AC258D2F41A8760016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50AC25B32F420CF00016265E /* RSError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSError.h; sourceTree = "<group>"; };
 		50AC25B42F420CF50016265E /* RSError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RSError.cpp; sourceTree = "<group>"; };
+		50AC25B72F42216E0016265E /* debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		50AC25B82F4221770016265E /* debug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = debug.cpp; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPort.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPort.h; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
@@ -1626,6 +1630,8 @@
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
 				504C42F824AF29AB00E69CAE /* config.h */,
 				5077AC672B5ACC5100EFAC85 /* config.cpp */,
+				50AC25B72F42216E0016265E /* debug.h */,
+				50AC25B82F4221770016265E /* debug.cpp */,
 				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
 				506F30452B768DE30083EAEA /* VirtualC64.h */,
 				506F30462B7692180083EAEA /* VirtualC64.cpp */,
@@ -2762,6 +2768,7 @@
 				50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */,
 				50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */,
+				50AC25BA2F4221780016265E /* debug.cpp in Sources */,
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
 				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
 				508C1E732C0C59A20097473C /* PaddleBase.cpp in Sources */,
@@ -3011,6 +3018,7 @@
 				5055D5B42615886E005D3DA6 /* Error.cpp in Sources */,
 				5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
+				50AC25B92F4221780016265E /* debug.cpp in Sources */,
 				505F45692E96963B00418105 /* DevicesSettings.swift in Sources */,
 				500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */,
 				50157EEB28256035000E9DDD /* Config.swift in Sources */,

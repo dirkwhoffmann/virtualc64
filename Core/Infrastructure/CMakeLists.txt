@@ -16,7 +16,6 @@ Inspectable.cpp
 MsgQueue.cpp
 Option.cpp
 SubComponent.cpp
-Synchronizable.cpp
 Thread.cpp
 Wakeable.cpp
 

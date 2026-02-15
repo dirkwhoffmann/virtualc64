@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include "debug.h"
+
 //
 // Release settings
 //
@@ -20,13 +22,13 @@
 static constexpr int VER_MAJOR      = 6;
 static constexpr int VER_MINOR      = 0;
 static constexpr int VER_SUBMINOR   = 0;
-static constexpr int VER_BETA       = 1;
+static constexpr int VER_BETA       = 2;
 
 // Snapshot version number
 static constexpr int SNP_MAJOR      = 6;
 static constexpr int SNP_MINOR      = 0;
 static constexpr int SNP_SUBMINOR   = 0;
-static constexpr int SNP_BETA       = 1;
+static constexpr int SNP_BETA       = 2;
 
 
 //
