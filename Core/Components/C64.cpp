@@ -257,7 +257,7 @@ C64::prefix(LogLevel level, const std::source_location &loc) const
         if constexpr (verbosity >= 3) {
             char buffer[64];
             std::snprintf(buffer, sizeof(buffer),
-                          "[%d] (%3d,%3d) ",
+                          "[%llu] (%3d,%3d) ",
                           frame, scanline, rasterCycle);
             result += buffer;
         }

@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "Snapshot.h"
+#include "MediaError.h"
 #include "C64.h"
 
 namespace vc64 {
@@ -102,13 +103,13 @@ Snapshot::Snapshot(C64 &c64, Compressor compressor) : Snapshot(c64)
 void
 Snapshot::finalizeRead()
 {
-    if (FORCE_SNAP_TOO_OLD) throw AppError(Fault::SNAP_TOO_OLD);
-    if (FORCE_SNAP_TOO_NEW) throw AppError(Fault::SNAP_TOO_NEW);
-    if (FORCE_SNAP_IS_BETA) throw AppError(Fault::SNAP_IS_BETA);
+    if (force::SNAP_TOO_OLD) throw MediaError(MediaError::SNAP_TOO_OLD);
+    if (force::SNAP_TOO_NEW) throw MediaError(MediaError::SNAP_TOO_NEW);
+    if (force::SNAP_IS_BETA) throw MediaError(MediaError::SNAP_IS_BETA);
 
-    if (isTooOld()) throw AppError(Fault::SNAP_TOO_OLD);
-    if (isTooNew()) throw AppError(Fault::SNAP_TOO_NEW);
-    if (isBeta() && !betaRelease) throw AppError(Fault::SNAP_IS_BETA);
+    if (isTooOld()) throw MediaError(MediaError::SNAP_TOO_OLD);
+    if (isTooNew()) throw MediaError(MediaError::SNAP_TOO_NEW);
+    if (isBeta() && !betaRelease) throw MediaError(MediaError::SNAP_IS_BETA);
 }
 
 std::pair <isize,isize> 

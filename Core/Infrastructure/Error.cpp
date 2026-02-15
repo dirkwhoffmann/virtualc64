@@ -181,26 +181,6 @@ AppError::AppError(Fault code, const string &s)
             description = "Mega65 Rom revisions do not match.";
             break;
 
-        case Fault::SNAP_TOO_OLD:
-            description = "The snapshot was created with an older version of VirtualC64";
-            description += " and is incompatible with this release.";
-            break;
-
-        case Fault::SNAP_TOO_NEW:
-            description = "The snapshot was created with a newer version of VirtualC64";
-            description += " and is incompatible with this release.";
-            break;
-
-        case Fault::SNAP_IS_BETA:
-            description = "The snapshot was created with a beta version of VirtualC64";
-            description += " and is incompatible with this release.";
-            break;
-
-        case Fault::SNAP_CORRUPTED:
-            description = "The snapshot data is corrupted and has put the";
-            description += " emulator into an inconsistent state.";
-            break;
-
         case Fault::DRV_UNCONNECTED:
             description = "Drive is unconnected.";
             break;

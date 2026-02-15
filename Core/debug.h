@@ -108,17 +108,17 @@ constexpr long DAP_DEBUG       = 0;
 
 namespace utl::force {
 
-constexpr long FORCE_LAUNCH_ERROR             = 0;
-constexpr long FORCE_ROM_MISSING              = 0;
-constexpr long FORCE_MEGA64_MISMATCH          = 0;
-constexpr long FORCE_SNAP_TOO_OLD             = 0;
-constexpr long FORCE_SNAP_TOO_NEW             = 0;
-constexpr long FORCE_SNAP_IS_BETA             = 0;
-constexpr long FORCE_SNAP_CORRUPTED           = 0;
-constexpr long FORCE_CRT_UNKNOWN              = 0;
-constexpr long FORCE_CRT_UNSUPPORTED          = 0;
-constexpr long FORCE_RECORDING_ERROR          = 0;
-constexpr long FORCE_ZLIB_ERROR               = 0;
+constexpr long LAUNCH_ERROR     = 0;
+constexpr long ROM_MISSING      = 0;
+constexpr long MEGA64_MISMATCH  = 0;
+constexpr long SNAP_TOO_OLD     = 0;
+constexpr long SNAP_TOO_NEW     = 0;
+constexpr long SNAP_IS_BETA     = 0;
+constexpr long SNAP_CORRUPTED   = 0;
+constexpr long CRT_UNKNOWN      = 0;
+constexpr long CRT_UNSUPPORTED  = 0;
+constexpr long RECORDING_ERROR  = 0;
+constexpr long ZLIB_ERROR       = 0;
 
 }
 

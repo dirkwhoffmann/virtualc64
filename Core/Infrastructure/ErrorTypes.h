@@ -70,11 +70,13 @@ enum class Fault : long
     ROM_MEGA65_MISMATCH,  ///< MEGA65 Roms have different version numbers
 
     // Snapshots
+    /*
     SNAP_TOO_OLD,         ///< Snapshot was created with an older version
     SNAP_TOO_NEW,         ///< Snapshot was created with a later version
     SNAP_IS_BETA,         ///< Snapshot was created with a beta release
     SNAP_CORRUPTED,       ///< Snapshot data is corrupted
-
+    */
+    
     // Drives
     DRV_UNCONNECTED,      ///< Floppy drive is not connected
     DRV_NO_DISK,          ///< Floppy drive contains no disk
@@ -180,11 +182,13 @@ struct FaultEnum : Reflectable<FaultEnum, Fault> {
             case Fault::ROM_DRIVE_MISSING:       return "ROM_DRIVE_MISSING";
             case Fault::ROM_MEGA65_MISMATCH:     return "ROM_MEGA65_MISMATCH";
 
+                /*
             case Fault::SNAP_TOO_OLD:            return "SNAP_TOO_OLD";
             case Fault::SNAP_TOO_NEW:            return "SNAP_TOO_NEW";
             case Fault::SNAP_IS_BETA:		     return "SNAP_IS_BETA";
             case Fault::SNAP_CORRUPTED:		     return "SNAP_CORRUPTED";
-
+                 */
+                
             case Fault::DRV_UNCONNECTED:         return "DRV_UNCONNECTED";
             case Fault::DRV_NO_DISK:             return "DRV_NO_DISK";
 
