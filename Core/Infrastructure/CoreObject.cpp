@@ -13,6 +13,7 @@
 #include "config.h"
 #include "CoreObject.h"
 #include <iostream>
+#include <format>
 
 namespace vc64 {
 

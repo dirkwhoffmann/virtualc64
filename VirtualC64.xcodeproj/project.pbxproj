@@ -456,6 +456,10 @@
 		50AC25B62F420CF60016265E /* RSError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B42F420CF50016265E /* RSError.cpp */; };
 		50AC25B92F4221780016265E /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B82F4221770016265E /* debug.cpp */; };
 		50AC25BA2F4221780016265E /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B82F4221770016265E /* debug.cpp */; };
+		50AC25BF2F4257980016265E /* CoreError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25BE2F4257970016265E /* CoreError.cpp */; };
+		50AC25C02F4257980016265E /* CoreError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25BE2F4257970016265E /* CoreError.cpp */; };
+		50AC25C32F425DD20016265E /* MediaError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25C22F425DD10016265E /* MediaError.cpp */; };
+		50AC25C42F425DD20016265E /* MediaError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25C22F425DD10016265E /* MediaError.cpp */; };
 		50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerPort.cpp */; };
 		50AE19392632B787005A5898 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE19372632B787005A5898 /* Script.cpp */; };
 		50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
@@ -1123,6 +1127,10 @@
 		50AC25B72F42216E0016265E /* debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
 		50AC25B82F4221770016265E /* debug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = debug.cpp; sourceTree = "<group>"; };
 		50AC25BB2F424BD90016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC25BD2F4257900016265E /* CoreError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreError.h; sourceTree = "<group>"; };
+		50AC25BE2F4257970016265E /* CoreError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CoreError.cpp; sourceTree = "<group>"; };
+		50AC25C12F425DC80016265E /* MediaError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaError.h; sourceTree = "<group>"; };
+		50AC25C22F425DD10016265E /* MediaError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MediaError.cpp; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPort.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPort.h; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
@@ -1737,6 +1745,8 @@
 				50B1A61A25A20A8900201A2C /* MediaFileTypes.h */,
 				50CCC8002C117ACF0047ED17 /* MediaFile.h */,
 				50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */,
+				50AC25C12F425DC80016265E /* MediaError.h */,
+				50AC25C22F425DD10016265E /* MediaError.cpp */,
 				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CE24AF29AB00E69CAE /* AnyFile.h */,
 				504C42D624AF29AB00E69CAE /* AnyFile.cpp */,
@@ -2126,6 +2136,8 @@
 				506F30392B729CE80083EAEA /* Emulator.h */,
 				506F30382B729CE80083EAEA /* Emulator.cpp */,
 				50A2D7AE24AF944500671F38 /* Constants.h */,
+				50AC25BD2F4257900016265E /* CoreError.h */,
+				50AC25BE2F4257970016265E /* CoreError.cpp */,
 				50E17E242B8B26EB0029747D /* OptionTypes.h */,
 				50E17E232B8B26D70029747D /* Option.h */,
 				50E17E1F2B8B26AC0029747D /* Option.cpp */,
@@ -2763,6 +2775,7 @@
 				50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */,
 				50AC25BA2F4221780016265E /* debug.cpp in Sources */,
+				50AC25BF2F4257980016265E /* CoreError.cpp in Sources */,
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
 				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
 				508C1E732C0C59A20097473C /* PaddleBase.cpp in Sources */,
@@ -2781,6 +2794,7 @@
 				500375072C23F26000979A1B /* C64Base.cpp in Sources */,
 				508C1E642C0B5EE80097473C /* KeyboardBase.cpp in Sources */,
 				50726F992961CA0D0031F2F5 /* MagicDesk.cpp in Sources */,
+				50AC25C42F425DD20016265E /* MediaError.cpp in Sources */,
 				50726F9B2961CA0D0031F2F5 /* Mach5.cpp in Sources */,
 				50726FB22961CA230031F2F5 /* FSDescriptors.cpp in Sources */,
 				5077AC692B5ACC5100EFAC85 /* config.cpp in Sources */,
@@ -2943,6 +2957,7 @@
 				50AC259C2F41A8760016265E /* Streams.cpp in Sources */,
 				50AC259D2F41A8760016265E /* Strings.cpp in Sources */,
 				50AC259E2F41A8760016265E /* Bits.cpp in Sources */,
+				50AC25C02F4257980016265E /* CoreError.cpp in Sources */,
 				50AC259F2F41A8760016265E /* Formatter.cpp in Sources */,
 				504C436624AF29AC00E69CAE /* Kcs.cpp in Sources */,
 				5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */,
@@ -3018,6 +3033,7 @@
 				508C1E632C0B5EE80097473C /* KeyboardBase.cpp in Sources */,
 				501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */,
 				50AC25B62F420CF60016265E /* RSError.cpp in Sources */,
+				50AC25C32F425DD20016265E /* MediaError.cpp in Sources */,
 				5003382B266F7F3C00D5456E /* VICIITable.cpp in Sources */,
 				50CCC8012C117ACF0047ED17 /* MediaFile.cpp in Sources */,
 				504C438324AF29AC00E69CAE /* CoreComponent.cpp in Sources */,

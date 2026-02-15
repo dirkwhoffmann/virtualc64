@@ -5,6 +5,7 @@ target_sources(VC64Core PRIVATE
 CmdQueue.cpp
 Colors.cpp
 Configurable.cpp
+CoreError.cpp
 CoreObject.cpp
 CoreComponent.cpp
 Defaults.cpp
