@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -30,7 +30,7 @@ enum class PaddleOrientation : long
     VERTICAL_FLIPPED     ///< Vertical, reverse direction
 };
 
-struct PaddleOrientationEnum : Reflection<PaddleOrientationEnum, PaddleOrientation> {
+struct PaddleOrientationEnum : Reflectable<PaddleOrientationEnum, PaddleOrientation> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(PaddleOrientation::VERTICAL_FLIPPED);

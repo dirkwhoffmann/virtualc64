@@ -67,7 +67,7 @@ enum class CIAReg : long
     CRB
 };
 
-struct CIARegEnum : Reflection<CIARegEnum, CIAReg> {
+struct CIARegEnum : Reflectable<CIARegEnum, CIAReg> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CIAReg::CRB);

@@ -59,7 +59,7 @@ enum class FSFileType : long
     REL
 };
 
-struct FSFileTypeEnum : Reflection<FSFileTypeEnum, FSFileType> {
+struct FSFileTypeEnum : Reflectable<FSFileTypeEnum, FSFileType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FSFileType::REL);
@@ -92,7 +92,7 @@ enum class FSBlockType : long
     DATA
 };
 
-struct FSBlockTypeEnum : Reflection<FSBlockTypeEnum, FSBlockType> {
+struct FSBlockTypeEnum : Reflectable<FSBlockTypeEnum, FSBlockType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FSBlockType::DATA);
@@ -142,7 +142,7 @@ enum class FSUsage
     DATA
 };
 
-struct FSUsageEnum : Reflection<FSUsageEnum, FSUsage> {
+struct FSUsageEnum : Reflectable<FSUsageEnum, FSUsage> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FSUsage::DATA);

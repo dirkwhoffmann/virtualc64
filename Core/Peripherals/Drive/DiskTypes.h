@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "Reflection.h"
 #include "Serializable.h"
 #include "DriveTypes.h"
 
@@ -115,7 +114,7 @@ enum class DiskType : long
     DS_SD    ///< Double-sided, single density (VC1571) (unsupported)
 };
 
-struct DiskTypeEnum : Reflection<DiskTypeEnum, DiskType> {
+struct DiskTypeEnum : Reflectable<DiskTypeEnum, DiskType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DiskType::DS_SD);
@@ -144,7 +143,7 @@ enum class CBMFileType
     REL
 };
 
-struct CBMFileTypeEnum : Reflection<CBMFileTypeEnum, CBMFileType> {
+struct CBMFileTypeEnum : Reflectable<CBMFileTypeEnum, CBMFileType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CBMFileType::REL);

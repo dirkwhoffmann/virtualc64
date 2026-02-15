@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -39,7 +39,7 @@ enum class GamePadAction : long
     RELEASE_RIGHT  ///< Release the right mouse button
 };
 
-struct GamePadActionEnum : Reflection<GamePadActionEnum, GamePadAction> {
+struct GamePadActionEnum : Reflectable<GamePadActionEnum, GamePadAction> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(GamePadAction::RELEASE_RIGHT);

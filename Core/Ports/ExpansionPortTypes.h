@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -30,7 +30,7 @@ enum class CRTMode : long
     OFF         //! No cartridge
 };
 
-struct CRTModeEnum : Reflection<CRTModeEnum, CRTMode> {
+struct CRTModeEnum : Reflectable<CRTModeEnum, CRTMode> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CRTMode::OFF);

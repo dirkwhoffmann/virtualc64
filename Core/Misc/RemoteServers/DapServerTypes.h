@@ -56,7 +56,7 @@ static const std::unordered_map<std::string, Type> stringToType = {
 };
 */
 
-struct TypeEnum : Reflection<TypeEnum, Type>
+struct TypeEnum : Reflectable<TypeEnum, Type>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Type::EVENT);
@@ -90,7 +90,7 @@ enum class Command : long
     setBreakpoints
 };
 
-struct CommandEnum : Reflection<CommandEnum, Command>
+struct CommandEnum : Reflectable<CommandEnum, Command>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Command::setBreakpoints);

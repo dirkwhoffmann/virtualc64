@@ -248,7 +248,7 @@ Console::lastLineIsEmpty()
 void
 Console::press(RSKey key, bool shift)
 {
-    assert_enum(RSKey, key);
+    assert(RSKeyEnum::isValid(key));
     assert(cursor >= 0 && cursor <= inputLength());
 
     switch(key) {

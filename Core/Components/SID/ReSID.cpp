@@ -193,7 +193,7 @@ ReSID::getRevision() const
 void
 ReSID::setRevision(SIDRevision revision)
 {
-    assert_enum(SIDRevision, revision);
+    assert(SIDRevisionEnum::isValid(revision));
 
     if (model != revision) {
 

@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -28,48 +28,6 @@ typedef i64 Cycle;
 // Enumerations
 //
 
-/*
-enum class Compressor : long
-{
-    NONE,
-    GZIP,
-    LZ4,
-    RLE2,
-    RLE3
-};
-
-struct CompressorEnum : Reflection<CompressorEnum, Compressor>
-{
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = long(Compressor::RLE3);
-
-    static const char *_key(Compressor value)
-    {
-        switch (value) {
-
-            case Compressor::NONE:  return "NONE";
-            case Compressor::GZIP:  return "GZIP";
-            case Compressor::RLE2:  return "RLE2";
-            case Compressor::RLE3:  return "RLE3";
-            case Compressor::LZ4:   return "LZ4";
-        }
-        return "???";
-    }
-    static const char *help(Compressor value)
-    {
-        switch (value) {
-
-            case Compressor::NONE:  return "No compression";
-            case Compressor::GZIP:  return "Gzip compression";
-            case Compressor::RLE2:  return "Run-length encoding (2)";
-            case Compressor::RLE3:  return "Run-length encoding (3)";
-            case Compressor::LZ4:   return "LZ4 compression";
-        }
-        return "???";
-    }
-};
-*/
-
 /// C64 model
 enum class ConfigScheme : long
 {
@@ -81,7 +39,7 @@ enum class ConfigScheme : long
     NTSC_OLD  ///< Early C64 (NTSC)
 };
 
-struct ConfigSchemeEnum : Reflection<ConfigSchemeEnum, ConfigScheme> {
+struct ConfigSchemeEnum : Reflectable<ConfigSchemeEnum, ConfigScheme> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ConfigScheme::NTSC_OLD);
@@ -113,7 +71,7 @@ enum class Warp : long
     ALWAYS
 };
 
-struct WarpEnum : Reflection<WarpEnum, Warp>
+struct WarpEnum : Reflectable<WarpEnum, Warp>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Warp::ALWAYS);
@@ -166,7 +124,7 @@ enum EventSlot : long
 };
 // typedef SLOT EventSlot;
 
-struct EventSlotEnum : Reflection<EventSlotEnum, EventSlot>
+struct EventSlotEnum : Reflectable<EventSlotEnum, EventSlot>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = SLOT_COUNT - 1;

@@ -132,7 +132,7 @@ Disk::init(const fs::path &path, bool wp)
 void
 Disk::init(DOSType type, PETName<16> name, bool wp)
 {
-    assert_enum(DOSType, type);
+    assert(DOSTypeEnum::isValid(type));
     
     if (type == DOSType::CBM) {
         

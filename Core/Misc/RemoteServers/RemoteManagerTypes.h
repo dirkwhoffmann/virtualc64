@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "Reflection.h"
 #include "RemoteServerTypes.h"
 
 namespace vc64 {
@@ -29,7 +28,7 @@ enum class ServerType : long
     PROM
 };
 
-struct ServerTypeEnum : Reflection<ServerTypeEnum, ServerType>
+struct ServerTypeEnum : Reflectable<ServerTypeEnum, ServerType>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ServerType::PROM);

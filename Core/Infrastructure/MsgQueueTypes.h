@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -124,7 +124,7 @@ enum class Msg : long
     SRV_SEND
 };
 
-struct MsgEnum : Reflection<MsgEnum, Msg> {
+struct MsgEnum : Reflectable<MsgEnum, Msg> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Msg::SRV_SEND);

@@ -47,7 +47,7 @@ C64::build()
 const char *
 C64::eventName(EventSlot slot, EventID id)
 {
-    assert_enum(EventSlot, slot);
+    assert(EventSlotEnum::isValid(slot));
 
     switch (slot) {
 
@@ -488,7 +488,7 @@ C64::set(const string &opt, const string &value, const std::vector<isize> objids
 void
 C64::set(ConfigScheme scheme)
 {
-    assert_enum(ConfigScheme, scheme);
+    assert(ConfigSchemeEnum::isValid(scheme));
     
     emulator.revertToDefaultConfig();
     

@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -37,7 +37,7 @@ enum class ControlPortDevice
     JOYSTICK   ///< Joystick
 };
 
-struct ControlPortDeviceEnum : Reflection<ControlPortDeviceEnum, ControlPortDevice> {
+struct ControlPortDeviceEnum : Reflectable<ControlPortDeviceEnum, ControlPortDevice> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ControlPortDevice::JOYSTICK);

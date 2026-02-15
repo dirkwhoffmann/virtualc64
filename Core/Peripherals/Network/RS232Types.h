@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -29,7 +29,7 @@ enum class CommunicationDevice : long
     COMMANDER
 };
 
-struct CommunicationDeviceEnum : Reflection<CommunicationDeviceEnum, CommunicationDevice>
+struct CommunicationDeviceEnum : Reflectable<CommunicationDeviceEnum, CommunicationDevice>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CommunicationDevice::COMMANDER);

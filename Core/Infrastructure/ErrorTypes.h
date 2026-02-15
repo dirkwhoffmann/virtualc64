@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -128,7 +128,7 @@ enum class Fault : long
     COUNT
 };
 
-struct FaultEnum : Reflection<FaultEnum, Fault> {
+struct FaultEnum : Reflectable<FaultEnum, Fault> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Fault::FS_EXPECTED_MAX);

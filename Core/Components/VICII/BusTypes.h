@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -28,7 +28,7 @@ enum class MemAccess : long
     COUNT
 };
 
-struct MemAccessEnum : Reflection<MemAccessEnum, MemAccess> {
+struct MemAccessEnum : Reflectable<MemAccessEnum, MemAccess> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(MemAccess::S);

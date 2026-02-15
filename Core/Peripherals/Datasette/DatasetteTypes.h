@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -27,7 +27,7 @@ enum class DatasetteModel
     C1530     ///< Standard datasette (Commodore)
 };
 
-struct DatasetteModelEnum : Reflection<DatasetteModelEnum, DatasetteModel> {
+struct DatasetteModelEnum : Reflectable<DatasetteModelEnum, DatasetteModel> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DatasetteModel::C1530);

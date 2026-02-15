@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -32,7 +32,7 @@ enum class MouseModel : long
     PADDLE_XY ///< Paddle (POTX + POTX)
 };
 
-struct MouseModelEnum : Reflection<MouseModelEnum, MouseModel> {
+struct MouseModelEnum : Reflectable<MouseModelEnum, MouseModel> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(MouseModel::PADDLE_XY);

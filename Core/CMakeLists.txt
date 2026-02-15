@@ -64,7 +64,6 @@ add_subdirectory(FileSystems)
 add_subdirectory(Media)
 add_subdirectory(Misc)
 add_subdirectory(Peripherals)
-add_subdirectory(ThirdParty)
 
 # Add libraries
 set(THREADS_PREFER_PTHREAD_FLAG ON)

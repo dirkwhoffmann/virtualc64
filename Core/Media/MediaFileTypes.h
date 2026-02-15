@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -41,7 +41,7 @@ enum class FileType : long
     VC1541_ROM
 };
 
-struct FileTypeEnum : Reflection<FileTypeEnum, FileType> {
+struct FileTypeEnum : Reflectable<FileTypeEnum, FileType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FileType::VC1541_ROM);
@@ -82,7 +82,7 @@ enum class TAPVersion : long
     ADVANCED
 };
 
-struct TAPVersionEnum : Reflection<TAPVersionEnum, TAPVersion> {
+struct TAPVersionEnum : Reflectable<TAPVersionEnum, TAPVersion> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(TAPVersion::ADVANCED);

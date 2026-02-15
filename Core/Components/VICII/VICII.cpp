@@ -146,7 +146,7 @@ VICII::updateRevision()
 void
 VICII::setRevision(VICIIRev revision)
 {
-    assert_enum(VICIIRev, revision);
+    assert(VICIIRevEnum::isValid(revision));
 
     /* Changing the VICII revision is only allowed in certain emulator states.
      * If the emulator is powered off, the operation is harmless and can be

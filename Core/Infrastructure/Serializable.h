@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "BasicTypes.h"
 #include "utl/storage.h"
 #include "utl/abilities/Hashable.h"
 #include <concepts>

@@ -13,7 +13,6 @@
 
 #pragma once
 
-#include "Reflection.h"
 #include "BusTypes.h"
 
 namespace vc64 {
@@ -30,7 +29,7 @@ enum class DmaDisplayMode : long
     ODD_EVEN_LAYERS
 };
 
-struct DmaDisplayModeEnum : Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
+struct DmaDisplayModeEnum : Reflectable<DmaDisplayModeEnum, DmaDisplayMode> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DmaDisplayMode::ODD_EVEN_LAYERS);

@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -107,7 +107,7 @@ enum class CartridgeType : long
     NONE
 };
 
-struct CartridgeTypeEnum : Reflection<CartridgeTypeEnum, CartridgeType> {
+struct CartridgeTypeEnum : Reflectable<CartridgeTypeEnum, CartridgeType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CartridgeType::NONE);
@@ -222,7 +222,7 @@ enum class FlashState : long
     SECTOR_ERASE_SUSPEND
 };
 
-struct FlashStateEnum : Reflection<FlashStateEnum, FlashState> {
+struct FlashStateEnum : Reflectable<FlashStateEnum, FlashState> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FlashState::SECTOR_ERASE_SUSPEND);

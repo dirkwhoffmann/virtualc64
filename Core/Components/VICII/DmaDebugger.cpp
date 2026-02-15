@@ -24,7 +24,7 @@ DmaDebugger::DmaDebugger(C64 &ref) : SubComponent(ref)
 void
 DmaDebugger::setDmaDebugColor(MemAccess type, GpuColor color)
 {
-    assert_enum(MemAccess, type);
+    assert(MemAccessEnum::isValid(type));
     
     auto channel = (long)type;
     config.dmaColor[channel] = color.abgr;

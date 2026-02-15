@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -30,7 +30,7 @@ enum class PowerGrid : long
     UNSTABLE_60HZ  ///< 60Hz with jitter
 };
 
-struct PowerGridEnum : Reflection<PowerGridEnum, PowerGrid> {
+struct PowerGridEnum : Reflectable<PowerGridEnum, PowerGrid> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(PowerGrid::UNSTABLE_60HZ);

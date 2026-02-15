@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 
 namespace vc64 {
 
@@ -29,7 +29,7 @@ enum ParCableType : long
     DOLPHIN3      ///< DolphinDOS cable
 };
 
-struct ParCableTypeEnum : Reflection<ParCableTypeEnum, ParCableType> {
+struct ParCableTypeEnum : Reflectable<ParCableTypeEnum, ParCableType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ParCableType::DOLPHIN3);

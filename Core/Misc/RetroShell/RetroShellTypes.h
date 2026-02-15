@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "Reflection.h"
+#include "BasicTypes.h"
 #include <future>
 
 namespace vc64 {
@@ -41,7 +41,7 @@ enum class RSKey
     CR
 };
 
-struct RSKeyEnum : Reflection<RSKeyEnum, RSKey>
+struct RSKeyEnum : Reflectable<RSKeyEnum, RSKey>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(RSKey::CR);
