@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "RemoteManager.h"
-#include "IOUtils.h"
 #include "C64.h"
 
 namespace vc64 {

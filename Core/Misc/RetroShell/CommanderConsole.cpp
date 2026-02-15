@@ -289,7 +289,7 @@ CommanderConsole::initCommands(RSCommand &root)
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             auto path = host.makeAbsolute(args.at("path"));
-            if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
+            if (!utl::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
 
             auto file = PRGFile(path);
             c64.flash(file, 0);
@@ -610,7 +610,7 @@ CommanderConsole::initCommands(RSCommand &root)
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
                 auto path = host.makeAbsolute(args.at("path"));
-                if (!util::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
+                if (!utl::fileExists(path)) throw AppError(Fault::FILE_NOT_FOUND, path);
 
                 auto &drive = values.front() ? drive9 : drive8;
                 drive.insertDisk(path, false);

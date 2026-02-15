@@ -13,14 +13,15 @@
 #include "config.h"
 #include "P00File.h"
 #include "FileSystem.h"
-#include "IOUtils.h"
+#include "utl/io/Files.h"
+#include "utl/support/Strings.h"
 
 namespace vc64 {
 
 bool
 P00File::isCompatible(const fs::path &path)
 {
-    auto s = util::uppercased(path.extension().string());
+    auto s = utl::uppercased(path.extension().string());
     return s == ".P00";
 }
 
@@ -30,7 +31,7 @@ P00File::isCompatible(const u8 *buf, isize len)
     const u8 magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
 
     if (len < 0x1A) return false;
-    return util::matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
+    return utl::matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
 }
 
 bool

@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "ControlPort.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 

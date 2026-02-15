@@ -19,7 +19,7 @@ namespace vc64 {
 bool
 Folder::isCompatible(const fs::path &path)
 {
-    return util::isDirectory(path);
+    return utl::isDirectory(path);
 }
 
 void

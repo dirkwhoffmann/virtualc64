@@ -15,7 +15,6 @@
 #include "DapAdapter.h"
 #include "Emulator.h"
 #include "CPU.h"
-#include "IOUtils.h"
 #include "Memory.h"
 #include "MsgQueue.h"
 #include "RetroShell.h"
@@ -116,8 +115,8 @@ DapServer::didReceive(const string &cmd)
     string jsonStr = cmd.substr(messageStart, contentLength);
 
     if (config.verbose) {
-        retroShell << "R: " << util::makePrintable(jsonStr) << "\n";
-        printf("R: %s\n", util::makePrintable(jsonStr).c_str());
+        retroShell << "R: " << utl::makePrintable(jsonStr) << "\n";
+        printf("R: %s\n", utl::makePrintable(jsonStr).c_str());
     }
 
     try {
@@ -143,7 +142,7 @@ DapServer::reply(const string &payload)
     std::stringstream ss;
 
     ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
-    printf("T: %s\n", util::makePrintable(payload).c_str());
+    printf("T: %s\n", utl::makePrintable(payload).c_str());
 
     *this << ss.str();
 }

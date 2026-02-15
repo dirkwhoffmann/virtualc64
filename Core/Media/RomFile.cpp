@@ -13,7 +13,6 @@
 #include "config.h"
 #include "RomFile.h"
 #include "C64.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 
@@ -84,7 +83,7 @@ RomFile::isRomBuffer(RomType type, const u8 *buf, isize len)
         if (signatures[i].size != len) continue;
 
         // Only proceed if the matches bytes matche
-        if (!util::matchingBufferHeader(buf, magic, 3, offset)) continue;
+        if (!utl::matchingBufferHeader(buf, magic, 3, offset)) continue;
 
         return true;
     }

@@ -1417,13 +1417,13 @@ NSString *EventSlotName(EventSlot slot)
 
 - (NSString *)capacityString
 {
-    auto str = util::byteCountAsString([self fs]->getNumBytes());
+    auto str = utl::byteCountAsString([self fs]->getNumBytes());
     return @(str.c_str());
 }
 
 - (NSString *)fillLevelString
 {
-    auto str = util::fillLevelAsString([self fs]->fillLevel());
+    auto str = utl::fillLevelAsString([self fs]->fillLevel());
     return @(str.c_str());
 }
 

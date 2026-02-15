@@ -13,7 +13,6 @@
 #include "config.h"
 #include "Drive.h"
 #include "Emulator.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 

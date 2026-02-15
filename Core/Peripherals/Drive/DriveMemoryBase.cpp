@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "DriveMemory.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 
@@ -57,8 +56,8 @@ DriveMemory::_dump(Category category, std::ostream &os) const
             DrvMemType newsrc = i < 64 ? usage[i] : (DrvMemType)-1;
             if (oldsrc != newsrc) {
                 os << "        ";
-                os << util::hex((u16)(oldi << 10)) << " - ";
-                os << util::hex((u16)((i << 10) - 1)) << " : ";
+                os << utl::hex((u16)(oldi << 10)) << " - ";
+                os << utl::hex((u16)((i << 10) - 1)) << " : ";
                 os << DrvMemTypeEnum::key(oldsrc) << std::endl;
                 oldsrc = newsrc; oldi = i;
             }

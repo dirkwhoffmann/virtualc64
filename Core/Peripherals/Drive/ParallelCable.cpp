@@ -13,7 +13,6 @@
 #include "config.h"
 #include "ParallelCable.h"
 #include "C64.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 

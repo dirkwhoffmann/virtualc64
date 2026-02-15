@@ -13,14 +13,13 @@
 #include "config.h"
 #include "G64File.h"
 #include "Disk.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 
 bool
 G64File::isCompatible(const fs::path &path)
 {
-    auto s = util::uppercased(path.extension().string());
+    auto s = utl::uppercased(path.extension().string());
     return s == ".G64";
 }
 
@@ -31,7 +30,7 @@ G64File::isCompatible(const u8 *buf, isize len)
     const u8 magicBytes[] = { 'G', 'C', 'R', '-', '1', '5', '4', '1' };
 
     if (len < 0x2AC) return false;
-    return util::matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
+    return utl::matchingBufferHeader(buf, magicBytes, sizeof(magicBytes));
 }
 
 bool

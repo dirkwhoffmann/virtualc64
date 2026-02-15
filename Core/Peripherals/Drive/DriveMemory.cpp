@@ -14,7 +14,6 @@
 #include "DriveMemory.h"
 #include "Emulator.h"
 #include "utl/abilities/Hashable.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 

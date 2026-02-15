@@ -14,7 +14,6 @@
 #include "Keyboard.h"
 #include "C64.h"
 #include "C64Key.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 

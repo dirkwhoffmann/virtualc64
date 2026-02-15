@@ -13,7 +13,6 @@
 #include "config.h"
 #include "FileSystem.h"
 #include "Disk.h"
-#include "IOUtils.h"
 #include "Folder.h"
 #include "PRGFile.h"
 #include "P00File.h"
@@ -786,7 +785,7 @@ FileSystem::ascii(Block nr, isize offset, isize len) const
     assert(isBlockNumber(nr));
     assert(offset + len <= 256);
 
-    return util::createAscii(blocks[nr]->data + offset, len);
+    return utl::createAscii(blocks[nr]->data + offset, len);
     // return string(len, '.');
 }
 
@@ -923,17 +922,17 @@ void
 FileSystem::exportDirectory(const fs::path &path, bool createDir)
 {
     // Try to create the directory if it doesn't exist
-    if (!util::isDirectory(path) && createDir && !util::createDirectory(path)) {
+    if (!utl::isDirectory(path) && createDir && !utl::createDirectory(path)) {
         throw AppError(Fault::DIR_CANT_CREATE);
     }
 
     // Only proceed if the directory exists
-    if (!util::isDirectory(path)) {
+    if (!utl::isDirectory(path)) {
         throw AppError(Fault::DIR_NOT_FOUND);
     }
 
     // Only proceed if path points to an empty directory
-    if (util::numDirectoryItems(path) != 0) {
+    if (utl::numDirectoryItems(path) != 0) {
         throw AppError(Fault::DIR_NOT_EMPTY, path);
     }
     

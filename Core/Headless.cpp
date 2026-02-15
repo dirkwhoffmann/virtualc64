@@ -116,7 +116,7 @@ Headless::checkArguments()
     if (keys.find("arg1") != keys.end()) {
 
         // The input file must exist
-        if (!util::fileExists(keys["arg1"])) {
+        if (!utl::fileExists(keys["arg1"])) {
             throw SyntaxError("File " + keys["arg1"] + " does not exist");
         }
 

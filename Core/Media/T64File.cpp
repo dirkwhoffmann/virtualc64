@@ -13,7 +13,6 @@
 #include "config.h"
 #include "T64File.h"
 #include "FileSystem.h"
-#include "IOUtils.h"
 #include "Macros.h"
 
 namespace vc64 {
@@ -21,7 +20,7 @@ namespace vc64 {
 bool
 T64File::isCompatible(const fs::path &path)
 {
-    auto s = util::uppercased(path.extension().string());
+    auto s = utl::uppercased(path.extension().string());
     return s == ".T64";
 }
 
@@ -34,10 +33,10 @@ T64File::isCompatible(const u8 *buf, isize len)
     if (len < 0x40) return false;
 
     // T64 files must begin with "C64"
-    if (!util::matchingBufferHeader(buf, len, magicT64)) return false;
+    if (!utl::matchingBufferHeader(buf, len, magicT64)) return false;
 
     // T64 files must *not* begin with "C64-TAPE" (which is used by TAP files)
-    if (util::matchingBufferHeader(buf, len, magicTAP)) return false;
+    if (utl::matchingBufferHeader(buf, len, magicTAP)) return false;
 
     return true;
 }

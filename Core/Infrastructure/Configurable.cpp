@@ -14,7 +14,8 @@
 #include "Configurable.h"
 #include "Option.h"
 #include "Defaults.h"
-#include "IOUtils.h"
+#include "utl/io/Streams.h"
+#include "utl/support/Strings.h"
 #include <algorithm>
 
 namespace vc64 {

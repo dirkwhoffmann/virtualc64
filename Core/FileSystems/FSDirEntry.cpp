@@ -87,7 +87,7 @@ FSDirEntry::getFileSystemRepresentation() const
     for (const auto c: name) {
 
         if (illegal.find(c) != std::string::npos) {
-            result += "%" + util::hexstr<2>(c);
+            result += "%" + utl::hexstr<2>(c);
         } else {
             result += c;
         }

@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "TAPFile.h"
-#include "IOUtils.h"
 #include "Macros.h"
 
 namespace vc64 {
@@ -20,14 +19,14 @@ namespace vc64 {
 bool
 TAPFile::isCompatible(const fs::path &path)
 {
-    auto s = util::uppercased(path.extension().string());
+    auto s = utl::uppercased(path.extension().string());
     return s == ".TAP" || s == ".T64";
 }
 
 bool
 TAPFile::isCompatible(const u8 *buf, isize len)
 {
-    return util::matchingBufferHeader(buf, len, string("C64-TAPE-RAW"));
+    return utl::matchingBufferHeader(buf, len, string("C64-TAPE-RAW"));
 }
 
 bool

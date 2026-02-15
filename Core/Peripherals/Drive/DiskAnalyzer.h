@@ -15,7 +15,6 @@
 #include "DiskAnalyzerTypes.h"
 #include "DiskTypes.h"
 #include "CoreObject.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 

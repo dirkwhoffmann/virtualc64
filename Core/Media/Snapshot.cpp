@@ -13,7 +13,6 @@
 #include "config.h"
 #include "Snapshot.h"
 #include "C64.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 
@@ -53,7 +52,7 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
 bool
 Snapshot::isCompatible(const fs::path &path)
 {
-    auto suffix = util::uppercased(path.extension().string());
+    auto suffix = utl::uppercased(path.extension().string());
     return suffix == ".VCSNAP";
 }
 
@@ -61,7 +60,7 @@ bool
 Snapshot::isCompatible(const u8 *buf, isize len)
 {
     if (len < isizeof(SnapshotHeader)) return false;
-    return util::matchingBufferHeader(buf, string("VC64"));
+    return utl::matchingBufferHeader(buf, string("VC64"));
 }
 
 bool

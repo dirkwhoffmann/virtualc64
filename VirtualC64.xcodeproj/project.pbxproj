@@ -24,7 +24,6 @@
 		500C1C7A2965E7D300071AF3 /* PeddleDisassembler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500C1C772965E7D300071AF3 /* PeddleDisassembler.cpp */; };
 		500E2D642824EBE30015C46F /* CartridgeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500E2D632824EBE30015C46F /* CartridgeInspector.xib */; };
 		500E2D662824EC140015C46F /* CartridgeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E2D652824EC130015C46F /* CartridgeInspector.swift */; };
-		500E34142615BF5E006A38DA /* IOUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IOUtils.cpp */; };
 		500E34172615C40D006A38DA /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
 		500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500F7CC5281EAB64003F1A7C /* DiskCreator.xib */; };
@@ -210,7 +209,6 @@
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
 		50726F3D2961C96B0031F2F5 /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
 		50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B579B5281436F6001D8621 /* StringUtils.cpp */; };
-		50726F402961C97B0031F2F5 /* IOUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IOUtils.cpp */; };
 		50726F412961C97B0031F2F5 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		50726F462961C9940031F2F5 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
 		50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
@@ -616,8 +614,6 @@
 		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
 		500E2D632824EBE30015C46F /* CartridgeInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartridgeInspector.xib; sourceTree = "<group>"; };
 		500E2D652824EC130015C46F /* CartridgeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartridgeInspector.swift; sourceTree = "<group>"; };
-		500E34122615BF5E006A38DA /* IOUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IOUtils.cpp; sourceTree = "<group>"; };
-		500E34132615BF5E006A38DA /* IOUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtils.h; sourceTree = "<group>"; };
 		500E34152615C40D006A38DA /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		500E34162615C40D006A38DA /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* SubComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SubComponent.cpp; sourceTree = "<group>"; };
@@ -1004,7 +1000,6 @@
 		5093D6A824B19E9200BDF924 /* Serializable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serializable.h; sourceTree = "<group>"; };
 		5095C81A2BA08B0A00A83825 /* MemoryDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MemoryDebugger.cpp; sourceTree = "<group>"; };
 		5095C81B2BA08B0A00A83825 /* MemoryDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryDebugger.h; sourceTree = "<group>"; };
-		50975A5D2DE05AA10016118E /* Annotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Annotations.h; sourceTree = "<group>"; };
 		5098C57E2658E1F400E05EFC /* DragImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragImageView.swift; sourceTree = "<group>"; };
 		50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleDebugger.cpp; sourceTree = "<group>"; };
 		50995F2924DBCDE400F40713 /* PeddleDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleDebugger.h; sourceTree = "<group>"; };
@@ -1444,13 +1439,10 @@
 			isa = PBXGroup;
 			children = (
 				5078BEA8264D6F9E00EDA161 /* CMakeLists.txt */,
-				50975A5D2DE05AA10016118E /* Annotations.h */,
 				500FAA63261376C50062488E /* BasicTypes.h */,
 				500FAA64261377050062488E /* Macros.h */,
 				50B579B6281436F6001D8621 /* StringUtils.h */,
 				50B579B5281436F6001D8621 /* StringUtils.cpp */,
-				500E34132615BF5E006A38DA /* IOUtils.h */,
-				500E34122615BF5E006A38DA /* IOUtils.cpp */,
 				500E34162615C40D006A38DA /* Parser.h */,
 				500E34152615C40D006A38DA /* Parser.cpp */,
 			);
@@ -2782,7 +2774,6 @@
 				50726FA02961CA0D0031F2F5 /* Rex.cpp in Sources */,
 				50726F9D2961CA0D0031F2F5 /* Isepic.cpp in Sources */,
 				50726FAC2961CA1C0031F2F5 /* TAPFile.cpp in Sources */,
-				50726F402961C97B0031F2F5 /* IOUtils.cpp in Sources */,
 				50726F572961C9A10031F2F5 /* CIA.cpp in Sources */,
 				50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */,
 				50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */,
@@ -3130,7 +3121,6 @@
 				503C1DD324FCD1BF00D91141 /* SnapshotViewer.swift in Sources */,
 				50D5F88024F4F12F0062EF13 /* TrackTableView.swift in Sources */,
 				50BE4B6024E7F8A1008F39C9 /* Date.swift in Sources */,
-				500E34142615BF5E006A38DA /* IOUtils.cpp in Sources */,
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
 				50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */,

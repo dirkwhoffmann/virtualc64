@@ -248,7 +248,24 @@ public:
     // Dumps a portion of memory to a stream
     void memDump(std::ostream &os, u16 addr, isize numLines = 16, bool hex = true);
 
+    
+    //
+    // Pretty printing (DEPRECATED)
+    //
 
+    // Writes an integer into a string in decimal format
+    static void sprint8d(char *s, u8 value);
+    static void sprint16d(char *s, u16 value);
+
+    // Writes an integer into a string in hexadecimal format
+    static void sprint8x(char *s, u8 value);
+    static void sprint16x(char *s, u16 value);
+
+    // Writes an integer into a string in binary format
+    static void sprint8b(char *s, u8 value);
+    static void sprint16b(char *s, u16 value);
+
+    
     //
     // Executing
     //

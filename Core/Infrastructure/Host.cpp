@@ -13,8 +13,8 @@
 #include "config.h"
 #include "Host.h"
 #include "Emulator.h"
-#include "IOUtils.h"
-#include "StringUtils.h"
+#include "utl/io/Files.h"
+#include "utl/support/Strings.h"
 #include <unordered_set>
 
 namespace vc64 {
@@ -144,7 +144,7 @@ Host::sanitize(const string &filename)
             "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
         };
         
-        return reserved.count(util::uppercased(name)) > 0;
+        return reserved.count(utl::uppercased(name)) > 0;
     };
 
     string result;
@@ -217,7 +217,7 @@ Host::unsanitize(const fs::path &filename)
         };
         
         if (s.rfind("__", 0) != 0) return false;
-        return reserved.count(util::uppercased(s.substr(2))) > 0;
+        return reserved.count(utl::uppercased(s.substr(2))) > 0;
     };
 
     std::string result;
@@ -309,7 +309,7 @@ Host::tmp(const string &name, bool unique) const
     auto result = base / name;
 
     // Make the file name unique if requested
-    if (unique) result = fs::path(util::makeUniquePath(result));
+    if (unique) result = fs::path(utl::makeUniquePath(result));
 
     return result;
 }

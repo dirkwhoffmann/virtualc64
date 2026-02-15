@@ -12,7 +12,8 @@
 
 #include "config.h"
 #include "Workspace.h"
-#include "IOUtils.h"
+#include "utl/io/Files.h"
+#include "utl/support/Strings.h"
 
 #include <sstream>
 
@@ -21,9 +22,9 @@ namespace vc64 {
 bool
 Workspace::isCompatible(const fs::path &path)
 {
-    if (!util::isDirectory(path)) return false;
+    if (!utl::isDirectory(path)) return false;
 
-    auto suffix = util::uppercased(path.extension().string());
+    auto suffix = utl::uppercased(path.extension().string());
     return suffix == ".VC64";
 }
 

@@ -13,7 +13,6 @@
 #include "config.h"
 #include "TOD.h"
 #include "C64.h"
-#include "IOUtils.h"
 #include "PowerPort.h"
 
 namespace vc64 {

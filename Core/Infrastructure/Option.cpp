@@ -14,7 +14,6 @@
 #include "Option.h"
 #include "VirtualC64Types.h"
 #include "Error.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 

@@ -13,8 +13,6 @@
 #include "config.h"
 #include "RegressionTester.h"
 #include "Emulator.h"
-#include "IOUtils.h"
-
 #include <fstream>
 
 namespace vc64 {
@@ -23,7 +21,7 @@ void
 RegressionTester::prepare(C64 &c64, ConfigScheme model)
 {
     // Only proceed if the /tmp folder exisits
-    if (!util::fileExists(fs::path("/tmp"))) throw AppError(Fault::DIR_NOT_FOUND, "/tmp");
+    if (!utl::fileExists(fs::path("/tmp"))) throw AppError(Fault::DIR_NOT_FOUND, "/tmp");
 
     // Check if we've got write permissions
     if (host.tmp() != "/tmp") throw AppError(Fault::DIR_ACCESS_DENIED, "/tmp");

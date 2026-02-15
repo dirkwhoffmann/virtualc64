@@ -13,7 +13,6 @@
 #include "config.h"
 #include "CRTFile.h"
 #include "Cartridge.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 
@@ -26,14 +25,14 @@ CRTFile::cartridgeTypeName(CartridgeType type)
 bool
 CRTFile::isCompatible(const fs::path &path)
 {
-    auto s = util::uppercased(path.extension().string());
+    auto s = utl::uppercased(path.extension().string());
     return s == ".CRT";
 }
 
 bool
 CRTFile::isCompatible(const u8 *buf, isize len)
 {
-    return util::matchingBufferHeader(buf, len, string("C64 CARTRIDGE   "));
+    return utl::matchingBufferHeader(buf, len, string("C64 CARTRIDGE   "));
 }
 
 bool

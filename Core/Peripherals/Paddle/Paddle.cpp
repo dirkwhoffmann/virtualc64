@@ -13,7 +13,6 @@
 #include "config.h"
 #include "Paddle.h"
 #include "Emulator.h"
-// #include "IOUtils.h"
 
 namespace vc64 {
 

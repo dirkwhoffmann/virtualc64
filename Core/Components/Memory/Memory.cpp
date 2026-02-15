@@ -13,7 +13,6 @@
 #include "config.h"
 #include "Memory.h"
 #include "Emulator.h"
-#include "IOUtils.h"
 
 #include <random>
 
@@ -649,10 +648,10 @@ Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const
             for (isize j = 0; j < pads; j++) *p++ = ' ';
 
             if (hex) {
-                util::sprint8x(p, spypeek(addr++, src));
+                sprint8x(p, spypeek(addr++, src));
                 p += 2;
             } else {
-                util::sprint8d(p, spypeek(addr++, src));
+                sprint8d(p, spypeek(addr++, src));
                 p += 3;
             }
         }
@@ -717,7 +716,77 @@ Memory::memDump(std::ostream &os, u16 addr, isize numLines, bool hex)
     }
 }
 
-void 
+void
+Memory::sprint8d(char *s, u8 value)
+{
+    for (int i = 2; i >= 0; i--) {
+        
+        u8 digit = value % 10;
+        s[i] = '0' + digit;
+        value /= 10;
+    }
+    s[3] = 0;
+}
+
+void
+Memory::sprint8x(char *s, u8 value)
+{
+    for (int i = 1; i >= 0; i--) {
+        
+        u8 digit = value % 16;
+        s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
+        value /= 16;
+    }
+    s[2] = 0;
+}
+
+void
+Memory::sprint8b(char *s, u8 value)
+{
+    for (int i = 7; i >= 0; i--) {
+        
+        s[i] = (value & 0x01) ? '1' : '0';
+        value >>= 1;
+    }
+    s[8] = 0;
+}
+
+void
+Memory::sprint16d(char *s, u16 value)
+{
+    for (int i = 4; i >= 0; i--) {
+        
+        u8 digit = value % 10;
+        s[i] = '0' + digit;
+        value /= 10;
+    }
+    s[5] = 0;
+}
+
+void
+Memory::sprint16x(char *s, u16 value)
+{
+    for (int i = 3; i >= 0; i--) {
+        
+        u8 digit = value % 16;
+        s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
+        value /= 16;
+    }
+    s[4] = 0;
+}
+
+void
+Memory::sprint16b(char *s, u16 value)
+{
+    for (int i = 15; i >= 0; i--) {
+        
+        s[i] = (value & 0x01) ? '1' : '0';
+        value >>= 1;
+    }
+    s[16] = 0;
+}
+
+void
 Memory::endFrame()
 {
     if (config.heatmap) {

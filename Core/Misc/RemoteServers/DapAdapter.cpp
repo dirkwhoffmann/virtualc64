@@ -15,7 +15,6 @@
 #include "DapServer.h"
 #include "Emulator.h"
 #include "CPU.h"
-#include "IOUtils.h"
 #include "Memory.h"
 #include "MsgQueue.h"
 #include "RetroShell.h"
@@ -348,12 +347,12 @@ DapAdapter::readRegister(isize nr)
 {
     switch (nr) {
 
-        case 0: return util::hexstr<2>(c64.cpu.reg.a);
-        case 1: return util::hexstr<2>(c64.cpu.reg.x);
-        case 2: return util::hexstr<2>(c64.cpu.reg.y);
-        case 3: return util::hexstr<2>(c64.cpu.reg.sp);
-        case 4: return util::hexstr<2>(c64.cpu.getP());
-        case 5: return util::hexstr<4>(c64.cpu.getPC0());
+        case 0: return utl::hexstr<2>(c64.cpu.reg.a);
+        case 1: return utl::hexstr<2>(c64.cpu.reg.x);
+        case 2: return utl::hexstr<2>(c64.cpu.reg.y);
+        case 3: return utl::hexstr<2>(c64.cpu.reg.sp);
+        case 4: return utl::hexstr<2>(c64.cpu.getP());
+        case 5: return utl::hexstr<4>(c64.cpu.getPC0());
         default: return "00";
     }
 }
@@ -362,7 +361,7 @@ string
 DapAdapter::readMemory(isize addr)
 {
     auto byte = mem.spypeek((u16)addr);
-    return util::hexstr <2> (byte);
+    return utl::hexstr <2> (byte);
 }
 
 void

@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "AnyFile.h"
-#include "IOUtils.h"
 #include "CRTFile.h"
 #include "D64File.h"
 #include "Folder.h"
@@ -148,7 +147,7 @@ AnyFile::writeToStream(std::ostream &stream, isize offset, isize len)
 isize
 AnyFile::writeToFile(const std::filesystem::path &path, isize offset, isize len)
 {
-    if (util::isDirectory(path)) {
+    if (utl::isDirectory(path)) {
         throw AppError(Fault::FILE_IS_DIRECTORY);
     }
 

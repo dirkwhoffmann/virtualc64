@@ -14,6 +14,7 @@
 #include "DiskAnalyzer.h"
 #include "Drive.h"
 #include "Disk.h"
+#include "Memory.h"
 
 #include <stdarg.h>
 
@@ -359,11 +360,11 @@ DiskAnalyzer::sectorBytesAsString(Halftrack ht, isize offset, isize length, bool
         u8 value = decodeGcr(ht, offset + gcrOffset);
 
         if (hex) {
-            util::sprint8x(text + strOffset, value);
+            Memory::sprint8x(text + strOffset, value);
             text[strOffset + 2] = ' ';
             strOffset += 3;
         } else {
-            util::sprint8d(text + strOffset, value);
+            Memory::sprint8d(text + strOffset, value);
             text[strOffset + 3] = ' ';
             strOffset += 4;
         }

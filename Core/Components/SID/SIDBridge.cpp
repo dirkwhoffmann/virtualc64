@@ -13,7 +13,6 @@
 #include "config.h"
 #include "SIDBridge.h"
 #include "Emulator.h"
-#include "IOUtils.h"
 
 #include <algorithm>
 #include <cmath>

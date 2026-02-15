@@ -15,8 +15,6 @@
 #include "Emulator.h"
 #include "Option.h"
 #include "Script.h"
-// #include "Checksum.h"
-// #include "IOUtils.h"
 #include "Chrono.h"
 #include "RomDatabase.h"
 #include "OpenRoms.h"

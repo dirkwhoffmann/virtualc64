@@ -27,11 +27,11 @@ CPU::_dump(Category category, std::ostream &os) const
 
             auto guard = guards.guardNr(i);
 
-            os << util::tab(name + " " + std::to_string(i));
-            os << util::hex(guard->addr);
+            os << utl::tab(name + " " + std::to_string(i));
+            os << utl::hex(guard->addr);
 
             if (!guard->enabled) os << " (Disabled)";
-            else if (guard->ignore) os << " (Disabled for " << util::dec(guard->ignore) << " hits)";
+            else if (guard->ignore) os << " (Disabled for " << utl::dec(guard->ignore) << " hits)";
             os << std::endl;
         }
     };

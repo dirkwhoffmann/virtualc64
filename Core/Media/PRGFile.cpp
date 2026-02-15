@@ -13,14 +13,13 @@
 #include "config.h"
 #include "PRGFile.h"
 #include "FileSystem.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 
 bool
 PRGFile::isCompatible(const fs::path &path)
 {
-    auto s = util::uppercased(path.extension().string());
+    auto s = utl::uppercased(path.extension().string());
     return s == ".PRG";
 }
 

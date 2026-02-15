@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "C64.h"
-#include "IOUtils.h"
 #include "utl/abilities/Hashable.h"
 
 #include <stdarg.h>

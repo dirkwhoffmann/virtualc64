@@ -12,14 +12,13 @@
 
 #include "config.h"
 #include "C64.h"
-#include "IOUtils.h"
 
 namespace vc64 {
 
 bool
 D64File::isCompatible(const fs::path &path)
 {
-    auto s = util::uppercased(path.extension().string());
+    auto s = utl::uppercased(path.extension().string());
     return s == ".D64";
 }
 
