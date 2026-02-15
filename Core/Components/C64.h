@@ -394,7 +394,7 @@ private:
     void _dump(Category category, std::ostream &os) const override;
 
     void _didReset(bool hard) override;
-    void _isReady() const throws override;
+    void _isReady() const override;
     void _powerOn() override;
     void _powerOff() override;
     void _run() override;
@@ -444,17 +444,17 @@ public:
 public:
 
     // Queries an option
-    i64 get(Opt opt, isize objid = 0) const throws;
+    i64 get(Opt opt, isize objid = 0) const;
 
     // Checks an option
-    void check(Opt opt, i64 value, const std::vector<isize> objids = { }) throws;
+    void check(Opt opt, i64 value, const std::vector<isize> objids = { });
 
     // Sets an option
-    void set(Opt opt, i64 value, const std::vector<isize> objids = { }) throws;
+    void set(Opt opt, i64 value, const std::vector<isize> objids = { });
 
     // Convenience wrappers
-    void set(Opt opt, const string &value, const std::vector<isize> objids = { }) throws;
-    void set(const string &opt, const string &value, const std::vector<isize> objids = { }) throws;
+    void set(Opt opt, const string &value, const std::vector<isize> objids = { });
+    void set(const string &opt, const string &value, const std::vector<isize> objids = { });
 
     // Configures the emulator to match a specific C64 model
     void set(ConfigScheme model);
@@ -668,7 +668,7 @@ private:
 public:
 
     // Loads a workspace from a file
-    void loadWorkspace(const fs::path &path) throws;
+    void loadWorkspace(const fs::path &path);
 
     // Saves the current workspace to a file
     void saveWorkspace(const fs::path &path);
@@ -688,11 +688,11 @@ public:
     MediaFile *takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
 
     // Loads a snapshot from a file
-    void loadSnapshot(const fs::path &path) throws;
-    void loadSnapshot(const MediaFile &file) throws;
+    void loadSnapshot(const fs::path &path);
+    void loadSnapshot(const MediaFile &file);
 
     // Saves a snapshot to a file
-    void saveSnapshot(const fs::path &path, Compressor compressor) throws;
+    void saveSnapshot(const fs::path &path, Compressor compressor);
 
 private:
 
@@ -730,7 +730,7 @@ private:
 public:
 
     // Installs a Rom
-    void loadRom(const fs::path &path) throws;
+    void loadRom(const fs::path &path);
     void loadRom(const MediaFile &file);
 
     // Erases an installed Rom or all Roms
@@ -738,7 +738,7 @@ public:
     void deleteRoms();
 
     // Saves a Rom to disk
-    void saveRom(RomType rom, const fs::path &path) throws;
+    void saveRom(RomType rom, const fs::path &path);
 
     // Installs an OpenROM or all three of them
     void installOpenRom(RomType type);
@@ -750,9 +750,9 @@ public:
     //
 
     // Flashes a single file into memory
-    void flash(const MediaFile &file) throws;
-    void flash(const MediaFile &file, isize item) throws;
-    void flash(const FileSystem &fs, isize item) throws;
+    void flash(const MediaFile &file);
+    void flash(const MediaFile &file, isize item);
+    void flash(const FileSystem &fs, isize item);
 
 
     //

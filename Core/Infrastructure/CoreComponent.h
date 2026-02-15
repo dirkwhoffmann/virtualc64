@@ -93,7 +93,7 @@ public:
     virtual bool isHalted() const;
 
     // Throws an exception if the emulator is not ready to power on
-    virtual void isReady() const throws;
+    virtual void isReady() const;
 
     // Computes a checksum
     u64 checksum(bool recursive);
@@ -150,7 +150,7 @@ public:
 private:
 
     virtual void _initialize() { }
-    virtual void _isReady() const throws { }
+    virtual void _isReady() const { }
     virtual void _powerOn() { }
     virtual void _powerOff() { }
     virtual void _run() { }
@@ -183,7 +183,7 @@ public:
     void softReset() { reset(false); }
 
     // Loads the internal state from a memory buffer
-    isize load(const u8 *buf) throws;
+    isize load(const u8 *buf);
     virtual void _didLoad() { }
 
     // Saves the internal state to a memory buffer

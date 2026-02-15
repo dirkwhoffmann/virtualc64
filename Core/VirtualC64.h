@@ -1008,20 +1008,20 @@ struct DefaultsAPI : public API {
      *  @param  key     The key of the key-value pair.
      *  @throw  AppError (#INVALID_KEY)
      */
-    void remove(const string &key) throws;
+    void remove(const string &key);
 
     /** @brief  Deletes a key-value pair
      *  @param  option  The option's name forms the key.
      *  @throw  AppError (#INVALID_KEY)
      */
-    void remove(Opt option) throws;
+    void remove(Opt option);
 
     /** @brief  Deletes multiple key-value pairs.
      *  @param  option  The option's name forms the prefix of the keys.
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
      *  @throw  AppError (#INVALID_KEY)
      */
-    void remove(Opt option, std::vector <isize> objids) throws;
+    void remove(Opt option, std::vector <isize> objids);
 
     /// @}
 };
@@ -1534,7 +1534,7 @@ struct VirtualC64 : public API {
      *  @note If this function is called for an options that applies to multiple
      *  components, all components are configured with the specified value.
      */
-    void set(Opt opt, i64 value) throws;
+    void set(Opt opt, i64 value);
 
     /** @brief  Configures a component.
      *

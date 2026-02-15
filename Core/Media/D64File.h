@@ -43,15 +43,15 @@ public:
     
     D64File();
     D64File(isize tracks, bool ecc);
-    D64File(const fs::path &path) throws : D64File() { init(path); }
-    D64File(const u8 *buf, isize len) throws : D64File() { init(buf, len); }
-    D64File(const class FileSystem &fs) throws : D64File() { init(fs); }
+    D64File(const fs::path &path) : D64File() { init(path); }
+    D64File(const u8 *buf, isize len) : D64File() { init(buf, len); }
+    D64File(const class FileSystem &fs) : D64File() { init(fs); }
 
 private:
     
     using AnyFile::init;
     void init(isize tracks, bool ecc);
-    void init(const FileSystem &fs) throws;
+    void init(const FileSystem &fs);
     
     
     //
@@ -71,7 +71,7 @@ public:
     bool isCompatibleBuffer(const u8 *buf, isize len) const override { return isCompatible(buf, len); }
     FileType type() const override { return FileType::D64; }
     PETName<16> getName() const override;
-    void finalizeRead() throws override;
+    void finalizeRead() override;
 
 
     //

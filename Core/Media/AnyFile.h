@@ -83,10 +83,10 @@ public:
     virtual ~AnyFile() { };
 
     void init(isize capacity);
-    void init(const Buffer<u8> &buffer) throws;
-    void init(const string &str) throws;
-    void init(const std::filesystem::path &path) throws;
-    void init(const u8 *buf, isize len) throws;
+    void init(const Buffer<u8> &buffer);
+    void init(const string &str);
+    void init(const std::filesystem::path &path);
+    void init(const u8 *buf, isize len);
 
 
     //
@@ -137,26 +137,26 @@ protected:
     virtual bool isCompatibleBuffer(const u8 *buf, isize len) const = 0;
     bool isCompatibleBuffer(const Buffer<u8> &buffer) const;
 
-    isize readFromBuffer(const u8 *buf, isize len) throws override;
-    isize readFromBuffer(const Buffer<u8> &buffer) throws;
+    isize readFromBuffer(const u8 *buf, isize len) override;
+    isize readFromBuffer(const Buffer<u8> &buffer);
 
 public:
     
-    isize writeToStream(std::ostream &stream, isize offset, isize len) throws;
-    isize writeToFile(const std::filesystem::path &path, isize offset, isize len) throws;
-    isize writeToBuffer(u8 *buf, isize offset, isize len) throws;
-    isize writeToBuffer(Buffer<u8> &buffer, isize offset, isize len) throws;
+    isize writeToStream(std::ostream &stream, isize offset, isize len);
+    isize writeToFile(const std::filesystem::path &path, isize offset, isize len);
+    isize writeToBuffer(u8 *buf, isize offset, isize len);
+    isize writeToBuffer(Buffer<u8> &buffer, isize offset, isize len);
 
-    isize writeToStream(std::ostream &stream) throws override;
-    isize writeToFile(const std::filesystem::path &path) throws override;
-    isize writeToBuffer(u8 *buf) throws override;
-    isize writeToBuffer(Buffer<u8> &buffer) throws;
+    isize writeToStream(std::ostream &stream) override;
+    isize writeToFile(const std::filesystem::path &path) override;
+    isize writeToBuffer(u8 *buf) override;
+    isize writeToBuffer(Buffer<u8> &buffer);
 
 private:
     
     // Delegation methods
-    virtual void finalizeRead() throws { };
-    virtual void finalizeWrite() throws { };
+    virtual void finalizeRead() { };
+    virtual void finalizeWrite() { };
 };
 
 }

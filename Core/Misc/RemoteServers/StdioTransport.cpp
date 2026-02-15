@@ -142,7 +142,7 @@ StdioTransport::sessionLoop()
 }
 
 void
-StdioTransport::send(const string &payload) throws
+StdioTransport::send(const string &payload)
 {
     if (isConnected()) { stdio << payload; }
 }

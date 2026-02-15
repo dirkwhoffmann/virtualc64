@@ -153,18 +153,18 @@ public:
     void asyncExecScript(std::stringstream &ss);
     void asyncExecScript(const std::ifstream &fs);
     void asyncExecScript(const string &contents);
-    void asyncExecScript(const class MediaFile &script) throws;
+    void asyncExecScript(const class MediaFile &script);
     
     // Aborts the execution of a script
     void abortScript();
     
     // Executes all pending commands
-    void exec() throws;
+    void exec();
     
 private:
     
     // Executes a single pending command
-    void exec(const InputLine &cmd) throws;
+    void exec(const InputLine &cmd);
     
     
     //

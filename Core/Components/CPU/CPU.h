@@ -266,28 +266,28 @@ public:
 
 public:
 
-    void setBreakpoint(u32 addr, isize ignores = 0) throws;
-    void moveBreakpoint(isize nr, u32 newAddr) throws;
+    void setBreakpoint(u32 addr, isize ignores = 0);
+    void moveBreakpoint(isize nr, u32 newAddr);
 
-    void deleteBreakpoint(isize nr) throws;
-    void deleteBreakpointAt(u32 addr) throws;
-    void deleteAllBreakpoints() throws;
+    void deleteBreakpoint(isize nr);
+    void deleteBreakpointAt(u32 addr);
+    void deleteAllBreakpoints();
 
-    void enableBreakpoint(isize nr) throws { setEnableBreakpoint(nr, true); }
-    void enableBreakpointAt(u32 addr) throws { setEnableBreakpointAt(addr, true); }
-    void enableAllBreakpoints() throws { setEnableAllBreakpoints(true); }
+    void enableBreakpoint(isize nr) { setEnableBreakpoint(nr, true); }
+    void enableBreakpointAt(u32 addr) { setEnableBreakpointAt(addr, true); }
+    void enableAllBreakpoints() { setEnableAllBreakpoints(true); }
 
-    void disableBreakpoint(isize nr) throws { setEnableBreakpoint(nr, false); }
-    void disableBreakpointAt(u32 addr) throws { setEnableBreakpointAt(addr, false); }
-    void disableAllBreakpoints() throws { setEnableAllBreakpoints(false); }
+    void disableBreakpoint(isize nr) { setEnableBreakpoint(nr, false); }
+    void disableBreakpointAt(u32 addr) { setEnableBreakpointAt(addr, false); }
+    void disableAllBreakpoints() { setEnableAllBreakpoints(false); }
 
-    void toggleBreakpoint(isize nr) throws;
+    void toggleBreakpoint(isize nr);
 
 private:
 
-    void setEnableBreakpoint(isize nr, bool value) throws;
-    void setEnableBreakpointAt(u32 addr, bool value) throws;
-    void setEnableAllBreakpoints(bool value) throws;
+    void setEnableBreakpoint(isize nr, bool value);
+    void setEnableBreakpointAt(u32 addr, bool value);
+    void setEnableAllBreakpoints(bool value);
 
 
     //
@@ -296,28 +296,28 @@ private:
 
 public:
 
-    void setWatchpoint(u32 addr, isize ignores = 0) throws;
-    void moveWatchpoint(isize nr, u32 newAddr) throws;
+    void setWatchpoint(u32 addr, isize ignores = 0);
+    void moveWatchpoint(isize nr, u32 newAddr);
 
-    void deleteWatchpoint(isize nr) throws;
-    void deleteWatchpointAt(u32 addr) throws;
-    void deleteAllWatchpoints() throws;
+    void deleteWatchpoint(isize nr);
+    void deleteWatchpointAt(u32 addr);
+    void deleteAllWatchpoints();
 
-    void enableWatchpoint(isize nr) throws { setEnableWatchpoint(nr, true); }
-    void enableWatchpointAt(u32 addr) throws { setEnableWatchpointAt(addr, true); }
-    void enableAllWatchpoints() throws { setEnableAllWatchpoints(true); }
+    void enableWatchpoint(isize nr) { setEnableWatchpoint(nr, true); }
+    void enableWatchpointAt(u32 addr) { setEnableWatchpointAt(addr, true); }
+    void enableAllWatchpoints() { setEnableAllWatchpoints(true); }
 
-    void disableWatchpoint(isize nr) throws { setEnableWatchpoint(nr, false); }
-    void disableWatchpointAt(u32 addr) throws { setEnableWatchpointAt(addr, false); }
-    void disableAllWatchpoints() throws { setEnableAllWatchpoints(false); }
+    void disableWatchpoint(isize nr) { setEnableWatchpoint(nr, false); }
+    void disableWatchpointAt(u32 addr) { setEnableWatchpointAt(addr, false); }
+    void disableAllWatchpoints() { setEnableAllWatchpoints(false); }
 
-    void toggleWatchpoint(isize nr) throws;
+    void toggleWatchpoint(isize nr);
 
 private:
 
-    void setEnableWatchpoint(isize nr, bool value) throws;
-    void setEnableWatchpointAt(u32 addr, bool value) throws;
-    void setEnableAllWatchpoints(bool value) throws;
+    void setEnableWatchpoint(isize nr, bool value);
+    void setEnableWatchpointAt(u32 addr, bool value);
+    void setEnableAllWatchpoints(bool value);
 };
 
 }

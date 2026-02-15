@@ -31,11 +31,11 @@ public:
     // Initializing
     //
     
-    Folder(const fs::path &path) throws { init(path); }
+    Folder(const fs::path &path) { init(path); }
 
 private:
     
-    void init(const fs::path &path) throws;
+    void init(const fs::path &path);
 
 
     //

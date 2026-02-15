@@ -71,19 +71,19 @@ public:
 public:
 
     // Launch the remote server
-    virtual void start(u16 port, const string &endpoint = "") throws;
+    virtual void start(u16 port, const string &endpoint = "");
 
     // Shuts down the remote server
-    virtual void stop() throws;
+    virtual void stop();
 
     // Disconnects the client
-    virtual void disconnect() throws = 0;
+    virtual void disconnect() = 0;
 
     // Switches the internal state
     void switchState(SrvState newState);
 
     // The main thread function
-    virtual void main(u16 port, const string &endpoint = "") throws { };
+    virtual void main(u16 port, const string &endpoint = "") { };
 
 
     //

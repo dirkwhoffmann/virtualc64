@@ -154,8 +154,8 @@ public:
     static bool isROMHaddr(u16 addr);
 
     // Factory methods
-    static Cartridge *makeWithType(C64 &c64, CartridgeType type) throws;
-    static Cartridge *makeWithCRTFile(C64 &c64, const CRTFile &file) throws;
+    static Cartridge *makeWithType(C64 &c64, CartridgeType type);
+    static Cartridge *makeWithCRTFile(C64 &c64, const CRTFile &file);
 
 
     //

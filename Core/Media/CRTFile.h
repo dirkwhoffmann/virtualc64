@@ -55,14 +55,14 @@ public:
 
 public:
     
-    CRTFile(const fs::path &path) throws { init(path); }
-    CRTFile(const u8 *buf, isize len) throws { init(buf, len); }
-    CRTFile(class ExpansionPort &expansion) throws { init(expansion); }
+    CRTFile(const fs::path &path) { init(path); }
+    CRTFile(const u8 *buf, isize len) { init(buf, len); }
+    CRTFile(class ExpansionPort &expansion) { init(expansion); }
 
 private:
 
     using AnyFile::init;
-    void init(class ExpansionPort &expansion) throws;
+    void init(class ExpansionPort &expansion);
 
 
     //

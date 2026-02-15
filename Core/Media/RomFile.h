@@ -57,9 +57,9 @@ public:
     // Initializing
     //
     
-    RomFile(const fs::path &path) throws { init(path); }
-    // RomFile(const fs::path &path, std::istream &stream) throws { init(path, stream); }
-    RomFile(const u8 *buf, isize len) throws { init(buf, len); }
+    RomFile(const fs::path &path) { init(path); }
+    // RomFile(const fs::path &path, std::istream &stream) { init(path, stream); }
+    RomFile(const u8 *buf, isize len) { init(buf, len); }
 
     
     //

@@ -46,11 +46,11 @@ public:
     FileSystem(isize capacity) { init(capacity); }
     FileSystem(FSDeviceDescriptor &layout) { init(layout); }
     FileSystem(DiskType type, DOSType vType) { init(type, vType); }
-    FileSystem(const class D64File &d64) throws { init(d64); }
-    FileSystem(class Disk &disk) throws { init(disk); }
-    FileSystem(AnyCollection &collection) throws { init(collection); }
-    FileSystem(MediaFile &file) throws;
-    FileSystem(const fs::path &path) throws { init(path); }
+    FileSystem(const class D64File &d64) { init(d64); }
+    FileSystem(class Disk &disk) { init(disk); }
+    FileSystem(AnyCollection &collection) { init(collection); }
+    FileSystem(MediaFile &file);
+    FileSystem(const fs::path &path) { init(path); }
     ~FileSystem();
     
 private:
@@ -58,11 +58,11 @@ private:
     void init(isize capacity);
     void init(FSDeviceDescriptor &layout);
     void init(DiskType type, DOSType vType);
-    void init(const class D64File &d64) throws;
-    void init(class Disk &disk) throws;
-    void init(AnyCollection &collection) throws;
-    void init(MediaFile &file) throws;
-    void init(const fs::path &path) throws;
+    void init(const class D64File &d64);
+    void init(class Disk &disk);
+    void init(AnyCollection &collection);
+    void init(MediaFile &file);
+    void init(const fs::path &path);
 
     
 public:
@@ -285,12 +285,12 @@ public:
     string ascii(Block nr, isize offset, isize len) const;
 
     // Imports the volume from a buffer
-    void importVolume(const u8 *src, isize size) throws;
+    void importVolume(const u8 *src, isize size);
     bool importVolume(const u8 *src, isize size, Fault *err);
     
     // Imports a folder from the host file system
-    void importDirectory(const fs::path &path) throws;
-    void importDirectory(const fs::directory_entry &dir) throws;
+    void importDirectory(const fs::path &path);
+    void importDirectory(const fs::directory_entry &dir);
 
     // Exports the volume to a buffer
     bool exportVolume(u8 *dst, isize size, Fault *err = nullptr) const;
@@ -300,9 +300,9 @@ public:
     bool exportBlocks(isize first, isize last, u8 *dst, isize size, Fault *err = nullptr) const;
 
     // Exports all files or a single file to a folder in the host file system
-    void exportDirectory(const fs::path &path, bool createDir = true) throws;
-    void exportFile(FSDirEntry *item, const fs::path &path) throws;
-    void exportFile(FSDirEntry *entry, std::ofstream &stream) throws;
+    void exportDirectory(const fs::path &path, bool createDir = true);
+    void exportFile(FSDirEntry *item, const fs::path &path);
+    void exportFile(FSDirEntry *entry, std::ofstream &stream);
 
 
     //

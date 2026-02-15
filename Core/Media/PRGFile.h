@@ -35,14 +35,14 @@ public:
     
     PRGFile() : AnyCollection() { }
     PRGFile(isize capacity) : AnyCollection(capacity) { }
-    PRGFile(const fs::path &path) throws { init(path); }
-    PRGFile(const u8 *buf, isize len) throws { init(buf, len); }
-    PRGFile(const class FileSystem &fs) throws { init(fs); }
+    PRGFile(const fs::path &path) { init(path); }
+    PRGFile(const u8 *buf, isize len) { init(buf, len); }
+    PRGFile(const class FileSystem &fs) { init(fs); }
 
 private:
     
     using AnyFile::init;
-    void init(const FileSystem &fs) throws;
+    void init(const FileSystem &fs);
     
     
     //

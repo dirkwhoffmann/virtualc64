@@ -52,10 +52,10 @@ private:
 public:
 
     // Processes an DAP command given as string
-    void process(const string &packet) throws;
+    void process(const string &packet);
 
     // Processes an DAP command given as a JSON object
-    void process(const json &j) throws;
+    void process(const json &j);
 
 private:
 
@@ -63,7 +63,7 @@ private:
     isize nextSeq() { return seqCounter++; }
 
     // Processes a single command
-    template <dap::Command> void process(isize seq, const string &packet) throws;
+    template <dap::Command> void process(isize seq, const string &packet);
 
     // Sends a packet to the connected client
     void reply(const string &payload);

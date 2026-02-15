@@ -47,7 +47,7 @@ public:
 private:
     
     // Inner loops (called from main)
-    void mainLoop(u16 port) throws;
+    void mainLoop(u16 port);
     void sessionLoop();
 
 

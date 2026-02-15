@@ -91,8 +91,8 @@ private:
 public:
 
     // Processes a single command (DapServerCmds.cpp)
-    // template <dap::Command> void process(isize seq, const string &packet) throws;
-    // void process(dap::Command cmd, isize seq, const string &packet) throws;
+    // template <dap::Command> void process(isize seq, const string &packet);
+    // void process(dap::Command cmd, isize seq, const string &packet);
 
     // Sends a packet to the connected client
     void reply(const string &payload);

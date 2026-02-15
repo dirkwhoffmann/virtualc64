@@ -36,14 +36,14 @@ public:
     
     G64File() { };
     G64File(isize capacity);
-    G64File(const fs::path &path) throws { init(path); }
-    G64File(const u8 *buf, isize len) throws { init(buf, len); }
-    G64File(class Disk &disk) throws { init(disk); }
+    G64File(const fs::path &path) { init(path); }
+    G64File(const u8 *buf, isize len) { init(buf, len); }
+    G64File(class Disk &disk) { init(disk); }
 
 private:
     
     using AnyFile::init;
-    void init(class Disk &disk) throws;
+    void init(class Disk &disk);
     
     
     //

@@ -111,23 +111,23 @@ public:
 public:
     
     Disk();
-    Disk(const fs::path &path, bool wp = false) throws { init(path, wp); }
+    Disk(const fs::path &path, bool wp = false) { init(path, wp); }
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
     Disk(const FileSystem &device, bool wp = false) { init(device, wp); }
     Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
-    Disk(const class D64File &d64, bool wp = false) throws { init(d64, wp); }
-    Disk(class AnyCollection &archive, bool wp = false) throws { init(archive, wp); }
-    Disk(SerReader &reader) throws { init(reader); }
+    Disk(const class D64File &d64, bool wp = false) { init(d64, wp); }
+    Disk(class AnyCollection &archive, bool wp = false) { init(archive, wp); }
+    Disk(SerReader &reader) { init(reader); }
     
 private:
     
-    void init(const fs::path &path, bool wp) throws;
+    void init(const fs::path &path, bool wp);
     void init(DOSType type, PETName<16> name, bool wp);
     void init(const class FileSystem &device, bool wp);
     void init(const class G64File &g64, bool wp);
-    void init(const class D64File &d64, bool wp) throws;
-    void init(class AnyCollection &archive, bool wp) throws;
-    void init(SerReader &reader) throws;
+    void init(const class D64File &d64, bool wp);
+    void init(class AnyCollection &archive, bool wp);
+    void init(SerReader &reader);
 
 public:
 

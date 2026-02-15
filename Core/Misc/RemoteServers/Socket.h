@@ -78,8 +78,8 @@ private:
     
 public:
     
-    void connect(u16 port) throws;
-    void bind(u16 port) throws;
+    void connect(u16 port);
+    void bind(u16 port);
     void listen();
     Socket accept();
     void close();

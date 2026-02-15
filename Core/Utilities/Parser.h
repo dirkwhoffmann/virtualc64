@@ -49,10 +49,10 @@ bool isBool(const string& token);
 bool isOnOff(const string& token);
 bool isNum(const string& token);
 
-bool parseBool(const string& token) throws;
-bool parseOnOff(const string& token) throws;
-long parseNum(const string& token) throws;
-string parseSeq(const string& token) throws;
+bool parseBool(const string& token);
+bool parseOnOff(const string& token);
+long parseNum(const string& token);
+string parseSeq(const string& token);
 
 template <typename Enum> long parseEnum(const string& key)
 {

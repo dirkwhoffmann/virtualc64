@@ -31,14 +31,14 @@ public:
     
     T64File() : AnyCollection() { }
     T64File(isize capacity) : AnyCollection(capacity) { }
-    T64File(const fs::path &path) throws { init(path); }
-    T64File(const u8 *buf, isize len) throws { init(buf, len); }
-    T64File(const class FileSystem &fs) throws { init(fs); }
+    T64File(const fs::path &path) { init(path); }
+    T64File(const u8 *buf, isize len) { init(buf, len); }
+    T64File(const class FileSystem &fs) { init(fs); }
 
 private:
     
     using AnyFile::init;
-    void init(const FileSystem &fs) throws;
+    void init(const FileSystem &fs);
 
     
     //

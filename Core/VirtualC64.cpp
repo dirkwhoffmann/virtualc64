@@ -417,7 +417,7 @@ VirtualC64::set(ConfigScheme model)
 }
 
 void
-VirtualC64::set(Opt opt, i64 value) throws
+VirtualC64::set(Opt opt, i64 value)
 {
     VC64_PUBLIC
     emu->check(opt, value);

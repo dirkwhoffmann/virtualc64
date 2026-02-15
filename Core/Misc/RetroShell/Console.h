@@ -346,7 +346,7 @@ public:
 protected:
     
     // Executes a single command
-    void exec(const InputLine& cmd) throws;
+    void exec(const InputLine& cmd);
 
     // Prints a usage string for a command
     void cmdUsage(const RSCommand &cmd, const string &prefix);

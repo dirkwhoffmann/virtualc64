@@ -36,8 +36,8 @@ public:
     // Initializing
     //
     
-    TAPFile(const fs::path &path) throws { init(path); }
-    TAPFile(const u8 *buf, isize len) throws { init(buf, len); }
+    TAPFile(const fs::path &path) { init(path); }
+    TAPFile(const u8 *buf, isize len) { init(buf, len); }
 
     
     //

@@ -497,13 +497,13 @@ public:
      * the currently inserted disk halfway out before it is removed completely,
      * and pushing the new disk halfway in before it is inserted completely.
      */
-    void insertDisk(const fs::path &path, bool wp) throws;
+    void insertDisk(const fs::path &path, bool wp);
     void insertDisk(std::unique_ptr<Disk> disk);
     void insertNewDisk(DOSType fstype, string name);
     void insertMediaFile(class MediaFile &file, bool wp);
     void insertD64(const class D64File &d64, bool wp);
     void insertG64(const class G64File &g64, bool wp);
-    void insertCollection(class AnyCollection &archive, bool wp) throws;
+    void insertCollection(class AnyCollection &archive, bool wp);
     void insertFileSystem(const class FileSystem &device, bool wp);
     void ejectDisk();
 

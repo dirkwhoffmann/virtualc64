@@ -38,8 +38,8 @@ public:
 public:
     
     // Script();
-    Script(const fs::path &path) throws { init(path); }
-    Script(const u8 *buf, isize len) throws { init(buf, len); }
+    Script(const fs::path &path) { init(path); }
+    Script(const u8 *buf, isize len) { init(buf, len); }
     
     
     //

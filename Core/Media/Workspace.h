@@ -30,11 +30,11 @@ public:
     // Initializing
     //
 
-    Workspace(const fs::path &path) throws { init(path); }
+    Workspace(const fs::path &path) { init(path); }
 
 private:
 
-    void init(const fs::path &path) throws;
+    void init(const fs::path &path);
 
 
     //
