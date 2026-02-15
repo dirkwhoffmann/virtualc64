@@ -29,6 +29,7 @@ using std::span;
 
 #include <string>
 using std::string;
+using std::string_view;
 
 #include <vector>
 using std::vector;

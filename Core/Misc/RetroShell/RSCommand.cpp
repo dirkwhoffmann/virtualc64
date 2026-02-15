@@ -12,8 +12,8 @@
 
 #include "config.h"
 #include "RSCommand.h"
-#include "StringUtils.h"
 #include "Parser.h"
+#include "utl/support/Strings.h"
 #include <algorithm>
 #include <utility>
 
@@ -85,7 +85,7 @@ RSCommand::add(const RSCommandDescriptor &descriptor)
     if (descriptor.flags & rs::disabled) return;
  
  // Cleanse the token list (convert { "aaa bbb" } into { "aaa", "bbb" }
-    auto tokens = util::split(descriptor.tokens, ' ');
+    auto tokens = utl::split(descriptor.tokens, ' ');
  
     // The last entry in the token list is the command name
     auto name = tokens.back();
@@ -98,7 +98,7 @@ RSCommand::add(const RSCommandDescriptor &descriptor)
     RSCommand cmd;
     cmd.groupName = currentGroup;
     cmd.name = name;
-    cmd.fullName = util::concat({ node->fullName, name }, " ");
+    cmd.fullName = utl::concat({ node->fullName, name }, " ");
     cmd.flags = descriptor.flags;
     cmd.ghelp = !descriptor.ghelp.empty() ? descriptor.ghelp : descriptor.chelp;
     cmd.chelp = !descriptor.chelp.empty() ? descriptor.chelp : "???";
@@ -182,13 +182,13 @@ std::vector<const RSCommand *>
 RSCommand::filterPrefix(const string& prefix) const
 {
     std::vector<const RSCommand *> result;
-    auto uprefix = util::uppercased(prefix);
+    auto uprefix = utl::uppercased(prefix);
     
     for (auto &it : subcommands) {
         
         if (it.isHidden()) continue;
         auto substr = it.name.substr(0, prefix.size());
-        if (util::uppercased(substr) == uprefix) result.push_back(&it);
+        if (utl::uppercased(substr) == uprefix) result.push_back(&it);
     }
     
     return result;
@@ -202,7 +202,7 @@ RSCommand::autoComplete(string &token)
     auto matches = filterPrefix(token);
     for (auto &it : matches) { tokens.push_back(it->name); }
             
-    if (!tokens.empty()) token = util::commonPrefix(tokens);
+    if (!tokens.empty()) token = utl::commonPrefix(tokens);
     return (isize)matches.size();
             }
 
@@ -309,8 +309,8 @@ RSCommand::cmdUsage() const
     for (auto &it : subcommands) {
         if (it.isVisible()) items.push_back(it.name);
         }
-    auto combined = util::concat(items, " | ", callback ? "[ " : "{ ", callback ? " ]" : " }");
-    return  util::concat({ fullName, combined });
+    auto combined = utl::concat(items, " | ", callback ? "[ " : "{ ", callback ? " ]" : " }");
+    return  utl::concat({ fullName, combined });
     }
     
 string
@@ -330,9 +330,9 @@ RSCommand::argUsage() const
     for (auto &it : args) {
         if (!it.isFlag()) items.push_back(it.usageStr());
     }
-    string other = util::concat(items);
+    string other = utl::concat(items);
 
-    return util::concat({ fullName, flags, other });
+    return utl::concat({ fullName, flags, other });
 }
 
 }

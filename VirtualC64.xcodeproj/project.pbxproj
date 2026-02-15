@@ -208,7 +208,6 @@
 		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
 		50726F3D2961C96B0031F2F5 /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
-		50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B579B5281436F6001D8621 /* StringUtils.cpp */; };
 		50726F412961C97B0031F2F5 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		50726F462961C9940031F2F5 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
 		50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
@@ -471,7 +470,6 @@
 		50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */; };
 		50B1A61F25A2386F00201A2C /* HIDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61E25A2386F00201A2C /* HIDExtensions.swift */; };
 		50B485FD24FA1D3200844133 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FC24FA1D3200844133 /* iCarousel.m */; };
-		50B579B7281436F6001D8621 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B579B5281436F6001D8621 /* StringUtils.cpp */; };
 		50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7566B2617703100CE1865 /* RessourceManager.swift */; };
 		50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
 		50B98B4A2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */; };
@@ -1155,8 +1153,6 @@
 		50B1A61E25A2386F00201A2C /* HIDExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDExtensions.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		50B485FE24FA1D4100844133 /* iCarousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
-		50B579B5281436F6001D8621 /* StringUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
-		50B579B6281436F6001D8621 /* StringUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
 		50B7566B2617703100CE1865 /* RessourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RessourceManager.swift; sourceTree = "<group>"; };
 		50B7E2692813F8B000A405A3 /* RetroShellTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RetroShellTypes.h; sourceTree = "<group>"; };
 		50B7E26A2813F8C400A405A3 /* TextStorage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TextStorage.cpp; sourceTree = "<group>"; };
@@ -1441,8 +1437,6 @@
 				5078BEA8264D6F9E00EDA161 /* CMakeLists.txt */,
 				500FAA63261376C50062488E /* BasicTypes.h */,
 				500FAA64261377050062488E /* Macros.h */,
-				50B579B6281436F6001D8621 /* StringUtils.h */,
-				50B579B5281436F6001D8621 /* StringUtils.cpp */,
 				500E34162615C40D006A38DA /* Parser.h */,
 				500E34152615C40D006A38DA /* Parser.cpp */,
 			);
@@ -2775,7 +2769,6 @@
 				50726F9D2961CA0D0031F2F5 /* Isepic.cpp in Sources */,
 				50726FAC2961CA1C0031F2F5 /* TAPFile.cpp in Sources */,
 				50726F572961C9A10031F2F5 /* CIA.cpp in Sources */,
-				50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */,
 				50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */,
 				50726FBD2961CA5A0031F2F5 /* Headless.cpp in Sources */,
 				50726F5F2961C9AC0031F2F5 /* VICIIMemory.cpp in Sources */,
@@ -3009,7 +3002,6 @@
 				504C437124AF29AC00E69CAE /* CartridgeRom.cpp in Sources */,
 				50763277202989D300575110 /* DialogController.swift in Sources */,
 				5018BFAB24B4843200551848 /* Primitives.swift in Sources */,
-				50B579B7281436F6001D8621 /* StringUtils.cpp in Sources */,
 				50176C810A6F7357009E80BD /* EmulatorProxy.mm in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				50A92A1B2EC753F000F90519 /* RpcHttpServer.cpp in Sources */,

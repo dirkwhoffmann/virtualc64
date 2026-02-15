@@ -7,9 +7,9 @@
 
 #include "PeddleConfig.h"
 #include "SymbolTable.h"
-#include "StringUtils.h"
 #include "Parser.h"
 #include "Utilities/Parser.h" // DEPRECATED
+#include "utl/support/Strings.h"
 #include <fstream>
 #include <sstream>
 #include <algorithm>
@@ -35,7 +35,7 @@ inline void parseKeyValueLine(string_view line, auto &&handler) {
 
             string_view field = token.substr(0, eq);
             string_view value = token.substr(eq + 1);
-            handler(field, util::unquote(value));
+            handler(field, utl::unquote(value));
         }
 
         if (comma == string_view::npos) break;

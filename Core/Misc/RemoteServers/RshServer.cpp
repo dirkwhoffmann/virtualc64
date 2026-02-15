@@ -14,7 +14,6 @@
 #include "RshServer.h"
 #include "C64.h"
 #include "RetroShell.h"
-#include "StringUtils.h"
 
 namespace vc64 {
 
@@ -127,7 +126,7 @@ void
 RshServer::didReceive(const string &payload)
 {
     // Remove LF and CR (if present)
-    auto trimmed = util::rtrim(payload, "\n\r");
+    auto trimmed = utl::rtrim(payload, "\n\r");
 
     debug(1, "didReceive: %s\n", trimmed.c_str());
 

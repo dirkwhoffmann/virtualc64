@@ -13,7 +13,6 @@
 #include "config.h"
 #include "Defaults.h"
 #include "C64.h"
-#include "StringUtils.h"
 
 namespace vc64 {
 
@@ -254,7 +253,7 @@ Defaults::load(std::stringstream &stream)
             line++;
 
             // Remove white spaces
-            util::trim(input);
+            utl::trim(input);
 
             // Ignore empty lines
             if (input == "") continue;
@@ -277,8 +276,8 @@ Defaults::load(std::stringstream &stream)
                 auto value = input.substr(pos + 1, std::string::npos);
 
                 // Remove white spaces
-                util::trim(key);
-                util::trim(value);
+                utl::trim(key);
+                utl::trim(value);
 
                 // Assemble the key
                 auto delimiter = section.empty() ? "" : ".";
