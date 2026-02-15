@@ -52,10 +52,12 @@ NSString *EventSlotName(EventSlot slot);
 @interface ExceptionWrapper : NSObject {
     
     Fault fault;
+    NSString *key;
     NSString *what;
 }
 
 @property Fault fault;
+@property NSString *key;
 @property NSString *what;
 
 @end

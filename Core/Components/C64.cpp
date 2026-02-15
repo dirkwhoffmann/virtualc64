@@ -20,6 +20,7 @@
 #include "utl/abilities/Hashable.h"
 #include "utl/chrono.h"
 #include <algorithm>
+#include <format>
 #include <queue>
 
 namespace vc64 {
@@ -254,6 +255,32 @@ C64::prefix(LogLevel level, const std::source_location &loc) const
 
         // verbosity >= 3: frame & position
         if constexpr (verbosity >= 3) {
+            char buffer[64];
+            std::snprintf(buffer, sizeof(buffer),
+                          "[%d] (%3d,%3d) ",
+                          frame, scanline, rasterCycle);
+            result += buffer;
+        }
+
+        // verbosity >= 4: CPU PC
+        if constexpr (verbosity >= 4) {
+            char buffer[32];
+            std::snprintf(buffer, sizeof(buffer),
+                          "%06X ",
+                          cpu.getPC0());
+            result += buffer;
+        }
+
+        // verbosity >= 5: Interrupt lines
+        if constexpr (verbosity >= 5) {
+            result += (cpu.irqLine ? 'I' : 'i');
+            result += (cpu.nmiLine ? 'N' : 'n');
+            result += ' ';
+        }
+        
+        /*
+        // verbosity >= 3: frame & position
+        if constexpr (verbosity >= 3) {
             std::format_to(std::back_inserter(result),
                            "[{}] ({:3},{:3}) ",
                            frame, scanline, rasterCycle);
@@ -274,6 +301,7 @@ C64::prefix(LogLevel level, const std::source_location &loc) const
                            "{}{} ",
                            cpu.irqLine ? "I" : "i", cpu.nmiLine ? "N" : "n");
         }
+        */
         
         return result;
 

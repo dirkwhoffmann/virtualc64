@@ -15,6 +15,7 @@
 
 #include "VirtualC64Types.h"
 #include "Error.h"
+#include "CoreError.h"
 #include "MediaFile.h"
 
 namespace vc64 {

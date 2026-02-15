@@ -12,6 +12,7 @@
 #import "DiskAnalyzer.h"
 #import "FileSystem.h"
 #import "Texture.h"
+#import "MediaError.h"
 
 using namespace vc64;
 
@@ -27,6 +28,7 @@ NSString *EventSlotName(EventSlot slot)
 @implementation ExceptionWrapper
 
 @synthesize fault;
+@synthesize key;
 @synthesize what;
 
 - (instancetype)init {
@@ -39,10 +41,40 @@ NSString *EventSlotName(EventSlot slot)
     return self;
 }
 
+/*
 - (void)save:(const AppError &)exception
 {
     fault = Fault(exception.data);
     what = @(exception.what());
+}
+*/
+
+- (void)save:(const std::exception &)exception
+{
+    if (const auto *error = dynamic_cast<const CoreError *>(&exception)) {
+        
+        fault = Fault(error->payload);
+        key = @(error->errstr());
+        what = @(error->what());
+        
+    } else if (const auto *error = dynamic_cast<const MediaError *>(&exception)) {
+        
+        fault = Fault(error->payload);
+        key = @(error->errstr());
+        what = @(error->what());
+        
+    } else if (const auto *error = dynamic_cast<const AppError *>(&exception)) {
+        
+        fault = Fault(error->data);
+        key = @("");
+        what = @(error->what());
+        
+    } else {
+
+        fault = Fault(0);
+        key = @("");
+        what = @(exception.what());
+    }
 }
 
 @end
