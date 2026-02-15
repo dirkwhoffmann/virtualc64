@@ -187,6 +187,17 @@ Allocator<T>::resize(isize elements, T pad)
 }
 
 template <class T> void
+Allocator<T>::strip(isize elements)
+{
+    auto newSize = std::max(size - elements, isize(0));
+
+    for (isize i = 0; i < newSize; i++) {
+        ptr[i] = ptr[i + elements];
+    }
+    resize(newSize);
+}
+
+template <class T> void
 Allocator<T>::clear(T value, isize offset, isize len)
 {
     assert((size == 0) == (ptr == nullptr));
@@ -310,6 +321,7 @@ template void Allocator<T>::init(const fs::path &path); \
 template void Allocator<T>::init(const fs::path &path, const string &name); \
 template void Allocator<T>::resize(isize elements); \
 template void Allocator<T>::resize(isize elements, T value); \
+template void Allocator<T>::strip(isize elements); \
 template void Allocator<T>::clear(T value, isize offset, isize len); \
 template void Allocator<T>::copy(T *buf, isize offset, isize len) const; \
 template void Allocator<T>::patch(const u8 *seq, const u8 *subst); \

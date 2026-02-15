@@ -17,7 +17,6 @@ MsgQueue.cpp
 Option.cpp
 SubComponent.cpp
 Synchronizable.cpp
-Serializable.cpp
 Thread.cpp
 Wakeable.cpp
 

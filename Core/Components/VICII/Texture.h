@@ -13,7 +13,6 @@
 #pragma once
 
 #include "Buffer.h"
-#include "Utilities/Buffer.h" // DEPRECATED
 #include "Constants.h"
 
 namespace vc64 {
@@ -50,7 +49,7 @@ public:
     i64 nr = 0;
 
     // Pixel buffer
-    util::Buffer <u32> pixels;
+    utl::Buffer <u32> pixels;
 
     Texture();
 

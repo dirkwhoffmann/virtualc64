@@ -41,7 +41,7 @@ class VideoPort final : public SubComponent, public Inspectable<VideoPortInfo, V
     Texture blank;
 
     //  White noise data
-    util::Buffer <Texel> noise;
+    utl::Buffer <Texel> noise;
 
     //
     // Methods

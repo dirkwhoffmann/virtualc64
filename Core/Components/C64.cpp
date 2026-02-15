@@ -20,6 +20,7 @@
 #include "Chrono.h"
 #include "RomDatabase.h"
 #include "OpenRoms.h"
+#include "utl/abilities/Hashable.h"
 #include <algorithm>
 #include <queue>
 
@@ -1672,9 +1673,9 @@ C64::romCRC32(RomType type) const
     
     switch (type) {
             
-        case RomType::BASIC:  return util::crc32(mem.rom + 0xA000, 0x2000);
-        case RomType::CHAR:   return util::crc32(mem.rom + 0xD000, 0x1000);
-        case RomType::KERNAL: return util::crc32(mem.rom + 0xE000, 0x2000);
+        case RomType::BASIC:  return utl::Hashable::crc32(mem.rom + 0xA000, 0x2000);
+        case RomType::CHAR:   return utl::Hashable::crc32(mem.rom + 0xD000, 0x1000);
+        case RomType::KERNAL: return utl::Hashable::crc32(mem.rom + 0xE000, 0x2000);
         case RomType::VC1541: return drive8.mem.romCRC32();
 
         default:
@@ -1689,9 +1690,9 @@ C64::romFNV64(RomType type) const
     
     switch (type) {
             
-        case RomType::BASIC:  return util::fnv64(mem.rom + 0xA000, 0x2000);
-        case RomType::CHAR:   return util::fnv64(mem.rom + 0xD000, 0x1000);
-        case RomType::KERNAL: return util::fnv64(mem.rom + 0xE000, 0x2000);
+        case RomType::BASIC:  return utl::Hashable::fnv64(mem.rom + 0xA000, 0x2000);
+        case RomType::CHAR:   return utl::Hashable::fnv64(mem.rom + 0xD000, 0x1000);
+        case RomType::KERNAL: return utl::Hashable::fnv64(mem.rom + 0xE000, 0x2000);
         case RomType::VC1541: return drive8.mem.romFNV64();
 
         default:

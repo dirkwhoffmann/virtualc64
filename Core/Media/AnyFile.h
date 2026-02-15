@@ -15,7 +15,6 @@
 #include "CoreObject.h"
 #include "MediaFile.h"
 #include "Buffer.h"
-#include "Utilities/Buffer.h" // DEPRECATED
 #include "PETName.h"
 
 #include <sstream>
@@ -23,7 +22,7 @@
 
 namespace vc64 {
 
-using util::Buffer;
+using utl::Buffer;
 
 /* All media files are organized in the class hierarchy displayed below.
  * MediaFile is a wrapper class which is referenced in the public API. Below

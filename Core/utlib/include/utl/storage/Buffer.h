@@ -76,6 +76,9 @@ template <class T> struct Allocator : public Hashable, public Dumpable {
     void resize(isize elements);
     void resize(isize elements, T pad);
 
+    // Shrinks the buffer by removing elements at the front
+    void strip(isize elements);
+    
     // Overwrites elements with a default value
     void clear(T value, isize offset, isize len);
     void clear(T value = 0, isize offset = 0) { clear(value, offset, size - offset); }

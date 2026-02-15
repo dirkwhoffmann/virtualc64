@@ -14,8 +14,9 @@
 
 #include "Macros.h"
 #include "Buffer.h"
+#include "utl/storage.h"
 #include "RingBuffer.h"
-#include "Utilities/Buffer.h"  // DEPRECATED
+#include "utl/abilities/Hashable.h"
 #include "Utilities/RingBuffer.h"  // DEPRECATED
 #include <concepts>
 
@@ -165,7 +166,7 @@ public:
     COUNTD(const double)
        
     template <class T>
-    auto& operator<<(util::Allocator<T> &a)
+    auto& operator<<(utl::Allocator<T> &a)
     {
         count += 8 + a.size;
         return *this;
@@ -268,7 +269,7 @@ public:
 #define CHECK(type) \
 auto& operator<<(type& v) \
 { \
-hash = util::fnvIt64(hash, (u64)v); \
+hash = utl::Hashable::fnvIt64(hash, (u64)v); \
 return *this; \
 }
 
@@ -278,7 +279,7 @@ public:
 
     u64 hash;
 
-    SerChecker() { hash = util::fnvInit64(); }
+    SerChecker() { hash = utl::Hashable::fnvInit64(); }
 
     CHECK(const bool)
     CHECK(const char)
@@ -296,9 +297,9 @@ public:
     CHECK(const double)
 
     template <class T>
-    auto& operator<<(util::Allocator<T> &a)
+    auto& operator<<(utl::Allocator<T> &a)
     {
-        hash = util::fnvIt64(hash, a.fnv64());
+        hash = utl::Hashable::fnvIt64(hash, a.fnv64());
         return *this;
     }
 
@@ -340,7 +341,7 @@ public:
     {
         auto len = v.length();
         for (usize i = 0; i < len; i++) {
-            hash = util::fnvIt64(hash, v[i]);
+            hash = utl::Hashable::fnvIt64(hash, v[i]);
         }
         return *this;
     }
@@ -374,7 +375,7 @@ public:
     template <class E, class = std::enable_if_t<std::is_enum<E>{}>>
     SerChecker& operator<<(E &v)
     {
-        hash = util::fnvIt64(hash, u64(v));
+        hash = utl::Hashable::fnvIt64(hash, u64(v));
         return *this;
     }
 
@@ -434,7 +435,7 @@ public:
     DESERIALIZED(double)
 
     template <class T>
-    auto& operator<<(util::Allocator<T> &a)
+    auto& operator<<(utl::Allocator<T> &a)
     {
         i64 len;
         *this << len;
@@ -588,7 +589,7 @@ public:
     SERIALIZED(const double)
 
     template <class T>
-    auto& operator<<(util::Allocator<T> &a)
+    auto& operator<<(utl::Allocator<T> &a)
     {
         *this << i64(a.size);
         a.copy(ptr);
@@ -732,7 +733,7 @@ public:
     RESET(double)
 
     template <class T>
-    auto& operator<<(util::Allocator<T> &a)
+    auto& operator<<(utl::Allocator<T> &a)
     {
         a.clear();
         return *this;
