@@ -14,8 +14,8 @@
 
 #include "CoreObject.h"
 #include "OptionTypes.h"
-#include "Concurrency.h"
 #include "utl/abilities/Synchronizable.h"
+#include "utl/concurrency.h"
 #include <map>
 
 namespace vc64 {

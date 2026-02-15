@@ -17,6 +17,5 @@ MsgQueue.cpp
 Option.cpp
 SubComponent.cpp
 Thread.cpp
-Wakeable.cpp
 
 )

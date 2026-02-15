@@ -199,8 +199,6 @@
 		506E28462EB746C7003FF0D3 /* DapAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506E28442EB746C6003FF0D3 /* DapAdapter.cpp */; };
 		506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
 		506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
-		506F30422B74C1C70083EAEA /* Wakeable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30402B74C1C70083EAEA /* Wakeable.cpp */; };
-		506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30402B74C1C70083EAEA /* Wakeable.cpp */; };
 		506F30472B7692180083EAEA /* VirtualC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30462B7692180083EAEA /* VirtualC64.cpp */; };
 		506F30482B7692180083EAEA /* VirtualC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30462B7692180083EAEA /* VirtualC64.cpp */; };
 		50726F2B295B61C50031F2F5 /* DebuggerConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* DebuggerConsole.cpp */; };
@@ -921,8 +919,6 @@
 		506E28472EB75882003FF0D3 /* DapAdapterTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DapAdapterTypes.h; sourceTree = "<group>"; };
 		506F30382B729CE80083EAEA /* Emulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Emulator.cpp; sourceTree = "<group>"; };
 		506F30392B729CE80083EAEA /* Emulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Emulator.h; sourceTree = "<group>"; };
-		506F30402B74C1C70083EAEA /* Wakeable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Wakeable.cpp; sourceTree = "<group>"; };
-		506F30412B74C1C70083EAEA /* Wakeable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wakeable.h; sourceTree = "<group>"; };
 		506F30442B7578870083EAEA /* EmulatorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorTypes.h; sourceTree = "<group>"; };
 		506F30452B768DE30083EAEA /* VirtualC64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64.h; sourceTree = "<group>"; };
 		506F30462B7692180083EAEA /* VirtualC64.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64.cpp; sourceTree = "<group>"; };
@@ -1126,6 +1122,7 @@
 		50AC25B42F420CF50016265E /* RSError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RSError.cpp; sourceTree = "<group>"; };
 		50AC25B72F42216E0016265E /* debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
 		50AC25B82F4221770016265E /* debug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = debug.cpp; sourceTree = "<group>"; };
+		50AC25BB2F424BD90016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPort.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPort.h; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
@@ -2024,6 +2021,7 @@
 		50650F362DF087C2008AD660 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				50AC25BB2F424BD90016265E /* CMakeLists.txt */,
 				50D834672EAB8EF00052F98D /* httplib.h */,
 				50F0C24C2EB148CE00BCC7BB /* json.h */,
 				50E99FE32EBF48F900633978 /* json_fwd.h */,
@@ -2145,8 +2143,6 @@
 				50EFB0C22C18D6200013B73C /* Dumpable.cpp */,
 				50BB3E902B7A232800B2D87B /* Inspectable.h */,
 				50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */,
-				506F30412B74C1C70083EAEA /* Wakeable.h */,
-				506F30402B74C1C70083EAEA /* Wakeable.cpp */,
 				504C42EC24AF29AB00E69CAE /* CoreObject.h */,
 				504C42ED24AF29AB00E69CAE /* CoreObject.cpp */,
 				5066B4152C7CCFA0003AEEE8 /* CoreComponentTypes.h */,
@@ -2904,7 +2900,6 @@
 				50E99FE62EBF872600633978 /* RpcServer.cpp in Sources */,
 				50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */,
 				50A5B7D62C74E44C00D6DDAD /* Socket.cpp in Sources */,
-				506F30432B74C1C70083EAEA /* Wakeable.cpp in Sources */,
 				50A194852BDA5CD40046849E /* TODBase.cpp in Sources */,
 				508C1E6E2C0C58FF0097473C /* Paddle.cpp in Sources */,
 				508C1E5B2C0B20EE0097473C /* SerialPortBase.cpp in Sources */,
@@ -3145,7 +3140,6 @@
 				506F30472B7692180083EAEA /* VirtualC64.cpp in Sources */,
 				50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */,
 				5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */,
-				506F30422B74C1C70083EAEA /* Wakeable.cpp in Sources */,
 				50F0EB7A25CC33B3002D0D72 /* GameKiller.cpp in Sources */,
 				50650F472DF23C8D008AD660 /* Texture.cpp in Sources */,
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,

@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "Buffer.h"
+#include "utl/storage/Buffer.h"
 #include "Constants.h"
 
 namespace vc64 {

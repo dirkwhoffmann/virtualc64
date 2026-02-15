@@ -13,7 +13,7 @@
 #pragma once
 
 #include "VirtualC64.h"
-#include "Wakeable.h"
+#include "utl/abilities/Wakeable.h"
 #include <map>
 
 namespace vc64 {

@@ -15,10 +15,10 @@
 #include "Emulator.h"
 #include "Option.h"
 #include "Script.h"
-#include "Chrono.h"
 #include "RomDatabase.h"
 #include "OpenRoms.h"
 #include "utl/abilities/Hashable.h"
+#include "utl/chrono.h"
 #include <algorithm>
 #include <queue>
 

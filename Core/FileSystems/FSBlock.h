@@ -13,9 +13,9 @@
 #pragma once
 
 #include "FSTypes.h"
-#include "Buffer.h"
 #include "CoreObject.h"
 #include "PETName.h"
+#include "utl/storage/Buffer.h"
 
 namespace vc64 {
 

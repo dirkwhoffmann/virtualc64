@@ -13,8 +13,8 @@
 #pragma once
 
 #include "CoreObject.h"
-#include "Concurrency.h"
 #include "utl/abilities/Synchronizable.h"
+#include "utl/concurrency.h"
 #include "utl/storage/RingBuffer.h"
 
 namespace vc64 {

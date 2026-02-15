@@ -18,7 +18,7 @@
 #include "Volume.h"
 #include "AudioPort.h"
 #include "SID.h"
-#include "Chrono.h"
+#include "utl/chrono.h"
 
 namespace vc64 {
 

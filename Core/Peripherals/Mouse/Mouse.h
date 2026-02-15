@@ -15,10 +15,10 @@
 #include "MouseTypes.h"
 #include "JoystickTypes.h"
 #include "SubComponent.h"
-#include "Chrono.h"
 #include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"
+#include "utl/chrono.h"
 
 namespace vc64 {
 

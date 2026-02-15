@@ -14,8 +14,8 @@
 
 #include "CoreObject.h"
 #include "MediaFile.h"
-#include "Buffer.h"
 #include "PETName.h"
+#include "utl/storage/Buffer.h"
 
 #include <sstream>
 #include <fstream>

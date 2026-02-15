@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Thread.h"
-#include "Chrono.h"
+#include "utl/chrono.h"
 #include <iostream>
 
 namespace vc64 {

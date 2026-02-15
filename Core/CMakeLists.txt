@@ -64,13 +64,14 @@ add_subdirectory(FileSystems)
 add_subdirectory(Media)
 add_subdirectory(Misc)
 add_subdirectory(Peripherals)
+add_subdirectory(ThirdParty)
 
 # Add libraries
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-target_link_libraries(VC64Core resid Threads::Threads)
-target_link_libraries(VC64Core lz4)
-target_link_libraries(VC64Headless lz4)
+target_link_libraries(VC64Core utlib resid Threads::Threads)
+# target_link_libraries(VC64Core lz4)
+# target_link_libraries(VC64Headless lz4)
 
 # Link zlib if available
 if(ZLIB_FOUND)

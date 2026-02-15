@@ -14,7 +14,7 @@
 
 #include "PowerPortTypes.h"
 #include "SubComponent.h"
-#include "Chrono.h"
+#include "utl/chrono.h"
 
 namespace vc64 {
 

@@ -15,9 +15,9 @@
 #include "AudioPortTypes.h"
 #include "SIDTypes.h"
 #include "SubComponent.h"
-#include "Animated.h"
 #include "AudioStream.h"
 #include "SampleRateDetector.h"
+#include "utl/wrappers/Animated.h"
 
 namespace vc64 {
 

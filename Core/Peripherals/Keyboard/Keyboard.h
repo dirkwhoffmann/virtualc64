@@ -16,7 +16,7 @@
 #include "SubComponent.h"
 #include "CmdQueue.h"
 #include "C64Key.h"
-#include "Buffer.h"
+#include "utl/storage/Buffer.h"
 
 namespace vc64 {
 

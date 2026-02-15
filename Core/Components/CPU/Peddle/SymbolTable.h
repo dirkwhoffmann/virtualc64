@@ -1,6 +1,3 @@
-#pragma once
-
-#include <string>
 // -----------------------------------------------------------------------------
 // This file is part of Peddle - A MOS 65xx CPU emulator
 //
