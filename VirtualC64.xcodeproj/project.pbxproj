@@ -216,7 +216,6 @@
 		50726F402961C97B0031F2F5 /* IOUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IOUtils.cpp */; };
 		50726F412961C97B0031F2F5 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B526158ABC005D3DA6 /* Checksum.cpp */; };
-		50726F442961C97B0031F2F5 /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
 		50726F452961C97B0031F2F5 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD303A28141F0B00D9A7A6 /* Buffer.cpp */; };
 		50726F462961C9940031F2F5 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
 		50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
@@ -421,7 +420,6 @@
 		50A92A282EC85E3D00F90519 /* TcpTransport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A92A262EC85E3C00F90519 /* TcpTransport.cpp */; };
 		50A9443B2DD7594700A242B0 /* DmaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A9443A2DD7594300A242B0 /* DmaView.swift */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
-		50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
 		50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA48B0292F8EC30084401D /* Peddle.cpp */; };
 		50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */; };
 		50ABD2872DD88EAC00456555 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ABD2862DD88EAC00456555 /* Dashboard.storyboard */; };
@@ -1067,8 +1065,6 @@
 		50A9443A2DD7594300A242B0 /* DmaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmaView.swift; sourceTree = "<group>"; };
 		50A9A086250DE90900723D32 /* PageFox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFox.cpp; sourceTree = "<group>"; };
 		50A9A087250DE90900723D32 /* PageFox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFox.h; sourceTree = "<group>"; };
-		50AA3EBF2616F60800C96EDB /* MemUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemUtils.h; sourceTree = "<group>"; };
-		50AA3EC02616F62500C96EDB /* MemUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MemUtils.cpp; sourceTree = "<group>"; };
 		50AA3EC2261718D700C96EDB /* RingBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
 		50AA48B0292F8EC30084401D /* Peddle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Peddle.cpp; sourceTree = "<group>"; };
 		50AA48B1292F8EC30084401D /* Peddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Peddle.h; sourceTree = "<group>"; };
@@ -1470,8 +1466,6 @@
 				50AD303B28141F0B00D9A7A6 /* Buffer.h */,
 				50AD303A28141F0B00D9A7A6 /* Buffer.cpp */,
 				50AA3EC2261718D700C96EDB /* RingBuffer.h */,
-				50AA3EBF2616F60800C96EDB /* MemUtils.h */,
-				50AA3EC02616F62500C96EDB /* MemUtils.cpp */,
 				5055D5B626158ABC005D3DA6 /* Checksum.h */,
 				5055D5B526158ABC005D3DA6 /* Checksum.cpp */,
 				50650F3C2DF094A3008AD660 /* Compression.h */,
@@ -2844,7 +2838,6 @@
 				500375072C23F26000979A1B /* C64Base.cpp in Sources */,
 				508C1E642C0B5EE80097473C /* KeyboardBase.cpp in Sources */,
 				50726F992961CA0D0031F2F5 /* MagicDesk.cpp in Sources */,
-				50726F442961C97B0031F2F5 /* MemUtils.cpp in Sources */,
 				50726F9B2961CA0D0031F2F5 /* Mach5.cpp in Sources */,
 				50726FB22961CA230031F2F5 /* FSDescriptors.cpp in Sources */,
 				5077AC692B5ACC5100EFAC85 /* config.cpp in Sources */,
@@ -3056,7 +3049,6 @@
 				5018BFAB24B4843200551848 /* Primitives.swift in Sources */,
 				50B579B7281436F6001D8621 /* StringUtils.cpp in Sources */,
 				50176C810A6F7357009E80BD /* EmulatorProxy.mm in Sources */,
-				50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				50A92A1B2EC753F000F90519 /* RpcHttpServer.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
@@ -3385,7 +3377,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = NO;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 6.0b1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
@@ -3442,7 +3434,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = YES_THIN;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 6.0b1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
@@ -3656,7 +3648,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				HEADER_SEARCH_PATHS = (
+					Core,
+					Core/utlib/include,
+					Core/RetroVault,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3676,7 +3673,12 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				HEADER_SEARCH_PATHS = (
+					Core,
+					Core/utlib/include,
+					Core/RetroVault,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

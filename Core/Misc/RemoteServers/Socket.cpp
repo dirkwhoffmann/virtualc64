@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Socket.h"
-#include "MemUtils.h"
+#include "utl/support/Bits.h"
 
 namespace vc64 {
 
@@ -104,7 +104,7 @@ Socket::connect(u16 port)
     struct sockaddr_in address;
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = util::bigEndian(port);
+    address.sin_port = utl::bigEndian(port);
     
     if (::connect(socket, (struct sockaddr *)&address, sizeof(address)) < 0) {
         throw AppError(Fault::SOCK_CANT_CONNECT);
@@ -120,7 +120,7 @@ Socket::bind(u16 port)
     struct sockaddr_in address;
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = util::bigEndian(port);
+    address.sin_port = utl::bigEndian(port);
     
     if (::bind(socket, (struct sockaddr *)&address, sizeof(address)) < 0) {
         throw AppError(Fault::SOCK_CANT_BIND);

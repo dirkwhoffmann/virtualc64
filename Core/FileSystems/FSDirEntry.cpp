@@ -38,7 +38,7 @@ FSDirEntry::init(const string &name, TSLink ref, isize numBlocks)
 bool
 FSDirEntry::isEmpty() const
 {
-    return util::isZero(&fileType, 30);
+    return utl::isZero(&fileType, 30);
 }
 
 const string

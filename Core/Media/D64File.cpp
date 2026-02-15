@@ -205,7 +205,7 @@ D64File::offset(Track track, Sector sector) const
 void
 D64File::dump(Track track, Sector sector) const
 {
-    util::hexdump(data.ptr + offset(track, sector), 256);
+    // util::hexdump(data.ptr + offset(track, sector), 256);
 }
 
 }

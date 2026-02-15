@@ -25,7 +25,7 @@ struct SyntaxError : public std::runtime_error {
 // The message listener
 void process(const void *listener, Message msg);
 
-class Headless : Wakeable {
+class Headless : utl::Wakeable {
 
     static const char *selfTestScript[];
     static const char *smokeTestScript[];

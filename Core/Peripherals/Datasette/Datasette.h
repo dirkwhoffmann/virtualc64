@@ -17,7 +17,7 @@
 #include "CmdQueue.h"
 #include "SubComponent.h"
 #include "Constants.h"
-#include "Chrono.h"
+#include "utl/chrono.h"
 
 namespace vc64 {
 

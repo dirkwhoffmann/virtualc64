@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Buffer.h"
 #include "IOUtils.h"
-#include "MemUtils.h"
+#include "utl/support/Bits.h"
 #include "Compression.h"
 #include <fstream>
 
@@ -218,13 +218,13 @@ Allocator<T>::copy(T *buf, isize offset, isize len) const
 template <class T> void
 Allocator<T>::patch(const u8 *seq, const u8 *subst)
 {
-    if (ptr) util::replace((u8 *)ptr, bytesize(), seq, subst);
+    if (ptr) utl::replace((u8 *)ptr, bytesize(), seq, subst);
 }
 
 template <class T> void
 Allocator<T>::patch(const char *seq, const char *subst)
 {
-    if (ptr) util::replace((char *)ptr, bytesize(), seq, subst);
+    if (ptr) utl::replace((char *)ptr, bytesize(), seq, subst);
 }
 
 template <class T> void
