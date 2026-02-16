@@ -15,7 +15,7 @@
 #include "SubComponent.h"
 #include "SIDTypes.h"
 #include "Constants.h"
-#include "Volume.h"
+#include "AudioVolume.h"
 #include "AudioPort.h"
 #include "SID.h"
 #include "utl/chrono.h"

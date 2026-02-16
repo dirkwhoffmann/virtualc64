@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "T64File.h"
-#include "FileSystem.h"
+#include "FileSystems/FileSystem.h"
 
 namespace vc64 {
 

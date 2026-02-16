@@ -12,15 +12,15 @@
 
 #pragma once
 
+#include "CoreObjectTypes.h"
 #include "Error.h"
 #include "CoreError.h"
-#include "Dumpable.h"
 #include "utl/abilities/Loggable.h"
 #include "utl/abilities/Reportable.h"
 
 namespace vc64 {
 
-class CoreObject : public Loggable, Reportable, public Dumpable {
+class CoreObject : public Loggable, Reportable {
     
 protected:
     
@@ -34,8 +34,9 @@ protected:
     
 public:
     
+    CoreObject() = default;
     virtual ~CoreObject() = default;
-    
+
     // Returns the name for this component
     virtual const char *objectName() const = 0;
     
@@ -53,7 +54,18 @@ public:
 protected:
 
     const Report makeReport(isize category) const override { return {{ "Name", objectName() }}; }
+    
+    
+    //
+    // Dumping state (deprecated, will be replaced by 'Reportable' API)
+    //
 
+public:
+
+    virtual void _dump(Category category, std::ostream &ss) const { }
+    
+    void dump(Category category, std::ostream &ss) const;
+    void dump(Category category) const;
 };
 
 }

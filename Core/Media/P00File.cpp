@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "P00File.h"
-#include "FileSystem.h"
+#include "FileSystems/FileSystem.h" // DEPRECATED
 #include "utl/io/Files.h"
 #include "utl/support/Strings.h"
 

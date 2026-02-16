@@ -45,7 +45,7 @@ class DiskCreator: DialogController {
             switch vc64.DriveType(rawValue: type) {
 
             case .VC1541, .VC1541C, .VC1541II:
-                capacity.lastItem?.title = "5.25\" SD"
+                capacity.lastItem?.title = "5.25\" DD"
 
             default:
                 fatalError()

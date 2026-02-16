@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FSDirEntry.h"
+#include "FileSystems/FSDirEntry.h"
 #include "C64.h"
 
 namespace vc64 {

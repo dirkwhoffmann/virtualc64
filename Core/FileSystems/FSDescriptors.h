@@ -14,7 +14,7 @@
 
 #include "CoreObject.h"
 #include "DiskTypes.h"
-#include "FSTypes.h"
+#include "FileSystems/FSTypes.h"
 
 namespace vc64 {
 

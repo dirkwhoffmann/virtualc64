@@ -10,7 +10,7 @@
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
 #import "DiskAnalyzer.h"
-#import "FileSystem.h"
+#import "FileSystems/FileSystem.h"
 #import "Texture.h"
 #import "MediaError.h"
 

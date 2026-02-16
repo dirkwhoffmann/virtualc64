@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "FSTypes.h"
+#include "FileSystems/FSTypes.h"
 #include "CoreObject.h"
 #include "PETName.h"
 #include "utl/storage/Buffer.h"

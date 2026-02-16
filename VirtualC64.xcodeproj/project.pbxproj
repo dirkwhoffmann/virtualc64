@@ -900,7 +900,7 @@
 		505F45772E9698F300418105 /* VideoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSettings.swift; sourceTree = "<group>"; };
 		505F457D2E96A41E00418105 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		50650F412DF0C7A5008AD660 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		50650F432DF0E715008AD660 /* DumpableTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DumpableTypes.h; sourceTree = "<group>"; };
+		50650F432DF0E715008AD660 /* CoreObjectTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreObjectTypes.h; sourceTree = "<group>"; };
 		50650F442DF23C81008AD660 /* Texture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		50650F452DF23C8A008AD660 /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardController.swift; sourceTree = "<group>"; };
@@ -1132,6 +1132,157 @@
 		50AC25C12F425DC80016265E /* MediaError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaError.h; sourceTree = "<group>"; };
 		50AC25C22F425DD10016265E /* MediaError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MediaError.cpp; sourceTree = "<group>"; };
 		50AC25C82F42FC120016265E /* ServerError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerError.h; sourceTree = "<group>"; };
+		50AC27082F436A2B0016265E /* BlockDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlockDevice.h; sourceTree = "<group>"; };
+		50AC27092F436A2B0016265E /* BlockDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlockDevice.cpp; sourceTree = "<group>"; };
+		50AC270A2F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC270B2F436A2B0016265E /* DeviceDescriptors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceDescriptors.h; sourceTree = "<group>"; };
+		50AC270C2F436A2B0016265E /* DeviceDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeviceDescriptors.cpp; sourceTree = "<group>"; };
+		50AC270D2F436A2B0016265E /* DeviceError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceError.h; sourceTree = "<group>"; };
+		50AC270E2F436A2B0016265E /* DeviceError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeviceError.cpp; sourceTree = "<group>"; };
+		50AC270F2F436A2B0016265E /* DeviceTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceTypes.h; sourceTree = "<group>"; };
+		50AC27102F436A2B0016265E /* LinearDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LinearDevice.h; sourceTree = "<group>"; };
+		50AC27112F436A2B0016265E /* LinearDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LinearDevice.cpp; sourceTree = "<group>"; };
+		50AC27122F436A2B0016265E /* TrackDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrackDevice.h; sourceTree = "<group>"; };
+		50AC27132F436A2B0016265E /* TrackDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TrackDevice.cpp; sourceTree = "<group>"; };
+		50AC27142F436A2B0016265E /* Volume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Volume.h; sourceTree = "<group>"; };
+		50AC27152F436A2B0016265E /* Volume.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Volume.cpp; sourceTree = "<group>"; };
+		50AC27172F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27182F436A2B0016265E /* FileSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
+		50AC27192F436A2B0016265E /* FileSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
+		50AC271A2F436A2B0016265E /* FileSystemLayer1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystemLayer1.cpp; sourceTree = "<group>"; };
+		50AC271B2F436A2B0016265E /* FileSystemLayer2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystemLayer2.cpp; sourceTree = "<group>"; };
+		50AC271C2F436A2B0016265E /* FileSystemLayer3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystemLayer3.cpp; sourceTree = "<group>"; };
+		50AC271D2F436A2B0016265E /* FSAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSAllocator.h; sourceTree = "<group>"; };
+		50AC271E2F436A2B0016265E /* FSAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSAllocator.cpp; sourceTree = "<group>"; };
+		50AC271F2F436A2B0016265E /* FSBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSBlock.h; sourceTree = "<group>"; };
+		50AC27202F436A2B0016265E /* FSBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSBlock.cpp; sourceTree = "<group>"; };
+		50AC27212F436A2B0016265E /* FSBootBlockImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSBootBlockImage.h; sourceTree = "<group>"; };
+		50AC27222F436A2B0016265E /* FSBootBlockImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSBootBlockImage.cpp; sourceTree = "<group>"; };
+		50AC27232F436A2B0016265E /* FSCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSCache.h; sourceTree = "<group>"; };
+		50AC27242F436A2B0016265E /* FSCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSCache.cpp; sourceTree = "<group>"; };
+		50AC27252F436A2B0016265E /* FSContract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSContract.h; sourceTree = "<group>"; };
+		50AC27262F436A2B0016265E /* FSContract.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSContract.cpp; sourceTree = "<group>"; };
+		50AC27272F436A2B0016265E /* FSDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDescriptor.h; sourceTree = "<group>"; };
+		50AC27282F436A2B0016265E /* FSDescriptor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDescriptor.cpp; sourceTree = "<group>"; };
+		50AC27292F436A2B0016265E /* FSDoctor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDoctor.h; sourceTree = "<group>"; };
+		50AC272A2F436A2B0016265E /* FSDoctor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDoctor.cpp; sourceTree = "<group>"; };
+		50AC272B2F436A2B0016265E /* FSExporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSExporter.h; sourceTree = "<group>"; };
+		50AC272C2F436A2B0016265E /* FSExporter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSExporter.cpp; sourceTree = "<group>"; };
+		50AC272D2F436A2B0016265E /* FSImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSImporter.h; sourceTree = "<group>"; };
+		50AC272E2F436A2B0016265E /* FSImporter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSImporter.cpp; sourceTree = "<group>"; };
+		50AC272F2F436A2B0016265E /* FSObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSObjects.h; sourceTree = "<group>"; };
+		50AC27302F436A2B0016265E /* FSObjects.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSObjects.cpp; sourceTree = "<group>"; };
+		50AC27312F436A2B0016265E /* FSService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSService.h; sourceTree = "<group>"; };
+		50AC27322F436A2B0016265E /* FSService.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSService.cpp; sourceTree = "<group>"; };
+		50AC27332F436A2B0016265E /* FSTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTree.h; sourceTree = "<group>"; };
+		50AC27342F436A2B0016265E /* FSTree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSTree.cpp; sourceTree = "<group>"; };
+		50AC27352F436A2B0016265E /* FSTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTypes.h; sourceTree = "<group>"; };
+		50AC27362F436A2B0016265E /* PosixAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PosixAdapter.h; sourceTree = "<group>"; };
+		50AC27372F436A2B0016265E /* PosixAdapter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PosixAdapter.cpp; sourceTree = "<group>"; };
+		50AC27392F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC273A2F436A2B0016265E /* FileSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
+		50AC273B2F436A2B0016265E /* FileSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
+		50AC273C2F436A2B0016265E /* FileSystemLayer1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystemLayer1.cpp; sourceTree = "<group>"; };
+		50AC273D2F436A2B0016265E /* FileSystemLayer2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystemLayer2.cpp; sourceTree = "<group>"; };
+		50AC273E2F436A2B0016265E /* FileSystemLayer3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystemLayer3.cpp; sourceTree = "<group>"; };
+		50AC273F2F436A2B0016265E /* FSAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSAllocator.h; sourceTree = "<group>"; };
+		50AC27402F436A2B0016265E /* FSAllocator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSAllocator.cpp; sourceTree = "<group>"; };
+		50AC27412F436A2B0016265E /* FSBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSBlock.h; sourceTree = "<group>"; };
+		50AC27422F436A2B0016265E /* FSBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSBlock.cpp; sourceTree = "<group>"; };
+		50AC27432F436A2B0016265E /* FSCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSCache.h; sourceTree = "<group>"; };
+		50AC27442F436A2B0016265E /* FSCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSCache.cpp; sourceTree = "<group>"; };
+		50AC27452F436A2B0016265E /* FSContract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSContract.h; sourceTree = "<group>"; };
+		50AC27462F436A2B0016265E /* FSContract.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSContract.cpp; sourceTree = "<group>"; };
+		50AC27472F436A2B0016265E /* FSDirEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDirEntry.h; sourceTree = "<group>"; };
+		50AC27482F436A2B0016265E /* FSDirEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDirEntry.cpp; sourceTree = "<group>"; };
+		50AC27492F436A2B0016265E /* FSDoctor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDoctor.h; sourceTree = "<group>"; };
+		50AC274A2F436A2B0016265E /* FSDoctor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDoctor.cpp; sourceTree = "<group>"; };
+		50AC274B2F436A2B0016265E /* FSExporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSExporter.h; sourceTree = "<group>"; };
+		50AC274C2F436A2B0016265E /* FSExporter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSExporter.cpp; sourceTree = "<group>"; };
+		50AC274D2F436A2B0016265E /* FSImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSImporter.h; sourceTree = "<group>"; };
+		50AC274E2F436A2B0016265E /* FSImporter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSImporter.cpp; sourceTree = "<group>"; };
+		50AC274F2F436A2B0016265E /* FSObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSObjects.h; sourceTree = "<group>"; };
+		50AC27502F436A2B0016265E /* FSObjects.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSObjects.cpp; sourceTree = "<group>"; };
+		50AC27512F436A2B0016265E /* FSService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSService.h; sourceTree = "<group>"; };
+		50AC27522F436A2B0016265E /* FSService.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSService.cpp; sourceTree = "<group>"; };
+		50AC27532F436A2B0016265E /* FSTraits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTraits.h; sourceTree = "<group>"; };
+		50AC27542F436A2B0016265E /* FSTraits.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSTraits.cpp; sourceTree = "<group>"; };
+		50AC27552F436A2B0016265E /* FSTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTypes.h; sourceTree = "<group>"; };
+		50AC27562F436A2B0016265E /* PosixAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PosixAdapter.h; sourceTree = "<group>"; };
+		50AC27572F436A2B0016265E /* PosixAdapter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PosixAdapter.cpp; sourceTree = "<group>"; };
+		50AC27592F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC275A2F436A2B0016265E /* FSError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSError.h; sourceTree = "<group>"; };
+		50AC275B2F436A2B0016265E /* FSError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSError.cpp; sourceTree = "<group>"; };
+		50AC275C2F436A2B0016265E /* PosixView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PosixView.h; sourceTree = "<group>"; };
+		50AC275D2F436A2B0016265E /* PosixView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PosixView.cpp; sourceTree = "<group>"; };
+		50AC275E2F436A2B0016265E /* PosixViewTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PosixViewTypes.h; sourceTree = "<group>"; };
+		50AC27602F436A2B0016265E /* ADFFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADFFile.h; sourceTree = "<group>"; };
+		50AC27612F436A2B0016265E /* ADFFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ADFFile.cpp; sourceTree = "<group>"; };
+		50AC27622F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27642F436A2B0016265E /* ADZFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADZFile.h; sourceTree = "<group>"; };
+		50AC27652F436A2B0016265E /* ADZFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ADZFile.cpp; sourceTree = "<group>"; };
+		50AC27662F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27682F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27692F436A2B0016265E /* D64File.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = D64File.h; sourceTree = "<group>"; };
+		50AC276A2F436A2B0016265E /* D64File.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = D64File.cpp; sourceTree = "<group>"; };
+		50AC276C2F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC276D2F436A2B0016265E /* DMSFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DMSFile.h; sourceTree = "<group>"; };
+		50AC276E2F436A2B0016265E /* DMSFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DMSFile.cpp; sourceTree = "<group>"; };
+		50AC27702F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27712F436A2B0016265E /* EADFFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EADFFile.h; sourceTree = "<group>"; };
+		50AC27722F436A2B0016265E /* EADFFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EADFFile.cpp; sourceTree = "<group>"; };
+		50AC27742F436A2B0016265E /* AmigaDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AmigaDecoder.h; sourceTree = "<group>"; };
+		50AC27752F436A2B0016265E /* AmigaDecoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AmigaDecoder.cpp; sourceTree = "<group>"; };
+		50AC27762F436A2B0016265E /* AmigaEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AmigaEncoder.h; sourceTree = "<group>"; };
+		50AC27772F436A2B0016265E /* AmigaEncoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AmigaEncoder.cpp; sourceTree = "<group>"; };
+		50AC27782F436A2B0016265E /* C64Decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Decoder.h; sourceTree = "<group>"; };
+		50AC27792F436A2B0016265E /* C64Decoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Decoder.cpp; sourceTree = "<group>"; };
+		50AC277A2F436A2B0016265E /* C64Encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Encoder.h; sourceTree = "<group>"; };
+		50AC277B2F436A2B0016265E /* C64Encoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Encoder.cpp; sourceTree = "<group>"; };
+		50AC277C2F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC277D2F436A2B0016265E /* DiskDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskDecoder.h; sourceTree = "<group>"; };
+		50AC277E2F436A2B0016265E /* DiskDecoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DiskDecoder.cpp; sourceTree = "<group>"; };
+		50AC277F2F436A2B0016265E /* DiskEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskEncoder.h; sourceTree = "<group>"; };
+		50AC27802F436A2B0016265E /* DOSDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DOSDecoder.h; sourceTree = "<group>"; };
+		50AC27812F436A2B0016265E /* DOSDecoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DOSDecoder.cpp; sourceTree = "<group>"; };
+		50AC27822F436A2B0016265E /* DOSEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DOSEncoder.h; sourceTree = "<group>"; };
+		50AC27832F436A2B0016265E /* DOSEncoder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DOSEncoder.cpp; sourceTree = "<group>"; };
+		50AC27842F436A2B0016265E /* GCR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCR.h; sourceTree = "<group>"; };
+		50AC27852F436A2B0016265E /* GCR.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GCR.cpp; sourceTree = "<group>"; };
+		50AC27862F436A2B0016265E /* MFM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFM.h; sourceTree = "<group>"; };
+		50AC27872F436A2B0016265E /* MFM.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MFM.cpp; sourceTree = "<group>"; };
+		50AC27892F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC278A2F436A2B0016265E /* EXEFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXEFile.h; sourceTree = "<group>"; };
+		50AC278B2F436A2B0016265E /* EXEFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EXEFile.cpp; sourceTree = "<group>"; };
+		50AC278D2F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC278E2F436A2B0016265E /* HDFFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDFFile.h; sourceTree = "<group>"; };
+		50AC278F2F436A2B0016265E /* HDFFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HDFFile.cpp; sourceTree = "<group>"; };
+		50AC27912F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27922F436A2B0016265E /* HDZFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDZFile.h; sourceTree = "<group>"; };
+		50AC27932F436A2B0016265E /* HDZFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HDZFile.cpp; sourceTree = "<group>"; };
+		50AC27952F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27962F436A2B0016265E /* IMGFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGFile.h; sourceTree = "<group>"; };
+		50AC27972F436A2B0016265E /* IMGFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IMGFile.cpp; sourceTree = "<group>"; };
+		50AC27992F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC279A2F436A2B0016265E /* STFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STFile.h; sourceTree = "<group>"; };
+		50AC279B2F436A2B0016265E /* STFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = STFile.cpp; sourceTree = "<group>"; };
+		50AC279D2F436A2B0016265E /* AnyImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyImage.h; sourceTree = "<group>"; };
+		50AC279E2F436A2B0016265E /* AnyImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyImage.cpp; sourceTree = "<group>"; };
+		50AC279F2F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27A02F436A2B0016265E /* DiskImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskImage.h; sourceTree = "<group>"; };
+		50AC27A12F436A2B0016265E /* DiskImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DiskImage.cpp; sourceTree = "<group>"; };
+		50AC27A22F436A2B0016265E /* FloppyDiskImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloppyDiskImage.h; sourceTree = "<group>"; };
+		50AC27A32F436A2B0016265E /* FloppyDiskImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FloppyDiskImage.cpp; sourceTree = "<group>"; };
+		50AC27A42F436A2B0016265E /* HardDiskImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HardDiskImage.h; sourceTree = "<group>"; };
+		50AC27A52F436A2B0016265E /* HardDiskImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HardDiskImage.cpp; sourceTree = "<group>"; };
+		50AC27A62F436A2B0016265E /* ImageError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageError.h; sourceTree = "<group>"; };
+		50AC27A72F436A2B0016265E /* ImageError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImageError.cpp; sourceTree = "<group>"; };
+		50AC27A82F436A2B0016265E /* ImageTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageTypes.h; sourceTree = "<group>"; };
+		50AC27AA2F436A2B0016265E /* AmigaFileSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AmigaFileSystem.h; sourceTree = "<group>"; };
+		50AC27AB2F436A2B0016265E /* CBMFileSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CBMFileSystem.h; sourceTree = "<group>"; };
+		50AC27AC2F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50AC27AD2F436A2B0016265E /* Devices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Devices.h; sourceTree = "<group>"; };
+		50AC27AE2F436A2B0016265E /* Images.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Images.h; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPort.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPort.h; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
@@ -1201,7 +1352,7 @@
 		50BF77D120309A2A006E000F /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		50C72DE31BC7BC8800F1863B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		50C72DE51BC7F42100F1863B /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		50C9318D2589E41D00D8BB94 /* Volume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Volume.h; sourceTree = "<group>"; };
+		50C9318D2589E41D00D8BB94 /* AudioVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioVolume.h; sourceTree = "<group>"; };
 		50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePadManager.swift; sourceTree = "<group>"; };
 		50CCC7FE2C10A99C0047ED17 /* PeddleDebuggerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleDebuggerTypes.h; sourceTree = "<group>"; };
 		50CCC7FF2C117ACF0047ED17 /* MediaFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MediaFile.cpp; sourceTree = "<group>"; };
@@ -1646,6 +1797,7 @@
 				50A2D7AF24AF945200671F38 /* Infrastructure */,
 				50E56AF529D489EA00EBCE76 /* Components */,
 				50ACF4DC256EB451003B5690 /* Ports */,
+				50AC27AF2F436A2B0016265E /* RetroVault */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C42C624AF29AB00E69CAE /* Media */,
 				5080501C2587A177004FE1F5 /* FileSystems */,
@@ -1872,7 +2024,7 @@
 				5078BEB6264D738000EDA161 /* CMakeLists.txt */,
 				50316E4A2E9A41C200BDF90F /* AudioStream.h */,
 				50316E4B2E9A41CC00BDF90F /* AudioStream.cpp */,
-				50C9318D2589E41D00D8BB94 /* Volume.h */,
+				50C9318D2589E41D00D8BB94 /* AudioVolume.h */,
 				50E806C125A1F1C500F08732 /* SIDTypes.h */,
 				506A8A8B2B89DAF800B95383 /* SID.h */,
 				50A194982BDA82720046849E /* SIDBase.cpp */,
@@ -2151,11 +2303,11 @@
 				5093D6A824B19E9200BDF924 /* Serializable.h */,
 				506A8A872B88D00200B95383 /* Configurable.h */,
 				506A8A862B88D00200B95383 /* Configurable.cpp */,
-				50650F432DF0E715008AD660 /* DumpableTypes.h */,
 				50EFB0C32C18D6200013B73C /* Dumpable.h */,
 				50EFB0C22C18D6200013B73C /* Dumpable.cpp */,
 				50BB3E902B7A232800B2D87B /* Inspectable.h */,
 				50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */,
+				50650F432DF0E715008AD660 /* CoreObjectTypes.h */,
 				504C42EC24AF29AB00E69CAE /* CoreObject.h */,
 				504C42ED24AF29AB00E69CAE /* CoreObject.cpp */,
 				5066B4152C7CCFA0003AEEE8 /* CoreComponentTypes.h */,
@@ -2468,6 +2620,292 @@
 				50AC258C2F41A8760016265E /* thirdparty */,
 			);
 			path = utlib;
+			sourceTree = "<group>";
+		};
+		50AC27162F436A2B0016265E /* Devices */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27082F436A2B0016265E /* BlockDevice.h */,
+				50AC27092F436A2B0016265E /* BlockDevice.cpp */,
+				50AC270A2F436A2B0016265E /* CMakeLists.txt */,
+				50AC270B2F436A2B0016265E /* DeviceDescriptors.h */,
+				50AC270C2F436A2B0016265E /* DeviceDescriptors.cpp */,
+				50AC270D2F436A2B0016265E /* DeviceError.h */,
+				50AC270E2F436A2B0016265E /* DeviceError.cpp */,
+				50AC270F2F436A2B0016265E /* DeviceTypes.h */,
+				50AC27102F436A2B0016265E /* LinearDevice.h */,
+				50AC27112F436A2B0016265E /* LinearDevice.cpp */,
+				50AC27122F436A2B0016265E /* TrackDevice.h */,
+				50AC27132F436A2B0016265E /* TrackDevice.cpp */,
+				50AC27142F436A2B0016265E /* Volume.h */,
+				50AC27152F436A2B0016265E /* Volume.cpp */,
+			);
+			path = Devices;
+			sourceTree = "<group>";
+		};
+		50AC27382F436A2B0016265E /* Amiga */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27172F436A2B0016265E /* CMakeLists.txt */,
+				50AC27182F436A2B0016265E /* FileSystem.h */,
+				50AC27192F436A2B0016265E /* FileSystem.cpp */,
+				50AC271A2F436A2B0016265E /* FileSystemLayer1.cpp */,
+				50AC271B2F436A2B0016265E /* FileSystemLayer2.cpp */,
+				50AC271C2F436A2B0016265E /* FileSystemLayer3.cpp */,
+				50AC271D2F436A2B0016265E /* FSAllocator.h */,
+				50AC271E2F436A2B0016265E /* FSAllocator.cpp */,
+				50AC271F2F436A2B0016265E /* FSBlock.h */,
+				50AC27202F436A2B0016265E /* FSBlock.cpp */,
+				50AC27212F436A2B0016265E /* FSBootBlockImage.h */,
+				50AC27222F436A2B0016265E /* FSBootBlockImage.cpp */,
+				50AC27232F436A2B0016265E /* FSCache.h */,
+				50AC27242F436A2B0016265E /* FSCache.cpp */,
+				50AC27252F436A2B0016265E /* FSContract.h */,
+				50AC27262F436A2B0016265E /* FSContract.cpp */,
+				50AC27272F436A2B0016265E /* FSDescriptor.h */,
+				50AC27282F436A2B0016265E /* FSDescriptor.cpp */,
+				50AC27292F436A2B0016265E /* FSDoctor.h */,
+				50AC272A2F436A2B0016265E /* FSDoctor.cpp */,
+				50AC272B2F436A2B0016265E /* FSExporter.h */,
+				50AC272C2F436A2B0016265E /* FSExporter.cpp */,
+				50AC272D2F436A2B0016265E /* FSImporter.h */,
+				50AC272E2F436A2B0016265E /* FSImporter.cpp */,
+				50AC272F2F436A2B0016265E /* FSObjects.h */,
+				50AC27302F436A2B0016265E /* FSObjects.cpp */,
+				50AC27312F436A2B0016265E /* FSService.h */,
+				50AC27322F436A2B0016265E /* FSService.cpp */,
+				50AC27332F436A2B0016265E /* FSTree.h */,
+				50AC27342F436A2B0016265E /* FSTree.cpp */,
+				50AC27352F436A2B0016265E /* FSTypes.h */,
+				50AC27362F436A2B0016265E /* PosixAdapter.h */,
+				50AC27372F436A2B0016265E /* PosixAdapter.cpp */,
+			);
+			path = Amiga;
+			sourceTree = "<group>";
+		};
+		50AC27582F436A2B0016265E /* CBM */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27392F436A2B0016265E /* CMakeLists.txt */,
+				50AC273A2F436A2B0016265E /* FileSystem.h */,
+				50AC273B2F436A2B0016265E /* FileSystem.cpp */,
+				50AC273C2F436A2B0016265E /* FileSystemLayer1.cpp */,
+				50AC273D2F436A2B0016265E /* FileSystemLayer2.cpp */,
+				50AC273E2F436A2B0016265E /* FileSystemLayer3.cpp */,
+				50AC273F2F436A2B0016265E /* FSAllocator.h */,
+				50AC27402F436A2B0016265E /* FSAllocator.cpp */,
+				50AC27412F436A2B0016265E /* FSBlock.h */,
+				50AC27422F436A2B0016265E /* FSBlock.cpp */,
+				50AC27432F436A2B0016265E /* FSCache.h */,
+				50AC27442F436A2B0016265E /* FSCache.cpp */,
+				50AC27452F436A2B0016265E /* FSContract.h */,
+				50AC27462F436A2B0016265E /* FSContract.cpp */,
+				50AC27472F436A2B0016265E /* FSDirEntry.h */,
+				50AC27482F436A2B0016265E /* FSDirEntry.cpp */,
+				50AC27492F436A2B0016265E /* FSDoctor.h */,
+				50AC274A2F436A2B0016265E /* FSDoctor.cpp */,
+				50AC274B2F436A2B0016265E /* FSExporter.h */,
+				50AC274C2F436A2B0016265E /* FSExporter.cpp */,
+				50AC274D2F436A2B0016265E /* FSImporter.h */,
+				50AC274E2F436A2B0016265E /* FSImporter.cpp */,
+				50AC274F2F436A2B0016265E /* FSObjects.h */,
+				50AC27502F436A2B0016265E /* FSObjects.cpp */,
+				50AC27512F436A2B0016265E /* FSService.h */,
+				50AC27522F436A2B0016265E /* FSService.cpp */,
+				50AC27532F436A2B0016265E /* FSTraits.h */,
+				50AC27542F436A2B0016265E /* FSTraits.cpp */,
+				50AC27552F436A2B0016265E /* FSTypes.h */,
+				50AC27562F436A2B0016265E /* PosixAdapter.h */,
+				50AC27572F436A2B0016265E /* PosixAdapter.cpp */,
+			);
+			path = CBM;
+			sourceTree = "<group>";
+		};
+		50AC275F2F436A2B0016265E /* FileSystems */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27382F436A2B0016265E /* Amiga */,
+				50AC27582F436A2B0016265E /* CBM */,
+				50AC27592F436A2B0016265E /* CMakeLists.txt */,
+				50AC275A2F436A2B0016265E /* FSError.h */,
+				50AC275B2F436A2B0016265E /* FSError.cpp */,
+				50AC275C2F436A2B0016265E /* PosixView.h */,
+				50AC275D2F436A2B0016265E /* PosixView.cpp */,
+				50AC275E2F436A2B0016265E /* PosixViewTypes.h */,
+			);
+			path = FileSystems;
+			sourceTree = "<group>";
+		};
+		50AC27632F436A2B0016265E /* ADF */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27602F436A2B0016265E /* ADFFile.h */,
+				50AC27612F436A2B0016265E /* ADFFile.cpp */,
+				50AC27622F436A2B0016265E /* CMakeLists.txt */,
+			);
+			path = ADF;
+			sourceTree = "<group>";
+		};
+		50AC27672F436A2B0016265E /* ADZ */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27642F436A2B0016265E /* ADZFile.h */,
+				50AC27652F436A2B0016265E /* ADZFile.cpp */,
+				50AC27662F436A2B0016265E /* CMakeLists.txt */,
+			);
+			path = ADZ;
+			sourceTree = "<group>";
+		};
+		50AC276B2F436A2B0016265E /* D64 */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27682F436A2B0016265E /* CMakeLists.txt */,
+				50AC27692F436A2B0016265E /* D64File.h */,
+				50AC276A2F436A2B0016265E /* D64File.cpp */,
+			);
+			path = D64;
+			sourceTree = "<group>";
+		};
+		50AC276F2F436A2B0016265E /* DMS */ = {
+			isa = PBXGroup;
+			children = (
+				50AC276C2F436A2B0016265E /* CMakeLists.txt */,
+				50AC276D2F436A2B0016265E /* DMSFile.h */,
+				50AC276E2F436A2B0016265E /* DMSFile.cpp */,
+			);
+			path = DMS;
+			sourceTree = "<group>";
+		};
+		50AC27732F436A2B0016265E /* EADF */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27702F436A2B0016265E /* CMakeLists.txt */,
+				50AC27712F436A2B0016265E /* EADFFile.h */,
+				50AC27722F436A2B0016265E /* EADFFile.cpp */,
+			);
+			path = EADF;
+			sourceTree = "<group>";
+		};
+		50AC27882F436A2B0016265E /* Encoders */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27742F436A2B0016265E /* AmigaDecoder.h */,
+				50AC27752F436A2B0016265E /* AmigaDecoder.cpp */,
+				50AC27762F436A2B0016265E /* AmigaEncoder.h */,
+				50AC27772F436A2B0016265E /* AmigaEncoder.cpp */,
+				50AC27782F436A2B0016265E /* C64Decoder.h */,
+				50AC27792F436A2B0016265E /* C64Decoder.cpp */,
+				50AC277A2F436A2B0016265E /* C64Encoder.h */,
+				50AC277B2F436A2B0016265E /* C64Encoder.cpp */,
+				50AC277C2F436A2B0016265E /* CMakeLists.txt */,
+				50AC277D2F436A2B0016265E /* DiskDecoder.h */,
+				50AC277E2F436A2B0016265E /* DiskDecoder.cpp */,
+				50AC277F2F436A2B0016265E /* DiskEncoder.h */,
+				50AC27802F436A2B0016265E /* DOSDecoder.h */,
+				50AC27812F436A2B0016265E /* DOSDecoder.cpp */,
+				50AC27822F436A2B0016265E /* DOSEncoder.h */,
+				50AC27832F436A2B0016265E /* DOSEncoder.cpp */,
+				50AC27842F436A2B0016265E /* GCR.h */,
+				50AC27852F436A2B0016265E /* GCR.cpp */,
+				50AC27862F436A2B0016265E /* MFM.h */,
+				50AC27872F436A2B0016265E /* MFM.cpp */,
+			);
+			path = Encoders;
+			sourceTree = "<group>";
+		};
+		50AC278C2F436A2B0016265E /* EXE */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27892F436A2B0016265E /* CMakeLists.txt */,
+				50AC278A2F436A2B0016265E /* EXEFile.h */,
+				50AC278B2F436A2B0016265E /* EXEFile.cpp */,
+			);
+			path = EXE;
+			sourceTree = "<group>";
+		};
+		50AC27902F436A2B0016265E /* HDF */ = {
+			isa = PBXGroup;
+			children = (
+				50AC278D2F436A2B0016265E /* CMakeLists.txt */,
+				50AC278E2F436A2B0016265E /* HDFFile.h */,
+				50AC278F2F436A2B0016265E /* HDFFile.cpp */,
+			);
+			path = HDF;
+			sourceTree = "<group>";
+		};
+		50AC27942F436A2B0016265E /* HDZ */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27912F436A2B0016265E /* CMakeLists.txt */,
+				50AC27922F436A2B0016265E /* HDZFile.h */,
+				50AC27932F436A2B0016265E /* HDZFile.cpp */,
+			);
+			path = HDZ;
+			sourceTree = "<group>";
+		};
+		50AC27982F436A2B0016265E /* IMG */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27952F436A2B0016265E /* CMakeLists.txt */,
+				50AC27962F436A2B0016265E /* IMGFile.h */,
+				50AC27972F436A2B0016265E /* IMGFile.cpp */,
+			);
+			path = IMG;
+			sourceTree = "<group>";
+		};
+		50AC279C2F436A2B0016265E /* ST */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27992F436A2B0016265E /* CMakeLists.txt */,
+				50AC279A2F436A2B0016265E /* STFile.h */,
+				50AC279B2F436A2B0016265E /* STFile.cpp */,
+			);
+			path = ST;
+			sourceTree = "<group>";
+		};
+		50AC27A92F436A2B0016265E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27632F436A2B0016265E /* ADF */,
+				50AC27672F436A2B0016265E /* ADZ */,
+				50AC276B2F436A2B0016265E /* D64 */,
+				50AC276F2F436A2B0016265E /* DMS */,
+				50AC27732F436A2B0016265E /* EADF */,
+				50AC27882F436A2B0016265E /* Encoders */,
+				50AC278C2F436A2B0016265E /* EXE */,
+				50AC27902F436A2B0016265E /* HDF */,
+				50AC27942F436A2B0016265E /* HDZ */,
+				50AC27982F436A2B0016265E /* IMG */,
+				50AC279C2F436A2B0016265E /* ST */,
+				50AC279D2F436A2B0016265E /* AnyImage.h */,
+				50AC279E2F436A2B0016265E /* AnyImage.cpp */,
+				50AC279F2F436A2B0016265E /* CMakeLists.txt */,
+				50AC27A02F436A2B0016265E /* DiskImage.h */,
+				50AC27A12F436A2B0016265E /* DiskImage.cpp */,
+				50AC27A22F436A2B0016265E /* FloppyDiskImage.h */,
+				50AC27A32F436A2B0016265E /* FloppyDiskImage.cpp */,
+				50AC27A42F436A2B0016265E /* HardDiskImage.h */,
+				50AC27A52F436A2B0016265E /* HardDiskImage.cpp */,
+				50AC27A62F436A2B0016265E /* ImageError.h */,
+				50AC27A72F436A2B0016265E /* ImageError.cpp */,
+				50AC27A82F436A2B0016265E /* ImageTypes.h */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		50AC27AF2F436A2B0016265E /* RetroVault */ = {
+			isa = PBXGroup;
+			children = (
+				50AC27162F436A2B0016265E /* Devices */,
+				50AC275F2F436A2B0016265E /* FileSystems */,
+				50AC27A92F436A2B0016265E /* Images */,
+				50AC27AA2F436A2B0016265E /* AmigaFileSystem.h */,
+				50AC27AB2F436A2B0016265E /* CBMFileSystem.h */,
+				50AC27AC2F436A2B0016265E /* CMakeLists.txt */,
+				50AC27AD2F436A2B0016265E /* Devices.h */,
+				50AC27AE2F436A2B0016265E /* Images.h */,
+			);
+			path = RetroVault;
 			sourceTree = "<group>";
 		};
 		50ACF4DC256EB451003B5690 /* Ports */ = {

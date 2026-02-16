@@ -117,6 +117,7 @@ extern debugflag FS_DEBUG;
 extern debugflag PAR_DEBUG;
 
 // Media
+extern debugflag IMG_DEBUG;
 extern debugflag CRT_DEBUG;
 extern debugflag FILE_DEBUG;
 

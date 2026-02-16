@@ -11,8 +11,8 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FSBlock.h"
-#include "FileSystem.h"
+#include "FileSystems/FSBlock.h"
+#include "FileSystems/FileSystem.h"
 
 namespace vc64 {
 

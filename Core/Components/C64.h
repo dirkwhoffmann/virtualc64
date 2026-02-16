@@ -49,16 +49,16 @@
 
 // Media files
 #include "Snapshot.h"
-#include "T64File.h"
-#include "D64File.h"
-#include "G64File.h"
-#include "PRGFile.h"
-#include "Folder.h"
-#include "P00File.h"
-#include "RomFile.h"
-#include "TAPFile.h"
-#include "CRTFile.h"
-#include "FileSystem.h"
+#include "Media/T64File.h"
+#include "Media/D64File.h"
+#include "Media/G64File.h"
+#include "Media/PRGFile.h"
+#include "Media/Folder.h"
+#include "Media/P00File.h"
+#include "Media/RomFile.h"
+#include "Media/TAPFile.h"
+#include "Media/CRTFile.h"
+#include "FileSystems/FileSystem.h" // DEPRECATED
 
 // Misc
 #include "Host.h"

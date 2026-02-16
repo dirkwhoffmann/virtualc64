@@ -11,18 +11,18 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "AnyFile.h"
-#include "CRTFile.h"
-#include "D64File.h"
-#include "Folder.h"
-#include "G64File.h"
-#include "P00File.h"
-#include "PRGFile.h"
-#include "RomFile.h"
-#include "Script.h"
-#include "Snapshot.h"
-#include "T64File.h"
-#include "TAPFile.h"
+#include "Media/AnyFile.h"
+#include "Media/CRTFile.h"
+#include "Media/D64File.h"
+#include "Media/Folder.h"
+#include "Media/G64File.h"
+#include "Media/P00File.h"
+#include "Media/PRGFile.h"
+#include "Media/RomFile.h"
+#include "Media/Script.h"
+#include "Media/Snapshot.h"
+#include "Media/T64File.h"
+#include "Media/TAPFile.h"
 
 namespace vc64 {
 

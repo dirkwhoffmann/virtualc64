@@ -85,6 +85,7 @@ DEBUG_CHANNEL(FS_DEBUG,         "File system");
 DEBUG_CHANNEL(PAR_DEBUG,        "Parallel port");
 
 // Media
+DEBUG_CHANNEL(IMG_DEBUG,        "Disk images");
 DEBUG_CHANNEL(CRT_DEBUG,        "Cartridges");
 DEBUG_CHANNEL(FILE_DEBUG,       "Media files");
 

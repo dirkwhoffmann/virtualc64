@@ -35,4 +35,16 @@ CoreObject::prefix(LogLevel level, const std::source_location &loc) const
     }
 }
 
+void
+CoreObject::dump(Category category, std::ostream &ss) const
+{
+    _dump(category, ss);
+}
+
+void
+CoreObject::dump(Category category) const
+{
+    dump(category, std::cout);
+}
+
 }

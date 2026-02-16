@@ -12,11 +12,11 @@
 
 #pragma once
 
-#include "FSDescriptors.h"
-#include "FSBlock.h"
-#include "FSDirEntry.h"
-#include "D64File.h"
-#include "AnyCollection.h"
+#include "FileSystems/FSDescriptors.h"
+#include "FileSystems/FSBlock.h"
+#include "FileSystems/FSDirEntry.h"
+#include "Media/D64File.h"
+#include "Media/AnyCollection.h"
 
 namespace vc64 {
 

@@ -14,7 +14,7 @@
 
 #include "DiskTypes.h"
 #include "DiskAnalyzerTypes.h"
-#include "FSTypes.h"
+#include "FileSystems/FSTypes.h"
 #include "SubComponent.h"
 #include "PETName.h"
 

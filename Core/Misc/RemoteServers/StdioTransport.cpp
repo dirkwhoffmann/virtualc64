@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "StdioTransport.h"
+#include <iostream>
 
 #ifdef _WIN32
 

@@ -10,6 +10,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #pragma once
 
 #include "DumpableTypes.h"
@@ -29,3 +31,6 @@ public:
 };
 
 }
+
+#endif
+

@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "PRGFile.h"
-#include "FileSystem.h"
+#include "FileSystems/FileSystem.h" // DEPRECATED
 
 namespace vc64 {
 

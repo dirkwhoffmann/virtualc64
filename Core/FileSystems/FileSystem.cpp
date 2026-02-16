@@ -11,12 +11,13 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FileSystem.h"
+#include "FileSystems/FileSystem.h" // DEPRECATED
 #include "Disk.h"
-#include "Folder.h"
-#include "PRGFile.h"
-#include "P00File.h"
-#include "T64File.h"
+#include "Media/Folder.h"
+#include "Media/PRGFile.h"
+#include "Media/P00File.h"
+#include "Media/T64File.h"
+#include "Media/D64File.h"
 
 #include <limits.h>
 #include <set>

@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "FSTypes.h"
+#include "FileSystems/FSTypes.h"
 #include "PETName.h"
 
 namespace vc64 {

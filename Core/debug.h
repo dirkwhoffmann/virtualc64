@@ -79,6 +79,7 @@ constexpr long FS_DEBUG        = 0;
 constexpr long PAR_DEBUG       = 0;
 
 // Media
+constexpr long IMG_DEBUG       = 0;
 constexpr long CRT_DEBUG       = 0;
 constexpr long FILE_DEBUG      = 0;
 
@@ -119,6 +120,9 @@ constexpr long CRT_UNKNOWN      = 0;
 constexpr long CRT_UNSUPPORTED  = 0;
 constexpr long RECORDING_ERROR  = 0;
 constexpr long ZLIB_ERROR       = 0;
+constexpr long FS_WRONG_BSIZE    = 0;
+constexpr long FS_WRONG_CAPACITY = 0;
+constexpr long FS_WRONG_DOS_TYPE = 0;
 
 }
 
@@ -197,6 +201,7 @@ extern long FS_DEBUG;
 extern long PAR_DEBUG;
 
 // Media
+extern long IMG_DEBUG;
 extern long CRT_DEBUG;
 extern long FILE_DEBUG;
 
