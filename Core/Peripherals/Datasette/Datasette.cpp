@@ -312,6 +312,61 @@ Datasette::schedulePulse(isize nr)
     nextFallingEdge = pulses[nr].cycles;
 }
 
+std::unique_ptr<TAPFile>
+Datasette::makeTAP() const
+{
+    if (!hasTape()) return nullptr;
+
+    // Pulses in type-1 format
+    std::vector<u8> pulseVec;
+
+    for (isize i = 0; i < numPulses; i++) {
+
+        Pulse &p = pulses[i];
+
+        if (p.cycles / 8 > 255 || p.cycles % 8 != 0) {
+
+            pulseVec.push_back(0);
+            pulseVec.push_back(BYTE0(p.cycles));
+            pulseVec.push_back(BYTE1(p.cycles));
+            pulseVec.push_back(BYTE2(p.cycles));
+
+        } else {
+
+            pulseVec.push_back(u8(p.cycles / 8));
+        }
+    }
+
+    Buffer<u8> buffer(0x14 + (isize)pulseVec.size(), 0);
+
+    u8 *ptr = buffer.ptr;
+
+    // TAP signature
+    std::strcpy(reinterpret_cast<char *>(ptr), "C64-TAPE-RAW");
+
+    // TAP version
+    ptr[0x0C] = 0x01;
+
+    // Data length
+    ptr[0x10] = BYTE0(pulseVec.size());
+    ptr[0x11] = BYTE1(pulseVec.size());
+    ptr[0x12] = BYTE2(pulseVec.size());
+    ptr[0x13] = BYTE3(pulseVec.size());
+
+    // Pulse data
+    std::memcpy(ptr + 0x14, pulseVec.data(), pulseVec.size());
+
+    return std::make_unique<TAPFile>(buffer.ptr, buffer.size);
+}
+
+void
+Datasette::exportTAP(const fs::path &path) const
+{
+    auto tap = makeTAP();
+    tap->writeToFile(path);
+}
+
+/*
 MediaFile *
 Datasette::exportTAP() const
 {
@@ -357,5 +412,6 @@ Datasette::exportTAP() const
 
     return new TAPFile(buffer.ptr, buffer.size);
 }
+*/
 
 }

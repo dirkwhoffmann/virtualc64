@@ -600,9 +600,9 @@ struct GuardInfo {
 - (void)pressPlay;
 - (void)pressStop;
 - (void)rewind;
-- (void)insertTape:(MediaFileProxy *)tape __attribute__((deprecated("MediaFile will go away.")));
 - (void)ejectTape;
-- (MediaFileProxy *) exportTAP __attribute__((deprecated("MediaFile will go away.")));
+- (void)insertTape:(NSURL *)url exception:(ExceptionWrapper *)ex;
+- (void)exportTape:(NSURL *)url exception:(ExceptionWrapper *)ex;
 
 @end
 

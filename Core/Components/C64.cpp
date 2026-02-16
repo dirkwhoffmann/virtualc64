@@ -1471,12 +1471,8 @@ C64::saveWorkspace(const fs::path &path)
         if (datasette.hasTape()) {
 
             try {
-
-                if (auto tap = datasette.exportTAP(); tap) {
-
-                    tap->writeToFile(path / file);
-                    ss << "try " << name << " insert " << file << "\n";
-                }
+                datasette.exportTAP(path / file);
+                ss << "try " << name << " insert " << file << "\n";
 
             } catch (...) { }
 

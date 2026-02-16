@@ -954,8 +954,7 @@ extension MyController: NSMenuItemValidation {
 
                     do {
 
-                        let tap = emu.datasette.exportTAP()
-                        try tap?.writeToFile(url: url)
+                        try emu.datasette.exportTape(url)
 
                     } catch {
 

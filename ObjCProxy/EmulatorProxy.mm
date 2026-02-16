@@ -1065,27 +1065,19 @@ NSString *EventSlotName(EventSlot slot)
     [self emu]->put(Cmd::DATASETTE_REWIND);
 }
 
-- (void)insertTape:(MediaFileProxy *)proxy
-{
-    [self emu]->datasette.insertTape(*(MediaFile *)proxy->obj);
-}
-
 - (void)ejectTape
 {
     [self emu]->datasette.ejectTape();
 }
 
-- (MediaFileProxy *) exportTAP
+- (void)insertTape:(NSURL *)url
 {
-    try {
+    [self emu]->datasette.insertTape(fs::path(url.fileSystemRepresentation));
+}
 
-        MediaFile *tap = [self emu]->datasette.exportTAP();
-        return [MediaFileProxy make:tap];
-
-    } catch (std::exception &error) {
-
-        return nil;
-    }
+- (void)exportTape:(NSURL *)url
+{
+    [self emu]->datasette.exportTAP(fs::path(url.fileSystemRepresentation));
 }
 
 @end

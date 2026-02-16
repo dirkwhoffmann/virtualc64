@@ -234,6 +234,27 @@ class MediaManager {
         // None of the allowed types matched the file
         throw AppError(what: "The type of this file is not known to the emulator.")
     }
+
+    //
+    // Tapes
+    //
+
+    func insertTape(url: URL, options: [Option] = [.remember]) throws {
+
+        guard let emu = emu else { return }
+        
+        try emu.datasette.insertTape(url)
+     
+        if options.contains(.remember) {
+            MediaManager.noteNewRecentlyInsertedTapeURL(url)
+        }
+                
+        if options.contains(.autostart) {
+            mycontroller.keyboard.type("LOAD\n")
+            emu.datasette.pressPlay()
+        }
+    }
+    
     
     //
     // Mounting media files
@@ -308,6 +329,7 @@ class MediaManager {
                 debug(.media, "CRT")
                 try emu.expansionport.attachCartridge(proxy, reset: true)
                 
+                /*
             case .TAP:
                 
                 debug(.media, "TAP")
@@ -317,6 +339,7 @@ class MediaManager {
                     mycontroller.keyboard.type("LOAD\n")
                     emu.datasette.pressPlay()
                 }
+                */
                 
             case .T64, .PRG, .P00, .D64, .G64, .FOLDER:
                 
@@ -354,6 +377,7 @@ class MediaManager {
                 debug(.media, "CRT")
                 try emu.expansionport.attachCartridge(proxy, reset: true)
                 
+                /*
             case .TAP:
                 
                 debug(.media, "TAP")
@@ -363,6 +387,7 @@ class MediaManager {
                     mycontroller.keyboard.type("load\n")
                     emu.datasette.pressPlay()
                 }
+                */
                 
             case .PRG, .P00, .T64:
                 

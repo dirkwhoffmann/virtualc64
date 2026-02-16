@@ -216,6 +216,24 @@ extension EmulatorProxy {
 }
 
 @MainActor
+extension DatasetteProxy {
+    
+    func insertTape(_ url: URL) throws {
+        
+        let exc = ExceptionWrapper()
+        insertTape(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+
+    func exportTape(_ url: URL) throws {
+        
+        let exc = ExceptionWrapper()
+        exportTape(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+}
+
+@MainActor
 extension ExpansionPortProxy {
     
     func attachCartridge(_ proxy: MediaFileProxy, reset: Bool) throws {

@@ -499,9 +499,9 @@ struct DatasetteAPI : public API {
      */
     void ejectTape();
 
-    /** @brief  Export cartridge
+    /** @brief  Export tape in TAP format
      */
-    [[deprecated]] MediaFile *exportTAP() const;
+    void exportTAP(const fs::path &path) const;
 };
 
 
