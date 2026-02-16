@@ -210,14 +210,14 @@ Drive::checkOption(Opt opt, i64 value)
         case Opt::DRV_TYPE:
 
             if (!DriveTypeEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, DriveTypeEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, DriveTypeEnum::keyList());
             }
             return;
 
         case Opt::DRV_RAM:
 
             if (!DriveRamEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, DriveRamEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, DriveRamEnum::keyList());
             }
             return;
 
@@ -229,14 +229,14 @@ Drive::checkOption(Opt opt, i64 value)
         case Opt::DRV_PARCABLE:
 
             if (!ParCableTypeEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, ParCableTypeEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, ParCableTypeEnum::keyList());
             }
             return;
 
         case Opt::DRV_CONNECT:
 
             if (value && !canConnect()) {
-                throw AppError(Fault::ROM_DRIVE_MISSING);
+                throw CoreError(CoreError::ROM_DRIVE_MISSING);
             }
             return;
 
@@ -254,7 +254,7 @@ Drive::checkOption(Opt opt, i64 value)
             return;
 
         default:
-            throw AppError(Fault::OPT_UNSUPPORTED);
+            throw CoreError(CoreError::OPT_UNSUPPORTED);
     }
 }
 

@@ -65,10 +65,6 @@ CoreError::CoreError(long code, const string &s) : Error(code)
             set_msg("Syntax error" + (s.empty() ? "" : " in line " + s + "."));
             break;
 
-        case CPU_UNSUPPORTED:
-            set_msg("CPU revision is not supported yet.");
-            break;
-
         case GUARD_NOT_FOUND:
             set_msg("Entry " + s + " not found.");
             break;

@@ -42,7 +42,7 @@ Emulator::~Emulator()
 void
 Emulator::launch(const void *listener, Callback *func)
 {
-    if (FORCE_LAUNCH_ERROR) throw AppError(Fault::LAUNCH);
+    if (FORCE_LAUNCH_ERROR) throw CoreError(CoreError::LAUNCH);
 
     // Connect the listener to the message queue of the main instance
     if (listener && func) { main.msgQueue.setListener(listener, func); }
@@ -60,7 +60,7 @@ Emulator::initialize()
     baseTime = utl::Time::now();
 
     // Make sure this function is only called once
-    if (isInitialized()) throw AppError(Fault::LAUNCH, "The emulator is already initialized.");
+    if (isInitialized()) throw CoreError(CoreError::LAUNCH, "The emulator is already initialized.");
 
     // Initialize all components
     main.initialize();
@@ -492,7 +492,7 @@ Emulator::getDebugVariable(DebugFlag flag)
 {
 #ifdef NDEBUG
 
-    throw AppError(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
+    throw CoreError(CoreError::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
 
 #else
 
@@ -572,7 +572,7 @@ Emulator::getDebugVariable(DebugFlag flag)
         case DebugFlag::FORCE_CRT_UNSUPPORTED:    return FORCE_CRT_UNSUPPORTED;
 
         default:
-            throw AppError(Fault::OPT_UNSUPPORTED,
+            throw CoreError(CoreError::OPT_UNSUPPORTED,
                         "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 
@@ -584,7 +584,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
 {
 #ifdef NDEBUG
 
-    throw AppError(Fault::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
+    throw CoreError(CoreError::OPT_UNSUPPORTED, "Debug variables are only accessible in debug builds.");
 
 #else
 
@@ -664,7 +664,7 @@ Emulator::setDebugVariable(DebugFlag flag, bool val)
         case DebugFlag::FORCE_CRT_UNSUPPORTED:    FORCE_CRT_UNSUPPORTED = val; break;
 
         default:
-            throw AppError(Fault::OPT_UNSUPPORTED,
+            throw CoreError(CoreError::OPT_UNSUPPORTED,
                         "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 #endif

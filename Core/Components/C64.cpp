@@ -437,7 +437,7 @@ C64::exportConfig(const fs::path &path) const
     auto fs = std::ofstream(path, std::ofstream::binary);
 
     if (!fs.is_open()) {
-        throw AppError(Fault::FILE_CANT_WRITE);
+        throw CoreError(CoreError::FILE_CANT_WRITE);
     }
 
     exportConfig(fs);
@@ -461,7 +461,7 @@ C64::get(Opt opt, isize objid) const
     loginfo(CNF_DEBUG, "get(%s, %ld)\n", OptEnum::key(opt), objid);
 
     auto target = routeOption(opt, objid);
-    if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
+    if (target == nullptr) throw CoreError(CoreError::OPT_INV_ID);
     return target->getOption(opt);
 }
 
@@ -486,7 +486,7 @@ C64::check(Opt opt, i64 value, const std::vector<isize> objids)
         loginfo(CNF_DEBUG, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
-        if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
+        if (target == nullptr) throw CoreError(CoreError::OPT_INV_ID);
 
         target->checkOption(opt, value);
     }
@@ -515,7 +515,7 @@ C64::set(Opt opt, i64 value, const std::vector<isize> objids)
         loginfo(CNF_DEBUG, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
-        if (target == nullptr) throw AppError(Fault::OPT_INV_ID);
+        if (target == nullptr) throw CoreError(CoreError::OPT_INV_ID);
 
         target->setOption(opt, value);
     }
@@ -1004,16 +1004,16 @@ C64::_isReady() const
     bool mega = hasMega65Rom(RomType::BASIC) && hasMega65Rom(RomType::KERNAL);
     
     if (!hasRom(RomType::BASIC)) {
-        throw AppError(Fault::ROM_BASIC_MISSING);
+        throw CoreError(CoreError::ROM_BASIC_MISSING);
     }
     if (!hasRom(RomType::CHAR)) {
-        throw AppError(Fault::ROM_CHAR_MISSING);
+        throw CoreError(CoreError::ROM_CHAR_MISSING);
     }
     if (!hasRom(RomType::KERNAL) || FORCE_ROM_MISSING) {
-        throw AppError(Fault::ROM_KERNAL_MISSING);
+        throw CoreError(CoreError::ROM_KERNAL_MISSING);
     }
     if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
-        throw AppError(Fault::ROM_MEGA65_MISMATCH);
+        throw CoreError(CoreError::ROM_MEGA65_MISMATCH);
     }
 }
 

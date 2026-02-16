@@ -41,7 +41,7 @@ void
 RpcHttpServer::checkOption(Opt opt, i64 value)
 {
     if (opt == Opt::SRV_TRANSPORT && value == i64(TransportProtocol::TCP)) {
-        throw AppError(Fault::OPT_UNSUPPORTED, "This server requires a HTTP connection.");
+        throw CoreError(CoreError::OPT_UNSUPPORTED, "This server requires a HTTP connection.");
     }
 
     RemoteServer::checkOption(opt, value);

@@ -96,7 +96,7 @@ Memory::checkOption(Opt opt, i64 value)
         case Opt::MEM_INIT_PATTERN:
 
             if (!RamPatternEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, RamPatternEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, RamPatternEnum::keyList());
             }
             return;
 
@@ -106,7 +106,7 @@ Memory::checkOption(Opt opt, i64 value)
             return;
 
         default:
-            throw AppError(Fault::OPT_UNSUPPORTED);
+            throw CoreError(CoreError::OPT_UNSUPPORTED);
     }
 }
 

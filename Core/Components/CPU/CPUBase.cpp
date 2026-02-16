@@ -201,12 +201,12 @@ CPU::checkOption(Opt opt, i64 value)
         case Opt::DASM_NUMBERS:
 
             if (!DasmNumbersEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, DasmNumbersEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, DasmNumbersEnum::keyList());
             }
             return;
 
         default:
-            throw AppError(Fault::OPT_UNSUPPORTED);
+            throw CoreError(CoreError::OPT_UNSUPPORTED);
     }
 }
 

@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Error.h"
+#include "CoreError.h"
 #include "Dumpable.h"
 #include "utl/abilities/Loggable.h"
 #include "utl/abilities/Reportable.h"

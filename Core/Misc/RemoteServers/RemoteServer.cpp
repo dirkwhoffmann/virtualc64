@@ -76,12 +76,12 @@ RemoteServer::checkOption(Opt opt, i64 value)
             if (!isSupported(TransportProtocol(value))) {
 
                 auto name = string(TransportProtocolEnum::key(TransportProtocol(value)));
-                throw AppError(Fault::OPT_UNSUPPORTED, "Unsupported protocol: " + name);
+                throw CoreError(CoreError::OPT_UNSUPPORTED, "Unsupported protocol: " + name);
             }
             return;
 
         default:
-            throw AppError(Fault::OPT_UNSUPPORTED);
+            throw CoreError(CoreError::OPT_UNSUPPORTED);
     }
 }
 

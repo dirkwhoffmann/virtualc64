@@ -19,7 +19,7 @@ Reu::Reu(C64 &ref, isize kb) : Cartridge(ref), kb(kb)
 {
     // The RAM capacity must be a power of two between 128 and 16384
     if ((kb & (kb - 1)) || kb < 128 || kb > 16384) {
-        throw AppError(Fault::OPT_INV_ARG, "128, 256, 512, ..., 16384");
+        throw CoreError(CoreError::OPT_INV_ARG, "128, 256, 512, ..., 16384");
     }
 
     traits.memory = kb << 10;

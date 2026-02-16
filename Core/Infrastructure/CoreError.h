@@ -38,7 +38,6 @@ struct CoreError : public Error {
     static constexpr long SYNTAX            = 301; ///< Syntax error
 
     // CPU
-    static constexpr long CPU_UNSUPPORTED   = 400; ///< Unsupported CPU model
     static constexpr long GUARD_NOT_FOUND   = 401; ///< Guard is not set
     static constexpr long GUARD_ALREADY_SET = 402; ///< Guard is already set
     static constexpr long BP_NOT_FOUND      = 403; ///< Breakpoint is not set (DEPRECATED)
@@ -49,90 +48,16 @@ struct CoreError : public Error {
     // Memory
     static constexpr long OUT_OF_MEMORY     = 500; ///< Out of memory
 
-    /* File IO
-    DIR_NOT_FOUND,        ///< Directory does not exist
-    DIR_ACCESS_DENIED,    ///< File access denied
-    DIR_CANT_CREATE,      ///< Unable to create a directory
-    DIR_NOT_EMPTY,        ///< Directory is not empty
-    FILE_NOT_FOUND,       ///< File not found error
-    FILE_EXISTS,          ///< File already exists
-    FILE_IS_DIRECTORY,    ///< The file is a directory
-    FILE_ACCESS_DENIED,   ///< File access denied
-    FILE_TYPE_MISMATCH,   ///< File type mismatch
-    FILE_TYPE_UNSUPPORTED,///< Unsupported file type
-    FILE_CANT_READ,       ///< Can't read from file
-    FILE_CANT_WRITE,      ///< Can't write to file
-    FILE_CANT_CREATE,     ///< Can't create file
-    */
-    
     // Roms
     static constexpr long ROM_BASIC_MISSING     = 600; ///< No Basic Rom installed
     static constexpr long ROM_CHAR_MISSING      = 601; ///< No Character Rom installed
     static constexpr long ROM_KERNAL_MISSING    = 602; ///< No Kernal Rom installed
     static constexpr long ROM_DRIVE_MISSING     = 603; ///< No Floppy Drive Rom installed
     static constexpr long ROM_MEGA65_MISMATCH   = 604; ///< MEGA65 Roms have different version numbers
-
-    /*
-    // Snapshots
-    static constexpr long SNAP_TOO_OLD          = 700; ///< Snapshot was created with an older version
-    static constexpr long SNAP_TOO_NEW          = 701; ///< Snapshot was created with a later version
-    static constexpr long SNAP_IS_BETA          = 702; ///< Snapshot was created with a beta release
-    static constexpr long SNAP_CORRUPTED        = 703; ///< Snapshot data is corrupted
-    */
     
     // Drives
     static constexpr long DRV_UNCONNECTED       = 700; ///< Floppy drive is not connected
     static constexpr long DRV_NO_DISK           = 701; ///< Floppy drive contains no disk
-
-    /*
-    // Cartridges
-    static constexpr long CRT_NO_CARTRIDGE      = 801; ///< No cartridge attached
-    static constexpr long CRT_UNKNOWN           = 802; ///< Unknown cartridge type
-    static constexpr long CRT_UNSUPPORTED       = 803; ///< Unsupported cartridge type
-    static constexpr long CRT_TOO_MANY_PACKETS  = 804; ///< CRT file contains too many Rom packets
-    static constexpr long CRT_CORRUPTED_PACKET  = 805; ///< CRT file contains a corrupted Rom package
-    */
-    /*
-    // Remote servers
-    static constexpr long SOCK_CANT_CREATE      = 500;
-    static constexpr long SOCK_CANT_CONNECT     = 500;
-    static constexpr long SOCK_CANT_BIND        = 500;
-    static constexpr long SOCK_CANT_LISTEN    = 500;
-    static constexpr long SOCK_CANT_ACCEPT    = 500;
-    static constexpr long SOCK_CANT_RECEIVE    = 500;
-    static constexpr long SOCK_CANT_SEND    = 500;
-    static constexpr long SOCK_DISCONNECTED    = 500;
-    static constexpr long SERVER_PORT_IN_USE    = 500;
-    static constexpr long SERVER_ON    = 500;
-    static constexpr long SERVER_OFF    = 500;
-    static constexpr long SERVER_RUNNING    = 500;
-    static constexpr long SERVER_NOT_RUNNING    = 500;
-    static constexpr long SERVER_NO_CLIENT    = 500;
-
-    // DAP server
-    static constexpr long DAP_INVALID_FORMAT    = 500;
-    static constexpr long DAP_UNRECOGNIZED_CMD    = 500;
-    static constexpr long DAP_UNSUPPORTED_CMD    = 500;
-
-    // GDB server
-    static constexpr long GDB_NO_ACK    = 500;
-    static constexpr long GDB_INVALID_FORMAT    = 500;
-    static constexpr long GDB_INVALID_CHECKSUM    = 500;
-    static constexpr long GDB_UNRECOGNIZED_CMD    = 500;
-    static constexpr long GDB_UNSUPPORTED_CMD    = 500;
-    */
-    /*
-    // File systems
-    FS_UNSUPPORTED,       ///< Unsupported file system
-    FS_WRONG_CAPACITY,    ///< Wrong file system capacity
-    FS_CORRUPTED,         ///< File system is corrupted
-    FS_HAS_NO_FILES,      ///< File system is empty
-    FS_HAS_CYCLES,        ///< File system has cyclic links
-    FS_CANT_IMPORT,       ///< Failed to import a file system
-    FS_EXPECTED_VAL,      ///< Unexpected value found
-    FS_EXPECTED_MIN,      ///< Value is too small
-    FS_EXPECTED_MAX,      ///< Value is too big
-    */
 
     const char *errstr() const noexcept override {
 
@@ -154,7 +79,6 @@ struct CoreError : public Error {
             case INVALID_KEY:           return "INVALID_KEY";
             case SYNTAX:                return "SYNTAX";
 
-            case CPU_UNSUPPORTED:       return "CPU_UNSUPPORTED";
             case GUARD_NOT_FOUND:       return "GUARD_NOT_FOUND";
             case GUARD_ALREADY_SET:     return "GUARD_ALREADY_SET";
             case BP_NOT_FOUND:          return "BP_NOT_FOUND";

@@ -60,28 +60,28 @@ Monitor::checkOption(Opt opt, i64 value)
         case Opt::MON_PALETTE:
             
             if (!PaletteEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, PaletteEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, PaletteEnum::keyList());
             }
             return;
             
         case Opt::MON_UPSCALER:
             
             if (!UpscalerEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, UpscalerEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, UpscalerEnum::keyList());
             }
             return;
 
         case Opt::MON_DOTMASK:
             
             if (!DotmaskEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, DotmaskEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, DotmaskEnum::keyList());
             }
             return;
 
         case Opt::MON_SCANLINES:
             
             if (!ScanlinesEnum::isValid(value)) {
-                throw AppError(Fault::OPT_INV_ARG, ScanlinesEnum::keyList());
+                throw CoreError(CoreError::OPT_INV_ARG, ScanlinesEnum::keyList());
             }
             return;
 
@@ -91,7 +91,7 @@ Monitor::checkOption(Opt opt, i64 value)
         case Opt::MON_SATURATION:
             
             if (value < 0 || value > 100) {
-                throw AppError(Fault::OPT_INV_ARG, "0...100");
+                throw CoreError(CoreError::OPT_INV_ARG, "0...100");
             }
             return;
             
@@ -113,12 +113,12 @@ Monitor::checkOption(Opt opt, i64 value)
         case Opt::MON_DISALIGNMENT_V:
             
             if (value < 0 || value > 1000) {
-                throw AppError(Fault::OPT_INV_ARG, "0...1000");
+                throw CoreError(CoreError::OPT_INV_ARG, "0...1000");
             }
             return;
             
         default:
-            throw AppError(Fault::OPT_UNSUPPORTED);
+            throw CoreError(CoreError::OPT_UNSUPPORTED);
     }
 }
 

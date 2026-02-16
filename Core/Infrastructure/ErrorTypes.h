@@ -22,6 +22,7 @@ enum class Fault : long
     OK,                   ///< No error
     UNKNOWN,              ///< Unclassified error condition
 
+    /*
     // Execution state
     LAUNCH,               ///< Launch error
     POWERED_OFF,          ///< The emulator is powered off
@@ -46,23 +47,6 @@ enum class Fault : long
 
     // Memory
     OUT_OF_MEMORY,        ///< Out of memory
-
-    /*
-    // File IO
-    DIR_NOT_FOUND,        ///< Directory does not exist
-    DIR_ACCESS_DENIED,    ///< File access denied
-    DIR_CANT_CREATE,      ///< Unable to create a directory
-    DIR_NOT_EMPTY,        ///< Directory is not empty
-    FILE_NOT_FOUND,       ///< File not found error
-    FILE_EXISTS,          ///< File already exists
-    FILE_IS_DIRECTORY,    ///< The file is a directory
-    FILE_ACCESS_DENIED,   ///< File access denied
-    FILE_TYPE_MISMATCH,   ///< File type mismatch
-    FILE_TYPE_UNSUPPORTED,///< Unsupported file type
-    FILE_CANT_READ,       ///< Can't read from file
-    FILE_CANT_WRITE,      ///< Can't write to file
-    FILE_CANT_CREATE,     ///< Can't create file
-     */
     
     // Roms
     ROM_BASIC_MISSING,    ///< No Basic Rom installed
@@ -74,6 +58,7 @@ enum class Fault : long
     // Drives
     DRV_UNCONNECTED,      ///< Floppy drive is not connected
     DRV_NO_DISK,          ///< Floppy drive contains no disk
+    */
     
     // File systems
     FS_UNSUPPORTED,       ///< Unsupported file system
@@ -101,6 +86,7 @@ struct FaultEnum : Reflectable<FaultEnum, Fault> {
             case Fault::OK:                      return "OK";
             case Fault::UNKNOWN:                 return "UNKNOWN";
 
+                /*
             case Fault::LAUNCH:                  return "LAUNCH";
             case Fault::POWERED_OFF:             return "POWERED_OFF";
             case Fault::POWERED_ON:              return "POWERED_ON";
@@ -120,70 +106,15 @@ struct FaultEnum : Reflectable<FaultEnum, Fault> {
             case Fault::WP_ALREADY_SET:          return "WP_ALREADY_SET";
 
             case Fault::OUT_OF_MEMORY:           return "OUT_OF_MEMORY";
-
-                /*
-            case Fault::DIR_NOT_FOUND:           return "DIR_NOT_FOUND";
-            case Fault::DIR_ACCESS_DENIED:       return "DIR_ACCESS_DENIED";
-            case Fault::DIR_CANT_CREATE:         return "DIR_CANT_CREATE";
-            case Fault::DIR_NOT_EMPTY:           return "DIR_NOT_EMPTY";
-            case Fault::FILE_NOT_FOUND:          return "FILE_NOT_FOUND";
-            case Fault::FILE_EXISTS:             return "FILE_EXISTS";
-            case Fault::FILE_IS_DIRECTORY:       return "FILE_IS_DIRECtORY";
-            case Fault::FILE_ACCESS_DENIED:      return "FILE_ACCESS_DENIED";
-            case Fault::FILE_TYPE_MISMATCH:      return "FILE_TYPE_MISMATCH";
-            case Fault::FILE_TYPE_UNSUPPORTED:   return "FILE_TYPE_UNSUPPORTED";
-            case Fault::FILE_CANT_READ:          return "FILE_CANT_READ";
-            case Fault::FILE_CANT_WRITE:         return "FILE_CANT_WRITE";
-            case Fault::FILE_CANT_CREATE:        return "FILE_CANT_CREATE";
-                 */
                 
             case Fault::ROM_BASIC_MISSING:       return "ROM_BASIC_MISSING";
             case Fault::ROM_CHAR_MISSING:        return "ROM_CHAR_MISSING";
             case Fault::ROM_KERNAL_MISSING:      return "ROM_KERNAL_MISSING";
             case Fault::ROM_DRIVE_MISSING:       return "ROM_DRIVE_MISSING";
             case Fault::ROM_MEGA65_MISMATCH:     return "ROM_MEGA65_MISMATCH";
-
-                /*
-            case Fault::SNAP_TOO_OLD:            return "SNAP_TOO_OLD";
-            case Fault::SNAP_TOO_NEW:            return "SNAP_TOO_NEW";
-            case Fault::SNAP_IS_BETA:		     return "SNAP_IS_BETA";
-            case Fault::SNAP_CORRUPTED:		     return "SNAP_CORRUPTED";
-                 */
-                
+               
             case Fault::DRV_UNCONNECTED:         return "DRV_UNCONNECTED";
             case Fault::DRV_NO_DISK:             return "DRV_NO_DISK";
-
-                /*
-            case Fault::CRT_NO_CARTRIDGE:        return "CRT_NO_CARTRIDGE";
-            case Fault::CRT_UNKNOWN:             return "CRT_UNKNOWN";
-            case Fault::CRT_UNSUPPORTED:         return "CRT_UNSUPPORTED";
-            case Fault::CRT_TOO_MANY_PACKETS:    return "CRT_TOO_MANY_PACKETS";
-            case Fault::CRT_CORRUPTED_PACKET:    return "CRT_CORRUPTED_PACKET";
-
-            case Fault::SOCK_CANT_CREATE:        return "SOCK_CANT_CREATE";
-            case Fault::SOCK_CANT_CONNECT:       return "SOCK_CANT_CONNECT";
-            case Fault::SOCK_CANT_BIND:          return "SOCK_CANT_BIND";
-            case Fault::SOCK_CANT_LISTEN:        return "SOCK_CANT_LISTEN";
-            case Fault::SOCK_CANT_ACCEPT:        return "SOCK_CANT_ACCEPT";
-            case Fault::SOCK_CANT_RECEIVE:       return "SOCK_CANT_RECEIVE";
-            case Fault::SOCK_CANT_SEND:          return "SOCK_CANT_SEND";
-            case Fault::SOCK_DISCONNECTED:       return "SOCK_DISCONNECTED";
-            case Fault::SERVER_PORT_IN_USE:      return "SERVER_PORT_IN_USE";
-            case Fault::SERVER_ON:               return "SERVER_ON";
-            case Fault::SERVER_OFF:              return "SERVER_OFF";
-            case Fault::SERVER_RUNNING:          return "SERVER_RUNNING";
-            case Fault::SERVER_NOT_RUNNING:      return "SERVER_NOT_RUNNING";
-            case Fault::SERVER_NO_CLIENT:        return "SERVER_NO_CLIENT";
-
-            case Fault::DAP_INVALID_FORMAT:      return "DAP_INVALID_FORMAT";
-            case Fault::DAP_UNRECOGNIZED_CMD:    return "DAP_UNRECOGNIZED_CMD";
-            case Fault::DAP_UNSUPPORTED_CMD:     return "DAP_UNSUPPORTED_CMD";
-
-            case Fault::GDB_NO_ACK:              return "GDB_NO_ACK";
-            case Fault::GDB_INVALID_FORMAT:      return "GDB_INVALID_FORMAT";
-            case Fault::GDB_INVALID_CHECKSUM:    return "GDB_INVALID_CHECKSUM";
-            case Fault::GDB_UNRECOGNIZED_CMD:    return "GDB_UNRECOGNIZED_CMD";
-            case Fault::GDB_UNSUPPORTED_CMD:     return "GDB_UNSUPPORTED_CMD";
                  */
                 
             case Fault::FS_UNSUPPORTED:          return "FS_UNSUPPORTED";

@@ -297,7 +297,7 @@ Defaults::load(std::stringstream &stream)
                 continue;
             }
 
-            throw AppError(Fault::SYNTAX, line);
+            throw CoreError(CoreError::SYNTAX, line);
         }
 
         if (accepted || skipped) {
@@ -381,7 +381,7 @@ Defaults::getRaw(const string &key) const
     if (values.contains(key)) return values.at(key);
     if (fallbacks.contains(key)) return fallbacks.at(key);
 
-    throw AppError(Fault::INVALID_KEY, key);
+    throw CoreError(CoreError::INVALID_KEY, key);
 }
 
 i64
@@ -418,7 +418,7 @@ Defaults::getFallbackRaw(const string &key) const
 {
     if (fallbacks.contains(key)) return fallbacks.at(key);
 
-    throw AppError(Fault::INVALID_KEY, key);
+    throw CoreError(CoreError::INVALID_KEY, key);
 }
 
 i64
@@ -461,7 +461,7 @@ Defaults::set(const string &key, const string &value)
 
             logwarn("Invalid key: %s\n", key.c_str());
             assert(false);
-            throw AppError(Fault::INVALID_KEY, key);
+            throw CoreError(CoreError::INVALID_KEY, key);
         }
 
         values[key] = value;
@@ -552,7 +552,7 @@ Defaults::remove(const string &key)
 
             logwarn("Invalid key: %s\n", key.c_str());
             assert(false);
-            throw AppError(Fault::INVALID_KEY, key);
+            throw CoreError(CoreError::INVALID_KEY, key);
         }
         if (values.contains(key)) {
             values.erase(key);
