@@ -80,6 +80,8 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        Cartridge::operator<<(worker);
+        
         worker
 
         << qD;
@@ -90,7 +92,7 @@ public:
 
         << freeezeButtonIsPressed;
 
-    } CARTRIDGE_SERIALIZERS(serialize);
+    } SERIALIZERS(serialize);
 
     void _didReset(bool hard) override;
 

@@ -184,6 +184,8 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        Cartridge::operator<<(worker);
+        
         if (isResetter(worker)) return;
 
         worker
@@ -213,7 +215,7 @@ public:
         << bus
         << memTypeF;
 
-    } CARTRIDGE_SERIALIZERS(serialize);
+    } SERIALIZERS(serialize);
 
     void _didReset(bool hard) override;
     void _didLoad() override;

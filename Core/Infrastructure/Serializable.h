@@ -21,20 +21,7 @@ namespace vc64 {
 
 struct SerializableStruct {
 
-};
-
-class Serializable {
-
-public:
-
-    virtual ~Serializable() = default;
-
-    // Serializers (to be implemented by the subclass)
-    virtual void operator << (class SerCounter &worker) = 0;
-    virtual void operator << (class SerChecker &worker) = 0;
-    virtual void operator << (class SerResetter &worker) = 0;
-    virtual void operator << (class SerReader &worker) = 0;
-    virtual void operator << (class SerWriter &worker) = 0;
+    ~SerializableStruct() = default;
 };
 
 
@@ -249,13 +236,6 @@ public:
         v << *this;
         return *this;
     }
-
-    template <std::derived_from<Serializable> T>
-    SerCounter& operator<<(T &v)
-    {
-        v << *this;
-        return *this;
-    }
 };
 
 
@@ -377,13 +357,6 @@ public:
     }
 
     template <std::derived_from<SerializableStruct> T>
-    SerChecker& operator<<(T &v)
-    {
-        v << *this;
-        return *this;
-    }
-
-    template <std::derived_from<Serializable> T>
     SerChecker& operator<<(T &v)
     {
         v << *this;
@@ -530,14 +503,7 @@ public:
         v << *this;
         return *this;
     }
-
-    template <std::derived_from<Serializable> T>
-    SerReader& operator<<(T &v)
-    {
-        v << *this;
-        return *this;
-    }
-
+    
     void copy(void *dst, isize n)
     {
         std::memcpy(dst, (void *)ptr, n);
@@ -676,14 +642,7 @@ public:
         v << *this;
         return *this;
     }
-
-    template <std::derived_from<Serializable> T>
-    SerWriter& operator<<(T &v)
-    {
-        v << *this;
-        return *this;
-    }
-
+    
     void copy(const void *src, isize n)
     {
         std::memcpy((void *)ptr, src, n);
@@ -811,13 +770,6 @@ public:
         v << *this;
         return *this;
     }
-
-    template <std::derived_from<Serializable> T>
-    SerResetter& operator<<(T &v)
-    {
-        v << *this;
-        return *this;
-    }
 };
 
 template <class T> inline bool isChecker(T &worker) { return false; }
@@ -837,20 +789,6 @@ void operator << (SerCounter &worker) override { fn(worker); } \
 void operator << (SerResetter &worker) override { fn(worker); } \
 void operator << (SerReader &worker) override { fn(worker); } \
 void operator << (SerWriter &worker) override { fn(worker); }
-
-#define STRUCT_SERIALIZERS(fn) \
-void operator << (SerChecker &worker) { fn(worker); } \
-void operator << (SerCounter &worker) { fn(worker); } \
-void operator << (SerResetter &worker) { fn(worker); } \
-void operator << (SerReader &worker) { fn(worker); } \
-void operator << (SerWriter &worker) { fn(worker); }
-
-#define CARTRIDGE_SERIALIZERS(fn) \
-void operator << (SerChecker &worker) override { Cartridge::operator<<(worker); fn(worker); } \
-void operator << (SerCounter &worker) override { Cartridge::operator<<(worker); fn(worker); } \
-void operator << (SerResetter &worker) override { Cartridge::operator<<(worker); fn(worker); } \
-void operator << (SerReader &worker) override { Cartridge::operator<<(worker); fn(worker); } \
-void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); fn(worker); }
 
 #define CLONE(x) x = other.x;
 #define CLONE_ARRAY(x) std::copy(std::begin(other.x), std::end(other.x), std::begin(x));

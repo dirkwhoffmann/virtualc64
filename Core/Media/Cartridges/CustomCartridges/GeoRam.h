@@ -84,6 +84,8 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        Cartridge::operator<<(worker);
+        
         if (isResetter(worker)) return;
 
         worker
@@ -92,7 +94,7 @@ public:
         << bank
         << page;
 
-    } CARTRIDGE_SERIALIZERS(serialize);
+    } SERIALIZERS(serialize);
 
 
     //

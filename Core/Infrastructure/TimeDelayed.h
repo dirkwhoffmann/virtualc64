@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-template <class T, isize delay> class TimeDelayed : public Serializable {
+template <class T, isize delay> class TimeDelayed : public SerializableStruct {
     
     static constexpr isize capacity = delay + 1;
     
@@ -84,6 +84,18 @@ public:
 public:
     
     template <class W>
+    W& operator<<(W& worker)
+    {
+        worker
+
+        << pipeline
+        << timeStamp;
+
+        return worker;
+    }
+    
+    /*
+    template <class W>
     void serialize(W& worker)
     {
         worker
@@ -92,7 +104,7 @@ public:
         << timeStamp;
 
     } SERIALIZERS(serialize);
-
+    */
 
     //
     // Accessing

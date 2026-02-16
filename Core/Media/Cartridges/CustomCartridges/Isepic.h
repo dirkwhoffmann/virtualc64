@@ -75,6 +75,8 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        Cartridge::operator<<(worker);
+
         worker
 
         << page;
@@ -86,7 +88,7 @@ public:
         << oldPeekSource
         << oldPokeTarget;
 
-    } CARTRIDGE_SERIALIZERS(serialize);
+    } SERIALIZERS(serialize);
 
     void _didReset(bool hard) override;
 

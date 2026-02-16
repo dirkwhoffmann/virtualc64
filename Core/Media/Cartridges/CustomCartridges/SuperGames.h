@@ -62,11 +62,13 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        Cartridge::operator<<(worker);
+        
         worker
 
         << protect;
 
-    } CARTRIDGE_SERIALIZERS(serialize)
+    } SERIALIZERS(serialize)
 
 
     //

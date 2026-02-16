@@ -42,7 +42,28 @@ struct VICIIRegisters : SerializableStruct
     u8 xscroll;
     DisplayMode mode;
 
+    template <class W>
+    W& operator<<(W& worker)
+    {
+        worker
 
+        << sprX
+        << sprY
+        << ctrl1
+        << sprEnable
+        << ctrl2
+        << sprExpandY
+        << sprPriority
+        << sprMC
+        << sprExpandX
+        << colors
+        << xscroll
+        << mode;
+
+        return worker;
+    }
+    
+    /*
     template <class W>
     void serialize(W& worker)
     {
@@ -62,6 +83,7 @@ struct VICIIRegisters : SerializableStruct
         << mode;
 
     } STRUCT_SERIALIZERS(serialize);
+    */
 };
 
 struct SpriteSR : SerializableStruct
@@ -90,6 +112,23 @@ struct SpriteSR : SerializableStruct
     u8 colBits;
 
     template <class W>
+    W& operator<<(W& worker)
+    {
+        worker
+
+        << data
+        << chunk1
+        << chunk2
+        << chunk3
+        << mcFlop
+        << expFlop
+        << colBits;
+
+        return worker;
+    }
+    
+    /*
+    template <class W>
     void serialize(W& worker)
     {
         worker
@@ -103,6 +142,7 @@ struct SpriteSR : SerializableStruct
         << colBits;
 
     } STRUCT_SERIALIZERS(serialize);
+    */
 };
 
 class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStats> {

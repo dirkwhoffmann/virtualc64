@@ -74,13 +74,15 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        Cartridge::operator<<(worker);
+        
         if (isSoftResetter(worker)) return;
 
         worker
 
         << cycle;
 
-    } CARTRIDGE_SERIALIZERS(serialize);
+    } SERIALIZERS(serialize);
 
     void _didReset(bool hard) override;
 

@@ -36,7 +36,7 @@ struct Description {
 typedef std::vector<Description> Descriptions;
 
 class CoreComponent :
-public CoreObject, public Serializable, public utl::Synchronizable, public Configurable {
+public CoreObject, public SerializableStruct, public utl::Synchronizable, public Configurable {
 
 public:
 
@@ -67,6 +67,13 @@ public:
 
     bool operator== (CoreComponent &other);
     bool operator!= (CoreComponent &other) { return !(other == *this); }
+
+    // Serializers (to be implemented by the subclass)
+    virtual void operator << (class SerCounter &worker) = 0;
+    virtual void operator << (class SerChecker &worker) = 0;
+    virtual void operator << (class SerResetter &worker) = 0;
+    virtual void operator << (class SerReader &worker) = 0;
+    virtual void operator << (class SerWriter &worker) = 0;
 
 
     //

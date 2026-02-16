@@ -177,7 +177,7 @@ struct CBMFileTypeEnum : Reflectable<CBMFileTypeEnum, CBMFileType> {
  *    - data.halftack[i] points to the first byte of halftrack i
  *    - data.track[i] points to the first byte of track i
  */
-struct DiskData : public Serializable
+struct DiskData : public SerializableStruct
 {
     union {
 
@@ -191,6 +191,17 @@ struct DiskData : public Serializable
     };
 
     template <class W>
+    W& operator<<(W& worker)
+    {
+        worker
+
+        << track;
+
+        return worker;
+    }
+    
+    /*
+    template <class W>
     void serialize(W& worker)
     {
         worker
@@ -198,7 +209,7 @@ struct DiskData : public Serializable
         << track;
 
     } SERIALIZERS(serialize);
-
+    */
 };
 
 /* Length of each halftrack in bits
@@ -208,7 +219,7 @@ struct DiskData : public Serializable
  *     - length.track[i][1] is the length of halftrack above track i
  */
 
-struct DiskLength : public Serializable
+struct DiskLength : public SerializableStruct
 {
     union {
 
@@ -222,6 +233,17 @@ struct DiskLength : public Serializable
     };
 
     template <class W>
+    W& operator<<(W& worker)
+    {
+        worker
+
+        << track;
+
+        return worker;
+    }
+    
+    /*
+    template <class W>
     void serialize(W& worker)
     {
         worker
@@ -229,6 +251,7 @@ struct DiskLength : public Serializable
         << track;
 
     } SERIALIZERS(serialize);
+    */
 };
 
 // Disk parameters of a standard floppy disk

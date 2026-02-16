@@ -77,13 +77,15 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        Cartridge::operator<<(worker);
+        
         if (isResetter(worker)) return;
 
         worker
 
         << active;
 
-    } CARTRIDGE_SERIALIZERS(serialize);
+    } SERIALIZERS(serialize);
 
 
     //
