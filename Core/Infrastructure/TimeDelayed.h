@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-template <class T, isize delay> class TimeDelayed : public SerializableStruct {
+template <class T, isize delay> class TimeDelayed : public Serializable {
     
     static constexpr isize capacity = delay + 1;
     

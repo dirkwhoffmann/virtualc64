@@ -177,7 +177,7 @@ struct CBMFileTypeEnum : Reflectable<CBMFileTypeEnum, CBMFileType> {
  *    - data.halftack[i] points to the first byte of halftrack i
  *    - data.track[i] points to the first byte of track i
  */
-struct DiskData : public SerializableStruct
+struct DiskData : public Serializable
 {
     union {
 
@@ -219,7 +219,7 @@ struct DiskData : public SerializableStruct
  *     - length.track[i][1] is the length of halftrack above track i
  */
 
-struct DiskLength : public SerializableStruct
+struct DiskLength : public Serializable
 {
     union {
 

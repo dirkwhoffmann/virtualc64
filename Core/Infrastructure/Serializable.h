@@ -19,9 +19,9 @@
 
 namespace vc64 {
 
-struct SerializableStruct {
+struct Serializable {
 
-    ~SerializableStruct() = default;
+    ~Serializable() = default;
 };
 
 

@@ -24,7 +24,7 @@
 
 namespace vc64 {
 
-struct VICIIRegisters : SerializableStruct
+struct VICIIRegisters : Serializable
 {
     // Registers
     u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
@@ -86,7 +86,7 @@ struct VICIIRegisters : SerializableStruct
     */
 };
 
-struct SpriteSR : SerializableStruct
+struct SpriteSR : Serializable
 {
     // Shift register data (24 bit)
     u32 data;
