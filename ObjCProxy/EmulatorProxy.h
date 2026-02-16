@@ -38,6 +38,7 @@ using namespace vc64;
 @class RetroShellProxy;
 @class RS232Proxy;
 @class SIDProxy;
+@class SnapshotProxy;
 @class UserPortProxy;
 @class VICIIProxy;
 @class VideoPortProxy;
@@ -231,7 +232,6 @@ NSString *EventSlotName(EventSlot slot);
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex type:(RomType)type;
 
-// - (void)loadRom:(MediaFileProxy *)proxy __attribute__((deprecated("MediaFile will go away.")));
 - (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)deleteRom:(RomType)type;
 
@@ -287,8 +287,8 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) RomTraits kernalRom;
 @property (readonly) RomTraits vc1541Rom;
 
-- (MediaFileProxy *) takeSnapshot:(Compressor)compressor __attribute__((deprecated("MediaFile will go away.")));
-- (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex __attribute__((deprecated("MediaFile will go away.")));
+- (SnapshotProxy *)takeSnapshot:(Compressor)compressor;
+- (void)loadSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
 - (void)loadSnapshotFromUrl:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)saveSnapshotToUrl:(NSURL *)url compressor:(Compressor)c exception:(ExceptionWrapper *)ex;
 
@@ -666,6 +666,51 @@ struct GuardInfo {
 
 
 //
+// F I L E   T Y P E   P R O X I E S
+//
+
+
+//
+// AnyFile
+//
+
+@interface AnyFileProxy : Proxy { }
+
+@property (readonly) NSURL *path;
+@property (readonly) NSInteger size;
+@property (readonly) u64 fnv;
+
+- (void)setPath:(NSURL *)path;
+- (NSInteger)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;
+
+@end
+
+
+//
+// Snapshot
+//
+
+@interface SnapshotProxy : AnyFileProxy
+{
+    NSImage *preview;
+}
+
++ (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c;
+
+@property (readonly) NSInteger size;
+@property (readonly) u64 fnv;
+@property (readonly) Compressor compressor;
+@property (readonly) BOOL compressed;
+
+@property (readonly) u8 *data;
+
+@property (readonly, strong) NSImage *previewImage;
+@property (readonly) time_t timeStamp;
+
+@end
+
+
+//
 // MediaFile
 //
 
@@ -680,7 +725,7 @@ struct GuardInfo {
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFile:(NSString *)path type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c;
+// + (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 

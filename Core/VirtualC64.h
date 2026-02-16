@@ -1102,16 +1102,14 @@ struct C64API : public API {
      *  @note   The function transfers the ownership to the caller. It is
      *          his responsibility of the caller to free the object.
      */
-    std::unique_ptr<Snapshot> takeSnapshotNew(Compressor compressor, isize delay = 0, bool repeat = false);
-    [[deprecated]] MediaFile *takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
+    std::unique_ptr<Snapshot> takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
 
     /** @brief  Loads a snapshot
      *
      *  @param  snapshot    Reference to a snapshot
      */
     void loadSnapshot(const Snapshot &snapshot);
-    [[deprecated]] void loadSnapshot(const MediaFile &snapshot);
-
+ 
     /** @brief  Loads a snapshot
      *
      *  @param  path    Source path
@@ -1135,10 +1133,6 @@ struct C64API : public API {
     void loadRom(const std::filesystem::path &path);
     void loadRom(const std::filesystem::path &path, RomType rom);
 
-    /** @brief  Loads a ROM, provided by a RomFile object
-     */
-    [[deprecated]] void loadRom(const MediaFile &file);
-
     /** @brief  Removes an installed ROM
      *          The ROM contents is overwritten with zeroes.
      */
@@ -1151,7 +1145,7 @@ struct C64API : public API {
 
     /** @brief  Saves a ROM to disk
      */
-    void saveRom(RomType rom, const std::filesystem::path &path);
+    void saveRom(const std::filesystem::path &path, RomType rom);
 
     /** @brief  Installes a MEGA65 OpenRom
      */

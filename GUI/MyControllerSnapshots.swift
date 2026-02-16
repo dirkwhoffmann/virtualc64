@@ -15,7 +15,7 @@ extension MyController {
     func restoreSnapshot(item: Int) throws {
         
         if let snapshot = mydocument.snapshots.element(at: item) {
-            try emu?.flash(snapshot)
+            try emu?.c64.loadSnapshot(snapshot)
         }
     }
     

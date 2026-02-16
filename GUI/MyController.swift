@@ -489,9 +489,10 @@ extension MyController {
             
         case .SNAPSHOT_TAKEN:
             let ptr = msg.snapshot.snapshot
-            let proxy = MediaFileProxy.init(ptr)!
-            mydocument.snapshots.append(proxy, size: proxy.size)
-            refreshToolbar()
+            let proxy = SnapshotProxy.init(ptr)!
+            if !mydocument.appendSnapshot(file: proxy) {
+                NSSound.beep()
+            }
 
         case .SNAPSHOT_RESTORED:
             renderer.rotateRight()

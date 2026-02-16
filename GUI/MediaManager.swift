@@ -250,7 +250,7 @@ class MediaManager {
         
         // Read file
         let file = try MediaManager.createFileProxy(from: url, allowedTypes: types)
-        
+    
         // Remember the URL if requested
         if options.contains(.remember) {
             
@@ -259,9 +259,10 @@ class MediaManager {
             case .WORKSPACE:
                 try mydocument.processWorkspaceFile(url: url)
                 
+                /*
             case .SNAPSHOT:
                 mydocument.snapshots.append(file, size: file.size)
-                
+                */
             case .CRT:
                 MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
                 

@@ -524,22 +524,24 @@ C64API::saveWorkspace(const fs::path &path) const
 }
 
 std::unique_ptr<Snapshot>
-C64API::takeSnapshotNew(Compressor compressor, isize delay, bool repeat)
+C64API::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
     VC64_PUBLIC_SUSPEND
     return c64->takeSnapshotNew(compressor, delay, repeat);
 }
 
 
+/*
 MediaFile *
 C64API::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
     VC64_PUBLIC_SUSPEND
     return c64->takeSnapshot(compressor, delay, repeat);
 }
+*/
 
 void
-C64API::loadSnapshot(const MediaFile &snapshot)
+C64API::loadSnapshot(const Snapshot &snapshot)
 {
     VC64_PUBLIC_SUSPEND
 
@@ -594,14 +596,6 @@ C64API::loadRom(const std::filesystem::path &path, RomType rom)
     emu->markAsDirty();
 }
 
-void
-C64API::loadRom(const MediaFile &file)
-{
-    VC64_PUBLIC_SUSPEND
-    c64->loadRom(file);
-    emu->markAsDirty();
-}
-
 void 
 C64API::deleteRom(RomType type)
 {
@@ -619,7 +613,7 @@ C64API::deleteRoms()
 }
 
 void
-C64API::saveRom(RomType rom, const std::filesystem::path &path)
+C64API::saveRom(const std::filesystem::path &path, RomType rom)
 {
     VC64_PUBLIC_SUSPEND
     c64->saveRom(rom, path);

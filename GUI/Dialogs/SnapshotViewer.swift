@@ -239,7 +239,7 @@ extension SnapshotViewer: NSFilePromiseProviderDelegate {
         if let snapshot = parent.mydocument.snapshots.element(at: currentItem) {
 
             do {
-                try mm.export(file: snapshot, to: url)
+                try snapshot.writeToFile(url: url)
             } catch {
                 parent.showAlert(.cantExport(url: url), error: error, async: true, window: window)
             }

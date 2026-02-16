@@ -10,7 +10,7 @@
 @MainActor
 extension C64Proxy {
 
-    func loadSnapshot(_ proxy: MediaFileProxy) throws {
+    func loadSnapshot(_ proxy: SnapshotProxy) throws {
 
         let exc = ExceptionWrapper()
         loadSnapshot(proxy, exception: exc)
@@ -222,6 +222,17 @@ extension ExpansionPortProxy {
         
         let exc = ExceptionWrapper()
         attachCartridge(proxy, reset: reset, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+}
+
+@MainActor
+extension AnyFileProxy {
+    
+    func writeToFile(url: URL) throws {
+        
+        let exc = ExceptionWrapper()
+        write(toFile: url, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
 }

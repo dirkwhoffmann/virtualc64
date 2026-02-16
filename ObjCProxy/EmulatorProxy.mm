@@ -1312,12 +1312,6 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
-+ (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c
-{
-    auto vc64 = (VirtualC64 *)proxy->obj;
-    return [self make:vc64->c64.takeSnapshot(c)];
-}
-
 + (instancetype)makeWithDrive:(DriveProxy *)proxy
                         type:(FileType)type
                    exception:(ExceptionWrapper *)ex
@@ -1365,6 +1359,142 @@ NSString *EventSlotName(EventSlot slot)
 {
     try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
     catch (std::exception &stdex) { [ex save:stdex]; }
+}
+
+- (NSImage *)previewImage
+{
+    // Return cached image (if any)
+    if (preview) { return preview; }
+
+    // Get dimensions and data
+    auto size = [self file]->previewImageSize();
+    auto data = (unsigned char *)[self file]->previewImageData();
+
+    // Create preview image
+    if (data) {
+
+        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
+                                 initWithBitmapDataPlanes: &data
+                                 pixelsWide:size.first
+                                 pixelsHigh:size.second
+                                 bitsPerSample:8
+                                 samplesPerPixel:4
+                                 hasAlpha:true
+                                 isPlanar:false
+                                 colorSpaceName:NSCalibratedRGBColorSpace
+                                 bytesPerRow:4*size.first
+                                 bitsPerPixel:32];
+
+        preview = [[NSImage alloc] initWithSize:[rep size]];
+        [preview addRepresentation:rep];
+
+        // image.makeGlossy()
+    }
+    return preview;
+}
+
+- (time_t)timeStamp
+{
+    return [self file]->timestamp();
+}
+
+@end
+
+
+//
+// AnyFile proxy
+//
+
+@implementation AnyFileProxy
+
+- (AnyFile *)file
+{
+    return (AnyFile *)obj;
+}
+
++ (instancetype)make:(AnyFile *)file
+{
+    return file ? [[self alloc] initWith:file] : nil;
+}
+
+- (NSURL *)path
+{
+    auto nsPath = @([self file]->path.c_str());
+    return [NSURL fileURLWithPath:nsPath];
+}
+
+- (NSInteger)size
+{
+    return [self file]->getSize();
+}
+
+- (u64)fnv
+{
+    return [self file]->fnv64();
+}
+
+- (void)setPath:(NSURL *)path
+{
+    [self file]->path = [path fileSystemRepresentation];
+}
+
+- (NSInteger)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex
+{
+    try { return [self file]->writeToFile([path fileSystemRepresentation]); }
+    catch(Error &error) { [ex save:error]; return 0; }
+}
+
+- (void)dealloc
+{
+    delete (AnyFile *)obj;
+}
+
+@end
+
+
+//
+// Snapshot
+//
+
+@implementation SnapshotProxy
+
++ (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c
+{
+    auto c64 = (VirtualC64 *)proxy->obj;
+    auto snap = c64->c64.takeSnapshot(c);
+
+    //Transfer ownership to ObjC via release
+    return [self make:snap.release()];
+}
+
+- (Snapshot *)file
+{
+    return (Snapshot *)obj;
+}
+
+- (NSInteger)size
+{
+    return [self file]->getSize();
+}
+
+- (u64)fnv
+{
+    return [self file]->fnv64();
+}
+
+- (Compressor)compressor
+{
+    return [self file]->compressor();
+}
+
+- (BOOL)compressed
+{
+    return [self file]->isCompressed();
+}
+
+- (u8 *)data
+{
+    return [self file]->getData()+ sizeof(SnapshotHeader);
 }
 
 - (NSImage *)previewImage
@@ -1767,7 +1897,22 @@ NSString *EventSlotName(EventSlot slot)
 }
 */
 
-- (MediaFileProxy *) takeSnapshot:(Compressor)compressor
+- (SnapshotProxy *)takeSnapshot:(Compressor)compressor
+{
+    try {
+
+        auto snap = [self c64]->takeSnapshot(compressor);
+
+        //Transfer ownership to ObjC via release
+        return [SnapshotProxy make:snap.release()];
+
+    } catch (std::exception &stdex) {
+
+        return nil;
+    }
+}
+/*
+- (MediaFileProxy *)takeSnapshot:(Compressor)compressor
 {
     try {
 
@@ -1779,8 +1924,9 @@ NSString *EventSlotName(EventSlot slot)
         return nil;
     }
 }
+*/
 
-- (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
+- (void)loadSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->loadSnapshot(*[proxy file]); }
     catch (std::exception &stdex) { [ex save:stdex]; }
@@ -2225,16 +2371,9 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-/*
-- (void) loadRom:(MediaFileProxy *)proxy
-{
-    [self emu]->c64.loadRom(*(MediaFile *)proxy->obj);
-}
-*/
-
 - (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
-    try { [self emu]->c64.saveRom(type, string([url fileSystemRepresentation])); }
+    try { [self emu]->c64.saveRom(string([url fileSystemRepresentation]), type); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
