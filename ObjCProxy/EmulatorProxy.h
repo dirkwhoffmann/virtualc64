@@ -229,11 +229,11 @@ NSString *EventSlotName(EventSlot slot);
 
 - (void)installOpenRoms;
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
-- (void)loadRom:(MediaFileProxy *)proxy;
+- (void)loadRom:(MediaFileProxy *)proxy __attribute__((deprecated("MediaFile will go away.")));
 - (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)deleteRom:(RomType)type;
 
-- (void)flash:(MediaFileProxy *)container exception:(ExceptionWrapper *)ex;
+- (void)flash:(MediaFileProxy *)container exception:(ExceptionWrapper *)ex __attribute__((deprecated("MediaFile will go away.")));
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
 @end
@@ -285,8 +285,8 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) RomTraits kernalRom;
 @property (readonly) RomTraits vc1541Rom;
 
-- (MediaFileProxy *) takeSnapshot:(Compressor)compressor;
-- (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex;
+- (MediaFileProxy *) takeSnapshot:(Compressor)compressor __attribute__((deprecated("MediaFile will go away.")));
+- (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex __attribute__((deprecated("MediaFile will go away.")));
 - (void)loadSnapshotFromUrl:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)saveSnapshotToUrl:(NSURL *)url compressor:(Compressor)c exception:(ExceptionWrapper *)ex;
 
@@ -494,12 +494,12 @@ struct GuardInfo {
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
 
 - (BOOL)cartridgeAttached;
-- (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex;
+- (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex __attribute__((deprecated("MediaFile will go away.")));
 - (void)attachReuCartridge:(NSInteger)capacity;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
 - (void)detachCartridge;
-- (MediaFileProxy *) exportCRT;
+- (MediaFileProxy *) exportCRT __attribute__((deprecated("MediaFile will go away.")));
 
 @end
 
@@ -556,7 +556,7 @@ struct GuardInfo {
 @property (readonly) DriveInfo cachedInfo;
 
 - (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
-- (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp;
+- (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp __attribute__((deprecated("MediaFile will go away.")));
 - (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
 
@@ -598,9 +598,9 @@ struct GuardInfo {
 - (void)pressPlay;
 - (void)pressStop;
 - (void)rewind;
-- (void)insertTape:(MediaFileProxy *)tape;
+- (void)insertTape:(MediaFileProxy *)tape __attribute__((deprecated("MediaFile will go away.")));
 - (void)ejectTape;
-- (MediaFileProxy *) exportTAP;
+- (MediaFileProxy *) exportTAP __attribute__((deprecated("MediaFile will go away.")));
 
 @end
 
@@ -657,7 +657,7 @@ struct GuardInfo {
 - (void)pressKey:(char)c;
 - (void)pressSpecialKey:(RSKey)key;
 - (void)pressSpecialKey:(RSKey)key shift:(BOOL)shift;
-- (void)executeScript:(MediaFileProxy *)file;
+- (void)executeScript:(MediaFileProxy *)file __attribute__((deprecated("MediaFile will go away.")));
 - (void)executeString:(NSString *)string;
 
 @end

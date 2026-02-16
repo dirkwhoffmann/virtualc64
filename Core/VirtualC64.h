@@ -16,6 +16,7 @@
 #include "VirtualC64Types.h"
 #include "Error.h"
 #include "CoreError.h"
+#include "Snapshot.h"
 #include "MediaFile.h"
 
 namespace vc64 {
@@ -490,7 +491,8 @@ struct DatasetteAPI : public API {
     /** @brief  Inserts a tape.
      *  @param  file    The tape to insert.
      */
-    void insertTape(MediaFile &file);
+    [[deprecated]] void insertTape(MediaFile &file);
+    void insertTape(const fs::path &path);
 
     /** @brief  Ejects a tape.
      *  This function has no effect if no tape is inserted.
@@ -499,7 +501,7 @@ struct DatasetteAPI : public API {
 
     /** @brief  Export cartridge
      */
-    MediaFile *exportTAP() const;
+    [[deprecated]] MediaFile *exportTAP() const;
 };
 
 
@@ -610,7 +612,7 @@ struct ExpansionPortAPI : public API {
 
     /** @brief  Attaches a cartridge to the expansion port.
      */
-    void attachCartridge(const MediaFile &c, bool reset = true);
+    [[deprecated]] void attachCartridge(const MediaFile &c, bool reset = true);
 
     /** @brief  Attaches a RAM Expansion Unit to the expansion port.
      */
@@ -630,7 +632,7 @@ struct ExpansionPortAPI : public API {
 
     /** @brief  Export cartridge
      */
-    MediaFile *exportCRT() const;
+    [[deprecated]] MediaFile *exportCRT() const;
 
     /// @}
 
@@ -696,7 +698,7 @@ struct DriveAPI : public API {
      *  @param  file    A media file wrapper object.
      *  @param  wp      Write-protection status of the disk.
      */
-    void insertMedia(MediaFile &file, bool wp);
+    [[deprecated]] void insertMedia(MediaFile &file, bool wp);
 
     /** @brief  Inserts a disk created from a file system.
      *  @param  fs      A file system wrapper object.
@@ -799,10 +801,11 @@ struct RetroShellAPI : public API {
      *  MSG\_SCRIPT\_DONE is sent. If shell execution has been aborted due
      *  to an error, MSG\_SCRIPT\_ABORT is sent.
      */
+    void execScript(const fs::path &path);
     void execScript(std::stringstream &ss);
     void execScript(const std::ifstream &fs);
     void execScript(const string &contents);
-    void execScript(const MediaFile &file);
+    [[deprecated]] void execScript(const MediaFile &file);
 
     /// @}
 };
@@ -1099,13 +1102,15 @@ struct C64API : public API {
      *  @note   The function transfers the ownership to the caller. It is
      *          his responsibility of the caller to free the object.
      */
-    MediaFile *takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
+    std::unique_ptr<Snapshot> takeSnapshotNew(Compressor compressor, isize delay = 0, bool repeat = false);
+    [[deprecated]] MediaFile *takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
 
     /** @brief  Loads a snapshot
      *
      *  @param  snapshot    Reference to a snapshot
      */
-    void loadSnapshot(const MediaFile &snapshot);
+    void loadSnapshot(const Snapshot &snapshot);
+    [[deprecated]] void loadSnapshot(const MediaFile &snapshot);
 
     /** @brief  Loads a snapshot
      *
@@ -1131,7 +1136,7 @@ struct C64API : public API {
 
     /** @brief  Loads a ROM, provided by a RomFile object
      */
-    void loadRom(const MediaFile &file);
+    [[deprecated]] void loadRom(const MediaFile &file);
 
     /** @brief  Removes an installed ROM
      *          The ROM contents is overwritten with zeroes.
@@ -1162,11 +1167,13 @@ struct C64API : public API {
 
     /** @brief  Flashes a file into memory
      */
-    void flash(const MediaFile &file);
-
+    [[deprecated]] void flash(const MediaFile &file);
+    void flashNew(const AnyFile &file);
+    
     /** @brief  Flashes a file from a collection into memory
      */
-    void flash(const MediaFile &file, isize item);
+    [[deprecated]] void flash(const MediaFile &file, isize item);
+    void flashNew(const AnyFile &file, isize item);
 
     /** @brief  Flashes a file from a file system into memory
      */

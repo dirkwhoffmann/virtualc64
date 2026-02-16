@@ -523,6 +523,14 @@ C64API::saveWorkspace(const fs::path &path) const
     c64->saveWorkspace(path);
 }
 
+std::unique_ptr<Snapshot>
+C64API::takeSnapshotNew(Compressor compressor, isize delay, bool repeat)
+{
+    VC64_PUBLIC_SUSPEND
+    return c64->takeSnapshotNew(compressor, delay, repeat);
+}
+
+
 MediaFile *
 C64API::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
@@ -1150,6 +1158,14 @@ DatasetteAPI::insertTape(MediaFile &file)
 }
 
 void
+DatasetteAPI::insertTape(const fs::path &path)
+{
+    VC64_PUBLIC
+    datasette->insertTape(path);
+    emu->markAsDirty();
+}
+
+void
 DatasetteAPI::ejectTape()
 {
     VC64_PUBLIC
@@ -1301,35 +1317,38 @@ RetroShellAPI::text()
     return retroShell->text();
 }
 
-/*
-isize
-RetroShellAPI::cursorRel()
-{
-    return retroShell->cursorRel();
-}
-*/
-
 void
 RetroShellAPI::press(RSKey key, bool shift)
 {
+    VC64_PUBLIC
     retroShell->press(key, shift);
 }
 
 void
 RetroShellAPI::press(char c)
 {
+    VC64_PUBLIC
     retroShell->press(c);
 }
 
 void
 RetroShellAPI::press(const string &s)
 {
+    VC64_PUBLIC
     retroShell->press(s);
+}
+
+void
+RetroShellAPI::execScript(const fs::path &path)
+{
+    VC64_PUBLIC_SUSPEND
+    retroShell->asyncExecScript(path);
 }
 
 void
 RetroShellAPI::execScript(std::stringstream &ss)
 {
+    VC64_PUBLIC
     retroShell->asyncExecScript(ss);
 }
 

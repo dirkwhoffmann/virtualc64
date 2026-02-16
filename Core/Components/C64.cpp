@@ -1580,6 +1580,25 @@ C64::activateWorkspace()
     msgQueue.put(Msg::WORKSPACE_LOADED);
 }
 
+std::unique_ptr<Snapshot>
+C64::takeSnapshotNew(Compressor compressor, isize delay, bool repeat)
+{
+    if (delay != 0) {
+
+        i64 payload = (i64)compressor << 24 | repeat << 16 | delay;
+        scheduleRel<SLOT_SNP>(C64::sec(delay), SNP_TAKE, payload);
+        return nullptr;
+    }
+
+    // Take the snapshot
+    auto result = make_unique<Snapshot>(*this);
+
+    // Compress the snapshot if requested
+    result->compress(compressor);
+
+    return result;
+}
+
 MediaFile *
 C64::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
@@ -1603,6 +1622,23 @@ void
 C64::loadSnapshot(const fs::path &path)
 {
     loadSnapshot(Snapshot(path));
+}
+
+void
+C64::loadSnapshot(const Snapshot &snapshot)
+{
+    // Make a copy so we can modify the snapshot
+    Snapshot snap(snapshot);
+
+    // Uncompress the snapshot
+    snap.uncompress();
+
+    // Restore the saved state
+    load(snap.getSnapshotData());
+
+    // Inform the GUI
+    msgQueue.put(vic.pal() ? Msg::PAL : Msg::NTSC);
+    msgQueue.put(Msg::SNAPSHOT_RESTORED);
 }
 
 void
@@ -1988,6 +2024,115 @@ C64::installOpenRom(RomType type)
 }
 
 void
+C64::flash(const fs::path &path)
+{
+    if (const auto *file = (AnyFile *)AnyFile::make(path)) {
+        
+        switch (file->type()) {
+                
+            case FileType::BASIC_ROM:
+            case FileType::CHAR_ROM:
+            case FileType::KERNAL_ROM:
+            case FileType::VC1541_ROM:
+            case FileType::SNAPSHOT:
+
+                flashNew(*file);
+                
+            case FileType::D64:
+            case FileType::T64:
+            case FileType::P00:
+            case FileType::PRG:
+            case FileType::FOLDER:
+                
+                flashNew(*file, 0);
+                break;
+                
+            default:
+                fatalError;
+        }
+    }
+}
+
+void
+C64::flashNew(const AnyFile &file)
+{
+    switch (file.type()) {
+            
+        case FileType::BASIC_ROM:
+            file.flash(mem.rom, 0xA000);
+            break;
+            
+        case FileType::CHAR_ROM:
+            file.flash(mem.rom, 0xD000);
+            break;
+            
+        case FileType::KERNAL_ROM:
+            file.flash(mem.rom, 0xE000);
+            break;
+            
+        case FileType::VC1541_ROM:
+            drive8.mem.loadRom(dynamic_cast<const RomFile &>(file));
+            drive9.mem.loadRom(dynamic_cast<const RomFile &>(file));
+            break;
+            
+        case FileType::SNAPSHOT:
+            loadSnapshot(dynamic_cast<const Snapshot &>(file));
+            break;
+            
+        case FileType::D64:
+        case FileType::T64:
+        case FileType::P00:
+        case FileType::PRG:
+        case FileType::FOLDER:
+            
+            flashNew(file, 0);
+            break;
+            
+        default:
+            fatalError;
+    }
+}
+
+void
+C64::flashNew(const AnyFile &file, isize nr)
+{
+    try {
+        
+        const AnyCollection &collection = dynamic_cast<const AnyCollection &>(file);
+        auto addr = (u16)collection.itemLoadAddr(nr);
+        auto size = collection.itemSize(nr);
+        if (size <= 2) return;
+        
+        switch (collection.type()) {
+                
+            case FileType::D64:
+            case FileType::T64:
+            case FileType::P00:
+            case FileType::PRG:
+            case FileType::FOLDER:
+                
+                // Flash data into memory
+                size = std::min(size - 2, isize(0x10000 - addr));
+                collection.copyItem(nr, mem.ram + addr, size, 2);
+                
+                // Rectify zero page
+                mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
+                mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
+                break;
+                
+            default:
+                fatalError;
+        }
+
+        msgQueue.put(Msg::FILE_FLASHED);
+
+    } catch (...) {
+
+        throw IOError(IOError::FILE_TYPE_MISMATCH);
+    }
+}
+
+void
 C64::flash(const MediaFile &file)
 {
     switch (file.type()) {
@@ -2057,11 +2202,11 @@ C64::flash(const MediaFile &file, isize nr)
             default:
                 fatalError;
         }
-
+        
         msgQueue.put(Msg::FILE_FLASHED);
-
+        
     } catch (...) {
-
+        
         throw IOError(IOError::FILE_TYPE_MISMATCH);
     }
 }
