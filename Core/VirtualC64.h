@@ -1133,6 +1133,7 @@ struct C64API : public API {
      *          The ROM type is determined automatically.
      */
     void loadRom(const std::filesystem::path &path);
+    void loadRom(const std::filesystem::path &path, RomType rom);
 
     /** @brief  Loads a ROM, provided by a RomFile object
      */

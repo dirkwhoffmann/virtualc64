@@ -733,6 +733,7 @@ public:
 
     // Installs a Rom
     void loadRom(const fs::path &path);
+    void loadRom(const fs::path &path, RomType type);
     [[deprecated]] void loadRom(const MediaFile &file);
 
     // Erases an installed Rom or all Roms

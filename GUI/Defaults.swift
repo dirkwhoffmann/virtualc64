@@ -684,24 +684,21 @@ extension Configuration {
 
     func loadRomUserDefaults() {
 
-        func load(_ url: URL?, type: vc64.FileType) {
+        func load(_ url: URL?, type: RomType) {
 
-            if url != nil {
-                if let file = try? MediaFileProxy.make(with: url!) {
-                    if file.type == type { emu?.loadRom(file) }
-                }
-            }
+            guard let url = url else { return }
+            try? emu?.loadRom(type, url: url)
         }
-
+        
         debug(.defaults)
 
         if let emu = emu {
 
             emu.suspend()
-            load(UserDefaults.basicRomUrl, type: .BASIC_ROM)
-            load(UserDefaults.charRomUrl, type: .CHAR_ROM)
-            load(UserDefaults.kernalRomUrl, type: .KERNAL_ROM)
-            load(UserDefaults.vc1541RomUrl, type: .VC1541_ROM)
+            load(UserDefaults.basicRomUrl, type: .BASIC)
+            load(UserDefaults.charRomUrl, type: .CHAR)
+            load(UserDefaults.kernalRomUrl, type: .KERNAL)
+            load(UserDefaults.vc1541RomUrl, type: .VC1541)
             emu.resume()
         }
     }

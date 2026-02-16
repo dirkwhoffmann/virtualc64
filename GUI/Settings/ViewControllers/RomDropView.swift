@@ -76,8 +76,7 @@ class RomDropView: DropView {
 
         do {
 
-            let rom = try MediaFileProxy.make(with: url)
-            emu?.loadRom(rom)
+            try emu?.loadRom(url: url)
 
             return true
 

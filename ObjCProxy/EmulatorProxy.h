@@ -229,7 +229,9 @@ NSString *EventSlotName(EventSlot slot);
 
 - (void)installOpenRoms;
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
-- (void)loadRom:(MediaFileProxy *)proxy __attribute__((deprecated("MediaFile will go away.")));
+- (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex type:(RomType)type;
+
+// - (void)loadRom:(MediaFileProxy *)proxy __attribute__((deprecated("MediaFile will go away.")));
 - (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)deleteRom:(RomType)type;
 

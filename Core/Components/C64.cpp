@@ -1867,6 +1867,23 @@ C64::loadRom(const fs::path &path)
 }
 
 void
+C64::loadRom(const fs::path &path, RomType type)
+{
+    RomFile file(path);
+
+    if ((file.type() == FileType::BASIC_ROM  && type == RomType::BASIC)  ||
+        (file.type() == FileType::CHAR_ROM   && type == RomType::CHAR)   ||
+        (file.type() == FileType::KERNAL_ROM && type == RomType::KERNAL) ||
+        (file.type() == FileType::VC1541_ROM && type == RomType::VC1541)) {
+        
+        loadRom(file);
+        return;
+    }
+        
+    throw IOError(IOError::FILE_TYPE_MISMATCH);
+}
+
+void
 C64::loadRom(const MediaFile &file)
 {
     switch (file.type()) {

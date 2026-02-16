@@ -16,7 +16,7 @@ extension C64Proxy {
         loadSnapshot(proxy, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
-
+    
     func loadSnapshot(url: URL) throws {
 
         let exc = ExceptionWrapper()
@@ -176,6 +176,20 @@ extension EmulatorProxy {
 
         let exc = ExceptionWrapper()
         exportConfig(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+
+    func loadRom(url: URL) throws {
+
+        let exc = ExceptionWrapper()
+        loadRom(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+
+    func loadRom(_ type: vc64.RomType, url: URL) throws {
+
+        let exc = ExceptionWrapper()
+        loadRom(url, exception: exc, type: type)
         if let _ = exc.fault { throw AppError(exc) }
     }
 

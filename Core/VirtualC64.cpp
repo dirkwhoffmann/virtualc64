@@ -586,7 +586,15 @@ C64API::loadRom(const fs::path &path)
     emu->markAsDirty();
 }
 
-void 
+void
+C64API::loadRom(const std::filesystem::path &path, RomType rom)
+{
+    VC64_PUBLIC_SUSPEND
+    c64->loadRom(path, rom);
+    emu->markAsDirty();
+}
+
+void
 C64API::loadRom(const MediaFile &file)
 {
     VC64_PUBLIC_SUSPEND

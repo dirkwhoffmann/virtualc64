@@ -2213,21 +2213,29 @@ NSString *EventSlotName(EventSlot slot)
     [self emu]->c64.installOpenRoms();
 }
 
-- (void) loadRom:(NSURL *)url exception:(ExceptionWrapper *)e
+- (void) loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.loadRom(string([url fileSystemRepresentation])); }
-    catch (std::exception &stdex) { [e save:stdex]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
+- (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex type:(RomType)type
+{
+    try { [self emu]->c64.loadRom(string([url fileSystemRepresentation]), type); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
+}
+
+/*
 - (void) loadRom:(MediaFileProxy *)proxy
 {
     [self emu]->c64.loadRom(*(MediaFile *)proxy->obj);
 }
+*/
 
-- (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e
+- (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.saveRom(type, string([url fileSystemRepresentation])); }
-    catch (std::exception &stdex) { [e save:stdex]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void) deleteRom:(RomType)type
