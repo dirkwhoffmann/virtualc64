@@ -499,9 +499,9 @@ struct DatasetteAPI : public API {
      */
     void ejectTape();
 
-    /** @brief  Export tape in TAP format
+    /** @brief  Export tape to a file
      */
-    void exportTAP(const fs::path &path) const;
+    void exportTape(const fs::path &path) const;
 };
 
 
@@ -694,6 +694,12 @@ struct DriveAPI : public API {
      */
     void insertBlankDisk(DOSType fstype, string name);
 
+    /** @brief  Inserts a disk created from an image file.
+     *  @param  path   Path to the disk image.
+     *  @param  wp      Write-protection status of the disk.
+     */
+    void insert(const std::filesystem::path& path, bool wp);
+
     /** @brief  Inserts a disk created from a media file.
      *  @param  file    A media file wrapper object.
      *  @param  wp      Write-protection status of the disk.
@@ -709,6 +715,11 @@ struct DriveAPI : public API {
     /** @brief  Ejects the current disk.
      */
     void ejectDisk();
+    
+    /** @brief  Exports the current disk to a file.
+     *  @param  path   Path to the destination file.
+     */
+    void writeToFile(const std::filesystem::path& path);
 };
 
 

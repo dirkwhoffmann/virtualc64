@@ -463,6 +463,38 @@ Drive::ejectDisk()
 }
 
 void
+Drive::writeToFile(const fs::path& path) const
+{
+    // if (!hasDisk()) throw DeviceError(DeviceError::DSK_MISSING);
+    if (hasDisk())
+        disk->writeToFile(path);
+}
+
+/*
+void
+FloppyDrive::writeToFile(const fs::path& path, ImageFormat fmt) const
+{
+    if (!hasDisk()) throw DeviceError(DeviceError::DSK_MISSING);
+    disk->writeToFile(path, fmt);
+}
+
+std::unique_ptr<FloppyDiskImage>
+FloppyDrive::exportDisk(ImageFormat fmt) const
+{
+    switch (fmt) {
+
+        case ImageFormat::ADF:  return Codec::makeADF(*this);
+        case ImageFormat::EADF: return Codec::makeEADF(*this);
+        case ImageFormat::IMG:  return Codec::makeIMG(*this);
+        case ImageFormat::ST:   return Codec::makeST(*this);
+
+        default:
+            throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
+    }
+}
+*/
+
+void
 Drive::vsyncHandler()
 {
     // Only proceed if the drive is connected and switched on

@@ -188,7 +188,7 @@ class DropZone: Layer {
                 case 1: try mm.mount(url: url, allowedTypes: [type], drive: DRIVE9)
                 case 2: try mm.mount(url: url, allowedTypes: [type], options: [.flash])
                 case 3: try mm.attachCartridge(url: url, options: [.remember, .reset])
-                case 4: try mm.mount(url: url, allowedTypes: [type])
+                case 4: try mm.insertTape(url: url, options: [.remember, .reset])
                     
                 default:
                     fatalError()

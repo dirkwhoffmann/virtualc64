@@ -1085,7 +1085,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)exportTape:(NSURL *)url
 {
-    [self emu]->datasette.exportTAP(fs::path(url.fileSystemRepresentation));
+    [self emu]->datasette.exportTape(fs::path(url.fileSystemRepresentation));
 }
 
 @end

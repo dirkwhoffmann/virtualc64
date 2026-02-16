@@ -35,7 +35,7 @@ public:
     //
     
     static const TrackDefaults trackDefaults[43];
-
+    
     // GCR encoding table. Maps 4 data bits to 5 GCR bits.
     static constexpr u8 gcr[16] = {
         
@@ -57,8 +57,8 @@ public:
         255,   9,  10,  11, /* 0x18 - 0x1B */
         255,  13,  14, 255  /* 0x1C - 0x1F */
     };
-
-
+    
+    
     //
     // Disk properties
     //
@@ -75,15 +75,15 @@ private:
     //
     // Disk data
     //
-
+    
 public:
     
     // Data information for each halftrack on this disk
     DiskData data = { };
-
+    
     // Length information for each halftrack on this disk
     DiskLength length = { };
-
+    
     
     //
     // Class functions
@@ -94,11 +94,11 @@ public:
     // Returns the number of sectors stored in a certain track or halftrack
     static isize numberOfSectorsInTrack(Track t);
     static isize numberOfSectorsInHalftrack(Halftrack ht);
-
+    
     // Returns the default speed zone of a track or halftrack
     static isize speedZoneOfTrack(Track t);
     static isize speedZoneOfHalftrack(Halftrack ht);
-
+    
     // Checks if the given pair is a valid (half)track / sector combination
     static bool isValidTrackSectorPair(Track t, Sector s);
     static bool isValidHalftrackSectorPair(Halftrack ht, Sector s);
@@ -128,60 +128,60 @@ private:
     void init(const class D64File &d64, bool wp);
     void init(class AnyCollection &archive, bool wp);
     void init(SerReader &reader);
-
+    
 public:
-
+    
     Disk& operator= (const Disk& other) {
-
+        
         CLONE(writeProtected)
         CLONE(modified)
         CLONE(data)
         CLONE(length)
-
+        
         return *this;
     }
-
-
+    
+    
     //
     // Methods from Serializable
     //
-
+    
 public:
-
+    
     template <class T>
     void serialize(T& worker)
     {
         if (isResetter(worker)) return;
-
+        
         worker
-
+        
         << writeProtected
         << modified
         << data
         << length;
     }
-
+    
     
     //
     // Methods from CoreObject and Dumpable
     //
-
+    
 private:
-
+    
     const char *objectName() const override { return "Disk"; }
     void _dump(Category category, std::ostream &os) const override;
-
-
+    
+    
     //
     // Accessing
     //
-
+    
 public:
     
     bool isWriteProtected() const { return writeProtected; }
     void setWriteProtection(bool b) { writeProtected = b; }
     void toggleWriteProtection() { writeProtected = !writeProtected; }
-
+    
     bool isModified() const { return modified; }
     void setModified(bool b);
     
@@ -195,7 +195,7 @@ public:
     // Converts a 4 bit binary value to a 5 bit GCR codeword or vice versa
     static u8 bin2gcr(u8 value) { assert(value < 16); return gcr[value]; }
     static u8 gcr2bin(u8 value) { assert(value < 32); return invgcr[value]; }
-
+    
     // Returns true if the provided 5 bit codeword is a valid GCR codeword
     static bool isGcr(u8 value) { assert(value < 32); return invgcr[value] != 0xFF; }
     
@@ -205,7 +205,7 @@ public:
      */
     void encodeGcr(u8 value, Track t, HeadPos offset);
     void encodeGcr(u8 *values, isize length, Track t, HeadPos offset);
-
+    
     
     //
     // Accessing disk data
@@ -264,7 +264,7 @@ public:
     void writeBitToTrack(Track t, HeadPos pos, bool bit, isize count) {
         writeBitToHalftrack(2 * t - 1, pos, bit, count);
     }
-
+    
     // Writes a single byte
     void writeByteToHalftrack(Halftrack ht, HeadPos pos, u8 byte) {
         for (u8 mask = 0x80; mask != 0; mask >>= 1)
@@ -282,10 +282,10 @@ public:
     void writeGapToTrack(Track t, HeadPos pos, isize length) {
         writeGapToHalftrack(2 * t - 1, pos, length);
     }
-
+    
     // Clears a single halftrack
     void clearHalftrack(Halftrack ht);
-
+    
     // Reverts to a factory-fresh disk
     void clearDisk();
     
@@ -293,20 +293,20 @@ public:
     //
     // Analyzing the disk
     //
-
+    
 public:
-
+    
     /* Checks whether a track or halftrack is cleared. Avoid calling these
      * methods frequently, because they scan the whole track.
      */
     bool trackIsEmpty(Track t) const;
     bool halftrackIsEmpty(Halftrack ht) const;
     isize nonemptyHalftracks() const;
-
+    
     // Returns the length of a halftrack in bits
     isize lengthOfTrack(Track t) const;
     isize lengthOfHalftrack(Halftrack ht) const;
-
+    
     
     //
     // Decoding disk data
@@ -320,17 +320,17 @@ public:
      * determine how many bytes will be written.
      */
     isize decodeDisk(u8 *dest);
-
+    
 private:
     
     isize decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer);
     isize decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer);
     isize decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer);
     isize decodeSector(Halftrack ht, isize offset, u8 *dest, DiskAnalyzer &analyzer);
-
-
+    
+    
     //
-    // Encoding disk data
+    // Encoding data
     //
     
 public:
@@ -362,6 +362,15 @@ private:
      * is returned.
      */
     isize encodeSector(const FileSystem &fs, Track t, Sector sector, HeadPos start, isize gap);
+
+    
+    //
+    // Exporting data
+    //
+
+    void writeToFile(const fs::path& path) const;
+    // void writeToFile(const fs::path& path, ImageFormat fmt) const;
+
 };
 
 }

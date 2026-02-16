@@ -682,4 +682,37 @@ Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize
     return offset - start;
 }
 
+void
+Disk::writeToFile(const fs::path& path) const
+{
+    auto ext = utl::uppercased(path.extension().string());
+
+    /*
+    if (ext == ".ADF")  writeToFile(path, ImageFormat::ADF);
+    if (ext == ".EADF") writeToFile(path, ImageFormat::EADF);
+    if (ext == ".IMG")  writeToFile(path, ImageFormat::IMG);
+    if (ext == ".IMA")  writeToFile(path, ImageFormat::IMG);
+    if (ext == ".ST")   writeToFile(path, ImageFormat::ST);
+    */
+    
+    throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
+}
+
+/*
+void
+Disk::writeToFile(const fs::path& path, ImageFormat fmt) const
+{
+    switch (fmt) {
+
+        case ImageFormat::ADF:  Codec::makeADF(*this)->writeToFile(path); break;
+        case ImageFormat::EADF: Codec::makeEADF(*this)->writeToFile(path); break;
+        case ImageFormat::IMG:  Codec::makeIMG(*this)->writeToFile(path); break;
+        case ImageFormat::ST:   Codec::makeST(*this)->writeToFile(path); break;
+
+        default:
+            throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
+    }
+}
+*/
+
 }

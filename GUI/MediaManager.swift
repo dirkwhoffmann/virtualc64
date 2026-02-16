@@ -209,11 +209,13 @@ class MediaManager {
     // Creating media files from URLs
     //
     
+    @available(*, deprecated, message: "MediaFileProxy will go away")
     static func createFileProxy(from url: URL, type: FileType) throws -> MediaFileProxy {
         
         return try createFileProxy(from: url, allowedTypes: [type])
     }
     
+    @available(*, deprecated, message: "MediaFileProxy will go away")
     static func createFileProxy(from url: URL, allowedTypes: [FileType]) throws -> MediaFileProxy {
         
         debug(.media, "Reading file \(url.lastPathComponent)")
@@ -323,6 +325,7 @@ class MediaManager {
         }
     }
     
+    @available(*, deprecated, message: "MediaFileProxy will go away")
     private func mount(proxy: MediaFileProxy,
                        drive: DriveProxy? = nil,
                        options: [Option] = []) throws {
@@ -379,6 +382,7 @@ class MediaManager {
         }
     }
     
+    @available(*, deprecated, message: "MediaFileProxy will go away")
     private func flash(proxy: MediaFileProxy, options: [Option] = []) throws {
 
         if let emu = emu {
@@ -437,30 +441,20 @@ class MediaManager {
     func export(drive id: Int, to url: URL) throws {
         
         debug(.media, "drive: \(id) to: \(url)")
-        
-        if let emu = emu {
-            
-            let drive = emu.drive(id)
-            try export(disk: drive, to: url)
-            
-            emu.put(.DSK_MODIFIED, value: id)
-        }
-    }
-    
-    func export(disk: DriveProxy, to url: URL) throws {
-        
-        debug(.media, "disk: \(disk) to: \(url)")
-        
+        guard let drive = emu?.drive(id) else { return }
+                        
         if url.c64FileType == .G64 {
             
-            let g64 = try MediaFileProxy.make(with: disk, type: .G64)
+            let g64 = try MediaFileProxy.make(with: drive, type: .G64)
             try export(file: g64, to: url)
             
         } else {
             
-            let fs = try FileSystemProxy.make(with: disk)
+            let fs = try FileSystemProxy.make(with: drive)
             try export(fs: fs, to: url)
         }
+        
+        emu?.put(.DSK_MODIFIED, value: id)
     }
     
     func export(fs: FileSystemProxy, to url: URL) throws {

@@ -1177,7 +1177,7 @@ DatasetteAPI::ejectTape()
 
 
 void
-DatasetteAPI::exportTAP(const fs::path &path) const
+DatasetteAPI::exportTape(const fs::path &path) const
 {
     datasette->exportTAP(path);
 }
@@ -1505,6 +1505,14 @@ DriveAPI::insertBlankDisk(DOSType fstype, string name)
 }
 
 void
+DriveAPI::insert(const fs::path &path, bool wp)
+{
+    VC64_PUBLIC_SUSPEND
+    drive->insertDisk(path, wp);
+    emu->markAsDirty();
+}
+
+void
 DriveAPI::insertMedia(MediaFile &file, bool wp)
 {
     drive->insertMediaFile(file, wp);
@@ -1523,6 +1531,12 @@ DriveAPI::ejectDisk()
 {
     drive->ejectDisk();
     emu->markAsDirty();
+}
+
+void
+DriveAPI::writeToFile(const std::filesystem::path& path)
+{
+    drive->writeToFile(path);
 }
 
 
