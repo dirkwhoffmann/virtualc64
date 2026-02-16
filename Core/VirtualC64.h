@@ -843,23 +843,18 @@ struct DefaultsAPI : public API {
     /// @name Loading and saving the key-value storage
 
     /** @brief  Loads a storage file from disk
-     *  @throw  AppError (#FILE_NOT_FOUND)
-     *  @throw  AppError (#SYNTAX)
      */
     void load(const std::filesystem::path &path);
 
     /** @brief  Loads a storage file from a stream
-     *  @throw  AppError (#SYNTAX)
      */
     void load(std::ifstream &stream);
 
     /** @brief  Loads a storage file from a string stream
-     *  @throw  AppError (#SYNTAX)
      */
     void load(std::stringstream &stream);
 
     /** @brief  Saves a storage file to disk
-     *  @throw  AppError (#FILE_CANT_WRITE)
      */
     void save(const std::filesystem::path &path);
 
@@ -879,14 +874,12 @@ struct DefaultsAPI : public API {
     /** @brief  Queries a key-value pair.
      *  @param  key     The key.
      *  @result The value as a string.
-     *  @throw  AppError (#ERROR\_INVALID\_KEY)
      */
     string getRaw(const string &key) const;
 
     /** @brief  Queries a key-value pair.
      *  @param  key     The key.
      *  @result The value as an integer. 0 if the value cannot not be parsed.
-     *  @throw  AppError (#ERROR\_INVALID\_KEY)
      */
     i64 get(const string &key) const;
 
@@ -894,21 +887,18 @@ struct DefaultsAPI : public API {
      *  @param  option  A config option whose name is used as the prefix of the key.
      *  @param  nr      Optional number that is appened to the key as suffix.
      *  @result The value as an integer.
-     *  @throw  AppError (#ERROR\_INVALID\_KEY)
      */
     i64 get(Opt option, isize nr = 0) const;
 
     /** @brief  Queries a fallback key-value pair.
      *  @param  key     The key.
      *  @result The value as a string.
-     *  @throw  AppError (#ERROR\_INVALID\_KEY)
      */
     string getFallbackRaw(const string &key) const;
 
     /** @brief  Queries a fallback key-value pair.
      *  @param  key     The key.
      *  @result The value as an integer. 0 if the value cannot not be parsed.
-     *  @throw  AppError (#ERROR\_INVALID\_KEY)
      */
     i64 getFallback(const string &key) const;
 
@@ -916,7 +906,6 @@ struct DefaultsAPI : public API {
      *  @param  option  A config option whose name is used as the key.
      *  @param  nr      Optional number that is appened to the key as suffix.
      *  @result The value as an integer.
-     *  @throw  AppError (#ERROR\_INVALID\_KEY)
      */
     i64 getFallback(Opt option, isize nr = 0) const;
 
@@ -928,14 +917,12 @@ struct DefaultsAPI : public API {
     /** @brief  Writes a key-value pair into the user storage.
      *  @param  key     The key, given as a string.
      *  @param  value   The value, given as a string.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void set(const string &key, const string &value);
 
     /** @brief  Writes a key-value pair into the user storage.
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The value, given as a string.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void set(Opt opt, const string &value);
 
@@ -943,14 +930,12 @@ struct DefaultsAPI : public API {
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The value for all pairs, given as a string.
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void set(Opt opt, const string &value, std::vector<isize> objids);
 
     /** @brief  Writes a key-value pair into the user storage.
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The value, given as an integer.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void set(Opt opt, i64 value);
 
@@ -958,7 +943,6 @@ struct DefaultsAPI : public API {
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The value for all pairs, given as an integer.
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void set(Opt opt, i64 value, std::vector<isize> objids);
 
@@ -971,7 +955,6 @@ struct DefaultsAPI : public API {
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The value, given as an integer.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void setFallback(Opt opt, const string &value);
 
@@ -985,7 +968,6 @@ struct DefaultsAPI : public API {
     /** @brief  Writes a key-value pair into the fallback storage.
      *  @param  opt     The option's name forms the prefix of the keys.
      *  @param  value   The value, given as an integer.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void setFallback(Opt opt, i64 value);
 
@@ -1007,20 +989,17 @@ struct DefaultsAPI : public API {
 
     /** @brief  Deletes a key-value pair
      *  @param  key     The key of the key-value pair.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void remove(const string &key);
 
     /** @brief  Deletes a key-value pair
      *  @param  option  The option's name forms the key.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void remove(Opt option);
 
     /** @brief  Deletes multiple key-value pairs.
      *  @param  option  The option's name forms the prefix of the keys.
      *  @param  objids  The keys are parameterized by adding the vector values as suffixes.
-     *  @throw  AppError (#INVALID_KEY)
      */
     void remove(Opt option, std::vector <isize> objids);
 
@@ -1147,9 +1126,6 @@ struct C64API : public API {
 
     /** @brief  Loads a ROM from a file
      *          The ROM type is determined automatically.
-     *
-     *  @throw  AppError (ROMemType::BASIC_MISSING)
-     *          AppError (FILE_TYPE_MISMATCH)
      */
     void loadRom(const std::filesystem::path &path);
 
@@ -1168,8 +1144,6 @@ struct C64API : public API {
     void deleteRoms();
 
     /** @brief  Saves a ROM to disk
-     *
-     *  @throw  AppError (FILE_CANT_WRITE)
      */
     void saveRom(RomType rom, const std::filesystem::path &path);
 
@@ -1313,12 +1287,6 @@ struct VirtualC64 : public API {
      *  The function checks if the necessary ROMs are installed to lauch the
      *  emulator. On success, the functions returns. Otherwise, an exception
      *  is thrown.
-     *
-     *  @throw  Error (ROMemType::BASIC_MISSING)
-     *  @throw  Error (ROMemType::CHAR_MISSING)
-     *  @throw  Error (ROMemType::KERNAL_MISSING)
-     *  @throw  Error (ROMemType::CHAR_MISSING)
-     *  @throw  Error (ROM_MEGA65_MISMATCH)
      */
     void isReady() const;
 

@@ -227,13 +227,12 @@ class MediaManager {
             do {
                 return try MediaFileProxy.make(with: newUrl, type: type)
             } catch let error as AppError {
-                if error.errorCode != .FILE_TYPE_MISMATCH { throw error }
+                if error.key != "FILE_TYPE_MISMATCH" { throw error }
             }
         }
         
         // None of the allowed types matched the file
-        throw AppError(.FILE_TYPE_MISMATCH,
-                       "The type of this file is not known to the emulator.")
+        throw AppError(what: "The type of this file is not known to the emulator.")
     }
     
     //
@@ -447,7 +446,7 @@ class MediaManager {
             file = try MediaFileProxy.make(with: fs, type: .P00)
             
         default:
-            throw AppError(vc64.Fault.FILE_TYPE_MISMATCH)
+            throw AppError(what: "File type mismatch.")
         }
         
         try export(file: file!, to: url)

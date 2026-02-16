@@ -12,37 +12,37 @@ extension C64Proxy {
 
     func loadSnapshot(_ proxy: MediaFileProxy) throws {
 
-        let exception = ExceptionWrapper()
-        loadSnapshot(proxy, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        loadSnapshot(proxy, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 
     func loadSnapshot(url: URL) throws {
 
-        let exception = ExceptionWrapper()
-        loadSnapshot(from: url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        loadSnapshot(from: url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 
     func saveSnapshot(url: URL, compressor: Compressor) throws {
 
-        let exception = ExceptionWrapper()
-        saveSnapshot(to: url, compressor: compressor, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        saveSnapshot(to: url, compressor: compressor, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 
     func loadWorkspace(url: URL) throws {
-
-        let exception = ExceptionWrapper()
-        loadWorkspace(url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        
+        let exc = ExceptionWrapper()
+        loadWorkspace(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
-
+    
     func saveWorkspace(url: URL) throws {
 
-        let exception = ExceptionWrapper()
-        saveWorkspace(url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        saveWorkspace(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 }
 
@@ -57,7 +57,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withBuffer: buffer, length: length, type: type, exception: exc)
-        if exc.fault != .OK { throw AppError(exc) }
+        if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
 
@@ -65,7 +65,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(with: data, type: type, exception: exc)
-        if exc.fault != .OK { throw AppError(exc) }
+        if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
 
@@ -81,7 +81,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withFile: url.path, exception: exc)
-        if exc.fault != .OK { throw AppError(exc) }
+        if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
 
@@ -89,7 +89,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withFile: url.path, type: type, exception: exc)
-        if exc.fault != .OK { throw AppError(exc) }
+        if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
 
@@ -97,7 +97,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withDrive: drive, type: type, exception: exc)
-        if exc.fault != .OK { throw AppError(exc) }
+        if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
 
@@ -105,7 +105,7 @@ extension MediaFileProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withFileSystem: fs, type: type, exception: exc)
-        if exc.fault != .OK { throw AppError(exc) }
+        if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
 }
@@ -117,7 +117,7 @@ extension FileSystemProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withMediaFile: file, exception: exc)
-        if exc.fault != .OK { throw AppError(exc) }
+        if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
 
@@ -125,7 +125,7 @@ extension FileSystemProxy {
 
         let exc = ExceptionWrapper()
         let obj = make(withDrive: drive, exception: exc)
-        if exc.fault != .OK { throw AppError(exc) }
+        if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
 }
@@ -139,65 +139,65 @@ extension EmulatorProxy {
 
     func launch() throws {
         
-        let exception = ExceptionWrapper()
-        launch(exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        launch(exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
     
     func launch(_ listener: UnsafeRawPointer, _ callback: @escaping @convention(c) (UnsafeRawPointer?, Message) -> Void) throws
     {
-        let exception = ExceptionWrapper()
-        launch(listener, function: callback, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        launch(listener, function: callback, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
     
     func isReady() throws {
         
-        let exception = ExceptionWrapper()
-        isReady(exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        isReady(exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 
     func powerOn() throws {
         
-        let exception = ExceptionWrapper()
-        power(on: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        power(on: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 
     func run() throws {
         
-        let exception = ExceptionWrapper()
-        run(exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        run(exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 
     func exportConfig(url: URL) throws {
 
-        let exception = ExceptionWrapper()
-        exportConfig(url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        exportConfig(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 
     func saveRom(_ type: vc64.RomType, url: URL) throws {
 
-        let exception = ExceptionWrapper()
-        save(type, url: url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        save(type, url: url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
      
     func flash(_ proxy: MediaFileProxy) throws {
 
-        let exception = ExceptionWrapper()
-        flash(proxy, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        flash(proxy, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
     
     func flash(_ proxy: FileSystemProxy, item: Int) throws {
 
-        let exception = ExceptionWrapper()
-        flash(proxy, item: item, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        flash(proxy, item: item, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 }
 
@@ -206,9 +206,9 @@ extension ExpansionPortProxy {
     
     func attachCartridge(_ proxy: MediaFileProxy, reset: Bool) throws {
         
-        let exception = ExceptionWrapper()
-        attachCartridge(proxy, reset: reset, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        attachCartridge(proxy, reset: reset, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 }
 
@@ -217,9 +217,9 @@ extension MediaFileProxy {
     
     func writeToFile(url: URL) throws {
         
-        let exception = ExceptionWrapper()
-        write(toFile: url.path, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        write(toFile: url.path, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 }
 
@@ -228,9 +228,9 @@ extension FileSystemProxy {
         
     func export(url: URL) throws {
             
-        let exception = ExceptionWrapper()
-        export(url.path, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        export(url.path, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
 }
 

@@ -44,18 +44,21 @@ public func warn(_ msg: String = "",
 
 final class AppError: Error {
     
-    let errorCode: Fault
+    let errorCode: Int
+    let key: String
     let what: String
 
     init(_ exception: ExceptionWrapper) {
 
-        self.errorCode = exception.fault
+        self.errorCode = 0
+        self.key = exception.key
         self.what = exception.what
     }
     
-    init(_ errorCode: vc64.Fault, _ what: String = "") {
+    init(_ errorCode: Int = 0, key: String = "", what: String = "") {
         
         self.errorCode = errorCode
+        self.key = ""
         self.what = what
     }
 }
@@ -65,7 +68,7 @@ extension NSError {
     convenience init(error: AppError) {
 
         self.init(domain: "VirtualC64",
-                  code: error.errorCode.rawValue,
+                  code: error.errorCode,
                   userInfo: [NSLocalizedRecoverySuggestionErrorKey: error.what])
     }
 }

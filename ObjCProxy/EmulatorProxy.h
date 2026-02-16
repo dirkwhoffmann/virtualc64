@@ -49,18 +49,27 @@ NSString *EventSlotName(EventSlot slot);
 // Exception wrapper
 //
 
+@interface ExceptionWrapper : NSObject
+
+@property (nonatomic, strong) NSNumber *fault;
+@property (nonatomic, copy) NSString *key;
+@property (nonatomic, copy) NSString *what;
+
+@end
+/*
 @interface ExceptionWrapper : NSObject {
     
-    Fault fault;
+    NSInteger fault;
     NSString *key;
     NSString *what;
 }
 
-@property Fault fault;
+@property NSInteger fault;
 @property NSString *key;
 @property NSString *what;
 
 @end
+*/
 
 //
 // Base proxies

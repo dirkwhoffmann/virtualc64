@@ -542,7 +542,7 @@ C64API::loadSnapshot(const MediaFile &snapshot)
         // Restore the saved state
         c64->loadSnapshot(snapshot);
 
-    } catch (AppError &) {
+    } catch (std::exception &) {
 
         /* If we reach this point, the emulator has been put into an
          * inconsistent state due to corrupted snapshot data. We cannot

@@ -28,9 +28,9 @@ extension DefaultsProxy {
         
         resetSearchPaths()
         
-        let exception = ExceptionWrapper()
-        load(url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        load(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
     
     func load() {
@@ -55,9 +55,9 @@ extension DefaultsProxy {
     
     func save(url: URL) throws {
         
-        let exception = ExceptionWrapper()
-        save(url, exception: exception)
-        if exception.fault != .OK { throw AppError(exception) }
+        let exc = ExceptionWrapper()
+        save(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
     }
     
     func save() {
@@ -714,7 +714,7 @@ extension Configuration {
         
         func save(_ type: vc64.RomType) throws {
             
-            if url == nil { throw AppError(vc64.Fault.FILE_CANT_WRITE) }
+            if url == nil { throw AppError(what: "Failed to save ROM. Missing URL.") }
             try? FileManager.default.removeItem(at: url!)
             try emu?.saveRom(type, url: url!)
         }

@@ -63,7 +63,7 @@ void Socket::create()
             
             WSADATA wsaData;
             if (WSAStartup(MAKEWORD(2, 2), &wsaData))
-                throw AppError(Fault::SOCK_CANT_CREATE);
+                throw ServerError(ServerError::SOCK_CANT_CREATE);
         }
         ~WSAInit() {
             

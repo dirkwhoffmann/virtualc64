@@ -39,8 +39,13 @@ int main(int argc, char *argv[])
             std::cout << what << std::endl;
         }
 
+    } catch (vc64::Error &e) {
+
+        std::cout << "Emulator Error: " << e.what() << std::endl;
+
     } catch (vc64::AppError &e) {
 
+        // DEPRECATED
         std::cout << "Emulator Error: " << e.what() << std::endl;
 
     } catch (std::exception &e) {

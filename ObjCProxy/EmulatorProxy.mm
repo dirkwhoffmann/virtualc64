@@ -35,12 +35,36 @@ NSString *EventSlotName(EventSlot slot)
 
     if (self = [super init]) {
         
-        fault = Fault::OK;
-        what = @"";
+        self.fault = NULL;
+        self.key   = @"";
+        self.what  = @"";
     }
     return self;
 }
 
+- (void)save:(const std::exception &)exception
+{
+    if (const auto *error = dynamic_cast<const Error *>(&exception)) {
+
+        self.fault = @(error->payload);
+        self.key   = @(error->errstr());
+        self.what  = @(error->what());
+        
+    } else if (const auto *error = dynamic_cast<const AppError *>(&exception)) {
+        
+        self.fault = @(error->data);
+        self.key   = @("");
+        self.what  = @(error->what());
+        
+    } else {
+
+        self.fault = @(0);
+        self.key   = @("");
+        self.what  = @(error->what());
+    }
+}
+
+/*
 - (void)save:(const std::exception &)exception
 {
     if (const auto *error = dynamic_cast<const Error *>(&exception)) {
@@ -63,6 +87,7 @@ NSString *EventSlotName(EventSlot slot)
         what = @(exception.what());
     }
 }
+*/
 
 @end
 
