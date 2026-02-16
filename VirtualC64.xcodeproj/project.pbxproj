@@ -1131,6 +1131,7 @@
 		50AC25BE2F4257970016265E /* CoreError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CoreError.cpp; sourceTree = "<group>"; };
 		50AC25C12F425DC80016265E /* MediaError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaError.h; sourceTree = "<group>"; };
 		50AC25C22F425DD10016265E /* MediaError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MediaError.cpp; sourceTree = "<group>"; };
+		50AC25C82F42FC120016265E /* ServerError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerError.h; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPort.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPort.h; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
@@ -2184,6 +2185,7 @@
 			isa = PBXGroup;
 			children = (
 				50A5B7C22C74E44C00D6DDAD /* CMakeLists.txt */,
+				50AC25C82F42FC120016265E /* ServerError.h */,
 				50A5B7C52C74E44C00D6DDAD /* RemoteManagerTypes.h */,
 				50A5B7C42C74E44C00D6DDAD /* RemoteManager.h */,
 				50A5B7C32C74E44C00D6DDAD /* RemoteManager.cpp */,

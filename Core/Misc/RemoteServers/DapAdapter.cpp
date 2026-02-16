@@ -311,13 +311,13 @@ DapAdapter::process(const string &packet)
             } else if (t == "event") {
 
             } else {
-                throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
+                throw ServerError(ServerError::DAP_UNRECOGNIZED_CMD, packet);
             }
         }
 
     } catch (...) {
 
-        throw AppError(Fault::DAP_UNRECOGNIZED_CMD, packet);
+        throw ServerError(ServerError::DAP_UNRECOGNIZED_CMD, packet);
     }
 }
 

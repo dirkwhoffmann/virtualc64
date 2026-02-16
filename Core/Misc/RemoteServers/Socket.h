@@ -13,6 +13,7 @@
 #pragma once
 
 #include "CoreObject.h"
+#include "ServerError.h"
 
 #ifdef _WIN32
 

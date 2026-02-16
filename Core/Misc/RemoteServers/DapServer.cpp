@@ -88,16 +88,14 @@ DapServer::didReceive(const string &cmd)
 {
     // Try to find the header terminator
     auto headerEnd = cmd.find("\r\n\r\n");
-    if (headerEnd == std::string::npos) {
-        throw AppError(Fault::DAP_INVALID_FORMAT, cmd);
-    }
+    if (headerEnd == std::string::npos)
+        throw ServerError(ServerError::DAP_INVALID_FORMAT, cmd);
 
     // Extract the header portion
     auto header = cmd.substr(0, headerEnd);
     auto contentLengthPos = header.find("Content-Length:");
-    if (contentLengthPos == std::string::npos) {
-        throw AppError(Fault::DAP_INVALID_FORMAT, cmd);
-    }
+    if (contentLengthPos == std::string::npos)
+        throw ServerError(ServerError::DAP_INVALID_FORMAT, cmd);
 
     // Parse content length
     auto lenStart = contentLengthPos + strlen("Content-Length:");
@@ -107,9 +105,8 @@ DapServer::didReceive(const string &cmd)
 
     // Check if we have the full message
     auto messageStart = headerEnd + 4;
-    if (cmd.size() < messageStart + contentLength) {
-        throw AppError(Fault::DAP_INVALID_FORMAT, cmd);
-    }
+    if (cmd.size() < messageStart + contentLength)
+        throw ServerError(ServerError::DAP_INVALID_FORMAT, cmd);
 
     // Extract JSON payload
     string jsonStr = cmd.substr(messageStart, contentLength);

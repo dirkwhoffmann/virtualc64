@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "ExpansionPort.h"
+#include "MediaError.h"
 #include "C64.h"
 
 namespace vc64 {
@@ -212,9 +213,8 @@ ExpansionPort::attachCartridge(const MediaFile &file, bool reset)
     const CRTFile &crtFile = dynamic_cast<const CRTFile &>(file);
     
     // Only proceed if this cartridge is supported
-    if (!crtFile.isSupported()) {
-        throw AppError(Fault::CRT_UNSUPPORTED, crtFile.cartridgeTypeName());
-    }
+    if (!crtFile.isSupported())
+        throw MediaError(MediaError::CRT_UNSUPPORTED, crtFile.cartridgeTypeName());
     
     try {
         

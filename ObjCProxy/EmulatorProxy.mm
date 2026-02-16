@@ -51,13 +51,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)save:(const std::exception &)exception
 {
-    if (const auto *error = dynamic_cast<const CoreError *>(&exception)) {
-        
-        fault = Fault(error->payload);
-        key = @(error->errstr());
-        what = @(error->what());
-        
-    } else if (const auto *error = dynamic_cast<const MediaError *>(&exception)) {
+    if (const auto *error = dynamic_cast<const Error *>(&exception)) {
         
         fault = Fault(error->payload);
         key = @(error->errstr());

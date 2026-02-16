@@ -13,6 +13,7 @@
 #include "config.h"
 #include "Cartridge.h"
 #include "C64.h"
+#include "MediaError.h"
 
 namespace vc64 {
 
@@ -141,7 +142,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CartridgeType::REU:               cart = new Reu(c64); break;
 
         default:
-            throw AppError(Fault::CRT_UNSUPPORTED, CRTFile::cartridgeTypeName(type));
+            throw MediaError(MediaError::CRT_UNSUPPORTED, CRTFile::cartridgeTypeName(type));
     }
 
     cart->init();
@@ -154,7 +155,8 @@ Cartridge::makeWithCRTFile(C64 &c64, const CRTFile &file)
     auto type = file.cartridgeType();
 
     // Only proceed if the cartridge ID is valid
-    if (!isKnownType(type)) throw AppError(Fault::CRT_UNKNOWN, std::to_string(long(type)));
+    if (!isKnownType(type))
+        throw MediaError(MediaError::CRT_UNKNOWN, std::to_string(long(type)));
 
     // Try to create the cartridge
     Cartridge *cart = makeWithType(c64, file.cartridgeType());

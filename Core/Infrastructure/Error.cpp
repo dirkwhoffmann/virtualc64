@@ -188,26 +188,6 @@ AppError::AppError(Fault code, const string &s)
         case Fault::DRV_NO_DISK:
             description = "No disk in drive.";
             break;
-
-        case Fault::CRT_NO_CARTRIDGE:
-            description = "No cartridge attached.";
-            break;
-
-        case Fault::CRT_UNKNOWN:
-            description = "This cartridge is a type " + s + " cartridge which";
-            description += " is unknown to the emulator.";
-            break;
-
-        case Fault::CRT_UNSUPPORTED:
-            description = "Cartridges of type " + s + " are not yet supported.";
-            break;
-
-        case Fault::CRT_TOO_MANY_PACKETS:
-            description = "The packet counts exceeds the allowed limit.";
-            break;
-
-        case Fault::CRT_CORRUPTED_PACKET:
-            description = "Corrputed packet detected.";
             
         case Fault::FS_UNSUPPORTED:
             description = "Unsupported file system.";

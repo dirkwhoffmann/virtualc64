@@ -81,13 +81,16 @@ enum class Fault : long
     DRV_UNCONNECTED,      ///< Floppy drive is not connected
     DRV_NO_DISK,          ///< Floppy drive contains no disk
 
+    /*
     // Cartridges
     CRT_NO_CARTRIDGE,     ///< No cartridge attached
     CRT_UNKNOWN,          ///< Unknown cartridge type
     CRT_UNSUPPORTED,      ///< Unsupported cartridge type
     CRT_TOO_MANY_PACKETS, ///< CRT file contains too many Rom packets
     CRT_CORRUPTED_PACKET, ///< CRT file contains a corrupted Rom package
-
+     */
+    
+    /*
     // Remote servers
     SOCK_CANT_CREATE,
     SOCK_CANT_CONNECT,
@@ -115,7 +118,8 @@ enum class Fault : long
     GDB_INVALID_CHECKSUM,
     GDB_UNRECOGNIZED_CMD,
     GDB_UNSUPPORTED_CMD,
-
+     */
+    
     // File systems
     FS_UNSUPPORTED,       ///< Unsupported file system
     FS_WRONG_CAPACITY,    ///< Wrong file system capacity
@@ -192,6 +196,7 @@ struct FaultEnum : Reflectable<FaultEnum, Fault> {
             case Fault::DRV_UNCONNECTED:         return "DRV_UNCONNECTED";
             case Fault::DRV_NO_DISK:             return "DRV_NO_DISK";
 
+                /*
             case Fault::CRT_NO_CARTRIDGE:        return "CRT_NO_CARTRIDGE";
             case Fault::CRT_UNKNOWN:             return "CRT_UNKNOWN";
             case Fault::CRT_UNSUPPORTED:         return "CRT_UNSUPPORTED";
@@ -222,7 +227,8 @@ struct FaultEnum : Reflectable<FaultEnum, Fault> {
             case Fault::GDB_INVALID_CHECKSUM:    return "GDB_INVALID_CHECKSUM";
             case Fault::GDB_UNRECOGNIZED_CMD:    return "GDB_UNRECOGNIZED_CMD";
             case Fault::GDB_UNSUPPORTED_CMD:     return "GDB_UNSUPPORTED_CMD";
-
+                 */
+                
             case Fault::FS_UNSUPPORTED:          return "FS_UNSUPPORTED";
             case Fault::FS_WRONG_CAPACITY:       return "FS_WRONG_CAPACITY";
             case Fault::FS_CORRUPTED:            return "FS_CORRUPTED";

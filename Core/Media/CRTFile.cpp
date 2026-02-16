@@ -13,6 +13,7 @@
 #include "config.h"
 #include "CRTFile.h"
 #include "Cartridge.h"
+#include "MediaError.h"
 
 namespace vc64 {
 
@@ -65,12 +66,11 @@ CRTFile::finalizeRead()
     u8 *ptr = data.ptr + headerSize();
     for (numberOfChips = 0; ptr < data.ptr + data.size; numberOfChips++) {
 
-        if (numberOfChips == MAX_PACKETS) {
-            throw AppError(Fault::CRT_TOO_MANY_PACKETS);
-        }
-        if (memcmp("CHIP", ptr, 4) != 0) {
-            throw AppError(Fault::CRT_CORRUPTED_PACKET);
-        }
+        if (numberOfChips == MAX_PACKETS)
+            throw MediaError(MediaError::CRT_TOO_MANY_PACKETS);
+
+        if (memcmp("CHIP", ptr, 4) != 0)
+            throw MediaError(MediaError::CRT_CORRUPTED_PACKET);
         
         // Remember start address of each chip section
         chips[numberOfChips] = ptr;

@@ -39,6 +39,26 @@ MediaError::MediaError(long code, const string &s) : Error(code)
                     " emulator into an inconsistent state.");
             break;
 
+        case CRT_NO_CARTRIDGE:
+            set_msg("No cartridge attached.");
+            break;
+
+        case CRT_UNKNOWN:
+            set_msg("This cartridge is a type " + s +
+                    " cartridge which is unknown to the emulator.");
+            break;
+
+        case CRT_UNSUPPORTED:
+            set_msg("Cartridges of type " + s + " are not yet supported.");
+            break;
+
+        case CRT_TOO_MANY_PACKETS:
+            set_msg("The packet counts exceeds the allowed limit.");
+            break;
+
+        case CRT_CORRUPTED_PACKET:
+            set_msg("Corrputed packet detected.");
+
         default:
             set_msg(string("MediaError ") + std::to_string(code) + " (" + errstr() + ").");
             break;

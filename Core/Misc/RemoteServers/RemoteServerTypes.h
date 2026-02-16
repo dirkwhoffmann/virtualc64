@@ -13,6 +13,7 @@
 #pragma once
 
 #include "TransportTypes.h"
+#include "ServerError.h"
 
 namespace vc64 {
 
