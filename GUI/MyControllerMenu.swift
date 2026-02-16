@@ -259,19 +259,14 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func importScriptAction(_ sender: Any!) {
-        
-        // let openPanel = NSOpenPanel()
-        
-        // Power off the emulator if the user doesn't object
-        if !askToPowerOff() { return }
-        
+                     
         myOpenPanel.configure(types: [ .retrosh ], prompt: "Import")
         myOpenPanel.open(for: window, { result in
             
             if result == .OK, let url = self.myOpenPanel.url {
                 
                 do {
-                    try self.mm.mount(url: url, allowedTypes: [.SCRIPT])
+                    try self.mydocument.processScriptFile(url: url)
                 } catch {
                     self.showAlert(.cantOpen(url: url), error: error, async: true)
                 }

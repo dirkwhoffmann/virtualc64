@@ -325,10 +325,12 @@ class MediaManager {
                     drive!.insertMedia(proxy, protected: options.contains(.protect))
                 }
                 
+                /*
             case .SCRIPT:
                 
                 debug(.media, "Script")
                 console.runScript(script: proxy)
+                */
                 
             default:
                 break
@@ -372,10 +374,12 @@ class MediaManager {
                     mycontroller.renderer.rotateLeft()
                 }
                 
+                /*
             case .SCRIPT:
                 
                 debug(.media, "Script")
                 console.runScript(script: proxy)
+                */
                 
             default:
                 break

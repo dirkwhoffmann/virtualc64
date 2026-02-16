@@ -188,6 +188,15 @@ class Console: Layer {
         
     }
     
+    func runScript(url: URL) {
+
+        open()
+
+        emu?.retroShell.executeScript(url)
+        isDirty = true
+    }
+    
+    /*
     func runScript(script: MediaFileProxy) {
         
         open()
@@ -195,4 +204,5 @@ class Console: Layer {
         emu?.retroShell.executeScript(script)
         isDirty = true
     }
+    */
 }

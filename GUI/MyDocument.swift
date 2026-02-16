@@ -254,12 +254,13 @@ class MyDocument: NSDocument {
 
     func processScriptFile(url: URL, force: Bool = false) throws {
 
-        let file = try MediaManager.createFileProxy(from: url, type: .SCRIPT)
-        try processScriptFile(file: file, force: force)
+        console.runScript(url: url)
     }
 
+    /*
+    @available(*, deprecated, message: "MediaFileProxy will go away.")
     func processScriptFile(file: MediaFileProxy, force: Bool = false) throws {
-
         console.runScript(script: file)
     }
+    */
 }

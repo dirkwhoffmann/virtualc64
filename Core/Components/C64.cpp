@@ -1884,7 +1884,7 @@ C64::loadRom(const fs::path &path, RomType type)
 }
 
 void
-C64::loadRom(const MediaFile &file)
+C64::loadRom(const RomFile &file)
 {
     switch (file.type()) {
             
