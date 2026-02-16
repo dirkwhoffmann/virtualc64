@@ -257,6 +257,22 @@ class MediaManager {
     
     
     //
+    // Cartridges
+    //
+    
+    func attachCartridge(url: URL, options: [Option] = [.remember, .reset]) throws {
+
+        guard let emu = emu else { return }
+        
+        try emu.expansionport.attachCartridge(url, reset: options.contains(.reset))
+     
+        if options.contains(.remember) {
+            MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
+        }
+    }
+
+    
+    //
     // Mounting media files
     //
     
@@ -283,10 +299,11 @@ class MediaManager {
                 /*
             case .SNAPSHOT:
                 mydocument.snapshots.append(file, size: file.size)
-                */
+            
             case .CRT:
                 MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
-                
+                 */
+
             case .TAP:
                 MediaManager.noteNewRecentlyInsertedTapeURL(url)
                 
@@ -324,11 +341,12 @@ class MediaManager {
                 try emu.flash(proxy)
                 debug(.media, "Snapshot flashed")
                 
+                /*
             case .CRT:
                 
                 debug(.media, "CRT")
                 try emu.expansionport.attachCartridge(proxy, reset: true)
-                
+                */
                 /*
             case .TAP:
                 
@@ -372,12 +390,12 @@ class MediaManager {
                 debug(.media, "Snapshot")
                 try emu.flash(proxy)
                 
+                /*
             case .CRT:
                 
                 debug(.media, "CRT")
                 try emu.expansionport.attachCartridge(proxy, reset: true)
                 
-                /*
             case .TAP:
                 
                 debug(.media, "TAP")

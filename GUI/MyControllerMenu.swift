@@ -977,7 +977,7 @@ extension MyController: NSMenuItemValidation {
             if result == .OK, let url = self.myOpenPanel.url {
                 
                 do {
-                    try self.mm.mount(url: url, allowedTypes: [ .CRT ])
+                    try self.mm.attachCartridge(url: url, options: [.remember, .reset])
                 } catch {
                     self.showAlert(.cantAttach, error: error, async: true)
                 }

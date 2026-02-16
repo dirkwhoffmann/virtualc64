@@ -829,11 +829,19 @@ NSString *EventSlotName(EventSlot slot)
     return [self eport]->getCartridgeTraits().type != CartridgeType::NONE;
 }
  
+- (void)attachCartridge:(NSURL *)url reset:(BOOL)reset exception:(ExceptionWrapper *)ex
+{
+    try { [self eport]->attachCartridge(fs::path(url.fileSystemRepresentation), reset); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
+}
+
+/*
 - (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
 {
     try { [self eport]->attachCartridge(*(MediaFile *)c->obj, reset); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
+*/
 
 - (void)attachReuCartridge:(NSInteger)capacity
 {

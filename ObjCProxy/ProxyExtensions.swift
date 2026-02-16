@@ -235,11 +235,11 @@ extension DatasetteProxy {
 
 @MainActor
 extension ExpansionPortProxy {
-    
-    func attachCartridge(_ proxy: MediaFileProxy, reset: Bool) throws {
+
+    func attachCartridge(_ url: URL, reset: Bool) throws {
         
         let exc = ExceptionWrapper()
-        attachCartridge(proxy, reset: reset, exception: exc)
+        attachCartridge(url, reset: reset, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
 }

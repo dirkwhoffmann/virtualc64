@@ -496,7 +496,7 @@ struct GuardInfo {
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
 
 - (BOOL)cartridgeAttached;
-- (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex __attribute__((deprecated("MediaFile will go away.")));
+- (void)attachCartridge:(NSURL *)url reset:(BOOL)reset exception:(ExceptionWrapper *)ex;
 - (void)attachReuCartridge:(NSInteger)capacity;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
