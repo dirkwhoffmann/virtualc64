@@ -32,7 +32,7 @@ void
 Workspace::init(const fs::path &path)
 {
     // Only proceed if the provided filename points to a directory
-    if (!isCompatiblePath(path)) throw AppError(Fault::FILE_TYPE_MISMATCH);
+    if (!isCompatiblePath(path)) throw IOError(IOError::FILE_TYPE_MISMATCH);
 
     this->path = path;
 }

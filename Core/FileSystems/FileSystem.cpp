@@ -37,7 +37,7 @@ FileSystem::FileSystem(MediaFile &file)
 
     } catch (...) {
 
-        throw AppError(Fault::FILE_TYPE_MISMATCH);
+        throw IOError(IOError::FILE_TYPE_MISMATCH);
     }}
 }
 
@@ -216,7 +216,7 @@ FileSystem::init(const fs::path &path)
         return;
     }
 
-    throw AppError(Fault::FILE_TYPE_MISMATCH);
+    throw IOError(IOError::FILE_TYPE_MISMATCH);
 }
 
 void
@@ -839,7 +839,7 @@ FileSystem::importDirectory(const fs::path &path)
     fs::directory_entry dir;
 
     try { dir = fs::directory_entry(path); }
-    catch (...) { throw AppError(Fault::FILE_CANT_READ); }
+    catch (...) { throw IOError(IOError::FILE_CANT_READ); }
 
     importDirectory(dir);
 }
@@ -923,17 +923,17 @@ FileSystem::exportDirectory(const fs::path &path, bool createDir)
 {
     // Try to create the directory if it doesn't exist
     if (!utl::isDirectory(path) && createDir && !utl::createDirectory(path)) {
-        throw AppError(Fault::DIR_CANT_CREATE);
+        throw IOError(IOError::DIR_CANT_CREATE);
     }
 
     // Only proceed if the directory exists
     if (!utl::isDirectory(path)) {
-        throw AppError(Fault::DIR_NOT_FOUND);
+        throw IOError(IOError::DIR_NOT_FOUND);
     }
 
     // Only proceed if path points to an empty directory
     if (utl::numDirectoryItems(path) != 0) {
-        throw AppError(Fault::DIR_NOT_EMPTY, path);
+        throw IOError(IOError::DIR_NOT_EMPTY, path);
     }
     
     // Rescan the directory to get the directory cache up to date
@@ -960,7 +960,7 @@ FileSystem::exportFile(FSDirEntry *entry, const fs::path &path)
     loginfo(FS_DEBUG, "Exporting file to %s\n", name.string().c_str());
 
     std::ofstream stream(name);
-    if (!stream.is_open()) throw AppError(Fault::FILE_CANT_CREATE);
+    if (!stream.is_open()) throw IOError(IOError::FILE_CANT_CREATE);
 
     exportFile(entry, stream);
 }

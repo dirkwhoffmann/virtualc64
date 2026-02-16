@@ -227,7 +227,7 @@ ExpansionPort::attachCartridge(const MediaFile &file, bool reset)
         
     } catch (...) {
 
-        throw AppError(Fault::FILE_TYPE_MISMATCH);
+        throw IOError(IOError::FILE_TYPE_MISMATCH);
     }
 }
 

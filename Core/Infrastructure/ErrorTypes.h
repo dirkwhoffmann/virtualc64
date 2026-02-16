@@ -47,6 +47,7 @@ enum class Fault : long
     // Memory
     OUT_OF_MEMORY,        ///< Out of memory
 
+    /*
     // File IO
     DIR_NOT_FOUND,        ///< Directory does not exist
     DIR_ACCESS_DENIED,    ///< File access denied
@@ -61,64 +62,18 @@ enum class Fault : long
     FILE_CANT_READ,       ///< Can't read from file
     FILE_CANT_WRITE,      ///< Can't write to file
     FILE_CANT_CREATE,     ///< Can't create file
-
+     */
+    
     // Roms
     ROM_BASIC_MISSING,    ///< No Basic Rom installed
     ROM_CHAR_MISSING,     ///< No Character Rom installed
     ROM_KERNAL_MISSING,   ///< No Kernel Rom installed
     ROM_DRIVE_MISSING,    ///< No Floppy Drive Rom installed
     ROM_MEGA65_MISMATCH,  ///< MEGA65 Roms have different version numbers
-
-    // Snapshots
-    /*
-    SNAP_TOO_OLD,         ///< Snapshot was created with an older version
-    SNAP_TOO_NEW,         ///< Snapshot was created with a later version
-    SNAP_IS_BETA,         ///< Snapshot was created with a beta release
-    SNAP_CORRUPTED,       ///< Snapshot data is corrupted
-    */
     
     // Drives
     DRV_UNCONNECTED,      ///< Floppy drive is not connected
     DRV_NO_DISK,          ///< Floppy drive contains no disk
-
-    /*
-    // Cartridges
-    CRT_NO_CARTRIDGE,     ///< No cartridge attached
-    CRT_UNKNOWN,          ///< Unknown cartridge type
-    CRT_UNSUPPORTED,      ///< Unsupported cartridge type
-    CRT_TOO_MANY_PACKETS, ///< CRT file contains too many Rom packets
-    CRT_CORRUPTED_PACKET, ///< CRT file contains a corrupted Rom package
-     */
-    
-    /*
-    // Remote servers
-    SOCK_CANT_CREATE,
-    SOCK_CANT_CONNECT,
-    SOCK_CANT_BIND,
-    SOCK_CANT_LISTEN,
-    SOCK_CANT_ACCEPT,
-    SOCK_CANT_RECEIVE,
-    SOCK_CANT_SEND,
-    SOCK_DISCONNECTED,
-    SERVER_PORT_IN_USE,
-    SERVER_ON,
-    SERVER_OFF,
-    SERVER_RUNNING,
-    SERVER_NOT_RUNNING,
-    SERVER_NO_CLIENT,
-
-    // DAP server
-    DAP_INVALID_FORMAT,
-    DAP_UNRECOGNIZED_CMD,
-    DAP_UNSUPPORTED_CMD,
-
-    // GDB server
-    GDB_NO_ACK,
-    GDB_INVALID_FORMAT,
-    GDB_INVALID_CHECKSUM,
-    GDB_UNRECOGNIZED_CMD,
-    GDB_UNSUPPORTED_CMD,
-     */
     
     // File systems
     FS_UNSUPPORTED,       ///< Unsupported file system
@@ -166,6 +121,7 @@ struct FaultEnum : Reflectable<FaultEnum, Fault> {
 
             case Fault::OUT_OF_MEMORY:           return "OUT_OF_MEMORY";
 
+                /*
             case Fault::DIR_NOT_FOUND:           return "DIR_NOT_FOUND";
             case Fault::DIR_ACCESS_DENIED:       return "DIR_ACCESS_DENIED";
             case Fault::DIR_CANT_CREATE:         return "DIR_CANT_CREATE";
@@ -179,7 +135,8 @@ struct FaultEnum : Reflectable<FaultEnum, Fault> {
             case Fault::FILE_CANT_READ:          return "FILE_CANT_READ";
             case Fault::FILE_CANT_WRITE:         return "FILE_CANT_WRITE";
             case Fault::FILE_CANT_CREATE:        return "FILE_CANT_CREATE";
-
+                 */
+                
             case Fault::ROM_BASIC_MISSING:       return "ROM_BASIC_MISSING";
             case Fault::ROM_CHAR_MISSING:        return "ROM_CHAR_MISSING";
             case Fault::ROM_KERNAL_MISSING:      return "ROM_KERNAL_MISSING";

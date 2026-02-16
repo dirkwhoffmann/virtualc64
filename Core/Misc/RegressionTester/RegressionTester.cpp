@@ -21,10 +21,10 @@ void
 RegressionTester::prepare(C64 &c64, ConfigScheme model)
 {
     // Only proceed if the /tmp folder exisits
-    if (!utl::fileExists(fs::path("/tmp"))) throw AppError(Fault::DIR_NOT_FOUND, "/tmp");
+    if (!utl::fileExists(fs::path("/tmp"))) throw IOError(IOError::DIR_NOT_FOUND, "/tmp");
 
     // Check if we've got write permissions
-    if (host.tmp() != "/tmp") throw AppError(Fault::DIR_ACCESS_DENIED, "/tmp");
+    if (host.tmp() != "/tmp") throw IOError(IOError::DIR_ACCESS_DENIED, "/tmp");
 
     // Initialize the emulator according to the specified model
     emulator.set(model);

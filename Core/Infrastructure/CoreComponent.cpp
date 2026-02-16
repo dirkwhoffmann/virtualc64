@@ -380,9 +380,8 @@ CoreComponent::exportConfig(const fs::path &path, bool diff, std::vector<Class> 
 {
     auto fs = std::ofstream(path, std::ofstream::binary);
 
-    if (!fs.is_open()) {
-        throw AppError(Fault::FILE_CANT_WRITE);
-    }
+    if (!fs.is_open())
+        throw IOError(IOError::FILE_CANT_WRITE);
 
     exportConfig(fs, diff, exclude);
 }

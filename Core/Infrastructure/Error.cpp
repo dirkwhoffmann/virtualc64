@@ -69,6 +69,7 @@ AppError::AppError(Fault code, const string &s)
             description = "Out of memory.";
             break;
 
+            /*
         case Fault::DIR_NOT_FOUND:
             if (s.empty()) {
                 description = "Folder not found.";
@@ -160,7 +161,8 @@ AppError::AppError(Fault code, const string &s)
                 description = "Failed to create file \"" + s + "\".";
             }
             break;
-
+             */
+            
         case Fault::ROM_BASIC_MISSING:
             description = "No Basic Rom installed.";
             break;

@@ -41,14 +41,6 @@ NSString *EventSlotName(EventSlot slot)
     return self;
 }
 
-/*
-- (void)save:(const AppError &)exception
-{
-    fault = Fault(exception.data);
-    what = @(exception.what());
-}
-*/
-
 - (void)save:(const std::exception &)exception
 {
     if (const auto *error = dynamic_cast<const Error *>(&exception)) {
@@ -59,6 +51,7 @@ NSString *EventSlotName(EventSlot slot)
         
     } else if (const auto *error = dynamic_cast<const AppError *>(&exception)) {
         
+        // DEPRECATED
         fault = Fault(error->data);
         key = @("");
         what = @(error->what());
@@ -128,13 +121,13 @@ NSString *EventSlotName(EventSlot slot)
 - (void)load:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { return [self props]->load([url fileSystemRepresentation]); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)save:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { return [self props]->save([url fileSystemRepresentation]); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)register:(NSString *)key value:(NSString *)value
@@ -814,7 +807,7 @@ NSString *EventSlotName(EventSlot slot)
 - (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
 {
     try { [self eport]->attachCartridge(*(MediaFile *)c->obj, reset); }
-    catch (AppError &err) { [ex save:err]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)attachReuCartridge:(NSInteger)capacity
@@ -844,7 +837,7 @@ NSString *EventSlotName(EventSlot slot)
         MediaFile *crt = [self eport]->exportCRT();
         return [MediaFileProxy make:crt];
 
-    } catch (AppError &error) {
+    } catch (std::exception &error) {
 
         return nil;
     }
@@ -1064,7 +1057,7 @@ NSString *EventSlotName(EventSlot slot)
         MediaFile *tap = [self emu]->datasette.exportTAP();
         return [MediaFileProxy make:tap];
 
-    } catch (AppError &error) {
+    } catch (std::exception &error) {
 
         return nil;
     }
@@ -1275,7 +1268,7 @@ NSString *EventSlotName(EventSlot slot)
                    exception:(ExceptionWrapper *)ex
 {
     try { return [self make: MediaFile::make([path fileSystemRepresentation])]; }
-    catch (AppError &error) { [ex save:error]; return nil; }
+    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
 + (instancetype)makeWithFile:(NSString *)path
@@ -1283,7 +1276,7 @@ NSString *EventSlotName(EventSlot slot)
                    exception:(ExceptionWrapper *)ex
 {
     try { return [self make: MediaFile::make([path fileSystemRepresentation], type)]; }
-    catch (AppError &error) { [ex save:error]; return nil; }
+    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
@@ -1291,7 +1284,7 @@ NSString *EventSlotName(EventSlot slot)
                      exception:(ExceptionWrapper *)ex
 {
     try { return [self make: MediaFile::make((u8 *)buf, len, type)]; }
-    catch (AppError &error) { [ex save:error]; return nil; }
+    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
 + (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c
@@ -1306,7 +1299,7 @@ NSString *EventSlotName(EventSlot slot)
 {
     auto drive = (DriveAPI *)proxy->obj;
     try { return [self make: MediaFile::make(*drive, type)]; }
-    catch (AppError &error) { [ex save:error]; return nil; }
+    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy
@@ -1315,7 +1308,7 @@ NSString *EventSlotName(EventSlot slot)
 {
     auto fs = (FileSystem *)proxy->obj;
     try { return [self make: MediaFile::make(*fs, type)]; }
-    catch (AppError &error) { [ex save:error]; return nil; }
+    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
 - (FileType)type
@@ -1346,7 +1339,7 @@ NSString *EventSlotName(EventSlot slot)
 - (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
     try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
-    catch (AppError &err) { [ex save:err]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (NSImage *)previewImage
@@ -1409,7 +1402,7 @@ NSString *EventSlotName(EventSlot slot)
 {
     auto *disk = [proxy drive]->disk.get();
     try { return [self make: new FileSystem(*disk)]; }
-    catch (AppError &err) { [ex save:err]; return nil; }
+    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType
@@ -1420,7 +1413,7 @@ NSString *EventSlotName(EventSlot slot)
 + (instancetype)makeWithMediaFile:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: new FileSystem(*(MediaFile *)proxy->obj)]; }
-    catch (AppError &err) { [ex save:err]; return nil; }
+    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
 - (NSString *)name
@@ -1601,10 +1594,10 @@ NSString *EventSlotName(EventSlot slot)
     return @([self fs]->ascii(Block(block), offset, len).c_str());
 }
 
-- (void)export:(NSString *)path exception:(ExceptionWrapper *)e
+- (void)export:(NSString *)path exception:(ExceptionWrapper *)ex
 {
     try { [self fs]->exportDirectory([path fileSystemRepresentation]); }
-    catch (AppError &error) { [e save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)info
@@ -1756,7 +1749,7 @@ NSString *EventSlotName(EventSlot slot)
         MediaFile *snapshot = [self c64]->takeSnapshot(compressor);
         return [MediaFileProxy make:snapshot];
 
-    } catch (AppError &error) {
+    } catch (std::exception &stdex) {
 
         return nil;
     }
@@ -1765,31 +1758,31 @@ NSString *EventSlotName(EventSlot slot)
 - (void)loadSnapshot:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->loadSnapshot(*[proxy file]); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)loadSnapshotFromUrl:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->loadSnapshot([url fileSystemRepresentation]); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)saveSnapshotToUrl:(NSURL *)url compressor:(Compressor)c exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->saveSnapshot([url fileSystemRepresentation], c); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)loadWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->loadWorkspace([url fileSystemRepresentation]); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)saveWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->saveWorkspace([url fileSystemRepresentation]); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (BOOL)getMessage:(Message *)msg
@@ -1906,13 +1899,13 @@ NSString *EventSlotName(EventSlot slot)
 - (void)launch:(ExceptionWrapper *)ex
 {
     try { [self emu]->launch(); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)launch:(const void *)listener function:(Callback *)func exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->launch(listener, func); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)hardReset
@@ -1928,13 +1921,13 @@ NSString *EventSlotName(EventSlot slot)
 - (void)isReady:(ExceptionWrapper *)ex
 {
     try { [self emu]->isReady(); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)powerOn:(ExceptionWrapper *)ex
 {
     try { [self emu]->powerOn(); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)powerOff
@@ -2000,7 +1993,7 @@ NSString *EventSlotName(EventSlot slot)
 - (void)run:(ExceptionWrapper *)ex
 {
     try { [self emu]->run(); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)pause
@@ -2083,7 +2076,7 @@ NSString *EventSlotName(EventSlot slot)
     try {
         [self emu]->set(opt, val);
         return true;
-    } catch (AppError &exception) {
+    } catch (std::exception &stdex) {
         return false;
     }
 }
@@ -2093,7 +2086,7 @@ NSString *EventSlotName(EventSlot slot)
     try {
         [self emu]->set(opt, val ? 1 : 0);
         return true;
-    } catch (AppError &exception) {
+    } catch (std::exception &stdex) {
         return false;
     }
 }
@@ -2103,7 +2096,7 @@ NSString *EventSlotName(EventSlot slot)
     try {
         [self emu]->set(opt, val, id);
         return true;
-    } catch (AppError &exception) {
+    } catch (std::exception &stdex) {
         return false;
     }
 }
@@ -2113,7 +2106,7 @@ NSString *EventSlotName(EventSlot slot)
     try {
         [self emu]->set(opt, val ? 1 : 0, id);
         return true;
-    } catch (AppError &exception) {
+    } catch (std::exception &stdex) {
         return false;
     }
 }
@@ -2123,7 +2116,7 @@ NSString *EventSlotName(EventSlot slot)
     try {
         [self emu]->set(opt, val, (long)id);
         return true;
-    } catch (AppError &exception) {
+    } catch (std::exception &stdex) {
         return false;
     }
 }
@@ -2133,7 +2126,7 @@ NSString *EventSlotName(EventSlot slot)
     try {
         [self emu]->set(opt, val ? 1 : 0, (long)id);
         return true;
-    } catch (AppError &exception) {
+    } catch (std::exception &stdex) {
         return false;
     }
 }
@@ -2146,7 +2139,7 @@ NSString *EventSlotName(EventSlot slot)
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->exportConfig([url fileSystemRepresentation]); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)wakeUp
@@ -2198,7 +2191,7 @@ NSString *EventSlotName(EventSlot slot)
 - (void) loadRom:(NSURL *)url exception:(ExceptionWrapper *)e
 {
     try { [self emu]->c64.loadRom(string([url fileSystemRepresentation])); }
-    catch (AppError &error) { [e save:error]; }
+    catch (std::exception &stdex) { [e save:stdex]; }
 }
 
 - (void) loadRom:(MediaFileProxy *)proxy
@@ -2209,7 +2202,7 @@ NSString *EventSlotName(EventSlot slot)
 - (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e
 {
     try { [self emu]->c64.saveRom(type, string([url fileSystemRepresentation])); }
-    catch (AppError &error) { [e save:error]; }
+    catch (std::exception &stdex) { [e save:stdex]; }
 }
 
 - (void) deleteRom:(RomType)type
@@ -2220,13 +2213,13 @@ NSString *EventSlotName(EventSlot slot)
 - (void)flash:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.flash(*(MediaFile *)proxy->obj); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.flash(*(FileSystem *)proxy->obj, (unsigned)nr); }
-    catch (AppError &error) { [ex save:error]; }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)put:(Cmd)type

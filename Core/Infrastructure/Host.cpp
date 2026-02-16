@@ -291,7 +291,7 @@ Host::tmp() const
 
             if (!logfile.is_open()) {
 
-                throw AppError(Fault::DIR_NOT_FOUND);
+                throw IOError(IOError::DIR_NOT_FOUND);
             }
         }
 

@@ -979,7 +979,7 @@ Console::initCommands(RSCommand &root)
 
                 auto path = host.makeAbsolute(args.at("path"));
                 auto stream = std::ifstream(path);
-                if (!stream.is_open()) throw AppError(Fault::FILE_NOT_FOUND, path);
+                if (!stream.is_open()) throw IOError(IOError::FILE_NOT_FOUND, path);
                 retroShell.asyncExecScript(stream);
             }
         });

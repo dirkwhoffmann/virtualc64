@@ -1866,7 +1866,7 @@ C64::loadRom(const MediaFile &file)
             
         default:
             
-            throw AppError(Fault::FILE_TYPE_MISMATCH);
+            throw IOError(IOError::FILE_TYPE_MISMATCH);
     }
 }
 
@@ -2062,7 +2062,7 @@ C64::flash(const MediaFile &file, isize nr)
 
     } catch (...) {
 
-        throw AppError(Fault::FILE_TYPE_MISMATCH);
+        throw IOError(IOError::FILE_TYPE_MISMATCH);
     }
 }
 
