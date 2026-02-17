@@ -49,7 +49,7 @@ RegressionTester::prepare(C64 &c64, ConfigScheme model)
 void
 RegressionTester::run(const fs::path path)
 {
-    c64.flash(PRGFile(path), 0);
+    c64.flash(path, 0);
     keyboard.autoType("run\n");
 }
 

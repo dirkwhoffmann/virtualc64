@@ -34,7 +34,6 @@ using namespace vc64;
 @class DmaDebuggerProxy;
 @class DriveProxy;
 @class ExpansionPortProxy;
-@class OldFileSystemProxy;
 @class SerialPortProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
@@ -245,7 +244,6 @@ NSString *EventSlotName(EventSlot slot);
 
 - (void)flashFile:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)flash:(MediaFileProxy *)container exception:(ExceptionWrapper *)ex __attribute__((deprecated("MediaFile will go away.")));
-- (void)flash:(OldFileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -512,6 +510,8 @@ struct GuardInfo {
 - (void)detachCartridge;
 - (MediaFileProxy *) exportCRT __attribute__((deprecated("MediaFile will go away.")));
 
+- (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;
+
 @end
 
 
@@ -569,7 +569,6 @@ struct GuardInfo {
 - (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
 - (void)insert:(NSURL *)url protected:(BOOL)wp exception:(ExceptionWrapper *)ex;
 - (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp __attribute__((deprecated("MediaFile will go away.")));
-- (void)insertFileSystem:(OldFileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
 
 - (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;
@@ -755,7 +754,6 @@ struct GuardInfo {
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;
 // + (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(OldFileSystemProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 
 @property (readonly) FileType type;
 @property (readonly) u64 fnv;
@@ -822,71 +820,5 @@ struct GuardInfo {
 @property (readonly) BOOL isSD;
 @property (readonly) BOOL isDD;
 @property (readonly) BOOL isHD;
-
-@end
-
-
-//
-// FileSystem
-//
-
-@interface OldFileSystemProxy : Proxy { }
-
-+ (instancetype)makeWithDrive:(DriveProxy *)drive exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType;
-+ (instancetype)makeWithMediaFile:(MediaFileProxy *)file exception:(ExceptionWrapper *)ex;
-
-@property NSString *name;
-@property (readonly) NSString *idString;
-@property (readonly) NSString *capacityString;
-@property (readonly) NSString *fillLevelString;
-@property (readonly) DOSType dos;
-@property (readonly) NSInteger numCyls;
-@property (readonly) NSInteger numHeads;
-@property (readonly) NSInteger numTracks;
-- (NSInteger)numSectors:(NSInteger)track;
-@property (readonly) NSInteger numBlocks;
-
-@property (readonly) NSInteger freeBlocks;
-@property (readonly) NSInteger usedBlocks;
-@property (readonly) NSInteger numFiles;
-
-- (NSInteger)cylNr:(NSInteger)t;
-- (NSInteger)headNr:(NSInteger)t;
-- (NSInteger)trackNr:(NSInteger)c head:(NSInteger)h;
-- (TSLink)tsLink:(NSInteger)b;
-- (NSInteger)trackNr:(NSInteger)b;
-- (NSInteger)sectorNr:(NSInteger)b;
-- (NSInteger)blockNr:(TSLink)ts;
-- (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s;
-- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s;
-
-- (FSBlockType)blockType:(NSInteger)blockNr;
-- (FSUsage)itemType:(NSInteger)blockNr pos:(NSInteger)pos;
-- (FSErrorReport)check:(BOOL)strict;
-- (Fault)check:(NSInteger)nr pos:(NSInteger)pos expected:(unsigned char *)exp strict:(BOOL)strict;
-- (BOOL)isCorrupted:(NSInteger)blockNr;
-- (NSInteger)getCorrupted:(NSInteger)blockNr;
-- (NSInteger)nextCorrupted:(NSInteger)blockNr;
-- (NSInteger)prevCorrupted:(NSInteger)blockNr;
-- (void)printDirectory;
-
-- (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
-- (NSString *)ascii:(NSInteger)block offset:(NSInteger)offset length:(NSInteger)len;
-- (void)export:(NSString *)path exception:(ExceptionWrapper *)ex;
-
-- (void)info;
-
-- (BOOL)isFree:(NSInteger)blockNr;
-
-- (NSString *)fileName:(NSInteger)nr;
-- (FSFileType)fileType:(NSInteger)nr;
-- (NSInteger)fileSize:(NSInteger)nr;
-- (NSInteger)fileBlocks:(NSInteger)nr;
-
-- (FSBlockType)getDisplayType:(NSInteger)column;
-- (NSInteger)diagnoseImageSlice:(NSInteger)column;
-- (NSInteger)nextBlockOfType:(FSBlockType)type after:(NSInteger)after;
-- (NSInteger)nextCorruptedBlock:(NSInteger)after;
 
 @end

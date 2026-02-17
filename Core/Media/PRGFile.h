@@ -37,13 +37,13 @@ public:
     PRGFile(isize capacity) : AnyCollection(capacity) { }
     PRGFile(const fs::path &path) { init(path); }
     PRGFile(const u8 *buf, isize len) { init(buf, len); }
-    PRGFile(const class OldFileSystem &fs) { init(fs); }
+    [[deprecated]] PRGFile(const class OldFileSystem &fs) { init(fs); }
     PRGFile(const class FileSystem &fs) { init(fs); }
 
 private:
     
     using AnyFile::init;
-    void init(const OldFileSystem &fs);
+    [[deprecated]] void init(const OldFileSystem &fs);
     void init(const FileSystem &fs);
     
     

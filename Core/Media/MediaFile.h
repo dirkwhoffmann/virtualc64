@@ -38,7 +38,6 @@ public:
     static MediaFile *make(const fs::path &path);
     static MediaFile *make(const fs::path &path, FileType type);
     static MediaFile *make(const u8 *buf, isize len, FileType type);
-    static MediaFile *make(const class OldFileSystem &fs, FileType type);
     static MediaFile *make(struct DriveAPI &drive, FileType type);
 
 

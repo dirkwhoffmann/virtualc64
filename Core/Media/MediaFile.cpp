@@ -114,6 +114,7 @@ MediaFile::make(const u8 *buf, isize len, FileType type)
     }
 }
 
+/*
 MediaFile *
 MediaFile::make(const class OldFileSystem &fs, FileType type)
 {
@@ -128,6 +129,7 @@ MediaFile::make(const class OldFileSystem &fs, FileType type)
             return nullptr;
     }
 }
+*/
 
 MediaFile *
 MediaFile::make(DriveAPI &drive, FileType type)

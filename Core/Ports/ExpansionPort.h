@@ -203,7 +203,8 @@ public:
     //
 
     MediaFile *exportCRT() const;
-
+    void exportCRT(const fs::path &path) const;
+    
 
     //
     // Operating buttons, switches, and LEDs

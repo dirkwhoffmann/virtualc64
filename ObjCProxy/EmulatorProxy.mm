@@ -13,7 +13,6 @@
 #import "Drive.h"
 // #import "Images/DiskImage.h"
 #import "Images/FloppyDiskImage.h"
-#import "FileSystems/OldFileSystem.h"
 #import "FileSystems/CBM/FileSystem.h"
 #import "Texture.h"
 #import "MediaError.h"
@@ -871,7 +870,7 @@ NSString *EventSlotName(EventSlot slot)
     [self eport]->detachCartridge();
 }
 
-- (MediaFileProxy *) exportCRT
+- (MediaFileProxy *)exportCRT
 {
     try {
 
@@ -882,6 +881,12 @@ NSString *EventSlotName(EventSlot slot)
 
         return nil;
     }
+}
+
+- (void)writeToFile:(NSURL *)url exception:(ExceptionWrapper *)ex
+{
+    try { [self eport]->exportCRT(fs::path(url.fileSystemRepresentation)); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 @end
@@ -1028,11 +1033,6 @@ NSString *EventSlotName(EventSlot slot)
     [self drive]->insertMedia(*(MediaFile *)proxy->obj, wp);
 }
 
-- (void)insertFileSystem:(OldFileSystemProxy *)proxy protected:(BOOL)wp
-{
-    [self drive]->insertFileSystem(*(OldFileSystem *)proxy->obj, wp);
-}
-
 - (void)insertBlankDisk:(DOSType)fsType name:(NSString *)name
 {
     [self drive]->insertBlankDisk(fsType, [name UTF8String]);
@@ -1098,14 +1098,16 @@ NSString *EventSlotName(EventSlot slot)
     [self emu]->datasette.ejectTape();
 }
 
-- (void)insertTape:(NSURL *)url
+- (void)insertTape:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
-    [self emu]->datasette.insertTape(fs::path(url.fileSystemRepresentation));
+    try { [self emu]->datasette.insertTape(fs::path(url.fileSystemRepresentation)); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)exportTape:(NSURL *)url
+- (void)exportTape:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
-    [self emu]->datasette.exportTape(fs::path(url.fileSystemRepresentation));
+    try { [self emu]->datasette.exportTape(fs::path(url.fileSystemRepresentation)); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 @end
@@ -1347,15 +1349,6 @@ NSString *EventSlotName(EventSlot slot)
 {
     auto drive = (DriveAPI *)proxy->obj;
     try { return [self make: MediaFile::make(*drive, type)]; }
-    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
-}
-
-+ (instancetype)makeWithFileSystem:(OldFileSystemProxy *)proxy
-                              type:(FileType)type
-                         exception:(ExceptionWrapper *)ex
-{
-    auto fs = (OldFileSystem *)proxy->obj;
-    try { return [self make: MediaFile::make(*fs, type)]; }
     catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
@@ -1726,6 +1719,7 @@ NSString *EventSlotName(EventSlot slot)
     try { return [self make: drive->drive->exportDisk(fmt).release()]; }
     catch(Error &error) { [ex save:error]; return nil; }
     */
+    return nil;
 }
 
 - (Diameter)diameter
@@ -1751,277 +1745,6 @@ NSString *EventSlotName(EventSlot slot)
 - (BOOL)isHD
 {
     return [self image]->isHD();
-}
-
-@end
-
-
-//
-// FileSystem
-//
-
-@implementation OldFileSystemProxy
-
-- (OldFileSystem *)fs
-{
-    return (OldFileSystem *)obj;
-}
-
-+ (instancetype)make:(OldFileSystem *)fs
-{
-    return fs ? [[self alloc] initWith: fs] : nil;
-}
-
-+ (instancetype)makeWithDrive:(DriveProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    auto *disk = [proxy drive]->disk.get();
-    try { return [self make: new OldFileSystem(*disk)]; }
-    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
-}
-
-+ (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType
-{
-    return [self make: new OldFileSystem(diskType, dosType)];
-}
-
-+ (instancetype)makeWithMediaFile:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: new OldFileSystem(*(MediaFile *)proxy->obj)]; }
-    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
-}
-
-- (NSString *)name
-{
-    auto str = [self fs]->getName();
-    return @(str.c_str());
-}
-
-- (void)setName:(NSString *)name
-{
-    auto str = string([name UTF8String]);
-    [self fs]->setName(PETName<16>(str));
-}
-
-- (NSString *)idString
-{
-    auto str = [self fs]->getID();
-    return @(str.c_str());
-}
-
-- (NSString *)capacityString
-{
-    auto str = utl::byteCountAsString([self fs]->getNumBytes());
-    return @(str.c_str());
-}
-
-- (NSString *)fillLevelString
-{
-    auto str = utl::fillLevelAsString([self fs]->fillLevel());
-    return @(str.c_str());
-}
-
-- (DOSType)dos
-{
-    return [self fs]->dos();
-}
-
-- (NSInteger)numCyls
-{
-    return [self fs]->getNumCyls();
-}
-
-- (NSInteger)numHeads
-{
-    return [self fs]->getNumHeads();
-}
-
-- (NSInteger)numTracks
-{
-    return [self fs]->getNumTracks();
-}
-
-- (NSInteger)numSectors:(NSInteger)track
-{
-    return [self fs]->getNumSectors((Track)track);
-}
-
-- (NSInteger)numBlocks
-{
-    return [self fs]->getNumBlocks();
-}
-
-- (NSInteger)freeBlocks
-{
-    return [self fs]->freeBlocks();
-}
-
-- (NSInteger)usedBlocks
-{
-    return [self fs]->usedBlocks();
-}
-
-- (NSInteger)numFiles
-{
-    return [self fs]->numFiles();
-}
-
-- (NSInteger)cylNr:(NSInteger)t
-{
-    return [self fs]->layout.cylNr((Track)t);
-}
-
-- (NSInteger)headNr:(NSInteger)t
-{
-    return [self fs]->layout.headNr((Track)t);
-}
-
-- (NSInteger)trackNr:(NSInteger)c head:(NSInteger)h
-{
-    return [self fs]->layout.trackNr((Cylinder)c, (Head)h);
-}
-
-- (TSLink)tsLink:(NSInteger)b
-{
-    return [self fs]->layout.tsLink((Block)b);
-}
-
-- (NSInteger)trackNr:(NSInteger)b
-{
-    return (NSInteger)[self tsLink:b].t;
-}
-
-- (NSInteger)sectorNr:(NSInteger)b
-{
-    return (NSInteger)[self tsLink:b].s;
-}
-
-- (NSInteger)blockNr:(TSLink)ts
-{
-    return [self fs]->layout.blockNr(ts);
-}
-
-- (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s
-{
-    return [self fs]->layout.blockNr((Track)t, (Sector)s);
-}
-
-- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s
-{
-    return [self fs]->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
-}
-
-- (FSBlockType)blockType:(NSInteger)blockNr
-{
-    return [self fs]->blockType((u32)blockNr);
-}
-
-- (FSUsage)itemType:(NSInteger)blockNr pos:(NSInteger)pos
-{
-    return [self fs]->usage((u32)blockNr, (u32)pos);
-}
-
-- (FSErrorReport)check:(BOOL)strict
-{
-    return [self fs]->check(strict);
-}
-
-- (Fault)check:(NSInteger)blockNr
-               pos:(NSInteger)pos
-          expected:(unsigned char *)exp
-            strict:(BOOL)strict
-{
-    return [self fs]->check((u32)blockNr, (u32)pos, exp, strict);
-}
-
-- (BOOL)isCorrupted:(NSInteger)blockNr
-{
-    return [self fs]->isCorrupted((u32)blockNr);
-}
-
-- (NSInteger)getCorrupted:(NSInteger)blockNr
-{
-    return [self fs]->getCorrupted((u32)blockNr);
-}
-
-- (NSInteger)nextCorrupted:(NSInteger)blockNr
-{
-    return [self fs]->nextCorrupted((u32)blockNr);
-}
-
-- (NSInteger)prevCorrupted:(NSInteger)blockNr
-{
-    return [self fs]->prevCorrupted((u32)blockNr);
-}
-
-- (void)printDirectory
-{
-    return [self fs]->printDirectory();
-}
-
-- (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset
-{
-    return [self fs]->readByte((u32)block, offset);
-}
-
-- (NSString *)ascii:(NSInteger)block offset:(NSInteger)offset length:(NSInteger)len
-{
-    return @([self fs]->ascii(Block(block), offset, len).c_str());
-}
-
-- (void)export:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { [self fs]->exportDirectory([path fileSystemRepresentation]); }
-    catch (std::exception &stdex) { [ex save:stdex]; }
-}
-
-- (void)info
-{
-    [self fs]->info();
-}
-
-- (BOOL)isFree:(NSInteger)blockNr
-{
-    return [self fs]->isFree(blockNr);
-}
-
-- (NSString *)fileName:(NSInteger)nr
-{
-    return @([self fs]->fileName((unsigned)nr).c_str());
-}
-
-- (FSFileType)fileType:(NSInteger)nr
-{
-    return [self fs]->fileType((unsigned)nr);
-}
-
-- (NSInteger)fileSize:(NSInteger)nr
-{
-    return [self fs]->fileSize((unsigned)nr);
-}
-
-- (NSInteger)fileBlocks:(NSInteger)nr
-{
-    return [self fs]->fileBlocks((unsigned)nr);
-}
-
-- (FSBlockType)getDisplayType:(NSInteger)column
-{
-    return [self fs]->getDisplayType(column);
-}
-
-- (NSInteger)diagnoseImageSlice:(NSInteger)column
-{
-    return [self fs]->diagnoseImageSlice(column);
-}
-
-- (NSInteger)nextBlockOfType:(FSBlockType)type after:(NSInteger)after
-{
-    return [self fs]->nextBlockOfType(type, after);
-}
-
-- (NSInteger)nextCorruptedBlock:(NSInteger)after
-{
-    return [self fs]->nextCorruptedBlock(after);
 }
 
 @end
@@ -2610,12 +2333,6 @@ NSString *EventSlotName(EventSlot slot)
 - (void)flash:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.flash(*(MediaFile *)proxy->obj); }
-    catch (std::exception &stdex) { [ex save:stdex]; }
-}
-
-- (void)flash:(OldFileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
-{
-    try { [self emu]->c64.flash(*(OldFileSystem *)proxy->obj, (unsigned)nr); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 

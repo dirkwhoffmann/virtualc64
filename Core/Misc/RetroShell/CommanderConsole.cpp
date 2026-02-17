@@ -292,8 +292,8 @@ CommanderConsole::initCommands(RSCommand &root)
             auto path = host.makeAbsolute(args.at("path"));
             if (!utl::fileExists(path)) throw IOError(IOError::FILE_NOT_FOUND, path);
 
-            auto file = PRGFile(path);
-            c64.flash(file, 0);
+            // auto file = PRGFile(path);
+            c64.flash(path, 0);
         }
     });
 

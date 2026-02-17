@@ -766,7 +766,6 @@ public:
     void flashNew(const AnyFile &file, isize item);
     [[deprecated]] void flash(const MediaFile &file);
     [[deprecated]] void flash(const MediaFile &file, isize item);
-    [[deprecated]] void flash(const OldFileSystem &fs, isize item);
     void flash(const FileSystem &fs, isize item);
 
 

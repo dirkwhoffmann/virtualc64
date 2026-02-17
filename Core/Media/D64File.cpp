@@ -72,26 +72,6 @@ D64File::init(isize tracks, bool ecc)
     }
 }
 
-void
-D64File::init(const OldFileSystem &volume)
-{
-    switch (volume.getNumBlocks() * 256) {
-
-        case D64_683_SECTORS: init(35, false); break;
-        case D64_768_SECTORS: init(40, false); break;
-        case D64_802_SECTORS: init(42, false); break;
-
-        default:
-            fatalError;
-    }
-
-    Fault err;
-    if (!volume.exportVolume(data.ptr, data.size, &err)) {
-        throw AppError(err);
-    }
-}
-
-
 PETName<16>
 D64File::getName() const
 {

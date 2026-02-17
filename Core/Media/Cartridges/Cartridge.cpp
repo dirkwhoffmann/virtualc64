@@ -543,6 +543,14 @@ Cartridge::exportCRT() const
 }
 
 void
+Cartridge::exportCRT(const fs::path &path) const
+{
+    Buffer<u8> buffer;
+    exportCRT(buffer);
+    CRTFile(buffer.ptr, buffer.size).writeToFile(path);
+}
+
+void
 Cartridge::exportCRT(Buffer<u8> &buffer) const
 {
     // Initialize the buffer with the proper size

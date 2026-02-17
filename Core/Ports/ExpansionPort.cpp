@@ -262,6 +262,12 @@ ExpansionPort::exportCRT() const
 }
 
 void
+ExpansionPort::exportCRT(const fs::path &path) const
+{
+    if (cartridge) cartridge->exportCRT(path);
+}
+
+void
 ExpansionPort::pressButton(isize nr)
 {
     assert(nr == 1 || nr == 2);

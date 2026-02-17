@@ -45,13 +45,11 @@ public:
     D64File(isize tracks, bool ecc);
     D64File(const fs::path &path) : D64File() { init(path); }
     D64File(const u8 *buf, isize len) : D64File() { init(buf, len); }
-    D64File(const class OldFileSystem &fs) : D64File() { init(fs); }
 
 private:
     
     using AnyFile::init;
     void init(isize tracks, bool ecc);
-    void init(const OldFileSystem &fs);
     
     
     //

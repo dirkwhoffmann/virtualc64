@@ -2225,25 +2225,6 @@ C64::flash(const MediaFile &file, isize nr)
 }
 
 void
-C64::flash(const OldFileSystem &fs, isize nr)
-{
-    u16 addr = fs.loadAddr(nr);
-    u64 size = fs.fileSize(nr);
-    
-    if (size <= 2) return;
-    
-    // Flash data into memory
-    size = std::min(size - 2, (u64)(0x10000 - addr));
-    fs.copyFile(nr, mem.ram + addr, size, 2);
-    
-    // Rectify zero page
-    mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
-    mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
-    
-    msgQueue.put(Msg::FILE_FLASHED);
-}
-
-void
 C64::flash(const FileSystem &fs, isize nr)
 {
     // Read directory

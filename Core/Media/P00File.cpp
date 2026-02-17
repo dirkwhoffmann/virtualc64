@@ -13,7 +13,7 @@
 #include "config.h"
 #include "P00File.h"
 #include "FileSystems/OldFileSystem.h" // DEPRECATED
-#include "filesystems/CBM/FileSystem.h"
+#include "FileSystems/CBM/FileSystem.h"
 #include "utl/io/Files.h"
 #include "utl/support/Strings.h"
 
@@ -76,38 +76,6 @@ P00File::init(const FileSystem &fs)
 
     // Add data
     memcpy(p, buf.ptr, buf.size);
-}
-
-void
-P00File::init(const OldFileSystem &fs)
-{
-    isize item = 0;
-    isize itemSize = fs.fileSize(item);
-
-    // Only proceed if the requested file exists
-    if (fs.numFiles() <= item) throw AppError(Fault::FS_HAS_NO_FILES);
-
-    // Create new archive
-    isize p00Size = itemSize + 8 + 17 + 1;
-    init(p00Size);
-
-    // Write magic bytes (8 bytes)
-    u8 *p = data.ptr;
-    strcpy((char *)p, "C64File");
-    p += 8;
-    
-    // Write name in PET format (16 bytes)
-    fs.fileName(item).write(p);
-    p += 16;
-    
-    // Always 0 (1 byte)
-    *p++ = 0;
-
-    // Record size (applies to REL files, only) (1 byte)
-    *p++ = 0;
-
-    // Add data
-    fs.copyFile(item, p, itemSize);
 }
 
 PETName<16>

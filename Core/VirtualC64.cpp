@@ -660,14 +660,6 @@ C64API::flash(const MediaFile &file, isize item)
     emu->markAsDirty();
 }
 
-void 
-C64API::flash(const OldFileSystem &fs, isize item)
-{
-    VC64_PUBLIC_SUSPEND
-    c64->flash(fs, item);
-    emu->markAsDirty();
-}
-
 
 //
 // CPU
@@ -1471,6 +1463,12 @@ ExpansionPortAPI::exportCRT() const
     return expansionPort->exportCRT();
 }
 
+void
+ExpansionPortAPI::exportCRT(const fs::path &path) const
+{
+    expansionPort->exportCRT(path);
+}
+
 
 //
 // Disk
@@ -1524,13 +1522,6 @@ void
 DriveAPI::insertMedia(MediaFile &file, bool wp)
 {
     drive->insertMediaFile(file, wp);
-    emu->markAsDirty();
-}
-
-void
-DriveAPI::insertFileSystem(const class OldFileSystem &device, bool wp)
-{
-    drive->insertFileSystem(device, wp);
     emu->markAsDirty();
 }
 

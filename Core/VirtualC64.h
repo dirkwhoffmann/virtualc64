@@ -633,7 +633,8 @@ struct ExpansionPortAPI : public API {
     /** @brief  Export cartridge
      */
     [[deprecated]] MediaFile *exportCRT() const;
-
+    void exportCRT(const fs::path &path) const;
+    
     /// @}
 
 };
@@ -705,12 +706,6 @@ struct DriveAPI : public API {
      *  @param  wp      Write-protection status of the disk.
      */
     [[deprecated]] void insertMedia(MediaFile &file, bool wp);
-
-    /** @brief  Inserts a disk created from a file system.
-     *  @param  fs      A file system wrapper object.
-     *  @param  wp      Write-protection status of the disk.
-     */
-    void insertFileSystem(const class OldFileSystem &fs, bool wp);
 
     /** @brief  Ejects the current disk.
      */
@@ -1181,11 +1176,6 @@ struct C64API : public API {
      */
     [[deprecated]] void flash(const MediaFile &file, isize item);
     void flashNew(const AnyFile &file, isize item);
-
-    /** @brief  Flashes a file from a file system into memory
-     */
-    void flash(const OldFileSystem &fs, isize item);
-    /// @}
 };
 
 

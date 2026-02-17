@@ -13,7 +13,7 @@
 #include "config.h"
 #include "PRGFile.h"
 #include "FileSystems/OldFileSystem.h" // DEPRECATED
-#include "filesystems/CBM/FileSystem.h"
+#include "FileSystems/CBM/FileSystem.h"
 
 namespace vc64 {
 
