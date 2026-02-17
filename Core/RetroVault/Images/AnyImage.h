@@ -103,7 +103,7 @@ public:
     u8* getData() const { return data.ptr; }
     bool empty() const { return data.empty(); }
 
-    virtual std::vector<string> describe() const noexcept { return {}; }
+    virtual std::vector<string> describeImage() const noexcept { return {}; }
 
 
     //
@@ -115,7 +115,6 @@ public:
     // Scans the image and throws an exception if an inconsistency is found
     virtual void checkIntegrity() { };
 
-    
     //
     // Accessing data
     //

@@ -25,9 +25,9 @@ HDZFile::about(const fs::path &path)
 }
 
 std::vector<string>
-HDZFile::describe() const noexcept
+HDZFile::describeImage() const noexcept
 {
-    return hdf.describe();
+    return hdf.describeImage();
 }
 
 void

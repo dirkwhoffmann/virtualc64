@@ -15,16 +15,14 @@
 namespace retro::vault {
 
 class DiskImage : public AnyImage, public TrackDevice {
-    
+
 public:
 
     static optional<ImageInfo> about(const fs::path& url);
     static unique_ptr<DiskImage> tryMake(const fs::path& path);
     static unique_ptr<DiskImage> make(const fs::path& path);
 
-    vector<string> describe() const noexcept override { return {}; }
 
-    
     //
     // Methods from LinearDevice
     //
@@ -42,7 +40,7 @@ public:
 
     // Returns the predicted file system family of this image
     virtual FSFamily fsFamily() const noexcept = 0;
-    
+
 
     //
     // Obtaining views on tracks and sectors

@@ -296,7 +296,7 @@ public:
     vector<FSDirEntry> readDirBlock(BlockNr block) const;
 
     // Overwrites the existing directory
-    void writeDir(const vector<FSDirEntry> &entry);
+    void writeDir(const vector<FSDirEntry> &dir);
 
     // Returns the number of directory items
     isize numItems() const;

@@ -35,13 +35,12 @@ DMSFile::about(const fs::path &path)
 }
 
 std::vector<string>
-DMSFile::describe() const noexcept
+DMSFile::describeImage() const noexcept
 {
     return {
         "Amiga Floppy Disk",
         std::format("{} {}",
                     getDiameterStr(), getDensityStr()),
-        TrackDevice::describe()[0],
         std::format("{} Cylinders, {} Sides, {} Sectors",
                     numCyls(), numHeads(), numSectors(0))
     };

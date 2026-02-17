@@ -58,7 +58,7 @@ public:
     
     ImageType type() const noexcept override { return ImageType::FLOPPY; }
     ImageFormat format() const noexcept override { return ImageFormat::ADZ; }
-    std::vector<string> describe() const noexcept override;
+    std::vector<string> describeImage() const noexcept override;
 
     void didInitialize() override;
 

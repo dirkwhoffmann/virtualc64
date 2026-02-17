@@ -45,13 +45,12 @@ IMGFile::init(Diameter dia, Density den)
 }
 
 std::vector<string>
-IMGFile::describe() const noexcept
+IMGFile::describeImage() const noexcept
 {
     return {
         "PC Floppy Disk",
         std::format("{} {}",
                     getDiameterStr(), getDensityStr()),
-        TrackDevice::describe()[0],
         std::format("{} Cylinders, {} Sides, {} Sectors",
                     numCyls(), numHeads(), numSectors())
     };

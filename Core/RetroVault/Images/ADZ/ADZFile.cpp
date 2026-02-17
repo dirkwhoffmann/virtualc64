@@ -25,9 +25,9 @@ ADZFile::about(const fs::path &path)
 }
 
 std::vector<string>
-ADZFile::describe() const noexcept
+ADZFile::describeImage() const noexcept
 {
-    return adf.describe();
+    return adf.describeImage();
 }
 
 void

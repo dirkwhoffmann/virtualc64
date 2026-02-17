@@ -15,7 +15,7 @@
 namespace retro::vault {
 
 std::vector<std::string>
-LinearDevice::describe() const noexcept
+LinearDevice::describeDevice() const noexcept
 {
     double b  = size();
     double kb = b  / 1024.0;

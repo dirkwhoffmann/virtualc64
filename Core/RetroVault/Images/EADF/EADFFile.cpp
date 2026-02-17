@@ -61,12 +61,11 @@ EADFFile::numSectors() const
 }
 
 std::vector<string>
-EADFFile::describe() const noexcept
+EADFFile::describeImage() const noexcept
 {
     return {
         "Amiga Floppy Disk",
         "Extended ADF format",
-        TrackDevice::describe()[0],
         ""
     };
 }

@@ -132,13 +132,12 @@ ADFFile::init(const FileSystem &volume)
 }
 
 std::vector<string>
-ADFFile::describe() const noexcept
+ADFFile::describeImage() const noexcept
 {
     return {
         "Amiga Floppy Disk",
         std::format("{} {}",
                     getDiameterStr(), getDensityStr()),
-        TrackDevice::describe()[0],
         std::format("{} Cylinders, {} Sides, {} Sectors",
                     numCyls(), numHeads(), numSectors())
     };

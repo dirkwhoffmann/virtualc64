@@ -43,13 +43,12 @@ STFile::init(Diameter dia, Density den)
 }
 
 std::vector<string>
-STFile::describe() const noexcept
+STFile::describeImage() const noexcept
 {
     return {
         "AtariST Floppy Disk",
         std::format("{} {}",
                     getDiameterStr(), getDensityStr()),
-        TrackDevice::describe()[0],
         std::format("{} Cylinders, {} Sides, {} Sectors",
                     numCyls(), numHeads(), numSectors())
     };

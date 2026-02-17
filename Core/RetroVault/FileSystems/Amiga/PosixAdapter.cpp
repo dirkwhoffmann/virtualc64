@@ -13,7 +13,7 @@ namespace retro::vault::amiga {
 
 PosixAdapter::PosixAdapter(FileSystem &fs) : fs(fs)
 {
-    
+
 }
 
 NodeMeta *
@@ -90,13 +90,13 @@ PosixAdapter::mkdir(const fs::path &path)
     
     auto parent = path.parent_path();
     auto name = path.filename();
-    
+
     // Lookup destination directory
     auto node = fs.seek(parent);
-    
+
     // Create directory
     auto udb = fs.mkdir(node, FSName(name));
-    
+
     // Create meta info
     auto &info = ensureMeta(udb);
     info.linkCount = 1;
@@ -109,7 +109,7 @@ PosixAdapter::rmdir(const fs::path &path)
     
     // Lookup directory
     auto node = fs.seek(path);
-    
+
     // Only empty directories can be removed
     auto dir = readDir(path);
     for (auto &it : dir) { printf("DIR item: %s\n", it.c_str()); }

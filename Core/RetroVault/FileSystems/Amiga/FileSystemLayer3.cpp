@@ -22,7 +22,6 @@ FileSystem::cd(BlockNr nr)
 optional<BlockNr>
 FileSystem::trySeek(const FSPath &path) const
 {
-    printf("trySeek: %s\n", path.cpp_str().c_str());
     try {
 
         BlockNr current = path.absolute() ? root() : pwd();
@@ -38,7 +37,6 @@ FileSystem::trySeek(const FSPath &path) const
 
             current = *next;
         }
-        printf("Found: %ld\n", current);
         return current;
 
     } catch (...) { return { }; }

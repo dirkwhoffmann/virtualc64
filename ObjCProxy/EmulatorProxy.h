@@ -9,8 +9,16 @@
 
 #import "config.h"
 #import "VirtualC64Types.h"
+#import "Devices/DeviceTypes.h"
+#import "Images/ImageTypes.h"
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
+
+using retro::vault::ImageType;
+using retro::vault::ImageFormat;
+using retro::vault::ImageInfo;
+using retro::vault::Diameter;
+using retro::vault::Density;
 
 using namespace vc64;
 
@@ -674,6 +682,21 @@ struct GuardInfo {
 // F I L E   T Y P E   P R O X I E S
 //
 
+@protocol MakeWithFile <NSObject>
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
+@end
+
+@protocol MakeWithBuffer <NSObject>
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
+@end
+
+@protocol MakeWithDrive <NSObject>
+
++ (instancetype)makeWithDrive:(DriveProxy *)proxy
+                       format:(ImageFormat)fmt
+                    exception:(ExceptionWrapper *)ex;
+@end
+
 
 //
 // AnyFile
@@ -744,6 +767,61 @@ struct GuardInfo {
 
 @property (readonly, strong) NSImage *previewImage;
 @property (readonly) time_t timeStamp;
+
+@end
+
+
+//
+// DiskImageProxy
+//
+
+@interface DiskImageProxy : Proxy { }
+
++ (ImageInfo)about:(NSURL *)url;
+
+- (NSArray<NSString *> *)describe;
+
+@property (readonly) NSURL *path;
+@property (readonly) NSInteger size;
+@property (readonly) u64 fnv;
+
+- (NSInteger)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;
+
+@property (readonly) ImageType type;
+@property (readonly) ImageFormat format;
+@property (readonly) ImageInfo info;
+
+@property (readonly) NSInteger bsize;
+@property (readonly) NSInteger numCyls;
+@property (readonly) NSInteger numHeads;
+@property (readonly) NSInteger numTracks;
+@property (readonly) NSInteger numSectors;
+@property (readonly) NSInteger numBlocks;
+@property (readonly) NSInteger numBytes;
+
+- (NSInteger)readByte:(NSInteger)b offset:(NSInteger)offset;
+- (NSString *)asciidump:(NSInteger)b offset:(NSInteger)offset len:(NSInteger)len;
+
+@end
+
+
+//
+// FloppyDiskImageProxy
+//
+
+@interface FloppyDiskImageProxy : DiskImageProxy <MakeWithDrive> { }
+
++ (ImageInfo)about:(NSURL *)url;
+
++ (instancetype)makeWithDrive:(DriveProxy *)proxy
+                       format:(ImageFormat)fmt
+                    exception:(ExceptionWrapper *)ex;
+
+@property (readonly) Diameter diameter;
+@property (readonly) Density density;
+@property (readonly) BOOL isSD;
+@property (readonly) BOOL isDD;
+@property (readonly) BOOL isHD;
 
 @end
 

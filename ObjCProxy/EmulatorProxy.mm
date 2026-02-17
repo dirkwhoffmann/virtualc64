@@ -10,12 +10,18 @@
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
 #import "DiskAnalyzer.h"
+#import "Drive.h"
+// #import "Images/DiskImage.h"
+#import "Images/FloppyDiskImage.h"
 #import "FileSystems/OldFileSystem.h"
 #import "FileSystems/CBM/FileSystem.h"
 #import "Texture.h"
 #import "MediaError.h"
 
 using namespace vc64;
+
+using retro::vault::DiskImage;
+using retro::vault::FloppyDiskImage;
 using retro::vault::cbm::FileSystem;
 
 NSString *EventSlotName(EventSlot slot)
@@ -1553,6 +1559,196 @@ NSString *EventSlotName(EventSlot slot)
 - (time_t)timeStamp
 {
     return [self file]->timestamp();
+}
+
+@end
+
+
+//
+// DiskFileProxy
+//
+
+@implementation DiskImageProxy
+
++ (ImageInfo)about:(NSURL *)url
+{
+    if (auto about = DiskImage::about([url fileSystemRepresentation])) {
+        return *about;
+    } else {
+        return { ImageType::UNKNOWN, ImageFormat::UNKNOWN };
+    }
+}
+
+- (DiskImage *)file
+{
+    return (DiskImage *)obj;
+}
+
+- (NSArray<NSString *> *)describe
+{
+    const auto vec = [self file]->describeImage();
+
+    NSMutableArray<NSString *> *result =
+        [NSMutableArray arrayWithCapacity:vec.size()];
+
+    for (const auto &s : vec) {
+        [result addObject:[NSString stringWithUTF8String:s.c_str()]];
+    }
+
+    return result;
+}
+
+- (NSURL *)path
+{
+    auto nsPath = @([self file]->path.c_str());
+    return [NSURL fileURLWithPath:nsPath];
+}
+
+- (NSInteger)size
+{
+    return [self file]->getSize();
+}
+
+- (u64)fnv
+{
+    return [self file]->fnv64();
+}
+
+- (NSInteger)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex
+{
+    try { return [self file]->writeToFile([path fileSystemRepresentation]); }
+    catch(Error &error) { [ex save:error]; return 0; }
+}
+
+- (ImageType)type
+{
+    return [self file]->type();
+}
+
+- (ImageFormat)format
+{
+    return [self file]->format();
+}
+
+-(ImageInfo)info
+{
+    return [self file]->info();
+}
+
+- (NSInteger)bsize
+{
+    return [self file]->bsize();
+}
+
+- (NSInteger)numCyls
+{
+    return [self file]->numCyls();
+}
+
+- (NSInteger)numHeads
+{
+    return [self file]->numHeads();
+}
+
+- (NSInteger)numTracks
+{
+    return [self file]->numTracks();
+}
+
+- (NSInteger)numSectors
+{
+    return [self file]->numSectors(0);
+}
+
+- (NSInteger)numBlocks
+{
+    return [self file]->numBlocks();
+}
+
+- (NSInteger)numBytes
+{
+    return [self file]->numBytes();
+}
+
+- (NSInteger)readByte:(NSInteger)b offset:(NSInteger)offset
+{
+    return [self file]->readByte(b * [self bsize] + offset);
+}
+
+- (NSString *)asciidump:(NSInteger)b offset:(NSInteger)offset len:(NSInteger)len
+{
+    string result;
+    auto p = [self file]->data.ptr + b * [self bsize] + offset;
+
+    for (isize i = 0; i < len; i++) {
+        result += isprint(int(p[i])) ? char(p[i]) : '.';
+    }
+
+    return @(result.c_str());
+}
+
+@end
+
+
+//
+// DiskFileProxy
+//
+
+@implementation FloppyDiskImageProxy
+
++ (ImageInfo)about:(NSURL *)url
+{
+    if (auto about = FloppyDiskImage::about([url fileSystemRepresentation])) {
+        return *about;
+    } else {
+        return { ImageType::UNKNOWN, ImageFormat::UNKNOWN };
+    }
+}
+
+- (FloppyDiskImage *)image
+{
+    return (FloppyDiskImage *)obj;
+}
+
++ (instancetype)make:(void *)file
+{
+    return file ? [[self alloc] initWith:file] : nil;
+}
+
++ (instancetype)makeWithDrive:(DriveProxy *)proxy
+                       format:(ImageFormat)fmt
+                    exception:(ExceptionWrapper *)ex
+{
+    /*
+    auto drive = (DriveAPI *)proxy->obj;
+    try { return [self make: drive->drive->exportDisk(fmt).release()]; }
+    catch(Error &error) { [ex save:error]; return nil; }
+    */
+}
+
+- (Diameter)diameter
+{
+    return [self image]->getDiameter();
+}
+
+- (Density)density
+{
+    return [self image]->getDensity();
+}
+
+- (BOOL)isSD
+{
+    return [self image]->isSD();
+}
+
+- (BOOL)isDD
+{
+    return [self image]->isDD();
+}
+
+- (BOOL)isHD
+{
+    return [self image]->isHD();
 }
 
 @end
