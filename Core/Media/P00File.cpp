@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "P00File.h"
-#include "FileSystems/FileSystem.h" // DEPRECATED
+#include "FileSystems/OldFileSystem.h" // DEPRECATED
 #include "utl/io/Files.h"
 #include "utl/support/Strings.h"
 
@@ -41,7 +41,7 @@ P00File::isCompatible(const Buffer<u8> &buf)
 }
 
 void
-P00File::init(const FileSystem &fs)
+P00File::init(const OldFileSystem &fs)
 {
     isize item = 0;
     isize itemSize = fs.fileSize(item);

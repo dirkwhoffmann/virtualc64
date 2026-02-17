@@ -10,7 +10,7 @@
 #import "EmulatorProxy.h"
 #import "VirtualC64.h"
 #import "DiskAnalyzer.h"
-#import "FileSystems/FileSystem.h"
+#import "FileSystems/OldFileSystem.h"
 #import "Texture.h"
 #import "MediaError.h"
 
@@ -1022,7 +1022,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp
 {
-    [self drive]->insertFileSystem(*(FileSystem *)proxy->obj, wp);
+    [self drive]->insertFileSystem(*(OldFileSystem *)proxy->obj, wp);
 }
 
 - (void)insertBlankDisk:(DOSType)fsType name:(NSString *)name
@@ -1338,7 +1338,7 @@ NSString *EventSlotName(EventSlot slot)
                               type:(FileType)type
                          exception:(ExceptionWrapper *)ex
 {
-    auto fs = (FileSystem *)proxy->obj;
+    auto fs = (OldFileSystem *)proxy->obj;
     try { return [self make: MediaFile::make(*fs, type)]; }
     catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
@@ -1556,12 +1556,12 @@ NSString *EventSlotName(EventSlot slot)
 
 @implementation FileSystemProxy
 
-- (FileSystem *)fs
+- (OldFileSystem *)fs
 {
-    return (FileSystem *)obj;
+    return (OldFileSystem *)obj;
 }
 
-+ (instancetype)make:(FileSystem *)fs
++ (instancetype)make:(OldFileSystem *)fs
 {
     return fs ? [[self alloc] initWith: fs] : nil;
 }
@@ -1569,18 +1569,18 @@ NSString *EventSlotName(EventSlot slot)
 + (instancetype)makeWithDrive:(DriveProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     auto *disk = [proxy drive]->disk.get();
-    try { return [self make: new FileSystem(*disk)]; }
+    try { return [self make: new OldFileSystem(*disk)]; }
     catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType
 {
-    return [self make: new FileSystem(diskType, dosType)];
+    return [self make: new OldFileSystem(diskType, dosType)];
 }
 
 + (instancetype)makeWithMediaFile:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new FileSystem(*(MediaFile *)proxy->obj)]; }
+    try { return [self make: new OldFileSystem(*(MediaFile *)proxy->obj)]; }
     catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
@@ -2403,7 +2403,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
-    try { [self emu]->c64.flash(*(FileSystem *)proxy->obj, (unsigned)nr); }
+    try { [self emu]->c64.flash(*(OldFileSystem *)proxy->obj, (unsigned)nr); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 

@@ -218,7 +218,6 @@ public:
     // Convenience wrappers
     bool is(BlockNr nr, FSBlockType type) const { return fetch(nr).is(type); }
     bool isEmpty(BlockNr nr) const { return fetch(nr).isEmpty(); }
-    // bool isData(BlockNr nr) const { return fetch(nr).isData(); }
 
     // Predicts the type of a block based on the stored data
     FSBlockType predictType(BlockNr nr, const u8 *buf) const noexcept;
@@ -297,7 +296,7 @@ public:
     vector<FSDirEntry> readDirBlock(BlockNr block) const;
 
     // Overwrites the existing directory
-    void writeDir(const vector<FSDirEntry> &dir);
+    void writeDir(const vector<FSDirEntry> &entry);
 
     // Returns the number of directory items
     isize numItems() const;
@@ -356,6 +355,7 @@ public:
     // Extracts the data from a file
     isize extractData(BlockNr b, Buffer<u8> &buf) const;
     isize extractData(TSLink ts, Buffer<u8> &buf) const;
+    isize extractData(const FSDirEntry &entry, Buffer<u8> &buf) const;
 
     // Shrinks or expands an existing file (pad with 0)
     void resize(BlockNr at, isize size);

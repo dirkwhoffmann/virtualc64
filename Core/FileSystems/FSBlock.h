@@ -22,7 +22,7 @@ namespace vc64 {
 class FSBlock : CoreObject {
     
     // The device this block belongs to
-    class FileSystem &device;
+    class OldFileSystem &device;
     
 public:
     
@@ -45,7 +45,7 @@ public:
 
 public:
     
-    FSBlock(FileSystem& _device, u32 _nr);
+    FSBlock(OldFileSystem& _device, u32 _nr);
     virtual ~FSBlock() = default;
     const char *objectName() const override { return "FSBlock"; }
 

@@ -58,7 +58,7 @@
 #include "Media/RomFile.h"
 #include "Media/TAPFile.h"
 #include "Media/CRTFile.h"
-#include "FileSystems/FileSystem.h" // DEPRECATED
+#include "FileSystems/OldFileSystem.h" // DEPRECATED
 
 // Misc
 #include "Host.h"
@@ -758,7 +758,7 @@ public:
     void flashNew(const AnyFile &file, isize item);
     [[deprecated]] void flash(const MediaFile &file);
     [[deprecated]] void flash(const MediaFile &file, isize item);
-    void flash(const FileSystem &fs, isize item);
+    void flash(const OldFileSystem &fs, isize item);
 
 
     //

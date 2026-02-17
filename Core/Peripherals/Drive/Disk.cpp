@@ -145,7 +145,7 @@ Disk::init(const fs::path &path, bool wp)
         return;
     }
     
-    auto fs = FileSystem(path);
+    auto fs = OldFileSystem(path);
     init(fs, wp);
 }
 
@@ -163,7 +163,7 @@ Disk::init(DOSType type, PETName<16> name, bool wp)
     
     if (type == DOSType::CBM) {
         
-        auto fs = FileSystem(DiskType::SS_SD, DOSType::CBM);
+        auto fs = OldFileSystem(DiskType::SS_SD, DOSType::CBM);
         fs.setName(name);
         init(fs, wp);
 
@@ -174,7 +174,7 @@ Disk::init(DOSType type, PETName<16> name, bool wp)
 }
 
 void
-Disk::init(const FileSystem &fs, bool wp)
+Disk::init(const OldFileSystem &fs, bool wp)
 {
     clearDisk();
     encode(fs);
@@ -192,14 +192,14 @@ Disk::init(const G64File &g64, bool wp)
 void
 Disk::init(const D64File &d64, bool wp)
 {
-    auto fs = FileSystem(d64);
+    auto fs = OldFileSystem(d64);
     init(fs, wp);
 }
 
 void
 Disk::init(AnyCollection &collection, bool wp)
 {
-    auto fs = FileSystem(collection);
+    auto fs = OldFileSystem(collection);
     init(fs, wp);
 }
 
@@ -544,7 +544,7 @@ Disk::encodeG64(const G64File &a)
 }
 
 void
-Disk::encode(const FileSystem &fs, bool alignTracks)
+Disk::encode(const OldFileSystem &fs, bool alignTracks)
 {    
     // 64COPY (fails on VICE test drive/skew)
     /*
@@ -614,7 +614,7 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
 }
 
 isize
-Disk::encodeTrack(const FileSystem &fs, Track t, isize gap, HeadPos start)
+Disk::encodeTrack(const OldFileSystem &fs, Track t, isize gap, HeadPos start)
 {
     assert(isTrackNumber(t));
     logdebug(GCR_DEBUG, "Encoding track %ld (%ld)\n", t, start);
@@ -633,7 +633,7 @@ Disk::encodeTrack(const FileSystem &fs, Track t, isize gap, HeadPos start)
 }
 
 isize
-Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize tailGap)
+Disk::encodeSector(const OldFileSystem &fs, Track t, Sector s, HeadPos start, isize tailGap)
 {
     assert(isValidTrackSectorPair(t, s));
     

@@ -18,7 +18,7 @@ namespace vc64 {
 
 class Folder : public AnyCollection {
     
-    class FileSystem *fs = nullptr;
+    class OldFileSystem *fs = nullptr;
 
 public:
 
@@ -71,7 +71,7 @@ public:
     // Accessing
     //
     
-    FileSystem *getFS() { return fs; }
+    OldFileSystem *getFS() { return fs; }
 };
 
 }

@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class FileSystem : CoreObject {
+class OldFileSystem : CoreObject {
     
     friend class FSBlock;
 
@@ -42,15 +42,15 @@ public:
     
 public:
 
-    FileSystem(isize capacity) { init(capacity); }
-    FileSystem(FSDeviceDescriptor &layout) { init(layout); }
-    FileSystem(DiskType type, DOSType vType) { init(type, vType); }
-    FileSystem(const class D64File &d64) { init(d64); }
-    FileSystem(class Disk &disk) { init(disk); }
-    FileSystem(AnyCollection &collection) { init(collection); }
-    FileSystem(MediaFile &file);
-    FileSystem(const fs::path &path) { init(path); }
-    ~FileSystem();
+    OldFileSystem(isize capacity) { init(capacity); }
+    OldFileSystem(FSDeviceDescriptor &layout) { init(layout); }
+    OldFileSystem(DiskType type, DOSType vType) { init(type, vType); }
+    OldFileSystem(const class D64File &d64) { init(d64); }
+    OldFileSystem(class Disk &disk) { init(disk); }
+    OldFileSystem(AnyCollection &collection) { init(collection); }
+    OldFileSystem(MediaFile &file);
+    OldFileSystem(const fs::path &path) { init(path); }
+    ~OldFileSystem();
     
 private:
     

@@ -2225,7 +2225,7 @@ C64::flash(const MediaFile &file, isize nr)
 }
 
 void
-C64::flash(const FileSystem &fs, isize nr)
+C64::flash(const OldFileSystem &fs, isize nr)
 {
     u16 addr = fs.loadAddr(nr);
     u64 size = fs.fileSize(nr);

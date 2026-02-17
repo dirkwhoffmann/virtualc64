@@ -25,7 +25,7 @@ using retro::vault::ImageFormat;
 namespace vc64 {
 
 class DiskAnalyzer;
-class FileSystem;
+class OldFileSystem;
 
 class Disk final : public CoreObject {
     
@@ -117,7 +117,7 @@ public:
     Disk(const fs::path &path, bool wp = false) { init(path, wp); }
     Disk(const FloppyDiskImage &file, bool wp = false) { init(file, wp); }
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
-    Disk(const FileSystem &device, bool wp = false) { init(device, wp); }
+    Disk(const OldFileSystem &device, bool wp = false) { init(device, wp); }
     Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
     Disk(const class D64File &d64, bool wp = false) { init(d64, wp); }
     Disk(class AnyCollection &archive, bool wp = false) { init(archive, wp); }
@@ -128,7 +128,7 @@ private:
     void init(const fs::path &path, bool wp);
     void init(const class FloppyDiskImage &file, bool wp);
     void init(DOSType type, PETName<16> name, bool wp);
-    void init(const class FileSystem &device, bool wp);
+    void init(const class OldFileSystem &device, bool wp);
     void init(const class G64File &g64, bool wp);
     void init(const class D64File &d64, bool wp);
     void init(class AnyCollection &archive, bool wp);
@@ -350,7 +350,7 @@ public:
      * and data blocks, checksums and gaps. If alignTracks is true, the first
      * sector always starts at the beginning of a track.
      */
-    void encode(const FileSystem &fs, bool alignTracks = false);
+    void encode(const OldFileSystem &fs, bool alignTracks = false);
     
 private:
     
@@ -362,14 +362,14 @@ private:
      * follwowing sectors with odd sector numbers. The number of written bits
      * is returned.
      */
-    isize encodeTrack(const FileSystem &fs, Track t, isize gap, HeadPos start);
+    isize encodeTrack(const OldFileSystem &fs, Track t, isize gap, HeadPos start);
     
     /* Encode a single sector. This function translates the logical byte
      * sequence of a single sector into the native VC1541 byte representation.
      * The sector is closed by 'gap' tail gap bytes. The number of written bits
      * is returned.
      */
-    isize encodeSector(const FileSystem &fs, Track t, Sector sector, HeadPos start, isize gap);
+    isize encodeSector(const OldFileSystem &fs, Track t, Sector sector, HeadPos start, isize gap);
 
     
     //

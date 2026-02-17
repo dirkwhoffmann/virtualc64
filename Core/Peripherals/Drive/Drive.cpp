@@ -402,7 +402,7 @@ Drive::insertNewDisk(DOSType fsType, string name)
 }
 
 void
-Drive::insertFileSystem(const FileSystem &device, bool wp)
+Drive::insertFileSystem(const OldFileSystem &device, bool wp)
 {
     insertDisk(std::make_unique<Disk>(device, wp));
 }

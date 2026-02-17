@@ -710,7 +710,7 @@ struct DriveAPI : public API {
      *  @param  fs      A file system wrapper object.
      *  @param  wp      Write-protection status of the disk.
      */
-    void insertFileSystem(const class FileSystem &fs, bool wp);
+    void insertFileSystem(const class OldFileSystem &fs, bool wp);
 
     /** @brief  Ejects the current disk.
      */
@@ -1183,7 +1183,7 @@ struct C64API : public API {
 
     /** @brief  Flashes a file from a file system into memory
      */
-    void flash(const FileSystem &fs, isize item);
+    void flash(const OldFileSystem &fs, isize item);
     /// @}
 };
 

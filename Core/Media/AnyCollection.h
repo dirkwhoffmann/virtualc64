@@ -14,6 +14,13 @@
 
 #include "AnyFile.h"
 
+namespace retro::vault::cbm {
+
+    class FileSystem;
+}
+
+using retro::vault::cbm::FileSystem;
+
 namespace vc64 {
 
 class AnyCollection : public AnyFile {

@@ -653,7 +653,7 @@ C64API::flash(const MediaFile &file, isize item)
 }
 
 void 
-C64API::flash(const FileSystem &fs, isize item)
+C64API::flash(const OldFileSystem &fs, isize item)
 {
     VC64_PUBLIC_SUSPEND
     c64->flash(fs, item);
@@ -1520,7 +1520,7 @@ DriveAPI::insertMedia(MediaFile &file, bool wp)
 }
 
 void
-DriveAPI::insertFileSystem(const class FileSystem &device, bool wp)
+DriveAPI::insertFileSystem(const class OldFileSystem &device, bool wp)
 {
     drive->insertFileSystem(device, wp);
     emu->markAsDirty();

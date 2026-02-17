@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "PRGFile.h"
-#include "FileSystems/FileSystem.h" // DEPRECATED
+#include "FileSystems/OldFileSystem.h" // DEPRECATED
 
 namespace vc64 {
 
@@ -36,7 +36,7 @@ PRGFile::isCompatible(const Buffer<u8> &buf)
 }
 
 void
-PRGFile::init(const FileSystem &fs)
+PRGFile::init(const OldFileSystem &fs)
 {
     isize item = 0;
     isize itemSize = fs.fileSize(item);

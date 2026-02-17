@@ -356,6 +356,12 @@ FileSystem::extractData(TSLink ts, Buffer<u8> &buf) const
     return b ? extractData(*b, buf) : 0;
 }
 
+isize
+FileSystem::extractData(const FSDirEntry &entry, Buffer<u8> &buf) const
+{
+    return extractData(entry.firstBlock(), buf);
+}
+
 void
 FileSystem::resize(BlockNr at, isize size)
 {

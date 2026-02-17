@@ -33,11 +33,13 @@ public:
     T64File(isize capacity) : AnyCollection(capacity) { }
     T64File(const fs::path &path) { init(path); }
     T64File(const u8 *buf, isize len) { init(buf, len); }
-    T64File(const class FileSystem &fs) { init(fs); }
+    [[deprecated]] T64File(const class OldFileSystem &fs) { init(fs); }
+    T64File(const FileSystem &fs) { init(fs); }
 
 private:
     
     using AnyFile::init;
+    void init(const OldFileSystem &fs);
     void init(const FileSystem &fs);
 
     

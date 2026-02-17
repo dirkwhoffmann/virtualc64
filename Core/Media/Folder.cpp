@@ -27,7 +27,7 @@ Folder::init(const fs::path &path)
 {
     if (!isCompatiblePath(path)) throw IOError(IOError::FILE_TYPE_MISMATCH);
     
-    fs = new FileSystem(path);
+    fs = new OldFileSystem(path);
 
     // REMOVE ASAP
     fs->scanDirectory();

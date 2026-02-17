@@ -12,7 +12,8 @@
 
 #include "config.h"
 #include "T64File.h"
-#include "FileSystems/FileSystem.h"
+#include "FileSystems/OldFileSystem.h"
+#include "FileSystems/CBM/FileSystem.h"
 
 namespace vc64 {
 
@@ -47,7 +48,135 @@ T64File::isCompatible(const Buffer<u8> &buf)
 }
 
 void
-T64File::init(const class FileSystem &fs)
+T64File::init(const FileSystem &fs)
+{
+    std::vector<std::unique_ptr<Buffer<u8>>> items;
+    std::vector<retro::vault::cbm::PETName<16>> names;
+
+    // Read directory
+    // auto dir = fs.readDir();
+
+    // Collect only suitable entries
+    for (const auto& entry : fs.readDir()) {
+
+        auto item = std::make_unique<Buffer<u8>>();
+        fs.extractData(entry, *item);
+
+        if (item->size >= 2) {
+            
+            items.push_back(std::move(item));
+            names.push_back(entry.getName());
+        }
+    }
+        
+    auto numFiles = isize(items.size());
+    std::vector<isize> length(numFiles);
+    isize dataLength = 0;
+    
+    for (isize i = 0; i < numFiles; i++) {
+        
+        length[i] = items[i]->size - 2;
+        dataLength += length[i];
+    }
+    
+    // Initialize the archive
+    isize maxFiles = std::max(numFiles, (isize)30);
+    isize fileSize = 64 + maxFiles * 32 + dataLength;
+    init(fileSize);
+    
+    //
+    // Header
+    //
+    
+    // Magic bytes (32 bytes)
+    u8 *ptr = data.ptr;
+    strncpy((char *)ptr, "C64 tape image file", 32);
+    ptr += 32;
+    
+    // Version (2 bytes)
+    *ptr++ = 0x01;
+    *ptr++ = 0x01;
+    
+    // Max files (2 bytes)
+    *ptr++ = LO_BYTE(maxFiles);
+    *ptr++ = HI_BYTE(maxFiles);
+    
+    // Stored files (2 bytes)
+    *ptr++ = LO_BYTE(numFiles);
+    *ptr++ = HI_BYTE(numFiles);
+    
+    // Reserved (2 bytes)
+    *ptr++ = 0x00;
+    *ptr++ = 0x00;
+    
+    // User description (24 bytes, padded with 0x20)
+    auto name = PETName<24>(fs.stat().name.c_str(), 0x20);
+    name.write(ptr);
+    ptr += 24;
+    
+    assert(ptr - data.ptr == 64);
+
+    //
+    // Tape entries
+    //
+    
+    isize tapePosition = 64 + maxFiles * 32; // Start of item 0
+    memset(ptr, 0, 32 * maxFiles);
+    
+    for (isize n = 0; n < maxFiles; n++) {
+        
+        // Skip if this is an empty tape slot
+        if (n >= numFiles) { ptr += 32; continue; }
+
+        // Entry used (1 byte)
+        *ptr++ = 0x01;
+        
+        // File type (1 byte)
+        *ptr++ = 0x82;
+        
+        // Start address (2 bytes)
+        u16 startAddr = LO_HI(items[n]->ptr[0], items[n]->ptr[1]);
+        *ptr++ = LO_BYTE(startAddr);
+        *ptr++ = HI_BYTE(startAddr);
+        
+        // End address (2 bytes)
+        u16 endAddr = (u16)(startAddr + length[n]);
+        *ptr++ = LO_BYTE(endAddr);
+        *ptr++ = HI_BYTE(endAddr);
+        
+        // Reserved (2 bytes)
+        ptr += 2;
+        
+        // Tape position (4 bytes)
+        *ptr++ = LO_BYTE(tapePosition);
+        *ptr++ = LO_BYTE(tapePosition >> 8);
+        *ptr++ = LO_BYTE(tapePosition >> 16);
+        *ptr++ = LO_BYTE(tapePosition >> 24);
+        tapePosition += fileSize;
+        
+        // Reserved (4 bytes)
+        ptr += 4;
+        
+        // File name (16 bytes)
+        names[n].write(ptr);
+        ptr += 16;
+    }
+    
+    //
+    // File data
+    //
+    
+    for (isize n = 0; n < numFiles; n++) {
+
+        assert(items[n]->size >= 2);
+        memcpy(ptr, items[n]->ptr + 2, items[n]->size - 2);
+        // fs.copyFile(n, ptr, length[n], 2);
+        ptr += length[n];
+    }
+}
+
+void
+T64File::init(const class OldFileSystem &fs)
 {
     // Analyze the file system
     isize numFiles = fs.numFiles();

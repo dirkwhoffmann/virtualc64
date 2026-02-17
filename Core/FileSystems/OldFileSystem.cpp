@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FileSystems/FileSystem.h" // DEPRECATED
+#include "FileSystems/OldFileSystem.h" // DEPRECATED
 #include "Disk.h"
 #include "Media/Folder.h"
 #include "Media/PRGFile.h"
@@ -24,7 +24,7 @@
 
 namespace vc64 {
 
-FileSystem::FileSystem(MediaFile &file)
+OldFileSystem::OldFileSystem(MediaFile &file)
 {
     try {
 
@@ -42,13 +42,13 @@ FileSystem::FileSystem(MediaFile &file)
     }}
 }
 
-FileSystem::~FileSystem()
+OldFileSystem::~OldFileSystem()
 {
     for (auto &b : blocks) delete b;
 }
 
 void
-FileSystem::init(isize capacity)
+OldFileSystem::init(isize capacity)
 {
     loginfo(FS_DEBUG, "Creating device with %ld blocks\n", capacity);
 
@@ -61,14 +61,14 @@ FileSystem::init(isize capacity)
 }
 
 void
-FileSystem::init(FSDeviceDescriptor &layout)
+OldFileSystem::init(FSDeviceDescriptor &layout)
 {
     init(layout.numBlocks());
     this->layout = layout;
 }
 
 void
-FileSystem::init(DiskType type, DOSType vType)
+OldFileSystem::init(DiskType type, DOSType vType)
 {
     FSDeviceDescriptor layout = FSDeviceDescriptor(type);
     init(layout);
@@ -79,7 +79,7 @@ FileSystem::init(DiskType type, DOSType vType)
 }
 
 void
-FileSystem::init(const D64File &d64)
+OldFileSystem::init(const D64File &d64)
 {
     // Get device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(d64);
@@ -103,7 +103,7 @@ FileSystem::init(const D64File &d64)
 }
 
 void
-FileSystem::init(class Disk &disk)
+OldFileSystem::init(class Disk &disk)
 {
     // Translate the GCR stream into a byte stream
     u8 buffer[D64File::D64_802_SECTORS];
@@ -135,7 +135,7 @@ FileSystem::init(class Disk &disk)
 }
 
 void
-FileSystem::init(AnyCollection &collection)
+OldFileSystem::init(AnyCollection &collection)
 {
     // Create the device
     init(DiskType::SS_SD, DOSType::CBM);
@@ -166,7 +166,7 @@ FileSystem::init(AnyCollection &collection)
 }
 
 void
-FileSystem::init(const fs::path &path)
+OldFileSystem::init(const fs::path &path)
 {
     if (Folder::isCompatible(path)) {
 
@@ -221,13 +221,13 @@ FileSystem::init(const fs::path &path)
 }
 
 void
-FileSystem::info()
+OldFileSystem::info()
 {
     scanDirectory();
 }
 
 void
-FileSystem::dump() const
+OldFileSystem::dump() const
 {
     isize blocksSize = (isize)blocks.size();
     
@@ -241,7 +241,7 @@ FileSystem::dump() const
 }
 
 void
-FileSystem::printDirectory()
+OldFileSystem::printDirectory()
 {
     scanDirectory();
 
@@ -256,7 +256,7 @@ FileSystem::printDirectory()
 }
 
 isize
-FileSystem::freeBlocks() const
+OldFileSystem::freeBlocks() const
 {
     isize result = 0;
     isize blocksSize = isize(blocks.size());
@@ -269,7 +269,7 @@ FileSystem::freeBlocks() const
 }
 
 isize
-FileSystem::usedBlocks() const
+OldFileSystem::usedBlocks() const
 {
     isize result = 0;
     isize blocksSize = isize(blocks.size());
@@ -282,37 +282,37 @@ FileSystem::usedBlocks() const
 }
 
 FSBlockType
-FileSystem::blockType(Block b) const
+OldFileSystem::blockType(Block b) const
 {
     return blockPtr(b) ? blocks[b]->type() : FSBlockType::UNKNOWN;
 }
 
 FSUsage
-FileSystem::usage(Block b, u32 pos) const
+OldFileSystem::usage(Block b, u32 pos) const
 {
     return blockPtr(b) ? blocks[b]->itemType(pos) : FSUsage::UNUSED;
 }
 
 u8
-FileSystem::getErrorCode(Block b) const
+OldFileSystem::getErrorCode(Block b) const
 {
     return blockPtr(b) ? blocks[b]->errorCode : 0;
 }
 
 void
-FileSystem::setErrorCode(Block b, u8 code)
+OldFileSystem::setErrorCode(Block b, u8 code)
 {
     if (blockPtr(b)) blocks[b]->errorCode = code;
 }
 
 FSBlock *
-FileSystem::blockPtr(Block b) const
+OldFileSystem::blockPtr(Block b) const
 {
     return (u64)b < (u64)blocks.size() ? blocks[b] : nullptr;
 }
 
 FSBlock *
-FileSystem::nextBlockPtr(Block b) const
+OldFileSystem::nextBlockPtr(Block b) const
 {
     FSBlock *ptr = blockPtr(b);
     
@@ -323,41 +323,41 @@ FileSystem::nextBlockPtr(Block b) const
 }
 
 FSBlock *
-FileSystem::nextBlockPtr(FSBlock *ptr) const
+OldFileSystem::nextBlockPtr(FSBlock *ptr) const
 {
     return ptr ? blockPtr(ptr->tsLink()) : nullptr;
 }
 
 PETName<16>
-FileSystem::getName() const
+OldFileSystem::getName() const
 {
     FSBlock *bam = bamPtr();
     return PETName<16>(bam->data + 0x90);
 }
 
 void
-FileSystem::setName(PETName<16> name)
+OldFileSystem::setName(PETName<16> name)
 {
     FSBlock *bam = bamPtr();
     name.write(bam->data + 0x90);
 }
 
 PETName<2>
-FileSystem::getID() const
+OldFileSystem::getID() const
 {
     FSBlock *bam = bamPtr();
     return PETName<2>(bam->data + 0xA2);
 }
 
 void
-FileSystem::setID(PETName<2> name)
+OldFileSystem::setID(PETName<2> name)
 {
     FSBlock *bam = bamPtr();
     name.write(bam->data + 0xA2);
 }
 
 bool
-FileSystem::isFree(TSLink ts) const
+OldFileSystem::isFree(TSLink ts) const
 {
     isize byte, bit;
     FSBlock *bam = locateAllocBit(ts, &byte, &bit);
@@ -366,7 +366,7 @@ FileSystem::isFree(TSLink ts) const
 }
 
 TSLink
-FileSystem::nextFreeBlock(TSLink ref) const
+OldFileSystem::nextFreeBlock(TSLink ref) const
 {
     if (!layout.isValidLink(ref)) return {0,0};
     
@@ -378,7 +378,7 @@ FileSystem::nextFreeBlock(TSLink ref) const
 }
 
 void
-FileSystem::setAllocBit(TSLink ts, bool value)
+OldFileSystem::setAllocBit(TSLink ts, bool value)
 {
     isize byte, bit;
     FSBlock *bam = locateAllocBit(ts, &byte, &bit);
@@ -403,7 +403,7 @@ FileSystem::setAllocBit(TSLink ts, bool value)
 }
 
 std::vector<TSLink>
-FileSystem::allocate(TSLink ts, u32 n)
+OldFileSystem::allocate(TSLink ts, u32 n)
 {
     assert(n > 0);
     
@@ -437,13 +437,13 @@ FileSystem::allocate(TSLink ts, u32 n)
 }
 
 FSBlock *
-FileSystem::locateAllocBit(Block b, isize *byte, isize *bit) const
+OldFileSystem::locateAllocBit(Block b, isize *byte, isize *bit) const
 {
     return locateAllocBit(layout.tsLink(b), byte, bit);
 }
 
 FSBlock *
-FileSystem::locateAllocBit(TSLink ts, isize *byte, isize *bit) const
+OldFileSystem::locateAllocBit(TSLink ts, isize *byte, isize *bit) const
 {
     assert(layout.isValidLink(ts));
 
@@ -462,42 +462,42 @@ FileSystem::locateAllocBit(TSLink ts, isize *byte, isize *bit) const
 }
 
 PETName<16>
-FileSystem::fileName(isize nr) const
+OldFileSystem::fileName(isize nr) const
 {
     assert(nr < numFiles());
     return fileName(dir[nr]);
 }
 
 PETName<16>
-FileSystem::fileName(FSDirEntry *entry) const
+OldFileSystem::fileName(FSDirEntry *entry) const
 {
     assert(entry);
     return PETName<16>(entry->fileName);
 }
 
 FSFileType
-FileSystem::fileType(isize nr) const
+OldFileSystem::fileType(isize nr) const
 {
     assert(nr < numFiles());
     return fileType(dir[nr]);
 }
 
 FSFileType
-FileSystem::fileType(FSDirEntry *entry) const
+OldFileSystem::fileType(FSDirEntry *entry) const
 {
     assert(entry);
     return entry->getFileType();
 }
 
 isize
-FileSystem::fileSize(isize nr) const
+OldFileSystem::fileSize(isize nr) const
 {
     assert(nr < numFiles());
     return fileSize(dir[nr]);
 }
 
 isize
-FileSystem::fileSize(FSDirEntry *entry) const
+OldFileSystem::fileSize(FSDirEntry *entry) const
 {
     assert(entry);
     
@@ -526,28 +526,28 @@ FileSystem::fileSize(FSDirEntry *entry) const
 }
 
 isize
-FileSystem::fileBlocks(isize nr) const
+OldFileSystem::fileBlocks(isize nr) const
 {
     assert(nr < numFiles());
     return fileBlocks(dir[nr]);
 }
 
 isize
-FileSystem::fileBlocks(FSDirEntry *entry) const
+OldFileSystem::fileBlocks(FSDirEntry *entry) const
 {
     assert(entry);
     return HI_LO(entry->fileSizeHi, entry->fileSizeLo);
 }
 
 u16
-FileSystem::loadAddr(isize nr) const
+OldFileSystem::loadAddr(isize nr) const
 {
     assert(nr < numFiles());
     return loadAddr(dir[nr]);
 }
 
 u16
-FileSystem::loadAddr(FSDirEntry *entry) const
+OldFileSystem::loadAddr(FSDirEntry *entry) const
 {
     assert(entry);
     u8 addr[2]; copyFile(entry, addr, 2);
@@ -555,14 +555,14 @@ FileSystem::loadAddr(FSDirEntry *entry) const
 }
 
 void
-FileSystem::copyFile(isize nr, u8 *buf, u64 len, u64 offset) const
+OldFileSystem::copyFile(isize nr, u8 *buf, u64 len, u64 offset) const
 {
     assert(nr < numFiles());
     copyFile(dir[nr], buf, len, offset);
 }
 
 void
-FileSystem::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset) const
+OldFileSystem::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset) const
 {
     assert(entry);
     
@@ -588,7 +588,7 @@ FileSystem::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset) const
 }
 
 FSDirEntry *
-FileSystem::getOrCreateNextFreeDirEntry()
+OldFileSystem::getOrCreateNextFreeDirEntry()
 {
     // The directory starts on track 18, sector 1
     FSBlock *ptr = blockPtr(TSLink{18,1});
@@ -617,7 +617,7 @@ FileSystem::getOrCreateNextFreeDirEntry()
 }
 
 void
-FileSystem::scanDirectory(bool skipInvisible)
+OldFileSystem::scanDirectory(bool skipInvisible)
 {
     // Start from scratch
     dir.clear();
@@ -642,7 +642,7 @@ FileSystem::scanDirectory(bool skipInvisible)
 }
 
 bool
-FileSystem::makeFile(PETName<16> name, const u8 *buf, isize cnt)
+OldFileSystem::makeFile(PETName<16> name, const u8 *buf, isize cnt)
 {
     // Search the next free directory slot
     FSDirEntry *dir = getOrCreateNextFreeDirEntry();
@@ -654,7 +654,7 @@ FileSystem::makeFile(PETName<16> name, const u8 *buf, isize cnt)
 }
 
 bool
-FileSystem::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, isize cnt)
+OldFileSystem::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, isize cnt)
 {
     // Determine the number of blocks needed for this file
     u32 numBlocks = (u32)((cnt + 253) / 254);
@@ -689,7 +689,7 @@ FileSystem::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, isize cnt
 }
 
 FSErrorReport
-FileSystem::check(bool strict)
+OldFileSystem::check(bool strict)
 {
     FSErrorReport result;
 
@@ -723,19 +723,19 @@ FileSystem::check(bool strict)
 }
 
 Fault
-FileSystem::check(isize blockNr, u32 pos, u8 *expected, bool strict)
+OldFileSystem::check(isize blockNr, u32 pos, u8 *expected, bool strict)
 {
     return blocks[blockNr]->check(pos, expected, strict);
 }
 
 isize
-FileSystem::getCorrupted(isize blockNr) const
+OldFileSystem::getCorrupted(isize blockNr) const
 {
     return blockPtr(blockNr) ? blocks[blockNr]->corrupted : 0;
 }
 
 bool
-FileSystem::isCorrupted(isize blockNr, isize n) const
+OldFileSystem::isCorrupted(isize blockNr, isize n) const
 {
     auto numBlocks = isize(blocks.size());
     
@@ -750,7 +750,7 @@ FileSystem::isCorrupted(isize blockNr, isize n) const
 }
 
 isize
-FileSystem::nextCorrupted(isize blockNr) const
+OldFileSystem::nextCorrupted(isize blockNr) const
 {
     auto numBlocks = isize(blocks.size());
     
@@ -761,7 +761,7 @@ FileSystem::nextCorrupted(isize blockNr) const
 }
 
 isize
-FileSystem::prevCorrupted(isize blockNr) const
+OldFileSystem::prevCorrupted(isize blockNr) const
 {
     auto numBlocks = isize(blocks.size());
     
@@ -772,7 +772,7 @@ FileSystem::prevCorrupted(isize blockNr) const
 }
 
 u8
-FileSystem::readByte(Block block, isize offset) const
+OldFileSystem::readByte(Block block, isize offset) const
 {
     assert(offset < 256);
     assert(block < (Block)blocks.size());
@@ -781,7 +781,7 @@ FileSystem::readByte(Block block, isize offset) const
 }
 
 string
-FileSystem::ascii(Block nr, isize offset, isize len) const
+OldFileSystem::ascii(Block nr, isize offset, isize len) const
 {
     assert(isBlockNumber(nr));
     assert(offset + len <= 256);
@@ -791,7 +791,7 @@ FileSystem::ascii(Block nr, isize offset, isize len) const
 }
 
 void
-FileSystem::importVolume(const u8 *src, isize size)
+OldFileSystem::importVolume(const u8 *src, isize size)
 {
     Fault err;
     importVolume(src, size, &err);
@@ -799,7 +799,7 @@ FileSystem::importVolume(const u8 *src, isize size)
 }
 
 bool
-FileSystem::importVolume(const u8 *src, isize size, Fault *err)
+OldFileSystem::importVolume(const u8 *src, isize size, Fault *err)
 {
     assert(src != nullptr);
 
@@ -835,7 +835,7 @@ FileSystem::importVolume(const u8 *src, isize size, Fault *err)
 }
 
 void
-FileSystem::importDirectory(const fs::path &path)
+OldFileSystem::importDirectory(const fs::path &path)
 {
     fs::directory_entry dir;
 
@@ -846,7 +846,7 @@ FileSystem::importDirectory(const fs::path &path)
 }
 
 void
-FileSystem::importDirectory(const fs::directory_entry &dir)
+OldFileSystem::importDirectory(const fs::directory_entry &dir)
 {
     for (const auto& entry : fs::directory_iterator(dir)) {
 
@@ -876,19 +876,19 @@ FileSystem::importDirectory(const fs::directory_entry &dir)
 }
 
 bool
-FileSystem::exportVolume(u8 *dst, isize size, Fault *err) const
+OldFileSystem::exportVolume(u8 *dst, isize size, Fault *err) const
 {
     return exportBlocks(0, layout.numBlocks() - 1, dst, size, err);
 }
 
 bool
-FileSystem::exportBlock(isize nr, u8 *dst, isize size, Fault *err) const
+OldFileSystem::exportBlock(isize nr, u8 *dst, isize size, Fault *err) const
 {
     return exportBlocks(nr, nr, dst, size, err);
 }
 
 bool
-FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, Fault *err) const
+OldFileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, Fault *err) const
 {
     assert(last < layout.numBlocks());
     assert(first <= last);
@@ -920,7 +920,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, Fault *er
 }
 
 void
-FileSystem::exportDirectory(const fs::path &path, bool createDir)
+OldFileSystem::exportDirectory(const fs::path &path, bool createDir)
 {
     // Try to create the directory if it doesn't exist
     if (!utl::isDirectory(path) && createDir && !utl::createDirectory(path)) {
@@ -955,7 +955,7 @@ FileSystem::exportDirectory(const fs::path &path, bool createDir)
 }
 
 void
-FileSystem::exportFile(FSDirEntry *entry, const fs::path &path)
+OldFileSystem::exportFile(FSDirEntry *entry, const fs::path &path)
 {
     auto name = path / entry->getFileSystemRepresentation();
     loginfo(FS_DEBUG, "Exporting file to %s\n", name.string().c_str());
@@ -967,7 +967,7 @@ FileSystem::exportFile(FSDirEntry *entry, const fs::path &path)
 }
 
 void
-FileSystem::exportFile(FSDirEntry *entry, std::ofstream &stream)
+OldFileSystem::exportFile(FSDirEntry *entry, std::ofstream &stream)
 {
     std::set<Block> visited;
 
@@ -988,7 +988,7 @@ FileSystem::exportFile(FSDirEntry *entry, std::ofstream &stream)
 }
 
 FSBlockType
-FileSystem::getDisplayType(isize column)
+OldFileSystem::getDisplayType(isize column)
 {
     static constexpr isize width = 1760;
 
@@ -1034,7 +1034,7 @@ FileSystem::getDisplayType(isize column)
 }
 
 isize
-FileSystem::diagnoseImageSlice(isize column)
+OldFileSystem::diagnoseImageSlice(isize column)
 {
     static constexpr isize width = 1760;
 
@@ -1075,7 +1075,7 @@ FileSystem::diagnoseImageSlice(isize column)
 }
 
 isize
-FileSystem::nextBlockOfType(FSBlockType type, isize after)
+OldFileSystem::nextBlockOfType(FSBlockType type, isize after)
 {
     assert(isBlockNumber(after));
 
@@ -1091,7 +1091,7 @@ FileSystem::nextBlockOfType(FSBlockType type, isize after)
 }
 
 isize
-FileSystem::nextCorruptedBlock(isize after)
+OldFileSystem::nextCorruptedBlock(isize after)
 {
     assert(isBlockNumber(after));
 

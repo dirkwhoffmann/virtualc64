@@ -12,11 +12,11 @@
 
 #include "config.h"
 #include "FileSystems/FSBlock.h"
-#include "FileSystems/FileSystem.h"
+#include "FileSystems/OldFileSystem.h"
 
 namespace vc64 {
 
-FSBlock::FSBlock(FileSystem& _device, u32 _nr) : device(_device), nr(_nr)
+FSBlock::FSBlock(OldFileSystem& _device, u32 _nr) : device(_device), nr(_nr)
 {
     memset(data, 0, sizeof(data));
 }
