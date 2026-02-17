@@ -13,6 +13,7 @@
 #include "config.h"
 #include "P00File.h"
 #include "FileSystems/OldFileSystem.h" // DEPRECATED
+#include "filesystems/CBM/FileSystem.h"
 #include "utl/io/Files.h"
 #include "utl/support/Strings.h"
 
@@ -38,6 +39,43 @@ bool
 P00File::isCompatible(const Buffer<u8> &buf)
 {
     return isCompatible(buf.ptr, buf.size);
+}
+
+void
+P00File::init(const FileSystem &fs)
+{
+    Buffer<u8> buf;
+    
+    // Read directory
+    auto dir = fs.readDir();
+
+    // Only proceed if the requested file exists
+    if (dir.size() == 0) throw AppError(Fault::FS_HAS_NO_FILES);
+
+    // Get the first item
+    fs.extractData(dir[0], buf);
+    
+    // Create new archive
+    isize p00Size = buf.size + 8 + 17 + 1;
+    init(p00Size);
+
+    // Write magic bytes (8 bytes)
+    u8 *p = data.ptr;
+    strcpy((char *)p, "C64File");
+    p += 8;
+    
+    // Write name in PET format (16 bytes)
+    dir[0].getName().write(p);
+    p += 16;
+    
+    // Always 0 (1 byte)
+    *p++ = 0;
+
+    // Record size (applies to REL files, only) (1 byte)
+    *p++ = 0;
+
+    // Add data
+    memcpy(p, buf.ptr, buf.size);
 }
 
 void

@@ -34,11 +34,13 @@ public:
     P00File(const fs::path &path) { init(path); }
     P00File(const u8 *buf, isize len) { init(buf, len); }
     P00File(const class OldFileSystem &fs) { init(fs); }
-    
+    P00File(const class FileSystem &fs) { init(fs); }
+
 private:
     
     using AnyFile::init;
-    void init(const OldFileSystem &fs);
+    [[deprecated]] void init(const OldFileSystem &fs);
+    void init(const FileSystem &fs);
 
     
     //
