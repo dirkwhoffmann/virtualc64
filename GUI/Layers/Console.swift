@@ -188,11 +188,10 @@ class Console: Layer {
         
     }
     
-    func runScript(url: URL) {
+    func runScript(url: URL) throws {
 
         open()
-
-        emu?.retroShell.executeScript(url)
+        try emu?.retroShell.executeScript(url: url)
         isDirty = true
     }
     

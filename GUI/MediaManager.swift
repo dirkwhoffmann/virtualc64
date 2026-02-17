@@ -256,7 +256,7 @@ class MediaManager {
     func runScript(url: URL, options: [Option] = []) throws {
         
         debug(.media, "url = \(url)")
-        try emu?.retroShell.executeScript(url)
+        try emu?.retroShell.executeScript(url: url)
     }
     
         

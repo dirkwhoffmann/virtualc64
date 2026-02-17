@@ -303,6 +303,18 @@ extension OldFileSystemProxy {
 }
 
 @MainActor
+extension RetroShellProxy {
+  
+    func executeScript(url: URL) throws {
+        
+        let exc = ExceptionWrapper()
+        executeScript(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+
+}
+
+@MainActor
 extension RemoteManagerProxy {
 
     var icon: NSImage? {

@@ -252,7 +252,7 @@ class MyDocument: NSDocument {
 
     func processScriptFile(url: URL, force: Bool = false) throws {
 
-        console.runScript(url: url)
+        try console.runScript(url: url)
     }
 
     /*

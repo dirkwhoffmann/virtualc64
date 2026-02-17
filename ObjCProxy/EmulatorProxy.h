@@ -672,7 +672,7 @@ struct GuardInfo {
 - (void)pressSpecialKey:(RSKey)key;
 - (void)pressSpecialKey:(RSKey)key shift:(BOOL)shift;
 // - (void)executeScript:(MediaFileProxy *)file __attribute__((deprecated("MediaFile will go away.")));
-- (void)executeScript:(NSURL *)url;
+- (void)executeScript:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)executeString:(NSString *)string;
 
 @end

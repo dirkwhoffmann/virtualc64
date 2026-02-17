@@ -487,14 +487,14 @@ Drive::writeToFile(const fs::path& path) const
     disk->writeToFile(path);
 }
 
-/*
 void
-FloppyDrive::writeToFile(const fs::path& path, ImageFormat fmt) const
+Drive::writeToFile(const fs::path& path, ImageFormat fmt) const
 {
     if (!hasDisk()) throw DeviceError(DeviceError::DSK_MISSING);
     disk->writeToFile(path, fmt);
 }
 
+/*
 std::unique_ptr<FloppyDiskImage>
 FloppyDrive::exportDisk(ImageFormat fmt) const
 {

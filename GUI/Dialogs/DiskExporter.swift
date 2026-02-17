@@ -37,15 +37,18 @@ class DiskExporter: DialogController {
     var drive: DriveProxy!
 
     // Results of the different decoders
+    /*
     var d64: MediaFileProxy?
     var t64: MediaFileProxy?
     var prg: MediaFileProxy?
     var vol: OldFileSystemProxy?
-
+    */
+    
     func showSheet(diskDrive nr: Int) {
 
         guard let emu = emu else { return }
 
+        /*
         drive = emu.drive(nr)
 
         if drive.info.hasDisk {
@@ -68,6 +71,7 @@ class DiskExporter: DialogController {
                 }
             }
         }
+        */
 
         super.showAsSheet()
     }
@@ -83,10 +87,16 @@ class DiskExporter: DialogController {
 
         formatPopup.autoenablesItems = false
         formatPopup.removeAllItems()
+        addItem("D64", tag: Format.d64, enabled: true)
+        addItem("T64", tag: Format.t64, enabled: true)
+        addItem("PRG", tag: Format.prg, enabled: true)
+        addItem("Folder", tag: Format.vol, enabled: true)
+        /*
         addItem("D64", tag: Format.d64, enabled: d64 != nil)
         addItem("T64", tag: Format.t64, enabled: t64 != nil)
         addItem("PRG", tag: Format.prg, enabled: prg != nil)
         addItem("Folder", tag: Format.vol, enabled: vol != nil)
+        */
     }
 
     override func dialogWillShow() {
@@ -120,11 +130,12 @@ class DiskExporter: DialogController {
 
         switch formatPopup.selectedTag() {
 
-        case Format.d64: icon.image = d64?.icon(protected: wp)
-        case Format.t64: icon.image = t64?.icon(protected: wp)
-        case Format.prg: icon.image = prg?.icon(protected: wp)
-        case Format.vol: icon.image = NSImage(named: "NSFolder")
-
+        case Format.d64, Format.t64, Format.prg:
+            icon.image = NSImage(named: "disk2" + (wp ? "_protected" : ""))
+            
+        case Format.vol:
+            icon.image = NSImage(named: "NSFolder")!
+            
         default:
             fatalError()
         }
@@ -141,9 +152,9 @@ class DiskExporter: DialogController {
 
     func updateInfo() {
 
-        info1.stringValue = vol?.layoutInfo ?? ""
-        info2.stringValue = vol?.dosInfo ?? "No compatible file system"
-        info3.stringValue = vol?.usageInfo ?? ""
+        info1.stringValue = "" // vol?.layoutInfo ?? ""
+        info2.stringValue = "" // vol?.dosInfo ?? "No compatible file system"
+        info3.stringValue = "" // vol?.usageInfo ?? ""
     }
 
     //
@@ -223,22 +234,22 @@ class DiskExporter: DialogController {
             case Format.d64:
 
                 debug(.media, "Exporting D64")
-                try mm.export(file: d64!, to: url)
+                try drive.write(toFile: url) // mm.export(file: d64!, to: url)
 
             case Format.t64:
 
                 debug(.media, "Exporting T64")
-                try mm.export(file: t64!, to: url)
+                try drive.write(toFile: url) // mm.export(file: t64!, to: url)
 
             case Format.prg:
 
                 debug(.media, "Exporting PRG")
-                try mm.export(file: prg!, to: url)
+                try drive.write(toFile: url) // mm.export(file: prg!, to: url)
 
             case Format.vol:
 
                 debug(.media, "Exporting file system")
-                try vol!.export(url: url)
+                // try vol!.export(url: url)
                 rememberUrl = false
 
             default:
