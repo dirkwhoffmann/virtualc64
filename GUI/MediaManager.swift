@@ -358,45 +358,6 @@ class MediaManager {
         emu?.put(.DSK_MODIFIED, value: id)
     }
     
-    /*
-    func export(fs: OldFileSystemProxy, to url: URL) throws {
-        
-        func showAlert(format: String) {
-            
-            let msg1 = "Only the first file will be exported."
-            let msg2 = "The \(format) format is designed to store a single file."
-            
-            showMultipleFilesAlert(msg1: msg1, msg2: msg2)
-        }
-        
-        debug(.media, "fs: \(fs) to: \(url)")
-        
-        var file: MediaFileProxy?
-        
-        switch url.c64FileType {
-            
-        case .D64:
-            file = try MediaFileProxy.make(with: fs, type: .D64)
-            
-        case .T64:
-            file = try MediaFileProxy.make(with: fs, type: .T64)
-            
-        case .PRG:
-            if fs.numFiles > 1 { showAlert(format: "PRG") }
-            file = try MediaFileProxy.make(with: fs, type: .PRG)
-            
-        case .P00:
-            if fs.numFiles > 1 { showAlert(format: "P00") }
-            file = try MediaFileProxy.make(with: fs, type: .P00)
-            
-        default:
-            throw AppError(what: "File type mismatch.")
-        }
-        
-        try export(file: file!, to: url)
-    }
-    */
-    
     func export(file: MediaFileProxy, to url: URL) throws {
         
         try file.writeToFile(url: url)

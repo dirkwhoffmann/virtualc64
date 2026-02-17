@@ -100,35 +100,9 @@ extension MediaFileProxy {
         if let _ = exc.fault { throw AppError(exc) }
         return obj!
     }
-
-    static func make(with fs: OldFileSystemProxy, type: vc64.FileType) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(withFileSystem: fs, type: type, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-        return obj!
-    }
 }
 
-@MainActor
-extension OldFileSystemProxy {
 
-    static func make(with file: MediaFileProxy) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(withMediaFile: file, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-        return obj!
-    }
-
-    static func make(with drive: DriveProxy) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(withDrive: drive, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-        return obj!
-    }
-}
 
 //
 // Exception passing
@@ -206,20 +180,6 @@ extension EmulatorProxy {
         flashFile(url, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
-    
-    func flash(_ proxy: MediaFileProxy) throws {
-
-        let exc = ExceptionWrapper()
-        flash(proxy, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-    }
-    
-    func flash(_ proxy: OldFileSystemProxy, item: Int) throws {
-
-        let exc = ExceptionWrapper()
-        flash(proxy, item: item, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-    }
 }
 
 @MainActor
@@ -287,17 +247,6 @@ extension MediaFileProxy {
         
         let exc = ExceptionWrapper()
         write(toFile: url.path, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-    }
-}
-
-@MainActor
-extension OldFileSystemProxy {
-        
-    func export(url: URL) throws {
-            
-        let exc = ExceptionWrapper()
-        export(url.path, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
 }
@@ -466,36 +415,3 @@ extension MediaFileProxy {
         return NSImage(named: name)!
     }
 }
-
-@MainActor
-extension OldFileSystemProxy {
-
-    func icon(protected: Bool) -> NSImage {
-                        
-        let name = "disk2" + (protected ? "_protected" : "")
-        return NSImage(named: name)!
-    }
-
-    var layoutInfo: String {
-
-        return "Single sided, single density disk with \(numTracks) tracks"
-    }
-
-    var dosInfo: String {
-
-        return dos.description
-    }
-
-    var usageInfo: String {
-
-        return "\(numBlocks) blocks, \(usedBlocks) blocks used"
-    }
-
-    var filesInfo: String {
-        
-        let num = numFiles
-        let files = num == 1 ? "file" : "files"
-        return "\(num) \(files)"
-    }
-}
-    

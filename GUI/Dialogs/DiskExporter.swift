@@ -35,44 +35,10 @@ class DiskExporter: DialogController {
 
     // Reference to the export drive
     var drive: DriveProxy!
-
-    // Results of the different decoders
-    /*
-    var d64: MediaFileProxy?
-    var t64: MediaFileProxy?
-    var prg: MediaFileProxy?
-    var vol: OldFileSystemProxy?
-    */
     
     func showSheet(diskDrive nr: Int) {
 
-        guard let emu = emu else { return }
-
-        /*
-        drive = emu.drive(nr)
-
-        if drive.info.hasDisk {
-
-            // Try to extract the file system
-            vol = try? OldFileSystemProxy.make(with: drive)
-
-            if vol != nil {
-
-                // Try to run the D64 encoder
-                d64 = try? MediaFileProxy.make(with: vol!, type: .D64)
-
-                // Try to run the T64 encoder
-                t64 = try? MediaFileProxy.make(with: vol!, type: .T64)
-
-                if vol!.numFiles > 0 {
-
-                    // Try to run the PRG encoder
-                    prg = try? MediaFileProxy.make(with: vol!, type: .PRG)
-                }
-            }
-        }
-        */
-
+        guard emu != nil else { return }
         super.showAsSheet()
     }
 
