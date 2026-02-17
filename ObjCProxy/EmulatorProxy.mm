@@ -958,7 +958,7 @@ NSString *EventSlotName(EventSlot slot)
     return [NSString stringWithUTF8String:s.c_str()];
 }
 
-- (SectorInfo)sectorInfo:(Halftrack)ht sector:(Sector)s
+- (SectorLayout)sectorInfo:(Halftrack)ht sector:(Sector)s
 {
     return [self analyzer]->sectorLayout(ht, s);
 }

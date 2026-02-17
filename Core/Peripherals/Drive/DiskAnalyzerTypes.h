@@ -23,19 +23,19 @@ typedef struct
     isize dataBegin;
     isize dataEnd;
 }
-SectorInfo;
+SectorLayout;
 
 typedef struct
 {
     isize length;
-    SectorInfo sectorInfo[22];
+    SectorLayout sectorLayout[22];
 }
-TrackInfo;
+TrackLayout;
 
 typedef struct
 {
-    TrackInfo trackInfo[85];
+    TrackLayout trackLayout[85];
 }
-DiskInfo;
+DiskLayout;
 
 }

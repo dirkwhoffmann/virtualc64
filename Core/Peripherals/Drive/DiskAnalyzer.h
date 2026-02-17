@@ -27,7 +27,7 @@ class DiskAnalyzer final : public CoreObject {
     u8 *data[85];
 
     // Result of the analysis
-    DiskInfo diskInfo = { };
+    DiskLayout diskLayout = { };
     
     // Error log (one for each halftrack)
     string logbook[85];
@@ -89,15 +89,15 @@ private:
     void analyzeDisk();
     
     // Analyzes a certain track or halftrack
-    TrackInfo analyzeTrack(Track t);
-    TrackInfo analyzeHalftrack(Halftrack ht);
+    TrackLayout analyzeTrack(Track t);
+    TrackLayout analyzeHalftrack(Halftrack ht);
 
     // Analyzes all sectors of a certain track
-    void analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo);
+    void analyzeSectorBlocks(Halftrack ht, TrackLayout &trackInfo);
 
     // Analyzes a single sector header block or sector data block
-    void analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &trackInfo);
-    void analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trackInfo);
+    void analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackLayout &trackInfo);
+    void analyzeSectorDataBlock(Halftrack ht, isize offset, TrackLayout &trackInfo);
 
     // Writes an error message into the error log
     void finding(Halftrack ht, isize begin, isize length, const char *fmt, ...);
@@ -105,7 +105,7 @@ private:
 public:
     
     // Returns the layout of a certain track
-    const SectorInfo &sectorLayout(Halftrack ht, Sector nr);
+    const SectorLayout &sectorLayout(Halftrack ht, Sector nr);
     
     // Returns the logbook for a certain track
     const string &getLogbook(Halftrack ht) { return logbook[ht]; }

@@ -589,7 +589,7 @@ struct GuardInfo {
 - (NSInteger)lengthOfTrack:(Track)t;
 - (NSInteger)lengthOfHalftrack:(Halftrack)ht;
 
-- (SectorInfo)sectorInfo:(Halftrack)ht sector:(Sector)s;
+- (SectorLayout)sectorInfo:(Halftrack)ht sector:(Sector)s;
 - (const char *)diskNameAsString;
 - (const char *)trackBitsAsString:(Halftrack)ht;
 - (const char *)sectorHeaderBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;

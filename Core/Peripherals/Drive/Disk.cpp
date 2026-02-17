@@ -433,7 +433,7 @@ Disk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
     for (Sector s = 0; s < numSectors; s++) {
         
         logdebug(GCR_DEBUG, "   Decoding sector %ld\n", s);
-        SectorInfo info = analyzer.sectorLayout(ht, s);
+        SectorLayout info = analyzer.sectorLayout(ht, s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(ht, info.dataBegin, dest + (dest ? numBytes : 0), analyzer);
         } else {

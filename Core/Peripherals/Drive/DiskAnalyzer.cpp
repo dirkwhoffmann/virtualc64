@@ -98,21 +98,21 @@ DiskAnalyzer::decodeGcr(Halftrack ht, isize offset)
 void DiskAnalyzer::analyzeDisk()
 {
     for (isize ht = 1; ht < 85; ht++) {
-        diskInfo.trackInfo[ht] = analyzeHalftrack(ht);
+        diskLayout.trackLayout[ht] = analyzeHalftrack(ht);
     }
 }
 
-TrackInfo
+TrackLayout
 DiskAnalyzer::analyzeTrack(Track t)
 {
     assert(isTrackNumber(t));
     return analyzeHalftrack(2 * t - 1);
 }
 
-TrackInfo
+TrackLayout
 DiskAnalyzer::analyzeHalftrack(Halftrack ht)
 {
-    TrackInfo trackInfo = {};
+    TrackLayout trackInfo = {};
     trackInfo.length = lengthOfHalftrack(ht);
 
     assert(errorLog[ht].empty());
@@ -169,10 +169,10 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
                 sector = decodeGcr(ht, i + 20);
 
                 if (isSectorNumber(sector)) {
-                    if (trackInfo.sectorInfo[sector].headerEnd != 0)
+                    if (trackInfo.sectorLayout[sector].headerEnd != 0)
                         break; // We've seen this sector already, so we are done
-                    trackInfo.sectorInfo[sector].headerBegin = i;
-                    trackInfo.sectorInfo[sector].headerEnd = i + headerBlockSize;
+                    trackInfo.sectorLayout[sector].headerBegin = i;
+                    trackInfo.sectorLayout[sector].headerEnd = i + headerBlockSize;
                 } else {
                     finding(ht, i + 20, 10, "Header block at index %d contains an invalid sector number (%d).", i, sector);
                 }
@@ -180,8 +180,8 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
             } else if (sync[i] == 0x07) {
                 
                 if (isSectorNumber(sector)) {
-                    trackInfo.sectorInfo[sector].dataBegin = i;
-                    trackInfo.sectorInfo[sector].dataEnd = i + dataBlockSize;
+                    trackInfo.sectorLayout[sector].dataBegin = i;
+                    trackInfo.sectorLayout[sector].dataEnd = i + dataBlockSize;
                 } else {
                     finding(ht, i + 20, 10, "Data block at index %d contains an invalid sector number (%d).", i, sector);
                 }
@@ -194,13 +194,13 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
 }
 
 void
-DiskAnalyzer::analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo)
+DiskAnalyzer::analyzeSectorBlocks(Halftrack ht, TrackLayout &trackInfo)
 {
     Track t = (ht + 1) / 2;
     
     for (Sector s = 0; s < Disk::trackDefaults[t].sectors; s++) {
         
-        const SectorInfo &info = trackInfo.sectorInfo[s];
+        const SectorLayout &info = trackInfo.sectorLayout[s];
         bool hasHeader = info.headerBegin != info.headerEnd;
         bool hasData = info.dataBegin != info.dataEnd;
 
@@ -224,7 +224,7 @@ DiskAnalyzer::analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo)
 }
 
 void
-DiskAnalyzer::analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &trackInfo)
+DiskAnalyzer::analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackLayout &trackInfo)
 {
     // The first byte must be 0x08 (indicating a header block)
     assert(decodeGcr(ht, offset) == 0x08);
@@ -243,7 +243,7 @@ DiskAnalyzer::analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &tr
 }
 
 void
-DiskAnalyzer::analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trackInfo)
+DiskAnalyzer::analyzeSectorDataBlock(Halftrack ht, isize offset, TrackLayout &trackInfo)
 {
     // The first byte must be 0x07 (indicating a header block)
     assert(decodeGcr(ht, offset) == 0x07);
@@ -259,13 +259,13 @@ DiskAnalyzer::analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trac
     }
 }
 
-const SectorInfo &
+const SectorLayout &
 DiskAnalyzer::sectorLayout(Halftrack ht, Sector nr) {
 
     assert(isHalftrackNumber(ht));
     assert(isSectorNumber(nr));
     
-    return diskInfo.trackInfo[ht].sectorInfo[nr];
+    return diskLayout.trackLayout[ht].sectorLayout[nr];
 }
 
 void
@@ -289,7 +289,7 @@ DiskAnalyzer::finding(Halftrack ht, isize begin, isize length, const char *fmt, 
 const char *
 DiskAnalyzer::diskNameAsString()
 {
-    auto &info = diskInfo.trackInfo[18].sectorInfo[0];
+    auto &info = diskLayout.trackLayout[18].sectorLayout[0];
     
     isize i;
     isize offset = info.dataBegin + (0x90 * 10);
@@ -329,7 +329,7 @@ DiskAnalyzer::sectorHeaderBytesAsString(Halftrack ht, Sector nr, bool hex)
     assert(isHalftrackNumber(ht));
     assert(isSectorNumber(nr));
     
-    auto info = diskInfo.trackInfo[ht].sectorInfo[nr];
+    auto info = diskLayout.trackLayout[ht].sectorLayout[nr];
     
     isize begin = info.headerBegin;
     isize end = info.headerEnd;
@@ -342,7 +342,7 @@ DiskAnalyzer::sectorDataBytesAsString(Halftrack ht, Sector nr, bool hex)
     assert(isHalftrackNumber(ht));
     assert(isSectorNumber(nr));
     
-    auto info = diskInfo.trackInfo[ht].sectorInfo[nr];
+    auto info = diskLayout.trackLayout[ht].sectorLayout[nr];
 
     isize begin = info.dataBegin;
     isize end = info.dataEnd;
