@@ -1174,6 +1174,7 @@ struct C64API : public API {
     /** @brief  Flashes a file into memory
      */
     [[deprecated]] void flash(const MediaFile &file);
+    void flash(const fs::path &path, isize item = 0);
     void flashNew(const AnyFile &file);
     
     /** @brief  Flashes a file from a collection into memory

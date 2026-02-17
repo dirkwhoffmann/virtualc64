@@ -101,7 +101,7 @@ extension MediaFileProxy {
         return obj!
     }
 
-    static func make(with fs: FileSystemProxy, type: vc64.FileType) throws -> Self {
+    static func make(with fs: OldFileSystemProxy, type: vc64.FileType) throws -> Self {
 
         let exc = ExceptionWrapper()
         let obj = make(withFileSystem: fs, type: type, exception: exc)
@@ -111,7 +111,7 @@ extension MediaFileProxy {
 }
 
 @MainActor
-extension FileSystemProxy {
+extension OldFileSystemProxy {
 
     static func make(with file: MediaFileProxy) throws -> Self {
 
@@ -199,7 +199,14 @@ extension EmulatorProxy {
         save(type, url: url, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
-     
+
+    func flash(url: URL) throws {
+
+        let exc = ExceptionWrapper()
+        flashFile(url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+    
     func flash(_ proxy: MediaFileProxy) throws {
 
         let exc = ExceptionWrapper()
@@ -207,7 +214,7 @@ extension EmulatorProxy {
         if let _ = exc.fault { throw AppError(exc) }
     }
     
-    func flash(_ proxy: FileSystemProxy, item: Int) throws {
+    func flash(_ proxy: OldFileSystemProxy, item: Int) throws {
 
         let exc = ExceptionWrapper()
         flash(proxy, item: item, exception: exc)
@@ -278,7 +285,7 @@ extension MediaFileProxy {
 }
 
 @MainActor
-extension FileSystemProxy {
+extension OldFileSystemProxy {
         
     func export(url: URL) throws {
             
@@ -442,7 +449,7 @@ extension MediaFileProxy {
 }
 
 @MainActor
-extension FileSystemProxy {
+extension OldFileSystemProxy {
 
     func icon(protected: Bool) -> NSImage {
                         

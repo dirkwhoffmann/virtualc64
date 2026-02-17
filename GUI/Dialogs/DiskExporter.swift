@@ -40,7 +40,7 @@ class DiskExporter: DialogController {
     var d64: MediaFileProxy?
     var t64: MediaFileProxy?
     var prg: MediaFileProxy?
-    var vol: FileSystemProxy?
+    var vol: OldFileSystemProxy?
 
     func showSheet(diskDrive nr: Int) {
 
@@ -51,7 +51,7 @@ class DiskExporter: DialogController {
         if drive.info.hasDisk {
 
             // Try to extract the file system
-            vol = try? FileSystemProxy.make(with: drive)
+            vol = try? OldFileSystemProxy.make(with: drive)
 
             if vol != nil {
 

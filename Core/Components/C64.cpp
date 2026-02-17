@@ -2037,7 +2037,7 @@ C64::installOpenRom(RomType type)
 }
 
 void
-C64::flash(const fs::path &path)
+C64::flash(const fs::path &path, isize item)
 {
     if (const auto *file = (AnyFile *)AnyFile::make(path)) {
         
@@ -2057,7 +2057,7 @@ C64::flash(const fs::path &path)
             case FileType::PRG:
             case FileType::FOLDER:
                 
-                flashNew(*file, 0);
+                flashNew(*file, item);
                 break;
                 
             default:

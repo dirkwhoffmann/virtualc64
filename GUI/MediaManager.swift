@@ -238,6 +238,21 @@ class MediaManager {
     }
 
     //
+    // Files
+    //
+    
+    func flashFile(url: URL, options: [Option] = []) throws {
+        
+        debug(.media, "url = \(url)")
+        
+        guard let emu = emu else { return }
+        try emu.flash(url: url)
+        
+        mycontroller.keyboard.type("run\n")
+        mycontroller.renderer.rotateLeft()
+    }
+    
+    //
     // Floppy disks
     //
 
@@ -262,8 +277,6 @@ class MediaManager {
         }
         */
     }
-    
-    
     
     //
     // Tapes
@@ -442,7 +455,7 @@ class MediaManager {
             case .PRG, .P00, .T64:
                 
                 debug(.media, "PRG, P00, T64")
-                if let volume = try? FileSystemProxy.make(with: proxy) {
+                if let volume = try? OldFileSystemProxy.make(with: proxy) {
                     
                     try? emu.flash(volume, item: 0)
                     mycontroller.keyboard.type("run\n")
@@ -478,14 +491,14 @@ class MediaManager {
             
         } else {
             
-            let fs = try FileSystemProxy.make(with: drive)
+            let fs = try OldFileSystemProxy.make(with: drive)
             try export(fs: fs, to: url)
         }
         
         emu?.put(.DSK_MODIFIED, value: id)
     }
     
-    func export(fs: FileSystemProxy, to url: URL) throws {
+    func export(fs: OldFileSystemProxy, to url: URL) throws {
         
         func showAlert(format: String) {
             

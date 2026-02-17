@@ -637,6 +637,14 @@ C64API::installOpenRoms()
 }
 
 void
+C64API::flash(const fs::path &path, isize item)
+{
+    VC64_PUBLIC_SUSPEND
+    c64->flash(path, item);
+    emu->markAsDirty();
+}
+
+void
 C64API::flash(const MediaFile &file)
 {
     VC64_PUBLIC_SUSPEND

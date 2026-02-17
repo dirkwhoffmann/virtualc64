@@ -122,7 +122,7 @@ extension DiskCreator: NSFilePromiseProviderDelegate {
 
     func export(url: URL) {
 
-        if let fs = FileSystemProxy.make(with: .SS_SD, dosType: dos) {
+        if let fs = OldFileSystemProxy.make(with: .SS_SD, dosType: dos) {
 
             do {
                 fs.name = name

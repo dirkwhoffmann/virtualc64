@@ -761,7 +761,7 @@ public:
     //
 
     // Flashes a single file into memory
-    void flash(const fs::path &path);
+    void flash(const fs::path &path, isize item = 0);
     void flashNew(const AnyFile &file);
     void flashNew(const AnyFile &file, isize item);
     [[deprecated]] void flash(const MediaFile &file);

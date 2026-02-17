@@ -26,7 +26,7 @@ using namespace vc64;
 @class DmaDebuggerProxy;
 @class DriveProxy;
 @class ExpansionPortProxy;
-@class FileSystemProxy;
+@class OldFileSystemProxy;
 @class SerialPortProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
@@ -235,8 +235,9 @@ NSString *EventSlotName(EventSlot slot);
 - (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)deleteRom:(RomType)type;
 
+- (void)flashFile:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)flash:(MediaFileProxy *)container exception:(ExceptionWrapper *)ex __attribute__((deprecated("MediaFile will go away.")));
-- (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
+- (void)flash:(OldFileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -560,7 +561,7 @@ struct GuardInfo {
 - (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
 - (void)insert:(NSURL *)url protected:(BOOL)wp exception:(ExceptionWrapper *)ex;
 - (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp __attribute__((deprecated("MediaFile will go away.")));
-- (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp;
+- (void)insertFileSystem:(OldFileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
 
 @end
@@ -729,7 +730,7 @@ struct GuardInfo {
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;
 // + (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c;
 + (instancetype)makeWithDrive:(DriveProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(OldFileSystemProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
 
 @property (readonly) FileType type;
 @property (readonly) u64 fnv;
@@ -749,7 +750,7 @@ struct GuardInfo {
 // FileSystem
 //
 
-@interface FileSystemProxy : Proxy { }
+@interface OldFileSystemProxy : Proxy { }
 
 + (instancetype)makeWithDrive:(DriveProxy *)drive exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType;

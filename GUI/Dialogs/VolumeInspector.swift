@@ -60,7 +60,7 @@ class VolumeInspector: DialogController {
     var myDocument: MyDocument { return parent.mydocument! }
 
     // The analyzed file system
-    var vol: FileSystemProxy!
+    var vol: OldFileSystemProxy!
 
     // Result of the consistency checker
     var errorReport: vc64.FSErrorReport?
@@ -147,13 +147,13 @@ class VolumeInspector: DialogController {
         if let emu = emu {
             
             let drive = emu.drive(nr)
-            vol = try FileSystemProxy.make(with: drive)
+            vol = try OldFileSystemProxy.make(with: drive)
             
             showAsWindow()
         }
     }
 
-    func showSheet(fs: FileSystemProxy) {
+    func showSheet(fs: OldFileSystemProxy) {
 
         vol = fs
         showAsWindow()

@@ -11,10 +11,12 @@
 #import "VirtualC64.h"
 #import "DiskAnalyzer.h"
 #import "FileSystems/OldFileSystem.h"
+#import "FileSystems/CBM/FileSystem.h"
 #import "Texture.h"
 #import "MediaError.h"
 
 using namespace vc64;
+using retro::vault::cbm::FileSystem;
 
 NSString *EventSlotName(EventSlot slot)
 {
@@ -1020,7 +1022,7 @@ NSString *EventSlotName(EventSlot slot)
     [self drive]->insertMedia(*(MediaFile *)proxy->obj, wp);
 }
 
-- (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp
+- (void)insertFileSystem:(OldFileSystemProxy *)proxy protected:(BOOL)wp
 {
     [self drive]->insertFileSystem(*(OldFileSystem *)proxy->obj, wp);
 }
@@ -1334,7 +1336,7 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; return nil; }
 }
 
-+ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy
++ (instancetype)makeWithFileSystem:(OldFileSystemProxy *)proxy
                               type:(FileType)type
                          exception:(ExceptionWrapper *)ex
 {
@@ -1554,7 +1556,7 @@ NSString *EventSlotName(EventSlot slot)
 // FileSystem
 //
 
-@implementation FileSystemProxy
+@implementation OldFileSystemProxy
 
 - (OldFileSystem *)fs
 {
@@ -2395,13 +2397,19 @@ NSString *EventSlotName(EventSlot slot)
     [self emu]->c64.deleteRom(type);
 }
 
+- (void)flashFile:(NSURL *)url exception:(ExceptionWrapper *)ex
+{
+    try { [self emu]->c64.flash(fs::path(url.fileSystemRepresentation)); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
+}
+
 - (void)flash:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.flash(*(MediaFile *)proxy->obj); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
+- (void)flash:(OldFileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.flash(*(OldFileSystem *)proxy->obj, (unsigned)nr); }
     catch (std::exception &stdex) { [ex save:stdex]; }
