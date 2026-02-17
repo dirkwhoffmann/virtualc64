@@ -706,11 +706,7 @@ extension MyController: NSMenuItemValidation {
                 if result == .OK, let url = self.myOpenPanel.url {
                     
                     do {
-                        try self.mm.mount(url: url,
-                                          allowedTypes: [ .D64, .T64, .PRG, .P00, .G64 ],
-                                          drive: id,
-                                          options: [.force, .remember])
-                        
+                        try self.mm.insertDisk(url: url, drive: id, options: [.force, .remember])
                     } catch {
                         self.showAlert(.cantInsert, error: error, async: true)
                     }
@@ -729,12 +725,13 @@ extension MyController: NSMenuItemValidation {
     
     func insertRecentDiskAction(drive: Int, slot: Int) {
         
-        let types: [vc64.FileType] = [ .D64, .T64, .PRG, .P00, .G64 ]
+        // let types: [vc64.FileType] = [ .D64, .T64, .PRG, .P00, .G64 ]
         
         if let url = MediaManager.getRecentlyInsertedDiskURL(slot) {
             
             do {
-                try self.mm.mount(url: url, allowedTypes: types, drive: drive)
+                try self.mm.insertDisk(url: url, drive: drive, options: [.remember])
+                // try self.mm.mount(url: url, allowedTypes: types, drive: drive)
             } catch {
                 self.showAlert(.cantInsert, error: error)
             }
@@ -907,7 +904,7 @@ extension MyController: NSMenuItemValidation {
     func insertTapeAction(from url: URL) {
         
         do {
-            try mm.mount(url: url, allowedTypes: [ .TAP ])
+            try mm.insertTape(url: url)
         } catch {
             self.showAlert(.cantInsertTape, error: error)
         }
@@ -992,7 +989,7 @@ extension MyController: NSMenuItemValidation {
         if let url = MediaManager.getRecentlyAtachedCartridgeURL(slot) {
             
             do {
-                try self.mm.mount(url: url, allowedTypes: [ .CRT ])
+                try self.mm.attachCartridge(url: url)
             } catch {
                 self.showAlert(.cantAttach, error: error, async: true)
             }

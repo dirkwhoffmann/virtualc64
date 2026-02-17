@@ -121,10 +121,8 @@ class MyDocument: NSDocument {
         debug(.media)
 
         do {
-            try mm.mount(url: url, allowedTypes: [.WORKSPACE])
-
+            try mm.loadWorkspace(url: url)
         } catch let error as AppError {
-
             throw NSError(error: error)
         }
     }

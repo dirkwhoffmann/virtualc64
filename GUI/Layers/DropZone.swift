@@ -197,14 +197,18 @@ class DropZone: Layer {
             } else {
                 
                 switch type {
-                    
-                case .WORKSPACE, .SNAPSHOT:
 
-                    try mm.mount(url: url, allowedTypes: [type])
+                case .WORKSPACE:
+
+                    try mydocument.processWorkspaceFile(url: url)
+
+                case .SNAPSHOT:
+
+                    try mm.loadSnapshot(url: url)
                     
                 case .SCRIPT:
                     
-                    try mm.mount(url: url, allowedTypes: [type])
+                    try mm.runScript(url: url)
                     mm.console.open()
                     
                 default:

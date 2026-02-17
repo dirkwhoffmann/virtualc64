@@ -337,7 +337,7 @@ extension MyController {
                 
                 if let url = mydocument.launchURL {
                     
-                    try? mm.mount(url: url)
+                    mm.process(url: url)
                     mydocument.launchURL = nil
                 }
             }
