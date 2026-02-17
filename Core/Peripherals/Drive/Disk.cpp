@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "C64.h"
+#include "Codecs.h"
 #include "Images/ImageError.h"
 #include "utl/abilities/Hashable.h"
 #include <stdarg.h>
@@ -755,36 +756,25 @@ Disk::encodeSector(const OldFileSystem &fs, Track t, Sector s, HeadPos start, is
 }
 
 void
-Disk::writeToFile(const fs::path& path) const
+Disk::writeToFile(const fs::path& path)
 {
     auto ext = utl::uppercased(path.extension().string());
 
-    /*
-    if (ext == ".ADF")  writeToFile(path, ImageFormat::ADF);
-    if (ext == ".EADF") writeToFile(path, ImageFormat::EADF);
-    if (ext == ".IMG")  writeToFile(path, ImageFormat::IMG);
-    if (ext == ".IMA")  writeToFile(path, ImageFormat::IMG);
-    if (ext == ".ST")   writeToFile(path, ImageFormat::ST);
-    */
+    if (ext == ".D64") writeToFile(path, ImageFormat::D64);
     
     throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
 }
 
-/*
 void
-Disk::writeToFile(const fs::path& path, ImageFormat fmt) const
+Disk::writeToFile(const fs::path& path, ImageFormat fmt)
 {
     switch (fmt) {
 
-        case ImageFormat::ADF:  Codec::makeADF(*this)->writeToFile(path); break;
-        case ImageFormat::EADF: Codec::makeEADF(*this)->writeToFile(path); break;
-        case ImageFormat::IMG:  Codec::makeIMG(*this)->writeToFile(path); break;
-        case ImageFormat::ST:   Codec::makeST(*this)->writeToFile(path); break;
+        case ImageFormat::D64: Codec::makeD64(*this)->writeToFile(path); break;
 
         default:
             throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
     }
 }
-*/
 
 }

@@ -564,6 +564,8 @@ struct GuardInfo {
 - (void)insertFileSystem:(OldFileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
 
+- (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;
+
 @end
 
 

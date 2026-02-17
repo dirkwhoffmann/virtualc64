@@ -1037,6 +1037,12 @@ NSString *EventSlotName(EventSlot slot)
     [self drive]->ejectDisk();
 }
 
+- (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex
+{
+    try { [self drive]->writeToFile(fs::path(path.fileSystemRepresentation)); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
+}
+
 @end
 
 

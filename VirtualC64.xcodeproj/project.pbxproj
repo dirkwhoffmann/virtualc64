@@ -614,6 +614,8 @@
 		50AC28672F446B2D0016265E /* u_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 50AC28462F446B2D0016265E /* u_init.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50AC28682F446B2D0016265E /* pfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 50AC283E2F446B2D0016265E /* pfile.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50AC28692F446B2D0016265E /* u_medium.c in Sources */ = {isa = PBXBuildFile; fileRef = 50AC28482F446B2D0016265E /* u_medium.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		50AC286D2F44AA050016265E /* Codecs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC286C2F44AA030016265E /* Codecs.cpp */; };
+		50AC286E2F44AA050016265E /* Codecs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC286C2F44AA030016265E /* Codecs.cpp */; };
 		50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerPort.cpp */; };
 		50AE19392632B787005A5898 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE19372632B787005A5898 /* Script.cpp */; };
 		50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
@@ -1462,6 +1464,8 @@
 		50AC284C2F446B2D0016265E /* u_rle.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = u_rle.c; sourceTree = "<group>"; };
 		50AC284D2F446B2D0016265E /* xdms.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xdms.c; sourceTree = "<group>"; };
 		50AC284E2F446B2D0016265E /* xdmsconfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xdmsconfig.h; sourceTree = "<group>"; };
+		50AC286B2F44A9FB0016265E /* Codecs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Codecs.h; sourceTree = "<group>"; };
+		50AC286C2F44AA030016265E /* Codecs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Codecs.cpp; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPort.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPort.h; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
@@ -2276,6 +2280,8 @@
 				50AB70772721B92D004ABB2B /* DiskAnalyzerTypes.h */,
 				50AB70752721B8EE004ABB2B /* DiskAnalyzer.h */,
 				50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */,
+				50AC286B2F44A9FB0016265E /* Codecs.h */,
+				50AC286C2F44AA030016265E /* Codecs.cpp */,
 			);
 			path = Drive;
 			sourceTree = "<group>";
@@ -3430,6 +3436,7 @@
 				50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */,
 				50AC25BA2F4221780016265E /* debug.cpp in Sources */,
+				50AC286E2F44AA050016265E /* Codecs.cpp in Sources */,
 				50AC25BF2F4257980016265E /* CoreError.cpp in Sources */,
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
 				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
@@ -4039,6 +4046,7 @@
 				505F45562E96953F00418105 /* SettingsOutlineView.swift in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
+				50AC286D2F44AA050016265E /* Codecs.cpp in Sources */,
 				500C1C792965E7D300071AF3 /* PeddleDisassembler.cpp in Sources */,
 				508081E925110FFE0084B060 /* Dinamic.cpp in Sources */,
 				50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */,

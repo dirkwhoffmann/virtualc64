@@ -376,8 +376,8 @@ private:
     // Exporting data
     //
 
-    void writeToFile(const fs::path& path) const;
-    // void writeToFile(const fs::path& path, ImageFormat fmt) const;
+    void writeToFile(const fs::path& path);
+    void writeToFile(const fs::path& path, ImageFormat fmt);
 
 };
 
