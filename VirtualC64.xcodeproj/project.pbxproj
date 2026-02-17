@@ -151,10 +151,8 @@
 		5055D5B42615886E005D3DA6 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
 		5058A918281D03D200C223C9 /* DiskInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A917281D03D200C223C9 /* DiskInspector.xib */; };
 		5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A919281D041400C223C9 /* DiskExporter.xib */; };
-		5058A91C281D042D00C223C9 /* VolumeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A91B281D042D00C223C9 /* VolumeInspector.xib */; };
 		5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A91D281D107A00C223C9 /* DiskExporter.swift */; };
 		5058A920281D109F00C223C9 /* DiskInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A91F281D109F00C223C9 /* DiskInspector.swift */; };
-		5058A922281D10B100C223C9 /* VolumeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A921281D10B100C223C9 /* VolumeInspector.swift */; };
 		5058A924281D10C600C223C9 /* DiskCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A923281D10C600C223C9 /* DiskCreator.swift */; };
 		505A132B2C3503B400FF8D2C /* UserPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13292C3503B400FF8D2C /* UserPort.cpp */; };
 		505A132C2C3503B400FF8D2C /* UserPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505A13292C3503B400FF8D2C /* UserPort.cpp */; };
@@ -1025,10 +1023,8 @@
 		5055D5B32615886E005D3DA6 /* Error.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Error.cpp; sourceTree = "<group>"; };
 		5058A917281D03D200C223C9 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
 		5058A919281D041400C223C9 /* DiskExporter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskExporter.xib; sourceTree = "<group>"; };
-		5058A91B281D042D00C223C9 /* VolumeInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VolumeInspector.xib; sourceTree = "<group>"; };
 		5058A91D281D107A00C223C9 /* DiskExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskExporter.swift; sourceTree = "<group>"; };
 		5058A91F281D109F00C223C9 /* DiskInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspector.swift; sourceTree = "<group>"; };
-		5058A921281D10B100C223C9 /* VolumeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeInspector.swift; sourceTree = "<group>"; };
 		5058A923281D10C600C223C9 /* DiskCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCreator.swift; sourceTree = "<group>"; };
 		505A13292C3503B400FF8D2C /* UserPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UserPort.cpp; sourceTree = "<group>"; };
 		505A132A2C3503B400FF8D2C /* UserPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserPort.h; sourceTree = "<group>"; };
@@ -1718,7 +1714,6 @@
 				50D5F88524F52A300062EF13 /* DiskDataView.swift */,
 				50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */,
 				50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */,
-				5058A921281D10B100C223C9 /* VolumeInspector.swift */,
 				5058A923281D10C600C223C9 /* DiskCreator.swift */,
 				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
 				500E2D652824EC130015C46F /* CartridgeInspector.swift */,
@@ -3188,7 +3183,6 @@
 				500E2D632824EBE30015C46F /* CartridgeInspector.xib */,
 				5058A917281D03D200C223C9 /* DiskInspector.xib */,
 				50D5F88724F556270062EF13 /* DiskErrors.xib */,
-				5058A91B281D042D00C223C9 /* VolumeInspector.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
 				50ABD2862DD88EAC00456555 /* Dashboard.storyboard */,
@@ -3364,7 +3358,6 @@
 				5051A1601B885FDD00CBFB5A /* 1541_track_change_2.aiff in Resources */,
 				50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */,
 				50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */,
-				5058A91C281D042D00C223C9 /* VolumeInspector.xib in Resources */,
 				50AC25A12F41A8760016265E /* CMakeLists.txt in Resources */,
 				50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */,
 				5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */,
@@ -3877,7 +3870,6 @@
 				50A22A1D261871E600C9FB1E /* Layer.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
-				5058A922281D10B100C223C9 /* VolumeInspector.swift in Sources */,
 				505F45782E9698F600418105 /* VideoSettings.swift in Sources */,
 				50A5B7D32C74E44C00D6DDAD /* RshServer.cpp in Sources */,
 				505F45652E96961F00418105 /* CapturesSettings.swift in Sources */,

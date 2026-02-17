@@ -82,8 +82,7 @@ extension MyController: NSMenuItemValidation {
 
         case #selector(MyController.ejectDiskAction(_:)),
             #selector(MyController.exportDiskAction(_:)),
-            #selector(MyController.inspectDiskAction(_:)),
-            #selector(MyController.inspectVolumeAction(_:)):
+            #selector(MyController.inspectDiskAction(_:)):
             return drive.info.hasDisk
             
         case #selector(MyController.exportRecentDiskDummyAction8(_:)):
@@ -820,24 +819,6 @@ extension MyController: NSMenuItemValidation {
         do {
             
             let panel = DiskInspector(with: self, nibName: "DiskInspector")
-            try panel?.show(diskDrive: nr)
-            
-        } catch {
-            
-            showAlert(.cantDecode, error: error, window: window)
-        }
-    }
-    
-    @IBAction func inspectVolumeAction(_ sender: NSMenuItem!) {
-        
-        inspectVolumeAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
-    }
-    
-    func inspectVolumeAction(drive nr: Int) {
-        
-        do {
-            
-            let panel = VolumeInspector(with: self, nibName: "VolumeInspector")
             try panel?.show(diskDrive: nr)
             
         } catch {

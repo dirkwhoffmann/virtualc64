@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -628,12 +628,6 @@ CQ
                                     <action selector="inspectDiskAction:" target="-1" id="KDO-QI-sCS"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Inspect File System..." id="oXo-OV-nrW">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="inspectVolumeAction:" target="-1" id="ZG5-K1-gog"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="IUK-50-Odb"/>
                             <menuItem title="Write Protected" id="vbD-qh-Fhq">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -774,12 +768,6 @@ CQ
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="inspectDiskAction:" target="-1" id="tuz-7u-uE8"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Inspect File System..." tag="1" id="hwl-wV-rUG">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="inspectVolumeAction:" target="-1" id="oC9-21-eS8"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="jQN-Hx-PgE"/>
