@@ -109,20 +109,29 @@ constexpr long DAP_DEBUG       = 0;
 
 namespace utl::force {
 
-constexpr long LAUNCH_ERROR     = 0;
-constexpr long ROM_MISSING      = 0;
-constexpr long MEGA64_MISMATCH  = 0;
-constexpr long SNAP_TOO_OLD     = 0;
-constexpr long SNAP_TOO_NEW     = 0;
-constexpr long SNAP_IS_BETA     = 0;
-constexpr long SNAP_CORRUPTED   = 0;
-constexpr long CRT_UNKNOWN      = 0;
-constexpr long CRT_UNSUPPORTED  = 0;
-constexpr long RECORDING_ERROR  = 0;
-constexpr long ZLIB_ERROR       = 0;
-constexpr long FS_WRONG_BSIZE    = 0;
-constexpr long FS_WRONG_CAPACITY = 0;
-constexpr long FS_WRONG_DOS_TYPE = 0;
+constexpr long LAUNCH_ERROR         = 0;
+constexpr long ROM_MISSING          = 0;
+constexpr long MEGA64_MISMATCH      = 0;
+constexpr long SNAP_TOO_OLD         = 0;
+constexpr long SNAP_TOO_NEW         = 0;
+constexpr long SNAP_IS_BETA         = 0;
+constexpr long SNAP_CORRUPTED       = 0;
+constexpr long CRT_UNKNOWN          = 0;
+constexpr long CRT_UNSUPPORTED      = 0;
+constexpr long RECORDING_ERROR      = 0;
+constexpr long ZLIB_ERROR           = 0;
+constexpr long HDR_TOO_LARGE        = 0;
+constexpr long HDR_UNSUPPORTED_C    = 0;
+constexpr long HDR_UNSUPPORTED_H    = 0;
+constexpr long HDR_UNSUPPORTED_S    = 0;
+constexpr long HDR_UNSUPPORTED_B    = 0;
+constexpr long HDR_UNKNOWN_GEOMETRY = 0;
+constexpr long HDR_MODIFIED         = 0;
+constexpr long FS_WRONG_BSIZE       = 0;
+constexpr long FS_WRONG_CAPACITY    = 0;
+constexpr long FS_WRONG_DOS_TYPE    = 0;
+constexpr long DMS_CANT_CREATE      = 0;
+
 
 }
 

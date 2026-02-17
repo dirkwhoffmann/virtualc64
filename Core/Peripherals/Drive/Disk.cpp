@@ -12,9 +12,11 @@
 
 #include "config.h"
 #include "C64.h"
+#include "Images/ImageError.h"
 #include "utl/abilities/Hashable.h"
-
 #include <stdarg.h>
+
+using retro::vault::ImageError;
 
 namespace vc64 {
 
@@ -118,6 +120,24 @@ Disk::Disk()
 void
 Disk::init(const fs::path &path, bool wp)
 {
+    if (auto info = FloppyDiskImage::about(path)) {
+        
+        // path points to a disk image
+        switch (info->format) {
+
+            case ImageFormat::D64:
+                
+                printf("D64 file: %s\n", path.string().c_str());
+                if (auto img = FloppyDiskImage::make(path)) {
+                    init(*img, wp);
+                }
+                return;
+                
+            default:
+                throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
+        }
+    }
+    
     if (G64File::isCompatible(path)) {
 
         auto file = G64File(path);
@@ -127,6 +147,13 @@ Disk::init(const fs::path &path, bool wp)
     
     auto fs = FileSystem(path);
     init(fs, wp);
+}
+
+void
+Disk::init(const class FloppyDiskImage &file, bool wp)
+{
+    encodeDisk(file);
+    setWriteProtection(wp);
 }
 
 void
@@ -440,6 +467,54 @@ Disk::decodeSector(Halftrack ht, isize offset, u8 *dest, DiskAnalyzer &analyzer)
 //
 
 void
+Disk::encodeDisk(const FloppyDiskImage &image)
+{
+    using namespace retro::vault;
+    
+    loginfo(DSK_DEBUG,
+            "Encoding floppy disk image %s...\n", image.path.string().c_str());
+
+    // Start with an unformatted disk
+    clearDisk();
+
+    // Encode all tracks
+    for (TrackNr t = 0; t < image.numTracks(); ++t) {
+        
+        auto gcr = image.encode(t).byteView();
+
+        memcpy(data.track[t], gcr.span().data(), gcr.span().size());
+        length.track[t][0] = length.track[t][1] = gcr.size() * 8;
+    }
+
+    /*
+    if constexpr (debug::IMG_DEBUG) {
+
+        string tmp = "/tmp/debug.img";
+        fprintf(stderr, "Saving image to %s for debugging\n", tmp.c_str());
+        Codec::makeIMG(*this)->writeToFile(tmp);
+    }
+     */
+    if constexpr (debug::IMG_DEBUG) {
+
+        /*
+        string tmp = "/tmp/debug.img";
+        fprintf(stderr, "Saving image to %s for debugging\n", tmp.c_str());
+        Codec::makeD64(*this)->writeToFile(tmp);
+        */
+    }
+
+    // In debug mode, also run the decoder
+    /*
+    if constexpr (debug::ADF_DEBUG) {
+
+        string tmp = "/tmp/debug.adf";
+        fprintf(stderr, "Saving image to %s for debugging\n", tmp.c_str());
+        Codec::makeADF(*this)->writeToFile(tmp);
+    }
+    */
+}
+
+void
 Disk::encodeG64(const G64File &a)
 {
     logdebug(GCR_DEBUG, "Encoding G64 archive\n");
@@ -519,9 +594,6 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
     // Encode tracks
     HeadPos start;
     for (Track t = 1; t <= numTracks; t++) {
-
-        // REMOVE ASAP
-        alignTracks = true;
 
         auto zone = speedZoneOfTrack(t);
         if (alignTracks) {

@@ -462,6 +462,22 @@ Drive::ejectDisk()
     }
 }
 
+/*
+void
+Drive::readImage(const fs::path& path, bool wp) const
+{
+    if (hasDisk())
+        disk->readImage(path, wp);
+}
+
+void
+Drive::readImage(std::unique_ptr<FloppyDiskImage> img, bool wp) const
+{
+    if (hasDisk())
+        disk->readImage(img, wp);
+}
+*/
+
 void
 Drive::writeToFile(const fs::path& path) const
 {

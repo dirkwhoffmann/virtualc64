@@ -178,7 +178,7 @@ GeometryDescriptor::dump(std::ostream &os) const
 void
 GeometryDescriptor::checkCompatibility() const
 {
-    if constexpr (debug::HDR_ACCEPT_ALL) return;
+    // if constexpr (debug::HDR_ACCEPT_ALL) return;
 
     // Check forced error conditions
     if constexpr (force::HDR_UNKNOWN_GEOMETRY) {
@@ -199,7 +199,7 @@ GeometryDescriptor::checkCompatibility() const
     if constexpr (force::HDR_UNSUPPORTED_B) {
         throw DeviceError(DeviceError::HDR_UNSUPPORTED_BSIZE);
     }
-
+    
     // Check for real error conditions
     if (cylinders == 0) {
         throw DeviceError(DeviceError::HDR_UNKNOWN_GEOMETRY);

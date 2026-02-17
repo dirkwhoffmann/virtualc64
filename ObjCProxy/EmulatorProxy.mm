@@ -1009,6 +1009,12 @@ NSString *EventSlotName(EventSlot slot)
     return [self drive]->getCachedInfo();
 }
 
+- (void)insert:(NSURL *)url protected:(BOOL)wp exception:(ExceptionWrapper *)ex
+{
+    try { [self drive]->insert(fs::path(url.fileSystemRepresentation), wp); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
+}
+
 - (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp
 {
     [self drive]->insertMedia(*(MediaFile *)proxy->obj, wp);

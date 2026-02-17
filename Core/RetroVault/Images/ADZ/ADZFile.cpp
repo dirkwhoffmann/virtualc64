@@ -33,7 +33,7 @@ ADZFile::describe() const noexcept
 void
 ADZFile::didInitialize()
 {
-    loginfo(ADF_DEBUG, "Decompressing %ld bytes...\n", data.size);
+    loginfo(IMG_DEBUG, "Decompressing %ld bytes...\n", data.size);
     
     try {
         data.gunzip();
@@ -41,7 +41,7 @@ ADZFile::didInitialize()
         throw IOError(IOError::ZLIB_ERROR, err.what());
     }
     
-    loginfo(ADF_DEBUG, "Restored %ld bytes.\n", data.size);
+    loginfo(IMG_DEBUG, "Restored %ld bytes.\n", data.size);
     
     // Initialize the ADF with the decompressed data (may throw)
     adf.init(data.ptr, data.size);

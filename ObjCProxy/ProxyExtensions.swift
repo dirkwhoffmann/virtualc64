@@ -216,6 +216,17 @@ extension EmulatorProxy {
 }
 
 @MainActor
+extension DriveProxy {
+    
+    func insert(url: URL, protected wp: Bool) throws {
+        
+        let exc = ExceptionWrapper()
+        insert(url, protected: wp, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+}
+
+@MainActor
 extension DatasetteProxy {
     
     func insertTape(_ url: URL) throws {

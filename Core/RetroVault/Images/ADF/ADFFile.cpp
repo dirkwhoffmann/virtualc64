@@ -236,7 +236,7 @@ ADFFile::formatDisk(FSFormat dos, BootBlockId id, string name)
 {
     retro::vault::amiga::FSFormatEnum::validate(dos);
 
-    loginfo(ADF_DEBUG,
+    loginfo(IMG_DEBUG,
             "Formatting disk (%ld, %s)\n",
             numBlocks(), retro::vault::amiga::FSFormatEnum::key(dos));
 

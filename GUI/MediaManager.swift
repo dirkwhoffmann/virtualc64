@@ -238,6 +238,34 @@ class MediaManager {
     }
 
     //
+    // Floppy disks
+    //
+
+    func insertDisk(url: URL, drive n: Int, options: [Option] = [.remember]) throws {
+        
+        debug(.media, "url = \(url) n = \(n)")
+        
+        guard let emu = emu else { return }
+        
+        try emu.drive(n).insert(url: url, protected: options.contains(.protect))
+
+        if options.contains(.remember) {
+            MediaManager.noteNewRecentlyInsertedDiskURL(url)
+        }
+
+        /*
+        // Process file
+        if options.contains(.flash) {
+            try flash(proxy: file, options: options)
+        } else {
+            try mount(proxy: file, drive: emu.drive(n), options: options)
+        }
+        */
+    }
+    
+    
+    
+    //
     // Tapes
     //
 

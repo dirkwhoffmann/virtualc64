@@ -558,6 +558,7 @@ struct GuardInfo {
 @property (readonly) DriveInfo cachedInfo;
 
 - (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
+- (void)insert:(NSURL *)url protected:(BOOL)wp exception:(ExceptionWrapper *)ex;
 - (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp __attribute__((deprecated("MediaFile will go away.")));
 - (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;

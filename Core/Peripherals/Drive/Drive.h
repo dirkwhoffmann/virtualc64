@@ -507,7 +507,12 @@ public:
     void insertFileSystem(const class FileSystem &device, bool wp);
     void ejectDisk();
 
+    // void readImage(const fs::path& path, bool wp) const;
+    // void readImage(std::unique_ptr<FloppyDiskImage> img, bool wp) const;
+    // void writeToFile(const fs::path& path, ImageFormat fmt) const;
 
+    // std::unique_ptr<FloppyDiskImage> exportDisk(ImageFormat fmt) const;
+    
     //
     // Exporting data
     //

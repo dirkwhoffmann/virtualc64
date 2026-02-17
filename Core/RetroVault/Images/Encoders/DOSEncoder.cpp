@@ -89,7 +89,7 @@ DOSEncoder::encodeSector(MutableByteView track, isize offset, TrackNr t, SectorN
 {
     const isize bsize = 512;   // Block size in bytes
 
-    loginfo(ADF_DEBUG, "Encoding sector %ld\n", s);
+    loginfo(IMG_DEBUG, "Encoding sector %ld\n", s);
     assert(data.size() == bsize);
 
     u8 buf[60 + 512 + 2 + 109]; // Header + Data + CRC + Gap

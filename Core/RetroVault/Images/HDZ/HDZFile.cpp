@@ -33,9 +33,9 @@ HDZFile::describe() const noexcept
 void
 HDZFile::didInitialize()
 {
-    loginfo(HDF_DEBUG, "Compressed size: %ld bytes.\n", data.size);
+    loginfo(IMG_DEBUG, "Compressed size: %ld bytes.\n", data.size);
         
-    {   utl::StopWatch(debug::HDF_DEBUG, "Uncompressing...");
+    {   utl::StopWatch(debug::IMG_DEBUG, "Uncompressing...");
 
         try {
             data.gunzip();
@@ -44,7 +44,7 @@ HDZFile::didInitialize()
         }
     }
     
-    loginfo(HDF_DEBUG, "Uncompressed size: %ld bytes\n", data.size);
+    loginfo(IMG_DEBUG, "Uncompressed size: %ld bytes\n", data.size);
     
     // Initialize the ADF with the decompressed data (may throw)
     hdf.init(data.ptr, data.size);

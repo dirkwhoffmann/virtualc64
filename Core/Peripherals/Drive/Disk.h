@@ -13,11 +13,14 @@
 #pragma once
 
 #include "DiskTypes.h"
+#include "SubComponent.h"
 #include "DiskAnalyzerTypes.h"
 #include "FileSystems/FSTypes.h"
-#include "SubComponent.h"
+#include "Images/FloppyDiskImage.h"
 #include "PETName.h"
 
+using retro::vault::FloppyDiskImage;
+using retro::vault::ImageFormat;
 
 namespace vc64 {
 
@@ -112,6 +115,7 @@ public:
     
     Disk();
     Disk(const fs::path &path, bool wp = false) { init(path, wp); }
+    Disk(const FloppyDiskImage &file, bool wp = false) { init(file, wp); }
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
     Disk(const FileSystem &device, bool wp = false) { init(device, wp); }
     Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
@@ -122,6 +126,7 @@ public:
 private:
     
     void init(const fs::path &path, bool wp);
+    void init(const class FloppyDiskImage &file, bool wp);
     void init(DOSType type, PETName<16> name, bool wp);
     void init(const class FileSystem &device, bool wp);
     void init(const class G64File &g64, bool wp);
@@ -334,6 +339,9 @@ private:
     //
     
 public:
+    
+    // Encodes a disk image
+    void encodeDisk(const class FloppyDiskImage &file);
     
     // Encodes a G64 file
     void encodeG64(const G64File &a);

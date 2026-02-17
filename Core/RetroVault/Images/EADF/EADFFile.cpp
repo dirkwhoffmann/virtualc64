@@ -153,7 +153,7 @@ EADFFile::didInitialize()
 
         if (isExtendedTrack(t)) {
 
-            loginfo(ADF_DEBUG, "Reading extended track %ld from EADF\n", t);
+            loginfo(IMG_DEBUG, "Reading extended track %ld from EADF\n", t);
 
             // Copy MFM bits from the EADF
             track.mfm.assign(trackData(t), trackData(t) + availableBytesForTrack(t));
