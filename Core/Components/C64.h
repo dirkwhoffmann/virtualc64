@@ -59,6 +59,7 @@
 #include "Media/TAPFile.h"
 #include "Media/CRTFile.h"
 #include "FileSystems/OldFileSystem.h" // DEPRECATED
+#include "FileSystems/CBM/FileSystem.h"
 
 // Misc
 #include "Host.h"
@@ -66,6 +67,13 @@
 #include "RemoteManager.h"
 #include "RetroShell.h"
 #include "RshServer.h"
+
+namespace retro::vault::cbm {
+
+    class FileSystem;
+}
+
+using retro::vault::cbm::FileSystem;
 
 namespace vc64 {
 
@@ -758,7 +766,8 @@ public:
     void flashNew(const AnyFile &file, isize item);
     [[deprecated]] void flash(const MediaFile &file);
     [[deprecated]] void flash(const MediaFile &file, isize item);
-    void flash(const OldFileSystem &fs, isize item);
+    [[deprecated]] void flash(const OldFileSystem &fs, isize item);
+    void flash(const FileSystem &fs, isize item);
 
 
     //

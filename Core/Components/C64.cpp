@@ -2244,6 +2244,35 @@ C64::flash(const OldFileSystem &fs, isize nr)
 }
 
 void
+C64::flash(const FileSystem &fs, isize nr)
+{
+    // Read directory
+    auto dir = fs.readDir();
+    
+    // Only proceed if the requested file exists
+    if (isize(dir.size()) < nr) throw AppError(Fault::FS_HAS_NO_FILES);
+    
+    // Get the requested item
+    Buffer<u8> buf; fs.extractData(dir[nr], buf);
+    
+    // Only proceed if the requested file contains data
+    if (buf.size < 2) return;
+
+    u16 addr = LO_HI(buf.ptr[0], buf.ptr[1]);
+    u64 size = buf.size;
+        
+    // Flash data into memory
+    size = std::min(size - 2, (u64)(0x10000 - addr));
+    memcpy(mem.ram + addr, buf.ptr + 2, size);
+    
+    // Rectify zero page
+    mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
+    mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
+    
+    msgQueue.put(Msg::FILE_FLASHED);
+}
+
+void
 C64::setAlarmAbs(Cycle trigger, i64 payload)
 {
     alarms.push_back(Alarm { trigger, payload });

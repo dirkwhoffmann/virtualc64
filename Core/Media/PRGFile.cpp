@@ -13,6 +13,7 @@
 #include "config.h"
 #include "PRGFile.h"
 #include "FileSystems/OldFileSystem.h" // DEPRECATED
+#include "filesystems/CBM/FileSystem.h"
 
 namespace vc64 {
 
@@ -49,6 +50,19 @@ PRGFile::init(const OldFileSystem &fs)
 
     // Add data
     fs.copyFile(item, data.ptr, itemSize);
+}
+
+void
+PRGFile::init(const FileSystem &fs)
+{    
+    // Read directory
+    auto dir = fs.readDir();
+    
+    // Only proceed if the requested file exists
+    if (dir.size() == 0) throw AppError(Fault::FS_HAS_NO_FILES);
+    
+    // Get the first item
+    fs.extractData(dir[0], data);
 }
 
 PETName<16>
