@@ -352,21 +352,13 @@ class MediaManager {
         
         debug(.media, "drive: \(id) to: \(url)")
         guard let drive = emu?.drive(id) else { return }
-                        
-        if url.c64FileType == .G64 {
-            
-            let g64 = try MediaFileProxy.make(with: drive, type: .G64)
-            try export(file: g64, to: url)
-            
-        } else {
-            
-            let fs = try OldFileSystemProxy.make(with: drive)
-            try export(fs: fs, to: url)
-        }
+
+        try drive.write(toFile: url)
         
         emu?.put(.DSK_MODIFIED, value: id)
     }
     
+    /*
     func export(fs: OldFileSystemProxy, to url: URL) throws {
         
         func showAlert(format: String) {
@@ -403,6 +395,7 @@ class MediaManager {
         
         try export(file: file!, to: url)
     }
+    */
     
     func export(file: MediaFileProxy, to url: URL) throws {
         

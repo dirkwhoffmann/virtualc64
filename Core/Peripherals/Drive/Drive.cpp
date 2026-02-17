@@ -14,6 +14,8 @@
 #include "Drive.h"
 #include "Emulator.h"
 
+using retro::vault::DeviceError;
+
 namespace vc64 {
 
 Drive::Drive(C64 &ref, isize id) : SubComponent(ref, id)
@@ -481,9 +483,8 @@ Drive::readImage(std::unique_ptr<FloppyDiskImage> img, bool wp) const
 void
 Drive::writeToFile(const fs::path& path) const
 {
-    // if (!hasDisk()) throw DeviceError(DeviceError::DSK_MISSING);
-    if (hasDisk())
-        disk->writeToFile(path);
+    if (!hasDisk()) throw DeviceError(DeviceError::DSK_MISSING);
+    disk->writeToFile(path);
 }
 
 /*

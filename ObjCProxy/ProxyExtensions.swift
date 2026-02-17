@@ -231,6 +231,13 @@ extension DriveProxy {
         insert(url, protected: wp, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
+    
+    func write(toFile url: URL) throws {
+
+        let exc = ExceptionWrapper()
+        write(toFile: url, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
 }
 
 @MainActor

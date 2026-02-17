@@ -105,32 +105,3 @@ class DiskCreator: DialogController {
         hide()
     }
 }
-
-@MainActor
-extension DiskCreator: NSFilePromiseProviderDelegate {
-
-    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
-
-        return "Empty.d64"
-    }
-
-    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
-
-        Task { @MainActor in export(url: url) }
-        completionHandler(nil)
-    }
-
-    func export(url: URL) {
-
-        if let fs = OldFileSystemProxy.make(with: .SS_SD, dosType: dos) {
-
-            do {
-                fs.name = name
-                let d64 = try MediaFileProxy.make(with: fs, type: .D64)
-                try d64.writeToFile(url: url)
-            } catch {
-                warn("Can't export file to \(url)")
-            }
-        }
-    }
-}
