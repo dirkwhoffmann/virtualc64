@@ -10,6 +10,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #include "config.h"
 // #include "MediaFile.h"
 #include "VirtualC64.h"
@@ -24,8 +26,6 @@
 #include "Media/T64File.h"
 #include "Media/TAPFile.h"
 #include "Workspace.h"
-
-#if 0
 
 namespace vc64 {
 
