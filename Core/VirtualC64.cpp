@@ -531,15 +531,6 @@ C64API::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 }
 
 
-/*
-MediaFile *
-C64API::takeSnapshot(Compressor compressor, isize delay, bool repeat)
-{
-    VC64_PUBLIC_SUSPEND
-    return c64->takeSnapshot(compressor, delay, repeat);
-}
-*/
-
 void
 C64API::loadSnapshot(const Snapshot &snapshot)
 {
@@ -641,22 +632,6 @@ C64API::flash(const fs::path &path, isize item)
 {
     VC64_PUBLIC_SUSPEND
     c64->flash(path, item);
-    emu->markAsDirty();
-}
-
-void
-C64API::flash(const MediaFile &file)
-{
-    VC64_PUBLIC_SUSPEND
-    c64->flash(file);
-    emu->markAsDirty();
-}
-
-void 
-C64API::flash(const MediaFile &file, isize item)
-{
-    VC64_PUBLIC_SUSPEND
-    c64->flash(file, item);
     emu->markAsDirty();
 }
 
@@ -1152,14 +1127,6 @@ DatasetteAPI::getCachedInfo() const
 }
 
 void
-DatasetteAPI::insertTape(MediaFile &file)
-{
-    VC64_PUBLIC
-    datasette->insertTape(file);
-    emu->markAsDirty();
-}
-
-void
 DatasetteAPI::insertTape(const fs::path &path)
 {
     VC64_PUBLIC
@@ -1182,13 +1149,6 @@ DatasetteAPI::exportTape(const fs::path &path) const
     datasette->exportTAP(path);
 }
 
-/*
-MediaFile *
-DatasetteAPI::exportTAP() const
-{
-    return datasette->exportTAP();
-}
-*/
 
 //
 // RS232
@@ -1374,12 +1334,6 @@ RetroShellAPI::execScript(const string &contents)
     retroShell->asyncExecScript(contents);
 }
 
-void 
-RetroShellAPI::execScript(const MediaFile &file)
-{
-    retroShell->asyncExecScript(file);
-}
-
 void
 RetroShellAPI::setStream(std::ostream &os)
 {
@@ -1423,13 +1377,6 @@ ExpansionPortAPI::attachCartridge(const std::filesystem::path &path, bool reset)
 }
 
 void
-ExpansionPortAPI::attachCartridge(const MediaFile &c, bool reset)
-{
-    expansionPort->attachCartridge(c, reset);
-    emu->markAsDirty();
-}
-
-void
 ExpansionPortAPI::attachReu(isize capacity)
 {
     expansionPort->attachReu(capacity);
@@ -1455,12 +1402,6 @@ ExpansionPortAPI::detachCartridge()
 {
     expansionPort->detachCartridge();
     emu->markAsDirty();
-}
-
-MediaFile *
-ExpansionPortAPI::exportCRT() const
-{
-    return expansionPort->exportCRT();
 }
 
 void
@@ -1515,13 +1456,6 @@ DriveAPI::insert(const fs::path &path, bool wp)
 {
     VC64_PUBLIC_SUSPEND
     drive->insertDisk(path, wp);
-    emu->markAsDirty();
-}
-
-void
-DriveAPI::insertMedia(MediaFile &file, bool wp)
-{
-    drive->insertMediaFile(file, wp);
     emu->markAsDirty();
 }
 

@@ -150,7 +150,7 @@ void
 Headless::runScript(const fs::path &path)
 {
     // Read the input script
-    Script script(path);
+    // Script script(path);
 
     // Create an emulator instance
     VirtualC64 c64;
@@ -169,7 +169,7 @@ Headless::runScript(const fs::path &path)
 
     // Execute script
     const auto timeout = utl::Time::seconds(500.0);
-    c64.retroShell.execScript(script);
+    c64.retroShell.execScript(path);
     waitForWakeUp(timeout);
 }
 

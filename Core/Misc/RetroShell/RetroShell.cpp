@@ -117,6 +117,15 @@ RetroShell::asyncExecScript(std::stringstream &ss)
 }
 
 void
+RetroShell::asyncExecScript(const fs::path &path)
+{
+    std::ifstream fs(path);
+    if (!fs) throw IOError(IOError::FILE_NOT_FOUND);
+
+    asyncExecScript(fs);
+}
+
+void
 RetroShell::asyncExecScript(const std::ifstream &fs)
 {
     std::stringstream ss;

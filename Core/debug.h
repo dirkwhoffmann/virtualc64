@@ -97,7 +97,7 @@ constexpr long RSH_DEBUG       = 0;
 constexpr long REC_DEBUG       = 0;
 constexpr long REU_DEBUG       = 0;
 constexpr long SCK_DEBUG       = 0;
-constexpr long SRV_DEBUG       = 1;
+constexpr long SRV_DEBUG       = 0;
 constexpr long GDB_DEBUG       = 0;
 constexpr long DAP_DEBUG       = 0;
 

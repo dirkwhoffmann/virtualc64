@@ -150,8 +150,9 @@ public:
     void asyncExec(const InputLine &command, bool append = true);
 
     // Adds the commands of a shell script to the list of pending commands
-    void asyncExecScript(std::stringstream &ss);
+    void asyncExecScript(const fs::path &path);
     void asyncExecScript(const std::ifstream &fs);
+    void asyncExecScript(std::stringstream &ss);
     void asyncExecScript(const string &contents);
     void asyncExecScript(const class MediaFile &script);
     

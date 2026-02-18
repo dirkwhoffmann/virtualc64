@@ -17,7 +17,6 @@
 #include "Error.h"
 #include "CoreError.h"
 #include "Snapshot.h"
-#include "MediaFile.h"
 #include "FileSystems/CBM/FSTypes.h"
 
 using retro::vault::cbm::FSFormat;
@@ -492,9 +491,8 @@ struct DatasetteAPI : public API {
     const DatasetteInfo &getCachedInfo() const;
 
     /** @brief  Inserts a tape.
-     *  @param  file    The tape to insert.
+     *  @param  path    The tape to insert.
      */
-    [[deprecated]] void insertTape(MediaFile &file);
     void insertTape(const fs::path &path);
 
     /** @brief  Ejects a tape.
@@ -502,7 +500,8 @@ struct DatasetteAPI : public API {
      */
     void ejectTape();
 
-    /** @brief  Export tape to a file
+    /** @brief  Export tape to a file.
+     *  @param  path    Export path.
      */
     void exportTape(const fs::path &path) const;
 };
@@ -519,7 +518,7 @@ struct RS232API : public API {
     // const RS232Info &getInfo() const;
     // const RS232Info &getCachedInfo() const;
 
-    /** @brief  Feeds textual data into the RS232 adapter
+    /** @brief  Feeds textual data into the RS232 adapter.
      *  This function emulates the transmission of incoming data from an
      *  external device.
      */
@@ -613,10 +612,6 @@ struct ExpansionPortAPI : public API {
      */
     void attachCartridge(const std::filesystem::path &path, bool reset = true);
 
-    /** @brief  Attaches a cartridge to the expansion port.
-     */
-    [[deprecated]] void attachCartridge(const MediaFile &c, bool reset = true);
-
     /** @brief  Attaches a RAM Expansion Unit to the expansion port.
      */
     void attachReu(isize capacity);
@@ -635,7 +630,6 @@ struct ExpansionPortAPI : public API {
 
     /** @brief  Export cartridge
      */
-    [[deprecated]] MediaFile *exportCRT() const;
     void exportCRT(const fs::path &path) const;
     
     /// @}
@@ -703,12 +697,6 @@ struct DriveAPI : public API {
      *  @param  wp      Write-protection status of the disk.
      */
     void insert(const std::filesystem::path& path, bool wp);
-
-    /** @brief  Inserts a disk created from a media file.
-     *  @param  file    A media file wrapper object.
-     *  @param  wp      Write-protection status of the disk.
-     */
-    [[deprecated]] void insertMedia(MediaFile &file, bool wp);
 
     /** @brief  Ejects the current disk.
      */
@@ -814,7 +802,6 @@ struct RetroShellAPI : public API {
     void execScript(std::stringstream &ss);
     void execScript(const std::ifstream &fs);
     void execScript(const string &contents);
-    [[deprecated]] void execScript(const MediaFile &file);
 
     /// @}
 };
@@ -1171,13 +1158,11 @@ struct C64API : public API {
 
     /** @brief  Flashes a file into memory
      */
-    [[deprecated]] void flash(const MediaFile &file);
     void flash(const fs::path &path, isize item = 0);
     void flashNew(const AnyFile &file);
     
     /** @brief  Flashes a file from a collection into memory
      */
-    [[deprecated]] void flash(const MediaFile &file, isize item);
     void flashNew(const AnyFile &file, isize item);
 };
 
