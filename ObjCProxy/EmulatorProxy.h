@@ -11,6 +11,7 @@
 #import "VirtualC64Types.h"
 #import "Devices/DeviceTypes.h"
 #import "Images/ImageTypes.h"
+#import "FileSystems/CBM/FSTypes.h"
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 
@@ -19,6 +20,7 @@ using retro::vault::ImageFormat;
 using retro::vault::ImageInfo;
 using retro::vault::Diameter;
 using retro::vault::Density;
+using retro::vault::cbm::FSFormat;
 
 using namespace vc64;
 
@@ -566,7 +568,7 @@ struct GuardInfo {
 @property (readonly) DriveInfo info;
 @property (readonly) DriveInfo cachedInfo;
 
-- (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
+- (void)insertBlankDisk:(FSFormat)fstype name:(NSString *)name;
 - (void)insert:(NSURL *)url protected:(BOOL)wp exception:(ExceptionWrapper *)ex;
 - (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp __attribute__((deprecated("MediaFile will go away.")));
 - (void)ejectDisk;

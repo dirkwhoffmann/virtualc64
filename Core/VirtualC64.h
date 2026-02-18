@@ -18,6 +18,9 @@
 #include "CoreError.h"
 #include "Snapshot.h"
 #include "MediaFile.h"
+#include "FileSystems/CBM/FSTypes.h"
+
+using retro::vault::cbm::FSFormat;
 
 namespace vc64 {
 
@@ -693,7 +696,7 @@ struct DriveAPI : public API {
      *  @param  fstype  The file system the disk should be formatted with.
      *  @param  name    A PET string with the name of the new disk.
      */
-    void insertBlankDisk(DOSType fstype, string name);
+    void insertBlankDisk(FSFormat fstype, string name);
 
     /** @brief  Inserts a disk created from an image file.
      *  @param  path   Path to the disk image.

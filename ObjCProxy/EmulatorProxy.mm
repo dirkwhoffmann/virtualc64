@@ -1033,7 +1033,7 @@ NSString *EventSlotName(EventSlot slot)
     [self drive]->insertMedia(*(MediaFile *)proxy->obj, wp);
 }
 
-- (void)insertBlankDisk:(DOSType)fsType name:(NSString *)name
+- (void)insertBlankDisk:(FSFormat)fsType name:(NSString *)name
 {
     [self drive]->insertBlankDisk(fsType, [name UTF8String]);
 }

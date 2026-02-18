@@ -10,21 +10,23 @@
 // 'utl' namespace
 typealias Compressor = utl.Compressor
 
+// 'retro::vault::amiga' namespace
+typealias FSFormat = retro.vault.cbm.FSFormat
+
 // 'vc64' namespace
 typealias AppClass = vc64.AppError
 typealias CartridgeType = vc64.CartridgeType
 typealias Class = vc64.Class
 typealias ConfigScheme = vc64.ConfigScheme
 typealias ControlPortDevice = vc64.ControlPortDevice
-typealias DOSType = vc64.DOSType
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum
 typealias EventSlotInfo = vc64.EventSlotInfo
 typealias Fault = vc64.Fault
 typealias FileType = vc64.FileType
-typealias FSBlockType = vc64.FSBlockType
-typealias FSFileType = vc64.FSFileType
-typealias FSUsage = vc64.FSUsage
+// typealias FSBlockType = vc64.FSBlockType
+// typealias FSFileType = vc64.FSFileType
+// typealias FSUsage = vc64.FSUsage
 typealias GamePadAction = vc64.GamePadAction
 typealias Message = vc64.Message
 typealias Opt = vc64.Opt
@@ -85,7 +87,7 @@ extension FileType {
     }
 }
 
-extension DOSType: CustomStringConvertible {
+extension FSFormat: CustomStringConvertible {
 
     public var description: String {
         
@@ -99,6 +101,7 @@ extension DOSType: CustomStringConvertible {
     }
 }
 
+/*
 extension FSFileType: CustomStringConvertible {
 
     public var description: String {
@@ -166,6 +169,7 @@ extension FSUsage: CustomStringConvertible {
         }
     }
 }
+*/
 
 extension Fault {
 

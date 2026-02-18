@@ -628,7 +628,7 @@ CommanderConsole::initCommands(RSCommand &root)
             .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
                 auto &drive = values.front() ? drive9 : drive8;
-                auto type = utl::parseEnum <DOSType, DOSTypeEnum> (args.at("dos"));
+                auto type = utl::parseEnum <FSFormat, FSFormatEnum> (args.at("dos"));
                 drive.insertNewDisk(type, "NEW DISK");
 
             }, .payload = {i}

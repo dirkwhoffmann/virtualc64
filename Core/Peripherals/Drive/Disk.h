@@ -15,12 +15,14 @@
 #include "DiskTypes.h"
 #include "SubComponent.h"
 #include "DiskAnalyzerTypes.h"
-#include "FileSystems/FSTypes.h"
+#include "FileSystems/CBM/FSTypes.h"
 #include "Images/FloppyDiskImage.h"
 #include "PETName.h"
 
 using retro::vault::FloppyDiskImage;
 using retro::vault::ImageFormat;
+using retro::vault::cbm::FSFormat;
+using retro::vault::cbm::FSFormatEnum;
 
 namespace vc64 {
 
@@ -115,7 +117,7 @@ public:
     Disk();
     Disk(const fs::path &path, bool wp = false) { init(path, wp); }
     Disk(const FloppyDiskImage &file, bool wp = false) { init(file, wp); }
-    Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
+    Disk(FSFormat type, PETName<16> name, bool wp = false) { init(type, name, wp); }
     Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
     Disk(class AnyCollection &archive, bool wp = false) { init(archive, wp); }
     Disk(SerReader &reader) { init(reader); }
@@ -124,7 +126,7 @@ private:
     
     void init(const fs::path &path, bool wp);
     void init(const class FloppyDiskImage &file, bool wp);
-    void init(DOSType type, PETName<16> name, bool wp);
+    void init(FSFormat type, PETName<16> name, bool wp);
     void init(const class G64File &g64, bool wp);
     void init(class AnyCollection &archive, bool wp);
     void init(SerReader &reader);

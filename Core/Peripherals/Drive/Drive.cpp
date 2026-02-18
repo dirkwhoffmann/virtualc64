@@ -398,7 +398,7 @@ Drive::insertDisk(std::unique_ptr<Disk> disk)
 }
 
 void
-Drive::insertNewDisk(DOSType fsType, string name)
+Drive::insertNewDisk(FSFormat fsType, string name)
 {
     // TODO:
     // insertDisk(std::make_unique<Disk>(fsType, name));

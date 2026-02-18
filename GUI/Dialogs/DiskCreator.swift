@@ -18,7 +18,7 @@ class DiskCreator: DialogController {
     @IBOutlet weak var nameLabel: NSTextField!
     @IBOutlet weak var nameField: NSTextField!
 
-    var dos: vc64.DOSType { return fileSystem.selectedTag() == 1 ? .CBM : .NODOS }
+    var dos: FSFormat { return fileSystem.selectedTag() == 1 ? .CBM : .NODOS }
     var name: String { return nameField.stringValue }
 
     var nr = DRIVE8

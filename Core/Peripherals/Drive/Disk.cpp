@@ -159,11 +159,11 @@ Disk::init(const class FloppyDiskImage &file, bool wp)
 }
 
 void
-Disk::init(DOSType type, PETName<16> name, bool wp)
+Disk::init(FSFormat type, PETName<16> name, bool wp)
 {
-    assert(DOSTypeEnum::isValid(type));
+    assert(retro::vault::cbm::FSFormatEnum::isValid(type));
     
-    if (type == DOSType::CBM) {
+    if (type == FSFormat::CBM) {
         
         // TODO:
         // auto fs = OldFileSystem(DiskType::SS_SD, DOSType::CBM);

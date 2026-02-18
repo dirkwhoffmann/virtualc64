@@ -1504,7 +1504,7 @@ DriveAPI::getCachedInfo() const
 }
 
 void
-DriveAPI::insertBlankDisk(DOSType fstype, string name)
+DriveAPI::insertBlankDisk(FSFormat fstype, string name)
 {
     drive->insertNewDisk(fstype, name);
     emu->markAsDirty();
