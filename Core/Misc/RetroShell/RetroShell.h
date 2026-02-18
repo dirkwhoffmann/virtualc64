@@ -154,7 +154,7 @@ public:
     void asyncExecScript(const std::ifstream &fs);
     void asyncExecScript(std::stringstream &ss);
     void asyncExecScript(const string &contents);
-    void asyncExecScript(const class MediaFile &script);
+    // void asyncExecScript(const class MediaFile &script);
     
     // Aborts the execution of a script
     void abortScript();

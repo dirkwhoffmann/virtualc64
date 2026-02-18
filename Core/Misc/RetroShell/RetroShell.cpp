@@ -141,6 +141,7 @@ RetroShell::asyncExecScript(const string &contents)
     asyncExecScript(ss);
 }
 
+/*
 void
 RetroShell::asyncExecScript(const MediaFile &file)
 {
@@ -159,6 +160,7 @@ RetroShell::asyncExecScript(const MediaFile &file)
             throw  IOError(IOError::FILE_TYPE_MISMATCH);
     }
 }
+*/
 
 void
 RetroShell::abortScript()

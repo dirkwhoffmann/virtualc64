@@ -253,11 +253,13 @@ ExpansionPort::detachCartridge()
     }
 }
 
+/*
 MediaFile *
 ExpansionPort::exportCRT() const
 {
     return cartridge ? cartridge->exportCRT() : nullptr;
 }
+*/
 
 void
 ExpansionPort::exportCRT(const fs::path &path) const

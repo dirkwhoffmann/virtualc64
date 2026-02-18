@@ -468,7 +468,7 @@ public:
     // Exporting
     //
 
-    MediaFile *exportCRT() const;
+    // MediaFile *exportCRT() const;
     void exportCRT(Buffer<u8> &buffer) const;
     void exportCRT(const fs::path &path) const;
 };

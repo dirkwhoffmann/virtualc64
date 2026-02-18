@@ -534,6 +534,7 @@ Cartridge::setSwitch(isize pos)
     switchPos = pos;
 }
 
+/*
 MediaFile *
 Cartridge::exportCRT() const
 {
@@ -541,6 +542,7 @@ Cartridge::exportCRT() const
     exportCRT(buffer);
     return new CRTFile(buffer.ptr, buffer.size);
 }
+*/
 
 void
 Cartridge::exportCRT(const fs::path &path) const

@@ -1491,11 +1491,8 @@ C64::saveWorkspace(const fs::path &path)
 
             try {
 
-                if (auto crt = eport.exportCRT(); crt) {
-
-                    crt->writeToFile(path / file);
-                    ss << "try " << name << " attach " << file << "\n";
-                }
+                expansionport.exportCRT(path / file);
+                ss << "try " << name << " attach " << file << "\n";
 
             } catch (...) { }
 
@@ -1855,6 +1852,12 @@ C64::mega65KernalRev() const
     rev[16] = 0;
     
     return rev;
+}
+
+optional<RomType>
+C64::romType(const fs::path &path)
+{
+    return RomFile::romType(path);
 }
 
 void

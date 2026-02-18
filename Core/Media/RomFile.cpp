@@ -91,6 +91,25 @@ RomFile::isRomBuffer(RomType type, const u8 *buf, isize len)
     return false;
 }
 
+std::optional<RomType>
+RomFile::romType(const fs::path &path)
+{
+    try {
+        
+        switch (RomFile(path).romFileType) {
+                
+            case FileType::CHAR_ROM:   return RomType::CHAR;
+            case FileType::BASIC_ROM:  return RomType::BASIC;
+            case FileType::KERNAL_ROM: return RomType::KERNAL;
+            case FileType::VC1541_ROM: return RomType::VC1541;
+            default: break;
+        }
+    
+    } catch (...) { }
+    
+    return {};
+}
+
 bool
 RomFile::isBasicRomBuffer(const u8 *buf, isize len)
 {

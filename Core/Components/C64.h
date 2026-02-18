@@ -736,6 +736,9 @@ private:
 
 public:
 
+    // Checks if the provided path references a Rom file
+    optional<RomType> romType(const fs::path &path);
+    
     // Installs a Rom
     void loadRom(const fs::path &path);
     void loadRom(const fs::path &path, RomType type);

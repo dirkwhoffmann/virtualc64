@@ -12,6 +12,7 @@
 #import "DiskAnalyzer.h"
 #import "Drive.h"
 // #import "Images/DiskImage.h"
+#import "Media/RomFile.h"
 #import "Images/FloppyDiskImage.h"
 #import "FileSystems/CBM/FileSystem.h"
 #import "Texture.h"
@@ -2119,6 +2120,15 @@ NSString *EventSlotName(EventSlot slot)
 - (void)installOpenRoms
 {
     [self emu]->c64.installOpenRoms();
+}
+
+- (RomType *)romType:(NSURL *)url
+{
+    if (url) {
+        if (auto type = RomFile::romType(fs::path(url.fileSystemRepresentation)))
+            return new RomType(*type);
+    }
+    return nil;
 }
 
 - (void) loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex

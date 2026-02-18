@@ -237,6 +237,7 @@ NSString *EventSlotName(EventSlot slot);
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
 - (void)installOpenRoms;
+- (RomType *)romType:(NSURL *)url;
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex type:(RomType)type;
 

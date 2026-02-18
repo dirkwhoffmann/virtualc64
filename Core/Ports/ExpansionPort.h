@@ -202,7 +202,8 @@ public:
     // Exporting
     //
 
-    MediaFile *exportCRT() const;
+    //
+    // [[deprecated]] MediaFile *exportCRT() const;
     void exportCRT(const fs::path &path) const;
     
 
