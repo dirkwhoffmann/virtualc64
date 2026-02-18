@@ -186,7 +186,6 @@ class DropZone: Layer {
     override func layerDidClose() {
         
         guard let url = metal.dropUrl else { return }
-        guard let type = metal.dropType else { return }
         
         do {
             
@@ -206,6 +205,8 @@ class DropZone: Layer {
                 
             } else {
                 
+                guard let type = vc64.FileType(url: url)  else { return }
+
                 switch type {
 
                 case .WORKSPACE:

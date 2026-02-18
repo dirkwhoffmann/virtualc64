@@ -98,7 +98,7 @@ public:
 
 
     //
-    // Methods from DiskImage
+    // Methods from TrackDevice
     //
 
 public:

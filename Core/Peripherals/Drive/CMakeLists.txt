@@ -10,7 +10,7 @@ DriveMemoryBase.cpp
 VIA.cpp
 PIA.cpp
 ParallelCable.cpp
-Disk.cpp
+FloppyDisk.cpp
 DiskAnalyzer.cpp
 
 )

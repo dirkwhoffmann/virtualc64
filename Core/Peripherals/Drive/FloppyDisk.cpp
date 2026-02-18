@@ -229,21 +229,23 @@ FloppyDisk::readBlock(u8 *dst, isize nr) const
 
     auto [t,s] = b2ts(nr);
     loginfo(GCR_DEBUG, "readBlock: %ld (%ld,%ld)\n", nr, t, s);
-
-    fatalError;
     
-    /*
-    auto bytes = decoder.decodeSector(track[t], t, s);
+    auto bv = BitView(data.track[t], lengthOfTrack(nr));
+    auto bytes = decoder.decodeSector(bv, t, s);
     assert(bytes.size() == bsize());
     memcpy(dst, bytes.data(), bytes.size());
-    */
 }
 
 void
 FloppyDisk::readBlocks(u8 *dst, Range<isize> range) const
 {
-    for (isize b = range.lower; b < range.upper; ++b)
-        readBlock(dst, b);
+    auto *ptr = dst;
+    
+    for (isize b = range.lower; b < range.upper; ++b) {
+        
+        readBlock(ptr, b);
+        ptr += bsize();
+    }
 }
 
 void
@@ -255,37 +257,43 @@ FloppyDisk::writeBlock(const u8 *src, isize nr)
     auto [t,s]  = b2ts(nr);
     loginfo(GCR_DEBUG, "writeBlock: %ld (%ld,%ld)\n", nr, t, s);
 
-    fatalError;
-    
-    /*
-    // Compute the MFM bit stream
-    auto mfm = encoder.encodeSector(ByteView(src, bsize()), t, s);
+    // Compute the GCR bit stream
+    auto gcr = encoder.encodeSector(ByteView(src, bsize()), t, s);
 
     // Locate the sector inside the track
-    auto sector = decoder.seekSector(track[t], s);
+    auto bv = MutableBitView(data.track[t], lengthOfTrack(nr));
+    auto sector = decoder.seekSector(bv, s);
 
     if (!sector.has_value())
         throw IOError(DeviceError::SEEK_ERR, "Block " + std::to_string(nr));
 
-    auto tr = track[t];
-    auto it = track[t].cyclic_begin() + sector->lower;
+    // auto tr = track[t];
+    auto it = bv.cyclic_begin() + sector->lower;
 
     // Replace the sector data
-    assert(mfm.size() == (*sector).size());
-    for (isize i = 0; i < mfm.size(); ++i, ++it)
-        tr.set(it.offset(), mfm[i]);
-
-    // Rectify clock bits
-    encoder.rectifyClockBit(tr, sector->lower);
-    encoder.rectifyClockBit(tr, sector->upper);
-    */
+    assert(gcr.size() == (*sector).size());
+    for (isize i = 0; i < gcr.size(); ++i, ++it)
+        bv.set(it.offset(), gcr[i]);
 }
 
 void
 FloppyDisk::writeBlocks(const  u8 *src, Range<isize> range)
 {
-    for (isize b = range.lower; b < range.upper; ++b)
-        writeBlock(src, b);
+    auto *ptr = src;
+    
+    for (isize b = range.lower; b < range.upper; ++b) {
+        
+        writeBlock(ptr, b);
+        ptr += bsize();
+    }
+}
+
+isize
+FloppyDisk::numSectors(isize t) const
+{
+    if (t < 0 || t >= numTracks()) return 0;
+
+    return D64File::trackDefaults(t).sectors;
 }
 
 void

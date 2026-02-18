@@ -161,7 +161,7 @@ public:
 
 public:
 
-    isize capacity() const override { fatalError; }
+    isize capacity() const override { return 802; }
     isize bsize() const override { return 256; }
     void readBlock(u8 *dst, isize nr) const override;
     void readBlocks(u8 *dst, Range<isize> range) const override;
@@ -175,9 +175,9 @@ public:
 
 public:
     
-    isize numCyls() const override { return 0; }
+    isize numCyls() const override { return 42; }
     isize numHeads() const override { return 1; }
-    isize numSectors(isize t) const override { return 0; }
+    isize numSectors(isize t) const override;
     void readTrack(u8 *dst, isize nr) const override;
     void writeTrack(const u8 *src, isize nr) override;
     
