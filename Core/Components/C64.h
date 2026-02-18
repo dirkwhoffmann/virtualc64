@@ -57,7 +57,6 @@
 #include "Media/RomFile.h"
 #include "Media/TAPFile.h"
 #include "Media/CRTFile.h"
-#include "FileSystems/OldFileSystem.h" // DEPRECATED
 #include "FileSystems/CBM/FileSystem.h"
 
 // Misc

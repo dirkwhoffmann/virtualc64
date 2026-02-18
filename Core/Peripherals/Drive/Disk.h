@@ -25,7 +25,6 @@ using retro::vault::ImageFormat;
 namespace vc64 {
 
 class DiskAnalyzer;
-class OldFileSystem;
 
 class Disk final : public CoreObject {
     
@@ -117,7 +116,6 @@ public:
     Disk(const fs::path &path, bool wp = false) { init(path, wp); }
     Disk(const FloppyDiskImage &file, bool wp = false) { init(file, wp); }
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
-    // [[deprecated]] Disk(const OldFileSystem &device, bool wp = false) { init(device, wp); }
     Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
     Disk(class AnyCollection &archive, bool wp = false) { init(archive, wp); }
     Disk(SerReader &reader) { init(reader); }
@@ -127,9 +125,7 @@ private:
     void init(const fs::path &path, bool wp);
     void init(const class FloppyDiskImage &file, bool wp);
     void init(DOSType type, PETName<16> name, bool wp);
-    // [[deprecated]] void init(const class OldFileSystem &device, bool wp);
     void init(const class G64File &g64, bool wp);
-    // void init(const class D64File &d64, bool wp);
     void init(class AnyCollection &archive, bool wp);
     void init(SerReader &reader);
     
@@ -345,31 +341,6 @@ public:
     // Encodes a G64 file
     void encodeG64(const G64File &a);
     
-    /* Encodes a file system. The method creates sync marks, GRC encoded header
-     * and data blocks, checksums and gaps. If alignTracks is true, the first
-     * sector always starts at the beginning of a track.
-     */
-    // [[deprecated]] void encode(const OldFileSystem &fs, bool alignTracks = false);
-    
-private:
-    
-    /* Encode a single track. This function translates the logical byte
-     * sequence of a single track into the native VC1541 byte representation.
-     * The native representation includes sync marks, GCR data etc.
-     * 'tailGapEven' specifies the number of tail bytes follwowing sectors with
-     * even sector numbers. 'tailGapOdd' specifies the number of tail bytes
-     * follwowing sectors with odd sector numbers. The number of written bits
-     * is returned.
-     */
-    // [[deprecated]] isize encodeTrack(const OldFileSystem &fs, Track t, isize gap, HeadPos start);
-    
-    /* Encode a single sector. This function translates the logical byte
-     * sequence of a single sector into the native VC1541 byte representation.
-     * The sector is closed by 'gap' tail gap bytes. The number of written bits
-     * is returned.
-     */
-    // [[deprecated]] isize encodeSector(const OldFileSystem &fs, Track t, Sector sector, HeadPos start, isize gap);
-
     
     //
     // Exporting data
@@ -377,7 +348,6 @@ private:
 
     void writeToFile(const fs::path& path);
     void writeToFile(const fs::path& path, ImageFormat fmt);
-
 };
 
 }
