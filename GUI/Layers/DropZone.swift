@@ -59,65 +59,62 @@ class DropZone: Layer {
         let suffix = enabled[zone] ? (inUse[zone] ? "InUse" : "Empty") : "Disabled"
         return NSImage(named: "dropZone\(zone)\(suffix)")!
     }
-    
-    private func setType(_ type: vc64.FileType) {
         
-        if let emu = emu {
-            
-            let info8 = emu.drive8.info
-            let config8 = emu.drive8.config
-            
-            let info9 = emu.drive9.info
-            let config9 = emu.drive9.config
-            
-            inUse[0] = info8.hasDisk
-            inUse[1] = info9.hasDisk
-            inUse[2] = false
-            inUse[3] = emu.expansionport.cartridgeAttached()
-            inUse[4] = emu.datasette.info.hasTape
-            
-            if url?.hasDirectoryPath == true {
-                
-                enabled = [config8.connected, config9.connected, false, false, false]
-                
-            } else {
-                
-                switch type {
-                    
-                case .T64, .P00, .PRG:
-                    enabled = [config8.connected, config9.connected, true, false, false]
-                    
-                case .D64, .G64:
-                    enabled = [config8.connected, config9.connected, false, false, false]
-                    
-                case .CRT:
-                    enabled = [false, false, false, true, false]
-                    
-                case .TAP:
-                    enabled = [false, false, false, false, true]
-                    
-                default:
-                    
-                    enabled = [false, false, false, false, false]
-                }
-            }
-            
-            for i in 0...4 {
-                
-                zones[i].image = image(zone: i)
-            }
-            
-            // Hide all drop zones if none is enabled
-            hideAll = !enabled[0] && !enabled[1] && !enabled[2] && !enabled[3] && !enabled[4]
-        }
-    }
-    
     func open(url: URL, delay: Double) {
         
+        guard let emu = emu else { return }
+        
         self.url = url
-        let type = MediaFileProxy.type(of: url)
+        
+        let about = DiskImageProxy.about(url)
+        let info8 = emu.drive8.info
+        let config8 = emu.drive8.config
+        let info9 = emu.drive9.info
+        let config9 = emu.drive9.config
+        
+        inUse[0] = info8.hasDisk
+        inUse[1] = info9.hasDisk
+        inUse[2] = false
+        inUse[3] = emu.expansionport.cartridgeAttached()
+        inUse[4] = emu.datasette.info.hasTape
+        
+        if url.hasDirectoryPath {
+            
+            enabled = [config8.connected, config9.connected, false, false, false]
+            
+        } else  if about.format != .UNKNOWN {
+            
+            enabled = [config8.connected, config9.connected, false, false, false]
 
-        setType(type)
+        } else {
+            
+            switch MediaFileProxy.type(of: url) {
+                
+            case .T64, .P00, .PRG:
+                enabled = [config8.connected, config9.connected, true, false, false]
+                
+            case .D64, .G64:
+                enabled = [config8.connected, config9.connected, false, false, false]
+                
+            case .CRT:
+                enabled = [false, false, false, true, false]
+                
+            case .TAP:
+                enabled = [false, false, false, false, true]
+                
+            default:
+                
+                enabled = [false, false, false, false, false]
+            }
+        }
+        
+        for i in 0...4 {
+            zones[i].image = image(zone: i)
+        }
+        
+        // Hide all drop zones if none is enabled
+        hideAll = !enabled[0] && !enabled[1] && !enabled[2] && !enabled[3] && !enabled[4]
+        
         open(delay: delay)
         resize()
     }

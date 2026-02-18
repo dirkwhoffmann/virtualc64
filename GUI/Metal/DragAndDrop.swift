@@ -40,10 +40,10 @@ extension MetalView {
             if let url = NSURL(from: pasteBoard) as URL? {
                 
                 // Unpack the file if it is compressed
-                let dropUrl = url.unpacked(maxSize: 2048 * 1024)
+                dropUrl = url.unpacked(maxSize: 2048 * 1024)
                 
                 // Open the drop zone layer
-                parent.renderer.dropZone.open(url: dropUrl, delay: 0.25)
+                parent.renderer.dropZone.open(url: dropUrl!, delay: 0.25)
             }
                 
             return NSDragOperation.copy

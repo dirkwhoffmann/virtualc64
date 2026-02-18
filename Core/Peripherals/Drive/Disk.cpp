@@ -176,6 +176,7 @@ Disk::init(DOSType type, PETName<16> name, bool wp)
     }
 }
 
+/*
 void
 Disk::init(const OldFileSystem &fs, bool wp)
 {
@@ -183,6 +184,7 @@ Disk::init(const OldFileSystem &fs, bool wp)
     encode(fs);
     setWriteProtection(wp);
 }
+*/
 
 void
 Disk::init(const G64File &g64, bool wp)
@@ -540,6 +542,8 @@ Disk::encodeG64(const G64File &a)
     }
 }
 
+#if 0
+
 void
 Disk::encode(const OldFileSystem &fs, bool alignTracks)
 {    
@@ -750,6 +754,7 @@ Disk::encodeSector(const OldFileSystem &fs, Track t, Sector s, HeadPos start, is
     // Return the number of encoded bits
     return offset - start;
 }
+#endif
 
 void
 Disk::writeToFile(const fs::path& path)

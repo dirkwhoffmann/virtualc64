@@ -1560,7 +1560,7 @@ NSString *EventSlotName(EventSlot slot)
 
 
 //
-// DiskFileProxy
+// DiskImageProxy
 //
 
 @implementation DiskImageProxy
