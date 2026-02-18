@@ -127,11 +127,29 @@ FloppyDisk::FloppyDisk()
 void
 FloppyDisk::init(const fs::path &path, bool wp)
 {
+    if (isDirectory(path)) {
+        
+        // Create a D64 container with a file system on top
+        auto d64 = D64File();
+        auto vol = Volume(d64);
+        auto fs  = FileSystem(vol);
+        
+        // Format disk
+        fs.format(FSFormat::CBM);
+        fs.setName(PETName<16>("NEW DISK"));
+        fs.importer.import(path);
+        fs.flush();
+        
+        // Initialize the disk with the formatted D64 container
+        init(d64, wp);
+        return;
+    }
+    
     if (auto info = FloppyDiskImage::about(path)) {
         
         // path points to a disk image
         switch (info->format) {
-
+                
             case ImageFormat::D64:
                 
                 printf("D64 file: %s\n", path.string().c_str());
@@ -152,7 +170,9 @@ FloppyDisk::init(const fs::path &path, bool wp)
         return;
     }
     
-    // TODO: 
+    throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
+    
+    // TODO:
     // auto fs = OldFileSystem(path);
     // init(fs, wp);
 }
@@ -537,6 +557,7 @@ FloppyDisk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
         } else {
 
             // The decoder failed to decode this sector.
+            logdebug(GCR_DEBUG, "   Failed to decode sector %ld\n", s);
             break;
         }
     }
@@ -581,8 +602,11 @@ FloppyDisk::encodeDisk(const FloppyDiskImage &image)
         
         auto gcr = image.encode(t).byteView();
 
-        memcpy(data.track[t], gcr.span().data(), gcr.span().size());
-        length.track[t][0] = length.track[t][1] = gcr.size() * 8;
+        // On the C64 side, track counting starts at 1
+        TrackNr tt = t + 1;
+        
+        memcpy(data.track[tt], gcr.span().data(), gcr.span().size());
+        length.track[tt][0] = length.track[tt][1] = gcr.size() * 8;
     }
 
     /*

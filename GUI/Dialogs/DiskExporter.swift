@@ -38,8 +38,11 @@ class DiskExporter: DialogController {
     
     func showSheet(diskDrive nr: Int) {
 
-        guard emu != nil else { return }
-        super.showAsSheet()
+        if let emu = emu {
+            
+            drive = emu.drive(nr)
+            super.showAsSheet()
+        }
     }
 
     func updateFormatPopup() {
@@ -163,7 +166,8 @@ class DiskExporter: DialogController {
                 if let url = self.savePanel.url {
                     if self.export(url: url) {
                         self.hide()
-                    }                }
+                    }
+                }
             }
         })
     }

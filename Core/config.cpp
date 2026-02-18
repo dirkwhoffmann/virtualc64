@@ -64,7 +64,7 @@ debugflag PIA_DEBUG       = 0;
 debugflag SER_DEBUG       = 0;
 debugflag DSK_DEBUG       = 0;
 debugflag DSKCHG_DEBUG    = 0;
-debugflag GCR_DEBUG       = 0;
+debugflag GCR_DEBUG       = 1;
 debugflag FS_DEBUG        = 0;
 debugflag PAR_DEBUG       = 0;
 

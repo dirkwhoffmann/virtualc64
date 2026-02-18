@@ -500,6 +500,7 @@ public:
     void insertDisk(const fs::path &path, bool wp);
     void insertDisk(std::unique_ptr<FloppyDisk> disk);
     void insertNewDisk(FSFormat fstype, string name);
+    // void insertFolder(const fs::path &path, bool wp);
     void insertG64(const class G64File &g64, bool wp);
     void insertCollection(class AnyCollection &archive, bool wp);
     void ejectDisk();
