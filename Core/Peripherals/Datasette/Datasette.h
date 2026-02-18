@@ -287,7 +287,6 @@ public:
 
     void exportTAP(const fs::path &path) const;
     std::unique_ptr<class TAPFile> makeTAP() const;
-    // [[deprecated]] MediaFile *exportTAP() const;
 };
 
 }

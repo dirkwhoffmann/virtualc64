@@ -11,6 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "VirtualC64.h"
 #include "Media/AnyFile.h"
 #include "Media/CRTFile.h"
 #include "Media/D64File.h"
@@ -22,8 +23,105 @@
 #include "Media/Snapshot.h"
 #include "Media/T64File.h"
 #include "Media/TAPFile.h"
+#include "Workspace.h"
 
 namespace vc64 {
+
+FileType
+AnyFile::type(const fs::path &path)
+{
+    if (Workspace::isCompatible(path))  return FileType::WORKSPACE;
+    if (Snapshot::isCompatible(path))   return FileType::SNAPSHOT;
+    if (Script::isCompatible(path))     return FileType::SCRIPT;
+    if (CRTFile::isCompatible(path))    return FileType::CRT;
+    if (T64File::isCompatible(path))    return FileType::T64;
+    if (P00File::isCompatible(path))    return FileType::P00;
+    if (PRGFile::isCompatible(path))    return FileType::PRG;
+    if (D64File::isCompatible(path))    return FileType::D64;
+    if (G64File::isCompatible(path))    return FileType::G64;
+    if (TAPFile::isCompatible(path))    return FileType::TAP;
+
+    if (RomFile::isCompatible(path)) {
+
+        Buffer<u8> buffer(path);
+        if (RomFile::isRomBuffer(RomType::BASIC, buffer)) return FileType::BASIC_ROM;
+        if (RomFile::isRomBuffer(RomType::CHAR, buffer)) return FileType::CHAR_ROM;
+        if (RomFile::isRomBuffer(RomType::KERNAL, buffer)) return FileType::KERNAL_ROM;
+        if (RomFile::isRomBuffer(RomType::VC1541, buffer)) return FileType::VC1541_ROM;
+    }
+
+    return FileType::UNKNOWN;
+}
+
+AnyFile *
+AnyFile::make(const fs::path &path)
+{
+    return make(path, type(path));
+}
+
+AnyFile *
+AnyFile::make(const fs::path &path, FileType type)
+{
+    switch (type) {
+
+        case FileType::WORKSPACE:  return new Workspace(path);
+        case FileType::SNAPSHOT:   return new Snapshot(path);
+        case FileType::SCRIPT:     return new Script(path);
+        case FileType::CRT:        return new CRTFile(path);
+        case FileType::T64:        return new T64File(path);
+        case FileType::PRG:        return new PRGFile(path);
+        case FileType::P00:        return new P00File(path);
+        case FileType::D64:        return new D64File(path);
+        case FileType::G64:        return new G64File(path);
+        case FileType::TAP:        return new TAPFile(path);
+        case FileType::BASIC_ROM:  return new RomFile(path);
+        case FileType::CHAR_ROM:   return new RomFile(path);
+        case FileType::KERNAL_ROM: return new RomFile(path);
+        case FileType::VC1541_ROM: return new RomFile(path);
+
+        default:
+            return nullptr;
+    }
+}
+
+AnyFile *
+AnyFile::make(const u8 *buf, isize len, FileType type)
+{
+    switch (type) {
+
+        case FileType::SNAPSHOT:   return new Snapshot(buf, len);
+        case FileType::SCRIPT:     return new Script(buf, len);
+        case FileType::CRT:        return new CRTFile(buf, len);
+        case FileType::T64:        return new T64File(buf, len);
+        case FileType::PRG:        return new PRGFile(buf, len);
+        case FileType::P00:        return new P00File(buf, len);
+        case FileType::D64:        return new D64File(buf, len);
+        case FileType::G64:        return new G64File(buf, len);
+        case FileType::TAP:        return new TAPFile(buf, len);
+        case FileType::BASIC_ROM:  return new RomFile(buf, len);
+        case FileType::CHAR_ROM:   return new RomFile(buf, len);
+        case FileType::KERNAL_ROM: return new RomFile(buf, len);
+        case FileType::VC1541_ROM: return new RomFile(buf, len);
+            
+        default:
+            return nullptr;
+    }
+}
+
+AnyFile *
+AnyFile::make(DriveAPI &drive, FileType type)
+{
+    auto disk = drive.disk.get();
+    if (!disk) return nullptr;
+
+    switch (type) {
+
+        case FileType::G64:        return new G64File(*disk);
+
+        default:
+            return nullptr;
+    }
+}
 
 void
 AnyFile::init(isize capacity)

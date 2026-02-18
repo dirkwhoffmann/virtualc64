@@ -13,6 +13,8 @@
 #pragma once
 
 #include "CoreObject.h"
+#include "C64Types.h"
+#include "MediaFileTypes.h"
 #include "MediaFile.h"
 #include "PETName.h"
 #include "utl/storage/Buffer.h"
@@ -63,7 +65,7 @@ using utl::Buffer;
  *               ---------   ---------    ---------    ---------
  */
 
-class AnyFile : public CoreObject, public MediaFile {
+class AnyFile : public CoreObject {
 
 public:
 
@@ -72,6 +74,20 @@ public:
 
     // The raw data of this file
     Buffer<u8> data;
+
+    
+    //
+    // Static methods
+    //
+
+    // Determines the type of an arbitrary file on disk
+    static FileType type(const fs::path &path);
+
+    // Factory methods
+    static AnyFile *make(const fs::path &path);
+    static AnyFile *make(const fs::path &path, FileType type);
+    static AnyFile *make(const u8 *buf, isize len, FileType type);
+    static AnyFile *make(struct DriveAPI &drive, FileType type);
 
     
     //
@@ -88,18 +104,32 @@ public:
     void init(const std::filesystem::path &path);
     void init(const u8 *buf, isize len);
 
-
+    
     //
-    // Methods from MediaFile
+    // Methods
     //
 
 public:
+    
+    // Returns the media type of this file
+    virtual FileType type() const { return FileType::UNKNOWN; }
 
-    virtual isize getSize() const override { return data.size; }
-    virtual u8 *getData() const override { return data.ptr; }
-    virtual u64 fnv64() const override { return data.fnv64(); }
-    virtual u32 crc32() const override { return data.crc32(); }
+    // Returns the size of this file
+    virtual isize getSize() const { return data.size; }
 
+    // Returns a textual representation of the file size
+    // virtual string getSizeAsString() const;
+
+    // Returns a pointer to the file data
+    virtual u8 *getData() const { return data.ptr; }
+
+    // Returns the logical name of this file
+    // virtual string name() const = 0;
+
+    // Returns a fingerprint (hash value) for this file
+    virtual u64 fnv64() const { return data.fnv64(); }
+    virtual u32 crc32() const { return data.crc32(); }
+    
 
     //
     // Accessing
@@ -108,7 +138,7 @@ public:
 public:
     
     // Returns the logical name of this file
-    virtual string name() const override;
+    virtual string name() const;
     virtual PETName<16> getName() const;
 
     // Returns a data byte
@@ -123,8 +153,8 @@ public:
     //
 
     // Copies the file contents into a buffer
-    virtual void flash(u8 *buf, isize offset, isize len) const override;
-    virtual void flash(u8 *buf, isize offset = 0) const override;
+    virtual void flash(u8 *buf, isize offset, isize len) const;
+    virtual void flash(u8 *buf, isize offset = 0) const;
 
     
     //
@@ -137,7 +167,7 @@ protected:
     virtual bool isCompatibleBuffer(const u8 *buf, isize len) const = 0;
     bool isCompatibleBuffer(const Buffer<u8> &buffer) const;
 
-    isize readFromBuffer(const u8 *buf, isize len) override;
+    isize readFromBuffer(const u8 *buf, isize len);
     isize readFromBuffer(const Buffer<u8> &buffer);
 
 public:
@@ -147,9 +177,9 @@ public:
     isize writeToBuffer(u8 *buf, isize offset, isize len);
     isize writeToBuffer(Buffer<u8> &buffer, isize offset, isize len);
 
-    isize writeToStream(std::ostream &stream) override;
-    isize writeToFile(const std::filesystem::path &path) override;
-    isize writeToBuffer(u8 *buf) override;
+    isize writeToStream(std::ostream &stream);
+    isize writeToFile(const std::filesystem::path &path);
+    isize writeToBuffer(u8 *buf);
     isize writeToBuffer(Buffer<u8> &buffer);
 
 private:

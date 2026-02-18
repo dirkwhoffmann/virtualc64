@@ -202,8 +202,7 @@ public:
     // Exporting
     //
 
-    //
-    // [[deprecated]] MediaFile *exportCRT() const;
+    // Exports the cartridge in CRT format
     void exportCRT(const fs::path &path) const;
     
 

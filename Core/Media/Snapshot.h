@@ -105,9 +105,9 @@ public:
     // Accessing
     //
 
-    std::pair <isize,isize> previewImageSize() const override;
-    const u32 *previewImageData() const override;
-    time_t timestamp() const override;
+    std::pair <isize,isize> previewImageSize() const;
+    const u32 *previewImageData() const;
+    time_t timestamp() const;
 
     // Checks the snapshot version number
     bool isTooOld() const;
@@ -133,11 +133,14 @@ public:
     //
 
     // Returns the compression method
-    Compressor compressor() const override { return Compressor(getHeader()->compressor); }
+    Compressor compressor() const { return Compressor(getHeader()->compressor); }
 
+    // Convenience wrapper
+    bool isCompressed() const { return compressor() != Compressor::NONE; }
+    
     // Compresses or uncompresses the snapshot
-    void compress(Compressor method) override;
-    void uncompress() override;
+    void compress(Compressor method);
+    void uncompress();
 };
 
 }

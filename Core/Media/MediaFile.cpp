@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "MediaFile.h"
+// #include "MediaFile.h"
 #include "VirtualC64.h"
 #include "Media/CRTFile.h"
 #include "Media/D64File.h"
@@ -24,6 +24,8 @@
 #include "Media/T64File.h"
 #include "Media/TAPFile.h"
 #include "Workspace.h"
+
+#if 0
 
 namespace vc64 {
 
@@ -147,3 +149,6 @@ MediaFile::getSizeAsString() const
 }
 
 }
+
+#endif
+

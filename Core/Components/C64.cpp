@@ -1634,27 +1634,6 @@ C64::loadSnapshot(const Snapshot &snapshot)
     msgQueue.put(Msg::SNAPSHOT_RESTORED);
 }
 
-/*
-void
-C64::loadSnapshot(const MediaFile &file)
-{
-    const Snapshot &snap = dynamic_cast<const Snapshot &>(file);
-
-    // Make a copy so we can modify the snapshot
-    Snapshot snapshot(snap);
-
-    // Uncompress the snapshot
-    snapshot.uncompress();
-
-    // Restore the saved state
-    load(snapshot.getSnapshotData());
-
-    // Inform the GUI
-    msgQueue.put(vic.pal() ? Msg::PAL : Msg::NTSC);
-    msgQueue.put(Msg::SNAPSHOT_RESTORED);
-}
-*/
-
 void
 C64::saveSnapshot(const fs::path &path, Compressor compressor)
 {
@@ -2146,85 +2125,6 @@ C64::flashNew(const AnyFile &file, isize nr)
         throw IOError(IOError::FILE_TYPE_MISMATCH);
     }
 }
-
-/*
-void
-C64::flash(const MediaFile &file)
-{
-    switch (file.type()) {
-            
-        case FileType::BASIC_ROM:
-            file.flash(mem.rom, 0xA000);
-            break;
-            
-        case FileType::CHAR_ROM:
-            file.flash(mem.rom, 0xD000);
-            break;
-            
-        case FileType::KERNAL_ROM:
-            file.flash(mem.rom, 0xE000);
-            break;
-            
-        case FileType::VC1541_ROM:
-            drive8.mem.loadRom(dynamic_cast<const RomFile &>(file));
-            drive9.mem.loadRom(dynamic_cast<const RomFile &>(file));
-            break;
-            
-        case FileType::SNAPSHOT:
-            loadSnapshot(dynamic_cast<const Snapshot &>(file));
-            break;
-            
-        case FileType::D64:
-        case FileType::T64:
-        case FileType::P00:
-        case FileType::PRG:
-            
-            flash(file, 0);
-            break;
-            
-        default:
-            fatalError;
-    }
-}
-
-void
-C64::flash(const MediaFile &file, isize nr)
-{
-    try {
-        
-        const AnyCollection &collection = dynamic_cast<const AnyCollection &>(file);
-        auto addr = (u16)collection.itemLoadAddr(nr);
-        auto size = collection.itemSize(nr);
-        if (size <= 2) return;
-        
-        switch (collection.type()) {
-                
-            case FileType::D64:
-            case FileType::T64:
-            case FileType::P00:
-            case FileType::PRG:
-                
-                // Flash data into memory
-                size = std::min(size - 2, isize(0x10000 - addr));
-                collection.copyItem(nr, mem.ram + addr, size, 2);
-                
-                // Rectify zero page
-                mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
-                mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
-                break;
-                
-            default:
-                fatalError;
-        }
-        
-        msgQueue.put(Msg::FILE_FLASHED);
-        
-    } catch (...) {
-        
-        throw IOError(IOError::FILE_TYPE_MISMATCH);
-    }
-}
-*/
 
 void
 C64::flash(const FileSystem &fs, isize nr)

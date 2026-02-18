@@ -2108,15 +2108,12 @@ NSString *EventSlotName(EventSlot slot)
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
-    auto fileType = MediaFile::type([url fileSystemRepresentation]);
+    if (auto t = [self romType:url])
+        return *t == type;
 
-    return 
-    (fileType == FileType::BASIC_ROM && type == RomType::BASIC) ||
-    (fileType == FileType::CHAR_ROM && type == RomType::CHAR) ||
-    (fileType == FileType::KERNAL_ROM && type == RomType::KERNAL) ||
-    (fileType == FileType::VC1541_ROM && type == RomType::VC1541);
+    return false;
 }
-
+    
 - (void)installOpenRoms
 {
     [self emu]->c64.installOpenRoms();
