@@ -93,7 +93,7 @@ class DropZone: Layer {
             case .T64, .P00, .PRG:
                 enabled = [config8.connected, config9.connected, true, false, false]
                 
-            case .D64, .G64:
+            case .G64:
                 enabled = [config8.connected, config9.connected, false, false, false]
                 
             case .CRT:

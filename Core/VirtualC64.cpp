@@ -1415,7 +1415,7 @@ ExpansionPortAPI::exportCRT(const fs::path &path) const
 // Disk
 //
 
-Disk *
+FloppyDisk *
 DiskAPI::get()
 {
     return drive->disk.get();

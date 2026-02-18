@@ -22,7 +22,7 @@ using retro::vault::ImageError;
 
 namespace vc64 {
 
-const TrackDefaults Disk::trackDefaults[43] = {
+const TrackDefaults FloppyDisk::trackDefaults[43] = {
     
     { 0, 0, 0, 0, 0, 0 }, // Padding
     
@@ -80,47 +80,47 @@ const TrackDefaults Disk::trackDefaults[43] = {
 };
 
 isize
-Disk::numberOfSectorsInTrack(Track t)
+FloppyDisk::numberOfSectorsInTrack(Track t)
 {
     return (t < 1) ? 0 : (t < 18) ? 21 : (t < 25) ? 19 : (t < 31) ? 18 : (t < 43) ? 17 : 0;
 }
 isize
-Disk::numberOfSectorsInHalftrack(Halftrack ht)
+FloppyDisk::numberOfSectorsInHalftrack(Halftrack ht)
 {
     return numberOfSectorsInTrack((ht + 1) / 2);
 }
 
 isize
-Disk::speedZoneOfTrack(Track t)
+FloppyDisk::speedZoneOfTrack(Track t)
 {
     return (t < 18) ? 3 : (t < 25) ? 2 : (t < 31) ? 1 : 0;
 }
 
 isize
-Disk::speedZoneOfHalftrack(Halftrack ht)
+FloppyDisk::speedZoneOfHalftrack(Halftrack ht)
 {
     return (ht < 35) ? 3 : (ht < 49) ? 2 : (ht < 61) ? 1 : 0;
 }
 
 bool
-Disk::isValidTrackSectorPair(Track t, Sector s)
+FloppyDisk::isValidTrackSectorPair(Track t, Sector s)
 {
     return s < numberOfSectorsInTrack(t);
 }
 
 bool
-Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
+FloppyDisk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
 {
     return s < numberOfSectorsInHalftrack(ht);
 }
 
-Disk::Disk()
+FloppyDisk::FloppyDisk()
 {    
     clearDisk();
 }
 
 void
-Disk::init(const fs::path &path, bool wp)
+FloppyDisk::init(const fs::path &path, bool wp)
 {
     if (auto info = FloppyDiskImage::about(path)) {
         
@@ -153,14 +153,14 @@ Disk::init(const fs::path &path, bool wp)
 }
 
 void
-Disk::init(const class FloppyDiskImage &file, bool wp)
+FloppyDisk::init(const class FloppyDiskImage &file, bool wp)
 {
     encodeDisk(file);
     setWriteProtection(wp);
 }
 
 void
-Disk::init(FSFormat type, PETName<16> name, bool wp)
+FloppyDisk::init(FSFormat type, PETName<16> name, bool wp)
 {
     assert(retro::vault::cbm::FSFormatEnum::isValid(type));
     
@@ -188,7 +188,7 @@ Disk::init(const OldFileSystem &fs, bool wp)
 */
 
 void
-Disk::init(const G64File &g64, bool wp)
+FloppyDisk::init(const G64File &g64, bool wp)
 {
     clearDisk();
     encodeG64(g64);
@@ -196,7 +196,7 @@ Disk::init(const G64File &g64, bool wp)
 }
 
 void
-Disk::init(AnyCollection &collection, bool wp)
+FloppyDisk::init(AnyCollection &collection, bool wp)
 {
     // TODO:
     // auto fs = OldFileSystem(collection);
@@ -204,13 +204,13 @@ Disk::init(AnyCollection &collection, bool wp)
 }
 
 void
-Disk::init(SerReader &reader)
+FloppyDisk::init(SerReader &reader)
 {
     serialize(reader);
 }
 
 void
-Disk::_dump(Category category, std::ostream &os) const
+FloppyDisk::_dump(Category category, std::ostream &os) const
 {
     using namespace utl;
     
@@ -237,7 +237,7 @@ Disk::_dump(Category category, std::ostream &os) const
 }
 
 void
-Disk::setModified(bool b)
+FloppyDisk::setModified(bool b)
 {
     if (b != modified) {
         modified = b;
@@ -245,7 +245,7 @@ Disk::setModified(bool b)
 }
 
 void
-Disk::encodeGcr(u8 value, Track t, HeadPos offset)
+FloppyDisk::encodeGcr(u8 value, Track t, HeadPos offset)
 {
     assert(isTrackNumber(t));
     
@@ -266,7 +266,7 @@ Disk::encodeGcr(u8 value, Track t, HeadPos offset)
 }
 
 void
-Disk::encodeGcr(u8 *values, isize length, Track t, HeadPos offset)
+FloppyDisk::encodeGcr(u8 *values, isize length, Track t, HeadPos offset)
 {
     for (isize i = 0; i < length; i++, values++, offset += 10) {
         encodeGcr(*values, t, offset);
@@ -274,20 +274,20 @@ Disk::encodeGcr(u8 *values, isize length, Track t, HeadPos offset)
 }
 
 bool
-Disk::isValidHeadPos(Halftrack ht, HeadPos pos) const
+FloppyDisk::isValidHeadPos(Halftrack ht, HeadPos pos) const
 {
     return isHalftrackNumber(ht) && pos >= 0 && pos < length.halftrack[ht];
 }
 
 HeadPos
-Disk::wrap(Halftrack ht, HeadPos pos) const
+FloppyDisk::wrap(Halftrack ht, HeadPos pos) const
 {
     auto len = length.halftrack[ht];
     return pos < 0 ? pos + len : pos >= len ? pos - len : pos;
 }
 
 u64
-Disk::_bitDelay(Halftrack ht, HeadPos pos) const {
+FloppyDisk::_bitDelay(Halftrack ht, HeadPos pos) const {
     
     assert(isValidHeadPos(ht, pos));
 
@@ -307,14 +307,14 @@ Disk::_bitDelay(Halftrack ht, HeadPos pos) const {
 }
 
 void
-Disk::clearHalftrack(Halftrack ht)
+FloppyDisk::clearHalftrack(Halftrack ht)
 {
     memset(&data.halftrack[ht], 0x55, sizeof(data.halftrack[ht]));
     length.halftrack[ht] = sizeof(data.halftrack[ht]) * 8;
 }
 
 void
-Disk::clearDisk()
+FloppyDisk::clearDisk()
 {
     // memset(&data, 0x55, sizeof(data));
     for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
@@ -325,7 +325,7 @@ Disk::clearDisk()
 }
 
 bool
-Disk::halftrackIsEmpty(Halftrack ht) const
+FloppyDisk::halftrackIsEmpty(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     for (usize i = 0; i < sizeof(data.halftrack[ht]); i++)
@@ -334,14 +334,14 @@ Disk::halftrackIsEmpty(Halftrack ht) const
 }
 
 bool
-Disk::trackIsEmpty(Track t) const
+FloppyDisk::trackIsEmpty(Track t) const
 {
     assert(isTrackNumber(t));
     return halftrackIsEmpty(2 * t - 1);
 }
 
 isize
-Disk::nonemptyHalftracks() const
+FloppyDisk::nonemptyHalftracks() const
 {
     isize result = 0;
     
@@ -354,14 +354,14 @@ Disk::nonemptyHalftracks() const
 }
 
 isize
-Disk::lengthOfTrack(Track t) const
+FloppyDisk::lengthOfTrack(Track t) const
 {
     assert(isTrackNumber(t));
     return length.track[t][0];
 }
 
 isize
-Disk::lengthOfHalftrack(Halftrack ht) const
+FloppyDisk::lengthOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     return length.halftrack[ht];
@@ -373,7 +373,7 @@ Disk::lengthOfHalftrack(Halftrack ht) const
 //
 
 isize
-Disk::decodeDisk(u8 *dest)
+FloppyDisk::decodeDisk(u8 *dest)
 {
     // Analyze the GCR bit stream
     DiskAnalyzer analyzer(*this);
@@ -393,7 +393,7 @@ Disk::decodeDisk(u8 *dest)
 }
 
 isize
-Disk::decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer)
+FloppyDisk::decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer)
 {
     isize numBytes = 0;
 
@@ -413,7 +413,7 @@ Disk::decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer)
 }
 
 isize
-Disk::decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer)
+FloppyDisk::decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer)
 {
     assert(isTrackNumber(t));
     
@@ -421,7 +421,7 @@ Disk::decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer)
 }
 
 isize
-Disk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
+FloppyDisk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
 {
     assert(isHalftrackNumber(ht));
     
@@ -446,7 +446,7 @@ Disk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
 }
 
 isize
-Disk::decodeSector(Halftrack ht, isize offset, u8 *dest, DiskAnalyzer &analyzer)
+FloppyDisk::decodeSector(Halftrack ht, isize offset, u8 *dest, DiskAnalyzer &analyzer)
 {
     // The first byte must be 0x07 (indicating a data block)
     assert(analyzer.decodeGcr(ht, offset) == 0x07);
@@ -467,7 +467,7 @@ Disk::decodeSector(Halftrack ht, isize offset, u8 *dest, DiskAnalyzer &analyzer)
 //
 
 void
-Disk::encodeDisk(const FloppyDiskImage &image)
+FloppyDisk::encodeDisk(const FloppyDiskImage &image)
 {
     using namespace retro::vault;
     
@@ -515,7 +515,7 @@ Disk::encodeDisk(const FloppyDiskImage &image)
 }
 
 void
-Disk::encodeG64(const G64File &a)
+FloppyDisk::encodeG64(const G64File &a)
 {
     logdebug(GCR_DEBUG, "Encoding G64 archive\n");
 
@@ -544,7 +544,7 @@ Disk::encodeG64(const G64File &a)
 }
 
 void
-Disk::writeToFile(const fs::path& path)
+FloppyDisk::writeToFile(const fs::path& path)
 {
     auto ext = utl::uppercased(path.extension().string());
 
@@ -554,7 +554,7 @@ Disk::writeToFile(const fs::path& path)
 }
 
 void
-Disk::writeToFile(const fs::path& path, ImageFormat fmt)
+FloppyDisk::writeToFile(const fs::path& path, ImageFormat fmt)
 {
     switch (fmt) {
 

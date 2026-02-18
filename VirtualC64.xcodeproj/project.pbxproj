@@ -129,7 +129,7 @@
 		504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433E24AF29AC00E69CAE /* ControlPort.cpp */; };
 		504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434424AF29AC00E69CAE /* Keyboard.cpp */; };
 		504C43A524AF29AC00E69CAE /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434524AF29AC00E69CAE /* ExpansionPort.cpp */; };
-		504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434824AF29AC00E69CAE /* Disk.cpp */; };
+		504C43A624AF29AC00E69CAE /* FloppyDisk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434824AF29AC00E69CAE /* FloppyDisk.cpp */; };
 		504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434A24AF29AC00E69CAE /* VIA.cpp */; };
 		504C43A824AF29AC00E69CAE /* DriveMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434B24AF29AC00E69CAE /* DriveMemory.cpp */; };
 		504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434D24AF29AC00E69CAE /* Drive.cpp */; };
@@ -248,7 +248,7 @@
 		50726F792961C9DC0031F2F5 /* ParallelCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParallelCable.cpp */; };
 		50726F7A2961C9DC0031F2F5 /* DiskAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */; };
 		50726F7B2961C9DC0031F2F5 /* Drive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434D24AF29AC00E69CAE /* Drive.cpp */; };
-		50726F7C2961C9DC0031F2F5 /* Disk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434824AF29AC00E69CAE /* Disk.cpp */; };
+		50726F7C2961C9DC0031F2F5 /* FloppyDisk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434824AF29AC00E69CAE /* FloppyDisk.cpp */; };
 		50726F7D2961C9E80031F2F5 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085D89B25B848940043B15C /* Joystick.cpp */; };
 		50726F7E2961C9E80031F2F5 /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FC24AF29AB00E69CAE /* Mouse.cpp */; };
 		50726F7F2961C9E80031F2F5 /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FE24AF29AB00E69CAE /* Mouse1350.cpp */; };
@@ -811,7 +811,7 @@
 		503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotViewer.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504268AC24F0F76F006BB841 /* C64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
-		504268AD24F12705006BB841 /* DiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskTypes.h; sourceTree = "<group>"; };
+		504268AD24F12705006BB841 /* FloppyDiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloppyDiskTypes.h; sourceTree = "<group>"; };
 		5042FB102D4E121600E4A167 /* FilePanels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePanels.swift; sourceTree = "<group>"; };
 		50441A872B93CE2600102A4D /* VirtualC64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64Types.h; sourceTree = "<group>"; };
 		50441A8A2B9495BE00102A4D /* communication.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = communication.md; sourceTree = "<group>"; };
@@ -983,13 +983,13 @@
 		504C434424AF29AC00E69CAE /* Keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Keyboard.cpp; sourceTree = "<group>"; };
 		504C434524AF29AC00E69CAE /* ExpansionPort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPort.cpp; sourceTree = "<group>"; };
 		504C434624AF29AC00E69CAE /* SerialPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerialPort.h; sourceTree = "<group>"; };
-		504C434824AF29AC00E69CAE /* Disk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Disk.cpp; sourceTree = "<group>"; };
+		504C434824AF29AC00E69CAE /* FloppyDisk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloppyDisk.cpp; sourceTree = "<group>"; };
 		504C434924AF29AC00E69CAE /* VIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VIA.h; sourceTree = "<group>"; };
 		504C434A24AF29AC00E69CAE /* VIA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VIA.cpp; sourceTree = "<group>"; };
 		504C434B24AF29AC00E69CAE /* DriveMemory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DriveMemory.cpp; sourceTree = "<group>"; };
 		504C434C24AF29AC00E69CAE /* Drive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drive.h; sourceTree = "<group>"; };
 		504C434D24AF29AC00E69CAE /* Drive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drive.cpp; sourceTree = "<group>"; };
-		504C434E24AF29AC00E69CAE /* Disk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Disk.h; sourceTree = "<group>"; };
+		504C434E24AF29AC00E69CAE /* FloppyDisk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloppyDisk.h; sourceTree = "<group>"; };
 		504C434F24AF29AC00E69CAE /* DriveMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveMemory.h; sourceTree = "<group>"; };
 		504C435324AF29AC00E69CAE /* CIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIA.h; sourceTree = "<group>"; };
 		504C435424AF29AC00E69CAE /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
@@ -2260,9 +2260,9 @@
 				5007E1E926A7029A000E7344 /* ParallelCableTypes.h */,
 				5007E1E726A70170000E7344 /* ParallelCable.h */,
 				5007E1E626A70170000E7344 /* ParallelCable.cpp */,
-				504268AD24F12705006BB841 /* DiskTypes.h */,
-				504C434E24AF29AC00E69CAE /* Disk.h */,
-				504C434824AF29AC00E69CAE /* Disk.cpp */,
+				504268AD24F12705006BB841 /* FloppyDiskTypes.h */,
+				504C434E24AF29AC00E69CAE /* FloppyDisk.h */,
+				504C434824AF29AC00E69CAE /* FloppyDisk.cpp */,
 				50AB70772721B92D004ABB2B /* DiskAnalyzerTypes.h */,
 				50AB70752721B8EE004ABB2B /* DiskAnalyzer.h */,
 				50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */,
@@ -3551,7 +3551,7 @@
 				50726F582961C9A10031F2F5 /* CIARegs.cpp in Sources */,
 				50726F982961CA0D0031F2F5 /* Kingsoft.cpp in Sources */,
 				50726F762961C9DC0031F2F5 /* VIA.cpp in Sources */,
-				50726F7C2961C9DC0031F2F5 /* Disk.cpp in Sources */,
+				50726F7C2961C9DC0031F2F5 /* FloppyDisk.cpp in Sources */,
 				50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */,
 				50316E4D2E9A41CD00BDF90F /* AudioStream.cpp in Sources */,
 				50E17E222B8B26AC0029747D /* Option.cpp in Sources */,
@@ -3932,7 +3932,7 @@
 				50AC27B02F4467760016265E /* FloppyDiskImage.cpp in Sources */,
 				505A132B2C3503B400FF8D2C /* UserPort.cpp in Sources */,
 				50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */,
-				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
+				504C43A624AF29AC00E69CAE /* FloppyDisk.cpp in Sources */,
 				506E283C2EB338FA003FF0D3 /* DapServer.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
 				505F457E2E96A42100418105 /* CGRect.swift in Sources */,

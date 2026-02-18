@@ -661,7 +661,7 @@ struct DiskAPI : public API {
     /** @brief  Getter for the raw disk object
      *  @return A pointer to the disk object or nullptr if no disk is present.
      */
-    class Disk *get();
+    class FloppyDisk *get();
 };
 
 

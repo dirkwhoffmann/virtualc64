@@ -75,7 +75,6 @@ extension FileType {
         case "t64":     self = .T64
         case "p00":     self = .P00
         case "prg":     self = .PRG
-        case "d64":     self = .D64
         case "g64":     self = .G64
         case "tap":     self = .TAP
         default:        return nil
@@ -87,7 +86,7 @@ extension FileType {
             .WORKSPACE, .SNAPSHOT, .SCRIPT,
             .CRT,
             .T64, .PRG, .P00,
-            .D64, .G64,
+            .G64,
             .TAP,
             .BASIC_ROM, .CHAR_ROM, .KERNAL_ROM, .VC1541_ROM
         ]
@@ -97,7 +96,7 @@ extension FileType {
         return [
             .WORKSPACE, .SNAPSHOT, .SCRIPT,
             .CRT, .T64, .PRG, .P00,
-            .D64, .G64,
+            .G64,
             .TAP
         ]
     }

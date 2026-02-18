@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "G64File.h"
-#include "Disk.h"
+#include "FloppyDisk.h"
 
 namespace vc64 {
 
@@ -49,7 +49,7 @@ G64File::G64File(isize capacity)
 }
 
 void
-G64File::init(Disk &disk)
+G64File::init(FloppyDisk &disk)
 {
     // Determine empty halftracks
     bool empty[85];
@@ -114,7 +114,7 @@ G64File::init(Disk &disk)
     
     // Write speed zone area (32 bit, little endian)
     for (Halftrack ht = 1; ht <= 84; ht++) {
-        buffer[pos++] = Disk::trackDefaults[(ht + 1) / 2].speedZone;
+        buffer[pos++] = FloppyDisk::trackDefaults[(ht + 1) / 2].speedZone;
         buffer[pos++] = 0;
         buffer[pos++] = 0;
         buffer[pos++] = 0;

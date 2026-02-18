@@ -22,7 +22,7 @@ Drive::Drive(C64 &ref, isize id) : SubComponent(ref, id)
 {
     assert(id == DRIVE8 || id == DRIVE9);
 
-    disk = std::make_unique<Disk>();
+    disk = std::make_unique<FloppyDisk>();
     
     subComponents = std::vector <CoreComponent *> {
         
@@ -380,11 +380,11 @@ Drive::toggleProtection()
 void
 Drive::insertDisk(const fs::path &path, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(path, wp));
+    insertDisk(std::make_unique<FloppyDisk>(path, wp));
 }
 
 void
-Drive::insertDisk(std::unique_ptr<Disk> disk)
+Drive::insertDisk(std::unique_ptr<FloppyDisk> disk)
 {
     loginfo(DSKCHG_DEBUG, "insertDisk\n");
     
@@ -428,13 +428,13 @@ Drive::insertMediaFile(class MediaFile &file, bool wp)
 void
 Drive::insertG64(const G64File &g64, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(g64, wp));
+    insertDisk(std::make_unique<FloppyDisk>(g64, wp));
 }
 
 void
 Drive::insertCollection(AnyCollection &collection, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(collection, wp));
+    insertDisk(std::make_unique<FloppyDisk>(collection, wp));
 }
 
 void 

@@ -41,7 +41,7 @@
 // Peripherals
 #include "Peripherals/Datasette/DatasetteTypes.h"
 #include "Peripherals/Drive/DriveTypes.h"
-#include "Peripherals/Drive/DiskTypes.h"
+#include "Peripherals/Drive/FloppyDiskTypes.h"
 #include "Peripherals/Drive/DiskAnalyzerTypes.h"
 #include "Peripherals/Joystick/JoystickTypes.h"
 #include "Peripherals/Keyboard/KeyboardTypes.h"

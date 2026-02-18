@@ -93,7 +93,7 @@ Drive::operator << (SerReader &worker)
 
     // If yes, recreate the disk
     if (diskInSnapshot) {
-        disk = std::make_unique<Disk>(worker);
+        disk = std::make_unique<FloppyDisk>(worker);
     } else {
         disk = nullptr;
     }

@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "DiskTypes.h"
+#include "FloppyDiskTypes.h"
 #include "SubComponent.h"
 #include "DiskAnalyzerTypes.h"
 #include "FileSystems/CBM/FSTypes.h"
@@ -28,7 +28,7 @@ namespace vc64 {
 
 class DiskAnalyzer;
 
-class Disk final : public CoreObject {
+class FloppyDisk final : public CoreObject {
     
     friend class Drive;
     
@@ -114,13 +114,13 @@ public:
     
 public:
     
-    Disk();
-    Disk(const fs::path &path, bool wp = false) { init(path, wp); }
-    Disk(const FloppyDiskImage &file, bool wp = false) { init(file, wp); }
-    Disk(FSFormat type, PETName<16> name, bool wp = false) { init(type, name, wp); }
-    Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
-    Disk(class AnyCollection &archive, bool wp = false) { init(archive, wp); }
-    Disk(SerReader &reader) { init(reader); }
+    FloppyDisk();
+    FloppyDisk(const fs::path &path, bool wp = false) { init(path, wp); }
+    FloppyDisk(const FloppyDiskImage &file, bool wp = false) { init(file, wp); }
+    FloppyDisk(FSFormat type, PETName<16> name, bool wp = false) { init(type, name, wp); }
+    FloppyDisk(const class G64File &g64, bool wp = false) { init(g64, wp); }
+    FloppyDisk(class AnyCollection &archive, bool wp = false) { init(archive, wp); }
+    FloppyDisk(SerReader &reader) { init(reader); }
     
 private:
     
@@ -133,7 +133,7 @@ private:
     
 public:
     
-    Disk& operator= (const Disk& other) {
+    FloppyDisk& operator= (const FloppyDisk& other) {
         
         CLONE(writeProtected)
         CLONE(modified)

@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "Disk.h"
+#include "FloppyDisk.h"
 #include "Drive.h"
 #include "Images/D64/D64File.h"
 #include "IMGFile.h"
@@ -26,7 +26,7 @@ class Codec {
 public:
 
     // Factory methods
-    static std::unique_ptr<D64File> makeD64(Disk &disk);
+    static std::unique_ptr<D64File> makeD64(FloppyDisk &disk);
     static std::unique_ptr<D64File> makeD64(Drive &drive);
 
     // Encoders and Decoders

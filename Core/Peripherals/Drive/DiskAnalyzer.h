@@ -13,7 +13,7 @@
 #pragma once
 
 #include "DiskAnalyzerTypes.h"
-#include "DiskTypes.h"
+#include "FloppyDiskTypes.h"
 #include "CoreObject.h"
 
 namespace vc64 {
@@ -51,13 +51,13 @@ class DiskAnalyzer final : public CoreObject {
     
 public:
 
-    DiskAnalyzer(const class Disk &disk);
+    DiskAnalyzer(const class FloppyDisk &disk);
     DiskAnalyzer(const class Drive &drive);
     ~DiskAnalyzer();
 
 private:
 
-    void init(const class Disk &disk);
+    void init(const class FloppyDisk &disk);
 
 
     //

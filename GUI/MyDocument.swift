@@ -209,7 +209,7 @@ class MyDocument: NSDocument {
 
         // Scan directory for additional media files
         let supportedTypes: [String : FileType] =
-        ["d64": .D64, "g64": .G64, "crt": .CRT, "tap": .TAP]
+        ["g64": .G64, "crt": .CRT, "tap": .TAP]
         let exclude = ["drive8", "drive9", "basic", "kernal", "char", "vc1541"]
 
         let contents = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)

@@ -17,7 +17,7 @@
 #include "CmdQueueTypes.h"
 #include "SubComponent.h"
 #include "CPU.h"
-#include "Disk.h"
+#include "FloppyDisk.h"
 #include "DiskAnalyzer.h"
 #include "DriveMemory.h"
 #include "VIA.h"
@@ -119,7 +119,7 @@ public:
     PiaDolphin pia = PiaDolphin(c64, *this);
     
     // The currently inserted disk (if any)
-    std::unique_ptr<Disk> disk;
+    std::unique_ptr<FloppyDisk> disk;
     
 
     //
@@ -127,7 +127,7 @@ public:
     //
     
     // A disk waiting to be inserted
-    std::unique_ptr<Disk> diskToInsert;
+    std::unique_ptr<FloppyDisk> diskToInsert;
 
     
     //
@@ -293,11 +293,11 @@ public:
 
         CLONE(config)
 
-        if (other.disk && !disk) disk = std::make_unique<Disk>();
+        if (other.disk && !disk) disk = std::make_unique<FloppyDisk>();
         if (!other.disk) disk = nullptr;
         if (disk) *disk = *other.disk;
 
-        if (other.diskToInsert && !diskToInsert) diskToInsert = std::make_unique<Disk>();
+        if (other.diskToInsert && !diskToInsert) diskToInsert = std::make_unique<FloppyDisk>();
         if (!other.diskToInsert) diskToInsert = nullptr;
         if (diskToInsert) *diskToInsert = *other.diskToInsert;
 
@@ -498,7 +498,7 @@ public:
      * and pushing the new disk halfway in before it is inserted completely.
      */
     void insertDisk(const fs::path &path, bool wp);
-    void insertDisk(std::unique_ptr<Disk> disk);
+    void insertDisk(std::unique_ptr<FloppyDisk> disk);
     void insertNewDisk(FSFormat fstype, string name);
     void insertG64(const class G64File &g64, bool wp);
     void insertCollection(class AnyCollection &archive, bool wp);

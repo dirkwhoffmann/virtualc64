@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "DiskTypes.h"
+#include "FloppyDiskTypes.h"
 
 namespace vc64 {
 

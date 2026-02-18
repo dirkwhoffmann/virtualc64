@@ -183,7 +183,7 @@ class MediaManager {
 
         case .CRT:
             MediaManager.noteNewRecentlyAtachedCartridgeURL(url)
-        case .T64, .P00, .PRG, .D64, .G64:
+        case .T64, .P00, .PRG, .G64:
             MediaManager.noteNewRecentlyInsertedDiskURL(url)
         case .TAP:
             MediaManager.noteNewRecentlyInsertedTapeURL(url)
@@ -196,7 +196,7 @@ class MediaManager {
 
         switch type {
 
-        case .T64, .P00, .PRG, .D64, .G64:
+        case .T64, .P00, .PRG, .G64:
             noteNewRecentlyExportedDiskURL(url, drive: nr)
         case .TAP:
             break

@@ -14,7 +14,7 @@
 #include "Codecs.h"
 #include "DiskEncoder.h"
 #include "FileSystems/CBM/FileSystem.h"
-#include "Disk.h"
+#include "FloppyDisk.h"
 #include "Drive.h"
 
 using namespace retro::vault;
@@ -22,7 +22,7 @@ using namespace retro::vault;
 namespace vc64 {
 
 std::unique_ptr<image::D64File>
-Codec::makeD64(Disk &disk)
+Codec::makeD64(FloppyDisk &disk)
 {
     // auto d64 = make_unique<D64File>(disk.getDiameter(), disk.getDensity());
     auto d64 = make_unique<image::D64File>(image::D64File::D64_683_SECTORS);

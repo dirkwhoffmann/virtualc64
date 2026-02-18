@@ -38,12 +38,12 @@ public:
     G64File(isize capacity);
     G64File(const fs::path &path) { init(path); }
     G64File(const u8 *buf, isize len) { init(buf, len); }
-    G64File(class Disk &disk) { init(disk); }
+    G64File(class FloppyDisk &disk) { init(disk); }
 
 private:
     
     using AnyFile::init;
-    void init(class Disk &disk);
+    void init(class FloppyDisk &disk);
     
     
     //

@@ -13,14 +13,14 @@
 #include "config.h"
 #include "DiskAnalyzer.h"
 #include "Drive.h"
-#include "Disk.h"
+#include "FloppyDisk.h"
 #include "Memory.h"
 
 #include <stdarg.h>
 
 namespace vc64 {
 
-DiskAnalyzer::DiskAnalyzer(const Disk &disk)
+DiskAnalyzer::DiskAnalyzer(const FloppyDisk &disk)
 {
     init(disk);
 }
@@ -39,7 +39,7 @@ DiskAnalyzer::~DiskAnalyzer()
 }
 
 void 
-DiskAnalyzer::init(const class Disk &disk)
+DiskAnalyzer::init(const class FloppyDisk &disk)
 {
     // Extract the GCR encoded bit stream from the disk
     for (Halftrack ht = 1; ht < 85; ht++) {
@@ -83,7 +83,7 @@ DiskAnalyzer::decodeGcrNibble(Halftrack ht, isize offset)
     auto codeword = gcr[0] << 4 | gcr[1] << 3 | gcr[2] << 2 | gcr[3] << 1 | gcr[4];
     assert(codeword < 32);
     
-    return Disk::invgcr[codeword];
+    return FloppyDisk::invgcr[codeword];
 }
 
 u8
@@ -198,7 +198,7 @@ DiskAnalyzer::analyzeSectorBlocks(Halftrack ht, TrackLayout &trackInfo)
 {
     Track t = (ht + 1) / 2;
     
-    for (Sector s = 0; s < Disk::trackDefaults[t].sectors; s++) {
+    for (Sector s = 0; s < FloppyDisk::trackDefaults[t].sectors; s++) {
         
         const SectorLayout &info = trackInfo.sectorLayout[s];
         bool hasHeader = info.headerBegin != info.headerEnd;
