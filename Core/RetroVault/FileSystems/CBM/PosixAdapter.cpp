@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "FileSystems/CBM/PosixAdapter.h"
+#include <sys/stat.h>
 
 namespace retro::vault::cbm {
 

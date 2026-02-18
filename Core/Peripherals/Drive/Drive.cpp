@@ -404,18 +404,12 @@ Drive::insertNewDisk(FSFormat fsType, string name)
     // insertDisk(std::make_unique<Disk>(fsType, name));
 }
 
+/*
 void
 Drive::insertMediaFile(class MediaFile &file, bool wp)
 {
     try {
 
-        /*
-        const D64File &d64 = dynamic_cast<const D64File &>(file);
-        printf("Drive::insertMediaFile\n");
-        insertDisk(std::make_unique<Disk>(d64, wp));
-         
-    } catch (...) { try {
-        */
         const G64File &g64 = dynamic_cast<const G64File &>(file);
         insertDisk(std::make_unique<Disk>(g64, wp));
         
@@ -428,13 +422,6 @@ Drive::insertMediaFile(class MediaFile &file, bool wp)
         
         throw IOError(IOError::FILE_TYPE_MISMATCH);
     }}
-}
-
-/*
-void
-Drive::insertD64(const D64File &d64, bool wp)
-{
-    insertDisk(std::make_unique<Disk>(d64, wp));
 }
 */
 

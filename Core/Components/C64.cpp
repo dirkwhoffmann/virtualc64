@@ -1595,7 +1595,7 @@ C64::takeSnapshotNew(Compressor compressor, isize delay, bool repeat)
     return result;
 }
 
-MediaFile *
+Snapshot *
 C64::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
     if (delay != 0) {
@@ -1637,6 +1637,7 @@ C64::loadSnapshot(const Snapshot &snapshot)
     msgQueue.put(Msg::SNAPSHOT_RESTORED);
 }
 
+/*
 void
 C64::loadSnapshot(const MediaFile &file)
 {
@@ -1655,6 +1656,7 @@ C64::loadSnapshot(const MediaFile &file)
     msgQueue.put(vic.pal() ? Msg::PAL : Msg::NTSC);
     msgQueue.put(Msg::SNAPSHOT_RESTORED);
 }
+*/
 
 void
 C64::saveSnapshot(const fs::path &path, Compressor compressor)
@@ -2142,6 +2144,7 @@ C64::flashNew(const AnyFile &file, isize nr)
     }
 }
 
+/*
 void
 C64::flash(const MediaFile &file)
 {
@@ -2218,6 +2221,7 @@ C64::flash(const MediaFile &file, isize nr)
         throw IOError(IOError::FILE_TYPE_MISMATCH);
     }
 }
+*/
 
 void
 C64::flash(const FileSystem &fs, isize nr)

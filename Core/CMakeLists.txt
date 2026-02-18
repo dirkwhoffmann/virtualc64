@@ -69,7 +69,7 @@ add_subdirectory(ThirdParty)
 # Add libraries
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-target_link_libraries(VC64Core utlib resid Threads::Threads)
+target_link_libraries(VC64Core utlib resid RetroVault Threads::Threads)
 # target_link_libraries(VC64Core lz4)
 # target_link_libraries(VC64Headless lz4)
 

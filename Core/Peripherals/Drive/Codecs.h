@@ -11,11 +11,13 @@
 
 #include "Disk.h"
 #include "Drive.h"
-#include "D64File.h"
+#include "Images/D64/D64File.h"
 #include "IMGFile.h"
 #include "STFile.h"
 #include "DMSFile.h"
 #include "EXEFile.h"
+
+using retro::vault::image::D64File;
 
 namespace vc64 {
 
@@ -24,8 +26,8 @@ class Codec {
 public:
 
     // Factory methods
-    static std::unique_ptr<retro::vault::image::D64File> makeD64(Disk &disk);
-    static std::unique_ptr<retro::vault::image::D64File> makeD64(Drive &drive);
+    static std::unique_ptr<D64File> makeD64(Disk &disk);
+    static std::unique_ptr<D64File> makeD64(Drive &drive);
 
     // Encoders and Decoders
     /*

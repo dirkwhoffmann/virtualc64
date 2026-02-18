@@ -208,18 +208,16 @@ ExpansionPort::attachCartridge(const fs::path &path, bool reset)
 }
 
 void
-ExpansionPort::attachCartridge(const MediaFile &file, bool reset)
+ExpansionPort::attachCartridge(const CRTFile &file, bool reset)
 {
-    const CRTFile &crtFile = dynamic_cast<const CRTFile &>(file);
-    
     // Only proceed if this cartridge is supported
-    if (!crtFile.isSupported())
-        throw MediaError(MediaError::CRT_UNSUPPORTED, crtFile.cartridgeTypeName());
+    if (!file.isSupported())
+        throw MediaError(MediaError::CRT_UNSUPPORTED, file.cartridgeTypeName());
     
     try {
         
         // Create cartridge from cartridge file
-        Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, crtFile);
+        Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, file);
         
         // Attach cartridge to the expansion port
         attachCartridge(cartridge);

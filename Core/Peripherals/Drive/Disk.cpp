@@ -13,6 +13,7 @@
 #include "config.h"
 #include "C64.h"
 #include "Codecs.h"
+#include "Images/D64/D64File.h"
 #include "Images/ImageError.h"
 #include "utl/abilities/Hashable.h"
 #include <stdarg.h>

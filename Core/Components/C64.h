@@ -692,12 +692,11 @@ public:
 
     // Takes a snapshot
     std::unique_ptr<Snapshot> takeSnapshotNew(Compressor compressor, isize delay = 0, bool repeat = false);
-    MediaFile *takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
+    Snapshot *takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
 
     // Loads a snapshot from a file
     void loadSnapshot(const fs::path &path);
     void loadSnapshot(const Snapshot &file);
-    [[deprecated]] void loadSnapshot(const MediaFile &file);
 
     // Saves a snapshot to a file
     void saveSnapshot(const fs::path &path, Compressor compressor);
@@ -762,8 +761,6 @@ public:
     void flash(const fs::path &path, isize item = 0);
     void flashNew(const AnyFile &file);
     void flashNew(const AnyFile &file, isize item);
-    [[deprecated]] void flash(const MediaFile &file);
-    [[deprecated]] void flash(const MediaFile &file, isize item);
     void flash(const FileSystem &fs, isize item);
 
 

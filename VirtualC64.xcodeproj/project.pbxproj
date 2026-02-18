@@ -781,6 +781,8 @@
 		501C46BC2965C54200C4B27B /* StrWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StrWriter.h; sourceTree = "<group>"; };
 		501C46BD2965C54200C4B27B /* StrWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StrWriter.cpp; sourceTree = "<group>"; };
 		501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		5020D0392F45C8FA006D3BF1 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		5020D03B2F45CCAF006D3BF1 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		5026118D259CACB60066E754 /* PETName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PETName.h; sourceTree = "<group>"; };
 		50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = gamecontrollerdb.txt; sourceTree = "<group>"; };
 		50316E462E97B9C700BDF90F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
@@ -1858,6 +1860,15 @@
 			path = GUI;
 			sourceTree = "<group>";
 		};
+		5020D0382F45C87E006D3BF1 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				5020D0392F45C8FA006D3BF1 /* CMakeLists.txt */,
+				50AC284F2F446B2D0016265E /* xdms */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
 		5036E0AD261AEF000048E66A /* RetroShell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2767,9 +2778,9 @@
 		50AC27162F436A2B0016265E /* Devices */ = {
 			isa = PBXGroup;
 			children = (
+				50AC270A2F436A2B0016265E /* CMakeLists.txt */,
 				50AC27082F436A2B0016265E /* BlockDevice.h */,
 				50AC27092F436A2B0016265E /* BlockDevice.cpp */,
-				50AC270A2F436A2B0016265E /* CMakeLists.txt */,
 				50AC270B2F436A2B0016265E /* DeviceDescriptors.h */,
 				50AC270C2F436A2B0016265E /* DeviceDescriptors.cpp */,
 				50AC270D2F436A2B0016265E /* DeviceError.h */,
@@ -2881,9 +2892,9 @@
 		50AC27632F436A2B0016265E /* ADF */ = {
 			isa = PBXGroup;
 			children = (
+				50AC27622F436A2B0016265E /* CMakeLists.txt */,
 				50AC27602F436A2B0016265E /* ADFFile.h */,
 				50AC27612F436A2B0016265E /* ADFFile.cpp */,
-				50AC27622F436A2B0016265E /* CMakeLists.txt */,
 			);
 			path = ADF;
 			sourceTree = "<group>";
@@ -2891,9 +2902,9 @@
 		50AC27672F436A2B0016265E /* ADZ */ = {
 			isa = PBXGroup;
 			children = (
+				50AC27662F436A2B0016265E /* CMakeLists.txt */,
 				50AC27642F436A2B0016265E /* ADZFile.h */,
 				50AC27652F436A2B0016265E /* ADZFile.cpp */,
-				50AC27662F436A2B0016265E /* CMakeLists.txt */,
 			);
 			path = ADZ;
 			sourceTree = "<group>";
@@ -2914,7 +2925,6 @@
 				50AC276C2F436A2B0016265E /* CMakeLists.txt */,
 				50AC276D2F436A2B0016265E /* DMSFile.h */,
 				50AC276E2F436A2B0016265E /* DMSFile.cpp */,
-				50AC284F2F446B2D0016265E /* xdms */,
 			);
 			path = DMS;
 			sourceTree = "<group>";
@@ -2932,11 +2942,11 @@
 		50AC27882F436A2B0016265E /* Encoders */ = {
 			isa = PBXGroup;
 			children = (
+				50AC277C2F436A2B0016265E /* CMakeLists.txt */,
 				50AC27742F436A2B0016265E /* AmigaDecoder.h */,
 				50AC27762F436A2B0016265E /* AmigaEncoder.h */,
 				50AC27782F436A2B0016265E /* C64Decoder.h */,
 				50AC277A2F436A2B0016265E /* C64Encoder.h */,
-				50AC277C2F436A2B0016265E /* CMakeLists.txt */,
 				50AC277D2F436A2B0016265E /* DiskDecoder.h */,
 				50AC277F2F436A2B0016265E /* DiskEncoder.h */,
 				50AC27802F436A2B0016265E /* DOSDecoder.h */,
@@ -3020,9 +3030,9 @@
 				50AC27942F436A2B0016265E /* HDZ */,
 				50AC27982F436A2B0016265E /* IMG */,
 				50AC279C2F436A2B0016265E /* ST */,
+				50AC279F2F436A2B0016265E /* CMakeLists.txt */,
 				50AC279D2F436A2B0016265E /* AnyImage.h */,
 				50AC279E2F436A2B0016265E /* AnyImage.cpp */,
-				50AC279F2F436A2B0016265E /* CMakeLists.txt */,
 				50AC27A02F436A2B0016265E /* DiskImage.h */,
 				50AC27A12F436A2B0016265E /* DiskImage.cpp */,
 				50AC27A22F436A2B0016265E /* FloppyDiskImage.h */,
@@ -3039,12 +3049,14 @@
 		50AC27AF2F436A2B0016265E /* RetroVault */ = {
 			isa = PBXGroup;
 			children = (
+				50AC27AC2F436A2B0016265E /* CMakeLists.txt */,
+				5020D03B2F45CCAF006D3BF1 /* config.h */,
 				50AC27162F436A2B0016265E /* Devices */,
 				50AC275F2F436A2B0016265E /* FileSystems */,
 				50AC27A92F436A2B0016265E /* Images */,
+				5020D0382F45C87E006D3BF1 /* ThirdParty */,
 				50AC27AA2F436A2B0016265E /* AmigaFileSystem.h */,
 				50AC27AB2F436A2B0016265E /* CBMFileSystem.h */,
-				50AC27AC2F436A2B0016265E /* CMakeLists.txt */,
 				50AC27AD2F436A2B0016265E /* Devices.h */,
 				50AC27AE2F436A2B0016265E /* Images.h */,
 			);
