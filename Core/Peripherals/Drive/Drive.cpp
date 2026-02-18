@@ -404,12 +404,6 @@ Drive::insertNewDisk(DOSType fsType, string name)
 }
 
 void
-Drive::insertFileSystem(const OldFileSystem &device, bool wp)
-{
-    insertDisk(std::make_unique<Disk>(device, wp));
-}
-
-void 
 Drive::insertMediaFile(class MediaFile &file, bool wp)
 {
     try {

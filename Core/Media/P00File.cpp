@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "P00File.h"
-#include "FileSystems/OldFileSystem.h" // DEPRECATED
 #include "FileSystems/CBM/FileSystem.h"
 #include "utl/io/Files.h"
 #include "utl/support/Strings.h"

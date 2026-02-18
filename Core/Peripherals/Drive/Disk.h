@@ -119,7 +119,6 @@ public:
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
     [[deprecated]] Disk(const OldFileSystem &device, bool wp = false) { init(device, wp); }
     Disk(const class G64File &g64, bool wp = false) { init(g64, wp); }
-    Disk(const class D64File &d64, bool wp = false) { init(d64, wp); }
     Disk(class AnyCollection &archive, bool wp = false) { init(archive, wp); }
     Disk(SerReader &reader) { init(reader); }
     
@@ -130,7 +129,7 @@ private:
     void init(DOSType type, PETName<16> name, bool wp);
     [[deprecated]] void init(const class OldFileSystem &device, bool wp);
     void init(const class G64File &g64, bool wp);
-    void init(const class D64File &d64, bool wp);
+    // void init(const class D64File &d64, bool wp);
     void init(class AnyCollection &archive, bool wp);
     void init(SerReader &reader);
     

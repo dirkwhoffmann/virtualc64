@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "T64File.h"
-#include "FileSystems/OldFileSystem.h"
 #include "FileSystems/CBM/FileSystem.h"
 
 namespace vc64 {

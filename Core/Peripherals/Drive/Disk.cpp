@@ -146,8 +146,9 @@ Disk::init(const fs::path &path, bool wp)
         return;
     }
     
-    auto fs = OldFileSystem(path);
-    init(fs, wp);
+    // TODO: 
+    // auto fs = OldFileSystem(path);
+    // init(fs, wp);
 }
 
 void
@@ -164,9 +165,10 @@ Disk::init(DOSType type, PETName<16> name, bool wp)
     
     if (type == DOSType::CBM) {
         
-        auto fs = OldFileSystem(DiskType::SS_SD, DOSType::CBM);
-        fs.setName(name);
-        init(fs, wp);
+        // TODO:
+        // auto fs = OldFileSystem(DiskType::SS_SD, DOSType::CBM);
+        // fs.setName(name);
+        // init(fs, wp);
 
     } else {
 
@@ -191,17 +193,11 @@ Disk::init(const G64File &g64, bool wp)
 }
 
 void
-Disk::init(const D64File &d64, bool wp)
-{
-    auto fs = OldFileSystem(d64);
-    init(fs, wp);
-}
-
-void
 Disk::init(AnyCollection &collection, bool wp)
 {
-    auto fs = OldFileSystem(collection);
-    init(fs, wp);
+    // TODO:
+    // auto fs = OldFileSystem(collection);
+    // init(fs, wp);
 }
 
 void

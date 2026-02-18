@@ -12,7 +12,6 @@
 
 #include "config.h"
 #include "PRGFile.h"
-#include "FileSystems/OldFileSystem.h" // DEPRECATED
 #include "FileSystems/CBM/FileSystem.h"
 
 namespace vc64 {
@@ -34,22 +33,6 @@ bool
 PRGFile::isCompatible(const Buffer<u8> &buf)
 {
     return isCompatible(buf.ptr, buf.size);
-}
-
-void
-PRGFile::init(const OldFileSystem &fs)
-{
-    isize item = 0;
-    isize itemSize = fs.fileSize(item);
-
-    // Only proceed if the requested file exists
-    if (fs.numFiles() <= item) throw AppError(Fault::FS_HAS_NO_FILES);
-
-    // Create new archive
-    init(itemSize);
-
-    // Add data
-    fs.copyFile(item, data.ptr, itemSize);
 }
 
 void

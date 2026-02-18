@@ -504,7 +504,6 @@ public:
     void insertD64(const class D64File &d64, bool wp);
     void insertG64(const class G64File &g64, bool wp);
     void insertCollection(class AnyCollection &archive, bool wp);
-    [[deprecated]] void insertFileSystem(const class OldFileSystem &device, bool wp);
     void ejectDisk();
 
     // void readImage(const fs::path& path, bool wp) const;
