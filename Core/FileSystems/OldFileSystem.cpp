@@ -13,7 +13,6 @@
 #include "config.h"
 #include "FileSystems/OldFileSystem.h" // DEPRECATED
 #include "Disk.h"
-#include "Media/Folder.h"
 #include "Media/PRGFile.h"
 #include "Media/P00File.h"
 #include "Media/T64File.h"
@@ -168,6 +167,7 @@ OldFileSystem::init(AnyCollection &collection)
 void
 OldFileSystem::init(const fs::path &path)
 {
+    /*
     if (Folder::isCompatible(path)) {
 
         // Create the device
@@ -188,7 +188,8 @@ OldFileSystem::init(const fs::path &path)
 
         return;
     }
-
+    */
+    
     if (D64File::isCompatible(path)) {
 
         auto file = D64File(path);

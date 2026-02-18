@@ -15,7 +15,6 @@
 #include "VirtualC64.h"
 #include "Media/CRTFile.h"
 #include "Media/D64File.h"
-#include "Media/Folder.h"
 #include "Media/G64File.h"
 #include "Media/P00File.h"
 #include "Media/PRGFile.h"
@@ -31,8 +30,6 @@ namespace vc64 {
 FileType
 MediaFile::type(const fs::path &path)
 {
-
-
     if (Workspace::isCompatible(path))  return FileType::WORKSPACE;
     if (Snapshot::isCompatible(path))   return FileType::SNAPSHOT;
     if (Script::isCompatible(path))     return FileType::SCRIPT;
@@ -52,8 +49,6 @@ MediaFile::type(const fs::path &path)
         if (RomFile::isRomBuffer(RomType::KERNAL, buffer)) return FileType::KERNAL_ROM;
         if (RomFile::isRomBuffer(RomType::VC1541, buffer)) return FileType::VC1541_ROM;
     }
-
-    if (Folder::isCompatible(path)) return FileType::FOLDER;
 
     return FileType::UNKNOWN;
 }
@@ -75,7 +70,6 @@ MediaFile::make(const fs::path &path, FileType type)
         case FileType::CRT:        return new CRTFile(path);
         case FileType::T64:        return new T64File(path);
         case FileType::PRG:        return new PRGFile(path);
-        case FileType::FOLDER:     return new Folder(path);
         case FileType::P00:        return new P00File(path);
         case FileType::D64:        return new D64File(path);
         case FileType::G64:        return new G64File(path);

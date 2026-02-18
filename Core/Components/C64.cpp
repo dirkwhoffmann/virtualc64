@@ -2055,7 +2055,6 @@ C64::flash(const fs::path &path, isize item)
             case FileType::T64:
             case FileType::P00:
             case FileType::PRG:
-            case FileType::FOLDER:
                 
                 flashNew(*file, item);
                 break;
@@ -2096,7 +2095,6 @@ C64::flashNew(const AnyFile &file)
         case FileType::T64:
         case FileType::P00:
         case FileType::PRG:
-        case FileType::FOLDER:
             
             flashNew(file, 0);
             break;
@@ -2122,7 +2120,6 @@ C64::flashNew(const AnyFile &file, isize nr)
             case FileType::T64:
             case FileType::P00:
             case FileType::PRG:
-            case FileType::FOLDER:
                 
                 // Flash data into memory
                 size = std::min(size - 2, isize(0x10000 - addr));
@@ -2175,7 +2172,6 @@ C64::flash(const MediaFile &file)
         case FileType::T64:
         case FileType::P00:
         case FileType::PRG:
-        case FileType::FOLDER:
             
             flash(file, 0);
             break;
@@ -2201,7 +2197,6 @@ C64::flash(const MediaFile &file, isize nr)
             case FileType::T64:
             case FileType::P00:
             case FileType::PRG:
-            case FileType::FOLDER:
                 
                 // Flash data into memory
                 size = std::min(size - 2, isize(0x10000 - addr));

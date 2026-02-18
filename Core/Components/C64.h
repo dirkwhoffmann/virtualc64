@@ -53,7 +53,6 @@
 #include "Media/D64File.h"
 #include "Media/G64File.h"
 #include "Media/PRGFile.h"
-#include "Media/Folder.h"
 #include "Media/P00File.h"
 #include "Media/RomFile.h"
 #include "Media/TAPFile.h"

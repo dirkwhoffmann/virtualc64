@@ -397,10 +397,11 @@ extension MediaFileProxy {
         
         case .TAP:
             return NSImage(named: "tape")!
-            
+       
+            /*
         case .FOLDER:
             return NSImage(named: "NSFolder")!
-
+             */
         case .D64, .G64, .T64, .PRG, .P00:
             return MediaFileProxy.diskIcon(protected: protected)
 

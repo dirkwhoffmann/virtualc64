@@ -9,7 +9,6 @@ AnyFile.cpp
 
 CRTFile.cpp
 D64File.cpp
-Folder.cpp
 G64File.cpp
 PRGFile.cpp
 P00File.cpp

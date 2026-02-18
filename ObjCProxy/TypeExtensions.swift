@@ -71,8 +71,7 @@ extension FileType {
             .T64, .PRG, .P00,
             .D64, .G64,
             .TAP,
-            .BASIC_ROM, .CHAR_ROM, .KERNAL_ROM, .VC1541_ROM,
-            .FOLDER
+            .BASIC_ROM, .CHAR_ROM, .KERNAL_ROM, .VC1541_ROM
         ]
     }
 
@@ -81,8 +80,7 @@ extension FileType {
             .WORKSPACE, .SNAPSHOT, .SCRIPT,
             .CRT, .T64, .PRG, .P00,
             .D64, .G64,
-            .TAP,
-            .FOLDER
+            .TAP
         ]
     }
 }

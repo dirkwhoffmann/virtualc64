@@ -14,7 +14,6 @@
 #include "Media/AnyFile.h"
 #include "Media/CRTFile.h"
 #include "Media/D64File.h"
-#include "Media/Folder.h"
 #include "Media/G64File.h"
 #include "Media/P00File.h"
 #include "Media/PRGFile.h"

@@ -11,6 +11,8 @@ import Foundation
 
 class DropZone: Layer {
     
+    var url: URL?
+    
     var window: NSWindow { return controller.window! }
     var contentView: NSView { return window.contentView! }
     var metal: MetalView { return controller.metal! }
@@ -74,22 +76,30 @@ class DropZone: Layer {
             inUse[3] = emu.expansionport.cartridgeAttached()
             inUse[4] = emu.datasette.info.hasTape
             
-            switch type {
+            if url?.hasDirectoryPath == true {
                 
-            case .T64, .P00, .PRG:
-                enabled = [config8.connected, config9.connected, true, false, false]
-                
-            case .FOLDER, .D64, .G64:
                 enabled = [config8.connected, config9.connected, false, false, false]
                 
-            case .CRT:
-                enabled = [false, false, false, true, false]
+            } else {
                 
-            case .TAP:
-                enabled = [false, false, false, false, true]
-                
-            default:
-                enabled = [false, false, false, false, false]
+                switch type {
+                    
+                case .T64, .P00, .PRG:
+                    enabled = [config8.connected, config9.connected, true, false, false]
+                    
+                case .D64, .G64:
+                    enabled = [config8.connected, config9.connected, false, false, false]
+                    
+                case .CRT:
+                    enabled = [false, false, false, true, false]
+                    
+                case .TAP:
+                    enabled = [false, false, false, false, true]
+                    
+                default:
+                    
+                    enabled = [false, false, false, false, false]
+                }
             }
             
             for i in 0...4 {
@@ -102,8 +112,11 @@ class DropZone: Layer {
         }
     }
     
-    func open(type: vc64.FileType, delay: Double) {
+    func open(url: URL, delay: Double) {
         
+        self.url = url
+        let type = MediaFileProxy.type(of: url)
+
         setType(type)
         open(delay: delay)
         resize()
