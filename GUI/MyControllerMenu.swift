@@ -1086,8 +1086,7 @@ extension MyController: NSMenuItemValidation {
 
                     do {
 
-                        let crt = emu.expansionport.exportCRT()
-                        try crt?.writeToFile(url: url)
+                        try emu.expansionport.write(toFile: url)
 
                     } catch {
                         

@@ -50,58 +50,6 @@ extension C64Proxy {
 // Factory extensions
 //
 
-@MainActor
-extension MediaFileProxy {
-
-    static func makeWith(buffer: UnsafeRawPointer, length: Int, type: vc64.FileType) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(withBuffer: buffer, length: length, type: type, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-        return obj!
-    }
-
-    static func make(with data: Data, type: vc64.FileType) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(with: data, type: type, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-        return obj!
-    }
-
-    private static func make(with data: Data, type: vc64.FileType, exception: ExceptionWrapper) -> Self? {
-
-        return data.withUnsafeBytes { uwbp -> Self? in
-
-            return make(withBuffer: uwbp.baseAddress!, length: uwbp.count, type: type, exception: exception)
-        }
-    }
-
-    static func make(with url: URL) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(withFile: url.path, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-        return obj!
-    }
-
-    static func make(with url: URL, type: vc64.FileType) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(withFile: url.path, type: type, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-        return obj!
-    }
-
-    static func make(with drive: DriveProxy, type: vc64.FileType) throws -> Self {
-
-        let exc = ExceptionWrapper()
-        let obj = make(withDrive: drive, type: type, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-        return obj!
-    }
-}
-
 
 
 //
@@ -220,11 +168,18 @@ extension DatasetteProxy {
 
 @MainActor
 extension ExpansionPortProxy {
-
+    
     func attachCartridge(_ url: URL, reset: Bool) throws {
         
         let exc = ExceptionWrapper()
         attachCartridge(url, reset: reset, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+
+    func write(toFile url: URL) throws {
+        
+        let exc = ExceptionWrapper()
+        write(toFile: url, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
 }
@@ -236,17 +191,6 @@ extension AnyFileProxy {
         
         let exc = ExceptionWrapper()
         write(toFile: url, exception: exc)
-        if let _ = exc.fault { throw AppError(exc) }
-    }
-}
-
-@MainActor
-extension MediaFileProxy {
-    
-    func writeToFile(url: URL) throws {
-        
-        let exc = ExceptionWrapper()
-        write(toFile: url.path, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
 }
@@ -382,37 +326,5 @@ extension DriveProxy {
         } else {
             return info.hasModifiedDisk ? DriveProxy.diskUnprotGray : DriveProxy.diskUnprot
         }
-    }
-}
-
-@MainActor
-extension MediaFileProxy {
-
-    func icon(protected: Bool = false) -> NSImage {
-     
-        switch type {
-     
-        case .CRT:
-            return NSImage(named: "cartridge")!
-        
-        case .TAP:
-            return NSImage(named: "tape")!
-       
-            /*
-        case .FOLDER:
-            return NSImage(named: "NSFolder")!
-             */
-        case .D64, .G64, .T64, .PRG, .P00:
-            return MediaFileProxy.diskIcon(protected: protected)
-
-        default:
-            fatalError()
-        }
-    }
-    
-    static func diskIcon(protected: Bool = false) -> NSImage {
-
-        let name = "disk2" + (protected ? "_protected" : "")
-        return NSImage(named: name)!
     }
 }

@@ -39,7 +39,6 @@ using namespace vc64;
 @class SerialPortProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
-@class MediaFileProxy;
 @class MemoryProxy;
 @class MouseProxy;
 @class MyController;
@@ -245,7 +244,6 @@ NSString *EventSlotName(EventSlot slot);
 - (void)deleteRom:(RomType)type;
 
 - (void)flashFile:(NSURL *)url exception:(ExceptionWrapper *)ex;
-- (void)flash:(MediaFileProxy *)container exception:(ExceptionWrapper *)ex __attribute__((deprecated("MediaFile will go away.")));
 
 @end
 
@@ -510,8 +508,6 @@ struct GuardInfo {
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
 - (void)detachCartridge;
-- (MediaFileProxy *) exportCRT __attribute__((deprecated("MediaFile will go away.")));
-
 - (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;
 
 @end
@@ -570,9 +566,7 @@ struct GuardInfo {
 
 - (void)insertBlankDisk:(FSFormat)fstype name:(NSString *)name;
 - (void)insert:(NSURL *)url protected:(BOOL)wp exception:(ExceptionWrapper *)ex;
-- (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp __attribute__((deprecated("MediaFile will go away.")));
 - (void)ejectDisk;
-
 - (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;
 
 @end
@@ -672,7 +666,6 @@ struct GuardInfo {
 - (void)pressKey:(char)c;
 - (void)pressSpecialKey:(RSKey)key;
 - (void)pressSpecialKey:(RSKey)key shift:(BOOL)shift;
-// - (void)executeScript:(MediaFileProxy *)file __attribute__((deprecated("MediaFile will go away.")));
 - (void)executeScript:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)executeString:(NSString *)string;
 
@@ -732,38 +725,6 @@ struct GuardInfo {
 @property (readonly) BOOL compressed;
 
 @property (readonly) u8 *data;
-
-@property (readonly, strong) NSImage *previewImage;
-@property (readonly) time_t timeStamp;
-
-@end
-
-
-//
-// MediaFile
-//
-
-@interface MediaFileProxy : Proxy
-{
-    NSImage *preview;
-}
-
-+ (FileType) typeOfUrl:(NSURL *)url;
-
-+ (instancetype)make:(void *)file;
-+ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFile:(NSString *)path type:(FileType)t exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len type:(FileType)t exception:(ExceptionWrapper *)ex;
-// + (instancetype)makeWithC64:(EmulatorProxy *)proxy compressor:(Compressor)c;
-+ (instancetype)makeWithDrive:(DriveProxy *)proxy type:(FileType)t exception:(ExceptionWrapper *)ex;
-
-@property (readonly) FileType type;
-@property (readonly) u64 fnv;
-@property (readonly) NSInteger size;
-@property (readonly) Compressor compressor;
-@property (readonly) BOOL compressed;
-
-- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 
 @property (readonly, strong) NSImage *previewImage;
 @property (readonly) time_t timeStamp;

@@ -86,9 +86,9 @@ class DropZone: Layer {
             
             enabled = [config8.connected, config9.connected, false, false, false]
 
-        } else {
+        } else if let fileType = FileType(url: url) {
             
-            switch MediaFileProxy.type(of: url) {
+            switch fileType {
                 
             case .T64, .P00, .PRG:
                 enabled = [config8.connected, config9.connected, true, false, false]

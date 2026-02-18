@@ -61,11 +61,27 @@ extension EventSlot: CustomStringConvertible {
 }
 
 extension FileType {
-
+    
     init?(url: URL?) {
-        self = url == nil ? .UNKNOWN : MediaFileProxy.type(of: url)
+        
+        guard let url = url else { return nil }
+        
+        switch url.pathExtension.lowercased() {
+            
+        case "vc64":    self = .WORKSPACE
+        case "vcsnap":  self = .SNAPSHOT
+        case "retrosh": self = .SCRIPT
+        case "crt":     self = .CRT
+        case "t64":     self = .T64
+        case "p00":     self = .P00
+        case "prg":     self = .PRG
+        case "d64":     self = .D64
+        case "g64":     self = .G64
+        case "tap":     self = .TAP
+        default:        return nil
+        }
     }
-
+        
     static var all: [vc64.FileType] {
         return [
             .WORKSPACE, .SNAPSHOT, .SCRIPT,

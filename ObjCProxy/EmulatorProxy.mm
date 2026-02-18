@@ -842,14 +842,6 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-/*
-- (void)attachCartridge:(MediaFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
-{
-    try { [self eport]->attachCartridge(*(MediaFile *)c->obj, reset); }
-    catch (std::exception &stdex) { [ex save:stdex]; }
-}
-*/
-
 - (void)attachReuCartridge:(NSInteger)capacity
 {
     [self eport]->attachReu(capacity);
@@ -868,19 +860,6 @@ NSString *EventSlotName(EventSlot slot)
 - (void)detachCartridge
 {
     [self eport]->detachCartridge();
-}
-
-- (MediaFileProxy *)exportCRT
-{
-    try {
-
-        MediaFile *crt = [self eport]->exportCRT();
-        return [MediaFileProxy make:crt];
-
-    } catch (std::exception &error) {
-
-        return nil;
-    }
 }
 
 - (void)writeToFile:(NSURL *)url exception:(ExceptionWrapper *)ex
@@ -1026,11 +1005,6 @@ NSString *EventSlotName(EventSlot slot)
 {
     try { [self drive]->insert(fs::path(url.fileSystemRepresentation), wp); }
     catch (std::exception &stdex) { [ex save:stdex]; }
-}
-
-- (void)insertMedia:(MediaFileProxy *)proxy protected:(BOOL)wp
-{
-    [self drive]->insertMedia(*(MediaFile *)proxy->obj, wp);
 }
 
 - (void)insertBlankDisk:(FSFormat)fsType name:(NSString *)name
@@ -1284,144 +1258,12 @@ NSString *EventSlotName(EventSlot slot)
     // [self shell]->execScript(fs::path(url.fileSystemRepresentation));
 }
 
-/*
-- (void)executeScript:(MediaFileProxy *)file
-{
-    [self shell]->execScript(*(MediaFile *)file->obj);
-}
-*/
-
 - (void)executeString:(NSString *)str
 {
     [self shell]->execScript(std::string([str UTF8String]));
 }
 
 @end
-
-
-//
-// MediaFile
-//
-
-@implementation MediaFileProxy
-
-- (MediaFile *)file
-{
-    return (MediaFile *)obj;
-}
-
-+ (FileType)typeOfUrl:(NSURL *)url
-{
-    return MediaFile::type([url fileSystemRepresentation]);
-}
-
-+ (instancetype)make:(void *)file
-{
-    return file ? [[self alloc] initWith:file] : nil;
-}
-
-+ (instancetype)makeWithFile:(NSString *)path
-                   exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: MediaFile::make([path fileSystemRepresentation])]; }
-    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
-}
-
-+ (instancetype)makeWithFile:(NSString *)path
-                        type:(FileType)type
-                   exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: MediaFile::make([path fileSystemRepresentation], type)]; }
-    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
-}
-
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
-                          type:(FileType)type
-                     exception:(ExceptionWrapper *)ex
-{
-    try { return [self make: MediaFile::make((u8 *)buf, len, type)]; }
-    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
-}
-
-+ (instancetype)makeWithDrive:(DriveProxy *)proxy
-                        type:(FileType)type
-                   exception:(ExceptionWrapper *)ex
-{
-    auto drive = (DriveAPI *)proxy->obj;
-    try { return [self make: MediaFile::make(*drive, type)]; }
-    catch (std::exception &stdex) { [ex save:stdex]; return nil; }
-}
-
-- (FileType)type
-{
-    return [self file]->type();
-}
-
-- (u64)fnv
-{
-    return [self file]->fnv64();
-}
-
-- (NSInteger)size
-{
-    return [self file]->getSize();
-}
-
-- (Compressor)compressor
-{
-    return [self file]->compressor();
-}
-
-- (BOOL)compressed
-{
-    return [self file]->isCompressed();
-}
-
-- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
-{
-    try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
-    catch (std::exception &stdex) { [ex save:stdex]; }
-}
-
-- (NSImage *)previewImage
-{
-    // Return cached image (if any)
-    if (preview) { return preview; }
-
-    // Get dimensions and data
-    auto size = [self file]->previewImageSize();
-    auto data = (unsigned char *)[self file]->previewImageData();
-
-    // Create preview image
-    if (data) {
-
-        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
-                                 initWithBitmapDataPlanes: &data
-                                 pixelsWide:size.first
-                                 pixelsHigh:size.second
-                                 bitsPerSample:8
-                                 samplesPerPixel:4
-                                 hasAlpha:true
-                                 isPlanar:false
-                                 colorSpaceName:NSCalibratedRGBColorSpace
-                                 bytesPerRow:4*size.first
-                                 bitsPerPixel:32];
-
-        preview = [[NSImage alloc] initWithSize:[rep size]];
-        [preview addRepresentation:rep];
-
-        // image.makeGlossy()
-    }
-    return preview;
-}
-
-- (time_t)timeStamp
-{
-    return [self file]->timestamp();
-}
-
-@end
-
 
 //
 // AnyFile proxy
@@ -1831,14 +1673,6 @@ NSString *EventSlotName(EventSlot slot)
     return [self getRomTraits:RomType::VC1541];
 }
 
-/*
-- (MediaFileProxy *)takeSnapshot
-{
-    MediaFile *snapshot = [self c64]->takeSnapshot();
-    return [MediaFileProxy make:snapshot];
-}
-*/
-
 - (SnapshotProxy *)takeSnapshot:(Compressor)compressor
 {
     try {
@@ -1853,20 +1687,6 @@ NSString *EventSlotName(EventSlot slot)
         return nil;
     }
 }
-/*
-- (MediaFileProxy *)takeSnapshot:(Compressor)compressor
-{
-    try {
-
-        MediaFile *snapshot = [self c64]->takeSnapshot(compressor);
-        return [MediaFileProxy make:snapshot];
-
-    } catch (std::exception &stdex) {
-
-        return nil;
-    }
-}
-*/
 
 - (void)loadSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex
 {
@@ -2327,12 +2147,6 @@ NSString *EventSlotName(EventSlot slot)
 - (void)flashFile:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
     try { [self emu]->c64.flash(fs::path(url.fileSystemRepresentation)); }
-    catch (std::exception &stdex) { [ex save:stdex]; }
-}
-
-- (void)flash:(MediaFileProxy *)proxy exception:(ExceptionWrapper *)ex
-{
-    try { [self emu]->c64.flash(*(MediaFile *)proxy->obj); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 

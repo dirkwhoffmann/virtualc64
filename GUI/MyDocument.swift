@@ -254,11 +254,4 @@ class MyDocument: NSDocument {
 
         try console.runScript(url: url)
     }
-
-    /*
-    @available(*, deprecated, message: "MediaFileProxy will go away.")
-    func processScriptFile(file: MediaFileProxy, force: Bool = false) throws {
-        console.runScript(script: file)
-    }
-    */
 }

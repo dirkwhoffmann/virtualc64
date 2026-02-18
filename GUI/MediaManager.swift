@@ -206,38 +206,6 @@ class MediaManager {
     }
 
     //
-    // Creating media files from URLs
-    //
-    
-    @available(*, deprecated, message: "MediaFileProxy will go away")
-    static func createFileProxy(from url: URL, type: FileType) throws -> MediaFileProxy {
-        
-        return try createFileProxy(from: url, allowedTypes: [type])
-    }
-    
-    @available(*, deprecated, message: "MediaFileProxy will go away")
-    static func createFileProxy(from url: URL, allowedTypes: [FileType]) throws -> MediaFileProxy {
-        
-        debug(.media, "Reading file \(url.lastPathComponent)")
-        
-        // If the provided URL points to compressed file, decompress it first
-        let newUrl = url.unpacked(maxSize: 2048 * 1024)
-        
-        // Iterate through all allowed file types
-        for type in allowedTypes {
-            
-            do {
-                return try MediaFileProxy.make(with: newUrl, type: type)
-            } catch let error as AppError {
-                if error.key != "FILE_TYPE_MISMATCH" { throw error }
-            }
-        }
-        
-        // None of the allowed types matched the file
-        throw AppError(what: "The type of this file is not known to the emulator.")
-    }
-
-    //
     // Workspaces, Snapshots, Scripts
     //
 
@@ -356,10 +324,5 @@ class MediaManager {
         try drive.write(toFile: url)
         
         emu?.put(.DSK_MODIFIED, value: id)
-    }
-    
-    func export(file: MediaFileProxy, to url: URL) throws {
-        
-        try file.writeToFile(url: url)
     }
 }
