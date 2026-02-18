@@ -48,11 +48,13 @@ CRTFile::init(class ExpansionPort &expansion)
     
 }
 
+/*
 PETName<16>
 CRTFile::getName() const
 {
     return PETName<16>(data.ptr + 0x20, 0x00);
 }
+*/
 
 void
 CRTFile::finalizeRead()

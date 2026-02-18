@@ -83,7 +83,7 @@ public:
     bool isCompatiblePath(const fs::path &path) const override { return isCompatible(path); }
     bool isCompatibleBuffer(const u8 *buf, isize len) const override { return isCompatible(buf, len); }
     FileType type() const override { return FileType::CRT; }
-    PETName<16> getName() const override;
+    // PETName<16> getName() const override;
     void finalizeRead() override;
 
     

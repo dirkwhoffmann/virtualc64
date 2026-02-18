@@ -18,9 +18,12 @@
 #include "MediaFile.h"
 #include "PETName.h"
 #include "utl/storage/Buffer.h"
+#include "FileSystems/CBM/FSObjects.h"
 
 #include <sstream>
 #include <fstream>
+
+using retro::vault::cbm::PETName;
 
 namespace vc64 {
 

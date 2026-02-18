@@ -13,14 +13,19 @@
 #include "config.h"
 #include "C64.h"
 #include "Codecs.h"
-#include "Images/D64/D64File.h"
+#include "ADFFile.h"
 #include "Images/ImageError.h"
+#include "Images/D64/D64File.h"
+#include "Images/Encoders/C64Encoder.h"
+#include "Images/Encoders/C64Decoder.h"
 #include "utl/abilities/Hashable.h"
 #include <stdarg.h>
 
-using retro::vault::ImageError;
+// using retro::vault::ImageError;
 
 namespace vc64 {
+
+using namespace retro::vault;
 
 const TrackDefaults FloppyDisk::trackDefaults[43] = {
     
@@ -160,16 +165,24 @@ FloppyDisk::init(const class FloppyDiskImage &file, bool wp)
 }
 
 void
-FloppyDisk::init(FSFormat type, PETName<16> name, bool wp)
+FloppyDisk::init(FSFormat type, const PETName<16> &name, bool wp)
 {
-    assert(retro::vault::cbm::FSFormatEnum::isValid(type));
+    assert(FSFormatEnum::isValid(type));
     
     if (type == FSFormat::CBM) {
         
-        // TODO:
-        // auto fs = OldFileSystem(DiskType::SS_SD, DOSType::CBM);
-        // fs.setName(name);
-        // init(fs, wp);
+        // Create a D64 container with a file system on top
+        auto d64 = D64File();
+        auto vol = Volume(d64);
+        auto fs  = FileSystem(vol);
+        
+        // Format disk
+        fs.format(type);
+        fs.setName(name);
+        fs.flush();
+        
+        // Initialize the disk with the formatted D64 container
+        init(d64, wp);
 
     } else {
 
@@ -207,6 +220,84 @@ void
 FloppyDisk::init(SerReader &reader)
 {
     serialize(reader);
+}
+
+void
+FloppyDisk::readBlock(u8 *dst, isize nr) const
+{
+    C64Decoder decoder;
+
+    auto [t,s] = b2ts(nr);
+    loginfo(GCR_DEBUG, "readBlock: %ld (%ld,%ld)\n", nr, t, s);
+
+    fatalError;
+    
+    /*
+    auto bytes = decoder.decodeSector(track[t], t, s);
+    assert(bytes.size() == bsize());
+    memcpy(dst, bytes.data(), bytes.size());
+    */
+}
+
+void
+FloppyDisk::readBlocks(u8 *dst, Range<isize> range) const
+{
+    for (isize b = range.lower; b < range.upper; ++b)
+        readBlock(dst, b);
+}
+
+void
+FloppyDisk::writeBlock(const u8 *src, isize nr)
+{
+    C64Encoder encoder;
+    C64Decoder decoder;
+
+    auto [t,s]  = b2ts(nr);
+    loginfo(GCR_DEBUG, "writeBlock: %ld (%ld,%ld)\n", nr, t, s);
+
+    fatalError;
+    
+    /*
+    // Compute the MFM bit stream
+    auto mfm = encoder.encodeSector(ByteView(src, bsize()), t, s);
+
+    // Locate the sector inside the track
+    auto sector = decoder.seekSector(track[t], s);
+
+    if (!sector.has_value())
+        throw IOError(DeviceError::SEEK_ERR, "Block " + std::to_string(nr));
+
+    auto tr = track[t];
+    auto it = track[t].cyclic_begin() + sector->lower;
+
+    // Replace the sector data
+    assert(mfm.size() == (*sector).size());
+    for (isize i = 0; i < mfm.size(); ++i, ++it)
+        tr.set(it.offset(), mfm[i]);
+
+    // Rectify clock bits
+    encoder.rectifyClockBit(tr, sector->lower);
+    encoder.rectifyClockBit(tr, sector->upper);
+    */
+}
+
+void
+FloppyDisk::writeBlocks(const  u8 *src, Range<isize> range)
+{
+    for (isize b = range.lower; b < range.upper; ++b)
+        writeBlock(src, b);
+}
+
+void
+FloppyDisk::readTrack(u8 *dst, isize nr) const
+{
+    fatalError;
+}
+
+void
+FloppyDisk::writeTrack(const u8 *src, isize nr)
+{
+    fatalError;
 }
 
 void

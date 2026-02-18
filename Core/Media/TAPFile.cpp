@@ -34,11 +34,13 @@ TAPFile::isCompatible(const Buffer<u8> &buf)
     return isCompatible(buf.ptr, buf.size);
 }
 
+/*
 PETName<16>
 TAPFile::getName() const
 {
     return PETName<16>(data.ptr + 8);
 }
+*/
 
 isize
 TAPFile::headerSize() const

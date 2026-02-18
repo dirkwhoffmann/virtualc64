@@ -400,8 +400,7 @@ Drive::insertDisk(std::unique_ptr<FloppyDisk> disk)
 void
 Drive::insertNewDisk(FSFormat fsType, string name)
 {
-    // TODO:
-    // insertDisk(std::make_unique<Disk>(fsType, name));
+    insertDisk(std::make_unique<FloppyDisk>(fsType, PETName<16>(name)));
 }
 
 /*
