@@ -31,8 +31,6 @@ enum class FileType : long
     T64,
     P00,
     PRG,
-    // FOLDER,
-    D64,
     G64,
     TAP,
     BASIC_ROM,
@@ -58,7 +56,6 @@ struct FileTypeEnum : Reflectable<FileTypeEnum, FileType> {
             case FileType::T64:        return "T64";
             case FileType::PRG:        return "PRG";
             case FileType::P00:        return "P00";
-            case FileType::D64:        return "D64";
             case FileType::G64:        return "G64";
             case FileType::TAP:        return "TAP";
             case FileType::BASIC_ROM:  return "BASIC_ROM";

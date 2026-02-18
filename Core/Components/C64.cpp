@@ -2035,7 +2035,6 @@ C64::flash(const fs::path &path, isize item)
 
                 flashNew(*file);
                 
-            case FileType::D64:
             case FileType::T64:
             case FileType::P00:
             case FileType::PRG:
@@ -2075,7 +2074,6 @@ C64::flashNew(const AnyFile &file)
             loadSnapshot(dynamic_cast<const Snapshot &>(file));
             break;
             
-        case FileType::D64:
         case FileType::T64:
         case FileType::P00:
         case FileType::PRG:
@@ -2100,7 +2098,6 @@ C64::flashNew(const AnyFile &file, isize nr)
         
         switch (collection.type()) {
                 
-            case FileType::D64:
             case FileType::T64:
             case FileType::P00:
             case FileType::PRG:

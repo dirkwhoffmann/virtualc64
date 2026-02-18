@@ -10,6 +10,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #include "config.h"
 #include "C64.h"
 
@@ -188,3 +190,4 @@ D64File::dump(Track track, Sector sector) const
 }
 
 }
+#endif

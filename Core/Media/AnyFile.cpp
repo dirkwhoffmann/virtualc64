@@ -37,7 +37,6 @@ AnyFile::type(const fs::path &path)
     if (T64File::isCompatible(path))    return FileType::T64;
     if (P00File::isCompatible(path))    return FileType::P00;
     if (PRGFile::isCompatible(path))    return FileType::PRG;
-    if (D64File::isCompatible(path))    return FileType::D64;
     if (G64File::isCompatible(path))    return FileType::G64;
     if (TAPFile::isCompatible(path))    return FileType::TAP;
 
@@ -71,7 +70,6 @@ AnyFile::make(const fs::path &path, FileType type)
         case FileType::T64:        return new T64File(path);
         case FileType::PRG:        return new PRGFile(path);
         case FileType::P00:        return new P00File(path);
-        case FileType::D64:        return new D64File(path);
         case FileType::G64:        return new G64File(path);
         case FileType::TAP:        return new TAPFile(path);
         case FileType::BASIC_ROM:  return new RomFile(path);
@@ -95,7 +93,6 @@ AnyFile::make(const u8 *buf, isize len, FileType type)
         case FileType::T64:        return new T64File(buf, len);
         case FileType::PRG:        return new PRGFile(buf, len);
         case FileType::P00:        return new P00File(buf, len);
-        case FileType::D64:        return new D64File(buf, len);
         case FileType::G64:        return new G64File(buf, len);
         case FileType::TAP:        return new TAPFile(buf, len);
         case FileType::BASIC_ROM:  return new RomFile(buf, len);
