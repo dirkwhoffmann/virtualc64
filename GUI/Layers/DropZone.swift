@@ -78,7 +78,11 @@ class DropZone: Layer {
         inUse[3] = emu.expansionport.cartridgeAttached()
         inUse[4] = emu.datasette.info.hasTape
         
-        if url.hasDirectoryPath {
+        if url.pathExtension.uppercased() == "VC64" {
+            
+            enabled = [false, false, false, false, false]
+            
+        } else if url.hasDirectoryPath {
             
             enabled = [config8.connected, config9.connected, false, false, false]
             

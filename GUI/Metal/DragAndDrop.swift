@@ -61,6 +61,7 @@ extension MetalView {
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
     
+        print("draggingExited")
         parent.renderer.dropZone.close(delay: 0.25)
     }
     
@@ -72,6 +73,7 @@ extension MetalView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
 
+        print("performDragOperation")
         let pasteBoard = sender.draggingPasteboard
 
         if let type = pasteBoard.availableType(from: acceptedTypes()) {

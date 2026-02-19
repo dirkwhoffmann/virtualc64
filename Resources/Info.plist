@@ -453,6 +453,10 @@
 			<string>VirtualC64 Workspace</string>
 			<key>UTTypeIcons</key>
 			<dict>
+				<key>UTTypeIconBackgroundName</key>
+				<string>IconBlue</string>
+				<key>UTTypeIconBadgeName</key>
+				<string>AppIcon</string>
 				<key>UTTypeIconText</key>
 				<string>WORKSPACE</string>
 			</dict>

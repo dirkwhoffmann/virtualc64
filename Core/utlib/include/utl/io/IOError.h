@@ -79,7 +79,7 @@ struct IOError : public Error {
                 break;
 
             case FILE_NOT_FOUND:
-                set_msg("File \"" + msg + "\" not empty.");
+                set_msg("File \"" + msg + "\" not found.");
                 break;
 
             case FILE_EXISTS:

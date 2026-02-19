@@ -28,7 +28,7 @@ void
 Console::willExecute(const InputLine &input)
 {
     // Echo the command if it came from somewhere else
-    if (!input.isUserCommand()) { *this << input.input << '\n'; }
+    if (!input.isUserCommand()) { *this << input.input; } //  << '\n'; }
 }
 
 void
@@ -36,6 +36,8 @@ Console::didExecute(const InputLine& input, std::stringstream &ss)
 {
     if (ss.peek() != EOF) {
         *this << vdelim << ss.str() << vdelim;
+    } else {
+        *this << vdelim;
     }
 }
 
@@ -755,7 +757,7 @@ Console::exec(const InputLine& cmd)
     std::stringstream ss;
 
     // Skip empty script lines
-    if (cmd.isScriptCommand() && cmd.input.empty()) return;
+    // if (cmd.isScriptCommand() && cmd.input.empty()) return;
 
     // Inform the delegates
     for (auto &delegate: delegates) delegate->willExecute(cmd);

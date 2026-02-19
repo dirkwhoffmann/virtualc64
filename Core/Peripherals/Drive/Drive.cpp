@@ -388,12 +388,23 @@ Drive::insertDisk(std::unique_ptr<FloppyDisk> disk)
 {
     loginfo(DSKCHG_DEBUG, "insertDisk\n");
     
-    if (!diskToInsert) {
+    if (diskToInsert) {
         
-        diskToInsert = std::move(disk);
+        logwarn("Disk change in progress. Ignoring new disk.\n");
+        // TODO: THROW
+        return;
+    }
+    
+    diskToInsert = std::move(disk);
+    
+    // Initiate the disk change procedure
+    scheduleFirstDiskChangeEvent(DCH_INSERT);
+    
+    // If the emulator is powered off, initiate the disk change immediately
+    if (isPoweredOff()) {
         
-        // Initiate the disk change procedure
-        scheduleFirstDiskChangeEvent(DCH_INSERT);
+        insertionStatus = InsertionStatus::PARTIALLY_INSERTED;
+        processDiskChangeEvent(DCH_INSERT);
     }
 }
 

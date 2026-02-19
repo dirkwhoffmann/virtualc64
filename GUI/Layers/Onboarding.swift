@@ -293,6 +293,7 @@ class Onboarding: Layer {
         super.open(delay: delay)
 
         if let toolbar = window.toolbar as? MyToolbar {
+            
             toolbar.isVisible = true
             toolbar.globalDisable = true
             toolbar.validateVisibleItems()

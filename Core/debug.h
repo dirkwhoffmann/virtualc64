@@ -73,8 +73,8 @@ constexpr long VIA_DEBUG       = 0;
 constexpr long PIA_DEBUG       = 0;
 constexpr long SER_DEBUG       = 0;
 constexpr long DSK_DEBUG       = 0;
-constexpr long DSKCHG_DEBUG    = 0;
-constexpr long GCR_DEBUG       = 1;
+constexpr long DSKCHG_DEBUG    = 1;
+constexpr long GCR_DEBUG       = 0;
 constexpr long FS_DEBUG        = 0;
 constexpr long PAR_DEBUG       = 0;
 

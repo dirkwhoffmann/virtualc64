@@ -1452,7 +1452,7 @@ C64::saveWorkspace(const fs::path &path)
                 G64File(*drive.disk).writeToFile(path / file);
                 drive.markDiskAsUnmodified();
 
-                ss << "try " << name << " attach cartridge " << file << "\n";
+                ss << "try " << name << " insert " << file << "\n";
                 ss << "try " << name << (drive.hasProtectedDisk() ? " protect\n" : " unprotect\n");
 
             } catch (...) { }

@@ -68,7 +68,7 @@ CommanderConsole::initCommands(RSCommand &root)
         .flags  = rs::hidden,
         .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            os << "\nRetroShell Commander\n";
+            // os << "\nRetroShell Commander\n";
         }
     });
 
@@ -699,6 +699,16 @@ CommanderConsole::initCommands(RSCommand &root)
         }
     });
 
+    root.add({
+
+        .tokens = { cmd, "eject" },
+        .chelp  = { "Eject the tape" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            datasette.ejectTape();
+        }
+    });
+    
 
     //
     // Peripherals (Mouse)
