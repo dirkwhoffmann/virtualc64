@@ -52,9 +52,6 @@ Gw
                                     <rect key="frame" x="19" y="25" width="72" height="72"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyUpOrDown" image="disk2" id="7hC-H7-6fS"/>
-                                    <connections>
-                                        <outlet property="exporter" destination="-2" id="ZC8-Lf-9Fe"/>
-                                    </connections>
                                 </imageView>
                             </subviews>
                         </view>

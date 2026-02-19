@@ -1009,10 +1009,10 @@ C64::_isReady() const
     if (!hasRom(RomType::CHAR)) {
         throw CoreError(CoreError::ROM_CHAR_MISSING);
     }
-    if (!hasRom(RomType::KERNAL) || FORCE_ROM_MISSING) {
+    if (!hasRom(RomType::KERNAL) || force::ROM_MISSING) {
         throw CoreError(CoreError::ROM_KERNAL_MISSING);
     }
-    if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
+    if (force::MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
         throw CoreError(CoreError::ROM_MEGA65_MISMATCH);
     }
 }

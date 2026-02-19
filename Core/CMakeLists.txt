@@ -25,10 +25,10 @@ else()
 endif()
 
 # Add the emulator library
-add_library(VC64Core VirtualC64.cpp config.cpp debug.cpp)
+add_library(VC64Core VirtualC64.cpp debug.cpp)
 
 # Add the headless app
-add_executable(VC64Headless Headless.cpp config.cpp debug.cpp)
+add_executable(VC64Headless Headless.cpp debug.cpp)
 target_link_libraries(VC64Headless VC64Core)
 
 # Specify compile options

@@ -20,7 +20,7 @@ namespace vc64 {
 bool
 Cartridge::isKnownType(CartridgeType type)
 {
-    if (FORCE_CRT_UNKNOWN) return false;
+    if (force::CRT_UNKNOWN) return false;
 
     return type >= CartridgeType::NORMAL && type <= CartridgeType::GMOD2;
 }
@@ -28,7 +28,7 @@ Cartridge::isKnownType(CartridgeType type)
 bool
 Cartridge::isSupportedType(CartridgeType type)
 {
-    if (FORCE_CRT_UNSUPPORTED) return false;
+    if (force::CRT_UNSUPPORTED) return false;
 
     switch (type) {
 
@@ -174,7 +174,7 @@ Cartridge::makeWithCRTFile(C64 &c64, const CRTFile &file)
         cart->loadChip(i, file);
     }
 
-    if (CRT_DEBUG) cart->dump(Category::State);
+    if (debug::CRT_DEBUG) cart->dump(Category::State);
     return cart;
 }
 

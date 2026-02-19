@@ -309,8 +309,6 @@
 		50726FBD2961CA5A0031F2F5 /* Headless.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726FBB2961CA5A0031F2F5 /* Headless.cpp */; };
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
 		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
-		5077AC682B5ACC5100EFAC85 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5077AC672B5ACC5100EFAC85 /* config.cpp */; };
-		5077AC692B5ACC5100EFAC85 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5077AC672B5ACC5100EFAC85 /* config.cpp */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499B24C8D64700DBF984 /* InstrTableView.swift */; };
 		507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499D24C8D65700DBF984 /* TraceTableView.swift */; };
@@ -1076,7 +1074,6 @@
 		50726FBC2961CA5A0031F2F5 /* Headless.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Headless.h; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
-		5077AC672B5ACC5100EFAC85 /* config.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = config.cpp; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		5078BEA5264D064600EDA161 /* PowerPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPortTypes.h; sourceTree = "<group>"; };
 		5078BEAA264D70AC00EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1956,7 +1953,6 @@
 			children = (
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
 				504C42F824AF29AB00E69CAE /* config.h */,
-				5077AC672B5ACC5100EFAC85 /* config.cpp */,
 				50AC25B72F42216E0016265E /* debug.h */,
 				50AC25B82F4221770016265E /* debug.cpp */,
 				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
@@ -3437,7 +3433,6 @@
 				50726F992961CA0D0031F2F5 /* MagicDesk.cpp in Sources */,
 				50AC25C42F425DD20016265E /* MediaError.cpp in Sources */,
 				50726F9B2961CA0D0031F2F5 /* Mach5.cpp in Sources */,
-				5077AC692B5ACC5100EFAC85 /* config.cpp in Sources */,
 				50726F8B2961CA0D0031F2F5 /* Expert.cpp in Sources */,
 				50AC282F2F4469480016265E /* DMSFile.cpp in Sources */,
 				50726F692961C9C60031F2F5 /* version.cc in Sources */,
@@ -3992,7 +3987,6 @@
 				50A5B7D12C74E44C00D6DDAD /* RemoteServer.cpp in Sources */,
 				50B064EF2C888F2C0080FCA0 /* RegressionTesterBase.cpp in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
-				5077AC682B5ACC5100EFAC85 /* config.cpp in Sources */,
 				5036E0B7261AEF000048E66A /* Console.cpp in Sources */,
 				50A92A202EC85E1B00F90519 /* Transport.cpp in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,

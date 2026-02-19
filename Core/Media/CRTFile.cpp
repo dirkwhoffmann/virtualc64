@@ -59,7 +59,7 @@ CRTFile::getName() const
 void
 CRTFile::finalizeRead()
 {
-    if (CRT_DEBUG) dump();
+    if (debug::CRT_DEBUG) dump();
 
     // Fix known inconsistencies
     repair();

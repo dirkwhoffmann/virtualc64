@@ -480,7 +480,7 @@ Reu::execute(EventID id)
 
         case EXP_REU_INITIATE:
 
-            if (REU_DEBUG) { dump(Category::Dma, std::cout); }
+            if (debug::REU_DEBUG) { dump(Category::Dma, std::cout); }
 
             // Update control register bits
             cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
@@ -515,15 +515,15 @@ Reu::execute(EventID id)
             // Only proceed if the bus is available
             if (busIsBlocked(id)) {
 
-                if (REU_DEBUG > 3) printf("BLOCKED\n");
+                if (debug::REU_DEBUG > 3) printf("BLOCKED\n");
                 break;
             }
 
             // Perform a DMA cycle
             auto remaining = doDma(id);
 
-            if (id == EXP_REU_STASH && REU_DEBUG > 3) printf("Stashing\n");
-            if (id == EXP_REU_FETCH && REU_DEBUG > 3) printf("Fetching %02x\n", reuVal);
+            if (id == EXP_REU_STASH && debug::REU_DEBUG > 3) printf("Stashing\n");
+            if (id == EXP_REU_FETCH && debug::REU_DEBUG > 3) printf("Fetching %02x\n", reuVal);
 
             // Set or clear the END_OF_BLOCK_BIT
             tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);

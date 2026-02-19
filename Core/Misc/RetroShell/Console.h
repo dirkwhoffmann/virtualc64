@@ -126,7 +126,7 @@ protected:
     static HistoryBuffer historyBuffer;
     
     // Additional output inserted before and after command execution
-    string vdelim = RSH_DEBUG ? "[DEBUG]\n" : "\n";
+    string vdelim = debug::RSH_DEBUG ? "[DEBUG]\n" : "\n";
     
     //
     // User input

@@ -62,6 +62,7 @@ static constexpr bool emscripten = 0;
 
 namespace vc64 {
 
+/*
 // General
 extern debugflag XFILES;
 extern debugflag CNF_DEBUG;
@@ -154,6 +155,7 @@ extern debugflag FORCE_CRT_UNKNOWN;
 extern debugflag FORCE_CRT_UNSUPPORTED;
 extern debugflag FORCE_RECORDING_ERROR;
 extern debugflag FORCE_ZLIB_ERROR;
+*/
 
 }
 

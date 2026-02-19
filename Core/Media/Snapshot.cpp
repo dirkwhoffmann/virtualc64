@@ -91,7 +91,7 @@ Snapshot::Snapshot(C64 &c64) : Snapshot(c64.size())
 {
     takeScreenshot(c64);
 
-    if (SNP_DEBUG) c64.dump(Category::State);
+    if (debug::SNP_DEBUG) c64.dump(Category::State);
     c64.save(getSnapshotData());
 }
 
@@ -191,7 +191,7 @@ Snapshot::compress(Compressor compressor)
 
         loginfo(SNP_DEBUG, "Compressing %ld bytes (hash: 0x%x)...", data.size, data.fnv32());
 
-        {   auto watch = utl::StopWatch(SNP_DEBUG, "");
+        {   auto watch = utl::StopWatch(debug::SNP_DEBUG, "");
             
             switch (compressor) {
                     
@@ -230,7 +230,7 @@ Snapshot::uncompress()
         
         loginfo(SNP_DEBUG, "Uncompressing %ld bytes...", data.size);
         
-        {   auto watch = utl::StopWatch(SNP_DEBUG, "");
+        {   auto watch = utl::StopWatch(debug::SNP_DEBUG, "");
         
             switch (compressor()) {
                     
