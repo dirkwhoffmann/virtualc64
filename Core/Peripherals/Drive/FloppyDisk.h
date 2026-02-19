@@ -119,7 +119,7 @@ public:
     FloppyDisk();
     FloppyDisk(const fs::path &path, bool wp = false) { init(path, wp); }
     FloppyDisk(const FloppyDiskImage &file, bool wp = false) { init(file, wp); }
-    FloppyDisk(FSFormat type, const PETName<16> &name, bool wp = false) { init(type, name, wp); }
+    FloppyDisk(FSFormat type, const PETName<16> &name, const fs::path& contents = {}, bool wp = false) { init(type, name, contents, wp); }
     FloppyDisk(const class G64File &g64, bool wp = false) { init(g64, wp); }
     FloppyDisk(class AnyCollection &archive, bool wp = false) { init(archive, wp); }
     FloppyDisk(SerReader &reader) { init(reader); }
@@ -128,7 +128,7 @@ private:
     
     void init(const fs::path &path, bool wp);
     void init(const class FloppyDiskImage &file, bool wp);
-    void init(FSFormat type, const PETName<16> &name, bool wp);
+    void init(FSFormat type, const PETName<16> &name, const fs::path& contents, bool wp);
     void init(const class G64File &g64, bool wp);
     void init(class AnyCollection &archive, bool wp);
     void init(SerReader &reader);

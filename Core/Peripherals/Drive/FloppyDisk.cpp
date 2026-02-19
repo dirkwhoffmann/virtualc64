@@ -129,23 +129,9 @@ FloppyDisk::init(const fs::path &path, bool wp)
 {
     if (isDirectory(path)) {
         
-        // Create a D64 container with a file system on top
-        auto d64 = D64File();
-        auto vol = Volume(d64);
-        auto fs  = FileSystem(vol);
+        init(FSFormat::CBM, PETName<16>("NEW DISK"), path, wp);
         
-        // Format disk
-        fs.format(FSFormat::CBM);
-        fs.setName(PETName<16>("NEW DISK"));
-        fs.importer.import(path);
-        fs.flush();
-        
-        // Initialize the disk with the formatted D64 container
-        init(d64, wp);
-        return;
-    }
-    
-    if (auto info = FloppyDiskImage::about(path)) {
+    } else if (auto info = FloppyDiskImage::about(path)) {
         
         // path points to a disk image
         switch (info->format) {
@@ -156,25 +142,26 @@ FloppyDisk::init(const fs::path &path, bool wp)
                 if (auto img = FloppyDiskImage::make(path)) {
                     init(*img, wp);
                 }
-                return;
+                break;
                 
             default:
                 throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
         }
-    }
-    
-    if (G64File::isCompatible(path)) {
-
+        
+    } else if (G64File::isCompatible(path)) {
+        
         auto file = G64File(path);
         init(file, wp);
-        return;
+        
+    } else if (auto *file = AnyCollection::make(path)) {
+        
+        if (auto *collection = dynamic_cast<AnyCollection *>(file))
+            init(*collection, wp);
+        
+    } else {
+        
+        throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
     }
-    
-    throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
-    
-    // TODO:
-    // auto fs = OldFileSystem(path);
-    // init(fs, wp);
 }
 
 void
@@ -185,7 +172,7 @@ FloppyDisk::init(const class FloppyDiskImage &file, bool wp)
 }
 
 void
-FloppyDisk::init(FSFormat type, const PETName<16> &name, bool wp)
+FloppyDisk::init(FSFormat type, const PETName<16> &name, const fs::path& contents, bool wp)
 {
     assert(FSFormatEnum::isValid(type));
     
@@ -199,8 +186,13 @@ FloppyDisk::init(FSFormat type, const PETName<16> &name, bool wp)
         // Format disk
         fs.format(type);
         fs.setName(name);
-        fs.flush();
         
+        // Add files (if present)
+        if (!contents.empty()) fs.importer.import(contents);
+
+        // Write back all file system changes
+        fs.flush();
+
         // Initialize the disk with the formatted D64 container
         init(d64, wp);
 
@@ -231,9 +223,36 @@ FloppyDisk::init(const G64File &g64, bool wp)
 void
 FloppyDisk::init(AnyCollection &collection, bool wp)
 {
-    // TODO:
-    // auto fs = OldFileSystem(collection);
-    // init(fs, wp);
+    isize numItems = collection.collectionCount();
+    Buffer<u8> buf;
+    
+    // Create a D64 container with a file system on top
+    auto d64 = D64File();
+    auto vol = Volume(d64);
+    auto fs  = FileSystem(vol);
+    
+    // Format disk
+    fs.format(FSFormat::CBM);
+    fs.setName(collection.collectionName());
+    
+    // Loop over all items
+    for (isize i = 0; i < numItems; ++i) {
+        
+        // Serialize item into a buffer
+        auto len = collection.itemSize(i);
+        buf.resize(len);
+        collection.copyItem(i, buf.ptr, buf.size);
+        for (isize i = 0; i < 64; ++i) printf("%02X ", buf[i]);
+        printf("\n");
+        // Create a file for this item
+        fs.createFile(collection.itemName(i), buf);
+    }
+    
+    // Write back all file system changes
+    fs.flush();
+
+    // Initialize the disk with the formatted D64 container
+    init(d64, wp);
 }
 
 void
@@ -671,7 +690,7 @@ FloppyDisk::writeToFile(const fs::path& path)
 {
     auto ext = utl::uppercased(path.extension().string());
 
-    if (ext == ".D64") writeToFile(path, ImageFormat::D64);
+    if (ext == ".D64") { writeToFile(path, ImageFormat::D64); return; }
     
     throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
 }

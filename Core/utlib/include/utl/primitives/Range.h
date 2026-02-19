@@ -59,10 +59,10 @@ struct Range {
             std::vector<T> copy = values;
             std::sort(copy.begin(), copy.end());
             
-            T start = values[0];
-            T prev  = values[0];
+            T start = copy[0];
+            T prev  = copy[0];
             
-            for (usize i = 1; i < copy.size(); i++) {
+            for (usize i = 1; i < copy.size(); ++i) {
                 
                 if (copy[i] == prev + 1) {
                     prev = copy[i];
