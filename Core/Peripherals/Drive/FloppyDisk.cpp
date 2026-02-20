@@ -196,6 +196,26 @@ FloppyDisk::init(FSFormat type, const PETName<16> &name, const fs::path& content
         // Initialize the disk with the formatted D64 container
         init(d64, wp);
 
+        // Run the GCR encoder for debugging...
+        if (debug::FS_DEBUG) {
+            
+            for (isize b = 0; b < d64.numBlocks(); ++b) {
+                                
+                try {
+                    
+                    u8 buf[256];
+                    retro::vault::BlockDevice::readBlock(span<u8>(buf, sizeof(buf)), b);
+                    
+                    for (isize i = 0; i < 256; ++i)
+                        assert(d64.data.ptr[b * 256 + i] == buf[i]);
+                    
+                } catch (const Error &err) {
+                    
+                    printf("%s\n", err.what());
+                }
+            }
+        }
+        
     } else {
 
         clearDisk();
@@ -242,8 +262,7 @@ FloppyDisk::init(AnyCollection &collection, bool wp)
         auto len = collection.itemSize(i);
         buf.resize(len);
         collection.copyItem(i, buf.ptr, buf.size);
-        for (isize i = 0; i < 64; ++i) printf("%02X ", buf[i]);
-        printf("\n");
+
         // Create a file for this item
         fs.createFile(collection.itemName(i), buf);
     }
@@ -269,8 +288,11 @@ FloppyDisk::readBlock(u8 *dst, isize nr) const
     auto [t,s] = b2ts(nr);
     loginfo(GCR_DEBUG, "readBlock: %ld (%ld,%ld)\n", nr, t, s);
     
-    auto bv = BitView(data.track[t], lengthOfTrack(nr));
-    auto bytes = decoder.decodeSector(bv, t, s);
+    // The first track in the data struct is numbered 1
+    auto tt = t + 1;
+    
+    auto bv = BitView(data.track[tt], lengthOfTrack(tt));
+    auto bytes = decoder.decodeSector(bv, tt, s);
     assert(bytes.size() == bsize());
     memcpy(dst, bytes.data(), bytes.size());
 }
@@ -296,11 +318,14 @@ FloppyDisk::writeBlock(const u8 *src, isize nr)
     auto [t,s]  = b2ts(nr);
     loginfo(GCR_DEBUG, "writeBlock: %ld (%ld,%ld)\n", nr, t, s);
 
+    // The first track in the data struct is numbered 1
+    auto tt = t + 1;
+
     // Compute the GCR bit stream
-    auto gcr = encoder.encodeSector(ByteView(src, bsize()), t, s);
+    auto gcr = encoder.encodeSector(ByteView(src, bsize()), tt, s);
 
     // Locate the sector inside the track
-    auto bv = MutableBitView(data.track[t], lengthOfTrack(nr));
+    auto bv = MutableBitView(data.track[tt], lengthOfTrack(tt));
     auto sector = decoder.seekSector(bv, s);
 
     if (!sector.has_value())

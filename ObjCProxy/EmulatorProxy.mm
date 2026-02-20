@@ -1008,9 +1008,10 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)insertBlankDisk:(FSFormat)fsType name:(NSString *)name
+- (void)insertBlankDisk:(FSFormat)fsType name:(NSString *)name exception:(ExceptionWrapper *)ex
 {
-    [self drive]->insertBlankDisk(fsType, [name UTF8String]);
+    try { [self drive]->insertBlankDisk(fsType, [name UTF8String]); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)ejectDisk

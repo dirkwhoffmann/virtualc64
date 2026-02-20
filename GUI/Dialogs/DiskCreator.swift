@@ -100,7 +100,7 @@ class DiskCreator: DialogController {
 
     @IBAction func insertAction(_ sender: Any!) {
 
-        drive?.insertBlankDisk(dos, name: name)
+        try? drive?.insert(format: dos, name: name)
         parent.mm.clearRecentlyExportedDiskURLs(drive: nr)
         hide()
     }

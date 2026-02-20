@@ -565,7 +565,7 @@ struct GuardInfo {
 @property (readonly) DriveInfo info;
 @property (readonly) DriveInfo cachedInfo;
 
-- (void)insertBlankDisk:(FSFormat)fstype name:(NSString *)name;
+- (void)insertBlankDisk:(FSFormat)fstype name:(NSString *)name exception:(ExceptionWrapper *)ex;
 - (void)insert:(NSURL *)url protected:(BOOL)wp exception:(ExceptionWrapper *)ex;
 - (void)ejectDisk;
 - (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;

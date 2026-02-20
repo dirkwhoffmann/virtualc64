@@ -140,6 +140,13 @@ extension DriveProxy {
         if let _ = exc.fault { throw AppError(exc) }
     }
     
+    func insert(format: FSFormat, name: String) throws {
+    
+        let exc = ExceptionWrapper()
+        insertBlankDisk(format, name: name, exception: exc)
+        if let _ = exc.fault { throw AppError(exc) }
+    }
+        
     func write(toFile url: URL) throws {
         
         let exc = ExceptionWrapper()
