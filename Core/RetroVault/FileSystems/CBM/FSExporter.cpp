@@ -112,11 +112,11 @@ FSExporter::exportFile(const FSDirEntry &entry, const fs::path &path) const
     Buffer<u8> buffer;
     fs.extractData(entry.firstBlock(), buffer);
 
-    if (!fs::exists(path)) {
+    if (!fs::exists(path))
         fs::create_directories(path);
-    } else if (!fs::is_directory(path)) {
+    
+    if (!fs::is_directory(path))
         throw FSError(FSError::FS_NOT_A_DIRECTORY, path.string());
-    }
 
     // Open file
     auto hostPath = path / entry.getName().str();

@@ -707,4 +707,19 @@ FloppyDisk::writeToFile(const fs::path& path, ImageFormat fmt)
     }
 }
 
+void
+FloppyDisk::saveFiles(const fs::path& path)
+{
+    // Decode the disk into a D64 image
+    auto d64 = Codec::makeD64(*this);
+    if (!d64) throw ImageError(ImageError::CANT_CREATE);
+    
+    // Create a file system on top
+    auto vol = Volume(*d64);
+    auto fs  = FileSystem(vol);
+    
+    // Export all file system
+    fs.exporter.exportFiles(path);
+}
+
 }

@@ -3,17 +3,8 @@ add_library(RetroVault)
 # Include paths
 target_include_directories(RetroVault PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Source files
-add_subdirectory(Devices)
-add_subdirectory(Images)
-add_subdirectory(FileSystems)
-add_subdirectory(ThirdParty)
-
-# Libraries
-target_link_libraries(RetroVault PRIVATE utlib xdms)
-
 # Compiler options
-target_compile_options(RetroVault INTERFACE
+target_compile_options(RetroVault PUBLIC
 
     # MSVC
     $<$<CXX_COMPILER_ID:MSVC>:/W4>
@@ -45,3 +36,12 @@ target_compile_options(RetroVault INTERFACE
     $<$<CXX_COMPILER_ID:AppleClang>:-Wno-gnu-anonymous-struct>
     $<$<CXX_COMPILER_ID:AppleClang>:-Wno-nested-anon-types>
 )
+
+# Source files
+add_subdirectory(Devices)
+add_subdirectory(Images)
+add_subdirectory(FileSystems)
+add_subdirectory(ThirdParty)
+
+# Libraries
+target_link_libraries(RetroVault PRIVATE utlib xdms)

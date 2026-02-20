@@ -1447,6 +1447,7 @@ DriveAPI::getCachedInfo() const
 void
 DriveAPI::insertBlankDisk(FSFormat fstype, string name)
 {
+    VC64_PUBLIC_SUSPEND
     drive->insertNewDisk(fstype, name);
     emu->markAsDirty();
 }
@@ -1462,14 +1463,23 @@ DriveAPI::insert(const fs::path &path, bool wp)
 void
 DriveAPI::ejectDisk()
 {
+    VC64_PUBLIC_SUSPEND
     drive->ejectDisk();
     emu->markAsDirty();
 }
 
 void
-DriveAPI::writeToFile(const std::filesystem::path& path)
+DriveAPI::save(const std::filesystem::path& path)
 {
+    VC64_PUBLIC_SUSPEND
     drive->writeToFile(path);
+}
+
+void
+DriveAPI::saveFiles(const std::filesystem::path& path)
+{
+    VC64_PUBLIC_SUSPEND
+    drive->saveFiles(path);
 }
 
 

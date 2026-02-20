@@ -149,30 +149,30 @@ public:
     //
     // Methods from LinearDevice
     //
-
+    
     isize size() const override { fatalError; }
     void read(u8 *dst, isize offset, isize count) const override { fatalError; }
     void write(const u8 *src, isize offset, isize count) override  { fatalError; }
-
-
+    
+    
     //
     // Methods from BlockDevice
     //
-
+    
 public:
-
+    
     isize capacity() const override { return 802; }
     isize bsize() const override { return 256; }
     void readBlock(u8 *dst, isize nr) const override;
     void readBlocks(u8 *dst, Range<isize> range) const override;
     void writeBlock(const u8 *src, isize nr) override;
     void writeBlocks(const  u8 *src, Range<isize> range) override;
-
-
+    
+    
     //
     // Methods from TrackDevice
     //
-
+    
 public:
     
     isize numCyls() const override { return 42; }
@@ -385,9 +385,11 @@ public:
     //
     // Exporting data
     //
-
+    
     void writeToFile(const fs::path& path);
     void writeToFile(const fs::path& path, ImageFormat fmt);
+
+    void saveFiles(const fs::path& path);
 };
 
 }

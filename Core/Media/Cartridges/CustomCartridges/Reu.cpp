@@ -234,7 +234,7 @@ Reu::spypeekIO2(u16 addr) const
 void
 Reu::pokeIO2(u16 addr, u8 value)
 {
-    loginfo(REU_DEBUG >= 2, "pokeIO2(%x,%x)\n", addr, value);
+    loginfo(REU_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
 
     switch (addr & 0x1F) {
 

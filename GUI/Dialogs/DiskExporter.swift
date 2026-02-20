@@ -195,42 +195,27 @@ class DiskExporter: DialogController {
     @discardableResult
     func export(url: URL) -> Bool {
 
-        var rememberUrl = true
-
         do {
 
             switch formatPopup.selectedTag() {
 
-            case Format.d64:
+            case Format.d64, Format.t64, Format.prg:
 
-                debug(.media, "Exporting D64")
-                try drive.write(toFile: url) // mm.export(file: d64!, to: url)
-
-            case Format.t64:
-
-                debug(.media, "Exporting T64")
-                try drive.write(toFile: url) // mm.export(file: t64!, to: url)
-
-            case Format.prg:
-
-                debug(.media, "Exporting PRG")
-                try drive.write(toFile: url) // mm.export(file: prg!, to: url)
-
+                debug(.media, "Exporting image")
+                try drive.write(toFile: url)
+                mm.noteNewRecentlyExportedDiskURL(url, drive: drive.info.id)
+                
             case Format.vol:
 
                 debug(.media, "Exporting file system")
-                // try vol!.export(url: url)
-                rememberUrl = false
+                try drive.saveFiles(url: url)
 
             default:
                 fatalError()
             }
 
             emu?.put(.DSK_UNMODIFIED, value: drive.info.id)
-            if rememberUrl {
-                mm.noteNewRecentlyExportedDiskURL(url, drive: drive.info.id)
-            }
-
+            
         } catch {
 
             parent.showAlert(.cantExport(url: url), error: error, async: true, window: window)

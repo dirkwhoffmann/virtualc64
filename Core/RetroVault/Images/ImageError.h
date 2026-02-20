@@ -18,8 +18,8 @@ struct ImageError : public Error {
     static constexpr long OK                =  0;
     static constexpr long CUSTOM            =  1;
 
-    // DMS images
-    static constexpr long DMS_CANT_CREATE   = 10;
+    // Image creation
+    static constexpr long CANT_CREATE       = 10;
 
     // Extended ADF images
     static constexpr long EXT_FACTOR5       = 20;
@@ -33,7 +33,7 @@ struct ImageError : public Error {
             case OK:                          return "OK";
             case CUSTOM:                      return "CUSTOM";
                 
-            case DMS_CANT_CREATE:             return "DMS_CANT_CREATE";
+            case CANT_CREATE:                 return "CANT_CREATE";
             case EXT_FACTOR5:                 return "EXT_UNSUPPORTED";
             case EXT_INCOMPATIBLE:            return "EXT_INCOMPATIBLE";
             case EXT_CORRUPTED:               return "EXT_CORRUPTED";

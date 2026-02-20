@@ -520,8 +520,8 @@ public:
     void writeToFile(const fs::path& path) const;
     void writeToFile(const fs::path& path, ImageFormat fmt) const;
 
-    // std::unique_ptr<FloppyDiskImage> exportDisk(ImageFormat fmt) const;
-
+    void saveFiles(const fs::path& path) const;
+    
     
     //
     // Emulating

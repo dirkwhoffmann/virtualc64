@@ -71,6 +71,9 @@
                                     <rect key="frame" x="19" y="25" width="72" height="72"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyUpOrDown" image="disk2" id="6FJ-cf-4nm"/>
+                                    <connections>
+                                        <outlet property="exporter" destination="-2" id="AxD-Yd-bb8"/>
+                                    </connections>
                                 </imageView>
                             </subviews>
                         </view>

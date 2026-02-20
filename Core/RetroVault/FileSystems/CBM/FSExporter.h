@@ -38,6 +38,7 @@ public:
     void exportBlocks(BlockNr first, BlockNr last, const fs::path &path) const;
 
     // Exports one or more files to the host system
+    void exportFiles(const fs::path &path) const { exportFiles(FSPattern("*"), path); }
     void exportFiles(const FSPattern &pattern, const fs::path &path) const;
 
 private:

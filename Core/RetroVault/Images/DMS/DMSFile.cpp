@@ -62,7 +62,7 @@ DMSFile::didInitialize()
     }
     
     if (adfData) free(adfData);
-    if (adf.empty()) throw ImageError(ImageError::DMS_CANT_CREATE);
+    if (adf.empty()) throw ImageError(ImageError::CANT_CREATE);
 }
 
 }

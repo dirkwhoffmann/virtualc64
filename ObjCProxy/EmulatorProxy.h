@@ -569,6 +569,7 @@ struct GuardInfo {
 - (void)insert:(NSURL *)url protected:(BOOL)wp exception:(ExceptionWrapper *)ex;
 - (void)ejectDisk;
 - (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex;
+- (void)saveFiles:(NSURL *)path exception:(ExceptionWrapper *)ex;
 
 @end
 

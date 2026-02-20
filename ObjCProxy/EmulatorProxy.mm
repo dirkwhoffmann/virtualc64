@@ -1020,7 +1020,13 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex
 {
-    try { [self drive]->writeToFile(fs::path(path.fileSystemRepresentation)); }
+    try { [self drive]->save(fs::path(path.fileSystemRepresentation)); }
+    catch (std::exception &stdex) { [ex save:stdex]; }
+}
+
+- (void)saveFiles:(NSURL *)path exception:(ExceptionWrapper *)ex
+{
+    try { [self drive]->saveFiles(fs::path(path.fileSystemRepresentation)); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 

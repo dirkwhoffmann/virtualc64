@@ -702,10 +702,15 @@ struct DriveAPI : public API {
      */
     void ejectDisk();
     
-    /** @brief  Exports the current disk to a file.
+    /** @brief  Saves the current disk as an image file.
      *  @param  path   Path to the destination file.
      */
-    void writeToFile(const std::filesystem::path& path);
+    void save(const std::filesystem::path& path);
+    
+    /** @brief  Exports the current disk to a file.
+     *  @param  path   Path to the destination folder.
+     */
+    void saveFiles(const std::filesystem::path& path);
 };
 
 

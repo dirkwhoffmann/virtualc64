@@ -17,8 +17,8 @@ ImageError::ImageError(long code, const string &s) : utl::Error(code)
 {
     switch (code)
     {
-        case DMS_CANT_CREATE:
-            set_msg("Failed to extract the DMS archive.");
+        case CANT_CREATE:
+            set_msg("Failed to create image.");
             break;
 
         case EXT_FACTOR5:
