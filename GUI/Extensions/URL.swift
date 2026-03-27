@@ -191,8 +191,8 @@ extension URL {
             fatalError()
         }
         
-        debug(.exec, "exec = \(exec)")
-        debug(.exec, "args = \(args)")
+        loginfo(.exec, "exec = \(exec)")
+        loginfo(.exec, "args = \(args)")
         
         let result = FileManager.exec(launchPath: exec, arguments: args)
         print("\(result)")

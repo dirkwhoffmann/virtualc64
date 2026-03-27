@@ -16,7 +16,7 @@ class MyDocumentController: NSDocumentController {
 
         var doc : NSDocument!
 
-        debug(.lifetime, "makeDocument(withContentsOf: \(url), ofType: \(typeName)")
+        loginfo(.lifetime, "makeDocument(withContentsOf: \(url), ofType: \(typeName)")
 
         if typeName.components(separatedBy: ".").last?.lowercased() != "vc64" {
 

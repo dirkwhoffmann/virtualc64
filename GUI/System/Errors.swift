@@ -26,7 +26,7 @@ public func log(_ enable: Int, _ msg: String = "",
     }
 }
 
-public func debug(_ enable: Int, _ msg: String = "",
+public func loginfo(_ enable: Int, _ msg: String = "",
                   path: String = #file, function: String = #function, line: Int = #line) {
 
     if !releaseBuild { log(enable, msg, path: path, function: function, line: line) }

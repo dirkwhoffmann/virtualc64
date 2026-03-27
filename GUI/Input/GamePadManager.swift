@@ -111,9 +111,9 @@ class GamePadManager {
     
     func shutDown() {
         
-        debug(.hid, "GamePadManager: shutdown")
+        loginfo(.hid, "GamePadManager: shutdown")
         
-        debug(.shutdown)
+        loginfo(.shutdown)
         
         // Terminate communication with all connected HID devices
         for (_, pad) in gamePads { pad.device?.close() }
@@ -127,8 +127,8 @@ class GamePadManager {
     
     deinit {
         
-        debug(.hid, "GamePadManager: deinit")
-        debug(.shutdown)
+        loginfo(.hid, "GamePadManager: deinit")
+        loginfo(.shutdown)
     }
     
     //
@@ -181,7 +181,7 @@ class GamePadManager {
         
         lock.lock(); defer { lock.unlock() }
         
-        debug(.hid)
+        loginfo(.hid)
         if (Int.hid != 0) { device.listProperties() }
         
         // Ignore internal devices
@@ -237,7 +237,7 @@ class GamePadManager {
         
         lock.lock(); defer { lock.unlock() }
         
-        debug(.hid)
+        loginfo(.hid)
         
         // Search for a matching locationID and remove device
         for (slot, pad) in gamePads where pad.locationID == device.locationID {

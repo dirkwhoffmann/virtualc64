@@ -201,13 +201,13 @@ class DiskExporter: DialogController {
 
             case Format.d64, Format.t64, Format.prg:
 
-                debug(.media, "Exporting image")
+                loginfo(.media, "Exporting image")
                 try drive.write(toFile: url)
                 mm.noteNewRecentlyExportedDiskURL(url, drive: drive.info.id)
                 
             case Format.vol:
 
-                debug(.media, "Exporting file system")
+                loginfo(.media, "Exporting file system")
                 try drive.saveFiles(url: url)
 
             default:

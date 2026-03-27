@@ -103,7 +103,7 @@ extension IOHIDDevice {
             return false
         }
         
-        debug(.hid, "HID device opened")
+        loginfo(.hid, "HID device opened")
         return true
     }
     
@@ -117,7 +117,7 @@ extension IOHIDDevice {
             return false
         }
         
-        debug(.hid, "HID device closed")
+        loginfo(.hid, "HID device closed")
         return true
     }
     

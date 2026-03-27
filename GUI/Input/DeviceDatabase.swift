@@ -348,7 +348,7 @@ class DeviceDatabase {
     
     func save() {
         
-        debug(.hid)
+        loginfo(.hid)
         
         if let encoded = try? JSONEncoder().encode(devices) {
             UserDefaults.standard.set(encoded, forKey: Keys.Dev.schemes)

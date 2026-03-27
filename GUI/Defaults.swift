@@ -35,7 +35,7 @@ extension DefaultsProxy {
     
     func load() {
         
-        debug(.defaults, "Loading user defaults")
+        loginfo(.defaults, "Loading user defaults")
         
         do {
             let folder = try URL.appSupportFolder()
@@ -43,7 +43,7 @@ extension DefaultsProxy {
             
             do {
                 try load(url: path)
-                debug(.defaults, "Successfully loaded user defaults from file \(path)")
+                loginfo(.defaults, "Successfully loaded user defaults from file \(path)")
             } catch {
                 warn("Failed to load user defaults from file \(path)")
             }
@@ -62,7 +62,7 @@ extension DefaultsProxy {
     
     func save() {
         
-        debug(.defaults, "Saving user defaults")
+        loginfo(.defaults, "Saving user defaults")
         
         do {
             let folder = try URL.appSupportFolder()
@@ -70,7 +70,7 @@ extension DefaultsProxy {
             
             do {
                 try save(url: path)
-                debug(.defaults, "Successfully saved user defaults to file \(path)")
+                loginfo(.defaults, "Successfully saved user defaults to file \(path)")
             } catch {
                 warn("Failed to save user defaults file \(path)")
             }
@@ -233,7 +233,7 @@ extension DefaultsProxy {
     
     func registerUserDefaults() {
         
-        debug(.defaults, "Registering user defaults")
+        loginfo(.defaults, "Registering user defaults")
         
         registerGeneralUserDefaults()
         registerControlsUserDefaults()
@@ -253,7 +253,7 @@ extension Preferences {
 
     func applyUserDefaults() {
         
-        debug(.defaults, "Applying user defaults")
+        loginfo(.defaults, "Applying user defaults")
         
         applyGeneralUserDefaults()
         applyControlsUserDefaults()
@@ -267,7 +267,7 @@ extension Configuration {
     
     func applyUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         applyHardwareUserDefaults()
         applyPeripheralsUserDefaults()
@@ -307,7 +307,7 @@ extension DefaultsProxy {
     
     func registerGeneralUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         // Fullscreen
         register(Keys.Gen.keepAspectRatio, false)
@@ -326,7 +326,7 @@ extension DefaultsProxy {
     
     func removeGeneralUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         let keys = [ Keys.Gen.keepAspectRatio,
                      Keys.Gen.exitOnEsc,
@@ -349,7 +349,7 @@ extension Preferences {
     
     func saveGeneralUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         defaults.set(Keys.Gen.keepAspectRatio, keepAspectRatio)
@@ -368,7 +368,7 @@ extension Preferences {
     
     func applyGeneralUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         keepAspectRatio = defaults.bool(Keys.Gen.keepAspectRatio)
@@ -411,7 +411,7 @@ extension DefaultsProxy {
     
     func registerCapturesUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         // Snapshots
         register(Keys.Cap.snapshotCompressor, Compressor.LZ4.rawValue)
@@ -427,7 +427,7 @@ extension DefaultsProxy {
     
     func removeCapturesUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         let keys = [ Keys.Cap.snapshotCompressor,
                      Keys.Cap.snapshotAutoDelete,
@@ -448,7 +448,7 @@ extension Preferences {
     
     func saveCapturesUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         defaults.set(Keys.Cap.snapshotCompressor, snapshotCompressorIntValue)
@@ -465,7 +465,7 @@ extension Preferences {
     
     func applyCapturesUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         snapshotCompressorIntValue = defaults.int(Keys.Cap.snapshotCompressor)
@@ -501,7 +501,7 @@ extension DefaultsProxy {
     
     func registerControlsUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         let emptyMap: [MacKey: Int] = [:]
         
@@ -532,7 +532,7 @@ extension DefaultsProxy {
     
     func removeControlsUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         let keys = [ Keys.Con.mouseKeyMap,
                      Keys.Con.joyKeyMap1,
@@ -548,7 +548,7 @@ extension Preferences {
     
     func saveControlsUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         defaults.encode(Keys.Con.mouseKeyMap, keyMaps[0])
@@ -561,7 +561,7 @@ extension Preferences {
     
     func applyControlsUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         defaults.decode(Keys.Con.mouseKeyMap, &keyMaps[0])
@@ -601,7 +601,7 @@ extension Preferences {
     
     func saveDevicesUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         defaults.save()
@@ -609,7 +609,7 @@ extension Preferences {
     
     func applyDevicesUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
     }
 }
 
@@ -633,7 +633,7 @@ extension DefaultsProxy {
     
     func registerKeyboardUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         // Emulation keys
         register(Keys.Kbd.keyMap, encodable: KeyboardController.standardKeyMap)
@@ -642,7 +642,7 @@ extension DefaultsProxy {
     
     func removeKeyboardUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         let keys = [ Keys.Kbd.keyMap,
                      Keys.Kbd.mapKeysByPosition ]
@@ -656,7 +656,7 @@ extension Preferences {
     
     func saveKeyboardUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         defaults.encode(Keys.Kbd.keyMap, keyMap)
@@ -667,7 +667,7 @@ extension Preferences {
     
     func applyKeyboardUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         let defaults = EmulatorProxy.defaults!
         
         defaults.decode(Keys.Kbd.keyMap, &keyMap)
@@ -690,7 +690,7 @@ extension Configuration {
             try? emu?.loadRom(type, url: url)
         }
         
-        debug(.defaults)
+        loginfo(.defaults)
 
         if let emu = emu {
 
@@ -705,7 +705,7 @@ extension Configuration {
 
     func saveRomUserDefaults() throws {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         var url: URL?
         
@@ -746,13 +746,13 @@ extension DefaultsProxy {
     
     func registerHardwareUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         // No GUI related items in this sections
     }
     
     func removeHardwareUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         remove(.VICII_REVISION)
         remove(.VICII_POWER_SAVE)
@@ -777,7 +777,7 @@ extension Configuration {
     
     func saveHardwareUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -813,7 +813,7 @@ extension Configuration {
     
     func applyHardwareUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -866,7 +866,7 @@ extension DefaultsProxy {
     
     func registerPeripheralsUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         // Port assignments
         register(Keys.Per.gameDevice1, -1)
@@ -875,7 +875,7 @@ extension DefaultsProxy {
     
     func removePeripheralsUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         remove(.DRV_CONNECT, [0, 1])
         remove(.DRV_TYPE, [0, 1])
@@ -892,7 +892,7 @@ extension Configuration {
     
     func savePeripheralsUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -926,7 +926,7 @@ extension Configuration {
     
     func applyPeripheralsUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -966,13 +966,13 @@ extension DefaultsProxy {
     
     func registerPerformanceUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         // No GUI related items in this sections
     }
     
     func removePerformanceUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         remove(.DRV_POWER_SAVE, [0, 1])
         remove(.VICII_POWER_SAVE)
@@ -992,7 +992,7 @@ extension Configuration {
     
     func savePerformanceUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1020,7 +1020,7 @@ extension Configuration {
     
     func applyPerformanceUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1054,13 +1054,13 @@ extension DefaultsProxy {
     
     func registerAudioUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         // No GUI related items in this sections
     }
     
     func removeAudioUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         remove(.SID_ENGINE, [0, 1, 2, 3])
         remove(.SID_SAMPLING, [0, 1, 2, 3])
@@ -1089,7 +1089,7 @@ extension Configuration {
     
     func saveAudioUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1124,7 +1124,7 @@ extension Configuration {
     
     func applyAudioUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1169,13 +1169,13 @@ extension DefaultsProxy {
     
     func registerVideoUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         // No GUI related keys in this category
     }
     
     func removeVideoUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         removeColorUserDefaults()
         removeGeometryUserDefaults()
@@ -1184,7 +1184,7 @@ extension DefaultsProxy {
     
     func removeColorUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         remove(.MON_PALETTE)
         remove(.MON_BRIGHTNESS)
@@ -1194,7 +1194,7 @@ extension DefaultsProxy {
     
     func removeGeometryUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         remove(.MON_HCENTER)
         remove(.MON_VCENTER)
@@ -1204,7 +1204,7 @@ extension DefaultsProxy {
     
     func removeShaderUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         remove(.MON_UPSCALER)
         remove(.MON_BLUR)
@@ -1229,7 +1229,7 @@ extension Configuration {
     
     func saveVideoUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         saveColorUserDefaults()
         saveGeometryUserDefaults()
@@ -1238,7 +1238,7 @@ extension Configuration {
     
     func saveColorUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1257,7 +1257,7 @@ extension Configuration {
     
     func saveGeometryUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1276,7 +1276,7 @@ extension Configuration {
     
     func saveShaderUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1306,7 +1306,7 @@ extension Configuration {
     
     func applyVideoUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         applyColorUserDefaults()
         applyGeometryUserDefaults()
@@ -1315,7 +1315,7 @@ extension Configuration {
     
     func applyColorUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1333,7 +1333,7 @@ extension Configuration {
     
     func applyGeometryUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1352,7 +1352,7 @@ extension Configuration {
     
     func applyShaderUserDefaults() {
         
-        debug(.defaults)
+        loginfo(.defaults)
         
         if let emu = emu {
             
@@ -1406,13 +1406,13 @@ extension DefaultsProxy {
 
     func registerServerUserDefaults() {
 
-        debug(.defaults)
+        loginfo(.defaults)
         // No GUI related items in this sections    }
     }
 
     func removeServerUserDefaults() {
 
-        debug(.defaults)
+        loginfo(.defaults)
 
         remove(.SRV_ENABLE, [0, 1, 2, 3])
         remove(.SRV_PORT, [0, 1, 2, 3])
@@ -1424,7 +1424,7 @@ extension Configuration {
 
     func saveServerUserDefaults() {
 
-        debug(.defaults)
+        loginfo(.defaults)
 
         if let emu = emu {
 
@@ -1449,7 +1449,7 @@ extension Configuration {
 
     func applyServerUserDefaults() {
 
-        debug(.defaults)
+        loginfo(.defaults)
 
         if let emu = emu {
 

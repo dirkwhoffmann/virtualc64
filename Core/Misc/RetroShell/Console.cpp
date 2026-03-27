@@ -757,7 +757,7 @@ Console::exec(const InputLine& cmd)
     std::stringstream ss;
 
     // Skip empty script lines
-    // if (cmd.isScriptCommand() && cmd.input.empty()) return;
+    if (cmd.isScriptCommand() && cmd.input.empty()) { *this << '\n'; return; }
 
     // Inform the delegates
     for (auto &delegate: delegates) delegate->willExecute(cmd);

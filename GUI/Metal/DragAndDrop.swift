@@ -25,7 +25,6 @@ extension MetalView {
 
         dropZone = nil
         dropUrl = nil
-        // dropType = nil
         
         switch type {
             
@@ -61,7 +60,6 @@ extension MetalView {
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
     
-        print("draggingExited")
         parent.renderer.dropZone.close(delay: 0.25)
     }
     
@@ -73,7 +71,6 @@ extension MetalView {
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
 
-        print("performDragOperation")
         let pasteBoard = sender.draggingPasteboard
 
         if let type = pasteBoard.availableType(from: acceptedTypes()) {
@@ -111,12 +108,6 @@ extension MetalView {
         // Only proceed if an URL is given
         if dropUrl == nil { return false }
 
-        // Only proceed if a file type can be derived
-        // guard let type = vc64.FileType(url: dropUrl) else { return false }
-
-        // Only proceed if a draggable type is given
-        // if !vc64.FileType.draggable.contains(type) { return false }
-
         // Check all drop zones
         var zone: Int?
         for i in 0...4 where renderer.dropZone.isInside(sender, zone: i) {
@@ -129,7 +120,6 @@ extension MetalView {
         }
 
         dropZone = zone
-        // dropType = type
         return true
     }
 

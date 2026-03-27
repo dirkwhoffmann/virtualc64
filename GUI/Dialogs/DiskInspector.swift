@@ -71,7 +71,7 @@ class DiskInspector: DialogController {
 
         if let emu = emu {
             
-            debug(.lifetime)
+            loginfo(.lifetime)
 
             drive = nr == DRIVE8 ? emu.drive8 : emu.drive9
             showAsWindow()
@@ -80,7 +80,7 @@ class DiskInspector: DialogController {
 
     override func dialogWillShow() {
 
-        debug(.lifetime)
+        loginfo(.lifetime)
 
         warningText.isHidden = true
         warningButton.isHidden = true

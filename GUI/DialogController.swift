@@ -67,13 +67,13 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     func register() {
 
         DialogController.active.append(self)
-        debug(.lifetime, "Register: \(DialogController.active)")
+        loginfo(.lifetime, "Register: \(DialogController.active)")
     }
 
     func unregister() {
 
         DialogController.active = DialogController.active.filter {$0 != self}
-        debug(.lifetime, "Unregister: \(DialogController.active)")
+        loginfo(.lifetime, "Unregister: \(DialogController.active)")
     }
 
     /*
@@ -83,7 +83,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     
     override func windowDidLoad() {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
 
         super.windowDidLoad()
         self.window?.delegate = self
@@ -100,22 +100,22 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     
     func dialogWillShow() {
 
-        debug(.lifetime)
+        loginfo(.lifetime)
     }
     
     func dialogDidShow() {
 
-        debug(.lifetime)
+        loginfo(.lifetime)
     }
     
     func cleanup() {
      
-        debug(.lifetime)
+        loginfo(.lifetime)
     }
 
     func showAsWindow() {
 
-        debug(.lifetime)
+        loginfo(.lifetime)
         
         sheet = false
         register()
@@ -138,7 +138,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     
     func showAsSheet(completionHandler handler:(() -> Void)? = nil) {
 
-        debug(.lifetime)
+        loginfo(.lifetime)
         
         sheet = true
         register()
@@ -181,7 +181,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
 
     func join() {
 
-        debug(.shutdown, "Wait until window is closed...")
+        loginfo(.shutdown, "Wait until window is closed...")
 
         lock.lock()
         lock.unlock()
@@ -202,7 +202,7 @@ extension DialogController: NSWindowDelegate {
 
     func windowDidBecomeKey(_ notification: Notification) {
 
-        debug(.lifetime)
+        loginfo(.lifetime)
     }
     
     func windowWillClose(_ notification: Notification) {

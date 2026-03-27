@@ -32,7 +32,7 @@ class MacAudio: NSObject {
 
     convenience init?(with controller: MyController) {
 
-        debug(.lifetime, "Initializing audio interface")
+        loginfo(.lifetime, "Initializing audio interface")
 
         self.init()
         parent = controller
@@ -114,14 +114,14 @@ class MacAudio: NSObject {
 
     func shutDown() {
 
-        debug(.shutdown, "Initiating shutdown...")
+        loginfo(.shutdown, "Initiating shutdown...")
         state = .shutdown
 
-        debug(.shutdown, "Fading out...")
+        loginfo(.shutdown, "Fading out...")
         lock.lock()
         precondition(state == .off)
 
-        debug(.shutdown, "Stopping audio hardware...")
+        loginfo(.shutdown, "Stopping audio hardware...")
         audiounit.stopHardware()
         audiounit.outputProvider = nil
     }
@@ -145,11 +145,11 @@ class MacAudio: NSObject {
 
             if let cnt = emu?.audioPort.copyMono(ptr, size: n) {
 
-                debug(.shutdown, "Copied \(cnt) mono samples.")
+                loginfo(.shutdown, "Copied \(cnt) mono samples.")
                 if cnt == n { break }
             }
 
-            debug(.shutdown, "Successfully faded out.")
+            loginfo(.shutdown, "Successfully faded out.")
             state = .off
             lock.unlock()
 
@@ -179,11 +179,11 @@ class MacAudio: NSObject {
 
             if let cnt = emu?.audioPort.copyStereo(ptr1, buffer2: ptr2, size: n) {
 
-                debug(.shutdown, "Copied \(cnt) stereo samples.")
+                loginfo(.shutdown, "Copied \(cnt) stereo samples.")
                 if cnt == n { break }
             }
 
-            debug(.shutdown, "Successfully faded out.")
+            loginfo(.shutdown, "Successfully faded out.")
             state = .off
             lock.unlock()
 

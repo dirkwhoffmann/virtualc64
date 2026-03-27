@@ -1263,7 +1263,6 @@ NSString *EventSlotName(EventSlot slot)
 {
     try { [self shell]->execScript(fs::path(url.fileSystemRepresentation)); }
     catch (std::exception &stdex) { [ex save:stdex]; }
-    // [self shell]->execScript(fs::path(url.fileSystemRepresentation));
 }
 
 - (void)executeString:(NSString *)str

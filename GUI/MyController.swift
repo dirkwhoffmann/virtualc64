@@ -154,7 +154,7 @@ extension MyController {
     
     func commonInit() {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
         assert(!initialized, "Double-initialization of MyController")
         
         mydocument = document as? MyDocument
@@ -370,7 +370,7 @@ extension MyController {
             shutDown()
             
         case .ABORT:
-            debug(.shutdown, "Aborting with exit code \(value)")
+            loginfo(.shutdown, "Aborting with exit code \(value)")
             exit(Int32(value))
             
         case .EASTER_EGG, .WARP, .TRACK:
@@ -506,7 +506,7 @@ extension MyController {
             if value != 0 { renderer.zoomTextureOut() } else { renderer.zoomTextureIn() }
             
         case .ALARM:
-            debug(.events, "Received Alarm \(msg.value)")
+            loginfo(.events, "Received Alarm \(msg.value)")
             
         case .RS232_IN:
             var c = emu?.userPort.rs232.readIncomingPrintableByte() ?? -1

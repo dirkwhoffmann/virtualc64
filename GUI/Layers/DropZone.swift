@@ -209,7 +209,7 @@ class DropZone: Layer {
                 
             } else {
                 
-                guard let type = vc64.FileType(url: url)  else { return }
+                guard let type = FileType(url: url)  else { return }
 
                 switch type {
 

@@ -563,9 +563,9 @@ extension MyController: NSMenuItemValidation {
             virtualKeyboard = VirtualKeyboardController.make(parent: self)
         }
         if virtualKeyboard?.window?.isVisible == true {
-            debug(.lifetime, "Virtual keyboard already open")
+            loginfo(.lifetime, "Virtual keyboard already open")
         } else {
-            debug(.lifetime, "Opeining virtual keyboard as a window")
+            loginfo(.lifetime, "Opeining virtual keyboard as a window")
         }
         
         virtualKeyboard?.showAsWindow()
@@ -1115,11 +1115,11 @@ extension MyController: NSMenuItemValidation {
         
         let height = renderer.canvas.visible.height * 2
         
-        debug(.metal, "Old metal view: \(metal.frame)")
-        debug(.metal, "Visible texture lines: \(height)")
+        loginfo(.metal, "Old metal view: \(metal.frame)")
+        loginfo(.metal, "Visible texture lines: \(height)")
         
         adjustWindowSize(height: height)
         
-        debug(.metal, "New metal view: \(metal.frame)")
+        loginfo(.metal, "New metal view: \(metal.frame)")
     }
 }

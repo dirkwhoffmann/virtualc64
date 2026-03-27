@@ -11,7 +11,7 @@ extension MyController: NSWindowDelegate {
     
     public func windowDidBecomeMain(_ notification: Notification) {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
         
         // Initialize if this window becomes active the first time
         if !initialized { commonInit() }
@@ -42,7 +42,7 @@ extension MyController: NSWindowDelegate {
     
     public func windowDidResignMain(_ notification: Notification) {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
         
         // Stop the emulator if configured to pause in background
         if let emu = emu {
@@ -54,7 +54,7 @@ extension MyController: NSWindowDelegate {
     
     public func windowShouldClose(_ sender: NSWindow) -> Bool {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
         
         if proceedWithUnsavedFloppyDisks() {
             return true
@@ -65,47 +65,47 @@ extension MyController: NSWindowDelegate {
     
     public func windowWillClose(_ notification: Notification) {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
         
-        debug(.shutdown, "Pause emulation...")
+        loginfo(.shutdown, "Pause emulation...")
         emu?.pause()
         
-        debug(.shutdown, "Shut down the audio unit...")
+        loginfo(.shutdown, "Shut down the audio unit...")
         macAudio.shutDown()
         
-        debug(.shutdown, "Close all inspectors...")
+        loginfo(.shutdown, "Close all inspectors...")
         for inspector in inspectors {
             inspector.close()
             inspector.join()
         }
         
-        debug(.shutdown, "Close all dashboards...")
+        loginfo(.shutdown, "Close all dashboards...")
         for dashboard in dashboards {
             dashboard.close()
             dashboard.join()
         }
         
-        debug(.shutdown, "Stop the renderer...")
+        loginfo(.shutdown, "Stop the renderer...")
         renderer.halt()
         
-        debug(.shutdown, "Disconnect all gaming devices...")
+        loginfo(.shutdown, "Disconnect all gaming devices...")
         gamePadManager.shutDown()
         
-        debug(.shutdown, "Shut down the emulator...")
+        loginfo(.shutdown, "Shut down the emulator...")
         emu?.halt()
         
-        debug(.shutdown, "Done")
+        loginfo(.shutdown, "Done")
     }
     
     func shutDown() {
         
-        debug(.shutdown)
+        loginfo(.shutdown)
         mydocument.shutDown()
     }
     
     public func windowWillEnterFullScreen(_ notification: Notification) {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
         
         renderer.fullscreen = true
         showStatusBar(false)
@@ -113,24 +113,24 @@ extension MyController: NSWindowDelegate {
     
     public func windowDidEnterFullScreen(_ notification: Notification) {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
     }
     
     public func windowWillExitFullScreen(_ notification: Notification) {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
         renderer.fullscreen = false
         showStatusBar(true)
     }
     
     public func windowDidExitFullScreen(_ notification: Notification) {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
     }
     
     public func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
         
-        debug(.lifetime)
+        loginfo(.lifetime)
         
         let autoHideToolbar = NSApplication.PresentationOptions.autoHideToolbar
         var options = NSApplication.PresentationOptions(rawValue: autoHideToolbar.rawValue)
@@ -211,12 +211,12 @@ extension MyController: NSWindowDelegate {
     
     public func windowDidChangeScreen(_ notification: Notification) {
         
-        debug(.vsync)
+        loginfo(.vsync)
     }
     
     public func windowDidChangeScreenProfile(_ notification: Notification) {
         
-        debug(.vsync)
+        loginfo(.vsync)
     }
 }
 

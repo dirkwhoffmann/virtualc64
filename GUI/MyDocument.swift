@@ -51,7 +51,7 @@ class MyDocument: NSDocument {
 
     override init() {
 
-        debug(.lifetime)
+        loginfo(.lifetime)
 
         super.init()
 
@@ -91,7 +91,7 @@ class MyDocument: NSDocument {
 
     override open func makeWindowControllers() {
 
-        debug(.lifetime)
+        loginfo(.lifetime)
 
         let controller = MyController(windowNibName: "MyDocument")
         self.addWindowController(controller)
@@ -99,12 +99,12 @@ class MyDocument: NSDocument {
 
     func shutDown() {
 
-        debug(.shutdown, "Remove proxy...")
+        loginfo(.shutdown, "Remove proxy...")
 
         emu?.kill()
         emu = nil
 
-        debug(.shutdown, "Done")
+        loginfo(.shutdown, "Done")
     }
 
     //
@@ -113,12 +113,12 @@ class MyDocument: NSDocument {
 
     override open func read(from url: URL, ofType typeName: String) throws {
 
-        debug(.media)
+        loginfo(.media)
     }
 
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
 
-        debug(.media)
+        loginfo(.media)
 
         do {
             try mm.loadWorkspace(url: url)
@@ -133,7 +133,7 @@ class MyDocument: NSDocument {
 
     override func save(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) async throws {
 
-        debug(.media, "url = \(url)")
+        loginfo(.media, "url = \(url)")
 
         if typeName == "de.dirkwhoffmann.retro.vc64" {
 

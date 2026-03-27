@@ -188,7 +188,7 @@ class GamePad {
         macKey2.carbonFlags = 0
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
         
-        debug(.events, "keyUpEvents \(direction)")
+        loginfo(.events, "keyUpEvents \(direction)")
         
         switch GamePadAction(rawValue: direction) {
             
@@ -343,7 +343,7 @@ class GamePad {
                 hidEvent = (.DPAD_LEFT, 0, intValue == 0 ? 0 : 1)
                 
             default:
-                debug(.hid, "Unknown HID usage: \(usage)")
+                loginfo(.hid, "Unknown HID usage: \(usage)")
             }
         }
         

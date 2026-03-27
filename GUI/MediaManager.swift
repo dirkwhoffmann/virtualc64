@@ -52,7 +52,7 @@ class MediaManager {
     
     init(with document: MyDocument) {
         
-        debug(.lifetime, "Creating media manager")
+        loginfo(.lifetime, "Creating media manager")
         self.mydocument = document
         
         initUrlMenus([drive8InsertRecent, drive9InsertRecent], count: 10,
@@ -211,19 +211,19 @@ class MediaManager {
 
     func loadWorkspace(url: URL, options: [Option] = []) throws {
         
-        debug(.media, "url = \(url)")
+        loginfo(.media, "url = \(url)")
         try emu?.c64.loadWorkspace(url: url)
     }
     
     func loadSnapshot(url: URL, options: [Option] = []) throws {
         
-        debug(.media, "url = \(url)")
+        loginfo(.media, "url = \(url)")
         try emu?.c64.loadSnapshot(url: url)
     }
 
     func runScript(url: URL, options: [Option] = []) throws {
         
-        debug(.media, "url = \(url)")
+        loginfo(.media, "url = \(url)")
         try emu?.retroShell.executeScript(url: url)
     }
     
@@ -234,7 +234,7 @@ class MediaManager {
     
     func flashFile(url: URL, options: [Option] = []) throws {
         
-        debug(.media, "url = \(url)")
+        loginfo(.media, "url = \(url)")
         
         guard let emu = emu else { return }
         try emu.flash(url: url)
@@ -249,7 +249,7 @@ class MediaManager {
 
     func insertDisk(url: URL, drive n: Int, options: [Option] = [.remember]) throws {
         
-        debug(.media, "url = \(url) n = \(n)")
+        loginfo(.media, "url = \(url) n = \(n)")
         
         guard let emu = emu else { return }
         
@@ -318,7 +318,7 @@ class MediaManager {
     
     func export(drive id: Int, to url: URL) throws {
         
-        debug(.media, "drive: \(id) to: \(url)")
+        loginfo(.media, "drive: \(id) to: \(url)")
         guard let drive = emu?.drive(id) else { return }
 
         try drive.write(toFile: url)
