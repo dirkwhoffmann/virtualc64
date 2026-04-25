@@ -42,7 +42,7 @@ DapServer::_dump(Category category, std::ostream &os) const
 void
 DapServer::_pause()
 {
-    printf("DapServer::_pause()\n");
+
 }
 
 Transport &
