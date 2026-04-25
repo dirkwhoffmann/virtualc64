@@ -150,7 +150,7 @@ public:
     COUNTD(const double)
        
     template <class T>
-    auto& operator<<(utl::Allocator<T> &a)
+    auto& operator<<(utl::Buffer<T> &a)
     {
         count += 8 + a.size;
         return *this;
@@ -274,7 +274,7 @@ public:
     CHECK(const double)
 
     template <class T>
-    auto& operator<<(utl::Allocator<T> &a)
+    auto& operator<<(utl::Buffer<T> &a)
     {
         hash = utl::Hashable::fnvIt64(hash, a.fnv64());
         return *this;
@@ -405,7 +405,7 @@ public:
     DESERIALIZED(double)
 
     template <class T>
-    auto& operator<<(utl::Allocator<T> &a)
+    auto& operator<<(utl::Buffer<T> &a)
     {
         i64 len;
         *this << len;
@@ -552,7 +552,7 @@ public:
     SERIALIZED(const double)
 
     template <class T>
-    auto& operator<<(utl::Allocator<T> &a)
+    auto& operator<<(utl::Buffer<T> &a)
     {
         *this << i64(a.size);
         a.copy(ptr);
@@ -689,7 +689,7 @@ public:
     RESET(double)
 
     template <class T>
-    auto& operator<<(utl::Allocator<T> &a)
+    auto& operator<<(utl::Buffer<T> &a)
     {
         a.clear();
         return *this;

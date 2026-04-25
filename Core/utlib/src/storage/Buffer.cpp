@@ -17,33 +17,18 @@
 
 namespace utl {
 
-template <class T>
-Allocator<T>::Allocator(const Allocator& other)
-{
-    ptr = nullptr;
-    size = other.size;
-
-    if (size) {
-
-        ptr = new T[size];
-        memcpy(ptr, other.ptr, size * sizeof(T));
-    }
-}
-
-template <class T> Allocator<T>&
-Allocator<T>::operator=(const Allocator<T>& other)
+template <class T> void
+Buffer<T>::init(const Buffer& other)
 {
     // Reallocate buffer
     alloc(other.size);
-    assert(size == other.size);
-
-    // Copy buffer
+    
+    // Copy contents
     if (size) std::memcpy(ptr, other.ptr, size * sizeof(T));
-    return *this;
 }
 
 template <class T> void
-Allocator<T>::alloc(isize elements)
+Buffer<T>::alloc(isize elements)
 {
     assert(usize(elements) <= maxCapacity);
     assert((size == 0) == (ptr == nullptr));
@@ -56,17 +41,19 @@ Allocator<T>::alloc(isize elements)
 
             size = elements;
             ptr = new T[size];
+            if (managed) *managed = ptr;
         }
 
     } catch (...) {
 
         size = 0;
         ptr = nullptr;
+        if (managed) *managed = nullptr;
     }
 }
 
 template <class T> void
-Allocator<T>::dealloc()
+Buffer<T>::dealloc()
 {
     assert((size == 0) == (ptr == nullptr));
 
@@ -74,12 +61,19 @@ Allocator<T>::dealloc()
 
         delete [] ptr;
         ptr = nullptr;
+        if (managed) *managed = nullptr;
         size = 0;
     }
 }
 
 template <class T> void
-Allocator<T>::init(isize elements, T value)
+Buffer<T>::init(isize elements)
+{
+    init(elements, T{});
+}
+
+template <class T> void
+Buffer<T>::init(isize elements, T value)
 {
     alloc(elements);
 
@@ -92,7 +86,7 @@ Allocator<T>::init(isize elements, T value)
 }
 
 template <class T> void
-Allocator<T>::init(const T *buf, isize elements)
+Buffer<T>::init(const T *buf, isize elements)
 {
     assert(buf);
 
@@ -107,19 +101,13 @@ Allocator<T>::init(const T *buf, isize elements)
 }
 
 template <class T> void
-Allocator<T>::init(const string &str)
+Buffer<T>::init(const string &str)
 {
     init((const T *)str.c_str(), isize(str.length() / sizeof(T)));
 }
 
 template <class T> void
-Allocator<T>::init(const Allocator<T> &other)
-{
-    init(other.ptr, other.size);
-}
-
-template <class T> void
-Allocator<T>::init(const std::vector<T> &vector)
+Buffer<T>::init(const std::vector<T> &vector)
 {
     isize vecsize = isize(vector.size());
 
@@ -128,14 +116,14 @@ Allocator<T>::init(const std::vector<T> &vector)
 }
 
 template <class T> void
-Allocator<T>::init(const fs::path &path)
+Buffer<T>::init(const fs::path &path)
 {
     // Open stream in binary mode
     std::ifstream stream(path, std::ifstream::binary);
 
-    // Return an empty buffer if the stream could not be opened
-    if (!stream) { dealloc(); return; }
-
+    if (!stream)
+        throw IOError(IOError::FILE_CANT_READ, path);
+    
     // Read file contents into a string stream
     std::ostringstream sstr(std::ios::binary);
     sstr << stream.rdbuf();
@@ -145,13 +133,7 @@ Allocator<T>::init(const fs::path &path)
 }
 
 template <class T> void
-Allocator<T>::init(const fs::path &path, const string &name)
-{
-    init(path / name);
-}
-
-template <class T> void
-Allocator<T>::resize(isize elements)
+Buffer<T>::resize(isize elements)
 {
     assert((size == 0) == (ptr == nullptr));
 
@@ -178,7 +160,7 @@ Allocator<T>::resize(isize elements)
 }
 
 template <class T> void
-Allocator<T>::resize(isize elements, T pad)
+Buffer<T>::resize(isize elements, T pad)
 {
     auto gap = elements > size ? elements - size : 0;
 
@@ -187,7 +169,7 @@ Allocator<T>::resize(isize elements, T pad)
 }
 
 template <class T> void
-Allocator<T>::strip(isize elements)
+Buffer<T>::strip(isize elements)
 {
     auto newSize = std::max(size - elements, isize(0));
 
@@ -198,7 +180,7 @@ Allocator<T>::strip(isize elements)
 }
 
 template <class T> void
-Allocator<T>::clear(T value, isize offset, isize len)
+Buffer<T>::clear(T value, isize offset, isize len)
 {
     assert((size == 0) == (ptr == nullptr));
     assert(offset >= 0 && len >= 0 && offset + len <= size);
@@ -212,7 +194,7 @@ Allocator<T>::clear(T value, isize offset, isize len)
 }
 
 template <class T> void
-Allocator<T>::copy(T *buf, isize offset, isize len) const
+Buffer<T>::copy(T *buf, isize offset, isize len) const
 {
     assert(buf);
     assert((size == 0) == (ptr == nullptr));
@@ -227,57 +209,19 @@ Allocator<T>::copy(T *buf, isize offset, isize len) const
 }
 
 template <class T> void
-Allocator<T>::patch(const u8 *seq, const u8 *subst)
+Buffer<T>::patch(const u8 *seq, const u8 *subst)
 {
     if (ptr) replace((u8 *)ptr, bytesize(), seq, subst);
 }
 
 template <class T> void
-Allocator<T>::patch(const char *seq, const char *subst)
+Buffer<T>::patch(const char *seq, const char *subst)
 {
     if (ptr) replace((char *)ptr, bytesize(), seq, subst);
 }
 
-/*
 template <class T> void
-Allocator<T>::dump(std::ostream &os, DumpOpt opt)
-{
-    Dumpable::dump(os, opt, ptr, size);
-}
-
-template <class T> void
-Allocator<T>::dump(std::ostream &os, DumpOpt opt, const char *fmt)
-{
-    Dumpable::dump(os, opt, ptr, size, fmt);
-}
-
-template <class T> void
-Allocator<T>::ascDump(std::ostream &os)
-{
-    dump(os, { .columns = 64, .offset = true, .ascii = true });
-}
-
-template <class T> void
-Allocator<T>::hexDump(std::ostream &os)
-{
-    dump(os, { .base = 16, .columns = 64, .nr = true });
-}
-
-template <class T> void
-Allocator<T>::memDump(std::ostream &os)
-{
-    dump(os, { .base = 16, .columns = 64, .offset = true, .ascii = true });
-}
-
-template <class T> void
-Allocator<T>::type(std::ostream &os, DumpOpt opt)
-{
-    dump(os, opt, "%a");
-}
-*/
-
-template <class T> void
-Allocator<T>::compress(std::function<void(u8 *, isize, vector<u8> &)> algo, isize offset)
+Buffer<T>::compress(std::function<void(u8 *, isize, vector<u8> &)> algo, isize offset)
 {
     std::vector<u8> compressed;
 
@@ -292,7 +236,7 @@ Allocator<T>::compress(std::function<void(u8 *, isize, vector<u8> &)> algo, isiz
 }
 
 template <class T> void
-Allocator<T>::uncompress(std::function<void(u8 *, isize, vector<u8> &, isize)> algo, isize offset, isize sizeEstimate)
+Buffer<T>::uncompress(std::function<void(u8 *, isize, vector<u8> &, isize)> algo, isize offset, isize sizeEstimate)
 {
     std::vector<u8> uncompressed;
 
@@ -306,35 +250,61 @@ Allocator<T>::uncompress(std::function<void(u8 *, isize, vector<u8> &, isize)> a
     init(uncompressed);
 }
 
+template <class T> void
+Buffer<T>::write(std::ostream &stream, isize offset, isize len) const
+{
+    assert(offset >= 0 && len >= 0 && offset + len <= size);
+    stream.write((char *)ptr + offset, len);
+}
+
+template <class T> void
+Buffer<T>::write(const fs::path &path, isize offset, isize len) const
+{
+    if (utl::isDirectory(path))
+        throw IOError(IOError::FILE_IS_DIRECTORY);
+
+    std::ofstream stream(path, std::ofstream::binary);
+
+    if (!stream.is_open())
+        throw IOError(IOError::FILE_CANT_WRITE, path);
+
+    write(stream);
+}
+
+
 //
 // Template instantiations
 //
 
-#define INSTANTIATE_ALLOCATOR(T) \
-template Allocator<T>& Allocator<T>::operator=(const Allocator<T>& other); \
-template void Allocator<T>::alloc(isize bytes); \
-template void Allocator<T>::dealloc(); \
-template void Allocator<T>::init(isize bytes, T value); \
-template void Allocator<T>::init(const T *buf, isize len); \
-template void Allocator<T>::init(const Allocator<T> &other); \
-template void Allocator<T>::init(const fs::path &path); \
-template void Allocator<T>::init(const fs::path &path, const string &name); \
-template void Allocator<T>::resize(isize elements); \
-template void Allocator<T>::resize(isize elements, T value); \
-template void Allocator<T>::strip(isize elements); \
-template void Allocator<T>::clear(T value, isize offset, isize len); \
-template void Allocator<T>::copy(T *buf, isize offset, isize len) const; \
-template void Allocator<T>::patch(const u8 *seq, const u8 *subst); \
-template void Allocator<T>::patch(const char *seq, const char *subst);
+// template Allocator<T>::Allocator(const Allocator&);
 
-INSTANTIATE_ALLOCATOR(u8)
-INSTANTIATE_ALLOCATOR(u32)
-INSTANTIATE_ALLOCATOR(u64)
-INSTANTIATE_ALLOCATOR(isize)
-INSTANTIATE_ALLOCATOR(float)
-INSTANTIATE_ALLOCATOR(bool)
+#define INSTANTIATE_BUFFER(T) \
+template Buffer<T>& Buffer<T>::operator=(const Buffer<T>& other); \
+template void Buffer<T>::alloc(isize bytes); \
+template void Buffer<T>::dealloc(); \
+template void Buffer<T>::init(isize bytes); \
+template void Buffer<T>::init(isize bytes, T value); \
+template void Buffer<T>::init(const T *buf, isize len); \
+template void Buffer<T>::init(const Buffer<T> &other); \
+template void Buffer<T>::init(const fs::path &path); \
+template void Buffer<T>::resize(isize elements); \
+template void Buffer<T>::resize(isize elements, T value); \
+template void Buffer<T>::strip(isize elements); \
+template void Buffer<T>::clear(T value, isize offset, isize len); \
+template void Buffer<T>::copy(T *buf, isize offset, isize len) const; \
+template void Buffer<T>::patch(const u8 *seq, const u8 *subst); \
+template void Buffer<T>::patch(const char *seq, const char *subst); \
+template void Buffer<T>::write(std::ostream &stream, isize offset, isize len) const; \
+template void Buffer<T>::write(const fs::path &path, isize offset, isize len) const;
 
-template void Allocator<u8>::compress(std::function<void (u8 *, isize, std::vector<u8> &)>, isize);
-template void Allocator<u8>::uncompress(std::function<void (u8 *, isize, std::vector<u8> &, isize)>, isize, isize);
+INSTANTIATE_BUFFER(u8)
+INSTANTIATE_BUFFER(u32)
+INSTANTIATE_BUFFER(u64)
+INSTANTIATE_BUFFER(isize)
+INSTANTIATE_BUFFER(float)
+INSTANTIATE_BUFFER(bool)
+
+template void Buffer<u8>::compress(std::function<void (u8 *, isize, std::vector<u8> &)>, isize);
+template void Buffer<u8>::uncompress(std::function<void (u8 *, isize, std::vector<u8> &, isize)>, isize, isize);
 
 }
