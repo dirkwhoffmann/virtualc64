@@ -62,7 +62,7 @@ public:
         if (steps == 0) {
             current = delta = 0;
         } else {
-            delta = -maximum / steps;
+            delta = -maximum / double(steps);
         }
     }
 
@@ -72,7 +72,7 @@ public:
         if (steps == 0) {
             current = maximum; delta = 0;
         } else {
-            delta = maximum / steps;
+            delta = maximum / double(steps);
         }
     }
 

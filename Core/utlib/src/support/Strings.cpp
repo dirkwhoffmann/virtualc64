@@ -95,12 +95,6 @@ ltrim(const string &s, const string &characters)
     return (pos == string::npos) ? "" : s.substr(pos);
 }
 
-string_view unquote(string_view sv)
-{
-    bool quoted = sv.size() >= 2 && sv.front() == '"' && sv.back() == '"';
-    return quoted ? sv.substr(1, sv.size() - 2) : sv;
-}
-
 string
 rtrim(const string &s, const string &characters)
 {
@@ -112,6 +106,12 @@ string
 trim(const string &s, const string &characters)
 {
     return ltrim(rtrim(s, characters), characters);
+}
+
+string_view unquote(string_view sv)
+{
+    bool quoted = sv.size() >= 2 && sv.front() == '"' && sv.back() == '"';
+    return quoted ? sv.substr(1, sv.size() - 2) : sv;
 }
 
 string

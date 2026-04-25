@@ -38,7 +38,7 @@ parseBool(const string& token)
     if (token == "1" || token == "true" || token == "yes") return true;
     if (token == "0" || token == "false" || token == "no") return false;
 
-    throw NewParseError(NewParseError::PARSE_BOOL_ERROR, token);
+    throw ParseError(ParseError::PARSE_BOOL_ERROR, token);
 }
 
 bool
@@ -47,7 +47,7 @@ parseOnOff(const string& token)
     if (token == "on") return true;
     if (token == "off") return false;
 
-    throw NewParseError(NewParseError::PARSE_ON_OFF_ERROR, token);
+    throw ParseError(ParseError::PARSE_ON_OFF_ERROR, token);
 }
 
 long
@@ -79,7 +79,7 @@ parseNum(const string& token)
 
     } catch (std::exception&) {
 
-        throw NewParseError(NewParseError::PARSE_NUM_ERROR, token);
+        throw ParseError(ParseError::PARSE_NUM_ERROR, token);
     }
 
     return result;
@@ -111,7 +111,7 @@ parseSeq(const string& token)
 
         } catch (std::exception&) {
 
-            throw NewParseError(NewParseError::PARSE_NUM_ERROR, token);
+            throw ParseError(ParseError::PARSE_NUM_ERROR, token);
         }
     }
 

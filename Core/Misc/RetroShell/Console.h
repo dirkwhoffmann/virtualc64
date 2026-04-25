@@ -36,28 +36,6 @@ public:
     virtual void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) = 0;
 };
 
-/*
-struct TooFewArgumentsError : public util::ParseError {
-    using ParseError::ParseError;
-};
-
-struct TooManyArgumentsError : public util::ParseError {
-    using ParseError::ParseError;
-};
-
-struct UnknownFlagError : public util::ParseError {
-    using ParseError::ParseError;
-};
-
-struct UnknownKeyValueError : public util::ParseError {
-    using ParseError::ParseError;
-};
-
-struct ScriptInterruption: AppException {
-    using AppException::AppException;
-};
-*/
-
 class HistoryBuffer {
     
     // History buffer storing old input strings and cursor positions

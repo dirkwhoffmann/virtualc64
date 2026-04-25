@@ -182,14 +182,8 @@ matchingBufferHeader(const u8 *buf, isize blen, const string &header, isize offs
 {
     assert(buf != nullptr);
 
-    if (isize length = isize(header.length()); length <= blen) {
-
-        for (usize i = 0; i < header.length(); i++) {
-            if (buf[offset + i] != header[i])
-                return false;
-        }
-    }
-    return true;
+    isize len = isize(header.length());
+    return len + offset <= blen && std::memcmp(buf + offset, (u8 *)header.c_str(), len) == 0;
 }
 
 bool

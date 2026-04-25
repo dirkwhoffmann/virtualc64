@@ -36,7 +36,7 @@ public:
     i64 asNanoseconds()  const { return ticks; }
     i64 asMicroseconds() const { return ticks / 1000; }
     i64 asMilliseconds() const { return ticks / 1000000; }
-    float asSeconds()    const { return ticks / 1000000000.f; }
+    float asSeconds()    const { return float(ticks) / 1000000000.f; }
 
     bool operator==(const Time &rhs) const;
     bool operator!=(const Time &rhs) const;

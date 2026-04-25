@@ -13,7 +13,7 @@
 
 namespace utl {
 
-struct NewParseError : public Error {
+struct ParseError : public Error {
 
     static constexpr long PARSE_BOOL_ERROR   = 0;
     static constexpr long PARSE_ON_OFF_ERROR = 1;
@@ -34,7 +34,7 @@ struct NewParseError : public Error {
         }
     }
 
-    NewParseError(long fault, const std::string &msg) : Error(fault) {
+    ParseError(long fault, const std::string &msg) : Error(fault) {
 
         switch (fault) {
 
@@ -59,7 +59,7 @@ struct NewParseError : public Error {
         }
     }
 
-    NewParseError(long d, const std::filesystem::path &p) : NewParseError(d, p.string()) { }
+    ParseError(long d, const std::filesystem::path &p) : ParseError(d, p.string()) { }
 };
 
 }

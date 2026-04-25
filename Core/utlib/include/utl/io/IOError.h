@@ -29,8 +29,10 @@ struct IOError : public Error {
     static constexpr long FILE_CANT_READ        = 10;
     static constexpr long FILE_CANT_WRITE       = 11;
     static constexpr long FILE_CANT_CREATE      = 12;
+    static constexpr long FILE_INVALID_DATA     = 13;
 
-    static constexpr long ZLIB_ERROR            = 20;
+    static constexpr long JSON_ERROR            = 20;
+    static constexpr long ZLIB_ERROR            = 21;
 
     const char *errstr() const noexcept override {
 
@@ -50,9 +52,11 @@ struct IOError : public Error {
             case FILE_CANT_READ:        return "FILE_CANT_READ";
             case FILE_CANT_WRITE:       return "FILE_CANT_WRITE";
             case FILE_CANT_CREATE:      return "FILE_CANT_CREATE";
-                
+            case FILE_INVALID_DATA:     return "FILE_INVALID_DATA";
+
+            case JSON_ERROR:            return "JSON_ERROR";
             case ZLIB_ERROR:            return "ZLIB_ERROR";
-                
+
             default:
                 return "UNKNOWN";
         }
@@ -116,6 +120,11 @@ struct IOError : public Error {
                 set_msg("Failed to create file \"" + msg + "\".");
                 break;
 
+            case FILE_INVALID_DATA:
+                set_msg("File \"" + msg + "\" contains invalid data.");
+                break;
+
+            case JSON_ERROR:
             case ZLIB_ERROR:
                 set_msg(msg);
                 break;

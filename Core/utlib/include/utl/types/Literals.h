@@ -13,16 +13,16 @@
 
 namespace utl {
 
-constexpr isize operator"" _B(unsigned long long v) {
+constexpr isize operator""_B(unsigned long long v) {
     return static_cast<isize>(v);
 }
-constexpr isize operator"" _KB(unsigned long long v) {
+constexpr isize operator""_KB(unsigned long long v) {
     return static_cast<isize>(v) << 10;
 }
-constexpr isize operator"" _MB(unsigned long long v) {
+constexpr isize operator""_MB(unsigned long long v) {
     return static_cast<isize>(v) << 20;
 }
-constexpr isize operator"" _GB(unsigned long long v) {
+constexpr isize operator""_GB(unsigned long long v) {
     return static_cast<isize>(v) << 30;
 }
 

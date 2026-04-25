@@ -202,7 +202,7 @@ template <class T> struct ResizableRingBuffer
     isize cap() const { return capacity; }
     isize count() const { return r > w ? capacity - (r - w) : w - r; }
     isize free() const { return capacity - count() - 1; }
-    double fillLevel() const { return (double)count() / capacity; }
+    double fillLevel() const { return (double)count() / double(capacity); }
     bool isEmpty() const { return r == w; }
     bool isFull() const { return count() == capacity - 1; }
 

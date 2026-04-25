@@ -229,7 +229,7 @@ Time::operator*(const long i) const
 Time
 Time::operator*(const double d) const
 {
-    return Time(i64(this->ticks * d));
+    return Time(i64(double(this->ticks) * d));
 }
 
 Time
@@ -241,7 +241,7 @@ Time::operator/(const long i) const
 Time
 Time::operator/(const double d) const
 {
-    return Time(i64(this->ticks / d));
+    return Time(i64(double(this->ticks) / d));
 }
 
 Time&

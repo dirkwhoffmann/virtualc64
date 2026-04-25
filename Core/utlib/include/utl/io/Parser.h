@@ -28,7 +28,7 @@ template <typename Enum> long parseEnum(const string& key)
     if (auto result = Enum::parseEnum(key)) {
         return long(*result);
     }
-    throw NewParseError(NewParseError::PARSE_ENUM_ERROR, Enum::keyList());
+    throw ParseError(ParseError::PARSE_ENUM_ERROR, Enum::keyList());
 }
 
 template <typename R, typename Enum> R parseEnum(const string& key)
@@ -36,7 +36,7 @@ template <typename R, typename Enum> R parseEnum(const string& key)
     if (auto result = Enum::parseEnum(key)) {
         return *result;
     }
-    throw NewParseError(NewParseError::PARSE_ENUM_ERROR, Enum::keyList());
+    throw ParseError(ParseError::PARSE_ENUM_ERROR, Enum::keyList());
 }
 
 template <typename Enum> long parsePartialEnum(const string& key, std::function<bool(long)> accept)
@@ -44,7 +44,7 @@ template <typename Enum> long parsePartialEnum(const string& key, std::function<
     if (auto result = (long)Enum::parsePartialEnum(key, accept)) {
         return result;
     }
-    throw NewParseError(NewParseError::PARSE_ENUM_ERROR, Enum::keyList());
+    throw ParseError(ParseError::PARSE_ENUM_ERROR, Enum::keyList());
 }
 
 template <typename R, typename Enum> R parsePartialEnum(const string& key, std::function<bool(long)> accept)
@@ -52,7 +52,7 @@ template <typename R, typename Enum> R parsePartialEnum(const string& key, std::
     if (auto result = Enum::parsePartialEnum(key, accept)) {
         return result;
     }
-    throw NewParseError(NewParseError::PARSE_ENUM_ERROR, Enum::keyList());
+    throw ParseError(ParseError::PARSE_ENUM_ERROR, Enum::keyList());
 }
 
 }
