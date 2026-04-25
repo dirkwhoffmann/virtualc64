@@ -541,9 +541,7 @@
 		50AC280C2F4468090016265E /* ADFFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27612F436A2B0016265E /* ADFFile.cpp */; };
 		50AC280D2F4468090016265E /* ADFFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27612F436A2B0016265E /* ADFFile.cpp */; };
 		50AC280F2F4468140016265E /* D64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC276A2F436A2B0016265E /* D64File.cpp */; };
-		50AC28102F4468140016265E /* ADZFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27652F436A2B0016265E /* ADZFile.cpp */; };
 		50AC28122F4468140016265E /* D64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC276A2F436A2B0016265E /* D64File.cpp */; };
-		50AC28132F4468140016265E /* ADZFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27652F436A2B0016265E /* ADZFile.cpp */; };
 		50AC28142F4468370016265E /* AmigaDecoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27752F436A2B0016265E /* AmigaDecoder.cpp */; };
 		50AC28152F4468370016265E /* DOSEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27832F436A2B0016265E /* DOSEncoder.cpp */; };
 		50AC28162F4468370016265E /* C64Decoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27792F436A2B0016265E /* C64Decoder.cpp */; };
@@ -565,8 +563,6 @@
 		50AC28262F4468460016265E /* IMGFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27972F436A2B0016265E /* IMGFile.cpp */; };
 		50AC28272F4468460016265E /* HDFFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC278F2F436A2B0016265E /* HDFFile.cpp */; };
 		50AC28282F4468460016265E /* EXEFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC278B2F436A2B0016265E /* EXEFile.cpp */; };
-		50AC28292F4468460016265E /* HDZFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27932F436A2B0016265E /* HDZFile.cpp */; };
-		50AC282A2F4468460016265E /* HDZFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27932F436A2B0016265E /* HDZFile.cpp */; };
 		50AC282B2F4468460016265E /* IMGFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC27972F436A2B0016265E /* IMGFile.cpp */; };
 		50AC282C2F4468460016265E /* HDFFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC278F2F436A2B0016265E /* HDFFile.cpp */; };
 		50AC282D2F4468460016265E /* EXEFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC278B2F436A2B0016265E /* EXEFile.cpp */; };
@@ -1351,9 +1347,6 @@
 		50AC27602F436A2B0016265E /* ADFFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADFFile.h; sourceTree = "<group>"; };
 		50AC27612F436A2B0016265E /* ADFFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ADFFile.cpp; sourceTree = "<group>"; };
 		50AC27622F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		50AC27642F436A2B0016265E /* ADZFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADZFile.h; sourceTree = "<group>"; };
-		50AC27652F436A2B0016265E /* ADZFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ADZFile.cpp; sourceTree = "<group>"; };
-		50AC27662F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50AC27682F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50AC27692F436A2B0016265E /* D64File.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = D64File.h; sourceTree = "<group>"; };
 		50AC276A2F436A2B0016265E /* D64File.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = D64File.cpp; sourceTree = "<group>"; };
@@ -1389,9 +1382,6 @@
 		50AC278D2F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50AC278E2F436A2B0016265E /* HDFFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDFFile.h; sourceTree = "<group>"; };
 		50AC278F2F436A2B0016265E /* HDFFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HDFFile.cpp; sourceTree = "<group>"; };
-		50AC27912F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		50AC27922F436A2B0016265E /* HDZFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDZFile.h; sourceTree = "<group>"; };
-		50AC27932F436A2B0016265E /* HDZFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HDZFile.cpp; sourceTree = "<group>"; };
 		50AC27952F436A2B0016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50AC27962F436A2B0016265E /* IMGFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMGFile.h; sourceTree = "<group>"; };
 		50AC27972F436A2B0016265E /* IMGFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IMGFile.cpp; sourceTree = "<group>"; };
@@ -1961,10 +1951,10 @@
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,
 				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				50AC258E2F41A8760016265E /* utlib */,
+				50AC27AF2F436A2B0016265E /* rvlib */,
 				50A2D7AF24AF945200671F38 /* Infrastructure */,
 				50E56AF529D489EA00EBCE76 /* Components */,
 				50ACF4DC256EB451003B5690 /* Ports */,
-				50AC27AF2F436A2B0016265E /* RetroVault */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C42C624AF29AB00E69CAE /* Media */,
 				50EF22312815925100440C4D /* Misc */,
@@ -2895,16 +2885,6 @@
 			path = ADF;
 			sourceTree = "<group>";
 		};
-		50AC27672F436A2B0016265E /* ADZ */ = {
-			isa = PBXGroup;
-			children = (
-				50AC27662F436A2B0016265E /* CMakeLists.txt */,
-				50AC27642F436A2B0016265E /* ADZFile.h */,
-				50AC27652F436A2B0016265E /* ADZFile.cpp */,
-			);
-			path = ADZ;
-			sourceTree = "<group>";
-		};
 		50AC276B2F436A2B0016265E /* D64 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2982,16 +2962,6 @@
 			path = HDF;
 			sourceTree = "<group>";
 		};
-		50AC27942F436A2B0016265E /* HDZ */ = {
-			isa = PBXGroup;
-			children = (
-				50AC27912F436A2B0016265E /* CMakeLists.txt */,
-				50AC27922F436A2B0016265E /* HDZFile.h */,
-				50AC27932F436A2B0016265E /* HDZFile.cpp */,
-			);
-			path = HDZ;
-			sourceTree = "<group>";
-		};
 		50AC27982F436A2B0016265E /* IMG */ = {
 			isa = PBXGroup;
 			children = (
@@ -3016,14 +2986,12 @@
 			isa = PBXGroup;
 			children = (
 				50AC27632F436A2B0016265E /* ADF */,
-				50AC27672F436A2B0016265E /* ADZ */,
 				50AC276B2F436A2B0016265E /* D64 */,
 				50AC276F2F436A2B0016265E /* DMS */,
 				50AC27732F436A2B0016265E /* EADF */,
 				50AC27882F436A2B0016265E /* Encoders */,
 				50AC278C2F436A2B0016265E /* EXE */,
 				50AC27902F436A2B0016265E /* HDF */,
-				50AC27942F436A2B0016265E /* HDZ */,
 				50AC27982F436A2B0016265E /* IMG */,
 				50AC279C2F436A2B0016265E /* ST */,
 				50AC279F2F436A2B0016265E /* CMakeLists.txt */,
@@ -3042,7 +3010,7 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		50AC27AF2F436A2B0016265E /* RetroVault */ = {
+		50AC27AF2F436A2B0016265E /* rvlib */ = {
 			isa = PBXGroup;
 			children = (
 				50AC27AC2F436A2B0016265E /* CMakeLists.txt */,
@@ -3056,7 +3024,7 @@
 				50AC27AD2F436A2B0016265E /* Devices.h */,
 				50AC27AE2F436A2B0016265E /* Images.h */,
 			);
-			path = RetroVault;
+			path = rvlib;
 			sourceTree = "<group>";
 		};
 		50AC284F2F446B2D0016265E /* xdms */ = {
@@ -3387,7 +3355,6 @@
 				50726F4B2961C9940031F2F5 /* Thread.cpp in Sources */,
 				50726FA02961CA0D0031F2F5 /* Rex.cpp in Sources */,
 				50726F9D2961CA0D0031F2F5 /* Isepic.cpp in Sources */,
-				50AC282A2F4468460016265E /* HDZFile.cpp in Sources */,
 				50AC282B2F4468460016265E /* IMGFile.cpp in Sources */,
 				50AC282C2F4468460016265E /* HDFFile.cpp in Sources */,
 				50AC282D2F4468460016265E /* EXEFile.cpp in Sources */,
@@ -3570,7 +3537,6 @@
 				50AC27F92F4467EA0016265E /* FSDescriptor.cpp in Sources */,
 				50AC28332F446A580016265E /* EADFFile.cpp in Sources */,
 				50AC28122F4468140016265E /* D64File.cpp in Sources */,
-				50AC28132F4468140016265E /* ADZFile.cpp in Sources */,
 				50AC27FA2F4467EA0016265E /* FSAllocator.cpp in Sources */,
 				50AC27FB2F4467EA0016265E /* FSExporter.cpp in Sources */,
 				50AC27FC2F4467EA0016265E /* FSImporter.cpp in Sources */,
@@ -3800,7 +3766,6 @@
 				50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */,
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50AC280F2F4468140016265E /* D64File.cpp in Sources */,
-				50AC28102F4468140016265E /* ADZFile.cpp in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				5042FB112D4E121A00E4A167 /* FilePanels.swift in Sources */,
@@ -3952,7 +3917,6 @@
 				50AC28262F4468460016265E /* IMGFile.cpp in Sources */,
 				50AC28272F4468460016265E /* HDFFile.cpp in Sources */,
 				50AC28282F4468460016265E /* EXEFile.cpp in Sources */,
-				50AC28292F4468460016265E /* HDZFile.cpp in Sources */,
 				50A22A2A2618725200C9FB1E /* Console.swift in Sources */,
 				500C1C752965D10F00071AF3 /* StrWriter.cpp in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,

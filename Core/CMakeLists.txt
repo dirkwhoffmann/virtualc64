@@ -57,10 +57,10 @@ target_include_directories(VC64Core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Add sub directories
 add_subdirectory(utlib)
+add_subdirectory(rvlib)
 add_subdirectory(Infrastructure)
 add_subdirectory(Components)
 add_subdirectory(Ports)
-add_subdirectory(RetroVault)
 add_subdirectory(Media)
 add_subdirectory(Misc)
 add_subdirectory(Peripherals)
@@ -69,7 +69,7 @@ add_subdirectory(ThirdParty)
 # Add libraries
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-target_link_libraries(VC64Core utlib resid RetroVault Threads::Threads)
+target_link_libraries(VC64Core utlib rvlib resid Threads::Threads)
 # target_link_libraries(VC64Core lz4)
 # target_link_libraries(VC64Headless lz4)
 
