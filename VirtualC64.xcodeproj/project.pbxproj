@@ -442,8 +442,8 @@
 		50AC25B22F41A8760016265E /* Formatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC257E2F41A8760016265E /* Formatter.cpp */; };
 		50AC25B52F420CF60016265E /* RSError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B42F420CF50016265E /* RSError.cpp */; };
 		50AC25B62F420CF60016265E /* RSError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B42F420CF50016265E /* RSError.cpp */; };
-		50AC25B92F4221780016265E /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B82F4221770016265E /* debug.cpp */; };
-		50AC25BA2F4221780016265E /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B82F4221770016265E /* debug.cpp */; };
+		50AC25B92F4221780016265E /* vcdebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B82F4221770016265E /* vcdebug.cpp */; };
+		50AC25BA2F4221780016265E /* vcdebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25B82F4221770016265E /* vcdebug.cpp */; };
 		50AC25BF2F4257980016265E /* CoreError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25BE2F4257970016265E /* CoreError.cpp */; };
 		50AC25C02F4257980016265E /* CoreError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25BE2F4257970016265E /* CoreError.cpp */; };
 		50AC25C32F425DD20016265E /* MediaError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC25C22F425DD10016265E /* MediaError.cpp */; };
@@ -926,7 +926,7 @@
 		504C42F524AF29AB00E69CAE /* CoreComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreComponent.h; sourceTree = "<group>"; };
 		504C42F624AF29AB00E69CAE /* C64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64.h; sourceTree = "<group>"; };
 		504C42F724AF29AB00E69CAE /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
-		504C42F824AF29AB00E69CAE /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		504C42F824AF29AB00E69CAE /* vcconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vcconfig.h; sourceTree = "<group>"; };
 		504C42FA24AF29AB00E69CAE /* Mouse1350.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse1350.h; sourceTree = "<group>"; };
 		504C42FB24AF29AB00E69CAE /* NeosMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeosMouse.h; sourceTree = "<group>"; };
 		504C42FC24AF29AB00E69CAE /* Mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse.cpp; sourceTree = "<group>"; };
@@ -1256,8 +1256,8 @@
 		50AC258D2F41A8760016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50AC25B32F420CF00016265E /* RSError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSError.h; sourceTree = "<group>"; };
 		50AC25B42F420CF50016265E /* RSError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RSError.cpp; sourceTree = "<group>"; };
-		50AC25B72F42216E0016265E /* debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
-		50AC25B82F4221770016265E /* debug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = debug.cpp; sourceTree = "<group>"; };
+		50AC25B72F42216E0016265E /* vcdebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vcdebug.h; sourceTree = "<group>"; };
+		50AC25B82F4221770016265E /* vcdebug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vcdebug.cpp; sourceTree = "<group>"; };
 		50AC25BB2F424BD90016265E /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50AC25BD2F4257900016265E /* CoreError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreError.h; sourceTree = "<group>"; };
 		50AC25BE2F4257970016265E /* CoreError.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CoreError.cpp; sourceTree = "<group>"; };
@@ -1946,9 +1946,9 @@
 			isa = PBXGroup;
 			children = (
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
-				504C42F824AF29AB00E69CAE /* config.h */,
-				50AC25B72F42216E0016265E /* debug.h */,
-				50AC25B82F4221770016265E /* debug.cpp */,
+				504C42F824AF29AB00E69CAE /* vcconfig.h */,
+				50AC25B72F42216E0016265E /* vcdebug.h */,
+				50AC25B82F4221770016265E /* vcdebug.cpp */,
 				50441A872B93CE2600102A4D /* VirtualC64Types.h */,
 				506F30452B768DE30083EAEA /* VirtualC64.h */,
 				506F30462B7692180083EAEA /* VirtualC64.cpp */,
@@ -3374,7 +3374,7 @@
 				50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */,
 				50A194882BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				508C1E672C0B5F770097473C /* MonitorBase.cpp in Sources */,
-				50AC25BA2F4221780016265E /* debug.cpp in Sources */,
+				50AC25BA2F4221780016265E /* vcdebug.cpp in Sources */,
 				50AC286E2F44AA050016265E /* Codecs.cpp in Sources */,
 				50AC25BF2F4257980016265E /* CoreError.cpp in Sources */,
 				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
@@ -3714,7 +3714,7 @@
 				5055D5B42615886E005D3DA6 /* Error.cpp in Sources */,
 				5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
-				50AC25B92F4221780016265E /* debug.cpp in Sources */,
+				50AC25B92F4221780016265E /* vcdebug.cpp in Sources */,
 				505F45692E96963B00418105 /* DevicesSettings.swift in Sources */,
 				500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */,
 				50AC285D2F446B2D0016265E /* getbits.c in Sources */,

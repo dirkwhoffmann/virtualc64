@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 /// @file
 
-#include "config.h"
+#include "vcconfig.h"
 #include "Headless.h"
 #include "C64.h"
 #include "Script.h"

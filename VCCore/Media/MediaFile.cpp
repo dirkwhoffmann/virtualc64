@@ -12,7 +12,7 @@
 
 #if 0
 
-#include "config.h"
+#include "vcconfig.h"
 // #include "MediaFile.h"
 #include "VirtualC64.h"
 #include "Media/CRTFile.h"

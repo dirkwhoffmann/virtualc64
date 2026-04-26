@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
 # Set the project name
 project(VCCore)
@@ -25,10 +25,10 @@ else()
 endif()
 
 # Add the emulator library
-add_library(VCCore VirtualC64.cpp debug.cpp)
+add_library(VCCore VirtualC64.cpp vcdebug.cpp)
 
 # Add the headless app
-add_executable(VC64Headless Headless.cpp debug.cpp)
+add_executable(VC64Headless Headless.cpp vcdebug.cpp)
 target_link_libraries(VC64Headless VCCore)
 
 # Specify compile options

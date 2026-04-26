@@ -10,7 +10,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.h"
+#include "vcconfig.h"
 #include "P00File.h"
 #include "FileSystems/CBM/FileSystem.h"
 #include "utl/io/Files.h"

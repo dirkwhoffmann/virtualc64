@@ -12,7 +12,7 @@
 
 #if 0
 
-#include "config.h"
+#include "vcconfig.h"
 #include "Dumpable.h"
 
 namespace vc64 {

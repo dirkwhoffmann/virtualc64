@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#import "config.h"
+#import "vcconfig.h"
 #import "VirtualC64Types.h"
 #import "Devices/DeviceTypes.h"
 #import "Images/ImageTypes.h"

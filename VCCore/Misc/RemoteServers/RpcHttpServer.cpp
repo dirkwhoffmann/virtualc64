@@ -12,7 +12,7 @@
 
 #if 0
 
-#include "config.h"
+#include "vcconfig.h"
 #include "RpcHttpServer.h"
 #include "Emulator.h"
 #include "httplib.h"

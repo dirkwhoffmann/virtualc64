@@ -10,7 +10,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.h"
+#include "vcconfig.h"
 #include "RS232.h"
 #include "C64.h"
 
