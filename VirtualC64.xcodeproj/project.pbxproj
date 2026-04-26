@@ -776,7 +776,7 @@
 		501C46BD2965C54200C4B27B /* StrWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StrWriter.cpp; sourceTree = "<group>"; };
 		501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		5020D0392F45C8FA006D3BF1 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		5020D03B2F45CCAF006D3BF1 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		5020D03B2F45CCAF006D3BF1 /* rvconfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rvconfig.h; sourceTree = "<group>"; };
 		5026118D259CACB60066E754 /* PETName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PETName.h; sourceTree = "<group>"; };
 		50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = gamecontrollerdb.txt; sourceTree = "<group>"; };
 		50316E462E97B9C700BDF90F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
@@ -1643,7 +1643,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* V64 */ = {
 			isa = PBXGroup;
 			children = (
-				504C428D24AF29AB00E69CAE /* C64Core */,
+				504C428D24AF29AB00E69CAE /* VCCore */,
 				5070D72224AF3330005862D0 /* ObjCProxy */,
 				50176C6D0A6F7357009E80BD /* GUI */,
 				50441A882B9495BE00102A4D /* Manual */,
@@ -1938,7 +1938,7 @@
 			path = pages;
 			sourceTree = "<group>";
 		};
-		504C428D24AF29AB00E69CAE /* C64Core */ = {
+		504C428D24AF29AB00E69CAE /* VCCore */ = {
 			isa = PBXGroup;
 			children = (
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
@@ -1960,7 +1960,7 @@
 				50EF22312815925100440C4D /* Misc */,
 				50650F362DF087C2008AD660 /* ThirdParty */,
 			);
-			path = C64Core;
+			path = VCCore;
 			sourceTree = "<group>";
 		};
 		504C428E24AF29AB00E69CAE /* Cartridges */ = {
@@ -3014,7 +3014,7 @@
 			isa = PBXGroup;
 			children = (
 				50AC27AC2F436A2B0016265E /* CMakeLists.txt */,
-				5020D03B2F45CCAF006D3BF1 /* config.h */,
+				5020D03B2F45CCAF006D3BF1 /* rvconfig.h */,
 				50AC27162F436A2B0016265E /* Devices */,
 				50AC275F2F436A2B0016265E /* FileSystems */,
 				50AC27A92F436A2B0016265E /* Images */,
@@ -4050,9 +4050,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
-					C64Core,
-					C64Core/rvlib,
-					C64Core/utlib/include,
+					VCCore,
+					VCCore/rvlib,
+					VCCore/utlib/include,
 					"$(SRCROOT)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -4109,9 +4109,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
-					C64Core,
-					C64Core/rvlib,
-					C64Core/utlib/include,
+					VCCore,
+					VCCore/rvlib,
+					VCCore/utlib/include,
 					"$(SRCROOT)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;

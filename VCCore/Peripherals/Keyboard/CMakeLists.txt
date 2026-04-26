@@ -1,0 +1,9 @@
+target_include_directories(VCCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_sources(VCCore PRIVATE
+
+C64Key.cpp
+Keyboard.cpp
+KeyboardBase.cpp
+
+)

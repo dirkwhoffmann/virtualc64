@@ -1,0 +1,10 @@
+target_include_directories(VCCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_sources(VCCore PRIVATE
+
+Mouse.cpp
+Mouse1350.cpp
+Mouse1351.cpp
+NeosMouse.cpp
+
+)

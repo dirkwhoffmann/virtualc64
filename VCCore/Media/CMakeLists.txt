@@ -1,0 +1,23 @@
+target_include_directories(VCCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_sources(VCCore PRIVATE
+
+MediaError.cpp
+AnyCollection.cpp
+AnyFile.cpp
+
+CRTFile.cpp
+D64File.cpp
+G64File.cpp
+PRGFile.cpp
+P00File.cpp
+RomFile.cpp
+Script.cpp
+Snapshot.cpp
+TAPFile.cpp
+T64File.cpp
+Workspace.cpp
+
+)
+
+add_subdirectory(Cartridges)

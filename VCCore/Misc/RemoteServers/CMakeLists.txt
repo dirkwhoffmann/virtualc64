@@ -1,0 +1,18 @@
+target_include_directories(VCCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_sources(VCCore PRIVATE
+
+RemoteManager.cpp
+RemoteServer.cpp
+RshServer.cpp
+DapServer.cpp
+DapAdapter.cpp
+RpcServer.cpp
+RpcHttpServer.cpp
+PromServer.cpp
+Socket.cpp
+Transport.cpp
+StdioTransport.cpp
+TcpTransport.cpp
+HttpTransport.cpp
+)
