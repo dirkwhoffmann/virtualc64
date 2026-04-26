@@ -4051,7 +4051,7 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
 					Core,
-					Core/RetroVault,
+					Core/rvlib,
 					Core/utlib/include,
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -4109,7 +4109,7 @@
 				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
 					Core,
-					Core/RetroVault,
+					Core/rvlib,
 					Core/utlib/include,
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
