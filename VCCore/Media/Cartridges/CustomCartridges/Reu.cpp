@@ -515,15 +515,18 @@ Reu::execute(EventID id)
             // Only proceed if the bus is available
             if (busIsBlocked(id)) {
 
-                if (debug::REU_DEBUG > 3) printf("BLOCKED\n");
+                if constexpr (debug::REU_DEBUG > 3) printf("BLOCKED\n");
                 break;
             }
 
             // Perform a DMA cycle
             auto remaining = doDma(id);
 
-            if (id == EXP_REU_STASH && debug::REU_DEBUG > 3) printf("Stashing\n");
-            if (id == EXP_REU_FETCH && debug::REU_DEBUG > 3) printf("Fetching %02x\n", reuVal);
+            if constexpr (debug::REU_DEBUG > 3) {
+                
+                if (id == EXP_REU_STASH) printf("Stashing\n");
+                if (id == EXP_REU_FETCH) printf("Fetching %02x\n", reuVal);
+            }
 
             // Set or clear the END_OF_BLOCK_BIT
             tlength == 1 ? SET_BIT(sr, 6) : CLR_BIT(sr, 6);
