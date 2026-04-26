@@ -53,7 +53,7 @@ FileSystem::FileSystem(Volume &vol) : cache(*this, vol)
     bmBlocks        = layout.bmBlocks;
     bmExtBlocks     = layout.bmExtBlocks;
 
-    if constexpr (debug::FS_DEBUG) dumpState();
+    if constexpr (FS_DEBUG) dumpState();
 
     // Set the current directory to '/'
     current = rootBlock;

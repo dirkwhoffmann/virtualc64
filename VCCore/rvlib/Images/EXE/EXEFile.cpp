@@ -75,7 +75,7 @@ EXEFile::didInitialize()
     // fs.importer.updateChecksums();
     fs.flush();
 
-    if constexpr (debug::FS_DEBUG) {
+    if constexpr (FS_DEBUG) {
 
         // Print some debug information about the volume
         fs.dumpState();

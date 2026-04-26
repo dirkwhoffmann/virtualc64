@@ -39,6 +39,7 @@ target_compile_options(rvlib PUBLIC
 )
 
 # Source files
+target_sources(rvlib PRIVATE rvdebug.cpp)
 add_subdirectory(Devices)
 add_subdirectory(Images)
 add_subdirectory(FileSystems)

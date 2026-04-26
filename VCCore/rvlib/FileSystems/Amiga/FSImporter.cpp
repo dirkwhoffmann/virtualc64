@@ -83,7 +83,7 @@ FSImporter::import(BlockNr top, const fs::path &path, bool recursive, bool conte
     // fs.importer.updateChecksums();
 
     // Verify the result
-    if constexpr (debug::FS_DEBUG)
+    if constexpr (FS_DEBUG)
         fs.doctor.xray(true, std::cout, false);
 }
 

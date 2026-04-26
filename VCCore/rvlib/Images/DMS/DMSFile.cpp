@@ -53,7 +53,7 @@ DMSFile::didInitialize()
     size_t adfSize = 0;
 
     int verbose = 0;
-    if constexpr (debug::IMG_DEBUG) verbose = 1;
+    if constexpr (IMG_DEBUG) verbose = 1;
     if (extractDMS(data.ptr, (size_t)data.size, &adfData, &adfSize, verbose) == 0) {
 
         if constexpr (!force::DMS_CANT_CREATE) {

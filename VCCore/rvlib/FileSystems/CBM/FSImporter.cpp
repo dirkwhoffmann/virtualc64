@@ -77,7 +77,7 @@ void FSImporter::import(const fs::path &path)
     }
 
     // Verify the result
-    if constexpr (debug::FS_DEBUG) fs.doctor.xray(true, std::cout, false);
+    if constexpr (FS_DEBUG) fs.doctor.xray(true, std::cout, false);
 }
 
 void

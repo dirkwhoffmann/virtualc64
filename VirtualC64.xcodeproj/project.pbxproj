@@ -40,6 +40,8 @@
 		501C46BF2965C54200C4B27B /* StrWriter.h in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BC2965C54200C4B27B /* StrWriter.h */; };
 		501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		502DD2D72F9E539400ACBE45 /* rvdebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502DD2D62F9E4EA200ACBE45 /* rvdebug.cpp */; };
+		502DD2D82F9E539400ACBE45 /* rvdebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502DD2D62F9E4EA200ACBE45 /* rvdebug.cpp */; };
 		50316E452E96CE7700BDF90F /* gamecontrollerdb.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */; };
 		50316E472E97B9CD00BDF90F /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50316E462E97B9C700BDF90F /* Onboarding.swift */; };
 		50316E492E97BC7800BDF90F /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50316E482E97BC7800BDF90F /* Onboarding.storyboard */; };
@@ -778,6 +780,8 @@
 		5020D0392F45C8FA006D3BF1 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5020D03B2F45CCAF006D3BF1 /* rvconfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rvconfig.h; sourceTree = "<group>"; };
 		5026118D259CACB60066E754 /* PETName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PETName.h; sourceTree = "<group>"; };
+		502DD2D62F9E4EA200ACBE45 /* rvdebug.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rvdebug.cpp; sourceTree = "<group>"; };
+		502DD2D92F9E562300ACBE45 /* rvdebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rvdebug.h; sourceTree = "<group>"; };
 		50316E442E96CE6C00BDF90F /* gamecontrollerdb.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = gamecontrollerdb.txt; sourceTree = "<group>"; };
 		50316E462E97B9C700BDF90F /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		50316E482E97BC7800BDF90F /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
@@ -3015,6 +3019,8 @@
 			children = (
 				50AC27AC2F436A2B0016265E /* CMakeLists.txt */,
 				5020D03B2F45CCAF006D3BF1 /* rvconfig.h */,
+				502DD2D92F9E562300ACBE45 /* rvdebug.h */,
+				502DD2D62F9E4EA200ACBE45 /* rvdebug.cpp */,
 				50AC27162F436A2B0016265E /* Devices */,
 				50AC275F2F436A2B0016265E /* FileSystems */,
 				50AC27A92F436A2B0016265E /* Images */,
@@ -3463,6 +3469,7 @@
 				50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */,
 				50AC28502F446B2D0016265E /* getbits.c in Sources */,
 				50AC28512F446B2D0016265E /* maketbl.c in Sources */,
+				502DD2D82F9E539400ACBE45 /* rvdebug.cpp in Sources */,
 				50AC28522F446B2D0016265E /* tables.c in Sources */,
 				50AC28532F446B2D0016265E /* u_deep.c in Sources */,
 				50AC28542F446B2D0016265E /* u_heavy.c in Sources */,
@@ -3761,6 +3768,7 @@
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
 				505F456C2E9698A200418105 /* RomSettings.swift in Sources */,
 				505184DE24F23484002C6124 /* MyControllerSnapshots.swift in Sources */,
+				502DD2D72F9E539400ACBE45 /* rvdebug.cpp in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
 				50BD64222C077610007CD347 /* HeatmapView.swift in Sources */,
 				50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */,

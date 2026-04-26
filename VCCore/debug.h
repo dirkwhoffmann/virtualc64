@@ -120,6 +120,7 @@ constexpr long CRT_UNKNOWN          = 0;
 constexpr long CRT_UNSUPPORTED      = 0;
 constexpr long RECORDING_ERROR      = 0;
 constexpr long ZLIB_ERROR           = 0;
+/*
 constexpr long HDR_TOO_LARGE        = 0;
 constexpr long HDR_UNSUPPORTED_C    = 0;
 constexpr long HDR_UNSUPPORTED_H    = 0;
@@ -131,7 +132,7 @@ constexpr long FS_WRONG_BSIZE       = 0;
 constexpr long FS_WRONG_CAPACITY    = 0;
 constexpr long FS_WRONG_DOS_TYPE    = 0;
 constexpr long DMS_CANT_CREATE      = 0;
-
+*/
 
 }
 

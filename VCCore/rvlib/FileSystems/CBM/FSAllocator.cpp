@@ -181,7 +181,7 @@ FSAllocator::numUnallocated() const noexcept
     for (isize i = 0x04; i < 0x8F; i += 4)
         result += data[i];
 
-    if constexpr (debug::FS_DEBUG) {
+    if constexpr (FS_DEBUG) {
 
         isize count = 0;
         for (isize i = 0; i < fs.blocks(); ++i) { if (isFree(BlockNr(i))) count++; }
