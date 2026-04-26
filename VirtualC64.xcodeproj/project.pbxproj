@@ -1643,7 +1643,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* V64 */ = {
 			isa = PBXGroup;
 			children = (
-				504C428D24AF29AB00E69CAE /* Core */,
+				504C428D24AF29AB00E69CAE /* C64Core */,
 				5070D72224AF3330005862D0 /* ObjCProxy */,
 				50176C6D0A6F7357009E80BD /* GUI */,
 				50441A882B9495BE00102A4D /* Manual */,
@@ -1938,7 +1938,7 @@
 			path = pages;
 			sourceTree = "<group>";
 		};
-		504C428D24AF29AB00E69CAE /* Core */ = {
+		504C428D24AF29AB00E69CAE /* C64Core */ = {
 			isa = PBXGroup;
 			children = (
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
@@ -1960,7 +1960,7 @@
 				50EF22312815925100440C4D /* Misc */,
 				50650F362DF087C2008AD660 /* ThirdParty */,
 			);
-			path = Core;
+			path = C64Core;
 			sourceTree = "<group>";
 		};
 		504C428E24AF29AB00E69CAE /* Cartridges */ = {
@@ -4050,9 +4050,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
-					Core,
-					Core/rvlib,
-					Core/utlib/include,
+					C64Core,
+					C64Core/rvlib,
+					C64Core/utlib/include,
+					"$(SRCROOT)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4108,9 +4109,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
-					Core,
-					Core/rvlib,
-					Core/utlib/include,
+					C64Core,
+					C64Core/rvlib,
+					C64Core/utlib/include,
+					"$(SRCROOT)",
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
