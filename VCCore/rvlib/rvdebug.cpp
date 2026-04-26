@@ -1,4 +1,4 @@
-#include "rvlib/rvconfig.h"
+#include "rvconfig.h"
 #include "utl/abilities/Loggable.h"
 
 #define STR(x) #x

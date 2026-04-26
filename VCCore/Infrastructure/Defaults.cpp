@@ -71,6 +71,7 @@ Defaults::Defaults()
 
     setFallback(Opt::VID_WHITE_NOISE,            true);
 
+    setFallback(Opt::MON_TEX_FORMAT,             (i64)TexFormat::RGBA);
     setFallback(Opt::MON_PALETTE,                (i64)Palette::COLOR);
     setFallback(Opt::MON_BRIGHTNESS,             50);
     setFallback(Opt::MON_CONTRAST,               100);

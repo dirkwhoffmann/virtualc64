@@ -68,8 +68,8 @@ extern long IMG_DEBUG;
 
 #define logMsg(key, level, format, ...) \
     do { \
-        if constexpr (debug::key) \
-            log(channel::key, level, std::source_location::current(), \
+        if constexpr (key) \
+            log(::retro::vault::channel::key, level, std::source_location::current(), \
                 format __VA_OPT__(,) __VA_ARGS__); \
     } while (0)
 

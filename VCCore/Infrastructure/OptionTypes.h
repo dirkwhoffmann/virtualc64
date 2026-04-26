@@ -78,6 +78,7 @@ enum class Opt : long
     VID_WHITE_NOISE,        ///< Generate white-noise when switched off
 
     // Monitor
+    MON_TEX_FORMAT,         ///< Texture format
     MON_PALETTE,            ///< Color palette
     MON_BRIGHTNESS,         ///< Brightness
     MON_CONTRAST,           ///< Contrast
@@ -248,6 +249,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::VID_WHITE_NOISE:       return "VID.WHITE_NOISE";
 
+            case Opt::MON_TEX_FORMAT:        return "MON.TEX_FORMAT";
             case Opt::MON_PALETTE:           return "MON.PALETTE";
             case Opt::MON_BRIGHTNESS:        return "MON.BRIGHTNESS";
             case Opt::MON_CONTRAST:          return "MON.CONTRAST";
@@ -400,6 +402,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::VID_WHITE_NOISE:       return "White noise";
 
+            case Opt::MON_TEX_FORMAT:        return "Texture format";
             case Opt::MON_PALETTE:           return "Color palette";
             case Opt::MON_BRIGHTNESS:        return "Monitor brightness";
             case Opt::MON_CONTRAST:          return "Monitor contrast";

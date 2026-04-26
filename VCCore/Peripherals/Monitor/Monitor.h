@@ -31,6 +31,7 @@ class Monitor final : public SubComponent {
 
     Options options = {
 
+        Opt::MON_TEX_FORMAT,
         Opt::MON_PALETTE,
         Opt::MON_BRIGHTNESS,
         Opt::MON_CONTRAST,
@@ -87,6 +88,8 @@ public:
 
         worker
 
+        << config.texFormat
+        
         << config.palette
         << config.brightness
         << config.contrast

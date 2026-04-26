@@ -23,6 +23,7 @@ Monitor::getOption(Opt option) const
 {
     switch (option) {
             
+        case Opt::MON_TEX_FORMAT:            return (i64)config.texFormat;
         case Opt::MON_PALETTE:               return (i64)config.palette;
         case Opt::MON_BRIGHTNESS:            return (i64)config.brightness;
         case Opt::MON_CONTRAST:              return (i64)config.contrast;
@@ -56,6 +57,13 @@ void
 Monitor::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
+            
+        case Opt::MON_TEX_FORMAT:
+            
+            if (!TexFormatEnum::isValid(value)) {
+                throw CoreError(CoreError::OPT_INV_ARG, TexFormatEnum::keyList());
+            }
+            return;
             
         case Opt::MON_PALETTE:
             
@@ -128,7 +136,13 @@ Monitor::setOption(Opt opt, i64 value)
     checkOption(opt, value);
     
     switch (opt) {
+
+        case Opt::MON_TEX_FORMAT:
             
+            config.texFormat = TexFormat(value);
+            vic.updatePalette();
+            break;
+
         case Opt::MON_PALETTE:
             
             config.palette = Palette(value);

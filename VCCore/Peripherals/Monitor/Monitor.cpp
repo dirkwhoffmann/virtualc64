@@ -246,7 +246,14 @@ Monitor::getColor(isize nr, Palette palette)
         b = gammaCorrect(b, 2.8, 2.2);
     }
 
-    return LO_LO_HI_HI((u8)r, (u8)g, (u8)b, 0xFF);
+    switch (config.texFormat) {
+
+        case TexFormat::ABGR: return LO_LO_HI_HI(0xFF, (u8)b, (u8)g, (u8)r);
+        case TexFormat::ARGB: return LO_LO_HI_HI(0xFF, (u8)r, (u8)g, (u8)b);
+          
+        default:
+            return LO_LO_HI_HI((u8)r, (u8)g, (u8)b, 0xFF);
+    }
 }
 
 }
