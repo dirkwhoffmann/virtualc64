@@ -55,7 +55,7 @@ endif()
 # Add include paths
 target_include_directories(VCCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Add sub directories
+# Subdirectories
 add_subdirectory(utlib)
 add_subdirectory(rvlib)
 add_subdirectory(Infrastructure)
@@ -66,14 +66,14 @@ add_subdirectory(Misc)
 add_subdirectory(Peripherals)
 add_subdirectory(ThirdParty)
 
-# Add libraries
+# Threads
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(VCCore utlib rvlib resid Threads::Threads)
 # target_link_libraries(VCCore lz4)
 # target_link_libraries(VC64Headless lz4)
 
-# Link zlib if available
+# Link ZLIB if available
 if(ZLIB_FOUND)
   target_link_libraries(VCCore ZLIB::ZLIB)
   target_link_libraries(VC64Headless ZLIB::ZLIB)
