@@ -8,7 +8,6 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
-#include "FileSystems/Amiga/FileSystem.h"
 #include "Images/EADF/EADFFile.h"
 #include "Images/Encoders/DiskEncoder.h"
 #include "Images/Encoders/AmigaEncoder.h"
