@@ -335,14 +335,9 @@ CommanderConsole::initCommands(RSCommand &root)
 
         .tokens = { cmd, "load", "openroms" },
         .chelp  = { "Installs the MEGA65 OpenROMs" },
-        .args   = {
-            { .name = { "path", "File path" } },
-            { .name = { "address", "Target memory address" } },
-        },
-            .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
-
-                c64.installOpenRoms();
-            }
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+            c64.installOpenRoms();
+        }
     });
 
     root.add({

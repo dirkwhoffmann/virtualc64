@@ -38,6 +38,18 @@ C64::version()
 }
 
 string
+C64::snapshotVersion()
+{
+    string result;
+
+    result = std::to_string(SNP_MAJOR) + "." + std::to_string(SNP_MINOR);
+    if constexpr (SNP_SUBMINOR > 0) result += "." + std::to_string(SNP_SUBMINOR);
+    if constexpr (SNP_BETA > 0) result += 'b' + std::to_string(SNP_BETA);
+
+    return result;
+}
+
+string
 C64::build()
 {
     string db = debugBuild ? " [DEBUG BUILD]" : "";
@@ -792,7 +804,8 @@ C64::update(CmdQueue &queue)
                 break;
 
             default:
-                fatal("Unhandled command: %s\n", CmdEnum::key(cmd.type));
+                logemergency("Unhandled command: %s\n", CmdEnum::key(cmd.type));
+                fatalError;
         }
     }
 
@@ -1511,8 +1524,7 @@ C64::saveWorkspace(const fs::path &path)
         }
     };
 
-    // TODO: exportTAP, exportCRT
-
+    printf("VC64: Saving workspace... %s\n", path.c_str());
     // If a file with the specified name exists, delete it
     if (fs::exists(path) && !fs::is_directory(path)) fs::remove(path);
 

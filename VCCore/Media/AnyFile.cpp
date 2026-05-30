@@ -196,7 +196,7 @@ AnyFile::flash(u8 *buf, isize offset, isize len) const
 void
 AnyFile::flash(u8 *buf, isize offset) const
 {
-    flash (buf, offset, data.size);
+    flash(buf, offset, data.size);
 }
 
 bool 

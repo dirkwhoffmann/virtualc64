@@ -14,7 +14,6 @@
 #pragma once
 
 #include "VirtualC64Types.h"
-#include "Error.h"
 #include "CoreError.h"
 #include "Snapshot.h"
 #include "FileSystems/CBM/FSTypes.h"
@@ -1223,7 +1222,11 @@ struct VirtualC64 : public API {
      */
     static string version();
 
-    /** @brief  eturns a build-number string for this release.
+    /** @brief  Returns a version string for the supported snapshot format.
+     */
+    static string snapshotVersion();
+
+    /** @brief  Returns a build-number string for this release.
      */
     static string build();
 
@@ -1234,6 +1237,11 @@ struct VirtualC64 : public API {
 
     VirtualC64();
     ~VirtualC64();
+
+
+    //
+    // Methods
+    //
 
     /** @brief  Returns the component's current state.
      */
@@ -1455,6 +1463,14 @@ struct VirtualC64 : public API {
      *  @param  func        The callback function.
      */
     void launch(const void *listener = nullptr, Callback *func = nullptr);
+
+    /* @brief  Registers a message receiver callback.
+     *
+     * If launch has been called without a listener and callback pointer,
+     * the callback can be registered at a later point in time by calling this
+     * function.
+     */
+    void setListener(const void *listener, Callback *func);
 
     /** @brief  Returns true if the emulator has been launched.
      */

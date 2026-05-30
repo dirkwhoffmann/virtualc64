@@ -26,6 +26,7 @@ Host::getOption(Opt option) const
 
         case Opt::HOST_REFRESH_RATE:     return i64(config.refreshRate);
         case Opt::HOST_SAMPLE_RATE:      return i64(config.sampleRate);
+        case Opt::HOST_TEX_FORMAT:       return i64(config.texFormat);
         case Opt::HOST_FRAMEBUF_WIDTH:   return i64(config.frameBufferWidth);
         case Opt::HOST_FRAMEBUF_HEIGHT:  return i64(config.frameBufferHeight);
 
@@ -38,6 +39,13 @@ void
 Host::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
+
+        case Opt::HOST_TEX_FORMAT:
+
+            if (!TexFormatEnum::isValid(value)) {
+                throw CoreError(CoreError::OPT_INV_ARG, TexFormatEnum::keyList());
+            }
+            return;
 
         case Opt::HOST_REFRESH_RATE:
         case Opt::HOST_SAMPLE_RATE:
@@ -65,6 +73,12 @@ Host::setOption(Opt opt, i64 value)
             config.sampleRate = isize(value);
             audioPort.setSampleRate(double(value));
             return;
+
+        case Opt::HOST_TEX_FORMAT:
+
+            config.texFormat = TexFormat(value);
+            vic.updatePalette();
+            break;
 
         case Opt::HOST_FRAMEBUF_WIDTH:
 

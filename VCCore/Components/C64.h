@@ -268,6 +268,9 @@ public:
     // Returns a version string for this release
     static string version();
 
+    // Returns a version string for the supported snapshot format
+    static string snapshotVersion();
+
     // Returns a build number string for this release
     static string build();
 

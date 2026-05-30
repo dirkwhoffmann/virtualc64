@@ -67,6 +67,12 @@ VirtualC64::version()
 }
 
 string
+VirtualC64::snapshotVersion()
+{
+    return C64::snapshotVersion();
+}
+
+string
 VirtualC64::build()
 {
     return C64::build();
@@ -385,6 +391,13 @@ VirtualC64::launch(const void *listener, Callback *func)
 {
     VC64_PUBLIC
     emu->launch(listener, func);
+}
+
+void
+VirtualC64::setListener(const void *listener, Callback *func)
+{
+    VC64_PUBLIC
+    emu->main.msgQueue.setListener(listener, func);
 }
 
 bool

@@ -21,41 +21,6 @@ namespace vc64 {
 // Enumerations
 //
 
-/// Texture format
-enum class TexFormat : long
-{
-    RGBA,                       ///< RRGGBBAA
-    ABGR,                       ///< AABBGGRR
-    ARGB,                       ///< AARRGGBB
-};
-
-struct TexFormatEnum : Reflectable<TexFormatEnum, TexFormat> {
-
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = long(TexFormat::ARGB);
-
-    static const char *_key(TexFormat value)
-    {
-        switch (value) {
-                
-            case TexFormat::RGBA:       return "RGBA";
-            case TexFormat::ABGR:       return "ABGR";
-            case TexFormat::ARGB:       return "ARGB";
-        }
-        return "???";
-    }
-    static const char *help(TexFormat value)
-    {
-        switch (value) {
-                
-            case TexFormat::RGBA:       return "32 bit RRGGBBAA";
-            case TexFormat::ABGR:       return "32 bit AABBGGRR";
-            case TexFormat::ARGB:       return "32 bit AARRGGBB";
-        }
-        return "???";
-    }
-};
-
 /// Color palette
 enum class Palette : long
 {
@@ -200,9 +165,6 @@ struct ScanlinesEnum : Reflectable<ScanlinesEnum, Scanlines> {
 
 typedef struct
 {
-    // Texture format
-    TexFormat texFormat;
-    
     // Colors
     Palette palette;
     isize brightness;

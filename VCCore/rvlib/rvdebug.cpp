@@ -5,12 +5,12 @@
 #define XSTR(x) STR(x)
 
 #define DEBUG_CHANNEL(name, description) \
-utl::LogChannel name = \
-  ::retro::vault::name ? \
+utl::LogChannel CH_ ## name = \
+  name ? \
     utl::Loggable::subscribe(XSTR(name), std::optional<long>(7), description) : \
     utl::Loggable::subscribe(XSTR(name), std::optional<long>(std::nullopt), description);
 
-namespace retro::vault::channel {
+namespace retro::vault {
 
 // Register the default channels
 DEBUG_CHANNEL(NULLDEV,          "Message sink");

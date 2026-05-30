@@ -14,7 +14,7 @@
 
 #include <source_location>
 
-namespace utl::debug {
+namespace vc64::debug {
 
 //
 // Debug settings
@@ -107,7 +107,7 @@ constexpr long DAP_DEBUG       = 0;
 // Forced error conditions
 //
 
-namespace utl::force {
+namespace vc64::force {
 
 constexpr long LAUNCH_ERROR         = 0;
 constexpr long ROM_MISSING          = 0;
@@ -150,7 +150,7 @@ constexpr long DMS_CANT_CREATE      = 0;
  * to apply performance optimization.
  */
 
-namespace utl::channel {
+namespace vc64::channel {
 
 // Default channels
 extern long NULLDEV;
@@ -295,12 +295,14 @@ do { \
 // Convenience wrappers
 //
 
+/*
 #define fatal(format, ...) \
     do { \
         logemergency(format __VA_OPT__(,) __VA_ARGS__); \
         assert(false); \
         std::terminate(); \
     } while(0)
+*/
 
 #define xfiles(format, ...) \
     logMsg(XFILES, LogLevel::LOG_INFO, format __VA_OPT__(,) __VA_ARGS__)

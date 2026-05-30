@@ -18,6 +18,7 @@
 // Release settings
 //
 
+namespace vc64 {
 // Version number
 static constexpr int VER_MAJOR      = 6;
 static constexpr int VER_MINOR      = 0;
@@ -60,4 +61,5 @@ static constexpr bool emscripten = 1;
 static constexpr bool emscripten = 0;
 #endif
 
+}
 #include <assert.h>

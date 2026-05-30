@@ -34,6 +34,7 @@ class Host final : public SubComponent {
 
         Opt::HOST_REFRESH_RATE,
         Opt::HOST_SAMPLE_RATE,
+        Opt::HOST_TEX_FORMAT,
         Opt::HOST_FRAMEBUF_WIDTH,
         Opt::HOST_FRAMEBUF_HEIGHT
     };

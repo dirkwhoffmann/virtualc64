@@ -56,20 +56,20 @@ Thread::execute()
         loadClock.go();
 
         try {
-            
+
             // Execute all missing frames
             for (isize i = 0; i < missing; i++, frameCounter++) {
-                
+
                 // Execute a single frame
                 computeFrame();
             }
-            
+
         } catch (StateChangeException &exc) {
-            
+
             // Serve a state change request
             switchState((ExecState)exc.data);
         }
-        
+
         loadClock.stop();
         lock.unlock();
 
@@ -98,7 +98,7 @@ Thread::sleep()
     /*
     // Don't sleep if the emulator is running in warp mode and no suspension is pending
     if (warp && isRunning() && suspensionLock.tryLock()) {
-        
+
         suspensionLock.unlock();
         return;
     }
@@ -157,10 +157,10 @@ Thread::switchState(ExecState newState)
     assert(isEmulatorThread() || !isRunning());
 
     auto invalid = [&]() {
-        
+
+        logemergency("Invalid state transition: %s -> %s\n",
+                     ExecStateEnum::key(state), ExecStateEnum::key(newState));
         assert(false);
-        fatal("Invalid state transition: %s -> %s\n",
-              ExecStateEnum::key(state), ExecStateEnum::key(newState));
     };
 
     loginfo(RUN_DEBUG,
@@ -287,7 +287,7 @@ Thread::halt()
 {
     loginfo(RUN_DEBUG, "halt()\n");
 
-    if (state != ExecState::HALTED) {
+    if (isLaunched() && state != ExecState::HALTED) {
 
         switchState(ExecState::HALTED);
     }
@@ -359,7 +359,7 @@ Thread::suspend() const
     assert(isUserThread());
 
     if (suspendCounter++ == 0) {
-        
+
         suspensionLock.lock();
         lock.lock();
     }
@@ -372,11 +372,12 @@ Thread::resume() const
     assert(isUserThread());
 
     if (suspendCounter <= 0) {
-        
-        fatal("resume() called with no call to suspend()\n");
-        
+
+        logemergency("resume() called with no call to suspend()\n");
+        fatalError;
+
     } else if (--suspendCounter == 0) {
-        
+
         suspensionLock.unlock();
         lock.unlock();
     }

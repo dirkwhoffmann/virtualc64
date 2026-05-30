@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "Devices/LinearDevice.h"
+#include "LinearDevice.h"
 
 namespace retro::vault {
 

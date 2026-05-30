@@ -17,12 +17,12 @@
 #define XSTR(x) STR(x)
 
 #define DEBUG_CHANNEL(name, description) \
-LogChannel name = \
-  ::utl::debug::name ? \
-    Loggable::subscribe(XSTR(name), std::optional<long>(7), description) : \
-    Loggable::subscribe(XSTR(name), std::optional<long>(std::nullopt), description);
+utl::LogChannel name = \
+  ::vc64::debug::name ? \
+    utl::Loggable::subscribe(XSTR(name), std::optional<long>(7), description) : \
+    utl::Loggable::subscribe(XSTR(name), std::optional<long>(std::nullopt), description);
 
-namespace utl::channel {
+namespace vc64::channel {
 
 // Register the default channels
 DEBUG_CHANNEL(NULLDEV,          "Message sink");

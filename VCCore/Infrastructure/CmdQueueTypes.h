@@ -13,8 +13,8 @@
 
 #pragma once
 
-#include "JoystickTypes.h"
-#include "Option.h"
+#include "Peripherals/Joystick/JoystickTypes.h"
+#include "Infrastructure/Option.h"
 
 namespace vc64 {
 

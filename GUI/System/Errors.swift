@@ -29,7 +29,7 @@ public func log(_ enable: Int, _ msg: String = "",
 public func loginfo(_ enable: Int, _ msg: String = "",
                   path: String = #file, function: String = #function, line: Int = #line) {
 
-    if !releaseBuild { log(enable, msg, path: path, function: function, line: line) }
+    if !vc64.releaseBuild { log(enable, msg, path: path, function: function, line: line) }
 }
 
 public func warn(_ msg: String = "",

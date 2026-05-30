@@ -30,6 +30,7 @@ OptionParser::create(Opt opt, i64 arg)
 
         case Opt::HOST_SAMPLE_RATE:          return numParser(" Hz");
         case Opt::HOST_REFRESH_RATE:         return numParser(" fps");
+        case Opt::HOST_TEX_FORMAT:           return enumParser.template operator()<TexFormatEnum,TexFormat>();
         case Opt::HOST_FRAMEBUF_WIDTH:       return numParser(" pixels");
         case Opt::HOST_FRAMEBUF_HEIGHT:      return numParser(" pixels");
 
@@ -73,7 +74,6 @@ OptionParser::create(Opt opt, i64 arg)
 
         case Opt::VID_WHITE_NOISE:           return boolParser();
             
-        case Opt::MON_TEX_FORMAT:            return enumParser.template operator()<TexFormatEnum,TexFormat>();
         case Opt::MON_PALETTE:               return enumParser.template operator()<PaletteEnum,Palette>();
         case Opt::MON_BRIGHTNESS:            return numParser("%");
         case Opt::MON_CONTRAST:              return numParser("%");

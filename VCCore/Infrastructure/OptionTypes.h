@@ -27,6 +27,7 @@ enum class Opt : long
     // Host
     HOST_REFRESH_RATE,      ///< Video refresh rate of the host display
     HOST_SAMPLE_RATE,       ///< Audio sample rate of the host display
+    HOST_TEX_FORMAT,        ///< Texture format
     HOST_FRAMEBUF_WIDTH,    ///< Current width of the emulator window
     HOST_FRAMEBUF_HEIGHT,   ///< Current height of the emulator window
 
@@ -78,7 +79,6 @@ enum class Opt : long
     VID_WHITE_NOISE,        ///< Generate white-noise when switched off
 
     // Monitor
-    MON_TEX_FORMAT,         ///< Texture format
     MON_PALETTE,            ///< Color palette
     MON_BRIGHTNESS,         ///< Brightness
     MON_CONTRAST,           ///< Contrast
@@ -206,6 +206,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::HOST_REFRESH_RATE:     return "HOST.REFRESH_RATE";
             case Opt::HOST_SAMPLE_RATE:      return "HOST.SAMPLE_RATE";
+            case Opt::HOST_TEX_FORMAT:       return "HOST.TEX_FORMAT";
             case Opt::HOST_FRAMEBUF_WIDTH:   return "HOST.FRAMEBUF_WIDTH";
             case Opt::HOST_FRAMEBUF_HEIGHT:  return "HOST.FRAMEBUF_HEIGHT";
 
@@ -249,7 +250,6 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::VID_WHITE_NOISE:       return "VID.WHITE_NOISE";
 
-            case Opt::MON_TEX_FORMAT:        return "MON.TEX_FORMAT";
             case Opt::MON_PALETTE:           return "MON.PALETTE";
             case Opt::MON_BRIGHTNESS:        return "MON.BRIGHTNESS";
             case Opt::MON_CONTRAST:          return "MON.CONTRAST";
@@ -283,7 +283,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::SID_ENABLE:            return "SID.ENABLE";
             case Opt::SID_ADDRESS:           return "SID.ADDRESS";
-            case Opt::SID_REV:          return "SID.REVISION";
+            case Opt::SID_REV:               return "SID.REVISION";
             case Opt::SID_FILTER:            return "SID.FILTER";
             case Opt::SID_ENGINE:            return "SID.ENGINE";
             case Opt::SID_SAMPLING:          return "SID.SAMPLING";
@@ -359,6 +359,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::HOST_REFRESH_RATE:     return "Host video refresh rate";
             case Opt::HOST_SAMPLE_RATE:      return "Host audio sample rate";
+            case Opt::HOST_TEX_FORMAT:       return "Texture format";
             case Opt::HOST_FRAMEBUF_WIDTH:   return "Window width";
             case Opt::HOST_FRAMEBUF_HEIGHT:  return "Window height";
 
@@ -402,7 +403,6 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::VID_WHITE_NOISE:       return "White noise";
 
-            case Opt::MON_TEX_FORMAT:        return "Texture format";
             case Opt::MON_PALETTE:           return "Color palette";
             case Opt::MON_BRIGHTNESS:        return "Monitor brightness";
             case Opt::MON_CONTRAST:          return "Monitor contrast";

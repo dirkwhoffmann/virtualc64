@@ -19,6 +19,7 @@
 #include "Infrastructure/CoreObjectTypes.h"
 #include "Infrastructure/CoreComponentTypes.h"
 #include "Infrastructure/ErrorTypes.h"
+#include "Infrastructure/Host.h"
 #include "Infrastructure/MsgQueueTypes.h"
 #include "Infrastructure/OptionTypes.h"
 #include "Infrastructure/ThreadTypes.h"

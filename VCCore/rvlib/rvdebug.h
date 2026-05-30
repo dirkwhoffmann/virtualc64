@@ -45,17 +45,17 @@ constexpr long DMS_CANT_CREATE      = 0;
 // Logging channels
 //
 
-namespace utl::channel {
+namespace retro::vault {
 
 // Default channels
-extern long NULLDEV;
-extern long STDERR;
+extern long CH_NULLDEV;
+extern long CH_STDERR;
 
 // File systems
-extern long FS_DEBUG;
+extern long CH_FS_DEBUG;
 
 // Images
-extern long IMG_DEBUG;
+extern long CH_IMG_DEBUG;
 
 }
 
@@ -69,7 +69,7 @@ extern long IMG_DEBUG;
 #define logMsg(key, level, format, ...) \
     do { \
         if constexpr (key) \
-            log(::retro::vault::channel::key, level, std::source_location::current(), \
+            log(CH_ ## key, level, std::source_location::current(), \
                 format __VA_OPT__(,) __VA_ARGS__); \
     } while (0)
 
@@ -77,12 +77,21 @@ extern long IMG_DEBUG;
 
 #define logMsg(key, level, format, ...)                           \
 do { \
-    log(::retro::vault::channel::key, level, std::source_location::current(), \
+    log(CH_ ## key, level, std::source_location::current(), \
         format __VA_OPT__(,) __VA_ARGS__); \
 } while (0)
 
 #endif
 
+/*
+#define logMsg(key, level, format, ...)                           \
+do { \
+log(::retro::vault::channel::key, level, std::source_location::current(), \
+format __VA_OPT__(,) __VA_ARGS__); \
+} while (0)
+
+#endif
+*/
 
 //
 // Wrappers for all syslog levels

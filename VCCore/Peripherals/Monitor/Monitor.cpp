@@ -12,6 +12,7 @@
 
 #include "vcconfig.h"
 #include "Monitor.h"
+#include "Host.h"
 #include "VICII.h"
 #include <cmath>
 
@@ -246,13 +247,13 @@ Monitor::getColor(isize nr, Palette palette)
         b = gammaCorrect(b, 2.8, 2.2);
     }
 
-    switch (config.texFormat) {
+    switch (host.getConfig().texFormat) {
 
-        case TexFormat::ABGR: return LO_LO_HI_HI(0xFF, (u8)b, (u8)g, (u8)r);
-        case TexFormat::ARGB: return LO_LO_HI_HI(0xFF, (u8)r, (u8)g, (u8)b);
-          
+        case TexFormat::ABGR: return HI_HI_LO_LO(0xFF, (u8)b, (u8)g, (u8)r);
+        case TexFormat::ARGB: return HI_HI_LO_LO(0xFF, (u8)r, (u8)g, (u8)b);
+
         default:
-            return LO_LO_HI_HI((u8)r, (u8)g, (u8)b, 0xFF);
+            return HI_HI_LO_LO((u8)r, (u8)g, (u8)b, 0xFF);
     }
 }
 

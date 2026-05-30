@@ -119,8 +119,8 @@ RetroShell::asyncExecScript(std::stringstream &ss)
 void
 RetroShell::asyncExecScript(const fs::path &path)
 {
-    std::ifstream fs(path);
-    if (!fs) throw IOError(IOError::FILE_NOT_FOUND);
+    std::ifstream fs(host.makeAbsolute(path));
+    if (!fs) throw IOError(IOError::FILE_NOT_FOUND, path);
 
     asyncExecScript(fs);
 }

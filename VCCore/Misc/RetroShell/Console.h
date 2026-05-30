@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "vcdebug.h"
 #include "RetroShellTypes.h"
 #include "SubComponent.h"
 #include "RSCommand.h"
