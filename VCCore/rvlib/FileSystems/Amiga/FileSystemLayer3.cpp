@@ -81,19 +81,13 @@ FileSystem::match(BlockNr top, const vector<FSPattern> &patterns)
         // Pattern-based lookup
         for (auto blk : currentSet) {
 
-            printf("  Seeking '%s' in '%s'\n",
-                   pattern.glob.c_str(),
-                   fetch(blk).absName().c_str());
-
             auto matches = searchdir(blk, pattern);
             for (auto m : matches) {
-                printf("    Found %ld (%s)\n", m, fetch(m).absName().c_str());
                 nextSet.push_back(m);
             }
         }
 
         if (nextSet.empty()) {
-            printf("No matches for '%s'\n", pattern.glob.c_str());
             return {};
         }
 

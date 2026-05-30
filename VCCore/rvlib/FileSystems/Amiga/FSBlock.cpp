@@ -280,10 +280,8 @@ bool
 FSBlock::matches(const FSPattern &pattern) const
 {
     if (pattern.isAbsolute()) {
-        printf("Abs matching %s and %s (%d)\n", absName().c_str(), pattern.glob.c_str(), pattern.match(absName()));
         return pattern.match(absName());
     } else {
-        printf("Rel matching %s and %s (%d)\n", relName().c_str(), pattern.glob.c_str(), pattern.match(relName()));
         return pattern.match(cppName());
     }
 }

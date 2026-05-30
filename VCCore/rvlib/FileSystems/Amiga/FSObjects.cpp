@@ -176,12 +176,6 @@ FSName::sanitize(const string &filename)
     // Avoid reserved Windows names
     if (isReserved(result)) result = "__" + result;
 
-    /*
-     if (filename != result) {
-     printf("sanitize: %s -> %s\n", filename.c_str(), result.c_str());
-     }
-     */
-
     return fs::path(result);
 }
 
@@ -251,12 +245,6 @@ FSName::unsanitize(const fs::path &filename)
             }
         }
     }
-
-    /*
-     if (filename.string() != result) {
-     printf("unsanitize: %s -> %s\n", filename.string().c_str(), result.c_str());
-     }
-     */
 
     return result;
 }

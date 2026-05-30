@@ -157,9 +157,7 @@ AnyImage::save(const Range<BlockNr> range)
 {
     std::ofstream file(path, std::ios::binary);
     if (!file) throw IOError(IOError::FILE_CANT_WRITE, path);
-    
-    printf("Saving range %ld - %ld...\n", range.lower, range.upper - 1);
-    
+        
     // Move to the correct position
     file.seekp(range.lower, std::ios::beg);
     

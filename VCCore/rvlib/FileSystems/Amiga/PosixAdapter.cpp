@@ -112,7 +112,6 @@ PosixAdapter::rmdir(const fs::path &path)
 
     // Only empty directories can be removed
     auto dir = readDir(path);
-    for (auto &it : dir) { printf("DIR item: %s\n", it.c_str()); }
     require.emptyDirectory(node);
         
     // Remove directory entry

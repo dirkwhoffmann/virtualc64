@@ -1524,7 +1524,6 @@ C64::saveWorkspace(const fs::path &path)
         }
     };
 
-    printf("VC64: Saving workspace... %s\n", path.c_str());
     // If a file with the specified name exists, delete it
     if (fs::exists(path) && !fs::is_directory(path)) fs::remove(path);
 
