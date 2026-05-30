@@ -8,12 +8,12 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
-#include "FileSystems/Amiga/FSBootBlockImage.h"
 #include "Images/EADF/EADFFile.h"
 #include "Images/Encoders/AmigaEncoder.h"
 #include "Images/Encoders/AmigaDecoder.h"
 #include "Images/ImageError.h"
 #include "FileSystems/Amiga/FileSystem.h"
+#include "FileSystems/Amiga/FSBootBlockImage.h"
 #include "utl/io.h"
 #include "utl/support/Strings.h"
 #include <format>

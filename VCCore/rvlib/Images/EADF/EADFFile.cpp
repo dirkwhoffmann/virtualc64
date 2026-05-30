@@ -8,12 +8,12 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
+#include "FileSystems/Amiga/FileSystem.h"
 #include "Images/EADF/EADFFile.h"
 #include "Images/Encoders/DiskEncoder.h"
 #include "Images/Encoders/AmigaEncoder.h"
 #include "Images/Encoders/AmigaDecoder.h"
 #include "Images/ImageError.h"
-#include "FileSystems/Amiga/FileSystem.h"
 #include "utl/io.h"
 
 namespace retro::vault::image {
