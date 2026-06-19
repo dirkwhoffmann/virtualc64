@@ -2300,7 +2300,7 @@
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lth-Ku-efg">
                                 <rect key="frame" x="170" y="256" width="20.5" height="28"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="trash" catalog="system" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="uro-oe-R5b">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -4236,7 +4236,7 @@
                                         <slider horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wRb-9b-wBo">
                                             <rect key="frame" x="253" y="78" width="28" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" continuous="YES" alignment="left" maxValue="400" sliderType="circular" id="JMh-pg-rvu"/>
+                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="400" doubleValue="154.35525432305207" sliderType="circular" id="JMh-pg-rvu"/>
                                             <connections>
                                                 <action selector="drive8PanAction:" target="WlI-B9-QcR" id="7q7-kE-LOZ"/>
                                             </connections>
@@ -4872,7 +4872,7 @@
                                 </view>
                             </box>
                             <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eSt-oJ-NLM">
-                                <rect key="frame" x="23" y="37" width="594" height="351"/>
+                                <rect key="frame" x="23" y="38" width="594" height="351"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
@@ -5981,7 +5981,7 @@
                             <button tag="2" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8G-38-sWe">
                                 <rect key="frame" x="20" y="198" width="163" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="DAP Server" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="f2p-lM-X5o">
+                                <buttonCell key="cell" type="check" title="DAP Adapter" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="f2p-lM-X5o">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="systemBold"/>
                                 </buttonCell>
