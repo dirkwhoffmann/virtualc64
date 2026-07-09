@@ -113,6 +113,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--verbose -svm &quot;test.svm&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "-&quot;mem flash /tmp/prog.prg&quot;"
             isEnabled = "NO">
          </CommandLineArgument>

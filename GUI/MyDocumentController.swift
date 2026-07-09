@@ -11,6 +11,36 @@
 
 class MyDocumentController: NSDocumentController {
 
+    override func openDocument(withContentsOf url: URL,
+                               display: Bool,
+                               completionHandler: @escaping (NSDocument?, Bool, Error?) -> Void)
+    {
+        loginfo(.lifetime, "openDocument(withContentsOf: \(url)")
+
+        let commandLine = CommandLine.arguments
+
+        for i in 1..<commandLine.count {
+            let argument = commandLine[i]
+
+            // Check only arguments that follow an option like "-svm"
+            if commandLine[i - 1].hasPrefix("-") {
+
+                let argumentURL = URL(fileURLWithPath: argument).standardizedFileURL
+                let openedURL = url.standardizedFileURL
+
+                if argumentURL == openedURL {
+                    loginfo(.lifetime, "Skipping command-line file \(url)")
+                    completionHandler(nil, false, nil)
+                    return
+                }
+            }
+        }
+
+        super.openDocument(withContentsOf: url,
+                           display: display,
+                           completionHandler: completionHandler)
+    }
+    
     override func makeDocument(withContentsOf url: URL,
                                ofType typeName: String) throws -> NSDocument {
 
