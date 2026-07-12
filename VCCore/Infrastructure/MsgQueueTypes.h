@@ -241,12 +241,15 @@ typedef struct
 
     // Payload
     union {
+        
         struct { i64 value; i64 value2; };
         CpuMsg cpu;
         DriveMsg drive;
         ScriptMsg script;
         SnapshotMsg snapshot;
     };
+    
+    const char *str;
 }
 Message;
 
@@ -255,6 +258,6 @@ Message;
 // Signatures
 //
 
-typedef void Callback(const void *, Message);
+typedef void Callback(const void *, const Message &);
 
 }

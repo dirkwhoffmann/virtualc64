@@ -47,7 +47,7 @@ MsgQueue::get(Message &msg)
 }
 
 void
-MsgQueue::put(const Message &msg)
+MsgQueue::put(const Message &msg, const string &str)
 {
     if (enabled) {
 
@@ -55,20 +55,20 @@ MsgQueue::put(const Message &msg)
 
         loginfo(MSG_DEBUG, "%s [%llx]\n", MsgEnum::key(msg.type), msg.value);
 
-        if (listener) {
-
-            // Send the message immediately if a lister has been registered
-            callback(listener, msg);
-
-        } else {
-
-            // Otherwise, store it in the ring buffer
-            if (!queue.isFull()) {
-                queue.write(msg);
-            } else {
-                logwarn("Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
-            }
+        // Delete the oldest element if the queue is full
+        if (queue.isFull()) {
+            logwarn("Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
+            (void)queue.read();
         }
+        
+        // Add message to the ringbuffer
+        auto w = queue.w;
+        queue.write(msg);
+        attachments[w] = str;
+        queue.elements[w].str = attachments[w].c_str();
+
+        // Send the message immediately if a lister has been registered
+        if (listener) callback(listener, msg);
     }
 }
 
@@ -76,6 +76,12 @@ void
 MsgQueue::put(Msg type, i64 payload, i64 payload2)
 {
     put( Message { .type = type, .value = payload, .value2 = payload2 } );
+}
+
+void
+MsgQueue::put(Msg type, const string &payload)
+{
+    put( Message { .type = type }, payload);
 }
 
 void

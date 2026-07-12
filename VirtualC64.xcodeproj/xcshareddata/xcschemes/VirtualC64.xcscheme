@@ -113,7 +113,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--verbose -svm &quot;test.svm&quot;"
+            argument = "--verbose -exec &quot;set server 1000&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
