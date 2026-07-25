@@ -197,8 +197,15 @@ class DropZone: Layer {
                 
                 switch n {
                     
-                case 0: try mm.insertDisk(url: url, drive: DRIVE8, options: [.remember])
-                case 1: try mm.insertDisk(url: url, drive: DRIVE9, options: [.remember])
+                case 0, 1:
+
+                    let nr = n == 0 ? DRIVE8 : DRIVE9
+
+                    // Ask user to continue if the current disk contains modified data
+                    if let emu = emu, !mm.proceedWithUnsavedFloppyDisk(drive: emu.drive(nr)) { return }
+
+                    try mm.insertDisk(url: url, drive: nr, options: [.remember])
+
                 case 2: try mm.flashFile(url: url, options: [.reset])
                 case 3: try mm.attachCartridge(url: url, options: [.remember, .reset])
                 case 4: try mm.insertTape(url: url, options: [.remember, .reset])

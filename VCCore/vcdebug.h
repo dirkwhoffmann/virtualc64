@@ -34,7 +34,7 @@ constexpr long RUN_DEBUG       = 0;
 constexpr long TIM_DEBUG       = 0;
 constexpr long WARP_DEBUG      = 0;
 constexpr long CMD_DEBUG       = 0;
-constexpr long MSG_DEBUG       = 0;
+constexpr long MSG_DEBUG       = 1;
 constexpr long SNP_DEBUG       = 0;
 
 // Run ahead

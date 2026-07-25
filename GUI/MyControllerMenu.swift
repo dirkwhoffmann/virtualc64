@@ -723,11 +723,14 @@ extension MyController: NSMenuItemValidation {
     }
     
     func insertRecentDiskAction(drive: Int, slot: Int) {
-        
+
         // let types: [vc64.FileType] = [ .D64, .T64, .PRG, .P00, .G64 ]
-        
-        if let url = MediaManager.getRecentlyInsertedDiskURL(slot) {
-            
+
+        if let emu = emu, let url = MediaManager.getRecentlyInsertedDiskURL(slot) {
+
+            // Ask user to continue if the current disk contains modified data
+            if !proceedWithUnsavedFloppyDisk(drive: emu.drive(drive)) { return }
+
             do {
                 try self.mm.insertDisk(url: url, drive: drive, options: [.remember])
                 // try self.mm.mount(url: url, allowedTypes: types, drive: drive)
