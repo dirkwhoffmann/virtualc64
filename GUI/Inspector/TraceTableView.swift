@@ -11,7 +11,7 @@ class TraceTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
     
-    var emu: EmulatorProxy? { return inspector.parent.emu }
+    var emu: EmulatorProxy? { return inspector?.parent.emu }
     var cpu: CPUProxy? { return emu?.cpu }
 
     // Data caches

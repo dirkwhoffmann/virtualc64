@@ -13,7 +13,7 @@ class HeatmapView: NSImageView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var mem: MemoryProxy? { return inspector.emu?.mem }
+    var mem: MemoryProxy? { return inspector?.emu?.mem }
 
     // View size
     var size: NSSize!

@@ -11,7 +11,7 @@ class EventTableView: NSTableView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var emu: EmulatorProxy? { return inspector.emu }
+    var emu: EmulatorProxy? { return inspector?.emu }
 
     var slotInfo = [EventSlotInfo?](repeating: nil, count: EventSlotEnum.count())
 
@@ -51,6 +51,10 @@ extension EventTableView: NSTableViewDataSource {
 
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
 
+        // The window (and with it, the inspector) may already be gone by
+        // the time AppKit gets around to a deferred redraw of this table
+        // view (e.g., right after the user closes the inspector window).
+        guard let inspector = inspector else { return nil }
         guard let info = slotInfo[row] else { return nil }
 
         let willTrigger = (info.trigger != INT64_MAX)

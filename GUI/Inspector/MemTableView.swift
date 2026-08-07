@@ -11,7 +11,7 @@ class MemTableView: NSTableView {
     
     @IBOutlet weak var inspector: Inspector!
 
-    var emu: EmulatorProxy? { return inspector.parent.emu }
+    var emu: EmulatorProxy? { return inspector?.parent.emu }
     var mem: MemoryProxy? { return emu?.mem }
 
     override init(frame frameRect: NSRect) { super.init(frame: frameRect); commonInit() }
@@ -49,7 +49,9 @@ extension MemTableView: NSTableViewDataSource {
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        
+
+        guard let inspector = inspector else { return nil }
+
         let base = inspector.displayedBank * 4096
         let addr = UInt16(base + 16 * row)
         

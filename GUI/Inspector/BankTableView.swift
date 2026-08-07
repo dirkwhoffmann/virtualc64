@@ -11,7 +11,7 @@ class BankTableView: NSTableView, NSTableViewDelegate {
     
     @IBOutlet weak var inspector: Inspector!
    
-    var emu: EmulatorProxy? { return inspector.parent.emu }
+    var emu: EmulatorProxy? { return inspector?.parent.emu }
 
     // Displayed memory bank
     var bank = 0
@@ -55,7 +55,9 @@ extension BankTableView: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int { return 16; }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        
+
+        guard let inspector = inspector else { return nil }
+
         switch tableColumn?.identifier.rawValue {
 
         case "source":

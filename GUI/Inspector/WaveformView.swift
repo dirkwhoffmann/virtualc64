@@ -13,7 +13,7 @@ class WaveformView: NSImageView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var sid: SIDProxy? { return inspector.emu?.sid }
+    var sid: SIDProxy? { return inspector?.emu?.sid }
 
     // Waveform size
     var size: NSSize!
@@ -38,7 +38,7 @@ class WaveformView: NSImageView {
         super.init(frame: frameRect)
     }
 
-    func resizeBuffer() {
+    func resizeBuffer(inspector: Inspector) {
 
         let w = inspector.sidWaveformView.visibleRect.width
         let h = inspector.sidWaveformView.visibleRect.height
@@ -54,7 +54,9 @@ class WaveformView: NSImageView {
 
     override func draw(_ dirtyRect: NSRect) {
 
-        if buffer == nil { resizeBuffer() }
+        guard let inspector = inspector else { return }
+
+        if buffer == nil { resizeBuffer(inspector: inspector) }
 
         var source = -1
         if inspector.sidWaveformSource.selectedTag() == 1 {

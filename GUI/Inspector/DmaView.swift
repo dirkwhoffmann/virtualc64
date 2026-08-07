@@ -13,8 +13,8 @@ class DmaView: NSImageView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var sid: SIDProxy? { return inspector.emu?.sid }
-    var videoPort: VideoPortProxy? { return inspector.emu?.videoPort }
+    var sid: SIDProxy? { return inspector?.emu?.sid }
+    var videoPort: VideoPortProxy? { return inspector?.emu?.videoPort }
     
     // Canvas size
     var size: NSSize!
