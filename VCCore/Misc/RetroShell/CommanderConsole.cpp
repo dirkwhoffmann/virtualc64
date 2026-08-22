@@ -311,7 +311,6 @@ CommanderConsole::initCommands(RSCommand &root)
         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
             auto path = host.makeAbsolute(args.at("path"));
-            printf("load rom: %s\n", path.string().c_str());
             c64.loadRom(path);
         }
     });

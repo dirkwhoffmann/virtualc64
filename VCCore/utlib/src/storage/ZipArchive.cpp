@@ -11,9 +11,9 @@
 #include "utl/storage/ZipArchive.h"
 #include "utl/io/IOError.h"
 #include "utl/storage/ZipError.h"
+#include "zip.h"
 #include <fstream>
 #include <sstream>
-#include <zip.h>
 
 namespace utl {
 

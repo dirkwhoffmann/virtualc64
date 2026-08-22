@@ -97,8 +97,8 @@ C64Encoder::trackDefaults(isize t)
     return trackDefaults[t];
 }
 
-BitView
-C64Encoder::encodeTrack(ByteView src, TrackNr t)
+utl::BitView
+C64Encoder::encodeTrack(utl::ByteView src, TrackNr t)
 {
     assert(src.size() % 256 == 0);
 
@@ -115,7 +115,7 @@ C64Encoder::encodeTrack(ByteView src, TrackNr t)
 
     // Create a bit view with proper length
     auto &defaults = trackDefaults(t);
-    auto view = MutableBitView(gcrbuffer, defaults.lengthInBits);
+    auto view = utl::MutableBitView(gcrbuffer, defaults.lengthInBits);
 
     // Format the track
     view.byteView().clear(0x55);
@@ -129,7 +129,7 @@ C64Encoder::encodeTrack(ByteView src, TrackNr t)
     for (SectorNr s = 0; s < defaults.sectors; ++s) {
 
         // Create a view on the sector data
-        ByteView sview(src.subspan(s * 256, 256));
+        utl::ByteView sview(src.subspan(s * 256, 256));
 
         // Encode the sector
         isize encodedBits = encodeSector(view, offset, t, s, sview);
@@ -137,7 +137,7 @@ C64Encoder::encodeTrack(ByteView src, TrackNr t)
         totalBits += encodedBits;
     }
 
-    if CONSTEXPR (debug::LOG_IMG != LogLevel::LOG_NONE) {
+    if CONSTEXPR (debug::LOG_IMG != debug::LogLevel::LOG_NONE) {
 
         logme(LOG_IMG,
                 "\nTrack size: %ld Encoded: %ld Checksum: %x\n",
@@ -147,15 +147,15 @@ C64Encoder::encodeTrack(ByteView src, TrackNr t)
     return view;
 }
 
-BitView
-C64Encoder::encodeSector(ByteView bytes, TrackNr t, SectorNr s)
+utl::BitView
+C64Encoder::encodeSector(utl::ByteView bytes, TrackNr t, SectorNr s)
 {
-    return BitView(nullptr, 0);
+    return utl::BitView(nullptr, 0);
 }
 
 isize
-C64Encoder::encodeSector(MutableBitView view,
-                         isize offset, TrackNr t, SectorNr s, ByteView src)
+C64Encoder::encodeSector(utl::MutableBitView view,
+                         isize offset, TrackNr t, SectorNr s, utl::ByteView src)
 {
     logme(LOG_IMG, "%ld (%ld) ", s, offset);
 

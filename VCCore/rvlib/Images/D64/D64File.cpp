@@ -15,7 +15,7 @@
 #include "utl/support/Strings.h"
 #include <format>
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 optional<ImageInfo>
 D64File::about(const fs::path &path)
@@ -155,7 +155,7 @@ D64File::getDensity() const noexcept
     return Density::DD;
 }
 
-BitView
+utl::BitView
 D64File::encode(TrackNr t) const
 {
     validateTrackNr(t);
@@ -176,11 +176,11 @@ D64File::encode(TrackNr t) const
     track.assign(gcr.data(), gcr.data() + gcr.byteView().size());
 
     // Return a bit view with the proper size
-    return BitView(track.data(), gcr.size());
+    return utl::BitView(track.data(), gcr.size());
 }
 
 void
-D64File::decode(TrackNr t, BitView bits)
+D64File::decode(TrackNr t, utl::BitView bits)
 {
     validateTrackNr(t);
 

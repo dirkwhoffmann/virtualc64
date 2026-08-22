@@ -14,7 +14,7 @@
 #include "utl/support/Strings.h"
 #include <format>
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 optional<ImageInfo>
 STFile::about(const fs::path &path)
@@ -72,14 +72,14 @@ STFile::numSectors() const
     return 9;
 }
 
-BitView
+utl::BitView
 STFile::encode(TrackNr t) const
 {
     throw std::runtime_error("NOT IMPLEMENTED YET");
 }
 
 void
-STFile::decode(TrackNr t, BitView bits)
+STFile::decode(TrackNr t, utl::BitView bits)
 {
     throw std::runtime_error("NOT IMPLEMENTED YET");
 }

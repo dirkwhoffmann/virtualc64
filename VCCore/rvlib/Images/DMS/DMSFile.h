@@ -11,7 +11,7 @@
 
 #include "Images/ADF/ADFFile.h"
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 class DMSFile : public FloppyDiskImage {
 
@@ -31,7 +31,7 @@ public:
     explicit DMSFile(const fs::path &path) { init(path); }
     explicit DMSFile(const u8 *buf, isize len) { init(buf, len); }
 
-    using AnyImage::init;
+    using BinaryImage::init;
 
     const ADFFile &getADF() const { return adf; }
 
@@ -81,8 +81,8 @@ public:
 
     isize bsize() const override { return adf.bsize(); }
     isize capacity() const override { return adf.capacity(); }
-    void readBlocks(u8 *dst, Range<isize> r) const override { adf.readBlocks(dst, r); }
-    void writeBlocks(const u8 *src, Range<isize> r) override { adf.writeBlocks(src, r); };
+    void readBlocks(u8 *dst, utl::Range<isize> r) const override { adf.readBlocks(dst, r); }
+    void writeBlocks(const u8 *src, utl::Range<isize> r) override { adf.writeBlocks(src, r); };
 
 
     //
@@ -105,8 +105,8 @@ public:
     Diameter getDiameter() const noexcept override { return adf.getDiameter(); }
     Density getDensity() const noexcept override { return adf.getDensity(); }
 
-    BitView encode(TrackNr t) const override { return adf.encode(t); }
-    void decode(TrackNr t, BitView bits) override { return adf.decode(t, bits); }
+    utl::BitView encode(TrackNr t) const override { return adf.encode(t); }
+    void decode(TrackNr t, utl::BitView bits) override { return adf.decode(t, bits); }
 };
 
 }

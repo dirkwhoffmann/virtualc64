@@ -17,17 +17,28 @@
 
 namespace retro::vault {
 
-using namespace utl;
+// extern utl::LogChannel HDF_DBG;
 
-class AnyImage : public Hashable, public Dumpable, public Loggable {
+/* Common base of everything the library treats as an image.
+ *
+ * It holds only what every image has: a location on disk, a type and format it
+ * can name itself by, and the ability to write itself back. Deliberately *not*
+ * a byte buffer -- most images are one, and those derive from BinaryImage,
+ * which adds the buffer and everything that reads it. An SVM is the case that
+ * forced the distinction: it is a directory tree, and a folder-backed one has
+ * no byte stream at all, so inheriting getSize(), byteView() or writeToFile()
+ * would only have given it members that answer for data it does not have.
+ *
+ * Hashable stays here because identity is universal -- an SVM hashes its
+ * manifest. Dumpable does not: a hex dump is a statement about bytes, so it
+ * belongs to BinaryImage.
+ */
+class AnyImage : public utl::Hashable, public utl::Loggable {
 
 public:
 
     // The location of this file (may be empty)
     fs::path path;
-    
-    // The raw data of this file
-    Buffer<u8> data;
 
 
     //
@@ -35,7 +46,7 @@ public:
     //
 
 public:
-    
+
     // Analyzes the type and format of the specified file
     static optional<ImageInfo> about(const fs::path& url);
 
@@ -52,36 +63,8 @@ public:
 
     virtual ~AnyImage() = default;
 
-    void init(isize len);
-    void init(const u8 *buf, isize len);
-    void init(const Buffer<u8>& buffer);
-    // void init(const string& str);
-    void init(const fs::path& path);
-
     // Checks if the URL points to an image of the same type
     virtual bool validateURL(const fs::path& url) const noexcept = 0;
-
-
-    //
-    // Methods from Hashable
-    //
-
-public:
-
-    u64 hash(HashAlgorithm algorithm) const noexcept override {
-        return data.hash(algorithm);
-    }
-
-
-    //
-    // Methods from Dumpable
-    //
-
-public:
-
-    Dumpable::DataProvider dataProvider() const override {
-        return data.dataProvider();
-    }
 
 
     //
@@ -94,10 +77,6 @@ public:
     virtual ImageFormat format() const noexcept = 0;
     ImageInfo info() const noexcept { return { type(), format() }; }
 
-    isize getSize() const { return data.size; }
-    u8* getData() const { return data.ptr; }
-    bool empty() const { return data.empty(); }
-
     virtual std::vector<string> describeImage() const noexcept { return {}; }
 
 
@@ -106,24 +85,9 @@ public:
     //
 
 public:
-    
+
     // Scans the image and throws an exception if an inconsistency is found
     virtual void checkIntegrity() { };
-
-    //
-    // Accessing data
-    //
-
-public:
-
-    ByteView byteView(isize offset = 0) const;
-    ByteView byteView(isize offset, isize len) const;
-    MutableByteView byteView(isize offset = 0);
-    MutableByteView byteView(isize offset, isize len);
-
-    // Copies the file contents into a buffer
-    virtual void copy(u8 *dst, isize offset, isize len) const;
-    virtual void copy(u8 *dst, isize offset = 0) const;
 
 
     //
@@ -132,24 +96,13 @@ public:
 
 public:
 
-    // Update the image or a portion of the image on disk
-    void save();
-    void save(const Range<isize> range);
-    void save(const std::vector<Range<isize>> ranges);
-    
-    // Create a new image file on disk and update it with the current contents
-    void saveAs(const fs::path &path);
-    
-    virtual isize writeToStream(std::ostream &stream) const;
-    virtual isize writeToFile(const fs::path &path) const;
-
-    virtual isize writeToStream(std::ostream &stream, isize offset, isize len) const;
-    virtual isize writeToFile(const fs::path &path, isize offset, isize len) const;
-
-private:
-
-    // Called at the end of init()
-    virtual void didInitialize() {};
+    /* Writes the image back to 'path'.
+     *
+     * Pure, because what "writing back" means is exactly what differs between
+     * an image that is a buffer and one that is a tree: BinaryImage dumps its
+     * bytes, SVMFile packs its root folder (see SVMFile::persist).
+     */
+    virtual void save() = 0;
 };
 
 }

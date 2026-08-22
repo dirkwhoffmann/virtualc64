@@ -38,7 +38,7 @@ RetroShell::registerDelegate(ConsoleDelegate &delegate)
 void
 RetroShell::_initialize()
 {
-
+    exec();
 }
 
 void
@@ -166,13 +166,21 @@ void
 RetroShell::abortScript()
 {
     {   SYNCHRONIZED
-        
+
         if (!commands.empty()) {
-            
+
             commands.clear();
+
+            // Drops the pending wake-up along with the commands
             c64.cancel<SLOT_RSH>();
         }
     }
+}
+
+bool
+RetroShell::waiting() const
+{
+    return c64.hasEvent<SLOT_RSH>(RSH_WAKEUP);
 }
 
 void
@@ -182,6 +190,9 @@ RetroShell::exec()
 
         // Only proceed if there is anything to process
         if (commands.empty()) return;
+
+        // Stay put while a 'wait' command is pending
+        if (waiting()) return;
 
         try {
 
@@ -194,6 +205,8 @@ RetroShell::exec()
 
         } catch (ScriptInterruption &) {
 
+            // The queue stays suspended until the scheduled RSH_WAKEUP
+            // arrives; the command that threw is what scheduled it.
             msgQueue.put(Msg::RSH_WAIT);
 
         } catch (...) {
@@ -362,8 +375,11 @@ RetroShell::setStream(std::ostream &os)
 void
 RetroShell::serviceEvent()
 {
-    emulator.put(Command(Cmd::RSH_EXECUTE));
+    // Clear the wake-up first: it is what waiting() reads, so the queue must
+    // no longer look suspended by the time the queued command is processed.
     c64.cancel<SLOT_RSH>();
+
+    emulator.put(Command(Cmd::RSH_EXECUTE));
 }
 
 }

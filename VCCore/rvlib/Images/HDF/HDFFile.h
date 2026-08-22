@@ -12,10 +12,9 @@
 #include "Images/HardDiskImage.h"
 #include "Devices/DeviceDescriptors.h"
 #include "utl/common.h"
+#include "Images/ImageTypes.h"
 
-namespace retro::vault::image {
-
-using namespace utl;
+namespace retro::vault {
 
 
 class HDFFile : public HardDiskImage {
@@ -47,7 +46,7 @@ public:
     explicit HDFFile() { }
     explicit HDFFile(isize len) { init(len); }
     explicit HDFFile(const u8 *buf, isize len) { init(buf, len); }
-    explicit HDFFile(const Buffer<u8>& buffer) { init(buffer); }
+    explicit HDFFile(const utl::Buffer<u8>& buffer) { init(buffer); }
     explicit HDFFile(const fs::path& path) { init(path); }
 
     using HardDiskImage::init;
@@ -99,7 +98,7 @@ public:
 public:
 
     isize numPartitions() const override { return isize(ptable.size()); }
-    Range<isize> partition(isize nr) const override { return ptable[nr].range(); }
+    utl::Range<isize> partition(isize nr) const override { return ptable[nr].range(); }
 
 
     //

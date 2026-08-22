@@ -13,7 +13,7 @@
 namespace retro::vault::GCR {
 
 void
-encodeGcr(MutableBitView &view, isize bitPos, u8 value)
+encodeGcr(utl::MutableBitView &view, isize bitPos, u8 value)
 {
     u8 n1 = bin2gcr(value >> 4);
     u8 n2 = bin2gcr(value & 0xF);
@@ -32,7 +32,7 @@ encodeGcr(MutableBitView &view, isize bitPos, u8 value)
 }
 
 u8
-decodeGcr4(BitView &view, isize offset)
+decodeGcr4(utl::BitView &view, isize offset)
 {
     auto codeword =
     (int)view[offset + 0] << 4 |
@@ -45,7 +45,7 @@ decodeGcr4(BitView &view, isize offset)
 }
 
 u8
-decodeGcr(BitView &view, isize offset)
+decodeGcr(utl::BitView &view, isize offset)
 {
     u8 nibble1 = decodeGcr4(view, offset);
     u8 nibble2 = decodeGcr4(view, offset + 5);

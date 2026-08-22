@@ -11,14 +11,11 @@
 
 #include "utl/common.h"
 #include "utl/primitives/BitView.h"
+#include "Images/ImageTypes.h"
 
 namespace retro::vault::GCR {
 
-using namespace utl;
-
 constexpr isize bitsPerByte = 10;
-
-using namespace utl;
 
 // GCR encoding table. Maps 4 data bits to 5 GCR bits.
 static constexpr u8 gcr[16] = {
@@ -50,12 +47,12 @@ static inline u8 gcr2bin(u8 value) { assert(value < 32); return invgcr[value]; }
 static inline bool isGcr(u8 value) { assert(value < 32); return invgcr[value] != 0xFF; }
 
 // Encodes a byte as a GCR bit stream
-void encodeGcr(MutableBitView &view, isize bitPos, u8 value);
+void encodeGcr(utl::MutableBitView &view, isize bitPos, u8 value);
 
 // Decodes 5 GCR bits back into a data nibble
-u8 decodeGcr4(BitView &view, isize offset);
+u8 decodeGcr4(utl::BitView &view, isize offset);
 
 // Decodes 10 GCR bits back into a data byte
-u8 decodeGcr(BitView &view, isize offset);
+u8 decodeGcr(utl::BitView &view, isize offset);
 
 }

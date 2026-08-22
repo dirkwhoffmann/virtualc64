@@ -58,14 +58,14 @@ RpcServer::transport() const
 bool
 RpcServer::isSupported(TransportProtocol protocol) const
 {
-    switch (config.transport) {
+    switch (protocol) {
 
         case TransportProtocol::STDIO:  return true;
         case TransportProtocol::TCP:    return true;
         case TransportProtocol::HTTP:   return true;
 
         default:
-            fatalError;
+            return false;
     }
 }
 
@@ -78,8 +78,15 @@ RpcServer::didSwitch(SrvState from, SrvState to)
 void
 RpcServer::didReceive(const string &payload)
 {
+    // Ignore blank packets (e.g., stray newlines on the stdio transport)
+    if (payload.find_first_not_of(" \t\r\n") == string::npos) return;
+
     if (auto response = process(payload); response) {
-        tcp << *response;
+
+        // Route the response through the active transport. (Sending via
+        // 'tcp' directly would break in stdio mode.) The newline allows
+        // clients to process the stream line by line.
+        *this << *response + "\n";
     }
 }
 
@@ -111,15 +118,23 @@ RpcServer::process(const string &payload, bool blocking)
         if (!request["params"].is_string()) {
             throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
         }
-        if (request["method"] != "retroshell") {
-            throw AppException(RPC::INVALID_PARAMS, "method  must be 'retroshell'");
+
+        if (request["method"] == "retroshell") {
+
+            if (blocking) {
+                return execBlocking(request["params"], request.value("id", 0));
+            } else {
+                return execNonBlocking(request["params"], request.value("id", 0));
+            }
         }
 
-        if (blocking) {
-            return execBlocking(request["params"], request.value("id", 0));
-        } else {
-            return execNonBlocking(request["params"], request.value("id", 0));
-        }
+        /* Any other method is not handled by the core. Such packets are
+         * app-level notifications (e.g., Silicium's "prefsChanged"), which
+         * the app processes by observing the traffic log (Msg::SRV_RECEIVE).
+         * The core sends no response for them, matching the JSON-RPC rule
+         * that notifications (requests without an "id") are never answered.
+         */
+        return { };
 
     } catch (const json::parse_error &) {
 
@@ -192,7 +207,7 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss)
     // If a promise is attached, fulfill it
     if (input.promise) { input.promise->set_value(response.dump()); }
 
-    *this << response.dump();
+    *this << response.dump() + "\n";
 }
 
 void
@@ -226,7 +241,7 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::except
     // If a promise is attached, fulfill it
     if (input.promise) { input.promise->set_value(response.dump()); }
 
-    *this << response.dump();
+    *this << response.dump() + "\n";
 }
 
 }

@@ -229,10 +229,10 @@ AnyFile::readFromBuffer(const Buffer<u8> &buffer)
 isize
 AnyFile::writeToStream(std::ostream &stream, isize offset, isize len)
 {
-    assert(offset >= 0 && offset < data.size);
+    assert(offset >= 0 && offset <= data.size);
     assert(len >= 0 && offset + len <= data.size);
 
-    stream.write((char *)data.ptr + offset, len);
+    if (len > 0) stream.write((char *)data.ptr + offset, len);
     finalizeWrite();
 
     return data.size;
@@ -261,10 +261,10 @@ isize
 AnyFile::writeToBuffer(u8 *buf, isize offset, isize len)
 {
     assert(buf);
-    assert(offset >= 0 && offset < data.size);
+    assert(offset >= 0 && offset <= data.size);
     assert(len >= 0 && offset + len <= data.size);
 
-    std::memcpy(buf, (char *)data.ptr + offset, len);
+    if (len > 0) std::memcpy(buf, (char *)data.ptr + offset, len);
     finalizeWrite();
 
     return data.size;

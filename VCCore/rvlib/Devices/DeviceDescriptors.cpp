@@ -204,7 +204,7 @@ GeometryDescriptor::checkCompatibility() const
     if (cylinders == 0) {
         throw DeviceError(DeviceError::HDR_UNKNOWN_GEOMETRY);
     }
-    if (numBytes() > 504_MB) {
+    if (numBytes() > 504 * (1 << 20)) {
         throw DeviceError(DeviceError::HDR_TOO_LARGE);
     }
     if ((cylinders < cMin && heads > 1) || cylinders > cMax) {

@@ -13,11 +13,9 @@
 
 namespace retro::vault {
 
-using namespace utl;
-
 using FSFault = long;
 
-struct FSError : public Error {
+struct FSError : public utl::Error {
 
     static constexpr long FS_OK                     = 0;
     static constexpr long FS_CUSTOM                 = 1;

@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
+#include "FileSystems/Amiga/FileSystem.h"
 #include "Images/EADF/EADFFile.h"
 #include "Images/Encoders/DiskEncoder.h"
 #include "Images/Encoders/AmigaEncoder.h"
@@ -15,7 +16,7 @@
 #include "Images/ImageError.h"
 #include "utl/io.h"
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 const std::vector<string> EADFFile::extAdfHeaders =
 {
@@ -212,7 +213,7 @@ EADFFile::write(const u8 *src, isize offset, isize count)
 }
 
 void
-EADFFile::readBlocks(u8 *dst, Range<isize> r) const
+EADFFile::readBlocks(u8 *dst, utl::Range<isize> r) const
 {
     validateBlockNr(r.lower);
     validateBlockNr(r.upper);
@@ -233,7 +234,7 @@ EADFFile::readBlocks(u8 *dst, Range<isize> r) const
 }
 
 void
-EADFFile::writeBlocks(const u8 *src, Range<isize> r)
+EADFFile::writeBlocks(const u8 *src, utl::Range<isize> r)
 {
     validateBlockNr(r.lower);
     validateBlockNr(r.upper);
@@ -274,7 +275,7 @@ EADFFile::getDensity() const noexcept
     return bitsInLargestTrack < 16000 * 8 ? Density::DD : Density::HD;
 }
 
-BitView
+utl::BitView
 EADFFile::encode(TrackNr t) const
 {
     validateTrackNr(t);
@@ -284,7 +285,7 @@ EADFFile::encode(TrackNr t) const
 }
 
 void
-EADFFile::decode(TrackNr t, BitView bits)
+EADFFile::decode(TrackNr t, utl::BitView bits)
 {
     throw std::runtime_error("NOT IMPLEMENTED YET");
 }

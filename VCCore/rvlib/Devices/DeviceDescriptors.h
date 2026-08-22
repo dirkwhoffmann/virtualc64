@@ -15,7 +15,7 @@
 
 namespace retro::vault {
 
-struct GeometryDescriptor : Streamable {
+struct GeometryDescriptor : utl::Streamable {
 
     // Constants
     static constexpr isize cMin = HDR_C_MIN;
@@ -80,7 +80,7 @@ struct GeometryDescriptor : Streamable {
     void checkCompatibility() const;
 };
 
-struct PartitionDescriptor : Streamable
+struct PartitionDescriptor : utl::Streamable
 {
     string name;
     u32 flags = 0;
@@ -135,7 +135,7 @@ struct PartitionDescriptor : Streamable
     isize translate(isize block) const noexcept;
 
     // Returns the partition's block range in [lower; upper) format
-    Range<isize> range() const noexcept { return { translate(0), translate(0) + numBlocks() }; }
+    utl::Range<isize> range() const noexcept { return { translate(0), translate(0) + numBlocks() }; }
 
     // Prints debug information
     void dump() const;
@@ -145,7 +145,7 @@ struct PartitionDescriptor : Streamable
     void checkCompatibility(const GeometryDescriptor &geo) const;
 };
 
-struct DriverDescriptor : Streamable
+struct DriverDescriptor : utl::Streamable
 {
     u32 dosType = 0;
     u32 dosVersion = 0;

@@ -47,8 +47,8 @@ public:
 
 public:
 
-    virtual BitView encode(TrackNr t) const = 0;
-    virtual void decode(TrackNr t, BitView bits) = 0;
+    virtual utl::BitView encode(TrackNr t) const = 0;
+    virtual void decode(TrackNr t, utl::BitView bits) = 0;
 };
 
 }

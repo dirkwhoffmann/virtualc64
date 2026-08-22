@@ -106,7 +106,7 @@ OptionParser::create(Opt opt, i64 arg)
 
         case Opt::SID_ENABLE:                return boolParser();
         case Opt::SID_ADDRESS:               return hexParser();
-        case Opt::SID_REV:              return enumParser.template operator()<SIDRevisionEnum,SIDRevision>();
+        case Opt::SID_REV:                   return enumParser.template operator()<SIDRevisionEnum,SIDRevision>();
         case Opt::SID_FILTER:                return boolParser();
         case Opt::SID_ENGINE:                return enumParser.template operator()<SIDEngineEnum,SIDEngine>();
         case Opt::SID_SAMPLING:              return enumParser.template operator()<SamplingMethodEnum,SamplingMethod>();

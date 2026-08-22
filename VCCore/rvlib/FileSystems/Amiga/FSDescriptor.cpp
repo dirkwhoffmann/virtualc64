@@ -17,7 +17,7 @@
 
 namespace retro::vault::amiga {
 
-using retro::vault::image::ADFFile;
+using retro::vault::ADFFile;
 
 FSDescriptor::FSDescriptor(isize numBlocks)
 {

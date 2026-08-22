@@ -13,8 +13,6 @@
 
 namespace retro::vault {
 
-using namespace utl;
-
 namespace posix {
 
 static constexpr u32 IRWXU = 0000700;   // RWX mask for owner

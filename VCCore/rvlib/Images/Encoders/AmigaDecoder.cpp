@@ -18,8 +18,8 @@ namespace retro::vault {
 
 static constexpr isize bsize  = 512;
 
-ByteView
-AmigaDecoder::decodeTrack(BitView track, TrackNr t, std::span<u8> out)
+utl::ByteView
+AmigaDecoder::decodeTrack(utl::BitView track, TrackNr t, std::span<u8> out)
 {
     logme(LOG_IMG, "Decoding Amiga track %ld\n", t);
 
@@ -46,11 +46,11 @@ AmigaDecoder::decodeTrack(BitView track, TrackNr t, std::span<u8> out)
         MFM::decodeOddEven(out.data() + s * bsize, mfm, bsize);
     }
 
-    return ByteView(out.data(), numSectors * bsize);
+    return utl::ByteView(out.data(), numSectors * bsize);
 }
 
-ByteView
-AmigaDecoder::decodeSector(BitView track, TrackNr t, SectorNr s, std::span<u8> out)
+utl::ByteView
+AmigaDecoder::decodeSector(utl::BitView track, TrackNr t, SectorNr s, std::span<u8> out)
 {
     logme(LOG_IMG, "Decoding Amiga sector %ld:%ld\n", t, s);
 
@@ -72,11 +72,11 @@ AmigaDecoder::decodeSector(BitView track, TrackNr t, SectorNr s, std::span<u8> o
     // Decode data
     MFM::decodeOddEven(out.data(), mfm, bsize);
 
-    return ByteView(out);
+    return utl::ByteView(out);
 }
 
-optional<Range<isize>>
-AmigaDecoder::seekSector(BitView track, SectorNr s, isize offset)
+optional<utl::Range<isize>>
+AmigaDecoder::seekSector(utl::BitView track, SectorNr s, isize offset)
 {
     auto map = seekSectors(track, std::vector<SectorNr>{s}, offset);
 
@@ -86,18 +86,18 @@ AmigaDecoder::seekSector(BitView track, SectorNr s, isize offset)
     return map[s];
 }
 
-std::unordered_map<isize, Range<isize>>
-AmigaDecoder::seekSectors(BitView track)
+std::unordered_map<isize, utl::Range<isize>>
+AmigaDecoder::seekSectors(utl::BitView track)
 {
     return seekSectors(track, std::vector<SectorNr>{});
 }
 
-std::unordered_map<SectorNr, Range<isize>>
-AmigaDecoder::seekSectors(BitView track, std::span<const SectorNr> wanted, isize offset)
+std::unordered_map<SectorNr, utl::Range<isize>>
+AmigaDecoder::seekSectors(utl::BitView track, std::span<const SectorNr> wanted, isize offset)
 {
     static constexpr u64 SYNC = u64(0x44894489);
 
-    std::unordered_map<SectorNr, Range<isize>> result;
+    std::unordered_map<SectorNr, utl::Range<isize>> result;
     std::unordered_set<SectorNr> visited;
 
     // Loop until a sector header repeats or no sync marks are found
@@ -125,7 +125,7 @@ AmigaDecoder::seekSectors(BitView track, std::span<const SectorNr> wanted, isize
         if (wanted.empty() || std::find(wanted.begin(), wanted.end(), s) != wanted.end()) {
 
             // Record the sector number
-            result[s] = Range<isize>(it.offset() + 48 * 8,
+            result[s] = utl::Range<isize>(it.offset() + 48 * 8,
                                      it.offset() + 48 * 8 + 1024 * 8);
 
             // Check for early exit

@@ -13,7 +13,17 @@
 
 namespace retro::vault {
 
-using namespace utl;
+using utl::i8;
+using utl::i16;
+using utl::i32;
+using utl::i64;
+using utl::isize;
+
+using utl::u8;
+using utl::u16;
+using utl::u32;
+using utl::u64;
+using utl::usize;
 
 //
 // Aliases
@@ -69,7 +79,7 @@ enum class Diameter : long
     INCH_8
 };
 
-struct DiameterEnum : Reflectable<DiameterEnum, Diameter>
+struct DiameterEnum : utl::Reflectable<DiameterEnum, Diameter>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Diameter::INCH_8);
@@ -103,7 +113,7 @@ enum class Density
     HD
 };
 
-struct DensityEnum : Reflectable<DensityEnum, Density>
+struct DensityEnum : utl::Reflectable<DensityEnum, Density>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Density::HD);

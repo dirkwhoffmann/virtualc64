@@ -14,9 +14,14 @@
 #include "utl/support/Strings.h"
 #include <format>
 
-namespace retro::vault::image {
+namespace retro::vault {
 
-// using retro::vault::amiga::FSName;
+/* Declared here rather than inherited from ADFFile.h, which used to leak these
+ * into every file that included it (see the note in that header).
+ */
+using retro::vault::amiga::FileSystem;
+using retro::vault::amiga::FSFormat;
+using retro::vault::amiga::BootBlockId;
 
 optional<ImageInfo>
 EXEFile::about(const fs::path &path)

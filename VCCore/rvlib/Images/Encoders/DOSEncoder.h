@@ -27,10 +27,10 @@ class DOSEncoder : public DiskEncoder {
 
 public:
 
-    BitView encodeTrack(ByteView bytes, TrackNr t) override;
-    BitView encodeSector(ByteView bytes, TrackNr t, TrackNr s) override;
+    utl::BitView encodeTrack(utl::ByteView bytes, TrackNr t) override;
+    utl::BitView encodeSector(utl::ByteView bytes, TrackNr t, TrackNr s) override;
 
-    void encodeSector(MutableByteView track, isize offset, TrackNr t, SectorNr s, ByteView src);
+    void encodeSector(utl::MutableByteView track, isize offset, TrackNr t, SectorNr s, utl::ByteView src);
 };
 
 namespace Encoder { extern DOSEncoder ibm; }

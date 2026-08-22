@@ -16,7 +16,7 @@
 #include "utl/support/Strings.h"
 #include <format>
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 optional<ImageInfo>
 IMGFile::about(const fs::path &path)
@@ -74,7 +74,7 @@ IMGFile::numSectors() const
     return 9;
 }
 
-BitView
+utl::BitView
 IMGFile::encode(TrackNr t) const
 {
     validateTrackNr(t);
@@ -88,11 +88,11 @@ IMGFile::encode(TrackNr t) const
     track.assign(mfm.data(), mfm.data() + mfm.byteView().size());
 
     // Return a bit view with the proper size
-    return BitView(track.data(), mfm.size());
+    return utl::BitView(track.data(), mfm.size());
 }
 
 void
-IMGFile::decode(TrackNr t, BitView bits)
+IMGFile::decode(TrackNr t, utl::BitView bits)
 {
     validateTrackNr(t);
 

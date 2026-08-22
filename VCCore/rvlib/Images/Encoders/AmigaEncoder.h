@@ -22,11 +22,11 @@ class AmigaEncoder : public DiskEncoder {
 public:
 
     // Methods from DiskDecoder
-    BitView encodeTrack(ByteView bytes, TrackNr t) override;
-    BitView encodeSector(ByteView bytes, TrackNr t, SectorNr s) override;
+    utl::BitView encodeTrack(utl::ByteView bytes, TrackNr t) override;
+    utl::BitView encodeSector(utl::ByteView bytes, TrackNr t, SectorNr s) override;
 
     // Recomputes the clock bit at the specified offset
-    void rectifyClockBit(MutableBitView bytes, isize offset);
+    void rectifyClockBit(utl::MutableBitView bytes, isize offset);
 };
 
 }

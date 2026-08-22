@@ -12,19 +12,18 @@
 #include "Devices/DeviceTypes.h"
 #include "utl/abilities/Loggable.h"
 #include "utl/primitives/BitView.h"
+#include "Images/ImageTypes.h"
 
 namespace retro::vault {
 
-using namespace utl;
-
-class DiskEncoder : public Loggable {
+class DiskEncoder : public utl::Loggable {
 
 public:
 
     virtual ~DiskEncoder() = default;
 
-    virtual BitView encodeTrack(ByteView src, TrackNr t) = 0;
-    virtual BitView encodeSector(ByteView src, TrackNr t, TrackNr s) = 0;
+    virtual utl::BitView encodeTrack(utl::ByteView src, TrackNr t) = 0;
+    virtual utl::BitView encodeSector(utl::ByteView src, TrackNr t, TrackNr s) = 0;
 };
 
 }

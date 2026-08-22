@@ -12,15 +12,15 @@
 
 namespace retro::vault {
 
-ByteView
-DiskDecoder::decodeTrack(BitView track, TrackNr t)
+utl::ByteView
+DiskDecoder::decodeTrack(utl::BitView track, TrackNr t)
 {
     trackBuffer.resize(requiredTrackSize(t));
     return decodeTrack(track, t, trackBuffer);
 }
 
-ByteView
-DiskDecoder::decodeSector(BitView track, TrackNr t, SectorNr s)
+utl::ByteView
+DiskDecoder::decodeSector(utl::BitView track, TrackNr t, SectorNr s)
 {
     sectorBuffer.resize(requiredSectorSize(t, s));
     return decodeSector(track, t, s, sectorBuffer);

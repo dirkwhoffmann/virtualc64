@@ -18,7 +18,7 @@
 #include "utl/support.h"
 #include <format>
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 optional<ImageInfo>
 HDFFile::about(const fs::path &path)
@@ -92,7 +92,7 @@ HDFFile::didInitialize()
             data.gunzip();
             data.write("/tmp/hd.hdf");
         } catch (std::exception &err) {
-            throw IOError(IOError::ZLIB_ERROR, err.what());
+            throw utl::IOError(utl::IOError::ZLIB_ERROR, err.what());
         }
         
         logme(LOG_IMG, "Restored %ld bytes.\n", data.size);

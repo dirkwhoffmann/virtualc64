@@ -16,9 +16,7 @@
 
 namespace vc64 {
 
-using namespace utl;
-
-struct MediaError : public Error {
+struct MediaError : public utl::Error {
 
     static constexpr long OK                    =  0;  ///< No error
     static constexpr long UNKNOWN               =  1;  ///< Unclassified

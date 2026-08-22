@@ -13,13 +13,17 @@
 #include "Devices/DeviceDescriptors.h"
 #include "FileSystems/Amiga/FileSystem.h"
 
-namespace retro::vault::image {
-
-using namespace utl;
-using retro::vault::amiga::BootBlockId;
-using retro::vault::amiga::FileSystem;
-using retro::vault::amiga::FSFormat;
-using retro::vault::amiga::FSDescriptor;
+/* Amiga file-system types are named with their namespace throughout this
+ * header rather than pulled in with using-declarations.
+ *
+ * A using-declaration at namespace scope in a header is inherited by every
+ * translation unit that includes it, so the names would land in retro::vault
+ * for everyone -- and amiga::FileSystem would then collide with the CBM
+ * FileSystem in files that use neither, as it once did in VCCore. The
+ * corresponding block in ADFFile.cpp is fine: it reaches no further than that
+ * one file.
+ */
+namespace retro::vault {
 
 class ADFFile : public FloppyDiskImage {
 
@@ -51,17 +55,17 @@ public:
     explicit ADFFile() { }
     explicit ADFFile(isize len) { init(len); }
     explicit ADFFile(const u8 *buf, isize len) { init(len); }
-    explicit ADFFile(const Buffer<u8>& buffer) { init(buffer); }
+    explicit ADFFile(const utl::Buffer<u8>& buffer) { init(buffer); }
     explicit ADFFile(const fs::path& path) { init(path); }
     explicit ADFFile(Diameter dia, Density den) { init(dia, den); }
     explicit ADFFile(const GeometryDescriptor &descr) { init(descr); }
-    explicit ADFFile(FileSystem &volume) { init(volume); }
+    explicit ADFFile(amiga::FileSystem &volume) { init(volume); }
 
     using FloppyDiskImage::init;
     void init(isize len);
     void init(Diameter dia, Density den);
     void init(const GeometryDescriptor &descr);
-    void init(const FileSystem &volume);
+    void init(const amiga::FileSystem &volume);
 
     // Checks if the buffer is in ADF format (throws if not)
     void ensureADF();
@@ -124,8 +128,8 @@ public:
     Diameter getDiameter() const noexcept override;
     Density getDensity() const noexcept override;
 
-    BitView encode(TrackNr t) const override;
-    void decode(TrackNr t, BitView bits) override;
+    utl::BitView encode(TrackNr t) const override;
+    void decode(TrackNr t, utl::BitView bits) override;
 
 
     //
@@ -134,7 +138,7 @@ public:
 
 public:
     
-    void formatDisk(FSFormat fs, BootBlockId id, string name);
+    void formatDisk(amiga::FSFormat fs, amiga::BootBlockId id, string name);
 };
 
 }

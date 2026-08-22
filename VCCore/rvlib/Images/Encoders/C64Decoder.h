@@ -24,19 +24,19 @@ public:
     using DiskDecoder::decodeTrack;
     using DiskDecoder::decodeSector;
 
-    ByteView decodeTrack(BitView track, TrackNr t, std::span<u8> out) override;
-    ByteView decodeSector(BitView track, TrackNr t, SectorNr s, std::span<u8> out) override;
+    utl::ByteView decodeTrack(utl::BitView track, TrackNr t, std::span<u8> out) override;
+    utl::ByteView decodeSector(utl::BitView track, TrackNr t, SectorNr s, std::span<u8> out) override;
 
-    optional<Range<isize>> seekSector(BitView track, SectorNr s, isize offset = 0) override;
-    std::unordered_map<isize, Range<isize>> seekSectors(BitView track) override;
+    optional<utl::Range<isize>> seekSector(utl::BitView track, SectorNr s, isize offset = 0) override;
+    std::unordered_map<isize, utl::Range<isize>> seekSectors(utl::BitView track) override;
 
 private:
 
     // Moves the iterator to the bit following the next sync mark
-    bool seekSync(BitView track, BitView::cyclic_iterator &it);
+    bool seekSync(utl::BitView track, utl::BitView::cyclic_iterator &it);
 
     // Moves the iterator to the bit following the next header block sync mark
-    bool seekHeaderSync(BitView track, BitView::cyclic_iterator &it);
+    bool seekHeaderSync(utl::BitView track, utl::BitView::cyclic_iterator &it);
 
     // Locates the data areas of certain sectors on a track
     //
@@ -49,7 +49,7 @@ private:
     //
     // Returns a mapping from sector numbers to the respective data area range.
 
-    std::unordered_map<SectorNr, Range<isize>> seekSectors(BitView track,
+    std::unordered_map<SectorNr, utl::Range<isize>> seekSectors(utl::BitView track,
                                                            std::span<const SectorNr> wanted,
                                                            isize offset = 0);
 };

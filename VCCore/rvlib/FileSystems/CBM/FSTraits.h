@@ -12,11 +12,11 @@
 #include "Devices/DeviceDescriptors.h"
 #include "FileSystems/CBM/FSTypes.h"
 
-namespace retro::vault::image { class D64File; }
+namespace retro::vault { class D64File; }
 
 namespace retro::vault::cbm {
 
-using image::D64File;
+using retro::vault::D64File;
 
 /* To create a FileSystem, several layout parameters need to to be provided.
  * This is done by passing a FSDescriptor which contains the necessary

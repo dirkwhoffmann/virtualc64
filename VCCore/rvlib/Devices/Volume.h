@@ -21,7 +21,7 @@ class Volume : public BlockDevice {
     class BlockDevice &device;
 
     // Blocks belonging to this volume
-    Range<isize> range;
+    utl::Range<isize> range;
 
 public:
 
@@ -37,10 +37,10 @@ public:
 public:
 
     Volume(BlockDevice &d);
-    Volume(BlockDevice &d, Range<isize> partition);
+    Volume(BlockDevice &d, utl::Range<isize> partition);
     virtual ~Volume() = default;
 
-    Range<isize> getRange() { return range; }
+    utl::Range<isize> getRange() { return range; }
 
     
     //
@@ -62,8 +62,8 @@ public:
 
     isize capacity() const override { return range.size(); }
     isize bsize() const override { return device.bsize(); }
-    void readBlocks(u8 *dst, Range<isize> range) const override;
-    void writeBlocks(const u8 *src, Range<isize> range) override;
+    void readBlocks(u8 *dst, utl::Range<isize> range) const override;
+    void writeBlocks(const u8 *src, utl::Range<isize> range) override;
 };
 
 }

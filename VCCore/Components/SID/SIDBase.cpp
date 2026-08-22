@@ -81,7 +81,7 @@ SID::getOption(Opt option) const
 
         case Opt::SID_ENABLE:        return (i64)config.enabled;
         case Opt::SID_ADDRESS:       return (i64)config.address;
-        case Opt::SID_REV:      return (i64)config.revision;
+        case Opt::SID_REV:           return (i64)config.revision;
         case Opt::SID_FILTER:        return (i64)config.filter;
         case Opt::SID_ENGINE:        return (i64)config.engine;
         case Opt::SID_SAMPLING:      return (i64)config.sampling;

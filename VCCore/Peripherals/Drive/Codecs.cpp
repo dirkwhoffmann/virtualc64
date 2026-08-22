@@ -21,11 +21,11 @@ using namespace retro::vault;
 
 namespace vc64 {
 
-std::unique_ptr<image::D64File>
+std::unique_ptr<D64File>
 Codec::makeD64(FloppyDisk &disk)
 {
     // auto d64 = make_unique<D64File>(disk.getDiameter(), disk.getDensity());
-    auto d64 = make_unique<image::D64File>(image::D64File::D64_683_SECTORS);
+    auto d64 = make_unique<D64File>(D64File::D64_683_SECTORS);
     
     auto size = disk.decodeDisk(nullptr);
     printf("size = %ld d64.size = %ld\n", size, d64->data.size);
@@ -34,7 +34,7 @@ Codec::makeD64(FloppyDisk &disk)
     return d64;
 }
 
-std::unique_ptr<image::D64File>
+std::unique_ptr<D64File>
 Codec::makeD64(Drive &drive)
 {
     if (drive.disk == nullptr) throw DeviceError(DeviceError::DSK_MISSING);

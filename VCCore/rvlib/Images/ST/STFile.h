@@ -11,7 +11,7 @@
 
 #include "FloppyDiskImage.h"
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 class STFile : public FloppyDiskImage {
 
@@ -33,7 +33,7 @@ public:
     explicit STFile(const u8 *buf, isize len) { init(buf, len); }
     explicit STFile(Diameter dia, Density den) { init(dia, den); }
 
-    using AnyImage::init;
+    using BinaryImage::init;
     void init(Diameter dia, Density den);
 
 
@@ -91,8 +91,8 @@ public:
     Diameter getDiameter() const noexcept override { return Diameter::INCH_35; }
     Density getDensity() const noexcept override { return Density::DD; }
 
-    BitView encode(TrackNr t) const override;
-    void decode(TrackNr t, BitView bits) override;
+    utl::BitView encode(TrackNr t) const override;
+    void decode(TrackNr t, utl::BitView bits) override;
 };
 
 }

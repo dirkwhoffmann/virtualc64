@@ -11,9 +11,9 @@
 // -----------------------------------------------------------------------------
 
 #include "vcconfig.h"
+#include "rvdebug.h"
 #include "Console.h"
 #include "Emulator.h"
-#include "rvdebug.h"
 
 namespace vc64 {
 

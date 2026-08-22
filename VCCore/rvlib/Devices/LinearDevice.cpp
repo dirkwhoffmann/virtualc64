@@ -14,6 +14,10 @@
 
 namespace retro::vault {
 
+using utl::Buffer;
+using utl::ByteView;
+using utl::Range;
+
 std::vector<std::string>
 LinearDevice::describeDevice() const noexcept
 {

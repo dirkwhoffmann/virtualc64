@@ -18,7 +18,7 @@
 #include "utl/support/Strings.h"
 #include <format>
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 using retro::vault::FSError;
 using retro::vault::amiga::FSName;
@@ -26,6 +26,8 @@ using retro::vault::amiga::FSFormatEnum;
 using retro::vault::amiga::FileSystem;
 using retro::vault::amiga::FSBlock;
 using retro::vault::amiga::FSDescriptor;
+using retro::vault::amiga::FSFormat;
+using retro::vault::amiga::BootBlockId;
 
 optional<ImageInfo>
 ADFFile::about(const fs::path &path)
@@ -207,7 +209,7 @@ ADFFile::didInitialize()
         try {
             data.gunzip();
         } catch (std::runtime_error &err) {
-            throw IOError(IOError::ZLIB_ERROR, err.what());
+            throw utl::IOError(utl::IOError::ZLIB_ERROR, err.what());
         }
         
         logme(LOG_IMG, "Restored %ld bytes.\n", data.size);
@@ -268,7 +270,7 @@ ADFFile::getDensity() const noexcept
     return (data.size & ~1) == ADFSIZE_35_HD ? Density::HD : Density::DD;
 }
 
-BitView
+utl::BitView
 ADFFile::encode(TrackNr t) const
 {
     validateTrackNr(t);
@@ -282,11 +284,11 @@ ADFFile::encode(TrackNr t) const
     track.assign(mfm.data(), mfm.data() + mfm.byteView().size());
 
     // Return a bit view with the proper size
-    return BitView(track.data(), mfm.size());
+    return utl::BitView(track.data(), mfm.size());
 }
 
 void
-ADFFile::decode(TrackNr t, BitView bits)
+ADFFile::decode(TrackNr t, utl::BitView bits)
 {
     validateTrackNr(t);
 

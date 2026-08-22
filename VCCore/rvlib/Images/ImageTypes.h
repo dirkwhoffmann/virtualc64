@@ -13,7 +13,17 @@
 
 namespace retro::vault {
 
-using namespace utl;
+using utl::i8;
+using utl::i16;
+using utl::i32;
+using utl::i64;
+using utl::isize;
+
+using utl::u8;
+using utl::u16;
+using utl::u32;
+using utl::u64;
+using utl::usize;
 
 //
 // Enumerations
@@ -26,13 +36,14 @@ enum class ImageType : long
     HARDDISK,
     TAPE,
     CARTRIDGE,
-    EXECUTABLE
+    EXECUTABLE,
+    VM
 };
 
 struct ImageTypeEnum : utl::Reflectable<ImageTypeEnum, ImageType>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(ImageType::EXECUTABLE);
+    static constexpr long maxVal = long(ImageType::VM);
 
     static const char *_key(ImageType value)
     {
@@ -44,6 +55,7 @@ struct ImageTypeEnum : utl::Reflectable<ImageTypeEnum, ImageType>
             case ImageType::TAPE:       return "TAPE";
             case ImageType::CARTRIDGE:  return "CARTRIDGE";
             case ImageType::EXECUTABLE: return "EXECUTABLE";
+            case ImageType::VM:         return "VM";
         }
         return "???";
     }
@@ -57,6 +69,7 @@ struct ImageTypeEnum : utl::Reflectable<ImageTypeEnum, ImageType>
             case ImageType::TAPE:       return "Tape Image";
             case ImageType::CARTRIDGE:  return "Cartridge Image";
             case ImageType::EXECUTABLE: return "File Image";
+            case ImageType::VM:         return "Virtual Machine";
         }
         return "???";
     }
@@ -74,13 +87,14 @@ enum class ImageFormat : long
     ST,
     DMS,
     EXE,
-    D64
+    D64,
+    SVM
 };
 
 struct ImageFormatEnum : utl::Reflectable<ImageFormatEnum, ImageFormat>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(ImageFormat::D64);
+    static constexpr long maxVal = long(ImageFormat::SVM);
 
     static const char *_key(ImageFormat value)
     {
@@ -97,6 +111,7 @@ struct ImageFormatEnum : utl::Reflectable<ImageFormatEnum, ImageFormat>
             case ImageFormat::DMS:     return "DMS";
             case ImageFormat::EXE:     return "EXE";
             case ImageFormat::D64:     return "D64";
+            case ImageFormat::SVM:     return "SVM";
         }
         return "???";
     }
@@ -115,6 +130,7 @@ struct ImageFormatEnum : utl::Reflectable<ImageFormatEnum, ImageFormat>
             case ImageFormat::DMS:     return "Disk Masher System";
             case ImageFormat::EXE:     return "Amiga Executable";
             case ImageFormat::D64:     return "C64 Floppy Disk";
+            case ImageFormat::SVM:     return "Silicium Virtual Machine";
         }
         return "???";
     }

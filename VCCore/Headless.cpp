@@ -380,8 +380,8 @@ Headless::smokeTestScript[] = {
     "sid set ENABLE true",
     "try sid set ENABLE false",     // Primary SID cannot be disabled
     "try sid set ADDRESS 0xD420",   // Primary SID cannot be remapped
-    "sid set REVISION MOS_6581",
-    "sid set REVISION MOS_8580",
+    "sid set REV MOS_6581",
+    "sid set REV MOS_8580",
     "sid set FILTER false",
     "sid set FILTER true",
     "sid set ENGINE RESID",
@@ -395,8 +395,8 @@ Headless::smokeTestScript[] = {
     "sid2 set ENABLE true",
     "sid2 set ENABLE false",
     "sid2 set ADDRESS 0xD420",
-    "sid2 set REVISION MOS_6581",
-    "sid2 set REVISION MOS_8580",
+    "sid2 set REV MOS_6581",
+    "sid2 set REV MOS_8580",
     "sid2 set FILTER true",
     "sid2 set FILTER false",
     "sid2 set ENGINE RESID",

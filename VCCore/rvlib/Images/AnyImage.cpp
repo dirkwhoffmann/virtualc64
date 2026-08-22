@@ -9,29 +9,40 @@
 
 #include "rvconfig.h"
 #include "Images/AnyImage.h"
-#include "Images/ADF/ADFFile.h"
-#include "Images/EADF/EADFFile.h"
-#include "Images/IMG/IMGFile.h"
-#include "Images/ST/STFile.h"
-#include "Images/DMS/DMSFile.h"
-#include "Images/EXE/EXEFile.h"
-#include "Images/HDF/HDFFile.h"
+#include "Images/DiskImage.h"
+#include "Images/SVM/SVMFile.h"
 #include "utl/io.h"
-#include "utl/support.h"
-#include <fstream>
 
 namespace retro::vault {
 
+/* SVMs are probed first.
+ *
+ * Not for precedence -- no disk format claims a '.svm', since every one of them
+ * tests its own suffix before anything else -- but because an SVM is the only
+ * image that can be a *directory*, and the disk probes go on to size and read
+ * the path as a regular file. Asking the cheapest and most specific question
+ * first keeps a folder from ever reaching them.
+ */
 optional<ImageInfo>
 AnyImage::about(const fs::path& url)
 {
+    if (auto info = SVMFile::about(url))  return info;
     if (auto info = DiskImage::about(url)) return info;
     return {};
 }
 
+/* Note that this can throw rather than answer nullptr, and deliberately so.
+ * SVMFile::about accepts a '.svm' on its suffix alone (opening the archive to
+ * answer "what is this file" is what the class exists to avoid), so a corrupt
+ * machine is only diagnosed when the constructor reads its manifest. Letting
+ * VM_NO_MANIFEST out beats reporting a broken machine as an unknown file type.
+ * DiskImage::tryMake behaves the same way -- HDFFile::about throws on a .hdf
+ * of the wrong size.
+ */
 std::unique_ptr<AnyImage>
 AnyImage::tryMake(const fs::path& path)
 {
+    if (SVMFile::about(path).has_value()) return std::make_unique<SVMFile>(path);
     if (auto img = DiskImage::tryMake(path)) return img;
     return nullptr;
 }
@@ -40,187 +51,7 @@ std::unique_ptr<AnyImage>
 AnyImage::make(const fs::path& path)
 {
     if (auto img = tryMake(path)) return img;
-    throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
-}
-
-void
-AnyImage::init(isize len)
-{
-    data.init(len);
-}
-
-void
-AnyImage::init(const Buffer<u8> &buffer)
-{
-    init(buffer.ptr, buffer.size);
-}
-
-/*
-void
-AnyImage::init(const string &str)
-{
-    init((const u8 *)str.c_str(), (isize)str.length());
-}
-*/
-
-void
-AnyImage::init(const fs::path &path)
-{
-    if (!validateURL(path))
-        throw IOError(IOError::FILE_TYPE_MISMATCH, path);
-
-    std::fstream stream(path, std::ios::binary | std::ios::in);
-    
-    if (!stream)
-        throw IOError(IOError::FILE_NOT_FOUND, path);
-
-    // Read file into a vector
-    std::vector<u8> buffer((std::istreambuf_iterator<char>(stream)),
-                           std::istreambuf_iterator<char>());
-    
-    if (buffer.empty())
-        throw IOError(IOError::FILE_CANT_READ, path);
-    
-    this->path = path;
-
-    // Initialize image with the vector contents
-    init(buffer.data(), isize(buffer.size()));
-}
-
-void
-AnyImage::init(const u8 *buf, isize len)
-{
-    assert(buf);
-
-    // Allocate memory
-    data.alloc(len);
-
-    // Copy data
-    std::memcpy(data.ptr, buf, data.size);
-    didInitialize();
-}
-
-void
-AnyImage::copy(u8 *buf, isize offset, isize len) const
-{
-    assert(buf);
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
-
-    std::memcpy(buf + offset, data.ptr, len);
-}
-
-ByteView
-AnyImage::byteView(isize offset) const
-{
-    return byteView(offset, data.size - offset);
-}
-
-ByteView
-AnyImage::byteView(isize offset, isize len) const
-{
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
-
-    return ByteView(data.ptr + offset, len);
-}
-
-MutableByteView
-AnyImage::byteView(isize offset)
-{
-    return byteView(offset, data.size - offset);
-}
-
-MutableByteView
-AnyImage::byteView(isize offset, isize len)
-{
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
-
-    return MutableByteView(data.ptr + offset, len);
-}
-
-void
-AnyImage::copy(u8 *buf, isize offset) const
-{
-    copy (buf, offset, data.size);
-}
-
-void
-AnyImage::save()
-{
-    save(Range<isize>{0,getSize()});
-}
-
-void
-AnyImage::save(const Range<BlockNr> range)
-{
-    std::ofstream file(path, std::ios::binary);
-    if (!file) throw IOError(IOError::FILE_CANT_WRITE, path);
-        
-    // Move to the correct position
-    file.seekp(range.lower, std::ios::beg);
-    
-    // Write the data to the stream
-    file.write((char *)(data.ptr + range.lower), range.size());
-    
-    // Update the file on disk
-    file.flush();
-}
-
-void
-AnyImage::save(const std::vector<Range<BlockNr>> ranges)
-{
-    for (auto &range: ranges) save(range);
-}
-
-void
-AnyImage::saveAs(const fs::path &newPath)
-{
-    path = newPath;
-    save();
-}
-
-isize
-AnyImage::writeToStream(std::ostream &stream, isize offset, isize len) const
-{
-    assert(offset >= 0 && len >= 0 && offset + len <= data.size);
-
-    stream.write((char *)data.ptr + offset, len);
-
-    return data.size;
-}
-
-isize
-AnyImage::writeToFile(const fs::path &path, isize offset, isize len) const
-{
-    if (utl::isDirectory(path)) {
-        throw IOError(IOError::FILE_IS_DIRECTORY);
-    }
-
-    std::ofstream stream(path, std::ofstream::binary);
-
-    if (!stream.is_open()) {
-        throw IOError(IOError::FILE_CANT_WRITE, path);
-    }
-
-    isize result = writeToStream(stream, offset, len);
-    assert(result == data.size);
-
-    return result;
-}
-
-isize
-AnyImage::writeToStream(std::ostream &stream) const
-{
-    return writeToStream(stream, 0, data.size);
-}
-
-isize
-AnyImage::writeToFile(const fs::path &path) const
-{
-    return writeToFile(path, 0, data.size);
+    throw utl::IOError(utl::IOError::FILE_TYPE_UNSUPPORTED);
 }
 
 }
-

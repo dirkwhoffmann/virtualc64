@@ -12,9 +12,11 @@
 #include "Images/HDF/HDFFile.h"
 #include "utl/io.h"
 
-using retro::vault::image::HDFFile;
+using retro::vault::HDFFile;
 
 namespace retro::vault {
+
+using utl::IOError;
 
 optional<ImageInfo>
 HardDiskImage::about(const fs::path& url)
@@ -36,7 +38,7 @@ unique_ptr<HardDiskImage>
 HardDiskImage::make(const fs::path &path)
 {
     if (auto img = tryMake(path)) return img;
-    throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
+    throw utl::IOError(utl::IOError::FILE_TYPE_UNSUPPORTED);
 }
 
 isize

@@ -22,6 +22,7 @@
 
 namespace retro::vault {
 
+using utl::IOError;
 using CHS = TrackDevice::CHS;
 using TS  = TrackDevice::TS;
 
@@ -37,8 +38,13 @@ DiskImage::about(const fs::path& path)
 std::unique_ptr<DiskImage>
 DiskImage::tryMake(const fs::path& path)
 {
-    if (auto img = FloppyDiskImage::make(path)) return img;
-    if (auto img = HardDiskImage::make(path))   return img;
+    /* tryMake, not make, on both lines. make() throws FILE_TYPE_UNSUPPORTED
+     * when it recognises nothing, so calling it here meant this function threw
+     * for every non-floppy instead of answering nullptr -- and never reached
+     * the hard disk line at all, so a valid HDF was reported as unsupported.
+     */
+    if (auto img = FloppyDiskImage::tryMake(path)) return img;
+    if (auto img = HardDiskImage::tryMake(path))   return img;
 
     return nullptr;
 }
@@ -47,7 +53,7 @@ std::unique_ptr<DiskImage>
 DiskImage::make(const fs::path& path)
 {
     if (auto img = tryMake(path)) return img;
-    throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
+    throw utl::IOError(utl::IOError::FILE_TYPE_UNSUPPORTED);
 }
 
 void
@@ -64,38 +70,38 @@ DiskImage::write(const u8 *src, isize offset, isize count)
     memcpy((void *)(data.ptr + offset), (void *)src, count);
 }
 
-ByteView
+utl::ByteView
 DiskImage::byteView(TrackNr t) const
 {
-    return ByteView(data.ptr + boffset(TS{t,0}), numSectors(t) * bsize());
+    return utl::ByteView(data.ptr + boffset(TS{t,0}), numSectors(t) * bsize());
 }
 
-ByteView
+utl::ByteView
 DiskImage::byteView(TrackNr t, SectorNr s) const
 {
-    return ByteView(data.ptr + boffset(TS{t,s}), bsize());
+    return utl::ByteView(data.ptr + boffset(TS{t,s}), bsize());
 }
 
-MutableByteView
+utl::MutableByteView
 DiskImage::byteView(TrackNr t)
 {
-    return MutableByteView(data.ptr + boffset(TS{t,0}), numSectors(t) * bsize());
+    return utl::MutableByteView(data.ptr + boffset(TS{t,0}), numSectors(t) * bsize());
 }
 
-MutableByteView
+utl::MutableByteView
 DiskImage::byteView(TrackNr t, SectorNr s)
 {
-    return MutableByteView(data.ptr + boffset(TS{t,s}), bsize());
+    return utl::MutableByteView(data.ptr + boffset(TS{t,s}), bsize());
 }
 
 void
-DiskImage::saveBlocks(const Range<BlockNr> range)
+DiskImage::saveBlocks(const utl::Range<BlockNr> range)
 {
-    save(Range<isize>{range.lower * bsize(), range.upper * bsize()});
+    save(utl::Range<isize>{range.lower * bsize(), range.upper * bsize()});
 }
 
 void
-DiskImage::saveBlocks(const std::vector<Range<BlockNr>> ranges)
+DiskImage::saveBlocks(const std::vector<utl::Range<BlockNr>> ranges)
 {
     for (auto &range: ranges) save(range);
 }

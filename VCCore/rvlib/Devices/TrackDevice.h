@@ -13,8 +13,6 @@
 
 namespace retro::vault {
 
-using namespace utl;
-
 class TrackDevice : public BlockDevice {
 
     // Maps a track to its first block

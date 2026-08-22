@@ -17,7 +17,7 @@
 #include "DMSFile.h"
 #include "EXEFile.h"
 
-using retro::vault::image::D64File;
+using retro::vault::D64File;
 
 namespace vc64 {
 

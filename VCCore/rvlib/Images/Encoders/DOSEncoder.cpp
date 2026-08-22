@@ -18,8 +18,8 @@ namespace retro::vault {
 
 namespace Encoder { DOSEncoder ibm; }
 
-BitView
-DOSEncoder::encodeTrack(ByteView src, TrackNr t)
+utl::BitView
+DOSEncoder::encodeTrack(utl::ByteView src, TrackNr t)
 {
     // Determine the number of sectors to encode
     const isize count = (isize)src.size() / bsize;
@@ -29,28 +29,28 @@ DOSEncoder::encodeTrack(ByteView src, TrackNr t)
     assert(src.size() % bsize == 0);
 
     // Start with a clean track
-    auto view = MutableByteView(mfmBuffer, count * ssize);
+    auto view = utl::MutableByteView(mfmBuffer, count * ssize);
     view.clear(0xAA);
 
     // Encode all sectors
     for (SectorNr s = 0; s < count; s++)
-        encodeSector(view, s * ssize, t, s, ByteView(src.subspan(s * bsize, bsize)));
+        encodeSector(view, s * ssize, t, s, utl::ByteView(src.subspan(s * bsize, bsize)));
 
     // Compute a debug checksum
     logme(LOG_IMG, "Track %ld checksum = %x\n", t, view.fnv32());
     
-    return BitView(view.data(), view.size() * 8);
+    return utl::BitView(view.data(), view.size() * 8);
 }
 
-BitView
-DOSEncoder::encodeSector(ByteView bytes, TrackNr t, SectorNr s)
+utl::BitView
+DOSEncoder::encodeSector(utl::ByteView bytes, TrackNr t, SectorNr s)
 {
-    return BitView(nullptr, 0);
+    return utl::BitView(nullptr, 0);
 }
 
 /*
 void
-DOSEncoder::encodeTrack(MutableByteView track, TrackNr t, ByteView src)
+DOSEncoder::encodeTrack(utl::MutableByteView track, TrackNr t, utl::ByteView src)
 {
     const isize bsize = 512;                       // Block size in bytes
     const isize ssize = 1300;                      // MFM sector size in bytes
@@ -77,7 +77,7 @@ DOSEncoder::encodeTrack(MutableByteView track, TrackNr t, ByteView src)
 
     // Encode all sectors
     for (SectorNr s = 0; s < count; s++)
-        encodeSector(track, 194 + s * ssize, t, s, ByteView(src.subspan(s * bsize, bsize)));
+        encodeSector(track, 194 + s * ssize, t, s, utl::ByteView(src.subspan(s * bsize, bsize)));
 
     // Compute a debug checksum
     logme(LOG_IMG, "Track %ld checksum = %x\n", t, track.fnv32());
@@ -85,7 +85,7 @@ DOSEncoder::encodeTrack(MutableByteView track, TrackNr t, ByteView src)
 */
 
 void
-DOSEncoder::encodeSector(MutableByteView track, isize offset, TrackNr t, SectorNr s, ByteView data)
+DOSEncoder::encodeSector(utl::MutableByteView track, isize offset, TrackNr t, SectorNr s, utl::ByteView data)
 {
     const isize bsize = 512;   // Block size in bytes
 
@@ -110,7 +110,7 @@ DOSEncoder::encodeSector(MutableByteView track, isize offset, TrackNr t, SectorN
     buf[19] = 2;
 
     // Compute and write CRC
-    u16 crc = Hashable::crc16(&buf[12], 8);
+    u16 crc = utl::Hashable::crc16(&buf[12], 8);
     buf[20] = HI_BYTE(crc);
     buf[21] = LO_BYTE(crc);
 
@@ -130,7 +130,7 @@ DOSEncoder::encodeSector(MutableByteView track, isize offset, TrackNr t, SectorN
     for (isize i = 0; i < bsize; ++i) { buf[60 + i] = data[i]; }
 
     // Compute and write CRC
-    crc = Hashable::crc16(&buf[56], 516);
+    crc = utl::Hashable::crc16(&buf[56], 516);
     buf[572] = HI_BYTE(crc);
     buf[573] = LO_BYTE(crc);
 

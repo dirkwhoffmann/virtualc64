@@ -15,8 +15,6 @@
 
 namespace retro::vault {
 
-using namespace utl;
-
 class LinearDevice {
 
 public:
@@ -44,7 +42,7 @@ public:
 
     // Exports all bytes or a selected range to a file
     void exportBytes(const fs::path& path) const;
-    void exportBytes(const fs::path& path, Range<isize> range) const;
+    void exportBytes(const fs::path& path, utl::Range<isize> range) const;
 };
 
 }

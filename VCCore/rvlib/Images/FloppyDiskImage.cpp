@@ -20,8 +20,6 @@
 
 namespace retro::vault {
 
-using namespace image;
-
 optional<ImageInfo>
 FloppyDiskImage::about(const fs::path& url)
 {
@@ -57,7 +55,7 @@ unique_ptr<FloppyDiskImage>
 FloppyDiskImage::make(const fs::path &path)
 {
     if (auto img = tryMake(path)) return img;
-    throw IOError(IOError::FILE_TYPE_UNSUPPORTED);
+    throw utl::IOError(utl::IOError::FILE_TYPE_UNSUPPORTED);
 }
 
 string

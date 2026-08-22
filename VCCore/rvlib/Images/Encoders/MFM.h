@@ -10,10 +10,9 @@
 #pragma once
 
 #include "utl/common.h"
+#include "Images/ImageTypes.h"
 
 namespace retro::vault::MFM {
-
-using namespace utl;
 
 void encodeMFM(u8 *dst, const u8 *src, isize count);
 void decodeMFM(u8 *dst, const u8 *src, isize count);

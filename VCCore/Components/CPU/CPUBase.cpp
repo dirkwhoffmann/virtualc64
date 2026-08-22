@@ -145,6 +145,8 @@ CPU::cacheInfo(CPUInfo &result) const
         result.nmi = nmiLine;
         result.rdy = rdyLine;
 
+        result.jammed = (next == JAM || next == JAM_2);
+
         result.next = next;
         
         result.processorPort = readPort();

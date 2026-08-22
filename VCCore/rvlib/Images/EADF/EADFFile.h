@@ -11,7 +11,7 @@
 
 #include "Images/ADF/ADFFile.h"
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 /* This class represents a file in the extended ADF format. The file layout is
  * organized as follows:
@@ -50,9 +50,9 @@ class EADFFile : public FloppyDiskImage {
         std::vector<u8> mfm;    // Encoded MFM bit stream
         std::vector<u8> data;   // Decoded data bytes
 
-        MutableBitView mfmBitView() { return MutableBitView(mfm.data(), bitCnt); }
-        MutableByteView mfmByteView() { return MutableByteView(mfm.data(), isize(mfm.size())); }
-        MutableByteView dataByteView() { return MutableByteView(data.data(), isize(data.size())); }
+        utl::MutableBitView mfmBitView() { return utl::MutableBitView(mfm.data(), bitCnt); }
+        utl::MutableByteView mfmByteView() { return utl::MutableByteView(mfm.data(), isize(mfm.size())); }
+        utl::MutableByteView dataByteView() { return utl::MutableByteView(data.data(), isize(data.size())); }
     };
 
     // Track cache
@@ -125,8 +125,8 @@ public:
 public:
 
     isize bsize() const override { return 512; }
-    void readBlocks(u8 *dst, Range<isize> r) const override;
-    void writeBlocks(const u8 *src, Range<isize> r) override;
+    void readBlocks(u8 *dst, utl::Range<isize> r) const override;
+    void writeBlocks(const u8 *src, utl::Range<isize> r) override;
 
 
     //
@@ -150,14 +150,10 @@ public:
     Diameter getDiameter() const noexcept override;
     Density getDensity() const noexcept override;
 
-    BitView encode(TrackNr t) const override;
-    void decode(TrackNr t, BitView bits) override;
+    utl::BitView encode(TrackNr t) const override;
+    void decode(TrackNr t, utl::BitView bits) override;
 
 private:
-
-    // BitView encodeStandardTrack(TrackNr t) const;
-    // BitView encodeExtendedTrack(TrackNr t) const;
-
 
     //
     // Scanning the raw data

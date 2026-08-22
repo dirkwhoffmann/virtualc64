@@ -15,8 +15,8 @@
 
 namespace retro::vault {
 
-ByteView
-DOSDecoder::decodeTrack(BitView track, TrackNr t, std::span<u8> out)
+utl::ByteView
+DOSDecoder::decodeTrack(utl::BitView track, TrackNr t, std::span<u8> out)
 {
     logme(LOG_IMG, "Decoding DOS track %ld\n", t);
 
@@ -43,11 +43,11 @@ DOSDecoder::decodeTrack(BitView track, TrackNr t, std::span<u8> out)
         MFM::decodeMFM(out.data() + s * bsize, mfm, bsize);
     }
 
-    return ByteView(out.data(), numSectors * bsize);
+    return utl::ByteView(out.data(), numSectors * bsize);
 }
 
-ByteView
-DOSDecoder::decodeSector(BitView track, TrackNr t, SectorNr s, std::span<u8> out)
+utl::ByteView
+DOSDecoder::decodeSector(utl::BitView track, TrackNr t, SectorNr s, std::span<u8> out)
 {
     logme(LOG_IMG, "Decoding DOS track %ld:%ld\n", t, s);
 
@@ -69,11 +69,11 @@ DOSDecoder::decodeSector(BitView track, TrackNr t, SectorNr s, std::span<u8> out
     // Decode data
     MFM::decodeMFM(out.data(), mfm, bsize);
 
-    return ByteView(out);
+    return utl::ByteView(out);
 }
 
-optional<Range<isize>>
-DOSDecoder::seekSector(BitView track, SectorNr s, isize offset)
+optional<utl::Range<isize>>
+DOSDecoder::seekSector(utl::BitView track, SectorNr s, isize offset)
 {
     auto map = seekSectors(track, std::vector<SectorNr>{s}, offset);
 
@@ -83,16 +83,16 @@ DOSDecoder::seekSector(BitView track, SectorNr s, isize offset)
     return map[s];
 }
 
-std::unordered_map<isize, Range<isize>>
-DOSDecoder::seekSectors(BitView track)
+std::unordered_map<isize, utl::Range<isize>>
+DOSDecoder::seekSectors(utl::BitView track)
 {
     return seekSectors(track, std::vector<SectorNr>{});
 }
 
-std::unordered_map<SectorNr, Range<isize>>
-DOSDecoder::seekSectors(BitView track, std::span<const SectorNr> wanted, isize offset)
+std::unordered_map<SectorNr, utl::Range<isize>>
+DOSDecoder::seekSectors(utl::BitView track, std::span<const SectorNr> wanted, isize offset)
 {
-    std::unordered_map<SectorNr, Range<isize>> result;
+    std::unordered_map<SectorNr, utl::Range<isize>> result;
     std::unordered_set<SectorNr> visited;
 
     // Loop until a sector header repeats or no sync marks are found
@@ -122,7 +122,7 @@ DOSDecoder::seekSectors(BitView track, std::span<const SectorNr> wanted, isize o
                 throw DeviceError(DeviceError::SEEK_ERR);
 
             // Record the sector number
-            result[s] = Range<isize>(it.offset(), it.offset() + 1024 * 8);
+            result[s] = utl::Range<isize>(it.offset(), it.offset() + 1024 * 8);
 
             // Check for early exit
             if (!wanted.empty() && result.size() == wanted.size()) break;

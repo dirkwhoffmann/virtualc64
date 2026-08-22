@@ -175,7 +175,7 @@ CPU::processCommand(const Command &cmd)
         case Cmd::BP_REMOVE_AT:      cpu.deleteBreakpointAt(u32(cmd.value)); break;
         case Cmd::BP_REMOVE_ALL:     cpu.deleteAllBreakpoints(); break;
         case Cmd::BP_ENABLE_NR:      cpu.enableBreakpoint(isize(cmd.value)); break;
-        case Cmd::BP_ENABLE_AT:      cpu.enableBreakpoint(u32(cmd.value)); break;
+        case Cmd::BP_ENABLE_AT:      cpu.enableBreakpointAt(u32(cmd.value)); break;
         case Cmd::BP_ENABLE_ALL:     cpu.enableAllBreakpoints(); break;
         case Cmd::BP_DISABLE_NR:     cpu.disableBreakpoint(isize(cmd.value)); break;
         case Cmd::BP_DISABLE_AT:     cpu.disableBreakpointAt(u32(cmd.value)); break;

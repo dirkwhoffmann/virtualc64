@@ -13,8 +13,6 @@
 
 namespace retro::vault {
 
-using namespace utl;
-
 class BlockDevice : public LinearDevice {
 
 public:
@@ -29,12 +27,12 @@ public:
     virtual isize capacity() const;
 
     // Reads a single block or a range of blocks
-    virtual void readBlock(u8 *dst, isize nr) const { readBlocks(dst, Range{nr,nr+1}); }
-    virtual void readBlocks(u8 *dst, Range<isize> range) const;
+    virtual void readBlock(u8 *dst, isize nr) const { readBlocks(dst, utl::Range{nr,nr+1}); }
+    virtual void readBlocks(u8 *dst, utl::Range<isize> range) const;
 
     // Writes a block
-    virtual void writeBlock(const u8 *src, isize nr) { writeBlocks(src, Range{nr,nr+1}); };
-    virtual void writeBlocks(const  u8 *src, Range<isize> range);
+    virtual void writeBlock(const u8 *src, isize nr) { writeBlocks(src, utl::Range{nr,nr+1}); };
+    virtual void writeBlocks(const  u8 *src, utl::Range<isize> range);
 
     // Safety wrappers
     void readBlock(span<u8> dst, isize nr) const;
@@ -42,7 +40,7 @@ public:
 
     // Exports a single block or a block range to a file
     void exportBlock(const fs::path& path, isize nr) const;
-    void exportBlocks(const fs::path& path, Range<isize> range) const;
+    void exportBlocks(const fs::path& path, utl::Range<isize> range) const;
 };
 
 }

@@ -2,6 +2,7 @@ target_include_directories(rvlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_sources(rvlib PRIVATE
         AnyImage.cpp
+        BinaryImage.cpp
         DiskImage.cpp
         FloppyDiskImage.cpp
         HardDiskImage.cpp
@@ -16,3 +17,4 @@ add_subdirectory(EXE)
 add_subdirectory(HDF)
 add_subdirectory(IMG)
 add_subdirectory(ST)
+add_subdirectory(SVM)

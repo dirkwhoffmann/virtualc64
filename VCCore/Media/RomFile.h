@@ -60,7 +60,6 @@ public:
     //
     
     RomFile(const fs::path &path) { init(path); }
-    // RomFile(const fs::path &path, std::istream &stream) { init(path, stream); }
     RomFile(const u8 *buf, isize len) { init(buf, len); }
 
     

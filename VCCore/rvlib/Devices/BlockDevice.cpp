@@ -18,18 +18,18 @@ BlockDevice::capacity() const
 }
 
 void
-BlockDevice::readBlocks(u8 *dst, Range<isize> range) const
+BlockDevice::readBlocks(u8 *dst, utl::Range<isize> range) const
 {
-    assert(range.subset(Range<isize>(0, capacity())));
+    assert(range.subset(utl::Range<isize>(0, capacity())));
     
     if (range.size() > 0)
         read(dst, range.lower * bsize(), range.size() * bsize());
 }
 
 void
-BlockDevice::writeBlocks(const u8 *src, Range<isize> range)
+BlockDevice::writeBlocks(const u8 *src, utl::Range<isize> range)
 {
-    assert(range.subset(Range<isize>(0, capacity())));
+    assert(range.subset(utl::Range<isize>(0, capacity())));
 
     if (range.size() > 0)
         write(src, range.lower * bsize(), range.size() * bsize());
@@ -52,13 +52,13 @@ BlockDevice::writeBlock(span<const u8> src, isize nr)
 void
 BlockDevice::exportBlock(const fs::path& path, isize nr) const
 {
-    exportBlocks(path, Range(nr, nr + 1));
+    exportBlocks(path, utl::Range(nr, nr + 1));
 }
 
 void
-BlockDevice::exportBlocks(const fs::path& path, Range<isize> range) const
+BlockDevice::exportBlocks(const fs::path& path, utl::Range<isize> range) const
 {
-    exportBytes(path, Range(range.lower * bsize(), range.upper * bsize()));
+    exportBytes(path, utl::Range(range.lower * bsize(), range.upper * bsize()));
 }
 
 }

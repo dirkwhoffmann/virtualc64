@@ -11,7 +11,7 @@
 
 #include "Images/FloppyDiskImage.h"
 
-namespace retro::vault::image {
+namespace retro::vault {
 
 // Disk parameters of a standard floppy disk
 typedef struct
@@ -117,12 +117,12 @@ public:
     Diameter getDiameter() const noexcept override;
     Density getDensity() const noexcept override;
 
-    BitView encode(TrackNr t) const override;
-    void decode(TrackNr t, BitView bits) override;
+    utl::BitView encode(TrackNr t) const override;
+    void decode(TrackNr t, utl::BitView bits) override;
 
 private:
 
-    [[deprecated]] isize encodeSector(MutableBitView &track, TrackNr t, SectorNr s, isize offset) const;
+    [[deprecated]] isize encodeSector(utl::MutableBitView &track, TrackNr t, SectorNr s, isize offset) const;
 
 
     //

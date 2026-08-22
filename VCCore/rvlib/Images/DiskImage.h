@@ -9,12 +9,12 @@
 
 #pragma once
 
-#include "Images/AnyImage.h"
+#include "Images/BinaryImage.h"
 #include "Devices/TrackDevice.h"
 
 namespace retro::vault {
 
-class DiskImage : public AnyImage, public TrackDevice {
+class DiskImage : public BinaryImage, public TrackDevice {
 
 public:
 
@@ -48,11 +48,11 @@ public:
 
 public:
 
-    using AnyImage::byteView;
-    ByteView byteView(TrackNr t) const;
-    ByteView byteView(TrackNr t, SectorNr s) const;
-    MutableByteView byteView(TrackNr t);
-    MutableByteView byteView(TrackNr t, SectorNr s);
+    using BinaryImage::byteView;
+    utl::ByteView byteView(TrackNr t) const;
+    utl::ByteView byteView(TrackNr t, SectorNr s) const;
+    utl::MutableByteView byteView(TrackNr t);
+    utl::MutableByteView byteView(TrackNr t, SectorNr s);
     
     
     //
@@ -62,8 +62,8 @@ public:
 public:
 
     // Update portions of the image file on disk with the current contents
-    void saveBlocks(const Range<BlockNr>);
-    void saveBlocks(const std::vector<Range<BlockNr>>);
+    void saveBlocks(const utl::Range<BlockNr>);
+    void saveBlocks(const std::vector<utl::Range<BlockNr>>);
 };
 
 }

@@ -117,7 +117,7 @@ enum class Opt : long
     // SID
     SID_ENABLE,             ///< Enable or disable SID
     SID_ADDRESS,            ///< Mapping address in memory
-    SID_REV,           ///< Chip revision
+    SID_REV,                ///< Chip revision
     SID_FILTER,             ///< Enable or disables the audio filter
     SID_ENGINE,             ///< SID backend (e.g., reSID)
     SID_SAMPLING,           ///< Audio sampling mode
@@ -283,7 +283,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::SID_ENABLE:            return "SID.ENABLE";
             case Opt::SID_ADDRESS:           return "SID.ADDRESS";
-            case Opt::SID_REV:               return "SID.REVISION";
+            case Opt::SID_REV:               return "SID.REV";
             case Opt::SID_FILTER:            return "SID.FILTER";
             case Opt::SID_ENGINE:            return "SID.ENGINE";
             case Opt::SID_SAMPLING:          return "SID.SAMPLING";
@@ -436,7 +436,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::SID_ENABLE:            return "Enable";
             case Opt::SID_ADDRESS:           return "Memory location";
-            case Opt::SID_REV:          return "Chip revision";
+            case Opt::SID_REV:               return "Chip revision";
             case Opt::SID_FILTER:            return "Use filter";
             case Opt::SID_ENGINE:            return "SID backend";
             case Opt::SID_SAMPLING:          return "Audio sampling rate";

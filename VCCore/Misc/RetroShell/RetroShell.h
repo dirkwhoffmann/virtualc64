@@ -158,7 +158,17 @@ public:
     
     // Aborts the execution of a script
     void abortScript();
-    
+
+    /* Indicates that the command queue is suspended. The 'wait' command
+     * schedules a RSH_WAKEUP event and throws a ScriptInterruption; the
+     * scheduled event is what "being suspended" means, so it is also what
+     * this asks. Without the check, any other source of a Cmd::RSH_EXECUTE --
+     * a nested 'source', a second --exec argument, an RPC request, a command
+     * typed into the shell -- would drain the pending commands right away and
+     * run the rest of the script through the wait.
+     */
+    bool waiting() const;
+
     // Executes all pending commands
     void exec();
     

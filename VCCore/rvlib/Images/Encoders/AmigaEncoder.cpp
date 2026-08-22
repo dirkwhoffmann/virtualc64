@@ -18,8 +18,8 @@ namespace retro::vault {
 static constexpr isize bsize  = 512;  // Block size in bytes
 static constexpr isize ssize  = 1088; // MFM sector size in bytes
 
-BitView
-AmigaEncoder::encodeTrack(ByteView src, TrackNr t)
+utl::BitView
+AmigaEncoder::encodeTrack(utl::ByteView src, TrackNr t)
 {
     assert(src.size() % bsize == 0);
 
@@ -35,13 +35,13 @@ AmigaEncoder::encodeTrack(ByteView src, TrackNr t)
     if (trackBuffer.empty()) trackBuffer.resize(16384, 0xAA);
 
     // Create views
-    auto bitView = MutableBitView(trackBuffer.data(), count * ssize * 8);
+    auto bitView = utl::MutableBitView(trackBuffer.data(), count * ssize * 8);
     auto view = bitView.byteView();
 
     for (SectorNr s = 0; s < count; s++) {
 
         // Encode sector
-        auto mfm = encodeSector(ByteView(src.subspan(s * bsize, bsize)), t, s);
+        auto mfm = encodeSector(utl::ByteView(src.subspan(s * bsize, bsize)), t, s);
         assert(mfm.size() == 8 * ssize);
 
         // Copy data onto the track
@@ -55,11 +55,11 @@ AmigaEncoder::encodeTrack(ByteView src, TrackNr t)
     // Compute a debug checksum
     logme(LOG_IMG, "Track %ld checksum = %x\n", t, view.fnv32());
 
-    return BitView(view.data(), view.size() * 8);
+    return utl::BitView(view.data(), view.size() * 8);
 }
 
-BitView
-AmigaEncoder::encodeSector(ByteView bytes, TrackNr t, SectorNr s)
+utl::BitView
+AmigaEncoder::encodeSector(utl::ByteView bytes, TrackNr t, SectorNr s)
 {
     assert(bytes.size() == bsize);
 
@@ -78,7 +78,7 @@ AmigaEncoder::encodeSector(ByteView bytes, TrackNr t, SectorNr s)
     //     Block checksum      48      8     Odd/Even encoded
     //     Data checksum       56      8     Odd/Even encoded
 
-    auto view = MutableByteView(sectorBuffer);
+    auto view = utl::MutableByteView(sectorBuffer);
     auto it = view.begin();
 
     // Bytes before SYNC
@@ -131,11 +131,11 @@ AmigaEncoder::encodeSector(ByteView bytes, TrackNr t, SectorNr s)
         it[i] = MFM::addClockBits(it[i], it[i-1]);
     }
 
-    return BitView(view.data(), 8 * view.size());
+    return utl::BitView(view.data(), 8 * view.size());
 }
 
 void
-AmigaEncoder::rectifyClockBit(MutableBitView view, isize offset)
+AmigaEncoder::rectifyClockBit(utl::MutableBitView view, isize offset)
 {
     auto it = view.cyclic_begin(offset);
     view.set(offset, it[-1] || it[1] ? 0 : 1);
