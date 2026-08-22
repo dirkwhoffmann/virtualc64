@@ -14,7 +14,7 @@
 
 #include "Transport.h"
 
-namespace httplib { class Server; struct Request; }
+namespace httplib { class Server; struct Request; struct Response; }
 
 namespace vc64 {
 
@@ -40,9 +40,19 @@ protected:
 
 public:
 
+    // See StdioTransport::~StdioTransport() -- stops the server thread
+    // before this object's srv pointer and Transport's serverThread are
+    // torn down.
+    ~HttpTransport();
+
     void disconnect() override;
     void main(u16 port, const string &endpoint) override;
     void send(const string &payload) override { }
+
+private:
+
+    // Records a request/response pair and forwards it to the delegate
+    void deliver(const httplib::Request &req, httplib::Response &res);
 };
 
 }

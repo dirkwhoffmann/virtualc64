@@ -125,24 +125,35 @@ Keyboard::press(C64Key key)
 
     switch (key.nr) {
 
-        case 34: shiftLock = true; return;
-        case 31: cpu.pullDownNmiLine(INTSRC_KBD); return;
+        case 34:
+
+            shiftLock = true;
+            break;
+
+        case 31:
+
+            cpu.pullDownNmiLine(INTSRC_KBD);
+            return;
+
+        default:
+
+            SYNCHRONIZED
+
+            assert(key.nr < 66);
+            assert(key.row < 8);
+            assert(key.col < 8);
+
+            if (GET_BIT(kbMatrixRow[key.row], key.col)) {
+                CLR_BIT(kbMatrixRow[key.row], key.col);
+                kbMatrixRowCnt[key.row]++;
+            }
+            if (GET_BIT(kbMatrixCol[key.col], key.row)) {
+                CLR_BIT(kbMatrixCol[key.col], key.row);
+                kbMatrixColCnt[key.col]++;
+            }
     }
 
-    assert(key.nr < 66);
-    assert(key.row < 8);
-    assert(key.col < 8);
-
-    SYNCHRONIZED
-
-    if (GET_BIT(kbMatrixRow[key.row], key.col)) {
-        CLR_BIT(kbMatrixRow[key.row], key.col);
-        kbMatrixRowCnt[key.row]++;
-    }
-    if (GET_BIT(kbMatrixCol[key.col], key.row)) {
-        CLR_BIT(kbMatrixCol[key.col], key.row);
-        kbMatrixColCnt[key.col]++;
-    }
+    msgQueue.put(Msg::KB_PRESS, key.nr);
 }
 
 void
@@ -150,29 +161,43 @@ Keyboard::release(C64Key key)
 {
     logme(LOG_KBD, "release(%ld)\n", key.nr);
 
+    // Only proceed if the key is currently pressed and unlocked
+    if (!isPressed(key) || isLocked(key)) return;
+
     switch (key.nr) {
 
-        case 34: shiftLock = false; return;
-        case 31: cpu.releaseNmiLine(INTSRC_KBD); return;
+        case 34:
+
+            shiftLock = false;
+            break;
+
+        case 31:
+            cpu.releaseNmiLine(INTSRC_KBD);
+            break;
+
+        default:
+
+            SYNCHRONIZED
+
+            assert(key.nr < 66);
+            assert(key.row < 8);
+            assert(key.col < 8);
+
+            // Only release right shift key if shift lock is not pressed
+            if (key.row == 6 && key.col == 4 && shiftLock) return;
+
+            if (GET_BIT(kbMatrixRow[key.row], key.col) == 0) {
+                SET_BIT(kbMatrixRow[key.row], key.col);
+                kbMatrixRowCnt[key.row]--;
+            }
+            if (GET_BIT(kbMatrixCol[key.col], key.row) == 0) {
+                SET_BIT(kbMatrixCol[key.col], key.row);
+                kbMatrixColCnt[key.col]--;
+            }
     }
 
-    assert(key.nr < 66);
-    assert(key.row < 8);
-    assert(key.col < 8);
-
-    SYNCHRONIZED
-
-    // Only release right shift key if shift lock is not pressed
-    if (key.row == 6 && key.col == 4 && shiftLock) return;
-
-    if (GET_BIT(kbMatrixRow[key.row], key.col) == 0) {
-        SET_BIT(kbMatrixRow[key.row], key.col);
-        kbMatrixRowCnt[key.row]--;
-    }
-    if (GET_BIT(kbMatrixCol[key.col], key.row) == 0) {
-        SET_BIT(kbMatrixCol[key.col], key.row);
-        kbMatrixColCnt[key.col]--;
-    }}
+    msgQueue.put(Msg::KB_RELEASE, key.nr);
+}
 
 void
 Keyboard::releaseAll()
@@ -181,6 +206,17 @@ Keyboard::releaseAll()
 
     logme(LOG_KBD, "releaseAll()\n");
 
+    for (isize i = 0; i < 66; ++i) {
+
+        C64Key key(i);
+
+        // Skip the shift lock key
+        if (key.nr == C64Key::shiftLock.nr) continue;
+
+        release(key);
+    }
+
+    /*
     // Clear the keyboard matrix
     for (isize i = 0; i < 8; i++) {
 
@@ -191,6 +227,48 @@ Keyboard::releaseAll()
 
     // Release the restore key
     cpu.releaseNmiLine(INTSRC_KBD);
+
+    msgQueue.put(Msg::KB_RELEASE, -1);
+    */
+}
+
+bool
+Keyboard::isLocked(C64Key key)
+{
+    assert(key.nr >= 0 && key.nr < 66);
+    return locked[key.nr];
+}
+
+void
+Keyboard::lock(C64Key key)
+{
+    assert(key.nr >= 0 && key.nr < 66);
+
+    if (!isLocked(key)) {
+
+        locked[key.nr] = true;
+        msgQueue.put(Msg::KB_LOCK, key.nr);
+    }
+}
+
+void
+Keyboard::unlock(C64Key key)
+{
+    assert(key.nr >= 0 && key.nr < 66);
+
+    if (isLocked(key)) {
+
+        locked[key.nr] = false;
+        msgQueue.put(Msg::KB_UNLOCK, key.nr);
+    }
+}
+
+void
+Keyboard::unlockAll()
+{
+    for (isize i = 0; i < 66; ++i) {
+        unlock(i);
+    }
 }
 
 void

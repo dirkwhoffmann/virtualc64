@@ -58,6 +58,38 @@ struct ServerTypeEnum : Reflectable<ServerTypeEnum, ServerType>
 };
 
 
+enum class TrafficDirection : long
+{
+    RECEIVED,       // The packet was received from a client
+    SENT            // The packet was sent to a client
+};
+
+struct TrafficDirectionEnum : Reflectable<TrafficDirectionEnum, TrafficDirection>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = long(TrafficDirection::SENT);
+
+    static const char *_key(TrafficDirection value)
+    {
+        switch (value) {
+
+            case TrafficDirection::RECEIVED:    return "RECEIVED";
+            case TrafficDirection::SENT:        return "SENT";
+        }
+        return "???";
+    }
+    static const char *help(TrafficDirection value)
+    {
+        switch (value) {
+
+            case TrafficDirection::RECEIVED:    return "Received from a client";
+            case TrafficDirection::SENT:        return "Sent to a client";
+        }
+        return "???";
+    }
+};
+
+
 //
 // Structures
 //
@@ -70,5 +102,31 @@ typedef struct
     RemoteServerInfo promInfo;
 }
 RemoteManagerInfo;
+
+/* A single entry of the traffic log. The remote servers record all transmitted
+ * packets in a bounded log inside the RemoteManager. Each recorded packet is
+ * assigned a monotonically increasing sequence number which is passed to the
+ * GUI in the Msg::SRV_RECEIVE and Msg::SRV_SEND notification messages. The GUI
+ * reads the log incrementally by passing the sequence number of the last seen
+ * entry to RemoteManagerAPI::getTraffic().
+ */
+typedef struct
+{
+    // Sequence number (unique, monotonically increasing)
+    isize nr;
+
+    // The server that received or sent the packet
+    ServerType server;
+
+    // Tells whether the packet was received or sent
+    TrafficDirection direction;
+
+    // Host time stamp (milliseconds since epoch)
+    i64 time;
+
+    // Packet contents
+    string payload;
+}
+TrafficEntry;
 
 }

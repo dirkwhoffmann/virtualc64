@@ -14,9 +14,13 @@
 
 #include "CoreObject.h"
 #include "TransportTypes.h"
+#include "RemoteManagerTypes.h"
+#include <atomic>
 #include <thread>
 
 namespace vc64 {
+
+class RemoteServer;
 
 class Transport : public CoreObject {
 
@@ -25,11 +29,29 @@ class Transport : public CoreObject {
 
 protected:
 
-    // Transport delegate
+    // The remote server owning this transport (used for traffic recording)
+    RemoteServer &server;
+
+    // Transport delegate (the owning server)
     TransportDelegate &delegate;
 
     // The current server state
     SrvState state = SrvState::OFF;
+
+    /* Sticky "please go away" flag for the server thread.
+     *
+     * 'state' cannot carry this on its own: the server thread overwrites it
+     * as it goes -- mainLoop() switches to LISTENING the moment it is
+     * scheduled -- so a stop() that runs in the window between start()
+     * spawning the thread and the thread actually starting has its STOPPING
+     * erased again. Nothing is then left to tell the thread to quit, and the
+     * join() at the end of stop() waits forever. Since stop() runs on the
+     * emulator thread, that hangs the whole emulator.
+     *
+     * This flag is only ever raised by stop() and lowered by start(), so no
+     * interleaving can lose it.
+     */
+    std::atomic<bool> stopRequested { false };
 
 
     //
@@ -38,7 +60,7 @@ protected:
 
 public:
 
-    Transport(TransportDelegate &delegate) : delegate(delegate) { }
+    Transport(RemoteServer &server);
     ~Transport();
 
     virtual const char *objectName() const override { return "Transport"; }
@@ -62,6 +84,10 @@ public:
     bool isConnected() const { return state == SrvState::CONNECTED; }
     bool isStopping() const { return state == SrvState::STOPPING; }
     bool isErroneous() const { return state == SrvState::INVALID; }
+
+    // Whether the server thread should wind down. Server threads must test
+    // this rather than isStopping() alone -- see stopRequested.
+    bool terminating() const { return stopRequested || isStopping(); }
 
 
     //
@@ -87,7 +113,7 @@ public:
 
 
     //
-    // Sending packets
+    // Sending and receiving packets
     //
 
 public:
@@ -97,6 +123,21 @@ public:
 
     // Operator overloads
     Transport &operator<<(const string &payload) { send(payload); return *this; }
+
+protected:
+
+    /* Traffic recording. Every transport is expected to route received
+     * packets through deliver() and to call record() for every packet it
+     * actually transmits. Both functions record the packet in the traffic
+     * log of the RemoteManager, which informs the GUI via Msg::SRV_RECEIVE
+     * and Msg::SRV_SEND.
+     */
+
+    // Records a packet in the traffic log
+    void record(TrafficDirection direction, const string &payload);
+
+    // Records a received packet and forwards it to the delegate
+    void deliver(const string &payload);
 };
 
 }

@@ -16,6 +16,11 @@
 
 namespace vc64 {
 
+HttpTransport::~HttpTransport()
+{
+    stop();
+}
+
 void
 HttpTransport::disconnect()
 {
@@ -42,13 +47,13 @@ HttpTransport::main(u16 port, const string &endpoint)
         srv->Get(endpoint, [this](const httplib::Request& req, httplib::Response& res) {
 
             switchState(SrvState::CONNECTED);
-            delegate.didReceive(req, res);
+            deliver(req, res);
         });
 
         srv->Post(endpoint, [this](const httplib::Request& req, httplib::Response& res) {
 
             switchState(SrvState::CONNECTED);
-            delegate.didReceive(req, res);
+            deliver(req, res);
         });
 
         // Start the server to listen on localhost
@@ -60,6 +65,20 @@ HttpTransport::main(u16 port, const string &endpoint)
         logme(LOG_SRV, "HTTP server thread interrupted\n");
         delegate.didTerminate(err.what());
     }
+}
+
+void
+HttpTransport::deliver(const httplib::Request &req, httplib::Response &res)
+{
+    /* HTTP traffic bypasses send(). The response is written into the response
+     * object by the delegate, so both directions are recorded here.
+     */
+    record(TrafficDirection::RECEIVED,
+           req.method + " " + req.path + (req.body.empty() ? "" : "\n" + req.body));
+
+    delegate.didReceive(req, res);
+
+    record(TrafficDirection::SENT, res.body);
 }
 
 }

@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "vcdebug.h"
 #include "RetroShellTypes.h"
 #include "SubComponent.h"
 #include "RSCommand.h"
@@ -103,10 +102,8 @@ protected:
     
     // History buffer storing old input strings and cursor positions
     static HistoryBuffer historyBuffer;
-    
-    // Additional output inserted before and after command execution
-    string vdelim = debug::LOG_RSH != utl::LogLevel::LOG_NONE ? "[DEBUG]\n" : "\n";
-    
+
+
     //
     // User input
     //
@@ -226,7 +223,12 @@ protected:
     // Returns true if the last line contains no text
     bool lastLineIsEmpty();
 
-    
+private:
+
+    // Additional output inserted before and after command execution
+    string vdelim() const; //  = "";
+
+
     //
     // Managing user input
     //

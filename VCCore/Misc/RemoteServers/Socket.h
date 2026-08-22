@@ -82,6 +82,14 @@ public:
     void connect(u16 port);
     void bind(u16 port);
     void listen();
+
+    /* Waits until accept() can proceed without blocking, or until the
+     * timeout expires. Returns true in the former case. Lets a caller park
+     * on a listening socket without becoming unkillable -- see
+     * TcpTransport::mainLoop().
+     */
+    bool waitForConnection(isize milliseconds);
+
     Socket accept();
     void close();
 

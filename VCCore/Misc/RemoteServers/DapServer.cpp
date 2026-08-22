@@ -67,7 +67,7 @@ DapServer::transport() const
 bool
 DapServer::isSupported(TransportProtocol protocol) const
 {
-    switch (config.transport) {
+    switch (protocol) {
 
         case TransportProtocol::STDIO:  return true;
         case TransportProtocol::TCP:    return true;

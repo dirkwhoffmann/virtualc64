@@ -13,9 +13,12 @@
 #include "vcconfig.h"
 #include "TcpTransport.h"
 
-using namespace utl;
-
 namespace vc64 {
+
+TcpTransport::~TcpTransport()
+{
+    stop();
+}
 
 void
 TcpTransport::disconnect()
@@ -44,9 +47,13 @@ TcpTransport::main(u16 port, const string &endpoint)
 void
 TcpTransport::mainLoop(u16 port)
 {
+    // A stop() may already have landed while this thread was being spawned;
+    // switching to LISTENING now would erase it (see Transport::stopRequested).
+    if (terminating()) { switchState(SrvState::OFF); return; }
+
     switchState(SrvState::LISTENING);
 
-    while (isListening()) {
+    while (isListening() && !terminating()) {
 
         try {
 
@@ -65,7 +72,26 @@ TcpTransport::mainLoop(u16 port)
                 listener.bind(port);
                 listener.listen();
 
-                // Wait for a client to connect
+                /* Wait for a client to connect. This polls rather than
+                 * parking inside accept(), because a thread blocked in
+                 * accept() can only be woken by closing the socket from the
+                 * outside -- and disconnect() may well run before this
+                 * socket even exists (stop() races the thread that start()
+                 * just spawned). That wakeup is then lost for good and the
+                 * thread blocks forever, taking the join() in
+                 * Transport::stop() with it -- and, since stop() runs on the
+                 * emulator thread, the whole emulator with it. Re-testing
+                 * terminating() on every pass cannot miss a stop, no matter
+                 * how the two threads interleave.
+                 */
+                while (!listener.waitForConnection(100) && !terminating()) { }
+
+                if (terminating()) {
+
+                    listener.close();
+                    break;
+                }
+
                 connection = listener.accept();
             }
 
@@ -80,7 +106,7 @@ TcpTransport::mainLoop(u16 port)
             logme(LOG_SRV, "Main loop interrupted\n");
 
             // Handle error if we haven't been interrupted purposely
-            if (!isStopping()) delegate.didTerminate(err.what());
+            if (!terminating()) delegate.didTerminate(err.what());
         }
     }
 
@@ -95,14 +121,14 @@ TcpTransport::sessionLoop()
     try {
 
         // Receive and process packets
-        while (1) { delegate.didReceive(connection.recv()); }
+        while (1) { deliver(connection.recv()); }
 
     } catch (std::exception &err) {
 
         logme(LOG_SRV, "Session loop interrupted\n");
 
         // Handle error if we haven't been interrupted purposely
-        if (!isStopping()) {
+        if (!terminating()) {
 
             delegate.didTerminate(err.what());
             switchState(SrvState::LISTENING);
@@ -134,6 +160,7 @@ TcpTransport::send(const string &payload)
     if (isConnected()) {
 
         connection.send(payload);
+        record(TrafficDirection::SENT, payload);
     }
 }
 

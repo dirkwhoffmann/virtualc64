@@ -55,7 +55,7 @@ AudioPort::generateSamples()
     if (s3) numSamples = std::min(numSamples, s3);
 
     // Check for a buffer overflow
-    if (stream.free() < numSamples) handleBufferOverflow();
+    if (stream.free() < numSamples) handleBufferOverflow(numSamples);
 
     // Generate the samples
     bool fading = volL.isFading() || volR.isFading();
@@ -253,10 +253,23 @@ AudioPort::handleBufferUnderflow()
 }
 
 void
-AudioPort::handleBufferOverflow()
+AudioPort::handleBufferOverflow(isize &numSamples)
 {
     // Reset the write pointer
     stream.alignWritePtr();
+
+    // Drain the source SID streams to prevent a secondary overflow
+    auto threshold = stream.cap() / 4;
+    while (sid0.stream.count() > threshold) (void) sid0.stream.read();
+    while (sid1.stream.count() > threshold) (void) sid1.stream.read();
+    while (sid2.stream.count() > threshold) (void) sid2.stream.read();
+    while (sid3.stream.count() > threshold) (void) sid3.stream.read();
+
+    // Recompute the number of generatable samples
+    numSamples = sid0.stream.count();
+    if (sid1.stream.count()) numSamples = std::min(numSamples, sid1.stream.count());
+    if (sid2.stream.count()) numSamples = std::min(numSamples, sid2.stream.count());
+    if (sid3.stream.count()) numSamples = std::min(numSamples, sid3.stream.count());
 
     // Determine the number of elapsed seconds since the last adjustment
     auto elapsedTime = utl::Time::now() - lastAlignment;

@@ -130,6 +130,28 @@ Socket::listen()
         throw ServerError(ServerError::SOCK_CANT_LISTEN);
 }
 
+bool
+Socket::waitForConnection(isize milliseconds)
+{
+    if (socket == INVALID_SOCKET)
+        throw ServerError(ServerError::SOCK_CANT_ACCEPT);
+
+    fd_set fds;
+    FD_ZERO(&fds);
+    FD_SET(socket, &fds);
+
+    struct timeval tv;
+    tv.tv_sec  = (decltype(tv.tv_sec))(milliseconds / 1000);
+    tv.tv_usec = (decltype(tv.tv_usec))((milliseconds % 1000) * 1000);
+
+    // The first argument is ignored on Windows
+    auto ret = ::select((int)socket + 1, &fds, nullptr, nullptr, &tv);
+
+    if (ret < 0) throw ServerError(ServerError::SOCK_CANT_ACCEPT);
+
+    return ret > 0;
+}
+
 Socket
 Socket::accept()
 {

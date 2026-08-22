@@ -12,9 +12,16 @@
 
 #include "vcconfig.h"
 #include "RemoteServer.h"
+#include "RemoteManager.h"
 #include "Emulator.h"
 
 namespace vc64 {
+
+void
+RemoteServer::recordTraffic(TrafficDirection direction, const string &payload)
+{
+    remoteManager.recordTraffic(ServerType(objid), direction, payload);
+}
 
 void
 RemoteServer::_dump(Category category, std::ostream &os) const
@@ -36,7 +43,7 @@ RemoteServer::_dump(Category category, std::ostream &os) const
 void
 RemoteServer::_powerOff()
 {
-    try { stop(); } catch(...) { }
+    // try { stop(); } catch(...) { }
 }
 
 void

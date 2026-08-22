@@ -95,8 +95,10 @@ enum class Msg : long
     CRT_ATTACHED,       ///< A cartridge has been plugged into the expansion port
 
     // Keyboard
-    KB_AUTO_PRESS,      ///< The auto-typing daemon has pressed a key
-    KB_AUTO_RELEASE,    ///< The auto-typing daemon has released a key
+    KB_PRESS,           ///< A key has been pressed
+    KB_RELEASE,         ///< A key has been released
+    KB_LOCK,            ///< A key has been locked
+    KB_UNLOCK,          ///< A key has been unlocked
 
     // Mouse
     SHAKING,            ///< A shaking mouse has been detected
@@ -119,9 +121,9 @@ enum class Msg : long
     RS232_OUT,          ///< RS232 adapter has sent data
 
     // Remote server
-    SRV_STATE,
-    SRV_RECEIVE,
-    SRV_SEND
+    SRV_STATE,          ///< A remote server has switched state
+    SRV_RECEIVE,        ///< A remote server has received a packet (value = ServerType, value2 = sequence number)
+    SRV_SEND            ///< A remote server has sent a packet (value = ServerType, value2 = sequence number)
 };
 
 struct MsgEnum : Reflectable<MsgEnum, Msg> {
@@ -194,8 +196,10 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
 
             case Msg::CRT_ATTACHED:          return "CRT_ATTACHED";
 
-            case Msg::KB_AUTO_PRESS:         return "KB_AUTO_PRESS";
-            case Msg::KB_AUTO_RELEASE:       return "KB_AUTO_RELEASE";
+            case Msg::KB_PRESS:              return "KB_PRESS";
+            case Msg::KB_RELEASE:            return "KB_RELEASE";
+            case Msg::KB_LOCK:               return "KB_LOCK";
+            case Msg::KB_UNLOCK:             return "KB_UNLOCK";
 
             case Msg::SHAKING:               return "SHAKING";
 
@@ -241,14 +245,14 @@ typedef struct
 
     // Payload
     union {
-        
+
         struct { i64 value; i64 value2; };
         CpuMsg cpu;
         DriveMsg drive;
         ScriptMsg script;
         SnapshotMsg snapshot;
     };
-    
+
     const char *str;
 }
 Message;

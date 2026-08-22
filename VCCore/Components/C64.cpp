@@ -205,16 +205,6 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
-        case SLOT_SRV:
-
-            switch (id) {
-
-                case EVENT_NONE:        return "none";
-                case SRV_LAUNCH_DAEMON: return "SRV_LAUNCH_DAEMON";
-                default:                return "*** INVALID ***";
-            }
-            break;
-
         case SLOT_DBG:
 
             switch (id) {
@@ -387,7 +377,6 @@ C64::operator << (SerResetter &worker)
     // Schedule initial events
     scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
-    scheduleRel<SLOT_SRV>(C64::sec(0.5), SRV_LAUNCH_DAEMON);
     scheduleNextSNPEvent();
 
     // Restore persistent events
@@ -676,136 +665,153 @@ C64::update(CmdQueue &queue)
 
         logme(LOG_CMD, "Command: %s\n", CmdEnum::key(cmd.type));
 
-        switch (cmd.type) {
+        try {
 
-            case Cmd::CONFIG:
+            switch (cmd.type) {
 
-                cmdConfig = true;
-                emulator.set(cmd.config.option, cmd.config.value, { cmd.config.id });
-                break;
+                case Cmd::CONFIG:
 
-            case Cmd::CONFIG_ALL:
+                    cmdConfig = true;
+                    emulator.set(cmd.config.option, cmd.config.value, {cmd.config.id});
+                    break;
 
-                cmdConfig = true;
-                emulator.set(cmd.config.option, cmd.config.value, { });
-                break;
+                case Cmd::CONFIG_ALL:
 
-            case Cmd::CONFIG_SCHEME:
+                    cmdConfig = true;
+                    emulator.set(cmd.config.option, cmd.config.value, {});
+                    break;
 
-                cmdConfig = true;
-                set(ConfigScheme(cmd.value));
-                break;
+                case Cmd::CONFIG_SCHEME:
 
-            case Cmd::HARD_RESET:
-            case Cmd::SOFT_RESET:
-            case Cmd::POWER_ON:
-            case Cmd::POWER_OFF:
-            case Cmd::RUN:
-            case Cmd::PAUSE:
-            case Cmd::WARP_ON:
-            case Cmd::WARP_OFF:
-            case Cmd::HALT:
-            case Cmd::ALARM_ABS:
-            case Cmd::ALARM_REL:
-            case Cmd::INSPECTION_TARGET:
+                    cmdConfig = true;
+                    set(ConfigScheme(cmd.value));
+                    break;
 
-                processCommand(cmd);
-                break;
+                case Cmd::HARD_RESET:
+                case Cmd::SOFT_RESET:
+                case Cmd::POWER_ON:
+                case Cmd::POWER_OFF:
+                case Cmd::RUN:
+                case Cmd::PAUSE:
+                case Cmd::WARP_ON:
+                case Cmd::WARP_OFF:
+                case Cmd::HALT:
+                case Cmd::ALARM_ABS:
+                case Cmd::ALARM_REL:
+                case Cmd::INSPECTION_TARGET:
 
-            case Cmd::CPU_BRK:
-            case Cmd::CPU_NMI:
-            case Cmd::BP_SET_AT:
-            case Cmd::BP_MOVE_TO:
-            case Cmd::BP_REMOVE_NR:
-            case Cmd::BP_REMOVE_AT:
-            case Cmd::BP_REMOVE_ALL:
-            case Cmd::BP_ENABLE_NR:
-            case Cmd::BP_ENABLE_AT:
-            case Cmd::BP_ENABLE_ALL:
-            case Cmd::BP_DISABLE_NR:
-            case Cmd::BP_DISABLE_AT:
-            case Cmd::BP_DISABLE_ALL:
-            case Cmd::WP_SET_AT:
-            case Cmd::WP_MOVE_TO:
-            case Cmd::WP_REMOVE_NR:
-            case Cmd::WP_REMOVE_AT:
-            case Cmd::WP_REMOVE_ALL:
-            case Cmd::WP_ENABLE_NR:
-            case Cmd::WP_ENABLE_AT:
-            case Cmd::WP_ENABLE_ALL:
-            case Cmd::WP_DISABLE_NR:
-            case Cmd::WP_DISABLE_AT:
-            case Cmd::WP_DISABLE_ALL:
+                    processCommand(cmd);
+                    break;
 
-                cpu.processCommand(cmd);
-                break;
+                case Cmd::CPU_BRK:
+                case Cmd::CPU_NMI:
+                case Cmd::BP_SET_AT:
+                case Cmd::BP_MOVE_TO:
+                case Cmd::BP_REMOVE_NR:
+                case Cmd::BP_REMOVE_AT:
+                case Cmd::BP_REMOVE_ALL:
+                case Cmd::BP_ENABLE_NR:
+                case Cmd::BP_ENABLE_AT:
+                case Cmd::BP_ENABLE_ALL:
+                case Cmd::BP_DISABLE_NR:
+                case Cmd::BP_DISABLE_AT:
+                case Cmd::BP_DISABLE_ALL:
+                case Cmd::WP_SET_AT:
+                case Cmd::WP_MOVE_TO:
+                case Cmd::WP_REMOVE_NR:
+                case Cmd::WP_REMOVE_AT:
+                case Cmd::WP_REMOVE_ALL:
+                case Cmd::WP_ENABLE_NR:
+                case Cmd::WP_ENABLE_AT:
+                case Cmd::WP_ENABLE_ALL:
+                case Cmd::WP_DISABLE_NR:
+                case Cmd::WP_DISABLE_AT:
+                case Cmd::WP_DISABLE_ALL:
 
-            case Cmd::KEY_PRESS:
-            case Cmd::KEY_RELEASE:
-            case Cmd::KEY_RELEASE_ALL:
-            case Cmd::KEY_TOGGLE:
+                    cpu.processCommand(cmd);
+                    break;
 
-                keyboard.processCommand(cmd);
-                break;
+                case Cmd::KEY_PRESS:
+                case Cmd::KEY_RELEASE:
+                case Cmd::KEY_RELEASE_ALL:
+                case Cmd::KEY_TOGGLE:
 
-            case Cmd::DSK_TOGGLE_WP:
-            case Cmd::DSK_MODIFIED:
-            case Cmd::DSK_UNMODIFIED:
+                    keyboard.processCommand(cmd);
+                    break;
 
-                drive().processCommand(cmd);
-                break;
+                case Cmd::DSK_TOGGLE_WP:
+                case Cmd::DSK_MODIFIED:
+                case Cmd::DSK_UNMODIFIED:
 
-            case Cmd::MOUSE_MOVE_ABS:
-            case Cmd::MOUSE_MOVE_REL:
+                    drive().processCommand(cmd);
+                    break;
 
-                switch (cmd.coord.port) {
+                case Cmd::MOUSE_MOVE_ABS:
+                case Cmd::MOUSE_MOVE_REL:
 
-                    case PORT_1: port1.processCommand(cmd); break;
-                    case PORT_2: port2.processCommand(cmd); break;
-                    default: fatalError;
-                }
-                break;
+                    switch (cmd.coord.port) {
 
-            case Cmd::MOUSE_BUTTON:
-            case Cmd::JOY_EVENT:
+                        case PORT_1:
+                            port1.processCommand(cmd);
+                            break;
+                        case PORT_2:
+                            port2.processCommand(cmd);
+                            break;
+                        default:
+                        fatalError;
+                    }
+                    break;
 
-                switch (cmd.action.port) {
+                case Cmd::MOUSE_BUTTON:
+                case Cmd::JOY_EVENT:
 
-                    case PORT_1: port1.processCommand(cmd); break;
-                    case PORT_2: port2.processCommand(cmd); break;
-                    default: fatalError;
-                }
-                break;
+                    switch (cmd.action.port) {
 
-            case Cmd::DATASETTE_PLAY:
-            case Cmd::DATASETTE_STOP:
-            case Cmd::DATASETTE_REWIND:
+                        case PORT_1:
+                            port1.processCommand(cmd);
+                            break;
+                        case PORT_2:
+                            port2.processCommand(cmd);
+                            break;
+                        default:
+                        fatalError;
+                    }
+                    break;
 
-                datasette.processCommand(cmd);
-                break;
+                case Cmd::DATASETTE_PLAY:
+                case Cmd::DATASETTE_STOP:
+                case Cmd::DATASETTE_REWIND:
 
-            case Cmd::CRT_BUTTON_PRESS:
-            case Cmd::CRT_BUTTON_RELEASE:
-            case Cmd::CRT_SWITCH_LEFT:
-            case Cmd::CRT_SWITCH_NEUTRAL:
-            case Cmd::CRT_SWITCH_RIGHT:
+                    datasette.processCommand(cmd);
+                    break;
 
-                expansionport.processCommand(cmd);
-                break;
+                case Cmd::CRT_BUTTON_PRESS:
+                case Cmd::CRT_BUTTON_RELEASE:
+                case Cmd::CRT_SWITCH_LEFT:
+                case Cmd::CRT_SWITCH_NEUTRAL:
+                case Cmd::CRT_SWITCH_RIGHT:
 
-            case Cmd::RSH_EXECUTE:
+                    expansionport.processCommand(cmd);
+                    break;
 
-                retroShell.exec();
-                break;
+                case Cmd::RSH_EXECUTE:
 
-            case Cmd::FOCUS:
+                    retroShell.exec();
+                    break;
 
-                cmd.value ? focus() : unfocus();
-                break;
+                case Cmd::FOCUS:
 
-            default:
+                    cmd.value ? focus() : unfocus();
+                    break;
+
+                default:
                 logme(LV_EMERGENCY, "Unhandled command: %s\n", CmdEnum::key(cmd.type));
                 fatalError;
+            }
+
+        } catch (std::exception &e) {
+
+            logme(LV_WARNING, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
         }
     }
 
@@ -1336,9 +1342,6 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_KEY>(cycle)) {
                 keyboard.processKeyEvent(eventid[SLOT_KEY]);
             }
-            if (isDue<SLOT_SRV>(cycle)) {
-                remoteManager.serviceServerEvent();
-            }
             if (isDue<SLOT_DBG>(cycle)) {
                 regressionTester.processEvent(eventid[SLOT_DBG]);
             }
@@ -1415,7 +1418,6 @@ C64::loadWorkspace(const fs::path &path)
     std::stringstream ss;
 
     // Set the search path to the workspace directoy
-    printf("loadWS: %s\n", path.string().c_str());
     host.setSearchPath(path);
 
     // Assemble the setup script
@@ -1531,7 +1533,7 @@ C64::saveWorkspace(const fs::path &path)
     if (!fs::exists(path)) fs::create_directories(path);
 
     // Remove old files
-    for (const auto& entry : fs::directory_iterator(path)) fs::remove_all(entry.path());
+    // for (const auto& entry : fs::directory_iterator(path)) fs::remove_all(entry.path());
 
     // Prepare the config script
     auto now = std::time(nullptr);
@@ -1871,7 +1873,7 @@ C64::loadRom(const fs::path &path, RomType type)
         return;
     }
         
-    throw IOError(IOError::FILE_TYPE_MISMATCH);
+    throw IOError(IOError::FILE_TYPE_MISMATCH, path);
 }
 
 void

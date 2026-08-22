@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class RshServer final : public RemoteServer, public ConsoleDelegate, public TransportDelegate {
+class RshServer final : public RemoteServer, public ConsoleDelegate {
 
 public:
 

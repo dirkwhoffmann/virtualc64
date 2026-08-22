@@ -173,6 +173,7 @@ public:
 
     // Triggers a gamepad event
     void trigger(GamePadAction event);
+    void trigger(bool state[5]);
 
     // To be called after each frame
     void eofHandler();

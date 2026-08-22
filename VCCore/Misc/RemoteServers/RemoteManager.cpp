@@ -13,8 +13,54 @@
 #include "vcconfig.h"
 #include "RemoteManager.h"
 #include "C64.h"
+#include <chrono>
 
 namespace vc64 {
+
+isize
+TrafficLog::append(ServerType server, TrafficDirection direction, const string &payload)
+{
+    std::lock_guard<std::mutex> lock(mutex);
+
+    auto now = std::chrono::system_clock::now().time_since_epoch();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
+
+    entries.push_back(TrafficEntry {
+
+        .nr         = counter,
+        .server     = server,
+        .direction  = direction,
+        .time       = i64(ms),
+        .payload    = payload
+    });
+
+    // Drop the oldest entries if the log has grown too large
+    while (isize(entries.size()) > capacity) entries.pop_front();
+
+    return counter++;
+}
+
+std::vector<TrafficEntry>
+TrafficLog::read(isize nr) const
+{
+    std::lock_guard<std::mutex> lock(mutex);
+
+    std::vector<TrafficEntry> result;
+
+    for (const auto &entry : entries) {
+        if (entry.nr > nr) result.push_back(entry);
+    }
+
+    return result;
+}
+
+void
+TrafficLog::clear()
+{
+    std::lock_guard<std::mutex> lock(mutex);
+
+    entries.clear();
+}
 
 RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
 {
@@ -106,9 +152,32 @@ RemoteManager::numErroneous() const
 }
 
 void
-RemoteManager::serviceServerEvent()
+RemoteManager::recordTraffic(ServerType server, TrafficDirection direction, const string &payload)
 {
-    // The server event slot is not utilized, yet.
+    // Ignore empty packets (e.g., HTTP responses without content)
+    if (payload.empty()) return;
+
+    // Store the packet in the traffic log
+    auto nr = trafficLog.append(server, direction, payload);
+
+    // Inform the GUI
+    auto msg = direction == TrafficDirection::SENT ? Msg::SRV_SEND : Msg::SRV_RECEIVE;
+    msgQueue.put(msg, i64(server), i64(nr), payload);
+}
+
+void
+RemoteManager::send(ServerType server, const string &payload)
+{
+    switch (server) {
+
+        case ServerType::RSH:  rshServer.send(payload);  break;
+        case ServerType::RPC:  rpcServer.send(payload);  break;
+        case ServerType::DAP:  dapServer.send(payload);  break;
+        case ServerType::PROM: promServer.send(payload); break;
+
+        default:
+            fatalError;
+    }
 }
 
 }

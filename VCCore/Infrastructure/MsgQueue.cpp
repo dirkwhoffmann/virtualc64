@@ -57,8 +57,13 @@ MsgQueue::put(const Message &msg, const string &str)
 
         // Delete the oldest element if the queue is full
         if (queue.isFull()) {
-            logme(LV_WARNING, "Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
-            (void)queue.read();
+            
+            if (!listener) {
+                
+                auto &lost = queue.read();
+                logme(LV_WARNING, "Message lost: %s [%llx]\n", MsgEnum::key(lost.type), lost.value);
+                (void)queue.read();
+            }
         }
         
         // Add message to the ringbuffer
@@ -73,9 +78,9 @@ MsgQueue::put(const Message &msg, const string &str)
 }
 
 void
-MsgQueue::put(Msg type, i64 payload, i64 payload2)
+MsgQueue::put(Msg type, i64 payload, i64 payload2, const string &str)
 {
-    put( Message { .type = type, .value = payload, .value2 = payload2 } );
+    put( Message { .type = type, .value = payload, .value2 = payload2 }, str);
 }
 
 void

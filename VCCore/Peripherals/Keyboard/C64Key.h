@@ -42,8 +42,8 @@ struct C64Key {
     //
     
     // First row in key matrix
-    static const C64Key del;            //! Delete key
-    static const C64Key ret;            //! Return key
+    static const C64Key del;
+    static const C64Key ret;
     static const C64Key curLeftRight;
     static const C64Key F7F8;
     static const C64Key F1F2;

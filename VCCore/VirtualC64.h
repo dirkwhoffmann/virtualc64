@@ -25,6 +25,7 @@ namespace vc64 {
 using peddle::Guard;
 using peddle::DasmStyle;
 using peddle::DasmNumberFormat;
+using peddle::RecordedInstruction;
 
 //
 // Base class for all APIs
@@ -113,6 +114,15 @@ struct CPUAPI : public API {
      */
     isize disassembleRecorded(char *dst, const char *fmt, isize nr) const;
 
+    /** Returns an entry from the record buffer. Returned by value (rather
+     *  than by reference) since the log buffer is written concurrently by
+     *  the emulator thread.
+     *  @param  nr      Index of the instruction in the record buffer
+     *  @return The recorded instruction, including the address (pc) it was
+     *          fetched from.
+     */
+    RecordedInstruction logEntry(isize nr) const;
+
     /** @brief  Returns a breakpoint from the breakpoint list.
      *  @param  nr      Number of the breakpoint.
      *  @return A pointer to the breakpoint or nullptr if it does not exist.
@@ -156,7 +166,7 @@ struct CIAAPI : public API {
 
     /** @brief  Returns statistical information about the components.
      */
-    CIAStats getStats() const;
+    const CIAStats &getStats() const;
 };
 
 
@@ -229,7 +239,7 @@ struct AudioPortAPI : public API {
 
     /** @brief  Returns statistical information about the components.
      */
-    AudioPortStats getStats() const;
+    const AudioPortStats &getStats() const;
 
 
     /// @}
@@ -384,6 +394,34 @@ struct KeyboardAPI : public API {
      */
     void releaseAll(double delay = 0.0);
 
+    /** @brief  Checks if a key is currently pressed.
+     *  @param  key     The key to check.
+     */
+    bool isLocked(C64Key key) const;
+
+    /** @brief  Locks a key
+     *
+     *  @param  key     The key to lock.
+     *
+     *  When a key is marked as locked, it won't be released when release()
+     *  or releaseAll() is called.
+     */
+    void lock(C64Key key);
+
+    /** @brief  Unlocks a key
+     *
+     *  @param key      The key to unlock.
+     *
+     *  Removes the lock, putting the key back into it's normal state.
+     */
+    void unlock(C64Key key);
+
+    /** @brief  Unlocks all keys
+    *
+    *  Removes the lock for all keys, putting them back into their normal state.
+    */
+    void unlockAll();
+
     /** @brief  Uses the auto-typing daemon to type a string.
      *  @param  text    The text to type.
      */
@@ -462,6 +500,10 @@ struct JoystickAPI : public API {
     /** @brief  Triggers a joystick action.
      */
     void trigger(GamePadAction event);
+
+    /** @brief  Updates the complete joystick state
+     */
+    void trigger(bool state[5]);
 };
 
 
@@ -726,6 +768,19 @@ struct RemoteManagerAPI : public API {
      */
     const RemoteManagerInfo &getInfo() const;
     const RemoteManagerInfo &getCachedInfo() const;
+
+
+    /// @}
+    /// @name Sending packets
+    /// @{
+
+    /** @brief  Sends a raw payload through the specified remote server.
+     *  It is delivered through the server's currently configured transport and
+     *  silently dropped if no client is connected.
+     *  @param  server   The server to send through.
+     *  @param  payload  The raw payload to send.
+     */
+    void send(ServerType server, const string &payload);
 
     /// @}
 };

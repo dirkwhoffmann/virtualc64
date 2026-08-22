@@ -53,7 +53,7 @@ RshServer::transport() const
 bool
 RshServer::isSupported(TransportProtocol protocol) const
 {
-    switch (config.transport) {
+    switch (protocol) {
 
         case TransportProtocol::STDIO:  return true;
         case TransportProtocol::TCP:    return true;

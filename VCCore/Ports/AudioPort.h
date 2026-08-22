@@ -217,7 +217,7 @@ private:
 
     // Handles a buffer underflow or overflow condition
     void handleBufferUnderflow();
-    void handleBufferOverflow();
+    void handleBufferOverflow(isize &numSamples);
 
 
     //

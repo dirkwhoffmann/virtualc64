@@ -31,7 +31,7 @@ const long SERVER_ERROR     = -32000; // Reserved for implementation-defined ser
 
 }
 
-class RpcServer final : public RemoteServer, public ConsoleDelegate, public TransportDelegate {
+class RpcServer final : public RemoteServer, public ConsoleDelegate {
 
     StdioTransport stdio = StdioTransport(*this);
     TcpTransport tcp = TcpTransport(*this);

@@ -22,16 +22,16 @@ namespace vc64 {
 class MsgQueue final : CoreObject, utl::Synchronizable {
 
     static constexpr isize CAPACITY = 512;
-    
+
     // Ring buffer storing all pending messages
     utl::RingBuffer <Message, CAPACITY> queue;
 
     // Attached string objects
     string attachments[CAPACITY];
-    
+
     // The registered listener
     const void *listener = nullptr;
-    
+
     // The registered callback function
     Callback *callback = nullptr;
 
@@ -41,7 +41,7 @@ class MsgQueue final : CoreObject, utl::Synchronizable {
     //
     // Constructing
     //
-    
+
     //
     // Methods from CoreObject
     //
@@ -50,25 +50,25 @@ public:
 
     const char *objectName() const override { return "MsgQueue"; }
 
-    
+
     //
     // Managing the queue
     //
-    
+
 public:
-    
+
     // Registers a listener together with it's callback function
     void setListener(const void *listener, Callback *func);
 
     // Disables the message queue
     void disable() { enabled = false; }
-    
+
     // Reads a message
     bool get(Message &msg);
 
     // Sends a message
     void put(const Message &msg, const string &str = "");
-    void put(Msg type, i64 payload = 0, i64 payload2 = 0);
+    void put(Msg type, i64 payload = 0, i64 payload2 = 0, const string &str = "");
     void put(Msg type, const string &payload);
     void put(Msg type, CpuMsg payload);
     void put(Msg type, DriveMsg payload);

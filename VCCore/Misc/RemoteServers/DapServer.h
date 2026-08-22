@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class DapServer final : public RemoteServer, public TransportDelegate {
+class DapServer final : public RemoteServer {
 
     StdioTransport stdio = StdioTransport(*this);
     TcpTransport tcp = TcpTransport(*this);

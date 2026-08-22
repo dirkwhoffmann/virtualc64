@@ -18,8 +18,14 @@ namespace vc64 {
 
 class Stdio {
 
-    // Pipe for terminating the blocking stdio read call
+#ifdef _WIN32
+    // Manual-reset event used to interrupt a blocking get() call. Stored as a
+    // void* so this header does not need to pull in <windows.h>.
+    void *wakeEvent = nullptr;
+#else
+    // Self-pipe used to interrupt the blocking select() inside get()
     int term[2];
+#endif
 
 public:
 
@@ -58,6 +64,14 @@ class StdioTransport : public Transport {
     //
 
 public:
+
+    // Stops the server thread before this object's members (in particular
+    // stdio, whose pipe the thread may still be blocked on) are torn down.
+    // Without this, the implicitly-generated destructor would destroy those
+    // members -- and Transport's serverThread -- while the thread could
+    // still be running, which makes serverThread's destructor call
+    // std::terminate() on a still-joinable thread.
+    ~StdioTransport();
 
     virtual void disconnect() override;
     void main(u16 port = 0, const string &endpoint = "") override;

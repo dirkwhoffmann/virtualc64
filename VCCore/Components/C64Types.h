@@ -115,7 +115,6 @@ enum EventSlot : long
     SLOT_SNP,                       // Snapshots
     SLOT_RSH,                       // Retro Shell
     SLOT_KEY,                       // Auto-typing
-    SLOT_SRV,                       // Remote server manager
     SLOT_DBG,                       // Debugging (Regression tester)
     SLOT_ALA,                       // Alarms (set by the GUI)
     SLOT_INS,                       // Handles periodic calls to inspect()
@@ -152,7 +151,6 @@ struct EventSlotEnum : Reflectable<EventSlotEnum, EventSlot>
             case SLOT_SNP:      return "SNP";
             case SLOT_RSH:      return "RSH";
             case SLOT_KEY:      return "KEY";
-            case SLOT_SRV:      return "SRV";
             case SLOT_DBG:      return "DBG";
             case SLOT_ALA:      return "ALA";
             case SLOT_INS:      return "INS";
@@ -183,7 +181,6 @@ struct EventSlotEnum : Reflectable<EventSlotEnum, EventSlot>
             case SLOT_SNP:      return "Snapshots";
             case SLOT_RSH:      return "Retro Shell";
             case SLOT_KEY:      return "Auto Typing";
-            case SLOT_SRV:      return "Server Daemon";
             case SLOT_DBG:      return "Debugger";
             case SLOT_ALA:      return "Alarms";
             case SLOT_INS:      return "Inspector";
@@ -271,10 +268,6 @@ enum EventID : u8 // _i8(EventID)
     // Auto typing
     KEY_AUTO_TYPE       = 1,
     KEY_EVENT_COUNT,
-
-    // Remote server manager
-    SRV_LAUNCH_DAEMON   = 1,
-    SRV_EVENT_COUNT,
 
     // Alarm event slot
     DBG_WATCHDOG        = 1,

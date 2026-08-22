@@ -32,8 +32,10 @@ Drive::_dump(Category category, std::ostream &os) const
         os << bol(isIdle()) << std::endl;
         os << tab("Motor");
         os << bol(isRotating(), "on", "off") << std::endl;
-        os << tab("Has disk");
+        os << tab("Disk");
         os << bol(hasDisk()) << std::endl;
+        os << tab("Modified");
+        os << bol(hasModifiedDisk()) << std::endl;
         os << tab("Bit ready timer");
         os << dec(bitReadyTimer) << std::endl;
         os << tab("Head position");

@@ -42,8 +42,11 @@ class Keyboard final : public SubComponent {
     u8 kbMatrixRowCnt[8] = { };
     u8 kbMatrixColCnt[8] = { };
     
-    // Indicates if the shift lock is currently pressed
+    // Indicates whether the shift lock is currently pressed
     bool shiftLock = false;
+
+    // If a key is marked as locked, it won't release
+    bool locked[66] = { };
 
     // Delayed keyboard commands (used, e.g., for auto-typing)
     utl::SortedRingBuffer<Command, 1024> pending;
@@ -64,6 +67,7 @@ public:
         CLONE_ARRAY(kbMatrixRowCnt)
         CLONE_ARRAY(kbMatrixColCnt)
         CLONE(shiftLock)
+        CLONE_ARRAY(locked)
         CLONE(pending)
         
         return *this;
@@ -85,7 +89,8 @@ public:
         << kbMatrixCol
         << kbMatrixRowCnt
         << kbMatrixColCnt
-        << shiftLock;
+        << shiftLock
+        << locked;
 
     } SERIALIZERS(serialize);
 
@@ -130,11 +135,16 @@ public:
     // Presses or releases a key
     void press(C64Key key);
     void release(C64Key key);
+    void releaseAll();
     void toggle(C64Key key) { isPressed(key) ? release(key) : press(key); }
 
-    // Clears the keyboard matrix
-    void releaseAll();
+    // Checks whether a certain key is locked
+    bool isLocked(C64Key key);
 
+    // Locks or unlocks a key
+    void lock(C64Key key);
+    void unlock(C64Key key);
+    void unlockAll();
 
     //
     // Auto typing

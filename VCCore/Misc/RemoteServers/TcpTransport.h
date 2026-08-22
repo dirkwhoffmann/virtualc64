@@ -41,6 +41,11 @@ class TcpTransport : public Transport {
 
 public:
 
+    // See StdioTransport::~StdioTransport() -- stops the server thread
+    // before this object's socket members and Transport's serverThread are
+    // torn down.
+    ~TcpTransport();
+
     virtual void disconnect() override;
     void main(u16 port, const string &endpoint = "") override;
 

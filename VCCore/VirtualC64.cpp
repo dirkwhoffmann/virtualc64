@@ -33,7 +33,6 @@ DefaultsAPI VirtualC64::defaults(&Emulator::defaults);
  *     an API function with this annotation may cause a noticable lag.
  */
 
-
 struct SuspendResume {
     const API *api;
     SuspendResume(const API *api) : api(api) {
@@ -695,6 +694,12 @@ CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) const
     return cpu->debugger.disassRecorded(dst, fmt, nr);
 }
 
+RecordedInstruction
+CPUAPI::logEntry(isize nr) const
+{
+    return cpu->debugger.logEntryAbs(nr);
+}
+
 Guard *
 CPUAPI::breakpointNr(long nr) const
 {
@@ -783,7 +788,7 @@ CIAAPI::getCachedInfo() const
     return cia->getCachedInfo();
 }
 
-CIAStats
+const CIAStats &
 CIAAPI::getStats() const
 {
     return cia->getStats();
@@ -844,7 +849,7 @@ VICIIAPI::getColor(isize nr, Palette palette) const
 SIDInfo
 SIDAPI::getInfo(isize nr) const
 {
-    assert(nr < 3);
+    assert(nr <= 3);
 
     return sidBridge->sid[nr].getInfo();
 }
@@ -852,7 +857,7 @@ SIDAPI::getInfo(isize nr) const
 SIDInfo
 SIDAPI::getCachedInfo(isize nr) const
 {
-    assert(nr < 3);
+    assert(nr <= 3);
 
     return sidBridge->sid[nr].getCachedInfo();
 }
@@ -869,7 +874,7 @@ SIDAPI::draw(u32 *buffer, isize width, isize height,
 // Audio port
 //
 
-AudioPortStats
+const AudioPortStats &
 AudioPortAPI::getStats() const
 {
     return audioPort->getStats();
@@ -1014,6 +1019,7 @@ KeyboardAPI::press(C64Key key, double delay, double duration)
         
         emu->put(Command(Cmd::KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
     }
+
     if (duration != 0.0) {
         
         emu->put(Command(Cmd::KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
@@ -1032,6 +1038,7 @@ KeyboardAPI::toggle(C64Key key, double delay, double duration)
 
         emu->put(Command(Cmd::KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
     }
+
     if (duration != 0.0) {
         
         emu->put(Command(Cmd::KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
@@ -1063,13 +1070,39 @@ KeyboardAPI::releaseAll(double delay)
     emu->markAsDirty();
 }
 
-void KeyboardAPI::autoType(const string &text)
+bool
+KeyboardAPI::isLocked(C64Key key) const
+{
+    return keyboard->isLocked(key);
+}
+
+void
+KeyboardAPI::lock(C64Key key)
+{
+    keyboard->lock(key);
+}
+
+void
+KeyboardAPI::unlock(C64Key key)
+{
+    keyboard->unlock(key);
+}
+
+void
+KeyboardAPI::unlockAll()
+{
+    keyboard->unlockAll();
+}
+
+void
+KeyboardAPI::autoType(const string &text)
 {
     keyboard->autoType(text);
     emu->markAsDirty();
 }
 
-void KeyboardAPI::abortAutoTyping()
+void
+KeyboardAPI::abortAutoTyping()
 {
     keyboard->abortAutoTyping();
     emu->markAsDirty();
@@ -1099,6 +1132,13 @@ JoystickAPI::trigger(GamePadAction event)
 {
     VC64_PUBLIC
     emu->put(Cmd::JOY_EVENT, GamePadCmd { .port = joystick->objid, .action = event });
+}
+
+void
+JoystickAPI::trigger(bool state[5])
+{
+    VC64_PUBLIC
+    joystick->trigger(state);
 }
 
 
@@ -1272,6 +1312,13 @@ const RemoteManagerInfo &
 RemoteManagerAPI::getCachedInfo() const
 {
     return remoteManager->getCachedInfo();
+}
+
+void
+RemoteManagerAPI::send(ServerType server, const string &payload)
+{
+    VC64_PUBLIC
+    remoteManager->send(server, payload);
 }
 
 

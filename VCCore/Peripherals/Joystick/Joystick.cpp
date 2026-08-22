@@ -94,6 +94,14 @@ Joystick::trigger(GamePadAction event)
 }
 
 void
+Joystick::trigger(bool state[5])
+{
+    trigger(state[0] ? GamePadAction::PULL_UP : state[1] ? GamePadAction::PULL_DOWN : GamePadAction::RELEASE_Y);
+    trigger(state[2] ? GamePadAction::PULL_LEFT : state[3] ? GamePadAction::PULL_RIGHT : GamePadAction::RELEASE_X);
+    trigger(state[4] ? GamePadAction::PRESS_FIRE : GamePadAction::RELEASE_FIRE);
+}
+
+void
 Joystick::eofHandler()
 {
     if (isAutofiring()) {

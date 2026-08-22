@@ -35,9 +35,9 @@ void
 Console::didExecute(const InputLine& input, std::stringstream &ss)
 {
     if (ss.peek() != EOF) {
-        *this << vdelim << ss.str() << vdelim;
+        *this << vdelim() << ss.str() << vdelim();
     } else {
-        *this << vdelim;
+        *this << vdelim();
     }
 }
 
@@ -47,7 +47,7 @@ Console::didExecute(const InputLine& input, std::stringstream &ss, std::exceptio
     describe(ss, exc, input.id, input.input);
 
     if (ss.peek() != EOF) {
-        *this << vdelim << ss.str() << vdelim;
+        *this << vdelim() << ss.str() << vdelim();
     }
 }
 
@@ -245,6 +245,14 @@ bool
 Console::lastLineIsEmpty()
 {
     return storage.lastLineIsEmpty();
+}
+
+string
+Console::vdelim() const
+{
+    // return RSH_DEBUG ? "[DEBUG]\n" : "\n";
+    // TODO: Add RSH_DEBUG once new debug flag code has been merged in
+    return "\n";
 }
 
 void
@@ -519,7 +527,7 @@ Console::parse(const RSCommand &cmd, const Tokens &args)
     std::vector<string> std;
 
     // Check if a command handler is present
-    if (!cmd.callback) { throw RSError(RSError::TOO_MANY_ARGUMENTS, cmd.fullName); }
+    if (!cmd.callback) { throw RSError(RSError::TOO_FEW_ARGUMENTS, cmd.fullName); }
 
     // Sort input tokens by type
     for (usize i = 0; i < args.size(); i++) {
@@ -788,12 +796,14 @@ Console::exec(const InputLine& cmd)
         // Dispatch output
         for (auto &delegate: delegates) delegate->didExecute(cmd, ss);
 
+    } catch (ScriptInterruption &) {
+
+        for (auto &delegate: delegates) delegate->didExecute(cmd, ss);
+        throw;
+
     } catch (std::exception &err) {
 
-        // Dispatch error message
         for (auto &delegate: delegates) delegate->didExecute(cmd, ss, err);
-
-        // Rethrow exception
         throw;
     }
 }
@@ -823,7 +833,7 @@ Console::describe(const std::exception &exc, isize line, const string &cmd)
 {
     std::stringstream ss;
     describe(ss, exc, line, cmd);
-    *this << vdelim << ss.str() << vdelim;
+    *this << vdelim() << ss.str() << vdelim();
 }
 
 void

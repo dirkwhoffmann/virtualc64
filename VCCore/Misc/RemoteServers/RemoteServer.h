@@ -13,6 +13,7 @@
 #pragma once
 
 #include "RemoteServerTypes.h"
+#include "RemoteManagerTypes.h"
 #include "SubComponent.h"
 #include "Socket.h"
 #include "Thread.h"
@@ -21,7 +22,12 @@
 
 namespace vc64 {
 
-class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo> {
+/* Every remote server is the transport delegate of its own transport layers.
+ * The TransportDelegate base is inherited here (rather than by the concrete
+ * subclasses) so that common functionality, such as traffic recording, can
+ * be implemented in a single place.
+ */
+class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo>, public TransportDelegate {
 
     friend class RemoteManager;
 
@@ -44,12 +50,20 @@ class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo> {
         .shell          = "server prom"
     }};
 
+    /* ENABLE comes last on purpose. exportConfig() emits the options in this
+     * order, and a generated config.retrosh is replayed line by line: with
+     * ENABLE first, the server is started on whatever transport and port
+     * happened to be current, and the following lines then have to stop and
+     * restart it (see setOption). Configuring first and switching on last
+     * means the server is only ever started once, already on the settings it
+     * is meant to run with.
+     */
     Options options = {
 
-        Opt::SRV_ENABLE,
         Opt::SRV_TRANSPORT,
         Opt::SRV_PORT,
-        Opt::SRV_VERBOSE
+        Opt::SRV_VERBOSE,
+        Opt::SRV_ENABLE
     };
 
 protected:
@@ -175,6 +189,20 @@ public:
 
     // Disconnects the client (if any)
     virtual void disconnect() { transport().disconnect(); }
+
+
+    //
+    // Recording traffic
+    //
+
+public:
+
+    /* Records a transmitted or received packet in the traffic log of the
+     * RemoteManager. This function is called from the transport layer for
+     * every packet that passes through. Note: It may be invoked from the
+     * transport's session thread.
+     */
+    void recordTraffic(TrafficDirection direction, const string &payload);
 
 
     //

@@ -12,12 +12,30 @@
 
 #include "vcconfig.h"
 #include "Transport.h"
+#include "RemoteServer.h"
 
 namespace vc64 {
+
+Transport::Transport(RemoteServer &server) : server(server), delegate(server) {
+
+}
 
 Transport::~Transport() {
 
     logme(LOG_SRV, "Shutting down\n");
+}
+
+void
+Transport::record(TrafficDirection direction, const string &payload)
+{
+    server.recordTraffic(direction, payload);
+}
+
+void
+Transport::deliver(const string &payload)
+{
+    record(TrafficDirection::RECEIVED, payload);
+    delegate.didReceive(payload);
 }
 
 void
@@ -31,6 +49,9 @@ Transport::start(u16 port, const string &endpoint)
     // Make sure we continue with a terminated server thread
     if (serverThread.joinable()) serverThread.join();
 
+    // Clear any stop request left over from the previous run
+    stopRequested = false;
+
     // Spawn a new thread
     serverThread = std::thread(&Transport::main, this, port, endpoint);
 }
@@ -38,13 +59,29 @@ Transport::start(u16 port, const string &endpoint)
 void
 Transport::stop()
 {
-    if (isOff() || isStopping()) return;
+    // Guard against re-entrant calls while a stop is already in progress,
+    // but not against a thread that has already exited on its own (e.g.,
+    // after an EOF on stdin) and self-switched to OFF from inside main() --
+    // a std::thread stays joinable until join() is actually called, and an
+    // un-joined joinable thread makes serverThread's destructor call
+    // std::terminate() when this object is torn down.
+    if (isStopping()) return;
 
-    logme(LOG_SRV, "Stopping server...\n");
-    switchState(SrvState::STOPPING);
+    /* Raise the stop request before anything else, and unconditionally --
+     * even when the state still reads OFF. The server thread may be between
+     * being spawned and having switched itself to LISTENING, in which case
+     * neither the state nor disconnect() reaches it (see stopRequested).
+     */
+    stopRequested = true;
 
-    // Interrupt the server thread
-    disconnect();
+    if (!isOff()) {
+
+        logme(LOG_SRV, "Stopping server...\n");
+        switchState(SrvState::STOPPING);
+
+        // Interrupt the server thread
+        disconnect();
+    }
 
     // Wait until the server thread has terminated
     if (serverThread.joinable()) serverThread.join();

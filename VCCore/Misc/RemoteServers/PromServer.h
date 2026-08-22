@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class PromServer final : public RemoteServer, public TransportDelegate {
+class PromServer final : public RemoteServer {
 
     HttpTransport http = HttpTransport(*this);
 
