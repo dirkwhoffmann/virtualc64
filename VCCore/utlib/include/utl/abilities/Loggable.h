@@ -78,12 +78,13 @@ struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
 
 /* Descriptor of a single debug flag.
  *
- * Client libraries declare their flags in X-macro tables and expand those
- * tables into a vector of descriptors (see rvdebug.h and vcdebug.h). The
- * descriptor gives RetroShell a uniform way to list and modify the flags of
- * several libraries, without any of them having to know about each other.
- * Both accessors funnel through 'long', so that LogLevel, bool, and plain
- * value flags can share a single descriptor type.
+ * Client code declares its flags in X-macro tables (see debug.h) and
+ * expands those tables into a vector of descriptors. In projects that
+ * combine several independent libraries, each with its own debug flags,
+ * the descriptor gives RetroShell a uniform way to list and modify all of
+ * them without any library having to know about the others. Both accessors
+ * funnel through 'long', so that LogLevel, bool, and plain value flags can
+ * share a single descriptor type.
  *
  * Descriptor tables exist in debug builds only. In release builds the flags
  * are 'constexpr': they cannot be assigned, and taking their address would
