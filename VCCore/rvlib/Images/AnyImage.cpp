@@ -149,7 +149,7 @@ AnyImage::copy(u8 *buf, isize offset) const
 void
 AnyImage::save()
 {
-    save(Range<isize>{0,size()});
+    save(Range<isize>{0,getSize()});
 }
 
 void

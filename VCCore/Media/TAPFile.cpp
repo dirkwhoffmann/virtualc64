@@ -87,7 +87,7 @@ TAPFile::read()
             
         } else {
             
-            loginfo(TAP_DEBUG, "TAP1 with a zero pulse byte\n");
+            logme(LOG_TAP, "TAP1 with a zero pulse byte\n");
 
             // TAP1 with a zero pulse byte
             result = LO_LO_HI_HI(fp + 1 < data.size ? data[fp + 1] : 0,
@@ -110,9 +110,9 @@ TAPFile::finalizeRead()
     isize header = 0x14;
     
     if (length + header != data.size) {
-        logwarn("TAP: Expected %lu bytes, found %lu\n", length + header, data.size);
+        logme(LV_WARNING, "TAP: Expected %lu bytes, found %lu\n", length + header, data.size);
     } else {
-        loginfo(TAP_DEBUG, "TAP file has been scanned with no errros\n");
+        logme(LOG_TAP, "TAP file has been scanned with no errros\n");
     }
 }
 

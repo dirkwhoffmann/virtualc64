@@ -605,7 +605,7 @@ Console::parse(const RSCommand &cmd, const Tokens &args)
     }
 
     // Print some debug information
-    for (auto &it : map) loginfo(RSH_DEBUG, "arg['%s']='%s'\n", it.first.c_str(), it.second.c_str());
+    for (auto &it : map) logme(LOG_RSH, "arg['%s']='%s'\n", it.first.c_str(), it.second.c_str());
 
     // Check for invalid or extra arguments
     if (!flags.empty()) { throw RSError(RSError::UNKNOWN_FLAG, flags.front()); }

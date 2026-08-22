@@ -119,7 +119,7 @@ CIA::cacheStats(CIAStats &result) const
         result.idleCycles = idle;
         result.idleSince = idleSince();
 
-        // loginfo(STDERR, "totalDiff: %lld idleDiff: %lld\n", totalDiff, idleDiff);
+        // logme(LV_INFO, "totalDiff: %lld idleDiff: %lld\n", totalDiff, idleDiff);
         result.idlePercentage =  totalDiff ? double(idleDiff) / double(totalDiff) : 1.0;
     }
 }

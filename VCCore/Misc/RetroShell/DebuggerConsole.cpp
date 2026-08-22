@@ -13,6 +13,7 @@
 #include "vcconfig.h"
 #include "Console.h"
 #include "Emulator.h"
+#include "rvdebug.h"
 
 namespace vc64 {
 
@@ -836,43 +837,157 @@ DebuggerConsole::initCommands(RSCommand &root)
         }
     });
 
+#ifndef NDEBUG
+
+    /* Logging and debug flags can only be changed in debug builds. In
+     * release builds they are compile-time constants, so the commands
+     * below are not registered at all.
+     *
+     * VirtualC64 and rvlib maintain their own, independent flag tables.
+     * Both are listed and made settable here, addressed by table index.
+     */
+
+    static const std::vector<const std::vector<utl::FlagInfo> *> logTables = {
+        &vc64::debug::logFlags, &retro::vault::debug::logFlags
+    };
+    static const std::vector<const std::vector<utl::FlagInfo> *> debugTables = {
+        &vc64::debug::debugFlags, &retro::vault::debug::debugFlags
+    };
+
     root.add({
 
-        .tokens = { "debug" },
-        .ghelp  = { "Debug variables" },
-        .chelp  = { "Display all debug variables" },
+        .tokens = { "log" },
+        .ghelp  = { "Logging flags" },
+        .chelp  = { "Display all logging flags" },
 
-        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-            dump(os, emulator, Category::Debug);
+            for (const auto *table : logTables) {
+                for (const auto &flag : *table) {
+
+                    os << utl::tab(flag.name);
+                    os << LogLevelEnum::key(LogLevel(flag.get())) << std::endl;
+                }
+            }
         }
     });
 
-    if (debugBuild) {
+    root.add({
 
-        auto& channels = Loggable::getChannels();
+        .tokens = { "log", "set" },
+        .ghelp  = { "Change a logging flag" }
+    });
 
-        for (isize i = 0; i < isize(channels.size()); ++i) {
+    for (isize t = 0; t < isize(logTables.size()); t++) {
+
+        for (isize i = 0; i < isize(logTables[t]->size()); i++) {
+
+            const auto &flag = (*logTables[t])[i];
 
             root.add({
-                
-                .tokens = { "debug", channels[i].name },
-                .chelp  = { channels[i].description },
-                .args   = {
-                    { .name = { "level", "Debug level" } }
-                },
-                    .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-                        auto level = parseNum(args, "level");
-                        if (level >= 0 && level <= 8) {
-                            Loggable::setLevel(values[0], LogLevel(level));
-                        } else {
-                            Loggable::setLevel(values[0], {});
-                        }
-                    }, .payload = { i }
+                .tokens = { "log", "set", flag.name },
+                .ghelp  = { flag.help }
             });
+
+            // Register a setter for every severity level
+            for (const auto &[key, value] : LogLevelEnum::pairs()) {
+
+                root.add({
+
+                    .tokens = { "log", "set", flag.name, key },
+                    .chelp  = { LogLevelEnum::help(value) },
+
+                    .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                        (*logTables[values[0]])[values[1]].set(values[2]);
+
+                    }, .payload = { t, i, value }
+                });
+            }
         }
     }
+
+    root.add({
+
+        .tokens = { "debug" },
+        .ghelp  = { "Debug flags" },
+        .chelp  = { "Display all debug flags" },
+
+        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            for (const auto *table : debugTables) {
+                for (const auto &flag : *table) {
+
+                    os << utl::tab(flag.name);
+                    if (flag.boolean) {
+                        os << utl::bol(flag.get() != 0) << std::endl;
+                    } else {
+                        os << utl::dec(flag.get()) << std::endl;
+                    }
+                }
+            }
+        }
+    });
+
+    root.add({
+
+        .tokens = { "debug", "set" },
+        .ghelp  = { "Change a debug flag" }
+    });
+
+    for (isize t = 0; t < isize(debugTables.size()); t++) {
+
+        for (isize i = 0; i < isize(debugTables[t]->size()); i++) {
+
+            const auto &flag = (*debugTables[t])[i];
+
+            if (flag.boolean) {
+
+                root.add({
+
+                    .tokens = { "debug", "set", flag.name },
+                    .ghelp  = { flag.help }
+                });
+
+                // Register a setter for both boolean values
+                for (const auto &[key, value] : std::vector<std::pair<string,isize>>
+                     { { "false", 0 }, { "true", 1 } }) {
+
+                    root.add({
+
+                        .tokens = { "debug", "set", flag.name, key },
+                        .chelp  = { value ? "Enable the flag" : "Disable the flag" },
+
+                        .func   = [] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                            (*debugTables[values[0]])[values[1]].set(values[2]);
+
+                        }, .payload = { t, i, value }
+                    });
+                }
+
+            } else {
+
+                // The flag holds a parameter value. Register a single setter
+                root.add({
+
+                    .tokens = { "debug", "set", flag.name },
+                    .chelp  = { flag.help },
+                    .args   = {
+                        { .name = { "value", "Parameter value" } }
+                    },
+                    .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+                        (*debugTables[values[0]])[values[1]].set(parseNum(args, "value"));
+
+                    }, .payload = { t, i }
+                });
+            }
+        }
+    }
+
+#endif
 
     root.add({
 

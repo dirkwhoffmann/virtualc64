@@ -231,7 +231,7 @@ FSDoctor::xray(BlockNr ref, bool strict) const
         if ( error != FSBlockError::OK) {
 
             erroneous++;
-            loginfo(FS_DEBUG, "Block %ld [%ld]: %s\n", node.nr, i, FSBlockErrorEnum::key(error));
+            logme(LOG_FS, "Block %ld [%ld]: %s\n", node.nr, i, FSBlockErrorEnum::key(error));
         }
     }
 

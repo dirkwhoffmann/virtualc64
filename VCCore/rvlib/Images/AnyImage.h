@@ -19,8 +19,6 @@ namespace retro::vault {
 
 using namespace utl;
 
-extern LogChannel HDF_DBG;
-
 class AnyImage : public Hashable, public Dumpable, public Loggable {
 
 public:

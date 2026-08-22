@@ -86,7 +86,7 @@ AudioPort::updateSampleRateCorrection()
         // Smooth it out
         sampleRateCorrection = (sampleRateCorrection * 0.75) + (correction * 0.25);
 
-        loginfo(AUDBUF_DEBUG, "ASR correction: %.0f Hz (fill: %.2f)\n",
+        logme(LOG_AUDBUF, "ASR correction: %.0f Hz (fill: %.2f)\n",
               sampleRateCorrection, stream.fillLevel());
 
     } else {
@@ -101,7 +101,7 @@ AudioPort::fadeOut()
 {
     SYNCHRONIZED
 
-    loginfo(AUDVOL_DEBUG, "Fading out (%ld samples)...\n", count());
+    logme(LOG_AUDVOL, "Fading out (%ld samples)...\n", count());
 
     volL.set(0.0);
     volR.set(0.0);
@@ -136,7 +136,7 @@ AudioPort::mixSingleSID(isize numSamples)
     auto curR = volR.current;
 
     // Print some debug info
-    loginfo(SID_EXEC, "volL: %f volR: %f vol0: %f pan0: %f\n", curL, curR, vol0, pan0);
+    logme(LOG_SID_EXEC, "volL: %f volR: %f vol0: %f pan0: %f\n", curL, curR, vol0, pan0);
 
     if (wasMuted) {
 
@@ -184,8 +184,8 @@ AudioPort::mixMultiSID(isize numSamples)
     auto curR = volR.current;
 
     // Print some debug info
-    loginfo(SID_EXEC, "volL: %f volR: %f\n", curL, curR);
-    loginfo(SID_EXEC, "vol0: %f vol1: %f vol2: %f vol3: %f\n", vol0, vol1, vol2, vol3);
+    logme(LOG_SID_EXEC, "volL: %f volR: %f\n", curL, curR);
+    logme(LOG_SID_EXEC, "vol0: %f vol1: %f vol2: %f vol3: %f\n", vol0, vol1, vol2, vol3);
 
     if (wasMuted) {
 
@@ -244,11 +244,11 @@ AudioPort::handleBufferUnderflow()
     if (emulator.isRunning() && !emulator.isWarping()) {
 
         stats.bufferUnderflows++;
-        loginfo(AUDBUF_DEBUG, "Audio buffer underflow after %f seconds\n", elapsedTime.asSeconds());
+        logme(LOG_AUDBUF, "Audio buffer underflow after %f seconds\n", elapsedTime.asSeconds());
 
         // Adjust the sample rate
         setSampleRate(host.getConfig().sampleRate);
-        loginfo(AUDBUF_DEBUG, "New sample rate = %.2f\n", sampleRate);
+        logme(LOG_AUDBUF, "New sample rate = %.2f\n", sampleRate);
     }
 }
 
@@ -266,11 +266,11 @@ AudioPort::handleBufferOverflow()
     if (emulator.isRunning() && !emulator.isWarping()) {
 
         stats.bufferOverflows++;
-        loginfo(AUDBUF_DEBUG, "Audio buffer overflow after %f seconds\n", elapsedTime.asSeconds());
+        logme(LOG_AUDBUF, "Audio buffer overflow after %f seconds\n", elapsedTime.asSeconds());
 
         // Adjust the sample rate
         setSampleRate(host.getConfig().sampleRate);
-        loginfo(AUDBUF_DEBUG, "New sample rate = %.2f\n", sampleRate);
+        logme(LOG_AUDBUF, "New sample rate = %.2f\n", sampleRate);
     }
 }
 

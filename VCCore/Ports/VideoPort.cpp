@@ -143,7 +143,7 @@ VideoPort::buffersWillSwap()
     if (grabbed < current) {
 
         stats.droppedFrames++;
-        loginfo(TIM_DEBUG, "Frame %lld dropped (total: %ld latest: %lld)\n",
+        logme(LOG_TIM, "Frame %lld dropped (total: %ld latest: %lld)\n",
             current, stats.droppedFrames, grabbed);
     }
 }

@@ -157,7 +157,7 @@ Reu::peekIO2(u16 addr)
             break;
     }
 
-    loginfo(REU_DEBUG, "peekIO2(%x) = %02X\n", addr, result);
+    logme(LOG_REU, "peekIO2(%x) = %02X\n", addr, result);
     return result;
 }
 
@@ -234,7 +234,7 @@ Reu::spypeekIO2(u16 addr) const
 void
 Reu::pokeIO2(u16 addr, u8 value)
 {
-    loginfo(REU_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
+    logme(LOG_REU, "pokeIO2(%x,%x)\n", addr, value);
 
     switch (addr & 0x1F) {
 
@@ -248,11 +248,11 @@ Reu::pokeIO2(u16 addr, u8 value)
 
             if (GET_BIT(cr,7) && ff00Enabled()) {
 
-                // loginfo(REU_DEBUG, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
+                // logme(LOG_REU, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
             }
             if (GET_BIT(cr,7) && ff00Disabled()) {
 
-                // loginfo(REU_DEBUG, "Initiating DMA [Mode %d]...\n", cr & 0x3);
+                // logme(LOG_REU, "Initiating DMA [Mode %d]...\n", cr & 0x3);
                 initiateDma();
             }
             break;
@@ -344,22 +344,22 @@ Reu::poke(u16 addr, u8 value)
 
     } else {
 
-        logdebug(REU_DEBUG, "poke($FF00,%02X)\n", value);
+        logme(LOG_REU, "poke($FF00,%02X)\n", value);
 
         if (isActive()) {
 
-            loginfo(REU_DEBUG, "Ignoring write to $FF00. REU already active\n");
+            logme(LOG_REU, "Ignoring write to $FF00. REU already active\n");
             return;
         }
 
         if (!isArmed()) {
 
-            loginfo(REU_DEBUG, "Ignoring write to $FF00. REU not armed\n");
+            logme(LOG_REU, "Ignoring write to $FF00. REU not armed\n");
             mem.poke(addr, value, memTypeF);
             return;
         }
 
-        loginfo(REU_DEBUG, "Starting REU via FF00 trigger\n");
+        logme(LOG_REU, "Starting REU via FF00 trigger\n");
         if (memTypeF != MemType::RAM) mem.poke(addr, value, memTypeF);
 
         initiateDma();
@@ -480,7 +480,7 @@ Reu::execute(EventID id)
 
         case EXP_REU_INITIATE:
 
-            if (debug::REU_DEBUG) { dump(Category::Dma, std::cout); }
+            if CONSTEXPR (debug::LOG_REU != LogLevel::LOG_NONE) { dump(Category::Dma, std::cout); }
 
             // Update control register bits
             cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
@@ -510,19 +510,19 @@ Reu::execute(EventID id)
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
         {
-            lognull(REU_DEBUG, "%d%d : ", ba[1], ba[0]);
+            logme(LOG_NULLDEV, "%d%d : ", ba[1], ba[0]);
 
             // Only proceed if the bus is available
             if (busIsBlocked(id)) {
 
-                if constexpr (debug::REU_DEBUG > 3) printf("BLOCKED\n");
+                if CONSTEXPR (debug::LOG_REU_DMA != LogLevel::LOG_NONE) printf("BLOCKED\n");
                 break;
             }
 
             // Perform a DMA cycle
             auto remaining = doDma(id);
 
-            if constexpr (debug::REU_DEBUG > 3) {
+            if CONSTEXPR (debug::LOG_REU_DMA != LogLevel::LOG_NONE) {
                 
                 if (id == EXP_REU_STASH) printf("Stashing\n");
                 if (id == EXP_REU_FETCH) printf("Fetching %02x\n", reuVal);
@@ -544,7 +544,7 @@ Reu::execute(EventID id)
 
             if (autoloadEnabled()) {
 
-                loginfo(REU_DEBUG, "Autoloading...\n");
+                logme(LOG_REU, "Autoloading...\n");
 
                 // Reload values from shadow registers
                 c64Base = c64BaseLatched;
@@ -675,7 +675,7 @@ Reu::doDma(EventID id)
 
             if (c64Val != reuVal) {
 
-                loginfo(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
+                logme(LOG_REU, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
                       c64Base, c64Val, (u32)reuBank << 16 | reuBase, reuVal);
 
                 // Set the Fault bit
@@ -721,7 +721,7 @@ Reu::triggerEndOfBlockIrq()
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
 
-        loginfo(REU_DEBUG, "End-of-block IRQ triggered (sr = %02x)\n", sr);
+        logme(LOG_REU, "End-of-block IRQ triggered (sr = %02x)\n", sr);
     }
 }
 
@@ -733,7 +733,7 @@ Reu::triggerVerifyErrorIrq()
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
 
-        loginfo(REU_DEBUG, "Verify-error IRQ triggered (sr = %02x)\n", sr);
+        logme(LOG_REU, "Verify-error IRQ triggered (sr = %02x)\n", sr);
     }
 }
 

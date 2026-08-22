@@ -59,7 +59,7 @@ CRTFile::getName() const
 void
 CRTFile::finalizeRead()
 {
-    if (debug::CRT_DEBUG) dump();
+    if CONSTEXPR (debug::LOG_CRT != LogLevel::LOG_NONE) dump();
 
     // Fix known inconsistencies
     repair();
@@ -81,7 +81,7 @@ CRTFile::finalizeRead()
         ptr += chipSize(numberOfChips);
     }
     
-    loginfo(CRT_DEBUG, "CRT file imported (%ld chips)\n", numberOfChips);
+    logme(LOG_CRT, "CRT file imported (%ld chips)\n", numberOfChips);
 }
 
 CartridgeType
@@ -180,7 +180,7 @@ CRTFile::repair()
         case 0xb2a479a5a2ee6cd5: // Mikro Assembler
 
             // Replace invalid CRT type $00 by $1C
-            loginfo(CRT_DEBUG, "Repairing broken Mikro Assembler cartridge\n");
+            logme(LOG_CRT, "Repairing broken Mikro Assembler cartridge\n");
             data[0x17] = 0x1C;
             break;
     }

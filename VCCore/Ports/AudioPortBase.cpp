@@ -19,7 +19,7 @@ namespace vc64 {
 void
 AudioPort::clear()
 {
-    loginfo(AUDBUF_DEBUG, "Clearing the audio sample buffer\n");
+    logme(LOG_AUDBUF, "Clearing the audio sample buffer\n");
 
     // Wipe out the ringbuffer
     stream.wipeOut();
@@ -268,12 +268,12 @@ AudioPort::setSampleRate(double hz)
     if (hz != 0.0) {
 
         sampleRate = hz;
-        logdebug(AUD_DEBUG, "setSampleRate(%.2f)\n", sampleRate);
+        logme(LOG_AUD, "setSampleRate(%.2f)\n", sampleRate);
 
     } else {
 
         sampleRate = detector.sampleRate();
-        logdebug(AUD_DEBUG, "setSampleRate(%.2f) (predicted)\n", sampleRate);
+        logme(LOG_AUD, "setSampleRate(%.2f) (predicted)\n", sampleRate);
     }
 }
 

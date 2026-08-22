@@ -1,24 +1,130 @@
 #pragma once
 
+#include "utl/abilities/Loggable.h"
 #include <source_location>
 
-namespace retro::vault {
+#ifdef NDEBUG
+#define CONSTEXPR constexpr
+#else
+#define CONSTEXPR
+#endif
+
+/* In release builds (NDEBUG), CONSTEXPR expands to 'constexpr'. Every debug
+ * flag below then becomes a compile-time constant, and 'if CONSTEXPR' below
+ * becomes 'if constexpr', so the compiler removes each guarded log call (or
+ * action) entirely when its flag is off.
+ *
+ * In debug builds, CONSTEXPR expands to nothing. The same flags become
+ * ordinary (inline) variables that can be switched on and off at runtime,
+ * either by editing the tables below or via RetroShell ('log' and 'debug').
+ *
+ * Debug flags come in two kinds, declared in the two tables below:
+ *
+ * - Logging flags gate a logme() call and nothing else. Disabling one
+ *   removes the call (release builds) or simply keeps it silent (debug
+ *   builds); the library behaves identically either way. They are typed
+ *   'LogLevel', because their value doubles as the severity the message is
+ *   issued with. LOG_NONE disables the call, any other LogLevel enables it
+ *   at that severity. All logging flags are prefixed 'LOG_'.
+ *
+ * - Action flags enable extra debug behavior with a real side effect
+ *   (an integrity check, a redundant computation compared against the
+ *   fast path, forcing a specific code path, ...). They are typed 'bool',
+ *   except for those holding a parameter value.
+ *
+ * Both tables are X-macro lists: each entry names a flag exactly once, and
+ * is expanded both into the variable declaration and (in debug builds) into
+ * a descriptor table used by RetroShell. To add a flag, add one line here.
+ */
+
 
 //
-// Debug settings
+// Logging flags
 //
 
-// Default channels
-constexpr long NULLDEV         = 0;
-constexpr long STDERR          = 1;
+//        name          default    description
+#define RV_LOG_FLAGS(E)                                                       \
+                                                                              \
+    /* File systems */                                                        \
+    E(LOG_FS,         LOG_NONE,  "File systems")                              \
+                                                                              \
+    /* Media */                                                               \
+    E(LOG_IMG,        LOG_NONE,  "Disk images")
 
-// File systems
-constexpr long FS_DEBUG        = 0;
 
-// Media
-constexpr long IMG_DEBUG       = 0;
+//
+// Action flags
+//
+
+//        type  name          default  description
+#define RV_DEBUG_FLAGS(E)                                                     \
+                                                                              \
+    /* File systems */                                                        \
+    E(bool, FS_VERIFY,      false, "Verify file system integrity")
+
+
+//
+// Logging macro
+//
+
+#define logme(key, format, ...) \
+    do { \
+        if CONSTEXPR (debug::key != utl::LogLevel::LOG_NONE) \
+            log(debug::key, std::source_location::current(), \
+                format __VA_OPT__(,) __VA_ARGS__); \
+    } while (0)
+
+
+namespace retro::vault::debug {
+
+using utl::LogLevel;
+using utl::FlagInfo;
+
+//
+// Fixed severities (always active, never LOG_NONE)
+//
+
+inline constexpr LogLevel LV_EMERGENCY = LogLevel::LOG_EMERG;
+inline constexpr LogLevel LV_ALERT     = LogLevel::LOG_ALERT;
+inline constexpr LogLevel LV_CRITICAL  = LogLevel::LOG_CRIT;
+inline constexpr LogLevel LV_ERROR     = LogLevel::LOG_ERR;
+inline constexpr LogLevel LV_WARNING   = LogLevel::LOG_WARNING;
+inline constexpr LogLevel LV_NOTICE    = LogLevel::LOG_NOTICE;
+inline constexpr LogLevel LV_INFO      = LogLevel::LOG_INFO;
+inline constexpr LogLevel LV_DEBUG     = LogLevel::LOG_DEBUG;
+
+// Always-off placeholder, used to permanently silence a log call
+inline constexpr LogLevel LOG_NULLDEV = LogLevel::LOG_NONE;
+
+
+//
+// Flag declarations (generated from the tables above)
+//
+
+#define DECLARE_LOG_FLAG(name, dflt, help) \
+    inline CONSTEXPR LogLevel name = LogLevel::dflt;
+RV_LOG_FLAGS(DECLARE_LOG_FLAG)
+#undef DECLARE_LOG_FLAG
+
+#define DECLARE_DEBUG_FLAG(type, name, dflt, help) \
+    inline CONSTEXPR type name = dflt;
+RV_DEBUG_FLAGS(DECLARE_DEBUG_FLAG)
+#undef DECLARE_DEBUG_FLAG
+
+
+//
+// Flag descriptors (debug builds only)
+//
+
+#ifndef NDEBUG
+
+extern const std::vector<FlagInfo> logFlags;
+extern const std::vector<FlagInfo> debugFlags;
+
+#endif
 
 }
+
 
 //
 // Forced error conditions
@@ -42,99 +148,12 @@ constexpr long DMS_CANT_CREATE      = 0;
 
 
 //
-// Logging channels
-//
-
-namespace retro::vault {
-
-// Default channels
-extern long CH_NULLDEV;
-extern long CH_STDERR;
-
-// File systems
-extern long CH_FS_DEBUG;
-
-// Images
-extern long CH_IMG_DEBUG;
-
-}
-
-
-//
-// Main logging macro
-//
-
-#if NDEBUG
-
-#define logMsg(key, level, format, ...) \
-    do { \
-        if constexpr (key) \
-            log(CH_ ## key, level, std::source_location::current(), \
-                format __VA_OPT__(,) __VA_ARGS__); \
-    } while (0)
-
-#else
-
-#define logMsg(key, level, format, ...)                           \
-do { \
-    log(CH_ ## key, level, std::source_location::current(), \
-        format __VA_OPT__(,) __VA_ARGS__); \
-} while (0)
-
-#endif
-
-/*
-#define logMsg(key, level, format, ...)                           \
-do { \
-log(::retro::vault::channel::key, level, std::source_location::current(), \
-format __VA_OPT__(,) __VA_ARGS__); \
-} while (0)
-
-#endif
-*/
-
-//
-// Wrappers for all syslog levels
-//
-
-#define logemergency(format, ...) \
-    logMsg(STDERR, LogLevel::LOG_EMERG, format __VA_OPT__(,) __VA_ARGS__)
-
-#define logalert(format, ...) \
-    logMsg(STDERR, LogLevel::LOG_ALERT, format __VA_OPT__(,) __VA_ARGS__)
-
-#define logcritical(format, ...) \
-    logMsg(STDERR, LogLevel::LOG_CRIT, format __VA_OPT__(,) __VA_ARGS__)
-
-#define logerror(format, ...) \
-    logMsg(STDERR, LogLevel::LOG_ERR, format __VA_OPT__(,) __VA_ARGS__)
-
-#define logwarn(format, ...) \
-    logMsg(STDERR, LogLevel::LOG_WARNING, format __VA_OPT__(,) __VA_ARGS__)
-
-#define lognotice(channel, format, ...) \
-    logMsg(channel, LogLevel::LOG_NOTICE, format __VA_OPT__(,) __VA_ARGS__)
-
-#define loginfo(channel, format, ...) \
-    logMsg(channel, LogLevel::LOG_INFO, format __VA_OPT__(,) __VA_ARGS__)
-
-#define logdebug(channel, format, ...) \
-    logMsg(channel, LogLevel::LOG_DEBUG, format __VA_OPT__(,) __VA_ARGS__)
-
-#define lognull(channel, format, ...)
-
-
-//
 // Convenience wrappers
 //
 
 #define fatal(format, ...) \
     do { \
-        logemergency(format __VA_OPT__(,) __VA_ARGS__); \
+        logme(LV_EMERGENCY, format __VA_OPT__(,) __VA_ARGS__); \
         assert(false); \
         std::terminate(); \
     } while(0)
-
-#define xfiles(format, ...) \
-    logMsg(XFILES, LogLevel::LOG_INFO, format __VA_OPT__(,) __VA_ARGS__)
-

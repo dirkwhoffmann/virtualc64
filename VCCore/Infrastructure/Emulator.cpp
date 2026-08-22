@@ -84,23 +84,6 @@ Emulator::_dump(Category category, std::ostream &os) const
 {
     using namespace utl;
 
-    if (category == Category::Debug) {
-
-        auto cs = getChannels();
-        std::sort(cs.begin(), cs.end(),
-                  [](const auto& a, const auto& b) { return a.name < b.name; });
-
-        for (auto c : cs) {
-
-            os << tab(c.name);
-            if (c.level.has_value()) {
-                os << LogLevelEnum::key(*c.level) << std::endl;
-            } else {
-                os << "-" << std::endl;
-            }
-        }
-    }
-    
     if (category == Category::Defaults) {
 
         defaults.dump(category, os);
@@ -323,12 +306,12 @@ Emulator::cloneRunAheadInstance()
     // Recreate the runahead instance from scratch
     ahead = main; isDirty = false;
 
-    if constexpr (debug::RUA_CHECKSUM) {
+    if CONSTEXPR (debug::RUA_CHECKSUM) {
         
         if (ahead != main) {
             
             main.diff(ahead);
-            logemergency("Corrupted run-ahead clone detected");
+            logme(LV_EMERGENCY, "Corrupted run-ahead clone detected");
             fatalError;
             // fatal("Corrupted run-ahead clone detected");
         }
@@ -343,7 +326,7 @@ Emulator::recreateRunAheadInstance()
     auto &config = main.getConfig();
 
     // Clone the main instance
-    if (debug::RUA_DEBUG) {
+    if CONSTEXPR (debug::LOG_RUA != LogLevel::LOG_NONE) {
         utl::StopWatch watch("Run-ahead: Clone");
         cloneRunAheadInstance();
     } else {
@@ -351,7 +334,7 @@ Emulator::recreateRunAheadInstance()
     }
 
     // Advance to the proper frame
-    if (debug::RUA_DEBUG) {
+    if CONSTEXPR (debug::LOG_RUA != LogLevel::LOG_NONE) {
         utl::StopWatch watch("Run-ahead: Fast-forward");
         ahead.fastForward(config.runAhead - 1);
     } else {

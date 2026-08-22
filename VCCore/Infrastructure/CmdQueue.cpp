@@ -20,12 +20,12 @@ CmdQueue::put(const Command &cmd)
 {
     {   SYNCHRONIZED
 
-        loginfo(CMD_DEBUG, "%s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
+        logme(LOG_CMD, "%s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
 
         if (!queue.isFull()) {
             queue.write(cmd);
         } else {
-            logwarn("Command lost: %s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
+            logme(LV_WARNING, "Command lost: %s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
         }
 
         empty = false;

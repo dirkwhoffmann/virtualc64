@@ -1,27 +1,32 @@
 #include "rvconfig.h"
 #include "utl/abilities/Loggable.h"
+#include <type_traits>
 
-#define STR(x) #x
-#define XSTR(x) STR(x)
+#ifndef NDEBUG
 
-#define DEBUG_CHANNEL(name, description) \
-utl::LogChannel CH_ ## name = \
-  name ? \
-    utl::Loggable::subscribe(XSTR(name), std::optional<long>(7), description) : \
-    utl::Loggable::subscribe(XSTR(name), std::optional<long>(std::nullopt), description);
+namespace retro::vault::debug {
 
-namespace retro::vault {
+/* The flag descriptor tables, generated from the X-macro lists in rvdebug.h.
+ * Each entry wraps its flag in a pair of captureless lambdas, so that flags
+ * of different types can be read and written through a common interface.
+ */
 
-// Register the default channels
-DEBUG_CHANNEL(NULLDEV,          "Message sink");
-DEBUG_CHANNEL(STDERR,           "Standard error");
+#define LOG_FLAG_ENTRY(name, dflt, help) \
+    { #name, help, false, \
+      []() -> long { return (long)name; }, \
+      [](long value) { name = LogLevel(value); } },
 
-// Register a logging channel for each debug flag
+#define DEBUG_FLAG_ENTRY(type, name, dflt, help) \
+    { #name, help, std::is_same_v<type, bool>, \
+      []() -> long { return (long)name; }, \
+      [](long value) { name = (type)value; } },
 
-// File systems
-DEBUG_CHANNEL(FS_DEBUG,         "File systems");
+const std::vector<FlagInfo> logFlags = { RV_LOG_FLAGS(LOG_FLAG_ENTRY) };
+const std::vector<FlagInfo> debugFlags = { RV_DEBUG_FLAGS(DEBUG_FLAG_ENTRY) };
 
-// Images
-DEBUG_CHANNEL(IMG_DEBUG,        "Disk images");
+#undef LOG_FLAG_ENTRY
+#undef DEBUG_FLAG_ENTRY
 
 }
+
+#endif

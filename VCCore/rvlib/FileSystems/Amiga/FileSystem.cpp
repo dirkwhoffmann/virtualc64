@@ -33,7 +33,7 @@ FSTraits::adf() const
 
 FileSystem::FileSystem(Volume &vol) : cache(*this, vol)
 {
-    loginfo(FS_DEBUG, "Creating file system...\n");
+    logme(LOG_FS, "Creating file system...\n");
 
     auto layout  = FSDescriptor(vol.capacity());
     layout.bsize = vol.bsize();
@@ -53,12 +53,12 @@ FileSystem::FileSystem(Volume &vol) : cache(*this, vol)
     bmBlocks        = layout.bmBlocks;
     bmExtBlocks     = layout.bmExtBlocks;
 
-    if constexpr (FS_DEBUG) dumpState();
+    if CONSTEXPR (debug::FS_VERIFY) dumpState();
 
     // Set the current directory to '/'
     current = rootBlock;
 
-    loginfo(FS_DEBUG, "Success\n");
+    logme(LOG_FS, "Success\n");
 }
 
 void

@@ -121,7 +121,7 @@ Keyboard::isPressed(C64Key key) const
 void
 Keyboard::press(C64Key key)
 {
-    loginfo(KBD_DEBUG, "press(%ld)\n", key.nr);
+    logme(LOG_KBD, "press(%ld)\n", key.nr);
 
     switch (key.nr) {
 
@@ -148,7 +148,7 @@ Keyboard::press(C64Key key)
 void
 Keyboard::release(C64Key key)
 {
-    loginfo(KBD_DEBUG, "release(%ld)\n", key.nr);
+    logme(LOG_KBD, "release(%ld)\n", key.nr);
 
     switch (key.nr) {
 
@@ -179,7 +179,7 @@ Keyboard::releaseAll()
 {
     SYNCHRONIZED
 
-    loginfo(KBD_DEBUG, "releaseAll()\n");
+    logme(LOG_KBD, "releaseAll()\n");
 
     // Clear the keyboard matrix
     for (isize i = 0; i < 8; i++) {
@@ -196,7 +196,7 @@ Keyboard::releaseAll()
 void
 Keyboard::autoType(const string &text)
 {
-    loginfo(KBD_DEBUG, "autoType(%s)\n", text.c_str());
+    logme(LOG_KBD, "autoType(%s)\n", text.c_str());
 
     auto trigger = c64.cpu.clock;
 
@@ -229,7 +229,7 @@ Keyboard::abortAutoTyping()
 {
     SYNCHRONIZED
 
-    loginfo(KBD_DEBUG, "abortAutoTyping()\n");
+    logme(LOG_KBD, "abortAutoTyping()\n");
 
     if (!pending.isEmpty()) {
 

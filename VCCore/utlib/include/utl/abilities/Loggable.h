@@ -9,17 +9,10 @@
 
 /* The Loggable interface provides a framework for printing log messages.
  *
- * The framework maintains a list of output channels. The `subscribe` method
- * returns a handle to a channel and creates a new channel on-the-fly if it
- * does not exist yet. Each output channel consists of an identifier, an
- * optional severity threshold, and an optional human-readable description.
- *
- * The severity threshold is used to filter messages based on their severity.
- * Severity levels are based on BSD syslog conventions, where lower numbers
- * indicate higher urgency. If no threshold is set, the channel is disabled;
- * no output is printed.
- *
- * Messages are generated via the log function.
+ * Messages are generated via the log function and are always written to
+ * stderr. Whether a call site actually calls log() at all is decided at
+ * the call site itself (see the logging macros in debug.h), based on a
+ * per-flag debug setting rather than a runtime channel lookup.
  */
 
 #pragma once
@@ -29,10 +22,9 @@
 
 namespace utl {
 
-using LogChannel = isize;
-
 enum class LogLevel : long
 {
+    LOG_NONE    = -1,
     LOG_EMERG   = 0,
     LOG_ALERT   = 1,
     LOG_CRIT    = 2,
@@ -45,7 +37,7 @@ enum class LogLevel : long
 
 struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
 {
-    static constexpr long minVal = 0;
+    static constexpr long minVal = -1;
     static constexpr long maxVal = (long)LogLevel::LOG_DEBUG;
 
     static const char *_key(long value) { return _key(LogLevel(value)); }
@@ -53,6 +45,7 @@ struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
     {
         switch (value) {
 
+            case LogLevel::LOG_NONE:    return "LV_NONE";
             case LogLevel::LOG_EMERG:   return "LV_EMERGENCY";
             case LogLevel::LOG_ALERT:   return "LV_ALERT";
             case LogLevel::LOG_CRIT:    return "LV_CRITICAL";
@@ -69,6 +62,7 @@ struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
     {
         switch (value) {
 
+            case LogLevel::LOG_NONE:    return "Logging disabled";
             case LogLevel::LOG_EMERG:   return "System is unusable";
             case LogLevel::LOG_ALERT:   return "Immediate action required";
             case LogLevel::LOG_CRIT:    return "Critical condition";
@@ -82,45 +76,45 @@ struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
     }
 };
 
-struct LogChannelInfo {
+/* Descriptor of a single debug flag.
+ *
+ * Client libraries declare their flags in X-macro tables and expand those
+ * tables into a vector of descriptors (see rvdebug.h and vcdebug.h). The
+ * descriptor gives RetroShell a uniform way to list and modify the flags of
+ * several libraries, without any of them having to know about each other.
+ * Both accessors funnel through 'long', so that LogLevel, bool, and plain
+ * value flags can share a single descriptor type.
+ *
+ * Descriptor tables exist in debug builds only. In release builds the flags
+ * are 'constexpr': they cannot be assigned, and taking their address would
+ * needlessly emit all of them into the binary.
+ */
 
-    // Channel identifier
-    string name;
+struct FlagInfo {
 
-    // Severity threshold (empty optional blocks everything)
-    optional<LogLevel> level;
+    // Name of the flag, as written in the declaration table
+    const char *name;
 
-    // Optional description
-    string description;
+    // Human-readable description
+    const char *help;
+
+    // Indicates whether this flag is a boolean switch
+    bool boolean;
+
+    // Accessors
+    long (*get)();
+    void (*set)(long);
 };
 
 class Loggable {
 
-    // Returns a reference to the channel pool
-    static std::vector<LogChannelInfo> &channels();
-
 public:
 
-    // Returns the number of registered channels
-    static isize size() noexcept { return isize(channels().size()); }
-
-    // Returns all registered channels
-    static const std::vector<LogChannelInfo> &getChannels() noexcept { return channels(); }
-
-    // Looks up an existing channel or creates a new one if it does not exist
-    static LogChannel subscribe(string name, optional<long> level, string description = "");
-    static LogChannel subscribe(string name, optional<LogLevel> level, string description = "");
-
-    // Modifies the severity threshold of an existing channel
-    static void setLevel(isize nr, optional<LogLevel> level);
-    static void setLevel(string name, optional<LogLevel> level);
-
-    // Output functions (called by macro wrappers)
+    // Output function (called by macro wrappers)
 #if defined(__clang__)
-    __attribute__((format(printf, 5, 6)))
+    __attribute__((format(printf, 4, 5)))
 #endif
-    void log(LogChannel channel,
-             LogLevel level,
+    void log(LogLevel level,
              const std::source_location &loc,
              const char *fmt, ...) const;
 

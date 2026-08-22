@@ -18,7 +18,7 @@ namespace vc64 {
 void
 GameKiller::resetCartConfig()
 {
-    loginfo(CRT_DEBUG, "Starting GameKiller cartridge in NOCART mode\n");
+    logme(LOG_CRT, "Starting GameKiller cartridge in NOCART mode\n");
     
     control = 0;
     expansionPort.setCartridgeMode(CRTMode::OFF);
@@ -33,7 +33,7 @@ GameKiller::peek(u16 addr)
 void
 GameKiller::pokeIO1(u16 addr, u8 value)
 {
-    loginfo(CRT_DEBUG, "GameKiller::pokeIO1(%x, %d)\n", addr, control);
+    logme(LOG_CRT, "GameKiller::pokeIO1(%x, %d)\n", addr, control);
     
     if (++control > 1) {
         expansionPort.setCartridgeMode(CRTMode::OFF);
@@ -43,7 +43,7 @@ GameKiller::pokeIO1(u16 addr, u8 value)
 void
 GameKiller::pokeIO2(u16 addr, u8 value)
 {
-    loginfo(CRT_DEBUG, "GameKiller::pokeIO2(%x, %d)\n", addr, control);
+    logme(LOG_CRT, "GameKiller::pokeIO2(%x, %d)\n", addr, control);
     
     if (++control > 1) {
         expansionPort.setCartridgeMode(CRTMode::OFF);
@@ -75,7 +75,7 @@ GameKiller::releaseButton(isize nr)
 void
 GameKiller::updatePeekPokeLookupTables()
 {
-    loginfo(CRT_DEBUG, "updatePeekPokeLookupTables\n");
+    logme(LOG_CRT, "updatePeekPokeLookupTables\n");
     
     if (control <= 1) {
         
@@ -87,7 +87,7 @@ GameKiller::updatePeekPokeLookupTables()
 void
 GameKiller::nmiWillTrigger()
 {
-    loginfo(CRT_DEBUG, "nmiWillTrigger");
+    logme(LOG_CRT, "nmiWillTrigger");
     
     control = 0;
     expansionPort.setCartridgeMode(CRTMode::OFF);

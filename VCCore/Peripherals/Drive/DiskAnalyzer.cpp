@@ -136,9 +136,9 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
             sync[i] = decodeGcr(ht, i);
             
             if (sync[i] == 0x08) {
-                logdebug(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
+                logme(LOG_GCR, "Sector header block found at offset %ld\n", i);
             } else if (sync[i] == 0x07) {
-                logdebug(GCR_DEBUG, "Sector data block found at offset %ld\n", i);
+                logme(LOG_GCR, "Sector data block found at offset %ld\n", i);
             } else {
                 finding(ht, i, 10, "Invalid sector ID %02X at index %d. Should be 0x07 or 0x08.", sync[i], i);
             }

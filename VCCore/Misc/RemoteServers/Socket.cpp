@@ -18,12 +18,12 @@ namespace vc64 {
 
 Socket::Socket() : socket(INVALID_SOCKET)
 {
-    loginfo(SCK_DEBUG, "Socket constructor\n");
+    logme(LOG_SCK, "Socket constructor\n");
 }
 
 Socket::Socket(SOCKET id) : socket(id)
 {
-    loginfo(SCK_DEBUG, "Wrapping socket %lld\n", (i64)id);
+    logme(LOG_SCK, "Wrapping socket %lld\n", (i64)id);
 }
 
 Socket::Socket(Socket&& other)
@@ -47,7 +47,7 @@ Socket& Socket::operator=(Socket&& other)
 
 Socket::~Socket()
 {
-    loginfo(SCK_DEBUG, "Socket destructor\n");
+    logme(LOG_SCK, "Socket destructor\n");
     
     if (socket != INVALID_SOCKET) {
         close();
@@ -89,7 +89,7 @@ void Socket::create()
         if (success < 0)
             throw ServerError(ServerError::SOCK_CANT_CREATE);
         
-        loginfo(SCK_DEBUG, "Created new socket %lld\n", (i64)socket);
+        logme(LOG_SCK, "Created new socket %lld\n", (i64)socket);
     }
 }
 
@@ -176,7 +176,7 @@ Socket::close()
 {    
     if (socket != INVALID_SOCKET) {
 
-        loginfo(SCK_DEBUG, "Closing socket %lld\n", (i64)socket);
+        logme(LOG_SCK, "Closing socket %lld\n", (i64)socket);
 #ifdef _WIN32
         closesocket(socket);
 #else

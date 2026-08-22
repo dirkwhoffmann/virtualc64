@@ -334,7 +334,7 @@ VICII::checkForRasterIrq()
     // A positive edge triggers a raster interrupt
     if (match && !lineMatchesIrqLine) {
         
-        logdebug(RASTERIRQ_DEBUG, "Triggering raster interrupt\n");
+        logme(LOG_RASTERIRQ, "Triggering raster interrupt\n");
         triggerIrq(1);
     }
     

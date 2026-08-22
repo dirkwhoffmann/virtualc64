@@ -114,7 +114,7 @@ SIDBridge::readPotY() const
 void 
 SIDBridge::poke(u16 addr, u8 value)
 {
-    logdebug(SIDREG_DEBUG, "poke(%x,%x)\n", addr, value);
+    logme(LOG_SIDREG, "poke(%x,%x)\n", addr, value);
 
     // Select the target SID
     isize sidNr = mappedSID(addr);

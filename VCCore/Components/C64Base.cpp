@@ -19,7 +19,7 @@ namespace vc64 {
 
 C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
 {    
-    logdebug(RUN_DEBUG, "Creating virtual C64\n");
+    logme(LOG_RUN, "Creating virtual C64\n");
 
     subComponents = std::vector<CoreComponent *> {
 
@@ -54,7 +54,7 @@ C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
 
 C64::~C64()
 {
-    logdebug(RUN_DEBUG, "Destructing virtual C64\n");
+    logme(LOG_RUN, "Destructing virtual C64\n");
 }
 
 

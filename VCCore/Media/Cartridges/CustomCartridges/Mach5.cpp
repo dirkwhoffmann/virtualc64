@@ -42,14 +42,14 @@ Mach5::spypeekIO2(u16 addr) const
 void
 Mach5::pokeIO1(u16 addr, u8 value)
 {
-    logdebug(CRT_DEBUG, "Enabling Mach5 in 8K game mode\n");
+    logme(LOG_CRT, "Enabling Mach5 in 8K game mode\n");
     expansionPort.setCartridgeMode(CRTMode::MODE8K);
 }
 
 void
 Mach5::pokeIO2(u16 addr, u8 value)
 {
-    logdebug(CRT_DEBUG, "Switching Mach5 off\n");
+    logme(LOG_CRT, "Switching Mach5 off\n");
     expansionPort.setCartridgeMode(CRTMode::OFF);
 }
 
