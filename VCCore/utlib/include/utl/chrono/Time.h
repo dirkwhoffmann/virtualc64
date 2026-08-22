@@ -30,6 +30,8 @@ public:
     static std::tm local(const std::time_t &time);
     static std::tm gmtime(const std::time_t &time);
 
+    static string buildTime(const string &format = "%Y-%m-%d %H:%M:%S");
+
     Time() { };
     Time(i64 value) : ticks(value) { };
 

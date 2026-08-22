@@ -112,6 +112,16 @@ Dumpable::dump(std::ostream &os, const DumpOpt &opt, const string &fmt, DataProv
     // Continue as long as data is available
     while (reader(bcnt, 1).has_value() && reader(ccnt, 1).has_value()) {
 
+        /* Bail out if the previous line consumed nothing.
+         *
+         * Only the data and ASCII directives advance bcnt/ccnt, so a format
+         * string carrying neither -- which fmt() produces for size == 0 and
+         * ascii == false -- would spin here forever. The defaults on DumpFmt
+         * make that unreachable through the normal entry points, but a caller
+         * can still hand us a format string directly.
+         */
+        const auto before = bcnt + ccnt;
+
         // Rewind to the beginning of the format string
         const char *p = fmt.c_str();
 
@@ -188,6 +198,8 @@ Dumpable::dump(std::ostream &os, const DumpOpt &opt, const string &fmt, DataProv
 
             ctrl = false;
         }
+
+        if (bcnt + ccnt == before) break;
     }
 }
 

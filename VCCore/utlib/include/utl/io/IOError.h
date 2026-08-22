@@ -18,21 +18,23 @@ struct IOError : public Error {
     static constexpr long DIR_NOT_FOUND         = 0;
     static constexpr long DIR_ACCESS_DENIED     = 1;
     static constexpr long DIR_CANT_CREATE       = 2;
-    static constexpr long DIR_NOT_EMPTY         = 3;
+    static constexpr long DIR_CANT_DELETE       = 3;
+    static constexpr long DIR_NOT_EMPTY         = 4;
 
-    static constexpr long FILE_NOT_FOUND        = 4;
-    static constexpr long FILE_EXISTS           = 5;
-    static constexpr long FILE_IS_DIRECTORY     = 6;
-    static constexpr long FILE_ACCESS_DENIED    = 7;
-    static constexpr long FILE_TYPE_MISMATCH    = 8;
-    static constexpr long FILE_TYPE_UNSUPPORTED = 9;
-    static constexpr long FILE_CANT_READ        = 10;
-    static constexpr long FILE_CANT_WRITE       = 11;
-    static constexpr long FILE_CANT_CREATE      = 12;
-    static constexpr long FILE_INVALID_DATA     = 13;
+    static constexpr long FILE_NOT_FOUND        = 10;
+    static constexpr long FILE_EXISTS           = 11;
+    static constexpr long FILE_IS_DIRECTORY     = 12;
+    static constexpr long FILE_ACCESS_DENIED    = 13;
+    static constexpr long FILE_TYPE_MISMATCH    = 14;
+    static constexpr long FILE_TYPE_UNSUPPORTED = 15;
+    static constexpr long FILE_CANT_READ        = 16;
+    static constexpr long FILE_CANT_WRITE       = 17;
+    static constexpr long FILE_CANT_CREATE      = 18;
+    static constexpr long FILE_CANT_DELETE      = 19;
+    static constexpr long FILE_INVALID_DATA     = 20;
 
-    static constexpr long JSON_ERROR            = 20;
-    static constexpr long ZLIB_ERROR            = 21;
+    static constexpr long JSON_ERROR            = 30;
+    static constexpr long ZLIB_ERROR            = 31;
 
     const char *errstr() const noexcept override {
 
@@ -41,6 +43,7 @@ struct IOError : public Error {
             case DIR_NOT_FOUND:         return "DIR_NOT_FOUND";
             case DIR_ACCESS_DENIED:     return "DIR_ACCESS_DENIED";
             case DIR_CANT_CREATE:       return "DIR_CANT_CREATE";
+            case DIR_CANT_DELETE:       return "DIR_CANT_DELETE";
             case DIR_NOT_EMPTY:         return "DIR_NOT_EMPTY";
                 
             case FILE_NOT_FOUND:        return "FILE_NOT_FOUND";
@@ -52,6 +55,7 @@ struct IOError : public Error {
             case FILE_CANT_READ:        return "FILE_CANT_READ";
             case FILE_CANT_WRITE:       return "FILE_CANT_WRITE";
             case FILE_CANT_CREATE:      return "FILE_CANT_CREATE";
+            case FILE_CANT_DELETE:      return "FILE_CANT_DELETE";
             case FILE_INVALID_DATA:     return "FILE_INVALID_DATA";
 
             case JSON_ERROR:            return "JSON_ERROR";
@@ -77,6 +81,10 @@ struct IOError : public Error {
             case DIR_CANT_CREATE:
                 set_msg("Failed to create folder \"" + msg + "\".");
                 break;
+
+            case DIR_CANT_DELETE:
+              set_msg("Failed to delete folder \"" + msg + "\".");
+              break;
 
             case DIR_NOT_EMPTY:
                 set_msg("Folder \"" + msg + "\" is not empty.");
@@ -119,6 +127,10 @@ struct IOError : public Error {
             case FILE_CANT_CREATE:
                 set_msg("Failed to create file \"" + msg + "\".");
                 break;
+
+            case FILE_CANT_DELETE:
+              set_msg("Failed to delete file \"" + msg + "\".");
+              break;
 
             case FILE_INVALID_DATA:
                 set_msg("File \"" + msg + "\" contains invalid data.");

@@ -14,6 +14,25 @@
 
 namespace utl {
 
+//
+// Platform-independent
+//
+
+std::string
+Time::buildTime(const std::string &format)
+{
+    // Parse compiler timestamp (e.g., "May  9 2026" / "13:42:11")
+    std::tm tm = {};
+    std::istringstream ss(std::string(__DATE__) + " " + __TIME__);
+    ss >> std::get_time(&tm, "%b %d %Y %H:%M:%S");
+
+    // Re-format timestamp
+    std::ostringstream os;
+    os << std::put_time(&tm, format.c_str());
+
+    return os.str();
+}
+
 #if defined(__MACH__)
 
 //
@@ -59,7 +78,15 @@ Time::sleep()
 {
     static struct mach_timebase_info tb = timebaseInfo();
     if (ticks > 0) {
-        mach_wait_until(now().asNanoseconds() + (ticks * tb.denom / tb.numer));
+
+        /* Both terms have to be in mach time units, which is what
+         * mach_wait_until() takes. The deadline therefore starts from
+         * mach_absolute_time() and not from now(), which has already been
+         * scaled to nanoseconds -- mixing the two made the deadline roughly
+         * numer/denom times too far away (a factor of ~42 on Apple silicon),
+         * so this slept until long past the heat death of the process.
+         */
+        mach_wait_until(mach_absolute_time() + (ticks * tb.denom / tb.numer));
     }
 }
 
@@ -181,7 +208,7 @@ Time::operator==(const Time &rhs) const
 bool
 Time::operator!=(const Time &rhs) const
 {
-    return this->asNanoseconds() == rhs.asNanoseconds();
+    return this->asNanoseconds() != rhs.asNanoseconds();
 }
 
 bool

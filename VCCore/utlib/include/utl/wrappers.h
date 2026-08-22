@@ -9,5 +9,4 @@
 
 #include "wrappers/Animated.h"
 #include "wrappers/Backed.h"
-#include "wrappers/Cached.h"
-#include "wrappers/Memorized.h"
+#include "wrappers/Sticky.h"

@@ -22,12 +22,12 @@ struct DumpOpt
 
 struct DumpFmt
 {
-    char   size;        // 'b' (Byte) | 'w' (Word) | 'l' (Long)
-    isize  columns;     // Number of data columns
-    isize  groups;      // Number of groups to split columns into
-    bool   nr;          // Add a column showing the current line number
-    bool   offset;      // Add a column showing the current buffer offset
-    bool   ascii;       // Add an ASCII column
+    char   size    = 'b';   // 'b' (Byte) | 'w' (Word) | 'l' (Long)
+    isize  columns = 16;    // Number of data columns
+    isize  groups  = 1;     // Number of groups to split columns into
+    bool   nr      = false; // Add a column showing the current line number
+    bool   offset  = false; // Add a column showing the current buffer offset
+    bool   ascii   = false; // Add an ASCII column
 
     string fmt() const; // Translates options to a format string
 };
