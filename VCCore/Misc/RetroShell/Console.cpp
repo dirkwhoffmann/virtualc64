@@ -250,9 +250,8 @@ Console::lastLineIsEmpty()
 string
 Console::vdelim() const
 {
+    return debug::LOG_RSH != utl::LogLevel::LOG_NONE ? "[DEBUG]\n" : "\n";
     // return RSH_DEBUG ? "[DEBUG]\n" : "\n";
-    // TODO: Add RSH_DEBUG once new debug flag code has been merged in
-    return "\n";
 }
 
 void
