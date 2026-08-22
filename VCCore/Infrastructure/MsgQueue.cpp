@@ -62,7 +62,6 @@ MsgQueue::put(const Message &msg, const string &str)
                 
                 auto &lost = queue.read();
                 logme(LV_WARNING, "Message lost: %s [%llx]\n", MsgEnum::key(lost.type), lost.value);
-                (void)queue.read();
             }
         }
         
@@ -73,7 +72,11 @@ MsgQueue::put(const Message &msg, const string &str)
         queue.elements[w].str = attachments[w].c_str();
 
         // Send the message immediately if a lister has been registered
-        if (listener) callback(listener, msg);
+        if (listener) {
+
+            callback(listener, queue.elements[w]);
+            (void) queue.read();
+        }
     }
 }
 
