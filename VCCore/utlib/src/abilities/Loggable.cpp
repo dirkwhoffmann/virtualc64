@@ -22,9 +22,9 @@ Loggable::log(LogLevel level,
 
     switch (level) {
 
-        case LogLevel::LV_FATAL: fprintf(stderr, "FATAL: "); break;
-        case LogLevel::LV_ERROR: fprintf(stderr, "ERROR: "); break;
-        case LogLevel::LV_WARN:  fprintf(stderr, "WARN: ");  break;
+        case LogLevel::Fatal: fprintf(stderr, "FATAL: "); break;
+        case LogLevel::Error: fprintf(stderr, "ERROR: "); break;
+        case LogLevel::Warn:  fprintf(stderr, "WARN: ");  break;
 
         default:
             break;

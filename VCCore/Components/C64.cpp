@@ -248,7 +248,7 @@ C64::prefix(LogLevel level, const std::source_location &loc) const
     std::string result;
     result.reserve(256);
     
-    if (level == LogLevel::LV_DEBUG && verbosity) {
+    if (level == LogLevel::Debug && verbosity) {
         
         // Run-ahead prefix
         if (isRunAheadInstance()) {

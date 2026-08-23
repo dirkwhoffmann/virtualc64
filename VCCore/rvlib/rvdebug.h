@@ -45,10 +45,10 @@
 #define RV_LOG_FLAGS(E)                                                       \
                                                                               \
     /* File systems */                                                        \
-    E(LOG_FS,         LV_OFF,  "File systems")                              \
+    E(LOG_FS,         Off,  "File systems")                              \
                                                                               \
     /* Media */                                                               \
-    E(LOG_IMG,        LV_OFF,  "Disk images")
+    E(LOG_IMG,        Off,  "Disk images")
 
 
 //
@@ -80,7 +80,7 @@
 
 #define logme(key, format, ...) \
     do { \
-        if CONSTEXPR (key != utl::LogLevel::LV_OFF) \
+        if CONSTEXPR (key != utl::LogLevel::Off) \
             log(key, std::source_location::current(), \
                 format __VA_OPT__(,) __VA_ARGS__); \
     } while (0)
@@ -96,13 +96,13 @@ using utl::FlagInfo;
 // Fixed severities (always active, never OFF)
 //
 
-inline constexpr LogLevel LV_OFF     = LogLevel::LV_OFF;
-inline constexpr LogLevel LV_FATAL   = LogLevel::LV_FATAL;
-inline constexpr LogLevel LV_ERROR   = LogLevel::LV_ERROR;
-inline constexpr LogLevel LV_WARNING = LogLevel::LV_WARN;
-inline constexpr LogLevel LV_INFO    = LogLevel::LV_INFO;
-inline constexpr LogLevel LV_DEBUG   = LogLevel::LV_DEBUG;
-inline constexpr LogLevel LV_TRACE   = LogLevel::LV_TRACE;
+inline constexpr LogLevel LV_OFF     = LogLevel::Off;
+inline constexpr LogLevel LV_FATAL   = LogLevel::Fatal;
+inline constexpr LogLevel LV_ERROR   = LogLevel::Error;
+inline constexpr LogLevel LV_WARNING = LogLevel::Warn;
+inline constexpr LogLevel LV_INFO    = LogLevel::Info;
+inline constexpr LogLevel LV_DEBUG   = LogLevel::Debug;
+inline constexpr LogLevel LV_TRACE   = LogLevel::Trace;
 
 
 //

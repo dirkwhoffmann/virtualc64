@@ -654,14 +654,14 @@ FloppyDisk::encodeDisk(const FloppyDiskImage &image)
     }
 
     /*
-    if CONSTEXPR (LOG_IMG != LogLevel::LV_OFF) {
+    if CONSTEXPR (LOG_IMG != LogLevel::Off) {
 
         string tmp = "/tmp/debug.img";
         fprintf(stderr, "Saving image to %s for debugging\n", tmp.c_str());
         Codec::makeIMG(*this)->writeToFile(tmp);
     }
      */
-    if CONSTEXPR (LOG_IMG != LogLevel::LV_OFF) {
+    if CONSTEXPR (LOG_IMG != LogLevel::Off) {
 
         /*
         string tmp = "/tmp/debug.img";

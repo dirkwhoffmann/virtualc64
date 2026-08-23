@@ -59,7 +59,7 @@ CRTFile::getName() const
 void
 CRTFile::finalizeRead()
 {
-    if CONSTEXPR (LOG_CRT != LogLevel::LV_OFF) dump();
+    if CONSTEXPR (LOG_CRT != LogLevel::Off) dump();
 
     // Fix known inconsistencies
     repair();
