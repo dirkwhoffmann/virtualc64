@@ -252,16 +252,6 @@ matchingBufferHeader(const u8 *buf, const string &header, isize offset)
     return matchingBufferHeader(buf, blen, header, offset);
 }
 
-static bool
-needsUpdate(const fs::path &src, const fs::path &dst)
-{
-    if (!fs::exists(dst) || fs::file_size(src) != fs::file_size(dst)) {
-        return true;
-    }
-
-    return fs::last_write_time(src) > fs::last_write_time(dst);
-}
-
 isize
 syncDirectory(const fs::path &source, const fs::path &destination)
 {

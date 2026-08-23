@@ -889,11 +889,16 @@ DebuggerConsole::initCommands(RSCommand &root)
                 .tokens = { "log", "set", flag.name },
                 .chelp  = { flag.help },
                 .args   = {
-                    { .name = { "level", "Severity (0 = off, 1 = fatal, 2 = error, 3 = warn, 4 = info, 5 = debug, 6 = trace)" } }
+                    { .name = { "level", "Severity level" } }
                 },
                 .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-                    (*logTables[values[0]])[values[1]].set(parseNum(args, "level"));
+                    auto value = parseNum(args, "level");
+                    
+                    if (value < 0 || value > 6)
+                        throw CoreError(CoreError::OPT_INV_ARG, "0 (off) ... 6 (trace)");
+            
+                    (*logTables[values[0]])[values[1]].set(value);
 
                 }, .payload = { t, i }
             });

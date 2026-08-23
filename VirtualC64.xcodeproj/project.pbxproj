@@ -687,10 +687,10 @@
 		50DC243B303A36690054EA1F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2439303A36690054EA1F /* zip.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50DC243D303A37990054EA1F /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243C303A37990054EA1F /* UUID.cpp */; };
 		50DC243E303A37990054EA1F /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243C303A37990054EA1F /* UUID.cpp */; };
-		50DC2441303A37BE0054EA1F /* ZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243F303A37BE0054EA1F /* ZipArchive.cpp */; };
-		50DC2442303A37BE0054EA1F /* ZipError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2440303A37BE0054EA1F /* ZipError.cpp */; };
-		50DC2443303A37BE0054EA1F /* ZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243F303A37BE0054EA1F /* ZipArchive.cpp */; };
-		50DC2444303A37BE0054EA1F /* ZipError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2440303A37BE0054EA1F /* ZipError.cpp */; };
+		50DC2441303A37BE0054EA1F /* ZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243F303A37BE0054EA1F /* ZipArchive.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		50DC2442303A37BE0054EA1F /* ZipError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2440303A37BE0054EA1F /* ZipError.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		50DC2443303A37BE0054EA1F /* ZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243F303A37BE0054EA1F /* ZipArchive.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		50DC2444303A37BE0054EA1F /* ZipError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2440303A37BE0054EA1F /* ZipError.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
 		50DF719425021FCA00953E2E /* Keycap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF719325021FCA00953E2E /* Keycap.swift */; };
 		50E17E212B8B26AC0029747D /* Option.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E17E1F2B8B26AC0029747D /* Option.cpp */; };
