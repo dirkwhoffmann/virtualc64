@@ -848,10 +848,10 @@ DebuggerConsole::initCommands(RSCommand &root)
      */
 
     static const std::vector<const std::vector<utl::FlagInfo> *> logTables = {
-        &vc64::debug::logFlags, &retro::vault::debug::logFlags
+        &vc64::logFlags, &retro::vault::logFlags
     };
     static const std::vector<const std::vector<utl::FlagInfo> *> debugTables = {
-        &vc64::debug::debugFlags, &retro::vault::debug::debugFlags
+        &vc64::debugFlags, &retro::vault::debugFlags
     };
 
     root.add({

@@ -32,7 +32,7 @@ FileSystem::FileSystem(Volume &vol) : cache(*this, vol)
     // Derive persistant file system properties
     traits.init(cache.predictDOS(vol), vol.capacity());
 
-    if CONSTEXPR (debug::FS_VERIFY) dumpStatfs();
+    if CONSTEXPR (FS_VERIFY) dumpStatfs();
     logme(LOG_FS, "Success\n");
 }
 

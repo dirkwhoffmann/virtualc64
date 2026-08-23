@@ -91,7 +91,7 @@ Snapshot::Snapshot(C64 &c64) : Snapshot(c64.size())
 {
     takeScreenshot(c64);
 
-    if CONSTEXPR (debug::SNP_VERIFY) c64.dump(Category::State);
+    if CONSTEXPR (SNP_VERIFY) c64.dump(Category::State);
     c64.save(getSnapshotData());
 }
 
@@ -103,9 +103,9 @@ Snapshot::Snapshot(C64 &c64, Compressor compressor) : Snapshot(c64)
 void
 Snapshot::finalizeRead()
 {
-    if (debug::SNAP_TOO_OLD) throw MediaError(MediaError::SNAP_TOO_OLD);
-    if (debug::SNAP_TOO_NEW) throw MediaError(MediaError::SNAP_TOO_NEW);
-    if (debug::SNAP_IS_BETA) throw MediaError(MediaError::SNAP_IS_BETA);
+    if (SNAP_TOO_OLD) throw MediaError(MediaError::SNAP_TOO_OLD);
+    if (SNAP_TOO_NEW) throw MediaError(MediaError::SNAP_TOO_NEW);
+    if (SNAP_IS_BETA) throw MediaError(MediaError::SNAP_IS_BETA);
 
     if (isTooOld()) throw MediaError(MediaError::SNAP_TOO_OLD);
     if (isTooNew()) throw MediaError(MediaError::SNAP_TOO_NEW);
@@ -191,7 +191,7 @@ Snapshot::compress(Compressor compressor)
 
         logme(LOG_SNP, "Compressing %ld bytes (hash: 0x%x)...", data.size, data.fnv32());
 
-        {   auto watch = utl::StopWatch(debug::LOG_SNP != LogLevel::LV_OFF, "");
+        {   auto watch = utl::StopWatch(LOG_SNP != LogLevel::LV_OFF, "");
             
             switch (compressor) {
                     
@@ -230,7 +230,7 @@ Snapshot::uncompress()
         
         logme(LOG_SNP, "Uncompressing %ld bytes...", data.size);
         
-        {   auto watch = utl::StopWatch(debug::LOG_SNP != LogLevel::LV_OFF, "");
+        {   auto watch = utl::StopWatch(LOG_SNP != LogLevel::LV_OFF, "");
         
             switch (compressor()) {
                     

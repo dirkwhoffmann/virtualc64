@@ -80,7 +80,7 @@ EXEFile::didInitialize()
     // fs.importer.updateChecksums();
     fs.flush();
 
-    if CONSTEXPR (debug::FS_VERIFY) {
+    if CONSTEXPR (FS_VERIFY) {
 
         // Print some debug information about the volume
         fs.dumpState();

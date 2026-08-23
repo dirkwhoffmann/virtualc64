@@ -137,7 +137,7 @@ C64Encoder::encodeTrack(utl::ByteView src, TrackNr t)
         totalBits += encodedBits;
     }
 
-    if CONSTEXPR (debug::LOG_IMG != debug::LogLevel::LV_OFF) {
+    if CONSTEXPR (LOG_IMG != LogLevel::LV_OFF) {
 
         logme(LOG_IMG,
                 "\nTrack size: %ld Encoded: %ld Checksum: %x\n",

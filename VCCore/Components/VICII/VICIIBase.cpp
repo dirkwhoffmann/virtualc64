@@ -169,7 +169,7 @@ VICII::_dump(Category category, std::ostream &os) const
 void
 VICII::clearStats()
 {
-    if CONSTEXPR (debug::VICII_STATS) {
+    if CONSTEXPR (VICII_STATS) {
 
         double canvasTotal = stats.canvasFastPath + stats.canvasSlowPath;
         double spriteTotal = stats.spriteFastPath + stats.spriteSlowPath;

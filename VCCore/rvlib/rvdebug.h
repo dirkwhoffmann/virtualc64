@@ -81,13 +81,13 @@
 
 #define logme(key, format, ...) \
     do { \
-        if CONSTEXPR (debug::key != utl::LogLevel::LV_OFF) \
-            log(debug::key, std::source_location::current(), \
+        if CONSTEXPR (key != utl::LogLevel::LV_OFF) \
+            log(key, std::source_location::current(), \
                 format __VA_OPT__(,) __VA_ARGS__); \
     } while (0)
 
 
-namespace retro::vault::debug {
+namespace retro::vault {
 
 using utl::LogLevel;
 using utl::FlagInfo;

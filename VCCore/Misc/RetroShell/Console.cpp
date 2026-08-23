@@ -250,7 +250,7 @@ Console::lastLineIsEmpty()
 string
 Console::vdelim() const
 {
-    return debug::LOG_RSH != utl::LogLevel::LV_OFF ? "[DEBUG]\n" : "\n";
+    return LOG_RSH != utl::LogLevel::LV_OFF ? "[DEBUG]\n" : "\n";
     // return RSH_DEBUG ? "[DEBUG]\n" : "\n";
 }
 

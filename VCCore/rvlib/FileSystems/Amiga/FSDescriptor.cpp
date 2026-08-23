@@ -126,10 +126,10 @@ FSDescriptor::dump(std::ostream &os) const
 void
 FSDescriptor::checkCompatibility() const
 {
-    if CONSTEXPR (debug::FS_WRONG_CAPACITY)
+    if CONSTEXPR (FS_WRONG_CAPACITY)
         throw FSError(FSError::FS_WRONG_CAPACITY);
 
-    if CONSTEXPR (debug::FS_WRONG_BSIZE)
+    if CONSTEXPR (FS_WRONG_BSIZE)
         throw FSError(FSError::FS_WRONG_BSIZE);
 
     if (numBytes() > 504_MB)

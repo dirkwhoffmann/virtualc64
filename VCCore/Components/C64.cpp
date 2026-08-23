@@ -1028,10 +1028,10 @@ C64::_isReady() const
     if (!hasRom(RomType::CHAR)) {
         throw CoreError(CoreError::ROM_CHAR_MISSING);
     }
-    if (!hasRom(RomType::KERNAL) || debug::ROM_MISSING) {
+    if (!hasRom(RomType::KERNAL) || ROM_MISSING) {
         throw CoreError(CoreError::ROM_KERNAL_MISSING);
     }
-    if (debug::MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
+    if (MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
         throw CoreError(CoreError::ROM_MEGA65_MISMATCH);
     }
 }

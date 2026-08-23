@@ -4,7 +4,7 @@
 
 #ifndef NDEBUG
 
-namespace retro::vault::debug {
+namespace retro::vault {
 
 /* The flag descriptor tables, generated from the X-macro lists in rvdebug.h.
  * Each entry wraps its flag in a pair of captureless lambdas, so that flags

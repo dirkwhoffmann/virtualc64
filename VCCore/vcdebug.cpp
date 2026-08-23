@@ -16,7 +16,7 @@
 
 #ifndef NDEBUG
 
-namespace vc64::debug {
+namespace vc64 {
 
 /* The flag descriptor tables, generated from the X-macro lists in vcdebug.h.
  * Each entry wraps its flag in a pair of captureless lambdas, so that flags

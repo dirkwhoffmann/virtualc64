@@ -21,7 +21,7 @@ VICII::drawSprites()
     assert(!isFirstDMAcycle);
     assert(!isSecondDMAcycle);
     
-    if ((delay & VICUpdateRegisters) || debug::VICII_SAFE_MODE == 1) {
+    if ((delay & VICUpdateRegisters) || VICII_SAFE_MODE) {
         drawSpritesSlowPath();
     } else {
         drawSpritesFastPath();
@@ -35,7 +35,7 @@ VICII::drawSprites()
 void
 VICII::drawSpritesFastPath()
 {    
-    if CONSTEXPR (debug::VICII_STATS) stats.spriteFastPath++;
+    if CONSTEXPR (VICII_STATS) stats.spriteFastPath++;
     
     // Prepare for collision detection
     for (isize i = 0; i < 8; i++) collision[i] = 0;
@@ -144,7 +144,7 @@ VICII::drawSpriteNr(isize nr, bool enable, bool active)
 void
 VICII::drawSpritesSlowPath()
 {
-    if CONSTEXPR (debug::VICII_STATS) stats.spriteSlowPath++;
+    if CONSTEXPR (VICII_STATS) stats.spriteSlowPath++;
     
     // Prepare for collision detection
     for (isize i = 0; i < 8; i++) collision[i] = 0;
@@ -243,10 +243,10 @@ VICII::drawSpritePixel(isize pixel, u8 enableBits, u8 freezeBits)
         bool active = GET_BIT(spriteSrActive, sprite);
 
         if (!enable && !active) {
-            if CONSTEXPR (debug::VICII_STATS) stats.quickExitHit++;
+            if CONSTEXPR (VICII_STATS) stats.quickExitHit++;
             continue;
         }
-        if CONSTEXPR (debug::VICII_STATS) stats.quickExitMiss++;
+        if CONSTEXPR (VICII_STATS) stats.quickExitMiss++;
         
         bool freeze = GET_BIT(freezeBits, sprite);
         bool mCol = GET_BIT(reg.delayed.sprMC, sprite);

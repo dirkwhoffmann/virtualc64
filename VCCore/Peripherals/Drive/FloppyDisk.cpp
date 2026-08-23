@@ -197,7 +197,7 @@ FloppyDisk::init(FSFormat type, const PETName<16> &name, const fs::path& content
         init(d64, wp);
 
         // Run the GCR encoder for debugging...
-        if CONSTEXPR (debug::FS_VERIFY) {
+        if CONSTEXPR (FS_VERIFY) {
             
             for (isize b = 0; b < d64.numBlocks(); ++b) {
                                 
@@ -654,14 +654,14 @@ FloppyDisk::encodeDisk(const FloppyDiskImage &image)
     }
 
     /*
-    if CONSTEXPR (debug::LOG_IMG != LogLevel::LV_OFF) {
+    if CONSTEXPR (LOG_IMG != LogLevel::LV_OFF) {
 
         string tmp = "/tmp/debug.img";
         fprintf(stderr, "Saving image to %s for debugging\n", tmp.c_str());
         Codec::makeIMG(*this)->writeToFile(tmp);
     }
      */
-    if CONSTEXPR (debug::LOG_IMG != LogLevel::LV_OFF) {
+    if CONSTEXPR (LOG_IMG != LogLevel::LV_OFF) {
 
         /*
         string tmp = "/tmp/debug.img";
@@ -672,7 +672,7 @@ FloppyDisk::encodeDisk(const FloppyDiskImage &image)
 
     // In debug mode, also run the decoder
     /*
-    if constexpr (debug::ADF_DEBUG) {
+    if constexpr (ADF_DEBUG) {
 
         string tmp = "/tmp/debug.adf";
         fprintf(stderr, "Saving image to %s for debugging\n", tmp.c_str());

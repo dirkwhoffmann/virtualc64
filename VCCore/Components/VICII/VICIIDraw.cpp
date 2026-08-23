@@ -64,7 +64,7 @@ VICII::drawBorder55()
 void
 VICII::drawCanvas()
 {
-    if ((delay & VICUpdateRegisters) || debug::VICII_SAFE_MODE == 1) {
+    if ((delay & VICUpdateRegisters) || VICII_SAFE_MODE) {
         drawCanvasSlowPath();
     } else {
         drawCanvasFastPath();
@@ -74,7 +74,7 @@ VICII::drawCanvas()
 void
 VICII::drawCanvasFastPath()
 {
-    if CONSTEXPR (debug::VICII_STATS) stats.canvasFastPath++;
+    if CONSTEXPR (VICII_STATS) stats.canvasFastPath++;
     
     u8 xscroll = reg.delayed.xscroll;
     
@@ -199,7 +199,7 @@ VICII::drawCanvasFastPath()
 void
 VICII::drawCanvasSlowPath()
 {
-    if CONSTEXPR (debug::VICII_STATS) stats.canvasSlowPath++;
+    if CONSTEXPR (VICII_STATS) stats.canvasSlowPath++;
     
     /* "The graphics data sequencer is capable of 8 different graphics modes
      *  that are selected by the bits ECM, BMM and MCM (Extended Color Mode,

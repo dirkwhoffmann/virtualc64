@@ -332,7 +332,7 @@ FSAllocator::numUnallocated() const noexcept
     isize result = 0;
     for (auto &it : readBitmap()) result += std::popcount(it);
 
-    if CONSTEXPR (debug::FS_VERIFY) {
+    if CONSTEXPR (FS_VERIFY) {
 
         isize count = 0;
         for (isize i = 0; i < fs.blocks(); i++) { if (isUnallocated(BlockNr(i))) count++; }

@@ -53,10 +53,10 @@ DMSFile::didInitialize()
     size_t adfSize = 0;
 
     int verbose = 0;
-    if CONSTEXPR (debug::LOG_IMG != debug::LogLevel::LV_OFF) verbose = 1;
+    if CONSTEXPR (LOG_IMG != LogLevel::LV_OFF) verbose = 1;
     if (extractDMS(data.ptr, (size_t)data.size, &adfData, &adfSize, verbose) == 0) {
 
-        if CONSTEXPR (!debug::DMS_CANT_CREATE) {
+        if CONSTEXPR (!DMS_CANT_CREATE) {
             adf.init(adfData, isize(adfSize));
         }
     }
