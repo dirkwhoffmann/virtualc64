@@ -22,11 +22,9 @@ Loggable::log(LogLevel level,
 
     switch (level) {
 
-        case LogLevel::LOG_EMERG:   fprintf(stderr, "EMERGENCY: "); break;
-        case LogLevel::LOG_CRIT:    fprintf(stderr, "CRITICAL: ");  break;
-        case LogLevel::LOG_ERR:     fprintf(stderr, "ERROR: ");     break;
-        case LogLevel::LOG_WARNING: fprintf(stderr, "WARNING: ");   break;
-        case LogLevel::LOG_NOTICE:  fprintf(stderr, "NOTICE: ");    break;
+        case LogLevel::LV_FATAL: fprintf(stderr, "FATAL: "); break;
+        case LogLevel::LV_ERROR: fprintf(stderr, "ERROR: "); break;
+        case LogLevel::LV_WARN:  fprintf(stderr, "WARN: ");  break;
 
         default:
             break;

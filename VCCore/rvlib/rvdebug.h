@@ -24,7 +24,7 @@
  *   removes the call (release builds) or simply keeps it silent (debug
  *   builds); the library behaves identically either way. They are typed
  *   'LogLevel', because their value doubles as the severity the message is
- *   issued with. LOG_NONE disables the call, any other LogLevel enables it
+ *   issued with. OFF disables the call, any other LogLevel enables it
  *   at that severity. All logging flags are prefixed 'LOG_'.
  *
  * - Action flags enable extra debug behavior with a real side effect
@@ -46,10 +46,10 @@
 #define RV_LOG_FLAGS(E)                                                       \
                                                                               \
     /* File systems */                                                        \
-    E(LOG_FS,         LOG_NONE,  "File systems")                              \
+    E(LOG_FS,         LV_OFF,  "File systems")                              \
                                                                               \
     /* Media */                                                               \
-    E(LOG_IMG,        LOG_NONE,  "Disk images")
+    E(LOG_IMG,        LV_OFF,  "Disk images")
 
 
 //
@@ -69,7 +69,7 @@
 
 #define logme(key, format, ...) \
     do { \
-        if CONSTEXPR (debug::key != utl::LogLevel::LOG_NONE) \
+        if CONSTEXPR (debug::key != utl::LogLevel::LV_OFF) \
             log(debug::key, std::source_location::current(), \
                 format __VA_OPT__(,) __VA_ARGS__); \
     } while (0)
@@ -80,21 +80,18 @@ namespace retro::vault::debug {
 using utl::LogLevel;
 using utl::FlagInfo;
 
+
 //
-// Fixed severities (always active, never LOG_NONE)
+// Fixed severities (always active, never OFF)
 //
 
-inline constexpr LogLevel LV_EMERGENCY = LogLevel::LOG_EMERG;
-inline constexpr LogLevel LV_ALERT     = LogLevel::LOG_ALERT;
-inline constexpr LogLevel LV_CRITICAL  = LogLevel::LOG_CRIT;
-inline constexpr LogLevel LV_ERROR     = LogLevel::LOG_ERR;
-inline constexpr LogLevel LV_WARNING   = LogLevel::LOG_WARNING;
-inline constexpr LogLevel LV_NOTICE    = LogLevel::LOG_NOTICE;
-inline constexpr LogLevel LV_INFO      = LogLevel::LOG_INFO;
-inline constexpr LogLevel LV_DEBUG     = LogLevel::LOG_DEBUG;
-
-// Always-off placeholder, used to permanently silence a log call
-inline constexpr LogLevel LOG_NULLDEV = LogLevel::LOG_NONE;
+inline constexpr LogLevel LV_OFF     = LogLevel::LV_OFF;
+inline constexpr LogLevel LV_FATAL   = LogLevel::LV_FATAL;
+inline constexpr LogLevel LV_ERROR   = LogLevel::LV_ERROR;
+inline constexpr LogLevel LV_WARNING = LogLevel::LV_WARN;
+inline constexpr LogLevel LV_INFO    = LogLevel::LV_INFO;
+inline constexpr LogLevel LV_DEBUG   = LogLevel::LV_DEBUG;
+inline constexpr LogLevel LV_TRACE   = LogLevel::LV_TRACE;
 
 
 //
@@ -153,7 +150,7 @@ constexpr long DMS_CANT_CREATE      = 0;
 
 #define fatal(format, ...) \
     do { \
-        logme(LV_EMERGENCY, format __VA_OPT__(,) __VA_ARGS__); \
+        logme(LV_FATAL, format __VA_OPT__(,) __VA_ARGS__); \
         assert(false); \
         std::terminate(); \
     } while(0)

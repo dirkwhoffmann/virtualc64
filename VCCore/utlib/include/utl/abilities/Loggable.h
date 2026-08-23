@@ -20,40 +20,40 @@
 #include "utl/abilities/Reflectable.h"
 #include <source_location>
 
+// Debug builds define DEBUG=1 as a preprocessor macro, which would otherwise
+// clobber the LogLevel::DEBUG enumerator below.
+#undef DEBUG
+
 namespace utl {
 
 enum class LogLevel : long
 {
-    LOG_NONE    = -1,
-    LOG_EMERG   = 0,
-    LOG_ALERT   = 1,
-    LOG_CRIT    = 2,
-    LOG_ERR     = 3,
-    LOG_WARNING = 4,
-    LOG_NOTICE  = 5,
-    LOG_INFO    = 6,
-    LOG_DEBUG   = 7
+    LV_OFF   = 0,
+    LV_FATAL = 1,
+    LV_ERROR = 2,
+    LV_WARN  = 3,
+    LV_INFO  = 4,
+    LV_DEBUG = 5,
+    LV_TRACE = 6
 };
 
 struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
 {
-    static constexpr long minVal = -1;
-    static constexpr long maxVal = (long)LogLevel::LOG_DEBUG;
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = (long)LogLevel::LV_TRACE;
 
     static const char *_key(long value) { return _key(LogLevel(value)); }
     static const char *_key(LogLevel value)
     {
         switch (value) {
 
-            case LogLevel::LOG_NONE:    return "LV_NONE";
-            case LogLevel::LOG_EMERG:   return "LV_EMERGENCY";
-            case LogLevel::LOG_ALERT:   return "LV_ALERT";
-            case LogLevel::LOG_CRIT:    return "LV_CRITICAL";
-            case LogLevel::LOG_ERR:     return "LV_ERROR";
-            case LogLevel::LOG_WARNING: return "LV_WARNING";
-            case LogLevel::LOG_NOTICE:  return "LV_NOTICE";
-            case LogLevel::LOG_INFO:    return "LV_INFO";
-            case LogLevel::LOG_DEBUG:   return "LV_DEBUG";
+            case LogLevel::LV_OFF:   return "OFF";
+            case LogLevel::LV_FATAL: return "FATAL";
+            case LogLevel::LV_ERROR: return "ERROR";
+            case LogLevel::LV_WARN:  return "WARN";
+            case LogLevel::LV_INFO:  return "INFO";
+            case LogLevel::LV_DEBUG: return "DEBUG";
+            case LogLevel::LV_TRACE: return "TRACE";
         }
         return "???";
     }
@@ -62,15 +62,13 @@ struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
     {
         switch (value) {
 
-            case LogLevel::LOG_NONE:    return "Logging disabled";
-            case LogLevel::LOG_EMERG:   return "System is unusable";
-            case LogLevel::LOG_ALERT:   return "Immediate action required";
-            case LogLevel::LOG_CRIT:    return "Critical condition";
-            case LogLevel::LOG_ERR:     return "Error condition";
-            case LogLevel::LOG_WARNING: return "Warning condition";
-            case LogLevel::LOG_NOTICE:  return "Normal but significant condition";
-            case LogLevel::LOG_INFO:    return "Informational message";
-            case LogLevel::LOG_DEBUG:   return "Debug message";
+            case LogLevel::LV_OFF:   return "Logging disabled";
+            case LogLevel::LV_FATAL: return "Unrecoverable error";
+            case LogLevel::LV_ERROR: return "Error condition";
+            case LogLevel::LV_WARN:  return "Warning condition";
+            case LogLevel::LV_INFO:  return "Informational message";
+            case LogLevel::LV_DEBUG: return "Debug message";
+            case LogLevel::LV_TRACE: return "Fine-grained trace message";
         }
         return "???";
     }

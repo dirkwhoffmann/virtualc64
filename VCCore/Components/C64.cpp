@@ -248,7 +248,7 @@ C64::prefix(LogLevel level, const std::source_location &loc) const
     std::string result;
     result.reserve(256);
     
-    if (level == LogLevel::LOG_DEBUG && verbosity) {
+    if (level == LogLevel::LV_DEBUG && verbosity) {
         
         // Run-ahead prefix
         if (isRunAheadInstance()) {
@@ -805,7 +805,7 @@ C64::update(CmdQueue &queue)
                     break;
 
                 default:
-                logme(LV_EMERGENCY, "Unhandled command: %s\n", CmdEnum::key(cmd.type));
+                logme(LV_FATAL, "Unhandled command: %s\n", CmdEnum::key(cmd.type));
                 fatalError;
             }
 

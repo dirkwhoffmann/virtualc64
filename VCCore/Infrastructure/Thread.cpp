@@ -158,7 +158,7 @@ Thread::switchState(ExecState newState)
 
     auto invalid = [&]() {
 
-        logme(LV_EMERGENCY, "Invalid state transition: %s -> %s\n",
+        logme(LV_FATAL, "Invalid state transition: %s -> %s\n",
                      ExecStateEnum::key(state), ExecStateEnum::key(newState));
         assert(false);
     };
@@ -373,7 +373,7 @@ Thread::resume() const
 
     if (suspendCounter <= 0) {
 
-        logme(LV_EMERGENCY, "resume() called with no call to suspend()\n");
+        logme(LV_FATAL, "resume() called with no call to suspend()\n");
         fatalError;
 
     } else if (--suspendCounter == 0) {

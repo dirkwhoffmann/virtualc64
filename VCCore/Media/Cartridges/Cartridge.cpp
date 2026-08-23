@@ -174,7 +174,7 @@ Cartridge::makeWithCRTFile(C64 &c64, const CRTFile &file)
         cart->loadChip(i, file);
     }
 
-    if CONSTEXPR (debug::LOG_CRT != LogLevel::LOG_NONE) cart->dump(Category::State);
+    if CONSTEXPR (debug::LOG_CRT != LogLevel::LV_OFF) cart->dump(Category::State);
     return cart;
 }
 

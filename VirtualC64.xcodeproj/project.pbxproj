@@ -683,8 +683,8 @@
 		50DC242F303A32BC0054EA1F /* SnapshotPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2424303A32BC0054EA1F /* SnapshotPool.cpp */; };
 		50DC2432303A32E50054EA1F /* BinaryImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2431303A32E50054EA1F /* BinaryImage.cpp */; };
 		50DC2433303A32E50054EA1F /* BinaryImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2431303A32E50054EA1F /* BinaryImage.cpp */; };
-		50DC243A303A36690054EA1F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2439303A36690054EA1F /* zip.c */; };
-		50DC243B303A36690054EA1F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2439303A36690054EA1F /* zip.c */; };
+		50DC243A303A36690054EA1F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2439303A36690054EA1F /* zip.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		50DC243B303A36690054EA1F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2439303A36690054EA1F /* zip.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50DC243D303A37990054EA1F /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243C303A37990054EA1F /* UUID.cpp */; };
 		50DC243E303A37990054EA1F /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243C303A37990054EA1F /* UUID.cpp */; };
 		50DC2441303A37BE0054EA1F /* ZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC243F303A37BE0054EA1F /* ZipArchive.cpp */; };
