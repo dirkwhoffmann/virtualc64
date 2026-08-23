@@ -20,7 +20,7 @@ Loggable::log(long level,
 {
     fprintf(stderr, "%s", prefix(level, loc).c_str());
 
-    // Severities, per LogLevelEnum: 1 = Fatal, 2 = Error, 3 = Warn
+    // Severities, per each client project's LOG_OFF..LOG_TRACE scheme
     switch (level) {
 
         case 1: fprintf(stderr, "FATAL: "); break;

@@ -17,53 +17,10 @@
 
 #pragma once
 
-#include "utl/abilities/Reflectable.h"
+#include "utl/common.h"
 #include <source_location>
 
 namespace utl {
-
-/* Logging severities. Levels are plain 'long' values rather than an enum, so
- * that a logging flag and an ordinary value flag can share the same
- * declaration and descriptor machinery (see FlagInfo below). The symbolic
- * names (OFF, FATAL, ...) are the ones a client project declares for itself,
- * typically as 'LOG_OFF', 'LOG_FATAL', etc.; this table only needs to know
- * their numeric meaning to print and parse them.
- */
-
-struct LogLevelEnum : Reflectable<LogLevelEnum, long>
-{
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = 6;
-
-    static const char *_key(long value)
-    {
-        switch (value) {
-
-            case 0: return "OFF";
-            case 1: return "FATAL";
-            case 2: return "ERROR";
-            case 3: return "WARN";
-            case 4: return "INFO";
-            case 5: return "DEBUG";
-            case 6: return "TRACE";
-        }
-        return "???";
-    }
-    static const char *help(long value)
-    {
-        switch (value) {
-
-            case 0: return "Logging disabled";
-            case 1: return "Unrecoverable error";
-            case 2: return "Error condition";
-            case 3: return "Warning condition";
-            case 4: return "Informational message";
-            case 5: return "Debug message";
-            case 6: return "Fine-grained trace message";
-        }
-        return "???";
-    }
-};
 
 /* Descriptor of a single debug flag.
  *
