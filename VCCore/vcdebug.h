@@ -57,15 +57,14 @@
 
 namespace vc64 {
 
+using utl::LOG_OFF;
+using utl::LOG_FATAL;
+using utl::LOG_ERROR;
+using utl::LOG_WARN;
+using utl::LOG_INFO;
+using utl::LOG_DEBUG;
+using utl::LOG_TRACE;
 using utl::FlagInfo;
-
-inline constexpr long LOG_OFF     = 0;
-inline constexpr long LOG_FATAL   = 1;
-inline constexpr long LOG_ERROR   = 2;
-inline constexpr long LOG_WARNING = 3;
-inline constexpr long LOG_INFO    = 4;
-inline constexpr long LOG_DEBUG   = 5;
-inline constexpr long LOG_TRACE   = 6;
 
 
 //
@@ -75,76 +74,76 @@ inline constexpr long LOG_TRACE   = 6;
 #define VC_LOG_FLAGS(E)                                                       \
                                                                               \
     /* General */                                                             \
-    E(LOG_XFILES,       LOG_OFF,  "Report paranormal activity")             \
-    E(LOG_CNF,          LOG_OFF,  "Configuration options")                  \
-    E(LOG_DEF,          LOG_OFF,  "User defaults")                          \
+    E(LOG_XFILES,       LOG_OFF,  "Report paranormal activity")               \
+    E(LOG_CNF,          LOG_OFF,  "Configuration options")                    \
+    E(LOG_DEF,          LOG_OFF,  "User defaults")                            \
                                                                               \
     /* Runloop */                                                             \
-    E(LOG_RUN,          LOG_OFF,  "Run loop, component states")             \
-    E(LOG_TIM,          LOG_OFF,  "Thread synchronization")                 \
-    E(LOG_WARP,         LOG_OFF,  "Warp mode")                              \
-    E(LOG_CMD,          LOG_OFF,  "Command queue")                          \
-    E(LOG_MSG,          LOG_OFF,  "Message queue")                          \
-    E(LOG_SNP,          LOG_OFF,  "Serialization (snapshots)")              \
+    E(LOG_RUN,          LOG_OFF,  "Run loop, component states")               \
+    E(LOG_TIM,          LOG_OFF,  "Thread synchronization")                   \
+    E(LOG_WARP,         LOG_OFF,  "Warp mode")                                \
+    E(LOG_CMD,          LOG_OFF,  "Command queue")                            \
+    E(LOG_MSG,          LOG_OFF,  "Message queue")                            \
+    E(LOG_SNP,          LOG_OFF,  "Serialization (snapshots)")                \
                                                                               \
     /* Run ahead */                                                           \
-    E(LOG_RUA,          LOG_OFF,  "Run-ahead activity")                     \
+    E(LOG_RUA,          LOG_OFF,  "Run-ahead activity")                       \
                                                                               \
     /* CPU */                                                                 \
-    E(LOG_CPU,          LOG_OFF,  "CPU")                                    \
-    E(LOG_IRQ,          LOG_OFF,  "CPU interrupts")                         \
+    E(LOG_CPU,          LOG_OFF,  "CPU")                                      \
+    E(LOG_IRQ,          LOG_OFF,  "CPU interrupts")                           \
                                                                               \
     /* Memory */                                                              \
-    E(LOG_MEM,          LOG_OFF,  "Memory")                                 \
+    E(LOG_MEM,          LOG_OFF,  "Memory")                                   \
                                                                               \
     /* CIAs */                                                                \
-    E(LOG_CIA,          LOG_OFF,  "CIA execution")                          \
-    E(LOG_CIAREG,       LOG_OFF,  "CIA registers")                          \
+    E(LOG_CIA,          LOG_OFF,  "CIA execution")                            \
+    E(LOG_CIAREG,       LOG_OFF,  "CIA registers")                            \
                                                                               \
     /* VICII */                                                               \
-    E(LOG_VICII,        LOG_OFF,  "VICII execution")                        \
-    E(LOG_VICII_REG,    LOG_OFF,  "VICII registers")                        \
-    E(LOG_RASTERIRQ,    LOG_OFF,  "VICII raster IRQ")                       \
+    E(LOG_VICII,        LOG_OFF,  "VICII execution")                          \
+    E(LOG_VICII_REG,    LOG_OFF,  "VICII registers")                          \
+    E(LOG_RASTERIRQ,    LOG_OFF,  "VICII raster IRQ")                         \
                                                                               \
     /* SID */                                                                 \
-    E(LOG_SID,          LOG_OFF,  "SID")                                    \
-    E(LOG_SID_EXEC,     LOG_OFF,  "SID execution")                          \
-    E(LOG_SIDREG,       LOG_OFF,  "SID registers")                          \
-    E(LOG_AUD,          LOG_OFF,  "Sound generation")                       \
-    E(LOG_AUDBUF,       LOG_OFF,  "Audio buffers")                          \
-    E(LOG_AUDVOL,       LOG_OFF,  "Audio volume")                           \
+    E(LOG_SID,          LOG_OFF,  "SID")                                      \
+    E(LOG_SID_EXEC,     LOG_OFF,  "SID execution")                            \
+    E(LOG_SIDREG,       LOG_OFF,  "SID registers")                            \
+    E(LOG_AUD,          LOG_OFF,  "Sound generation")                         \
+    E(LOG_AUDBUF,       LOG_OFF,  "Audio buffers")                            \
+    E(LOG_AUDVOL,       LOG_OFF,  "Audio volume")                             \
                                                                               \
     /* Drive */                                                               \
-    E(LOG_VIA,          LOG_OFF,  "VIA chip")                               \
-    E(LOG_PIA,          LOG_OFF,  "PIA chip")                               \
-    E(LOG_SER,          LOG_OFF,  "Serial port (IEC bus)")                  \
-    E(LOG_DSK,          LOG_OFF,  "Disk")                                   \
-    E(LOG_DSKCHG,       LOG_OFF,  "Disk change procedure")                  \
-    E(LOG_GCR,          LOG_OFF,  "GCR encoding")                           \
-    E(LOG_PAR,          LOG_OFF,  "Parallel port")                          \
+    E(LOG_VIA,          LOG_OFF,  "VIA chip")                                 \
+    E(LOG_PIA,          LOG_OFF,  "PIA chip")                                 \
+    E(LOG_SER,          LOG_OFF,  "Serial port (IEC bus)")                    \
+    E(LOG_DSK,          LOG_OFF,  "Disk")                                     \
+    E(LOG_DSKCHG,       LOG_OFF,  "Disk change procedure")                    \
+    E(LOG_GCR,          LOG_OFF,  "GCR encoding")                             \
+    E(LOG_PAR,          LOG_OFF,  "Parallel port")                            \
                                                                               \
     /* Media */                                                               \
-    E(LOG_IMG,          LOG_OFF,  "Disk images")                            \
-    E(LOG_CRT,          LOG_OFF,  "Cartridges")                             \
-    E(LOG_FILE,         LOG_OFF,  "Media files")                            \
+    E(LOG_IMG,          LOG_OFF,  "Disk images")                              \
+    E(LOG_CRT,          LOG_OFF,  "Cartridges")                               \
+    E(LOG_FILE,         LOG_OFF,  "Media files")                              \
                                                                               \
     /* Peripherals */                                                         \
-    E(LOG_JOY,          LOG_OFF,  "Joystick")                               \
-    E(LOG_DRV,          LOG_OFF,  "Floppy drive")                           \
-    E(LOG_TAP,          LOG_OFF,  "Datasette")                              \
-    E(LOG_KBD,          LOG_OFF,  "Keyboard")                               \
-    E(LOG_PRT,          LOG_OFF,  "Ports")                                  \
-    E(LOG_EXP,          LOG_OFF,  "Expansion port")                         \
-    E(LOG_USR,          LOG_OFF,  "User port")                              \
+    E(LOG_JOY,          LOG_OFF,  "Joystick")                                 \
+    E(LOG_DRV,          LOG_OFF,  "Floppy drive")                             \
+    E(LOG_TAP,          LOG_OFF,  "Datasette")                                \
+    E(LOG_KBD,          LOG_OFF,  "Keyboard")                                 \
+    E(LOG_PRT,          LOG_OFF,  "Ports")                                    \
+    E(LOG_EXP,          LOG_OFF,  "Expansion port")                           \
+    E(LOG_USR,          LOG_OFF,  "User port")                                \
                                                                               \
     /* Misc */                                                                \
-    E(LOG_RSH,          LOG_OFF,  "RetroShell")                             \
-    E(LOG_REC,          LOG_OFF,  "Screen recorder")                        \
-    E(LOG_REU,          LOG_OFF,  "REU cartridge")                          \
-    E(LOG_REU_DMA,      LOG_OFF,  "REU DMA transfers (very verbose)")       \
-    E(LOG_SCK,          LOG_OFF,  "Sockets")                                \
-    E(LOG_SRV,          LOG_OFF,  "Servers")                                \
-    E(LOG_GDB,          LOG_OFF,  "GDB server")                             \
+    E(LOG_RSH,          LOG_OFF,  "RetroShell")                               \
+    E(LOG_REC,          LOG_OFF,  "Screen recorder")                          \
+    E(LOG_REU,          LOG_OFF,  "REU cartridge")                            \
+    E(LOG_REU_DMA,      LOG_OFF,  "REU DMA transfers (very verbose)")         \
+    E(LOG_SCK,          LOG_OFF,  "Sockets")                                  \
+    E(LOG_SRV,          LOG_OFF,  "Servers")                                  \
+    E(LOG_GDB,          LOG_OFF,  "GDB server")                               \
     E(LOG_DAP,          LOG_OFF,  "DAP server")
 
 
@@ -183,15 +182,8 @@ inline constexpr long LOG_TRACE   = 6;
 
 
 //
-// Logging macro and flag declarations
+// Flag declarations
 //
-
-#define logme(key, format, ...) \
-    do { \
-        if CONSTEXPR (key != LOG_OFF) \
-            log(key, std::source_location::current(), \
-                format __VA_OPT__(,) __VA_ARGS__); \
-    } while (0)
 
 #define DECLARE_LOG_FLAG(name, dflt, help) \
     inline CONSTEXPR long name = dflt;

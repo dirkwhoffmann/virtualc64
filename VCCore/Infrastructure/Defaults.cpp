@@ -287,7 +287,7 @@ Defaults::load(std::stringstream &stream)
                 // Check if the key is a known key
                 if (!fallbacks.contains(key)) {
 
-                    logme(LOG_WARNING, "Ignoring invalid key %s = %s\n", key.c_str(), value.c_str());
+                    logme(LOG_WARN, "Ignoring invalid key %s = %s\n", key.c_str(), value.c_str());
                     skipped++;
                     continue;
                 }
@@ -396,7 +396,7 @@ Defaults::get(const string &key) const
 
     } catch (...) {
 
-        logme(LOG_WARNING, "Can't parse value %s\n", key.c_str());
+        logme(LOG_WARN, "Can't parse value %s\n", key.c_str());
         return 0;
     }
 }
@@ -433,7 +433,7 @@ Defaults::getFallback(const string &key) const
 
     } catch (...) {
 
-        logme(LOG_WARNING, "Can't parse value %s\n", key.c_str());
+        logme(LOG_WARN, "Can't parse value %s\n", key.c_str());
         return 0;
     }
 }
@@ -460,7 +460,7 @@ Defaults::set(const string &key, const string &value)
 
         if (!fallbacks.contains(key)) {
 
-            logme(LOG_WARNING, "Invalid key: %s\n", key.c_str());
+            logme(LOG_WARN, "Invalid key: %s\n", key.c_str());
             assert(false);
             throw CoreError(CoreError::INVALID_KEY, key);
         }
@@ -551,7 +551,7 @@ Defaults::remove(const string &key)
 
         if (!fallbacks.contains(key)) {
 
-            logme(LOG_WARNING, "Invalid key: %s\n", key.c_str());
+            logme(LOG_WARN, "Invalid key: %s\n", key.c_str());
             assert(false);
             throw CoreError(CoreError::INVALID_KEY, key);
         }

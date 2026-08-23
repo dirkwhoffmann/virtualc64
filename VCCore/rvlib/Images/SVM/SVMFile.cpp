@@ -279,7 +279,7 @@ namespace retro::vault {
 
             if (present(snapshots, info.binary)) return false;
 
-            logme(LOG_WARNING, "Dropping snapshot %s: '%s' is missing.\n",
+            logme(LOG_WARN, "Dropping snapshot %s: '%s' is missing.\n",
                      info.uuid.toString().c_str(), info.binary.string().c_str());
             return true;
         });
@@ -289,7 +289,7 @@ namespace retro::vault {
 
             if (!info.screenshot.empty() && !present(snapshots, info.screenshot)) {
 
-                logme(LOG_WARNING, "Snapshot %s: dropping missing screenshot '%s'.\n",
+                logme(LOG_WARN, "Snapshot %s: dropping missing screenshot '%s'.\n",
                         info.uuid.toString().c_str(), info.screenshot.string().c_str());
                 info.screenshot.clear();
             }
@@ -298,14 +298,14 @@ namespace retro::vault {
         // The VM's own screenshot depicts the workspace and is filed with it
         if (!manifest.screenshot.empty() && !present(workspace, manifest.screenshot)) {
 
-            logme(LOG_WARNING, "Dropping missing screenshot '%s'.\n", manifest.screenshot.string().c_str());
+            logme(LOG_WARN, "Dropping missing screenshot '%s'.\n", manifest.screenshot.string().c_str());
             manifest.screenshot.clear();
         }
 
         // Check for a missing startup script
         if (!manifest.startup.empty() && !present(workspace, manifest.startup)) {
 
-            logme(LOG_WARNING, "Dropping missing startup script '%s'.\n", manifest.startup.string().c_str());
+            logme(LOG_WARN, "Dropping missing startup script '%s'.\n", manifest.startup.string().c_str());
             manifest.startup.clear();
         }
 
@@ -330,7 +330,7 @@ namespace retro::vault {
 
         for (const auto &orphan: orphans) {
 
-            logme(LOG_WARNING, "Deleting unreferenced snapshot file '%s'.\n",
+            logme(LOG_WARN, "Deleting unreferenced snapshot file '%s'.\n",
                     orphan.filename().string().c_str());
             fs::remove(orphan, ec);
         }

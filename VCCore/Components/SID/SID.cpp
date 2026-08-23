@@ -71,7 +71,7 @@ SID::executeUntil(Cycle targetCycle)
         // Check if SID is in sync with the CPU
         if (missing < -1000 || missing > 1000000) {
 
-            logme(LOG_WARNING, "Resyncing SID %ld (%lld cycles off)\n", objid, missing);
+            logme(LOG_WARN, "Resyncing SID %ld (%lld cycles off)\n", objid, missing);
 
         } else {
 

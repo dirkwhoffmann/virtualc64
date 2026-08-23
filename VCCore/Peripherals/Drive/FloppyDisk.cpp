@@ -700,7 +700,7 @@ FloppyDisk::encodeG64(const G64File &a)
         }
         
         if (size > 7928) {
-            logme(LOG_WARNING, "Halftrack %ld has %ld bytes. Must be less than 7928\n", ht, size);
+            logme(LOG_WARN, "Halftrack %ld has %ld bytes. Must be less than 7928\n", ht, size);
             continue;
         }
         logme(LOG_GCR, "  Encoding halftrack %ld (%ld bytes)\n", ht, size);

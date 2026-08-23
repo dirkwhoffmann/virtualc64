@@ -1051,7 +1051,7 @@ VIA2::updatePB()
      } else if ((pb & 0x03) == ((oldPb - 1) & 0x03)) {
      drive->moveHeadDown();
      } else {
-     logme(LOG_WARNING, "Unexpected stepper motor control sequence\n");
+     logme(LOG_WARN, "Unexpected stepper motor control sequence\n");
      }
      }
      */

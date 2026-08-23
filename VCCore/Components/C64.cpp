@@ -343,7 +343,7 @@ C64::initialize()
         logme(LOG_RUN, "Trying to load Rom from %s...\n", path.string().c_str());
 
         try { loadRom(path); } catch (std::exception& e) {
-            logme(LOG_WARNING, "Error: %s\n", e.what());
+            logme(LOG_WARN, "Error: %s\n", e.what());
         }
     };
 
@@ -811,7 +811,7 @@ C64::update(CmdQueue &queue)
 
         } catch (std::exception &e) {
 
-            logme(LOG_WARNING, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
+            logme(LOG_WARN, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
         }
     }
 

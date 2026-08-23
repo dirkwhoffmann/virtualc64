@@ -278,7 +278,7 @@ Cartridge::getRomInfo(isize nr) const
 
     } else {
 
-        logme(LOG_WARNING, "Packet %ld does not exist\n", nr);
+        logme(LOG_WARN, "Packet %ld does not exist\n", nr);
     }
 
     return result;
@@ -424,11 +424,11 @@ Cartridge::loadChip(isize nr, const CRTFile &crt)
 
     // Perform some consistency checks
     if (start < 0x8000) {
-        logme(LOG_WARNING, "Ignoring chip %ld: Start address too low (%04X)\n", nr, start);
+        logme(LOG_WARN, "Ignoring chip %ld: Start address too low (%04X)\n", nr, start);
         return;
     }
     if (0x10000 - start < size) {
-        logme(LOG_WARNING, "Ignoring chip %ld: Invalid size (start: %04X size: %04X)/n", nr, start, size);
+        logme(LOG_WARN, "Ignoring chip %ld: Invalid size (start: %04X size: %04X)/n", nr, start, size);
         return;
     }
 
@@ -445,16 +445,16 @@ Cartridge::loadChip(isize nr, const CRTFile &crt)
             break;
 
         case 1: // RAM
-            logme(LOG_WARNING, "Ignoring chip %ld, because it has type RAM.\n", nr);
+            logme(LOG_WARN, "Ignoring chip %ld, because it has type RAM.\n", nr);
             return;
 
         case 2: // Flash ROM
-            logme(LOG_WARNING, "Chip %ld is a Flash Rom. Creating a Rom instead.\n", nr);
+            logme(LOG_WARN, "Chip %ld is a Flash Rom. Creating a Rom instead.\n", nr);
             packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
             break;
 
         default:
-            logme(LOG_WARNING, "Ignoring chip %ld, because it has unknown type %d.\n", nr, type);
+            logme(LOG_WARN, "Ignoring chip %ld, because it has unknown type %d.\n", nr, type);
             return;
     }
 
@@ -505,7 +505,7 @@ Cartridge::bankIn(isize nr)
 
     } else {
 
-        logme(LOG_WARNING, "Cannot map chip %ld. Invalid start address.\n", nr);
+        logme(LOG_WARN, "Cannot map chip %ld. Invalid start address.\n", nr);
     }
 }
 

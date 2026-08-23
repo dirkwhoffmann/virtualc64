@@ -10,9 +10,11 @@
 /* The Loggable interface provides a framework for printing log messages.
  *
  * Messages are generated via the log function and are always written to
- * stderr. Whether a call site actually calls log() at all is decided at
- * the call site itself (see the logging macros in debug.h), based on a
- * per-flag debug setting rather than a runtime channel lookup.
+ * stderr.
+ *
+ * The log levels follow the conventional log4j-style hierarchy, ranging
+ * from FATAL and ERROR to WARN, INFO, DEBUG, and TRACE. LOG_OFF disables
+ * logging entirely.
  */
 
 #pragma once
@@ -21,6 +23,15 @@
 #include <source_location>
 
 namespace utl {
+
+inline constexpr long LOG_OFF   = 0;
+inline constexpr long LOG_FATAL = 1;
+inline constexpr long LOG_ERROR = 2;
+inline constexpr long LOG_WARN  = 3;
+inline constexpr long LOG_INFO  = 4;
+inline constexpr long LOG_DEBUG = 5;
+inline constexpr long LOG_TRACE = 6;
+
 
 /* Descriptor of a single debug flag.
  *
@@ -74,5 +85,20 @@ protected:
     // Optional prefix printed prior to the debug message
     virtual string prefix(long, const std::source_location &) const;
 };
+
+//
+// Logging macro
+//
+
+#ifdef logme
+#undef logme
+#endif
+
+#define logme(key, format, ...) \
+    do { \
+        if CONSTEXPR (key != LOG_OFF) \
+            log(key, std::source_location::current(), \
+                format __VA_OPT__(,) __VA_ARGS__); \
+    } while (0)
 
 }
