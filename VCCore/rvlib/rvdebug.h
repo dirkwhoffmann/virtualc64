@@ -133,15 +133,3 @@ extern const std::vector<FlagInfo> debugFlags;
 #endif
 
 }
-
-
-//
-// Convenience wrappers
-//
-
-#define fatal(format, ...) \
-    do { \
-        logme(LV_FATAL, format __VA_OPT__(,) __VA_ARGS__); \
-        assert(false); \
-        std::terminate(); \
-    } while(0)

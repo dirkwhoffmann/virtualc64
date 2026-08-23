@@ -313,7 +313,6 @@ Emulator::cloneRunAheadInstance()
             main.diff(ahead);
             logme(LV_FATAL, "Corrupted run-ahead clone detected");
             fatalError;
-            // fatal("Corrupted run-ahead clone detected");
         }
     }
 }
