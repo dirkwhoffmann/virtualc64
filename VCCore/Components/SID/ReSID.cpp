@@ -177,7 +177,7 @@ ReSID::setClockFrequency(u32 frequency)
         sid->set_sampling_parameters((double)clockFrequency,
                                      (reSID::sampling_method)samplingMethod,
                                      (double)sampleRate);
-        logme(LOG_SID, "Setting clock frequency to %d\n", frequency);
+        logmsg(LOG_SID, "Setting clock frequency to %d\n", frequency);
     }
 
     assert((u32)sid->clock_frequency == clockFrequency);
@@ -199,7 +199,7 @@ ReSID::setRevision(SIDRevision revision)
 
         model = revision;
         sid->set_chip_model((reSID::chip_model)revision);
-        logme(LOG_SID, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
+        logmsg(LOG_SID, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
     }
 
     assert((SIDRevision)sid->sid_model == revision);
@@ -214,7 +214,7 @@ ReSID::setSampleRate(double value)
         sid->set_sampling_parameters((double)clockFrequency,
                                      (reSID::sampling_method)samplingMethod,
                                      sampleRate);
-        logme(LOG_SID, "Setting sample rate to %f samples per second\n", sampleRate);
+        logmsg(LOG_SID, "Setting sample rate to %f samples per second\n", sampleRate);
     }
 }
 
@@ -226,7 +226,7 @@ ReSID::setAudioFilter(bool value)
         emulateFilter = value;
         sid->enable_filter(value);
 
-        logme(LOG_SID, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
+        logmsg(LOG_SID, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
     }
 }
 
@@ -244,20 +244,20 @@ ReSID::setSamplingMethod(SamplingMethod value)
         
         switch(value) {
             case SamplingMethod::FAST:
-                logme(LOG_SID, "Using sampling method SAMPLE_FAST.\n");
+                logmsg(LOG_SID, "Using sampling method SAMPLE_FAST.\n");
                 break;
             case SamplingMethod::INTERPOLATE:
-                logme(LOG_SID, "Using sampling method SAMPLE_INTERPOLATE.\n");
+                logmsg(LOG_SID, "Using sampling method SAMPLE_INTERPOLATE.\n");
                 break;
             case SamplingMethod::RESAMPLE:
-                logme(LOG_SID, "Using sampling method SAMPLE_RESAMPLE.\n");
+                logmsg(LOG_SID, "Using sampling method SAMPLE_RESAMPLE.\n");
                 break;
             case SamplingMethod::RESAMPLE_FASTMEM:
-                logme(LOG_WARN, "SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
+                logmsg(LOG_WARN, "SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
                 value = SamplingMethod::INTERPOLATE;
                 break;
             default:
-                logme(LOG_WARN, "Unknown sampling method: %ld\n", (long)value);
+                logmsg(LOG_WARN, "Unknown sampling method: %ld\n", (long)value);
         }
 
         samplingMethod = value;
@@ -288,7 +288,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     isize buflength = 2047;
 
     if (numCycles > PAL::CYCLES_PER_SECOND) {
-        logme(LOG_WARN, "Number of missing SID cycles is far too large\n");
+        logmsg(LOG_WARN, "Number of missing SID cycles is far too large\n");
         numCycles = PAL::CYCLES_PER_SECOND;
     }
     
@@ -302,7 +302,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     
     // Check for a buffer overflow
     if (unlikely(samples > stream.free())) {
-        logme(LOG_WARN, "SID %ld: SAMPLE BUFFER OVERFLOW", objid);
+        logmsg(LOG_WARN, "SID %ld: SAMPLE BUFFER OVERFLOW", objid);
         stream.clear();
     }
     

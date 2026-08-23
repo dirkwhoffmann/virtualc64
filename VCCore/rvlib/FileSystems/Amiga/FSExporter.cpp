@@ -60,7 +60,7 @@ FSExporter::exportBlocks(BlockNr first, BlockNr last, u8 *dst, isize size) const
 
     isize count = last - first + 1;
 
-    logme(LOG_FS, "Exporting %ld blocks (%ld - %ld)\n", count, first, last);
+    logmsg(LOG_FS, "Exporting %ld blocks (%ld - %ld)\n", count, first, last);
 
     // Only proceed if the (predicted) block size matches
     if (size % traits.bsize != 0) throw FSError(FSError::FS_WRONG_BSIZE);
@@ -77,7 +77,7 @@ FSExporter::exportBlocks(BlockNr first, BlockNr last, u8 *dst, isize size) const
         fs.fetch(nr).exportBlock(dst + (nr - first) * traits.bsize, traits.bsize);
     }
 
-    logme(LOG_FS, "Success\n");
+    logmsg(LOG_FS, "Success\n");
 }
 
 void
@@ -122,7 +122,7 @@ FSExporter::exportFiles(BlockNr nr, const fs::path &path, bool recursive, bool c
         hostPath = fs::is_directory(path) ? path / item.cppName() : path;
     }
 
-    logme(LOG_FS, "Exporting %s to %s\n", item.absName().c_str(), hostPath.string().c_str());
+    logmsg(LOG_FS, "Exporting %s to %s\n", item.absName().c_str(), hostPath.string().c_str());
 
     auto newTree = fs.build(nr, { .depth = recursive ? MAX_ISIZE : 1 });
     save(newTree, hostPath, recursive);

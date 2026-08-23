@@ -157,7 +157,7 @@ Reu::peekIO2(u16 addr)
             break;
     }
 
-    logme(LOG_REU, "peekIO2(%x) = %02X\n", addr, result);
+    logmsg(LOG_REU, "peekIO2(%x) = %02X\n", addr, result);
     return result;
 }
 
@@ -234,7 +234,7 @@ Reu::spypeekIO2(u16 addr) const
 void
 Reu::pokeIO2(u16 addr, u8 value)
 {
-    logme(LOG_REU, "pokeIO2(%x,%x)\n", addr, value);
+    logmsg(LOG_REU, "pokeIO2(%x,%x)\n", addr, value);
 
     switch (addr & 0x1F) {
 
@@ -248,11 +248,11 @@ Reu::pokeIO2(u16 addr, u8 value)
 
             if (GET_BIT(cr,7) && ff00Enabled()) {
 
-                // logme(LOG_REU, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
+                // logmsg(LOG_REU, "Preparing for DMA [Mode %d]...\n", cr & 0x3);
             }
             if (GET_BIT(cr,7) && ff00Disabled()) {
 
-                // logme(LOG_REU, "Initiating DMA [Mode %d]...\n", cr & 0x3);
+                // logmsg(LOG_REU, "Initiating DMA [Mode %d]...\n", cr & 0x3);
                 initiateDma();
             }
             break;
@@ -344,22 +344,22 @@ Reu::poke(u16 addr, u8 value)
 
     } else {
 
-        logme(LOG_REU, "poke($FF00,%02X)\n", value);
+        logmsg(LOG_REU, "poke($FF00,%02X)\n", value);
 
         if (isActive()) {
 
-            logme(LOG_REU, "Ignoring write to $FF00. REU already active\n");
+            logmsg(LOG_REU, "Ignoring write to $FF00. REU already active\n");
             return;
         }
 
         if (!isArmed()) {
 
-            logme(LOG_REU, "Ignoring write to $FF00. REU not armed\n");
+            logmsg(LOG_REU, "Ignoring write to $FF00. REU not armed\n");
             mem.poke(addr, value, memTypeF);
             return;
         }
 
-        logme(LOG_REU, "Starting REU via FF00 trigger\n");
+        logmsg(LOG_REU, "Starting REU via FF00 trigger\n");
         if (memTypeF != MemType::RAM) mem.poke(addr, value, memTypeF);
 
         initiateDma();
@@ -510,7 +510,7 @@ Reu::execute(EventID id)
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
         {
-            logme(LOG_OFF, "%d%d : ", ba[1], ba[0]);
+            logmsg(LOG_OFF, "%d%d : ", ba[1], ba[0]);
 
             // Only proceed if the bus is available
             if (busIsBlocked(id)) {
@@ -544,7 +544,7 @@ Reu::execute(EventID id)
 
             if (autoloadEnabled()) {
 
-                logme(LOG_REU, "Autoloading...\n");
+                logmsg(LOG_REU, "Autoloading...\n");
 
                 // Reload values from shadow registers
                 c64Base = c64BaseLatched;
@@ -675,7 +675,7 @@ Reu::doDma(EventID id)
 
             if (c64Val != reuVal) {
 
-                logme(LOG_REU, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
+                logmsg(LOG_REU, "Verify error: (%x,%02x) <-> (%x,%02x)\n",
                       c64Base, c64Val, (u32)reuBank << 16 | reuBase, reuVal);
 
                 // Set the Fault bit
@@ -721,7 +721,7 @@ Reu::triggerEndOfBlockIrq()
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
 
-        logme(LOG_REU, "End-of-block IRQ triggered (sr = %02x)\n", sr);
+        logmsg(LOG_REU, "End-of-block IRQ triggered (sr = %02x)\n", sr);
     }
 }
 
@@ -733,7 +733,7 @@ Reu::triggerVerifyErrorIrq()
         sr |= 0x80;
         cpu.pullDownIrqLine(INTSRC_EXP);
 
-        logme(LOG_REU, "Verify-error IRQ triggered (sr = %02x)\n", sr);
+        logmsg(LOG_REU, "Verify-error IRQ triggered (sr = %02x)\n", sr);
     }
 }
 

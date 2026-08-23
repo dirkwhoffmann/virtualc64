@@ -223,7 +223,7 @@ Defaults::load(const fs::path &path)
         throw IOError(IOError::FILE_NOT_FOUND, path);
     }
 
-    logme(LOG_DEF, "Loading user defaults from %s...\n", path.string().c_str());
+    logmsg(LOG_DEF, "Loading user defaults from %s...\n", path.string().c_str());
     load(fs);
 }
 
@@ -247,7 +247,7 @@ Defaults::load(std::stringstream &stream)
         string input;
         string section;
 
-        logme(LOG_DEF, "Loading user defaults from string stream...\n");
+        logmsg(LOG_DEF, "Loading user defaults from string stream...\n");
 
         while(std::getline(stream, input)) {
 
@@ -287,7 +287,7 @@ Defaults::load(std::stringstream &stream)
                 // Check if the key is a known key
                 if (!fallbacks.contains(key)) {
 
-                    logme(LOG_WARN, "Ignoring invalid key %s = %s\n", key.c_str(), value.c_str());
+                    logmsg(LOG_WARN, "Ignoring invalid key %s = %s\n", key.c_str(), value.c_str());
                     skipped++;
                     continue;
                 }
@@ -302,7 +302,7 @@ Defaults::load(std::stringstream &stream)
         }
 
         if (accepted || skipped) {
-            logme(LOG_DEF, "%ld keys accepted, %ld ignored\n", accepted, skipped);
+            logmsg(LOG_DEF, "%ld keys accepted, %ld ignored\n", accepted, skipped);
         }
     }
 }
@@ -333,7 +333,7 @@ Defaults::save(std::stringstream &stream)
 {
     {   SYNCHRONIZED
 
-        logme(LOG_DEF, "Saving user defaults...\n");
+        logmsg(LOG_DEF, "Saving user defaults...\n");
 
         std::map <string, std::map <string, string>> groups;
 
@@ -396,7 +396,7 @@ Defaults::get(const string &key) const
 
     } catch (...) {
 
-        logme(LOG_WARN, "Can't parse value %s\n", key.c_str());
+        logmsg(LOG_WARN, "Can't parse value %s\n", key.c_str());
         return 0;
     }
 }
@@ -433,7 +433,7 @@ Defaults::getFallback(const string &key) const
 
     } catch (...) {
 
-        logme(LOG_WARN, "Can't parse value %s\n", key.c_str());
+        logmsg(LOG_WARN, "Can't parse value %s\n", key.c_str());
         return 0;
     }
 }
@@ -456,11 +456,11 @@ Defaults::set(const string &key, const string &value)
 {
     {   SYNCHRONIZED
 
-        logme(LOG_DEF, "%s = %s\n", key.c_str(), value.c_str());
+        logmsg(LOG_DEF, "%s = %s\n", key.c_str(), value.c_str());
 
         if (!fallbacks.contains(key)) {
 
-            logme(LOG_WARN, "Invalid key: %s\n", key.c_str());
+            logmsg(LOG_WARN, "Invalid key: %s\n", key.c_str());
             assert(false);
             throw CoreError(CoreError::INVALID_KEY, key);
         }
@@ -502,7 +502,7 @@ Defaults::setFallback(const string &key, const string &value)
 {
     {   SYNCHRONIZED
 
-        // logme(LOG_DEF, "Fallback: %s = %s\n", key.c_str(), value.c_str());
+        // logmsg(LOG_DEF, "Fallback: %s = %s\n", key.c_str(), value.c_str());
         fallbacks[key] = value;
     }
 }
@@ -551,7 +551,7 @@ Defaults::remove(const string &key)
 
         if (!fallbacks.contains(key)) {
 
-            logme(LOG_WARN, "Invalid key: %s\n", key.c_str());
+            logmsg(LOG_WARN, "Invalid key: %s\n", key.c_str());
             assert(false);
             throw CoreError(CoreError::INVALID_KEY, key);
         }

@@ -53,7 +53,7 @@ MsgQueue::put(const Message &msg, const string &str)
 
         SYNCHRONIZED
 
-        logme(LOG_MSG, "%s [%llx]\n", MsgEnum::key(msg.type), msg.value);
+        logmsg(LOG_MSG, "%s [%llx]\n", MsgEnum::key(msg.type), msg.value);
 
         // Delete the oldest element if the queue is full
         if (queue.isFull()) {
@@ -61,7 +61,7 @@ MsgQueue::put(const Message &msg, const string &str)
             if (!listener) {
                 
                 auto &lost = queue.read();
-                logme(LOG_WARN, "Message lost: %s [%llx]\n", MsgEnum::key(lost.type), lost.value);
+                logmsg(LOG_WARN, "Message lost: %s [%llx]\n", MsgEnum::key(lost.type), lost.value);
             }
         }
         

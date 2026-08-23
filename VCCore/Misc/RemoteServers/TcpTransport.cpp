@@ -23,7 +23,7 @@ TcpTransport::~TcpTransport()
 void
 TcpTransport::disconnect()
 {
-    logme(LOG_SRV, "Disconnecting TCP transport...\n");
+    logmsg(LOG_SRV, "Disconnecting TCP transport...\n");
 
     // Trigger an exception inside the server thread
     connection.close();
@@ -39,7 +39,7 @@ TcpTransport::main(u16 port, const string &endpoint)
 
     } catch (std::exception &err) {
 
-        logme(LOG_SRV, "Server thread interrupted\n");
+        logmsg(LOG_SRV, "Server thread interrupted\n");
         delegate.didTerminate(err.what());
     }
 }
@@ -61,12 +61,12 @@ TcpTransport::mainLoop(u16 port)
 
                 // Try to be a client by connecting to an existing server
                 connection.connect(port);
-                logme(LOG_SRV, "Acting as a client\n");
+                logmsg(LOG_SRV, "Acting as a client\n");
 
             } catch (...) {
 
                 // If there is no existing server, be the server
-                logme(LOG_SRV, "Acting as a server\n");
+                logmsg(LOG_SRV, "Acting as a server\n");
 
                 // Create a port listener
                 listener.bind(port);
@@ -103,7 +103,7 @@ TcpTransport::mainLoop(u16 port)
 
         } catch (std::exception &err) {
 
-            logme(LOG_SRV, "Main loop interrupted\n");
+            logmsg(LOG_SRV, "Main loop interrupted\n");
 
             // Handle error if we haven't been interrupted purposely
             if (!terminating()) delegate.didTerminate(err.what());
@@ -125,7 +125,7 @@ TcpTransport::sessionLoop()
 
     } catch (std::exception &err) {
 
-        logme(LOG_SRV, "Session loop interrupted\n");
+        logmsg(LOG_SRV, "Session loop interrupted\n");
 
         // Handle error if we haven't been interrupted purposely
         if (!terminating()) {

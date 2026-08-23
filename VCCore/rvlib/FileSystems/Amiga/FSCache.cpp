@@ -249,7 +249,7 @@ FSCache::markAsDirty(BlockNr nr)
 void
 FSCache::flush()
 {
-    logme(LOG_FS, "Flushing %zd dirty blocks\n", dirty.size());
+    logmsg(LOG_FS, "Flushing %zd dirty blocks\n", dirty.size());
     
     std::vector<u8> buffer;
     auto bs = bsize();

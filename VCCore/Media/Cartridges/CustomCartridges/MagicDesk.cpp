@@ -18,7 +18,7 @@ namespace vc64 {
 void
 MagicDesk::resetCartConfig()
 {
-    logme(LOG_CRT, "Starting cartridge in 8K game mode\n");
+    logmsg(LOG_CRT, "Starting cartridge in 8K game mode\n");
     expansionPort.setCartridgeMode(CRTMode::MODE8K);
 }
 

@@ -71,7 +71,7 @@ SID::executeUntil(Cycle targetCycle)
         // Check if SID is in sync with the CPU
         if (missing < -1000 || missing > 1000000) {
 
-            logme(LOG_WARN, "Resyncing SID %ld (%lld cycles off)\n", objid, missing);
+            logmsg(LOG_WARN, "Resyncing SID %ld (%lld cycles off)\n", objid, missing);
 
         } else {
 
@@ -80,11 +80,11 @@ SID::executeUntil(Cycle targetCycle)
 
             // Compute the missing samples
             auto numSamples = resid.executeCycles(isize(missing), stream);
-            logme(LOG_SID_EXEC, "%ld: target: %lld missing: %lld generated: %ld", objid, targetCycle, missing, numSamples);
+            logmsg(LOG_SID_EXEC, "%ld: target: %lld missing: %lld generated: %ld", objid, targetCycle, missing, numSamples);
         }
     } else {
 
-        // logme(LOG_DEBUG, "Power safe mode\n");
+        // logmsg(LOG_DEBUG, "Power safe mode\n");
     }
 
     clock = targetCycle;

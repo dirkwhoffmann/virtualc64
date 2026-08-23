@@ -67,7 +67,7 @@ void
 ActionReplay3::pressButton(isize nr)
 {
     assert(nr <= numButtons());
-    logme(LOG_CRT, "Pressing %s button.\n", getButtonTitle(nr));
+    logmsg(LOG_CRT, "Pressing %s button.\n", getButtonTitle(nr));
 
     switch (nr) {
 
@@ -94,7 +94,7 @@ void
 ActionReplay3::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
-    logme(LOG_CRT, "Releasing %s button.\n", getButtonTitle(nr));
+    logmsg(LOG_CRT, "Releasing %s button.\n", getButtonTitle(nr));
 
     switch (nr) {
 
@@ -128,7 +128,7 @@ ActionReplay::operator << (SerResetter &worker)
 void
 ActionReplay::resetCartConfig()
 {
-    logme(LOG_CRT, "Starting ActionReplay cartridge in 8K game mode.\n");
+    logmsg(LOG_CRT, "Starting ActionReplay cartridge in 8K game mode.\n");
     expansionPort.setCartridgeMode(CRTMode::MODE8K);
 }
 
@@ -213,7 +213,7 @@ void
 ActionReplay::pressButton(isize nr)
 {
     assert(nr <= numButtons());
-    logme(LOG_CRT, "Pressing %s button.\n", getButtonTitle(nr));
+    logmsg(LOG_CRT, "Pressing %s button.\n", getButtonTitle(nr));
 
     switch (nr) {
 
@@ -238,7 +238,7 @@ void
 ActionReplay::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
-    logme(LOG_CRT, "Releasing %s button.\n", getButtonTitle(nr));
+    logmsg(LOG_CRT, "Releasing %s button.\n", getButtonTitle(nr));
 
     switch (nr) {
 
@@ -255,7 +255,7 @@ ActionReplay::setControlReg(u8 value)
 {
     control = value;
 
-    logme(LOG_CRT, "PC: %04X setControlReg(%02X)\n", cpu.getPC0(), value);
+    logmsg(LOG_CRT, "PC: %04X setControlReg(%02X)\n", cpu.getPC0(), value);
 
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)
@@ -275,7 +275,7 @@ ActionReplay::setControlReg(u8 value)
     bankInROMH(bank(), 0x2000, 0);
 
     if (disabled()) {
-        logme(LOG_CRT, "Action Replay cartridge disabled.\n");
+        logmsg(LOG_CRT, "Action Replay cartridge disabled.\n");
     }
 
     if (resetFreezeMode() || disabled()) {

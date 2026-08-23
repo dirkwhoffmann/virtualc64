@@ -35,7 +35,7 @@ struct SYNC
 utl::ByteView
 C64Decoder::decodeTrack(utl::BitView track, TrackNr t, std::span<u8> out)
 {
-    logme(LOG_IMG, "Decoding C64 track %ld\n", t);
+    logmsg(LOG_IMG, "Decoding C64 track %ld\n", t);
 
     // Find all sectors
     auto sectors = seekSectors(track);
@@ -62,7 +62,7 @@ C64Decoder::decodeTrack(utl::BitView track, TrackNr t, std::span<u8> out)
 utl::ByteView
 C64Decoder::decodeSector(utl::BitView track, TrackNr t, SectorNr s, std::span<u8> out)
 {
-    logme(LOG_IMG, "Decoding C64 sector %ld:%ld\n", t, s);
+    logmsg(LOG_IMG, "Decoding C64 sector %ld:%ld\n", t, s);
 
     // Ensure the output buffer is large enough
     assert(isize(out.size()) >= bsize);

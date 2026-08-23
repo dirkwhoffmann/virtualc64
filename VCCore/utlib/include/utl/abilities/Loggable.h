@@ -90,11 +90,11 @@ protected:
 // Logging macro
 //
 
-#ifdef logme
-#undef logme
+#ifdef logmsg
+#undef logmsg
 #endif
 
-#define logme(key, format, ...) \
+#define logmsg(key, format, ...) \
     do { \
         if CONSTEXPR (key != LOG_OFF) \
             log(key, std::source_location::current(), \

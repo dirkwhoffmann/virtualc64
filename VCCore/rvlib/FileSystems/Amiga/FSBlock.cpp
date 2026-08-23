@@ -1618,7 +1618,7 @@ FSBlock::writeBootBlock(BootBlockId id, isize page)
     assert(page == 0 || page == 1);
     assert(type == FSBlockType::BOOT);
     
-    logme(LOG_FS, "writeBootBlock(%s, %ld)\n", BootBlockIdEnum::key(id), page);
+    logmsg(LOG_FS, "writeBootBlock(%s, %ld)\n", BootBlockIdEnum::key(id), page);
     
     if (id != BootBlockId::NONE) {
 
@@ -1933,7 +1933,7 @@ FSBlock::extractData(Buffer<u8> &buf) const
     }
 
     if (bytesRemaining != 0) {
-        logme(LOG_WARN, "%ld remaining bytes. Expected 0.\n", bytesRemaining);
+        logmsg(LOG_WARN, "%ld remaining bytes. Expected 0.\n", bytesRemaining);
     }
 
     return bytesTotal;
@@ -2036,7 +2036,7 @@ FSBlock::overwriteData(Buffer<u8> &buf)
                 
             } else {
                 
-                logme(LOG_WARN, "Ignoring block %ld (no data block)\n", ref);
+                logmsg(LOG_WARN, "Ignoring block %ld (no data block)\n", ref);
             }
         }
         
@@ -2045,7 +2045,7 @@ FSBlock::overwriteData(Buffer<u8> &buf)
     }
     
     if (bytesRemaining != 0) {
-        logme(LOG_WARN, "%ld remaining bytes. Expected 0.\n", bytesRemaining);
+        logmsg(LOG_WARN, "%ld remaining bytes. Expected 0.\n", bytesRemaining);
     }
     
     return bytesTotal;

@@ -25,7 +25,7 @@ DOSEncoder::encodeTrack(utl::ByteView src, TrackNr t)
     const isize count = (isize)src.size() / bsize;
     if (count >= maxsec) throw DeviceError(DeviceError::DSK_WRONG_SECTOR_CNT);
 
-    logme(LOG_IMG, "Encoding DOS track %ld with %ld sectors\n", t, count);
+    logmsg(LOG_IMG, "Encoding DOS track %ld with %ld sectors\n", t, count);
     assert(src.size() % bsize == 0);
 
     // Start with a clean track
@@ -37,7 +37,7 @@ DOSEncoder::encodeTrack(utl::ByteView src, TrackNr t)
         encodeSector(view, s * ssize, t, s, utl::ByteView(src.subspan(s * bsize, bsize)));
 
     // Compute a debug checksum
-    logme(LOG_IMG, "Track %ld checksum = %x\n", t, view.fnv32());
+    logmsg(LOG_IMG, "Track %ld checksum = %x\n", t, view.fnv32());
     
     return utl::BitView(view.data(), view.size() * 8);
 }
@@ -56,7 +56,7 @@ DOSEncoder::encodeTrack(utl::MutableByteView track, TrackNr t, utl::ByteView src
     const isize ssize = 1300;                      // MFM sector size in bytes
     const isize count = (isize)src.size() / bsize; // Number of sectors to encode
 
-    logme(LOG_IMG, "Encoding DOS track %ld with %ld sectors\n", t, count);
+    logmsg(LOG_IMG, "Encoding DOS track %ld with %ld sectors\n", t, count);
     assert(src.size() % bsize == 0);
 
     // Format track
@@ -80,7 +80,7 @@ DOSEncoder::encodeTrack(utl::MutableByteView track, TrackNr t, utl::ByteView src
         encodeSector(track, 194 + s * ssize, t, s, utl::ByteView(src.subspan(s * bsize, bsize)));
 
     // Compute a debug checksum
-    logme(LOG_IMG, "Track %ld checksum = %x\n", t, track.fnv32());
+    logmsg(LOG_IMG, "Track %ld checksum = %x\n", t, track.fnv32());
 }
 */
 
@@ -89,7 +89,7 @@ DOSEncoder::encodeSector(utl::MutableByteView track, isize offset, TrackNr t, Se
 {
     const isize bsize = 512;   // Block size in bytes
 
-    logme(LOG_IMG, "Encoding sector %ld\n", s);
+    logmsg(LOG_IMG, "Encoding sector %ld\n", s);
     assert(data.size() == bsize);
 
     u8 buf[60 + 512 + 2 + 109]; // Header + Data + CRC + Gap

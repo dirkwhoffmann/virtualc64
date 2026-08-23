@@ -67,7 +67,7 @@ VICII::initFuncTable(VICIIRev revision, u16 flags)
 void
 VICII::updateVicFunctionTable()
 {    
-    logme(LOG_VICII, "updateVicFunctionTable\n");
+    logmsg(LOG_VICII, "updateVicFunctionTable\n");
     
     u16 flags = c64.getHeadless() ? HEADLESS_CYCLE : dmaDebug() ? DEBUG_CYCLE : 0;
     

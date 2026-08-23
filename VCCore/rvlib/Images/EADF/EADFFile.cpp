@@ -89,19 +89,19 @@ EADFFile::checkIntegrity()
     
     if (std::strcmp((char *)data.ptr, "UAE-1ADF") != 0) {
         
-        logme(LOG_WARN, "Only UAE-1ADF files are supported\n");
+        logmsg(LOG_WARN, "Only UAE-1ADF files are supported\n");
         throw ImageError(ImageError::EXT_FACTOR5);
     }
     
     if (numTracks < 160 || numTracks > 168) {
 
-        logme(LOG_WARN, "Invalid number of tracks\n");
+        logmsg(LOG_WARN, "Invalid number of tracks\n");
         throw ImageError(ImageError::EXT_CORRUPTED);
     }
 
     if (data.size < proposedHeaderSize() || data.size != proposedFileSize()) {
         
-        logme(LOG_WARN, "File size mismatch\n");
+        logmsg(LOG_WARN, "File size mismatch\n");
         throw ImageError(ImageError::EXT_CORRUPTED);
     }
 
@@ -109,7 +109,7 @@ EADFFile::checkIntegrity()
 
         if (!isStandardTrack(i) && !isExtendedTrack(i)) {
 
-            logme(LOG_WARN, "Unsupported track format\n");
+            logmsg(LOG_WARN, "Unsupported track format\n");
             throw ImageError(ImageError::EXT_INCOMPATIBLE);
         }
 
@@ -117,14 +117,14 @@ EADFFile::checkIntegrity()
 
             if (usedBitsForTrack(i) != 11 * 512 * 8) {
 
-                logme(LOG_WARN, "Unsupported standard track size\n");
+                logmsg(LOG_WARN, "Unsupported standard track size\n");
                 throw ImageError(ImageError::EXT_CORRUPTED);
             }
         }
 
         if (usedBitsForTrack(i) > availableBytesForTrack(i) * 8) {
             
-            logme(LOG_WARN, "Corrupted length information\n");
+            logmsg(LOG_WARN, "Corrupted length information\n");
             throw ImageError(ImageError::EXT_CORRUPTED);
         }
     }
@@ -148,7 +148,7 @@ EADFFile::didInitialize()
 
         if (isStandardTrack(t)) {
 
-            logme(LOG_IMG, "Reading standard track %ld from EADF\n", t);
+            logmsg(LOG_IMG, "Reading standard track %ld from EADF\n", t);
 
             // Copy bytes from the EADF
             track.data.assign(trackData(t), trackData(t) + usedBitsForTrack(t) / 8);
@@ -164,7 +164,7 @@ EADFFile::didInitialize()
 
         if (isExtendedTrack(t)) {
 
-            logme(LOG_IMG, "Reading extended track %ld from EADF\n", t);
+            logmsg(LOG_IMG, "Reading extended track %ld from EADF\n", t);
 
             // Copy MFM bits from the EADF
             track.mfm.assign(trackData(t), trackData(t) + availableBytesForTrack(t));

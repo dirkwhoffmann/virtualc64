@@ -121,7 +121,7 @@ Keyboard::isPressed(C64Key key) const
 void
 Keyboard::press(C64Key key)
 {
-    logme(LOG_KBD, "press(%ld)\n", key.nr);
+    logmsg(LOG_KBD, "press(%ld)\n", key.nr);
 
     switch (key.nr) {
 
@@ -159,7 +159,7 @@ Keyboard::press(C64Key key)
 void
 Keyboard::release(C64Key key)
 {
-    logme(LOG_KBD, "release(%ld)\n", key.nr);
+    logmsg(LOG_KBD, "release(%ld)\n", key.nr);
 
     // Only proceed if the key is currently pressed and unlocked
     if (!isPressed(key) || isLocked(key)) return;
@@ -204,7 +204,7 @@ Keyboard::releaseAll()
 {
     SYNCHRONIZED
 
-    logme(LOG_KBD, "releaseAll()\n");
+    logmsg(LOG_KBD, "releaseAll()\n");
 
     for (isize i = 0; i < 66; ++i) {
 
@@ -274,7 +274,7 @@ Keyboard::unlockAll()
 void
 Keyboard::autoType(const string &text)
 {
-    logme(LOG_KBD, "autoType(%s)\n", text.c_str());
+    logmsg(LOG_KBD, "autoType(%s)\n", text.c_str());
 
     auto trigger = c64.cpu.clock;
 
@@ -307,7 +307,7 @@ Keyboard::abortAutoTyping()
 {
     SYNCHRONIZED
 
-    logme(LOG_KBD, "abortAutoTyping()\n");
+    logmsg(LOG_KBD, "abortAutoTyping()\n");
 
     if (!pending.isEmpty()) {
 

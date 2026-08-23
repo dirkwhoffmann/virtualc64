@@ -140,7 +140,7 @@ CIA::peek(u16 addr)
             fatalError;
     }
     
-    logme(LOG_CIAREG, "peek(%x) = %x\n", addr, result);
+    logmsg(LOG_CIAREG, "peek(%x) = %x\n", addr, result);
     return result;
 }
 
@@ -212,7 +212,7 @@ CIA::spypeek(u16 addr) const
 void
 CIA::poke(u16 addr, u8 value)
 {
-    logme(LOG_CIAREG, "poke(%x, %x)\n", addr, value);
+    logmsg(LOG_CIAREG, "poke(%x, %x)\n", addr, value);
     wakeUp();
     
     switch(addr) {

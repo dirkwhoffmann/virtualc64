@@ -18,7 +18,7 @@ namespace retro::vault {
 utl::ByteView
 DOSDecoder::decodeTrack(utl::BitView track, TrackNr t, std::span<u8> out)
 {
-    logme(LOG_IMG, "Decoding DOS track %ld\n", t);
+    logmsg(LOG_IMG, "Decoding DOS track %ld\n", t);
 
     // Find all sectors
     auto sectors    = seekSectors(track);
@@ -49,7 +49,7 @@ DOSDecoder::decodeTrack(utl::BitView track, TrackNr t, std::span<u8> out)
 utl::ByteView
 DOSDecoder::decodeSector(utl::BitView track, TrackNr t, SectorNr s, std::span<u8> out)
 {
-    logme(LOG_IMG, "Decoding DOS track %ld:%ld\n", t, s);
+    logmsg(LOG_IMG, "Decoding DOS track %ld:%ld\n", t, s);
 
     // Ensure the output buffer is large enough
     assert(isize(out.size()) >= bsize);

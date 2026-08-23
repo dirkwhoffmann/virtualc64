@@ -311,7 +311,7 @@ Emulator::cloneRunAheadInstance()
         if (ahead != main) {
             
             main.diff(ahead);
-            logme(LOG_FATAL, "Corrupted run-ahead clone detected");
+            logmsg(LOG_FATAL, "Corrupted run-ahead clone detected");
             fatalError;
         }
     }

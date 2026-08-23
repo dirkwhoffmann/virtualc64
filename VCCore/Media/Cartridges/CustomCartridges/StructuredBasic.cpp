@@ -24,7 +24,7 @@ StructuredBasic::resetCartConfig()
 u8
 StructuredBasic::peekIO1(u16 addr)
 {
-    logme(LOG_CRT, "peekIO1(%x)\n", addr);
+    logmsg(LOG_CRT, "peekIO1(%x)\n", addr);
 
     switch (addr & 0b11) {
 
@@ -55,7 +55,7 @@ StructuredBasic::spypeekIO1(u16 addr) const
 void
 StructuredBasic::pokeIO1(u16 addr, u8 value)
 {
-    logme(LOG_CRT, "pokeIO1(%x,%x)\n", addr, value);
+    logmsg(LOG_CRT, "pokeIO1(%x,%x)\n", addr, value);
 
     peekIO1(addr);
 }

@@ -286,7 +286,7 @@ FloppyDisk::readBlock(u8 *dst, isize nr) const
     C64Decoder decoder;
 
     auto [t,s] = b2ts(nr);
-    logme(LOG_GCR, "readBlock: %ld (%ld,%ld)\n", nr, t, s);
+    logmsg(LOG_GCR, "readBlock: %ld (%ld,%ld)\n", nr, t, s);
     
     // The first track in the data struct is numbered 1
     auto tt = t + 1;
@@ -316,7 +316,7 @@ FloppyDisk::writeBlock(const u8 *src, isize nr)
     C64Decoder decoder;
 
     auto [t,s]  = b2ts(nr);
-    logme(LOG_GCR, "writeBlock: %ld (%ld,%ld)\n", nr, t, s);
+    logmsg(LOG_GCR, "writeBlock: %ld (%ld,%ld)\n", nr, t, s);
 
     // The first track in the data struct is numbered 1
     auto tt = t + 1;
@@ -568,7 +568,7 @@ FloppyDisk::decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer)
         if (trackIsEmpty(t))
             break;
         
-        logme(LOG_GCR, "Decoding track %ld %s\n", t, dest ? "" : "(test run)");
+        logmsg(LOG_GCR, "Decoding track %ld %s\n", t, dest ? "" : "(test run)");
         numBytes += decodeTrack(t, dest + (dest ? numBytes : 0), analyzer);
     }
     
@@ -594,14 +594,14 @@ FloppyDisk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
     // For each sector ...
     for (Sector s = 0; s < numSectors; s++) {
         
-        logme(LOG_GCR, "   Decoding sector %ld\n", s);
+        logmsg(LOG_GCR, "   Decoding sector %ld\n", s);
         SectorLayout info = analyzer.sectorLayout(ht, s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(ht, info.dataBegin, dest + (dest ? numBytes : 0), analyzer);
         } else {
 
             // The decoder failed to decode this sector.
-            logme(LOG_GCR, "   Failed to decode sector %ld\n", s);
+            logmsg(LOG_GCR, "   Failed to decode sector %ld\n", s);
             break;
         }
     }
@@ -635,7 +635,7 @@ FloppyDisk::encodeDisk(const FloppyDiskImage &image)
 {
     using namespace retro::vault;
     
-    logme(LOG_DSK,
+    logmsg(LOG_DSK,
             "Encoding floppy disk image %s...\n", image.path.string().c_str());
 
     // Start with an unformatted disk
@@ -684,7 +684,7 @@ FloppyDisk::encodeDisk(const FloppyDiskImage &image)
 void
 FloppyDisk::encodeG64(const G64File &a)
 {
-    logme(LOG_GCR, "Encoding G64 archive\n");
+    logmsg(LOG_GCR, "Encoding G64 archive\n");
 
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
@@ -700,10 +700,10 @@ FloppyDisk::encodeG64(const G64File &a)
         }
         
         if (size > 7928) {
-            logme(LOG_WARN, "Halftrack %ld has %ld bytes. Must be less than 7928\n", ht, size);
+            logmsg(LOG_WARN, "Halftrack %ld has %ld bytes. Must be less than 7928\n", ht, size);
             continue;
         }
-        logme(LOG_GCR, "  Encoding halftrack %ld (%ld bytes)\n", ht, size);
+        logmsg(LOG_GCR, "  Encoding halftrack %ld (%ld bytes)\n", ht, size);
         length.halftrack[ht] = (u16)(8 * size);
         
         a.copyHalftrack(ht, data.halftrack[ht]);

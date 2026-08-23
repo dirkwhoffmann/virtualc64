@@ -86,7 +86,7 @@ FinalIII::nmiDidTrigger()
 {
     if (freeezeButtonIsPressed) {
 
-        logme(LOG_CRT, "NMI while freeze button is pressed.\n");
+        logmsg(LOG_CRT, "NMI while freeze button is pressed.\n");
 
         /* After the NMI has been processed by the CPU, the cartridge's counter
          * has reached a value that overflows qD to 0. This has two side
@@ -148,7 +148,7 @@ FinalIII::pressButton(isize nr)
     assert(nr <= numButtons());
     assert(isEmulatorThread());
 
-    logme(LOG_CRT, "Pressing %s button.\n", getButtonTitle(nr));
+    logmsg(LOG_CRT, "Pressing %s button.\n", getButtonTitle(nr));
 
     switch (nr) {
 

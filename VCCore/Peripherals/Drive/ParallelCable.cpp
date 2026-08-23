@@ -56,7 +56,7 @@ ParCable::getValue() const
 void
 ParCable::driveHandshake()
 {
-    logme(LOG_PAR, "driveHandshake()\n");
+    logmsg(LOG_PAR, "driveHandshake()\n");
     cia2.triggerFallingEdgeOnFlagPin();
 }
 
@@ -70,7 +70,7 @@ ParCable::c64Handshake()
 void
 ParCable::c64Handshake(Drive &drive)
 {
-    logme(LOG_PAR, "c64Handshake(%ld)\n", drive.getDeviceNr());
+    logmsg(LOG_PAR, "c64Handshake(%ld)\n", drive.getDeviceNr());
     
     switch (drive.getParCableType()) {
             

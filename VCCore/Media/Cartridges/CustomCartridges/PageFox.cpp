@@ -56,10 +56,10 @@ PageFox::peekRomL(u16 addr)
 
     if (ramIsVisible()) {
         result = peekRAM(ramAddrL(addr));
-        logme(LOG_CRT, "peekRomL(%x) [RAM] = %x\n", addr, result);
+        logmsg(LOG_CRT, "peekRomL(%x) [RAM] = %x\n", addr, result);
     } else {
         result = Cartridge::peekRomL(addr);
-        logme(LOG_CRT, "peekRomL(%x) = %x\n", addr, result);
+        logmsg(LOG_CRT, "peekRomL(%x) = %x\n", addr, result);
     }
 
     return result;
@@ -86,10 +86,10 @@ PageFox::peekRomH(u16 addr)
 
     if (ramIsVisible()) {
         result = peekRAM(ramAddrH(addr));
-        logme(LOG_CRT, "peekRomH(%x) [RAM] = %x\n", addr, result);
+        logmsg(LOG_CRT, "peekRomH(%x) [RAM] = %x\n", addr, result);
     } else {
         result = Cartridge::peekRomH(addr);
-        logme(LOG_CRT, "peekRomH(%x) = %x\n", addr, result);
+        logmsg(LOG_CRT, "peekRomH(%x) = %x\n", addr, result);
     }
 
     return result;
@@ -114,10 +114,10 @@ PageFox::pokeRomL(u16 addr, u8 value)
 {
 
     if (ramIsVisible()) {
-        logme(LOG_CRT, "pokeRomL [RAM] (%x, %x)\n", addr, value);
+        logmsg(LOG_CRT, "pokeRomL [RAM] (%x, %x)\n", addr, value);
         pokeRAM(ramAddrL(addr), value);
     } else {
-        logme(LOG_CRT, "pokeRomL(%x, %x)\n", addr, value);
+        logmsg(LOG_CRT, "pokeRomL(%x, %x)\n", addr, value);
     }
     mem.ram[0x8000 + addr] = value;
 }
@@ -126,10 +126,10 @@ void
 PageFox::pokeRomH(u16 addr, u8 value)
 {
     if (ramIsVisible()) {
-        logme(LOG_CRT, "pokeRomH [RAM] (%x, %x)\n", addr, value);
+        logmsg(LOG_CRT, "pokeRomH [RAM] (%x, %x)\n", addr, value);
         pokeRAM(ramAddrH(addr), value);
     } else {
-        logme(LOG_CRT, "pokeRomH(%x, %x)\n", addr, value);
+        logmsg(LOG_CRT, "pokeRomH(%x, %x)\n", addr, value);
     }
     mem.ram[0xA000 + addr] = value;
 }
@@ -149,16 +149,16 @@ PageFox::spypeekIO1(u16 addr) const
 void
 PageFox::pokeIO1(u16 addr, u8 value)
 {
-    logme(LOG_CRT, "pokeIO1(%x, %x)\n", addr, value);
+    logmsg(LOG_CRT, "pokeIO1(%x, %x)\n", addr, value);
 
     ctrlReg = value;
 
     if (disabled()) {
         expansionPort.setCartridgeMode(CRTMode::OFF);
-        logme(LOG_CRT, "CRT disabled\n");
+        logmsg(LOG_CRT, "CRT disabled\n");
     } else {
         expansionPort.setCartridgeMode(CRTMode::MODE16K);
-        logme(LOG_CRT, "16K mode\n");
+        logmsg(LOG_CRT, "16K mode\n");
     }
 
     bankIn(bank());

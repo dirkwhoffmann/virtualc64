@@ -218,7 +218,7 @@ Drive::setZone(isize value)
     assert(value < 4);
     
     if (value != zone) {
-        logme(LOG_DRV, "Switching zone: %ld --> %ld\n", zone, value);
+        logmsg(LOG_DRV, "Switching zone: %ld --> %ld\n", zone, value);
         zone = value;
     }
 }
@@ -273,7 +273,7 @@ Drive::wakeUp(isize awakeness)
 {
     if (isIdle()) {
         
-        logme(LOG_DRV, "Exiting power-safe mode\n");
+        logmsg(LOG_DRV, "Exiting power-safe mode\n");
         msgQueue.put(Msg::DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 0 } );
         needsEmulation = true;
     }
@@ -300,7 +300,7 @@ Drive::moveHeadUp()
             offset = 0;
         }
         
-        logme(LOG_DRV, "Moving head up to halftrack %ld (track %2.1f) (offset %ld)\n",
+        logmsg(LOG_DRV, "Moving head up to halftrack %ld (track %2.1f) (offset %ld)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
     }
 
@@ -328,7 +328,7 @@ Drive::moveHeadDown()
             offset = 0;
         }
         
-        logme(LOG_DRV, "Moving head down to halftrack %ld (track %2.1f)\n",
+        logmsg(LOG_DRV, "Moving head down to halftrack %ld (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
     }
 
@@ -386,11 +386,11 @@ Drive::insertDisk(const fs::path &path, bool wp)
 void
 Drive::insertDisk(std::unique_ptr<FloppyDisk> disk)
 {
-    logme(LOG_DSKCHG, "insertDisk\n");
+    logmsg(LOG_DSKCHG, "insertDisk\n");
     
     if (diskToInsert) {
         
-        logme(LOG_WARN, "Disk change in progress. Ignoring new disk.\n");
+        logmsg(LOG_WARN, "Disk change in progress. Ignoring new disk.\n");
         // TODO: THROW
         return;
     }
@@ -459,7 +459,7 @@ Drive::insertCollection(AnyCollection &collection, bool wp)
 void 
 Drive::ejectDisk()
 {
-    logme(LOG_DSKCHG, "ejectDisk()\n");
+    logmsg(LOG_DSKCHG, "ejectDisk()\n");
     
     if (insertionStatus == InsertionStatus::FULLY_INSERTED && !diskToInsert) {
         
@@ -533,7 +533,7 @@ Drive::vsyncHandler()
 
         if (--watchdog == 0) {
 
-            logme(LOG_DRV, "Entering power-save mode\n");
+            logmsg(LOG_DRV, "Entering power-save mode\n");
             needsEmulation = false;
             msgQueue.put(Msg::DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 1 } );
         }
@@ -586,7 +586,7 @@ Drive::processDiskChangeEvent(EventID id)
 
         case InsertionStatus::FULLY_INSERTED:
 
-            logme(LOG_DSKCHG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
+            logmsg(LOG_DSKCHG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
 
             // Pull the disk half out (blocks the light barrier)
             insertionStatus = InsertionStatus::PARTIALLY_EJECTED;
@@ -600,7 +600,7 @@ Drive::processDiskChangeEvent(EventID id)
 
         case InsertionStatus::PARTIALLY_EJECTED:
 
-            logme(LOG_DSKCHG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
+            logmsg(LOG_DSKCHG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
 
             // Take the disk out (unblocks the light barrier)
             insertionStatus = InsertionStatus::FULLY_EJECTED;
@@ -616,7 +616,7 @@ Drive::processDiskChangeEvent(EventID id)
 
         case InsertionStatus::FULLY_EJECTED:
 
-            logme(LOG_DSKCHG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
+            logmsg(LOG_DSKCHG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
 
             // Only proceed if a new disk is waiting for insertion
             if (!diskToInsert) break;
@@ -630,7 +630,7 @@ Drive::processDiskChangeEvent(EventID id)
 
         case InsertionStatus::PARTIALLY_INSERTED:
 
-            logme(LOG_DSKCHG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
+            logmsg(LOG_DSKCHG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
 
             // Fully insert the disk (unblocks the light barrier)
             insertionStatus = InsertionStatus::FULLY_INSERTED;

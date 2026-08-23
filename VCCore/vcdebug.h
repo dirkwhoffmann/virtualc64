@@ -34,7 +34,7 @@
  *
  * Debug flags come in two kinds, declared in the two tables below:
  *
- * - Logging flags gate a logme() call and nothing else. Disabling one
+ * - Logging flags gate a logmsg() call and nothing else. Disabling one
  *   removes the call (release builds) or simply keeps it silent (debug
  *   builds); the emulator behaves identically either way. They are typed
  *   'long', because their value doubles as the severity the message is

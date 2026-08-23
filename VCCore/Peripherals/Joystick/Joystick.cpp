@@ -37,7 +37,7 @@ Joystick::getControlPort() const
 void
 Joystick::trigger(GamePadAction event)
 {
-    logme(LOG_JOY, "Port %ld: %s\n", objid, GamePadActionEnum::key(event));
+    logmsg(LOG_JOY, "Port %ld: %s\n", objid, GamePadActionEnum::key(event));
 
     switch (event) {
 
@@ -108,14 +108,14 @@ Joystick::eofHandler()
 
         if (i64(c64.frame) == nextAutofireFrame) {
 
-            logme(LOG_JOY, "Autofire press\n");
+            logmsg(LOG_JOY, "Autofire press\n");
             button = true;
             nextAutofireReleaseFrame = nextAutofireFrame + config.autofireDelay;
         }
 
         if (i64(c64.frame) == nextAutofireReleaseFrame) {
 
-            logme(LOG_JOY, "Autofire release\n");
+            logmsg(LOG_JOY, "Autofire release\n");
             button = false;
             if (--bulletCounter > 0) {
                 nextAutofireFrame = nextAutofireReleaseFrame + config.autofireDelay;
@@ -141,7 +141,7 @@ Joystick::magazineSize()
 void
 Joystick::startAutofire()
 {
-    logme(LOG_JOY, "startAutofire()\n");
+    logmsg(LOG_JOY, "startAutofire()\n");
 
     // Load magazine
     reload();
@@ -156,7 +156,7 @@ Joystick::startAutofire()
 void
 Joystick::stopAutofire()
 {
-    logme(LOG_JOY, "stopAutofire()\n");
+    logmsg(LOG_JOY, "stopAutofire()\n");
 
     // Release button and empty the bullet counter
     button = false;

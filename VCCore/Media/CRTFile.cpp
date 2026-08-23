@@ -81,7 +81,7 @@ CRTFile::finalizeRead()
         ptr += chipSize(numberOfChips);
     }
     
-    logme(LOG_CRT, "CRT file imported (%ld chips)\n", numberOfChips);
+    logmsg(LOG_CRT, "CRT file imported (%ld chips)\n", numberOfChips);
 }
 
 CartridgeType
@@ -180,7 +180,7 @@ CRTFile::repair()
         case 0xb2a479a5a2ee6cd5: // Mikro Assembler
 
             // Replace invalid CRT type $00 by $1C
-            logme(LOG_CRT, "Repairing broken Mikro Assembler cartridge\n");
+            logmsg(LOG_CRT, "Repairing broken Mikro Assembler cartridge\n");
             data[0x17] = 0x1C;
             break;
     }

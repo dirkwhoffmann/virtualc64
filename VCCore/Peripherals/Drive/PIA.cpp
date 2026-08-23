@@ -184,19 +184,19 @@ PIA6821::peek(bool rs1, bool rs0)
                     setCA2Internal(1);
                     break;
             }
-            logme(LOG_PIA, "peekPRB() = %x\n", result);
+            logmsg(LOG_PIA, "peekPRB() = %x\n", result);
             break;
             
         case 0x0: case 0x1: // DDRA
             
             result = ddra;
-            logme(LOG_PIA, "peekDDRA() = %x\n", result);
+            logmsg(LOG_PIA, "peekDDRA() = %x\n", result);
             break;
             
         case 0x4: case 0x5: case 0x6: case 0x7: // CRA
             
             result = cra;
-            logme(LOG_PIA, "peekCRA() = %x\n", result);
+            logmsg(LOG_PIA, "peekCRA() = %x\n", result);
             break;
             
         case 0x9: case 0xb: // PRB
@@ -206,7 +206,7 @@ PIA6821::peek(bool rs1, bool rs0)
             // Clear interrupt bits
             crb &= 0x3F;
 
-            logme(LOG_PIA, "peekPRB() = %x\n", result);
+            logmsg(LOG_PIA, "peekPRB() = %x\n", result);
             break;
             
         case 0x8: case 0xa: // DDRB
@@ -217,7 +217,7 @@ PIA6821::peek(bool rs1, bool rs0)
         case 0xc: case 0xd: case 0xe: case 0xf: // CRB
             
             result = crb;
-            logme(LOG_PIA, "peekCRB() = %x\n", result);
+            logmsg(LOG_PIA, "peekCRB() = %x\n", result);
             break;
             
         default:
@@ -225,7 +225,7 @@ PIA6821::peek(bool rs1, bool rs0)
             fatalError;
     }
     
-    // logme(LOG_PIA, "peek(%x) = %x\n", addr, result);
+    // logmsg(LOG_PIA, "peek(%x) = %x\n", addr, result);
     return result;
 }
 
@@ -248,19 +248,19 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             
         case 0x2: case 0x3: // PRA
             
-            logme(LOG_PIA, "pokePRA(%x)\n", value);
+            logmsg(LOG_PIA, "pokePRA(%x)\n", value);
             ora = value;
             break;
             
         case 0x0: case 0x1: // DDRA
             
-            logme(LOG_PIA, "pokeDDRA(%x)\n", value);
+            logmsg(LOG_PIA, "pokeDDRA(%x)\n", value);
             ddra = value;
             break;
             
         case 0x4: case 0x5: case 0x6: case 0x7: // CRA
         {
-            logme(LOG_PIA, "pokeCRA(%x)\n", value);
+            logmsg(LOG_PIA, "pokeCRA(%x)\n", value);
 
             bool pendingIrq =
             (GET_BIT(cra, 7) && RISING_EDGE_BIT(cra, value, 0)) ||
@@ -286,7 +286,7 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
         }
         case 0x9: case 0xb: // PRB
             
-            logme(LOG_PIA, "pokePRB(%x)\n", value);
+            logmsg(LOG_PIA, "pokePRB(%x)\n", value);
             orb = value;
             
             switch (cb2Control()) {
@@ -306,13 +306,13 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             
         case 0x8: case 0xa: // DDRB
             
-            logme(LOG_PIA, "pokeDDRB(%x)\n", value);
+            logmsg(LOG_PIA, "pokeDDRB(%x)\n", value);
             ddrb = value;
             break;
             
         case 0xc: case 0xd: case 0xe: case 0xf: // CRB
         {
-            logme(LOG_PIA, "pokeCRB(%x)\n", value);
+            logmsg(LOG_PIA, "pokeCRB(%x)\n", value);
 
             bool pendingIrq =
             (GET_BIT(crb, 7) && RISING_EDGE_BIT(crb, value, 0)) ||
@@ -362,7 +362,7 @@ PIA6821::updatePB()
 void
 PiaDolphin::ca2HasChangedTo(bool value)
 {
-    logme(LOG_PIA, "ca2HasChangedTo(%d)\n", value);
+    logmsg(LOG_PIA, "ca2HasChangedTo(%d)\n", value);
     
     if (value) {
         parCable.driveHandshake();
@@ -372,19 +372,19 @@ PiaDolphin::ca2HasChangedTo(bool value)
 void
 PiaDolphin::cb2HasChangedTo(bool value)
 {
-    logme(LOG_PIA, "cb2HasChangedTo(%d)\n", value);
+    logmsg(LOG_PIA, "cb2HasChangedTo(%d)\n", value);
 }
 
 void
 PiaDolphin::irqAHasOccurred() const
 {
-    logme(LOG_PIA, "irqAHasOccurred\n");
+    logmsg(LOG_PIA, "irqAHasOccurred\n");
 }
 
 void
 PiaDolphin::irqBHasOccurred() const
 {
-    logme(LOG_PIA, "irqBHasOccurred\n");
+    logmsg(LOG_PIA, "irqBHasOccurred\n");
 }
 
 u8

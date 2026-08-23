@@ -130,12 +130,12 @@ RpcHttpServer::main()
         });
 
         // Start the server to listen on localhost
-        logme(LOG_SRV, "Starting RPC HTTP data provider\n");
+        logmsg(LOG_SRV, "Starting RPC HTTP data provider\n");
         srv->listen("localhost", (int)config.port);
 
     } catch (std::exception &err) {
 
-        logme(LOG_SRV, "Server thread interrupted\n");
+        logmsg(LOG_SRV, "Server thread interrupted\n");
         handleError(err.what());
     }
 }

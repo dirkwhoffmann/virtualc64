@@ -184,20 +184,20 @@ ExpansionPort::attachCartridge(Cartridge *c)
     cartridge->hardReset();
     
     msgQueue.put(Msg::CRT_ATTACHED, 1);
-    logme(LOG_EXP, "Cartridge attached to expansion port");
+    logmsg(LOG_EXP, "Cartridge attached to expansion port");
 }
 
 void
 ExpansionPort::attachReu(isize kb)
 {
-    logme(LOG_EXP, "Attaching REU (%ld KB)\n", kb);
+    logmsg(LOG_EXP, "Attaching REU (%ld KB)\n", kb);
     attachCartridge(new Reu(c64, kb));
 }
 
 void
 ExpansionPort::attachGeoRam(isize kb)
 {
-    logme(LOG_EXP, "Attaching GeoRAM (%ld KB)\n", kb);
+    logmsg(LOG_EXP, "Attaching GeoRAM (%ld KB)\n", kb);
     attachCartridge(new GeoRAM(c64, kb));
 }
 
@@ -232,7 +232,7 @@ ExpansionPort::attachCartridge(const CRTFile &file, bool reset)
 void
 ExpansionPort::attachIsepicCartridge()
 {
-    logme(LOG_EXP, "Attaching Isepic cartridge\n");
+    logmsg(LOG_EXP, "Attaching Isepic cartridge\n");
     
     Cartridge *isepic = new Isepic(c64); //  Cartridge::makeWithType(c64, CRT_ISEPIC);
     (void)attachCartridge(isepic);
@@ -248,7 +248,7 @@ ExpansionPort::detachCartridge()
         
         setCartridgeMode(CRTMode::OFF);
         
-        logme(LOG_EXP, "Cartridge detached from expansion port");
+        logmsg(LOG_EXP, "Cartridge detached from expansion port");
         msgQueue.put(Msg::CRT_ATTACHED, 0);
     }
 }

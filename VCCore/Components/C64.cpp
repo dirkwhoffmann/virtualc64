@@ -340,10 +340,10 @@ C64::initialize()
 {
     auto load = [&](const fs::path &path) {
 
-        logme(LOG_RUN, "Trying to load Rom from %s...\n", path.string().c_str());
+        logmsg(LOG_RUN, "Trying to load Rom from %s...\n", path.string().c_str());
 
         try { loadRom(path); } catch (std::exception& e) {
-            logme(LOG_WARN, "Error: %s\n", e.what());
+            logmsg(LOG_WARN, "Error: %s\n", e.what());
         }
     };
 
@@ -459,7 +459,7 @@ C64::exportConfig(std::ostream &stream) const
 i64
 C64::get(Opt opt, isize objid) const
 {
-    logme(LOG_CNF, "get(%s, %ld)\n", OptEnum::key(opt), objid);
+    logmsg(LOG_CNF, "get(%s, %ld)\n", OptEnum::key(opt), objid);
 
     auto target = routeOption(opt, objid);
     if (target == nullptr) throw CoreError(CoreError::OPT_INV_ID);
@@ -478,13 +478,13 @@ C64::check(Opt opt, i64 value, const std::vector<isize> objids)
             auto target = routeOption(opt, objid);
             if (target == nullptr) break;
 
-            logme(LOG_CNF, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
+            logmsg(LOG_CNF, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
             target->checkOption(opt, value);
         }
     }
     for (auto &objid : objids) {
 
-        logme(LOG_CNF, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
+        logmsg(LOG_CNF, "check(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
         if (target == nullptr) throw CoreError(CoreError::OPT_INV_ID);
@@ -507,13 +507,13 @@ C64::set(Opt opt, i64 value, const std::vector<isize> objids)
             auto target = routeOption(opt, objid);
             if (target == nullptr) break;
 
-            logme(LOG_CNF, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
+            logmsg(LOG_CNF, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
             target->setOption(opt, value);
         }
     }
     for (auto &objid : objids) {
 
-        logme(LOG_CNF, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
+        logmsg(LOG_CNF, "set(%s, %lld, %ld)\n", OptEnum::key(opt), value, objid);
 
         auto target = routeOption(opt, objid);
         if (target == nullptr) throw CoreError(CoreError::OPT_INV_ID);
@@ -646,7 +646,7 @@ C64::overrideOption(Opt opt, i64 value) const
 
     if (overrides.find(opt) != overrides.end()) {
 
-        logme(LOG_INFO, "Overriding option: %s = %lld\n", OptEnum::key(opt), value);
+        logmsg(LOG_INFO, "Overriding option: %s = %lld\n", OptEnum::key(opt), value);
         return overrides[opt];
     }
 
@@ -663,7 +663,7 @@ C64::update(CmdQueue &queue)
 
     while (queue.poll(cmd)) {
 
-        logme(LOG_CMD, "Command: %s\n", CmdEnum::key(cmd.type));
+        logmsg(LOG_CMD, "Command: %s\n", CmdEnum::key(cmd.type));
 
         try {
 
@@ -805,13 +805,13 @@ C64::update(CmdQueue &queue)
                     break;
 
                 default:
-                logme(LOG_FATAL, "Unhandled command: %s\n", CmdEnum::key(cmd.type));
+                logmsg(LOG_FATAL, "Unhandled command: %s\n", CmdEnum::key(cmd.type));
                 fatalError;
             }
 
         } catch (std::exception &e) {
 
-            logme(LOG_WARN, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
+            logmsg(LOG_WARN, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
         }
     }
 
@@ -1039,7 +1039,7 @@ C64::_isReady() const
 void
 C64::_powerOn()
 {
-    logme(LOG_RUN, "_powerOn\n");
+    logmsg(LOG_RUN, "_powerOn\n");
     
     hardReset();
     msgQueue.put(Msg::POWER, 1);
@@ -1048,7 +1048,7 @@ C64::_powerOn()
 void
 C64::_powerOff()
 {
-    logme(LOG_RUN, "_powerOff\n");
+    logmsg(LOG_RUN, "_powerOff\n");
 
     msgQueue.put(Msg::POWER, 0);
 }
@@ -1056,7 +1056,7 @@ C64::_powerOff()
 void
 C64::_run()
 {
-    logme(LOG_RUN, "_run\n");
+    logmsg(LOG_RUN, "_run\n");
     // assert(cpu.inFetchPhase());
 
     msgQueue.put(Msg::RUN);
@@ -1065,7 +1065,7 @@ C64::_run()
 void
 C64::_pause()
 {
-    logme(LOG_RUN, "_pause\n");
+    logmsg(LOG_RUN, "_pause\n");
     // assert(cpu.inFetchPhase());
 
     // Clear pending runloop flags
@@ -1077,7 +1077,7 @@ C64::_pause()
 void
 C64::_halt()
 {
-    logme(LOG_RUN, "_halt\n");
+    logmsg(LOG_RUN, "_halt\n");
 
     msgQueue.put(Msg::SHUTDOWN);
 }
@@ -1085,7 +1085,7 @@ C64::_halt()
 void
 C64::_warpOn()
 {
-    logme(LOG_RUN, "_warpOn\n");
+    logmsg(LOG_RUN, "_warpOn\n");
 
     msgQueue.put(Msg::WARP, 1);
 }
@@ -1093,7 +1093,7 @@ C64::_warpOn()
 void
 C64::_warpOff()
 {
-    logme(LOG_RUN, "_warpOff\n");
+    logmsg(LOG_RUN, "_warpOff\n");
 
     msgQueue.put(Msg::WARP, 0);
 }
@@ -1101,7 +1101,7 @@ C64::_warpOff()
 void
 C64::_trackOn()
 {
-    logme(LOG_RUN, "_trackOn\n");
+    logmsg(LOG_RUN, "_trackOn\n");
 
     msgQueue.put(Msg::TRACK, 1);
 }
@@ -1109,7 +1109,7 @@ C64::_trackOn()
 void
 C64::_trackOff()
 {
-    logme(LOG_RUN, "_trackOff\n");
+    logmsg(LOG_RUN, "_trackOff\n");
 
     msgQueue.put(Msg::TRACK, 0);
 }
@@ -1884,30 +1884,30 @@ C64::loadRom(const RomFile &file)
         case FileType::BASIC_ROM:
             
             file.flash(mem.rom, 0xA000);
-            logme(LOG_MEM, "Basic Rom flashed\n");
-            logme(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::BASIC));
-            logme(LOG_MEM, "mega65BasicRev() = %s\n", mega65BasicRev());
+            logmsg(LOG_MEM, "Basic Rom flashed\n");
+            logmsg(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::BASIC));
+            logmsg(LOG_MEM, "mega65BasicRev() = %s\n", mega65BasicRev());
             break;
             
         case FileType::CHAR_ROM:
             
             file.flash(mem.rom, 0xD000);
-            logme(LOG_MEM, "Character Rom flashed\n");
+            logmsg(LOG_MEM, "Character Rom flashed\n");
             break;
             
         case FileType::KERNAL_ROM:
             
             file.flash(mem.rom, 0xE000);
-            logme(LOG_MEM, "Kernal Rom flashed\n");
-            logme(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::KERNAL));
-            logme(LOG_MEM, "mega65KernalRev() = %s\n", mega65KernalRev());
+            logmsg(LOG_MEM, "Kernal Rom flashed\n");
+            logmsg(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::KERNAL));
+            logmsg(LOG_MEM, "mega65KernalRev() = %s\n", mega65KernalRev());
             break;
             
         case FileType::VC1541_ROM:
             
             drive8.mem.loadRom(file.getData(), file.getSize());
             drive9.mem.loadRom(file.getData(), file.getSize());
-            logme(LOG_MEM, "VC1541 Rom flashed\n");
+            logmsg(LOG_MEM, "VC1541 Rom flashed\n");
             break;
             
         default:
