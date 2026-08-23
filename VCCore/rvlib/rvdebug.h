@@ -30,8 +30,7 @@
  * - Debug flags enable extra behavior with a real side effect (an
  *   integrity check, a redundant computation compared against the fast
  *   path, forcing a specific code path, simulating an error condition,
- *   ...). They are typed 'bool', except for those holding a parameter
- *   value.
+ *   ...). They are all typed 'bool'.
  *
  * Both tables are X-macro lists: each entry names a flag exactly once, and
  * is expanded both into the variable declaration and (in debug builds) into
@@ -59,20 +58,20 @@
 #define RV_DEBUG_FLAGS(E)                                                     \
                                                                               \
     /* File systems */                                                        \
-    E(bool, FS_VERIFY,      false, "Verify file system integrity")            \
+    E(FS_VERIFY,      false, "Verify file system integrity")            \
                                                                               \
     /* Forced error conditions */                                             \
-    E(bool, HDR_TOO_LARGE,        false, "Force a 'drive too large' error")   \
-    E(bool, HDR_UNSUPPORTED_C,    false, "Force an unsupported 'C' geometry") \
-    E(bool, HDR_UNSUPPORTED_H,    false, "Force an unsupported 'H' geometry") \
-    E(bool, HDR_UNSUPPORTED_S,    false, "Force an unsupported 'S' geometry") \
-    E(bool, HDR_UNSUPPORTED_B,    false, "Force an unsupported 'B' geometry") \
-    E(bool, HDR_UNKNOWN_GEOMETRY, false, "Force an 'unknown geometry' error") \
-    E(bool, HDR_MODIFIED,         false, "Force the drive-modified flag")     \
-    E(bool, FS_WRONG_BSIZE,       false, "Force a wrong block-size error")    \
-    E(bool, FS_WRONG_CAPACITY,    false, "Force a wrong-capacity error")      \
-    E(bool, FS_WRONG_DOS_TYPE,    false, "Force a wrong DOS-type error")      \
-    E(bool, DMS_CANT_CREATE,      false, "Force a DMS-file creation error")
+    E(HDR_TOO_LARGE,        false, "Force a 'drive too large' error")   \
+    E(HDR_UNSUPPORTED_C,    false, "Force an unsupported 'C' geometry") \
+    E(HDR_UNSUPPORTED_H,    false, "Force an unsupported 'H' geometry") \
+    E(HDR_UNSUPPORTED_S,    false, "Force an unsupported 'S' geometry") \
+    E(HDR_UNSUPPORTED_B,    false, "Force an unsupported 'B' geometry") \
+    E(HDR_UNKNOWN_GEOMETRY, false, "Force an 'unknown geometry' error") \
+    E(HDR_MODIFIED,         false, "Force the drive-modified flag")     \
+    E(FS_WRONG_BSIZE,       false, "Force a wrong block-size error")    \
+    E(FS_WRONG_CAPACITY,    false, "Force a wrong-capacity error")      \
+    E(FS_WRONG_DOS_TYPE,    false, "Force a wrong DOS-type error")      \
+    E(DMS_CANT_CREATE,      false, "Force a DMS-file creation error")
 
 
 //
@@ -115,8 +114,8 @@ inline constexpr LogLevel LV_TRACE   = LogLevel::LV_TRACE;
 RV_LOG_FLAGS(DECLARE_LOG_FLAG)
 #undef DECLARE_LOG_FLAG
 
-#define DECLARE_DEBUG_FLAG(type, name, dflt, help) \
-    inline CONSTEXPR type name = dflt;
+#define DECLARE_DEBUG_FLAG(name, dflt, help) \
+    inline CONSTEXPR bool name = dflt;
 RV_DEBUG_FLAGS(DECLARE_DEBUG_FLAG)
 #undef DECLARE_DEBUG_FLAG
 
