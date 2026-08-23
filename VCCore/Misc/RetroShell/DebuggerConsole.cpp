@@ -866,7 +866,7 @@ DebuggerConsole::initCommands(RSCommand &root)
                 for (const auto &flag : *table) {
 
                     os << utl::tab(flag.name);
-                    os << LogLevelEnum::key(LogLevel(flag.get())) << std::endl;
+                    os << utl::dec(flag.get()) << std::endl;
                 }
             }
         }

@@ -44,7 +44,7 @@ public:
     virtual const char *description() const { return ""; }
     
     // Called by logging functions to produce detailed debug output
-    virtual string prefix(LogLevel, const std::source_location &) const override;
+    virtual string prefix(long, const std::source_location &) const override;
 
     
     //

@@ -253,11 +253,11 @@ ReSID::setSamplingMethod(SamplingMethod value)
                 logme(LOG_SID, "Using sampling method SAMPLE_RESAMPLE.\n");
                 break;
             case SamplingMethod::RESAMPLE_FASTMEM:
-                logme(LV_WARNING, "SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
+                logme(LOG_WARNING, "SAMPLE_RESAMPLE_FASTMEM not supported. Using SAMPLE_INTERPOLATE.\n");
                 value = SamplingMethod::INTERPOLATE;
                 break;
             default:
-                logme(LV_WARNING, "Unknown sampling method: %ld\n", (long)value);
+                logme(LOG_WARNING, "Unknown sampling method: %ld\n", (long)value);
         }
 
         samplingMethod = value;
@@ -288,7 +288,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     isize buflength = 2047;
 
     if (numCycles > PAL::CYCLES_PER_SECOND) {
-        logme(LV_WARNING, "Number of missing SID cycles is far too large\n");
+        logme(LOG_WARNING, "Number of missing SID cycles is far too large\n");
         numCycles = PAL::CYCLES_PER_SECOND;
     }
     
@@ -302,7 +302,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     
     // Check for a buffer overflow
     if (unlikely(samples > stream.free())) {
-        logme(LV_WARNING, "SID %ld: SAMPLE BUFFER OVERFLOW", objid);
+        logme(LOG_WARNING, "SID %ld: SAMPLE BUFFER OVERFLOW", objid);
         stream.clear();
     }
     

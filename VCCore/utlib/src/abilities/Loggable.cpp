@@ -14,17 +14,18 @@
 namespace utl {
 
 void
-Loggable::log(LogLevel level,
+Loggable::log(long level,
               const std::source_location &loc,
               const char *fmt, ...) const
 {
     fprintf(stderr, "%s", prefix(level, loc).c_str());
 
+    // Severities, per LogLevelEnum: 1 = Fatal, 2 = Error, 3 = Warn
     switch (level) {
 
-        case LogLevel::Fatal: fprintf(stderr, "FATAL: "); break;
-        case LogLevel::Error: fprintf(stderr, "ERROR: "); break;
-        case LogLevel::Warn:  fprintf(stderr, "WARN: ");  break;
+        case 1: fprintf(stderr, "FATAL: "); break;
+        case 2: fprintf(stderr, "ERROR: "); break;
+        case 3: fprintf(stderr, "WARN: ");  break;
 
         default:
             break;
@@ -37,7 +38,7 @@ Loggable::log(LogLevel level,
 }
 
 string
-Loggable::prefix(LogLevel level, const std::source_location &loc) const
+Loggable::prefix(long level, const std::source_location &loc) const
 {
     const isize verbosity = 2;
 

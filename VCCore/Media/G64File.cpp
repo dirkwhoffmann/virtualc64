@@ -97,7 +97,7 @@ G64File::init(FloppyDisk &disk)
             auto numFillBytes = maxBytesOnTrack - numDataBytes;
 
             if (disk.lengthOfHalftrack(ht) % 8 != 0) {
-                logme(LV_WARNING, "Size of halftrack %ld is not a multiple of 8\n", ht);
+                logme(LOG_WARNING, "Size of halftrack %ld is not a multiple of 8\n", ht);
             }
             assert(pos == offset[ht]);
             buffer[pos++] = LO_BYTE(numDataBytes);

@@ -110,7 +110,7 @@ TAPFile::finalizeRead()
     isize header = 0x14;
     
     if (length + header != data.size) {
-        logme(LV_WARNING, "TAP: Expected %lu bytes, found %lu\n", length + header, data.size);
+        logme(LOG_WARNING, "TAP: Expected %lu bytes, found %lu\n", length + header, data.size);
     } else {
         logme(LOG_TAP, "TAP file has been scanned with no errros\n");
     }

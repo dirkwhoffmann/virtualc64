@@ -75,7 +75,7 @@ EasyFlash::loadChip(isize nr, const CRTFile &crt)
     u8 *chipData = crt.chipData(nr);
 
     if(chipSize != 0x2000) {
-        logme(LV_WARNING, "Package %ld has chip size %04X. Expected 0x2000.\n", nr, chipSize);
+        logme(LOG_WARNING, "Package %ld has chip size %04X. Expected 0x2000.\n", nr, chipSize);
         return;
     }
 
@@ -93,7 +93,7 @@ EasyFlash::loadChip(isize nr, const CRTFile &crt)
 
     } else {
 
-        logme(LV_WARNING, "Package %ld has an invalid load address (%04X).", nr, chipAddr);
+        logme(LOG_WARNING, "Package %ld has an invalid load address (%04X).", nr, chipAddr);
         return;
     }
 }

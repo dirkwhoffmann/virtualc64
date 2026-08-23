@@ -241,14 +241,14 @@ C64::eventName(EventSlot slot, EventID id)
 }
 
 string
-C64::prefix(LogLevel level, const std::source_location &loc) const
+C64::prefix(long level, const std::source_location &loc) const
 {
     constexpr isize verbosity = 5;
     
     std::string result;
     result.reserve(256);
     
-    if (level == LogLevel::Debug && verbosity) {
+    if (level == LOG_DEBUG && verbosity) {
         
         // Run-ahead prefix
         if (isRunAheadInstance()) {
@@ -343,7 +343,7 @@ C64::initialize()
         logme(LOG_RUN, "Trying to load Rom from %s...\n", path.string().c_str());
 
         try { loadRom(path); } catch (std::exception& e) {
-            logme(LV_WARNING, "Error: %s\n", e.what());
+            logme(LOG_WARNING, "Error: %s\n", e.what());
         }
     };
 
@@ -646,7 +646,7 @@ C64::overrideOption(Opt opt, i64 value) const
 
     if (overrides.find(opt) != overrides.end()) {
 
-        logme(LV_INFO, "Overriding option: %s = %lld\n", OptEnum::key(opt), value);
+        logme(LOG_INFO, "Overriding option: %s = %lld\n", OptEnum::key(opt), value);
         return overrides[opt];
     }
 
@@ -805,13 +805,13 @@ C64::update(CmdQueue &queue)
                     break;
 
                 default:
-                logme(LV_FATAL, "Unhandled command: %s\n", CmdEnum::key(cmd.type));
+                logme(LOG_FATAL, "Unhandled command: %s\n", CmdEnum::key(cmd.type));
                 fatalError;
             }
 
         } catch (std::exception &e) {
 
-            logme(LV_WARNING, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
+            logme(LOG_WARNING, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
         }
     }
 

@@ -58,7 +58,7 @@ Expert::loadChip(isize nr, const CRTFile &crt)
 
     // Check file integrity
     if (nr != 0 || chipSize != 0x2000 || chipAddr != 0x8000) {
-        logme(LV_WARNING, "Corrupted CRT file. Aborting.");
+        logme(LOG_WARNING, "Corrupted CRT file. Aborting.");
         return;
     }
 

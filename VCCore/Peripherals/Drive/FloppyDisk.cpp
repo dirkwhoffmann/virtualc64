@@ -654,14 +654,14 @@ FloppyDisk::encodeDisk(const FloppyDiskImage &image)
     }
 
     /*
-    if CONSTEXPR (LOG_IMG != LogLevel::Off) {
+    if CONSTEXPR (LOG_IMG != LOG_OFF) {
 
         string tmp = "/tmp/debug.img";
         fprintf(stderr, "Saving image to %s for debugging\n", tmp.c_str());
         Codec::makeIMG(*this)->writeToFile(tmp);
     }
      */
-    if CONSTEXPR (LOG_IMG != LogLevel::Off) {
+    if CONSTEXPR (LOG_IMG != LOG_OFF) {
 
         /*
         string tmp = "/tmp/debug.img";
@@ -700,7 +700,7 @@ FloppyDisk::encodeG64(const G64File &a)
         }
         
         if (size > 7928) {
-            logme(LV_WARNING, "Halftrack %ld has %ld bytes. Must be less than 7928\n", ht, size);
+            logme(LOG_WARNING, "Halftrack %ld has %ld bytes. Must be less than 7928\n", ht, size);
             continue;
         }
         logme(LOG_GCR, "  Encoding halftrack %ld (%ld bytes)\n", ht, size);

@@ -13,7 +13,7 @@ namespace retro::vault {
 #define LOG_FLAG_ENTRY(name, dflt, help) \
     { #name, help, false, \
       []() -> long { return (long)name; }, \
-      [](long value) { name = LogLevel(value); } },
+      [](long value) { name = value; } },
 
 #define DEBUG_FLAG_ENTRY(name, dflt, help) \
     { #name, help, true, \

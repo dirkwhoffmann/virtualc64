@@ -191,7 +191,7 @@ Snapshot::compress(Compressor compressor)
 
         logme(LOG_SNP, "Compressing %ld bytes (hash: 0x%x)...", data.size, data.fnv32());
 
-        {   auto watch = utl::StopWatch(LOG_SNP != LogLevel::Off, "");
+        {   auto watch = utl::StopWatch(LOG_SNP != LOG_OFF, "");
             
             switch (compressor) {
                     
@@ -230,7 +230,7 @@ Snapshot::uncompress()
         
         logme(LOG_SNP, "Uncompressing %ld bytes...", data.size);
         
-        {   auto watch = utl::StopWatch(LOG_SNP != LogLevel::Off, "");
+        {   auto watch = utl::StopWatch(LOG_SNP != LOG_OFF, "");
         
             switch (compressor()) {
                     
@@ -247,7 +247,7 @@ Snapshot::uncompress()
         
         if (getHeader()->rawSize != expectedSize) {
          
-            logme(LV_WARNING, "Snaphot size: %ld. Expected: %ld\n", data.size, expectedSize);
+            logme(LOG_WARNING, "Snaphot size: %ld. Expected: %ld\n", data.size, expectedSize);
             fatalError;
         }
     }

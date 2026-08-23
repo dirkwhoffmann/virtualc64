@@ -89,19 +89,19 @@ EADFFile::checkIntegrity()
     
     if (std::strcmp((char *)data.ptr, "UAE-1ADF") != 0) {
         
-        logme(LV_WARNING, "Only UAE-1ADF files are supported\n");
+        logme(LOG_WARNING, "Only UAE-1ADF files are supported\n");
         throw ImageError(ImageError::EXT_FACTOR5);
     }
     
     if (numTracks < 160 || numTracks > 168) {
 
-        logme(LV_WARNING, "Invalid number of tracks\n");
+        logme(LOG_WARNING, "Invalid number of tracks\n");
         throw ImageError(ImageError::EXT_CORRUPTED);
     }
 
     if (data.size < proposedHeaderSize() || data.size != proposedFileSize()) {
         
-        logme(LV_WARNING, "File size mismatch\n");
+        logme(LOG_WARNING, "File size mismatch\n");
         throw ImageError(ImageError::EXT_CORRUPTED);
     }
 
@@ -109,7 +109,7 @@ EADFFile::checkIntegrity()
 
         if (!isStandardTrack(i) && !isExtendedTrack(i)) {
 
-            logme(LV_WARNING, "Unsupported track format\n");
+            logme(LOG_WARNING, "Unsupported track format\n");
             throw ImageError(ImageError::EXT_INCOMPATIBLE);
         }
 
@@ -117,14 +117,14 @@ EADFFile::checkIntegrity()
 
             if (usedBitsForTrack(i) != 11 * 512 * 8) {
 
-                logme(LV_WARNING, "Unsupported standard track size\n");
+                logme(LOG_WARNING, "Unsupported standard track size\n");
                 throw ImageError(ImageError::EXT_CORRUPTED);
             }
         }
 
         if (usedBitsForTrack(i) > availableBytesForTrack(i) * 8) {
             
-            logme(LV_WARNING, "Corrupted length information\n");
+            logme(LOG_WARNING, "Corrupted length information\n");
             throw ImageError(ImageError::EXT_CORRUPTED);
         }
     }

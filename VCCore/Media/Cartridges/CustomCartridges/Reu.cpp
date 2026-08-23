@@ -480,7 +480,7 @@ Reu::execute(EventID id)
 
         case EXP_REU_INITIATE:
 
-            if CONSTEXPR (LOG_REU != LogLevel::Off) { dump(Category::Dma, std::cout); }
+            if CONSTEXPR (LOG_REU != LOG_OFF) { dump(Category::Dma, std::cout); }
 
             // Update control register bits
             cr = (cr & ~CR::EXECUTE) | CR::FF00_DISABLE;
@@ -510,19 +510,19 @@ Reu::execute(EventID id)
         case EXP_REU_SWAP:
         case EXP_REU_VERIFY:
         {
-            logme(LV_OFF, "%d%d : ", ba[1], ba[0]);
+            logme(LOG_OFF, "%d%d : ", ba[1], ba[0]);
 
             // Only proceed if the bus is available
             if (busIsBlocked(id)) {
 
-                if CONSTEXPR (LOG_REU_DMA != LogLevel::Off) printf("BLOCKED\n");
+                if CONSTEXPR (LOG_REU_DMA != LOG_OFF) printf("BLOCKED\n");
                 break;
             }
 
             // Perform a DMA cycle
             auto remaining = doDma(id);
 
-            if CONSTEXPR (LOG_REU_DMA != LogLevel::Off) {
+            if CONSTEXPR (LOG_REU_DMA != LOG_OFF) {
                 
                 if (id == EXP_REU_STASH) printf("Stashing\n");
                 if (id == EXP_REU_FETCH) printf("Fetching %02x\n", reuVal);

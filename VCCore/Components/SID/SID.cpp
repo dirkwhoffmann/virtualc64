@@ -71,7 +71,7 @@ SID::executeUntil(Cycle targetCycle)
         // Check if SID is in sync with the CPU
         if (missing < -1000 || missing > 1000000) {
 
-            logme(LV_WARNING, "Resyncing SID %ld (%lld cycles off)\n", objid, missing);
+            logme(LOG_WARNING, "Resyncing SID %ld (%lld cycles off)\n", objid, missing);
 
         } else {
 
@@ -84,7 +84,7 @@ SID::executeUntil(Cycle targetCycle)
         }
     } else {
 
-        // logme(LV_DEBUG, "Power safe mode\n");
+        // logme(LOG_DEBUG, "Power safe mode\n");
     }
 
     clock = targetCycle;

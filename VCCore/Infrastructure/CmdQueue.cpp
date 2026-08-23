@@ -25,7 +25,7 @@ CmdQueue::put(const Command &cmd)
         if (!queue.isFull()) {
             queue.write(cmd);
         } else {
-            logme(LV_WARNING, "Command lost: %s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
+            logme(LOG_WARNING, "Command lost: %s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
         }
 
         empty = false;

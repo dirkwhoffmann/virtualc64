@@ -22,49 +22,44 @@
 
 namespace utl {
 
-enum class LogLevel : long
-{
-    Off   = 0,
-    Fatal = 1,
-    Error = 2,
-    Warn  = 3,
-    Info  = 4,
-    Debug = 5,
-    Trace = 6
-};
+/* Logging severities. Levels are plain 'long' values rather than an enum, so
+ * that a logging flag and an ordinary value flag can share the same
+ * declaration and descriptor machinery (see FlagInfo below). The symbolic
+ * names (OFF, FATAL, ...) are the ones a client project declares for itself,
+ * typically as 'LOG_OFF', 'LOG_FATAL', etc.; this table only needs to know
+ * their numeric meaning to print and parse them.
+ */
 
-struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
+struct LogLevelEnum : Reflectable<LogLevelEnum, long>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = (long)LogLevel::Trace;
+    static constexpr long maxVal = 6;
 
-    static const char *_key(long value) { return _key(LogLevel(value)); }
-    static const char *_key(LogLevel value)
+    static const char *_key(long value)
     {
         switch (value) {
 
-            case LogLevel::Off:   return "OFF";
-            case LogLevel::Fatal: return "FATAL";
-            case LogLevel::Error: return "ERROR";
-            case LogLevel::Warn:  return "WARN";
-            case LogLevel::Info:  return "INFO";
-            case LogLevel::Debug: return "DEBUG";
-            case LogLevel::Trace: return "TRACE";
+            case 0: return "OFF";
+            case 1: return "FATAL";
+            case 2: return "ERROR";
+            case 3: return "WARN";
+            case 4: return "INFO";
+            case 5: return "DEBUG";
+            case 6: return "TRACE";
         }
         return "???";
     }
-    static const char *help(long value) { return help(LogLevel(value)); }
-    static const char *help(LogLevel value)
+    static const char *help(long value)
     {
         switch (value) {
 
-            case LogLevel::Off:   return "Logging disabled";
-            case LogLevel::Fatal: return "Unrecoverable error";
-            case LogLevel::Error: return "Error condition";
-            case LogLevel::Warn:  return "Warning condition";
-            case LogLevel::Info:  return "Informational message";
-            case LogLevel::Debug: return "Debug message";
-            case LogLevel::Trace: return "Fine-grained trace message";
+            case 0: return "Logging disabled";
+            case 1: return "Unrecoverable error";
+            case 2: return "Error condition";
+            case 3: return "Warning condition";
+            case 4: return "Informational message";
+            case 5: return "Debug message";
+            case 6: return "Fine-grained trace message";
         }
         return "???";
     }
@@ -77,7 +72,7 @@ struct LogLevelEnum : Reflectable<LogLevelEnum, LogLevel>
  * combine several independent libraries, each with its own debug flags,
  * the descriptor gives RetroShell a uniform way to list and modify all of
  * them without any library having to know about the others. Both accessors
- * funnel through 'long', so that LogLevel, bool, and plain value flags can
+ * funnel through 'long', so that logging, bool, and plain value flags can
  * share a single descriptor type.
  *
  * Descriptor tables exist in debug builds only. In release builds the flags
@@ -109,7 +104,7 @@ public:
 #if defined(__clang__)
     __attribute__((format(printf, 4, 5)))
 #endif
-    void log(LogLevel level,
+    void log(long level,
              const std::source_location &loc,
              const char *fmt, ...) const;
 
@@ -120,7 +115,7 @@ public:
 protected:
 
     // Optional prefix printed prior to the debug message
-    virtual string prefix(LogLevel, const std::source_location &) const;
+    virtual string prefix(long, const std::source_location &) const;
 };
 
 }

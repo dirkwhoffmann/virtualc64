@@ -371,7 +371,7 @@ CoreComponent::diff(CoreComponent &other)
 
     // Compare this component
     if (auto check1 = checksum(false), check2 = other.checksum(false); check1 != check2) {
-        logme(LV_INFO, "Checksum mismatch: %llx != %llx\n", check1, check2);
+        logme(LOG_INFO, "Checksum mismatch: %llx != %llx\n", check1, check2);
     }
 }
 

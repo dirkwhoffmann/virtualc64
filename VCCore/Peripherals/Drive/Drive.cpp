@@ -390,7 +390,7 @@ Drive::insertDisk(std::unique_ptr<FloppyDisk> disk)
     
     if (diskToInsert) {
         
-        logme(LV_WARNING, "Disk change in progress. Ignoring new disk.\n");
+        logme(LOG_WARNING, "Disk change in progress. Ignoring new disk.\n");
         // TODO: THROW
         return;
     }

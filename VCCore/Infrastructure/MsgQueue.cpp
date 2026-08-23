@@ -61,7 +61,7 @@ MsgQueue::put(const Message &msg, const string &str)
             if (!listener) {
                 
                 auto &lost = queue.read();
-                logme(LV_WARNING, "Message lost: %s [%llx]\n", MsgEnum::key(lost.type), lost.value);
+                logme(LOG_WARNING, "Message lost: %s [%llx]\n", MsgEnum::key(lost.type), lost.value);
             }
         }
         
