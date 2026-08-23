@@ -27,10 +27,11 @@
  *   issued with. OFF disables the call, any other LogLevel enables it
  *   at that severity. All logging flags are prefixed 'LOG_'.
  *
- * - Action flags enable extra debug behavior with a real side effect
- *   (an integrity check, a redundant computation compared against the
- *   fast path, forcing a specific code path, ...). They are typed 'bool',
- *   except for those holding a parameter value.
+ * - Debug flags enable extra behavior with a real side effect (an
+ *   integrity check, a redundant computation compared against the fast
+ *   path, forcing a specific code path, simulating an error condition,
+ *   ...). They are typed 'bool', except for those holding a parameter
+ *   value.
  *
  * Both tables are X-macro lists: each entry names a flag exactly once, and
  * is expanded both into the variable declaration and (in debug builds) into
@@ -42,7 +43,6 @@
 // Logging flags
 //
 
-//        name          default    description
 #define RV_LOG_FLAGS(E)                                                       \
                                                                               \
     /* File systems */                                                        \
@@ -53,14 +53,26 @@
 
 
 //
-// Action flags
+// Debug flags
 //
 
-//        type  name          default  description
 #define RV_DEBUG_FLAGS(E)                                                     \
                                                                               \
     /* File systems */                                                        \
-    E(bool, FS_VERIFY,      false, "Verify file system integrity")
+    E(bool, FS_VERIFY,      false, "Verify file system integrity")            \
+                                                                              \
+    /* Forced error conditions */                                             \
+    E(bool, HDR_TOO_LARGE,        false, "Force a 'drive too large' error")   \
+    E(bool, HDR_UNSUPPORTED_C,    false, "Force an unsupported 'C' geometry") \
+    E(bool, HDR_UNSUPPORTED_H,    false, "Force an unsupported 'H' geometry") \
+    E(bool, HDR_UNSUPPORTED_S,    false, "Force an unsupported 'S' geometry") \
+    E(bool, HDR_UNSUPPORTED_B,    false, "Force an unsupported 'B' geometry") \
+    E(bool, HDR_UNKNOWN_GEOMETRY, false, "Force an 'unknown geometry' error") \
+    E(bool, HDR_MODIFIED,         false, "Force the drive-modified flag")     \
+    E(bool, FS_WRONG_BSIZE,       false, "Force a wrong block-size error")    \
+    E(bool, FS_WRONG_CAPACITY,    false, "Force a wrong-capacity error")      \
+    E(bool, FS_WRONG_DOS_TYPE,    false, "Force a wrong DOS-type error")      \
+    E(bool, DMS_CANT_CREATE,      false, "Force a DMS-file creation error")
 
 
 //
@@ -119,27 +131,6 @@ extern const std::vector<FlagInfo> logFlags;
 extern const std::vector<FlagInfo> debugFlags;
 
 #endif
-
-}
-
-
-//
-// Forced error conditions
-//
-
-namespace retro::vault::force {
-
-constexpr long HDR_TOO_LARGE        = 0;
-constexpr long HDR_UNSUPPORTED_C    = 0;
-constexpr long HDR_UNSUPPORTED_H    = 0;
-constexpr long HDR_UNSUPPORTED_S    = 0;
-constexpr long HDR_UNSUPPORTED_B    = 0;
-constexpr long HDR_UNKNOWN_GEOMETRY = 0;
-constexpr long HDR_MODIFIED         = 0;
-constexpr long FS_WRONG_BSIZE       = 0;
-constexpr long FS_WRONG_CAPACITY    = 0;
-constexpr long FS_WRONG_DOS_TYPE    = 0;
-constexpr long DMS_CANT_CREATE      = 0;
 
 }
 

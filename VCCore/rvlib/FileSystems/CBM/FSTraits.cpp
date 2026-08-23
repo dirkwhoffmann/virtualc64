@@ -65,10 +65,10 @@ FSTraits::checkCompatibility() const
 {
     auto blocks = numBlocks();
 
-    if constexpr (force::FS_WRONG_CAPACITY)
+    if CONSTEXPR (debug::FS_WRONG_CAPACITY)
         throw FSError(FSError::FS_WRONG_CAPACITY);
 
-    if constexpr (force::FS_WRONG_BSIZE)
+    if CONSTEXPR (debug::FS_WRONG_BSIZE)
         throw FSError(FSError::FS_WRONG_BSIZE);
 
     if (blocks != 683 && blocks != 768 && blocks != 802)

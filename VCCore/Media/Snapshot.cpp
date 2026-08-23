@@ -103,9 +103,9 @@ Snapshot::Snapshot(C64 &c64, Compressor compressor) : Snapshot(c64)
 void
 Snapshot::finalizeRead()
 {
-    if (force::SNAP_TOO_OLD) throw MediaError(MediaError::SNAP_TOO_OLD);
-    if (force::SNAP_TOO_NEW) throw MediaError(MediaError::SNAP_TOO_NEW);
-    if (force::SNAP_IS_BETA) throw MediaError(MediaError::SNAP_IS_BETA);
+    if (debug::SNAP_TOO_OLD) throw MediaError(MediaError::SNAP_TOO_OLD);
+    if (debug::SNAP_TOO_NEW) throw MediaError(MediaError::SNAP_TOO_NEW);
+    if (debug::SNAP_IS_BETA) throw MediaError(MediaError::SNAP_IS_BETA);
 
     if (isTooOld()) throw MediaError(MediaError::SNAP_TOO_OLD);
     if (isTooNew()) throw MediaError(MediaError::SNAP_TOO_NEW);

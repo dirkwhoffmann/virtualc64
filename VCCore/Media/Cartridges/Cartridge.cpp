@@ -20,7 +20,7 @@ namespace vc64 {
 bool
 Cartridge::isKnownType(CartridgeType type)
 {
-    if (force::CRT_UNKNOWN) return false;
+    if (debug::CRT_UNKNOWN) return false;
 
     return type >= CartridgeType::NORMAL && type <= CartridgeType::GMOD2;
 }
@@ -28,7 +28,7 @@ Cartridge::isKnownType(CartridgeType type)
 bool
 Cartridge::isSupportedType(CartridgeType type)
 {
-    if (force::CRT_UNSUPPORTED) return false;
+    if (debug::CRT_UNSUPPORTED) return false;
 
     switch (type) {
 

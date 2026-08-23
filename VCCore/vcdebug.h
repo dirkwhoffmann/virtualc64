@@ -39,12 +39,13 @@
  *   issued with. OFF disables the call, any other LogLevel enables it
  *   at that severity. All logging flags are prefixed 'LOG_'.
  *
- * - Action flags enable extra debug behavior with a real side effect
- *   (an integrity check, a redundant computation compared against the
- *   fast path, forcing a specific code path, ...). Some of these also log
- *   a message as part of that action, but disabling the flag changes what
- *   the emulator *does*, not just what it prints. They are typed 'bool',
- *   except for those holding a parameter value.
+ * - Debug flags enable extra behavior with a real side effect (an
+ *   integrity check, a redundant computation compared against the fast
+ *   path, forcing a specific code path, simulating an error condition,
+ *   ...). Some of these also log a message as part of that action, but
+ *   disabling the flag changes what the emulator *does*, not just what
+ *   it prints. They are typed 'bool', except for those holding a
+ *   parameter value.
  *
  * Both tables are X-macro lists: each entry names a flag exactly once, and
  * is expanded both into the variable declaration and (in debug builds) into
@@ -58,7 +59,6 @@
 // Logging flags
 //
 
-//        name            default    description
 #define VC_LOG_FLAGS(E)                                                       \
                                                                               \
     /* General */                                                             \
@@ -136,10 +136,9 @@
 
 
 //
-// Action flags
+// Debug flags
 //
 
-//        type  name             default  description
 #define VC_DEBUG_FLAGS(E)                                                     \
                                                                               \
     /* Run ahead */                                                           \
@@ -154,7 +153,20 @@
     E(bool, VICII_STATS,       false, "Collect VICII statistics")             \
                                                                               \
     /* Drive */                                                               \
-    E(bool, FS_VERIFY,         false, "Verify file system integrity")
+    E(bool, FS_VERIFY,         false, "Verify file system integrity")         \
+                                                                              \
+    /* Forced error conditions */                                             \
+    E(bool, LAUNCH_ERROR,      false, "Force a launch error")                 \
+    E(bool, ROM_MISSING,       false, "Force a missing-KERNAL-ROM error")     \
+    E(bool, MEGA64_MISMATCH,   false, "Force a MEGA65 ROM version mismatch")  \
+    E(bool, SNAP_TOO_OLD,      false, "Force a 'snapshot too old' error")     \
+    E(bool, SNAP_TOO_NEW,      false, "Force a 'snapshot too new' error")     \
+    E(bool, SNAP_IS_BETA,      false, "Force a 'beta snapshot' error")        \
+    E(bool, SNAP_CORRUPTED,    false, "Force a snapshot corruption error")    \
+    E(bool, CRT_UNKNOWN,       false, "Force an 'unknown cartridge' error")   \
+    E(bool, CRT_UNSUPPORTED,   false, "Force an 'unsupported cartridge' error")\
+    E(bool, RECORDING_ERROR,   false, "Force a screen-recording error")       \
+    E(bool, ZLIB_ERROR,        false, "Force a zlib decompression error")
 
 
 //
@@ -213,25 +225,5 @@ extern const std::vector<FlagInfo> logFlags;
 extern const std::vector<FlagInfo> debugFlags;
 
 #endif
-
-}
-
-//
-// Forced error conditions
-//
-
-namespace vc64::force {
-
-constexpr long LAUNCH_ERROR         = 0;
-constexpr long ROM_MISSING          = 0;
-constexpr long MEGA64_MISMATCH      = 0;
-constexpr long SNAP_TOO_OLD         = 0;
-constexpr long SNAP_TOO_NEW         = 0;
-constexpr long SNAP_IS_BETA         = 0;
-constexpr long SNAP_CORRUPTED       = 0;
-constexpr long CRT_UNKNOWN          = 0;
-constexpr long CRT_UNSUPPORTED      = 0;
-constexpr long RECORDING_ERROR      = 0;
-constexpr long ZLIB_ERROR           = 0;
 
 }
