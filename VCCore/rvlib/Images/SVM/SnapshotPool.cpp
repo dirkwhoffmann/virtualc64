@@ -9,6 +9,7 @@
 
 #include "rvconfig.h"
 #include "SnapshotPool.h"
+#include <algorithm>
 
 namespace retro::vault {
 

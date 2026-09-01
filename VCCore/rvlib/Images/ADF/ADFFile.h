@@ -54,7 +54,7 @@ public:
     
     explicit ADFFile() { }
     explicit ADFFile(isize len) { init(len); }
-    explicit ADFFile(const u8 *buf, isize len) { init(len); }
+    explicit ADFFile(const u8 *buf, isize len) { init(buf, len); }
     explicit ADFFile(const utl::Buffer<u8>& buffer) { init(buffer); }
     explicit ADFFile(const fs::path& path) { init(path); }
     explicit ADFFile(Diameter dia, Density den) { init(dia, den); }

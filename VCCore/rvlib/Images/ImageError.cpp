@@ -10,6 +10,7 @@
 #include "rvconfig.h"
 #include "Images/ImageTypes.h"
 #include "Images/ImageError.h"
+#include <format>
 
 namespace retro::vault {
 
