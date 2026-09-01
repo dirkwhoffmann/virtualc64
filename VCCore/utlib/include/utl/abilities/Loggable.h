@@ -12,9 +12,15 @@
  * Messages are generated via the log function and are always written to
  * stderr.
  *
- * The log levels follow the conventional log4j-style hierarchy, ranging
- * from FATAL and ERROR to WARN, INFO, DEBUG, and TRACE. LOG_OFF disables
- * logging entirely.
+ * The log levels follow the conventional log4j-style hierarchy:
+ *
+ *   OFF:   The highest possible rank. Intended to turn off logging.
+ *   FATAL: Severe errors that cause premature termination.
+ *   ERROR: Other runtime errors or unexpected conditions.
+ *   WARN:  Runtime situations that are undesirable or unexpected.
+ *   INFO:  Interesting runtime events.
+ *   DEBUG: Detailed information on the flow through the system.
+ *   TRACE: Most detailed information.
  */
 
 #pragma once
@@ -38,7 +44,7 @@ inline constexpr long LOG_TRACE = 6;
  * Client code declares its flags in X-macro tables (see debug.h) and
  * expands those tables into a vector of descriptors. In projects that
  * combine several independent libraries, each with its own debug flags,
- * the descriptor gives RetroShell a uniform way to list and modify all of
+ * the descriptor provides a uniform way to list and modify all of
  * them without any library having to know about the others. Both accessors
  * funnel through 'long', so that logging, bool, and plain value flags can
  * share a single descriptor type.
@@ -86,8 +92,9 @@ protected:
     virtual string prefix(long, const std::source_location &) const;
 };
 
+
 //
-// Logging macro
+// Logging macros
 //
 
 #ifdef logmsg
@@ -100,5 +107,8 @@ protected:
             log(key, std::source_location::current(), \
                 format __VA_OPT__(,) __VA_ARGS__); \
     } while (0)
+
+#define xfiles(format, ...) \
+    logmsg(LOG_XFILES, format __VA_OPT__(,) __VA_ARGS__)
 
 }

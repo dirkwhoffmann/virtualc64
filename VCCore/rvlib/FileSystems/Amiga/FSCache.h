@@ -74,7 +74,7 @@ public:
     isize usedBlocks() const { return (isize)blocks.size(); }
     isize freeBytes() const { return freeBlocks() * bsize(); }
     isize usedBytes() const { return usedBlocks() * bsize(); }
-    double fillLevel() const { return capacity() ? double(100) * usedBlocks() / capacity() : 0; }
+    double fillLevel() const { return capacity() ? double(100) * double(usedBlocks()) / double(capacity()) : 0; }
     bool isEmpty() const { return usedBlocks() == 0; }
     
     // Predicts the file system type based on stored data
