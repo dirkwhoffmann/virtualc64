@@ -17,9 +17,6 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-# Optional code coverage instrumentation (see cmake/Coverage.cmake)
-include(cmake/Coverage.cmake)
-
 add_library(utlib)
 
 target_include_directories(utlib PUBLIC
