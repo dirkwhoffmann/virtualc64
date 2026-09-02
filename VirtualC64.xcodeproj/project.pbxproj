@@ -1229,8 +1229,6 @@
 		50AC255F2F41A8760016265E /* Literals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Literals.h; sourceTree = "<group>"; };
 		50AC25612F41A8760016265E /* Animated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animated.h; sourceTree = "<group>"; };
 		50AC25622F41A8760016265E /* Backed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Backed.h; sourceTree = "<group>"; };
-		50AC25632F41A8760016265E /* Cached.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cached.h; sourceTree = "<group>"; };
-		50AC25642F41A8760016265E /* Memorized.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Memorized.h; sourceTree = "<group>"; };
 		50AC25662F41A8760016265E /* abilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = abilities.h; sourceTree = "<group>"; };
 		50AC25672F41A8760016265E /* chrono.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = chrono.h; sourceTree = "<group>"; };
 		50AC25682F41A8760016265E /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
@@ -2639,8 +2637,6 @@
 			children = (
 				50AC25612F41A8760016265E /* Animated.h */,
 				50AC25622F41A8760016265E /* Backed.h */,
-				50AC25632F41A8760016265E /* Cached.h */,
-				50AC25642F41A8760016265E /* Memorized.h */,
 			);
 			path = wrappers;
 			sourceTree = "<group>";
