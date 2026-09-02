@@ -8,7 +8,6 @@ RshServer.cpp
 DapServer.cpp
 DapAdapter.cpp
 RpcServer.cpp
-RpcHttpServer.cpp
 PromServer.cpp
 Socket.cpp
 Transport.cpp

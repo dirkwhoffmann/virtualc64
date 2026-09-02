@@ -15,7 +15,6 @@
 #include "SubComponent.h"
 #include "RemoteManagerTypes.h"
 #include "RpcServer.h"
-#include "RpcHttpServer.h"
 #include "RshServer.h"
 #include "DapServer.h"
 #include "PromServer.h"
