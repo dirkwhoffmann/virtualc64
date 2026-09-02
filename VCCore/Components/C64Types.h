@@ -113,7 +113,9 @@ enum EventSlot : long
     SLOT_DC8,                       // Disk change (Drive 8)
     SLOT_DC9,                       // Disk change (Drive 9)
     SLOT_SNP,                       // Snapshots
-    SLOT_RSH,                       // Retro Shell
+    SLOT_RSH0,                      // Retro Shell (GUI)
+    SLOT_RSH1,                      // Retro Shell (RSH server)
+    SLOT_RSH2,                      // Retro Shell (RPC server)
     SLOT_KEY,                       // Auto-typing
     SLOT_DBG,                       // Debugging (Regression tester)
     SLOT_ALA,                       // Alarms (set by the GUI)
@@ -149,7 +151,9 @@ struct EventSlotEnum : Reflectable<EventSlotEnum, EventSlot>
             case SLOT_DC8:      return "DC8";
             case SLOT_DC9:      return "DC9";
             case SLOT_SNP:      return "SNP";
-            case SLOT_RSH:      return "RSH";
+            case SLOT_RSH0:     return "RSH0";
+            case SLOT_RSH1:     return "RSH1";
+            case SLOT_RSH2:     return "RSH2";
             case SLOT_KEY:      return "KEY";
             case SLOT_DBG:      return "DBG";
             case SLOT_ALA:      return "ALA";
@@ -179,7 +183,9 @@ struct EventSlotEnum : Reflectable<EventSlotEnum, EventSlot>
             case SLOT_DC8:      return "Disk Change Drive 8";
             case SLOT_DC9:      return "Disk Change Drive 9";
             case SLOT_SNP:      return "Snapshots";
-            case SLOT_RSH:      return "Retro Shell";
+            case SLOT_RSH0:     return "Retro Shell (GUI)";
+            case SLOT_RSH1:     return "Retro Shell (RSH server)";
+            case SLOT_RSH2:     return "Retro Shell (RPC server)";
             case SLOT_KEY:      return "Auto Typing";
             case SLOT_DBG:      return "Debugger";
             case SLOT_ALA:      return "Alarms";

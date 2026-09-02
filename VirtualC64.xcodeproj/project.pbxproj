@@ -55,7 +55,6 @@
 		5036E0B7261AEF000048E66A /* Console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0AF261AEF000048E66A /* Console.cpp */; };
 		5036E0B9261AEF000048E66A /* RSCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B2261AEF000048E66A /* RSCommand.cpp */; };
 		5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B3261AEF000048E66A /* RetroShell.cpp */; };
-		5036E0BB261AEF000048E66A /* CommanderConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B5261AEF000048E66A /* CommanderConsole.cpp */; };
 		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
 		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
@@ -199,7 +198,6 @@
 		506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
 		506F30472B7692180083EAEA /* VirtualC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30462B7692180083EAEA /* VirtualC64.cpp */; };
 		506F30482B7692180083EAEA /* VirtualC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30462B7692180083EAEA /* VirtualC64.cpp */; };
-		50726F2B295B61C50031F2F5 /* DebuggerConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* DebuggerConsole.cpp */; };
 		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
 		50726F3D2961C96B0031F2F5 /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
@@ -304,8 +302,6 @@
 		50726FB42961CA290031F2F5 /* RSCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B2261AEF000048E66A /* RSCommand.cpp */; };
 		50726FB52961CA290031F2F5 /* RetroShell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B3261AEF000048E66A /* RetroShell.cpp */; };
 		50726FB62961CA290031F2F5 /* Console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0AF261AEF000048E66A /* Console.cpp */; };
-		50726FB72961CA290031F2F5 /* DebuggerConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* DebuggerConsole.cpp */; };
-		50726FB82961CA290031F2F5 /* CommanderConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B5261AEF000048E66A /* CommanderConsole.cpp */; };
 		50726FB92961CA290031F2F5 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
 		50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
 		50726FBD2961CA5A0031F2F5 /* Headless.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726FBB2961CA5A0031F2F5 /* Headless.cpp */; };
@@ -814,7 +810,6 @@
 		5036E0B2261AEF000048E66A /* RSCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSCommand.cpp; sourceTree = "<group>"; };
 		5036E0B3261AEF000048E66A /* RetroShell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RetroShell.cpp; sourceTree = "<group>"; };
 		5036E0B4261AEF000048E66A /* RSCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCommand.h; sourceTree = "<group>"; };
-		5036E0B5261AEF000048E66A /* CommanderConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommanderConsole.cpp; sourceTree = "<group>"; };
 		5038CA8E20B6C263000D9193 /* CPUPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPanel.swift; sourceTree = "<group>"; };
 		5038CA9020B6C281000D9193 /* MemoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPanel.swift; sourceTree = "<group>"; };
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
@@ -1082,7 +1077,6 @@
 		506F30442B7578870083EAEA /* EmulatorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorTypes.h; sourceTree = "<group>"; };
 		506F30452B768DE30083EAEA /* VirtualC64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualC64.h; sourceTree = "<group>"; };
 		506F30462B7692180083EAEA /* VirtualC64.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualC64.cpp; sourceTree = "<group>"; };
-		50726F2A295B61C50031F2F5 /* DebuggerConsole.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DebuggerConsole.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
 		50726F362961C86B0031F2F5 /* Headless */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Headless; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1906,8 +1900,6 @@
 				5036E0B3261AEF000048E66A /* RetroShell.cpp */,
 				5036E0B1261AEF000048E66A /* Console.h */,
 				5036E0AF261AEF000048E66A /* Console.cpp */,
-				5036E0B5261AEF000048E66A /* CommanderConsole.cpp */,
-				50726F2A295B61C50031F2F5 /* DebuggerConsole.cpp */,
 				50B7E26B2813F8C400A405A3 /* TextStorage.h */,
 				50B7E26A2813F8C400A405A3 /* TextStorage.cpp */,
 				5036E0B4261AEF000048E66A /* RSCommand.h */,
@@ -3413,7 +3405,6 @@
 				50726FAA2961CA1C0031F2F5 /* Snapshot.cpp in Sources */,
 				50726F552961C99A0031F2F5 /* Peddle.cpp in Sources */,
 				50726F612961C9AC0031F2F5 /* VICIISprites.cpp in Sources */,
-				50726FB72961CA290031F2F5 /* DebuggerConsole.cpp in Sources */,
 				500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */,
 				50A1948B2BDA5EED0046849E /* VICIIBase.cpp in Sources */,
 				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
@@ -3512,7 +3503,6 @@
 				50AC25B12F41A8760016265E /* Bits.cpp in Sources */,
 				50AC25B22F41A8760016265E /* Formatter.cpp in Sources */,
 				50726F6D2961C9C60031F2F5 /* filter.cc in Sources */,
-				50726FB82961CA290031F2F5 /* CommanderConsole.cpp in Sources */,
 				50AC27B52F4467820016265E /* ImageError.cpp in Sources */,
 				50726F832961C9ED0031F2F5 /* Keyboard.cpp in Sources */,
 				50AC27B82F4467930016265E /* AnyImage.cpp in Sources */,
@@ -3912,7 +3902,6 @@
 				50AC27BF2F4467A50016265E /* DeviceError.cpp in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
 				50AC28322F446A580016265E /* EADFFile.cpp in Sources */,
-				5036E0BB261AEF000048E66A /* CommanderConsole.cpp in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				50B98B4A2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */,
 				504C435E24AF29AC00E69CAE /* FinalIII.cpp in Sources */,
@@ -3925,7 +3914,6 @@
 				504C437F24AF29AC00E69CAE /* Memory.cpp in Sources */,
 				50AC27B22F44677C0016265E /* HardDiskImage.cpp in Sources */,
 				504C43AA24AF29AC00E69CAE /* TOD.cpp in Sources */,
-				50726F2B295B61C50031F2F5 /* DebuggerConsole.cpp in Sources */,
 				505F45612E9695F800418105 /* SidebarViewController.swift in Sources */,
 				50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */,
 				500A52B12DD4F93C00B06D23 /* BusPanel.swift in Sources */,

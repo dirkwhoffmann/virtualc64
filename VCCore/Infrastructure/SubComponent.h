@@ -43,6 +43,8 @@ public:
     class RegressionTester &regressionTester;
     class RemoteManager &remoteManager;
     class RetroShell &retroShell;
+    class RetroShell &rshShell;
+    class RetroShell &rpcShell;
     class SIDBridge &sidBridge;
     class SID& sid0;
     class SID& sid1;

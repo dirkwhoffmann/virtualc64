@@ -19,20 +19,73 @@
 
 namespace vc64 {
 
-RetroShell::RetroShell(C64& ref) : SubComponent(ref)
+RetroShell::RetroShell(C64& ref, isize id) : SubComponent(ref, id)
 {
     subComponents = std::vector<CoreComponent *> {
-        
-        &commander,
-        &debugger
+
+        &console
     };
+
+    // The main shell boots into the Commander. The remote shells stay idle
+    // until a client connects.
+    if (isPrimary()) commands = { InputLine {.input = "commander"} };
 }
 
 void
-RetroShell::registerDelegate(ConsoleDelegate &delegate)
+RetroShell::scheduleWakeup(Cycle delay)
 {
-    commander.delegates.push_back(&delegate);
-    debugger.delegates.push_back(&delegate);
+    switch (objid) {
+
+        case 0:     c64.scheduleRel<SLOT_RSH0>(delay, RSH_WAKEUP); break;
+        case 1:     c64.scheduleRel<SLOT_RSH1>(delay, RSH_WAKEUP); break;
+        case 2:     c64.scheduleRel<SLOT_RSH2>(delay, RSH_WAKEUP); break;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+RetroShell::cancelWakeup()
+{
+    switch (objid) {
+
+        case 0:     c64.cancel<SLOT_RSH0>(); break;
+        case 1:     c64.cancel<SLOT_RSH1>(); break;
+        case 2:     c64.cancel<SLOT_RSH2>(); break;
+
+        default:
+            fatalError;
+    }
+}
+
+bool
+RetroShell::waiting() const
+{
+    switch (objid) {
+
+        case 0:     return c64.hasEvent<SLOT_RSH0>(RSH_WAKEUP);
+        case 1:     return c64.hasEvent<SLOT_RSH1>(RSH_WAKEUP);
+        case 2:     return c64.hasEvent<SLOT_RSH2>(RSH_WAKEUP);
+
+        default:
+            fatalError;
+    }
+}
+
+void
+RetroShell::newSession()
+{
+    /* Called from the server threads. The lock keeps us from rebuilding the
+     * command tree while the emulator thread is walking it.
+     */
+    {   SYNCHRONIZED
+
+        commands = { };
+        cancelWakeup();
+        console.clear();
+        enterCommander();
+    }
 }
 
 void
@@ -45,33 +98,20 @@ void
 RetroShell::cacheInfo(RetroShellInfo &result) const
 {
     {   SYNCHRONIZED
-    
-        result.console = current->objid;
-        result.cursorRel = current->cursorRel();
+
+        result.console = isize(console.getCommandSet());
+        result.cursorRel = console.cursorRel();
     }
 }
 
 void
-RetroShell::enterConsole(isize nr)
+RetroShell::enterConsole(CommandSet cs)
 {
-    Console *newConsole = nullptr;
+    // Replace the command tree
+    console.setCommandSet(cs);
 
-    switch (nr) {
-            
-        case 0: newConsole = &commander; break;
-        case 1: newConsole = &debugger; break;
-            
-        default:
-            fatalError;
-    }
-
-    // Switch to the new console
-    if (current) current->didDeactivate();
-    current = newConsole;
-    current->didActivate();
-    
     // Inform the GUI about the change
-    msgQueue.put(Msg::RSH_SWITCH, nr);
+    msgQueue.put(Msg::RSH_SWITCH, objid, isize(cs));
 }
 
 void
@@ -89,7 +129,7 @@ RetroShell::asyncExec(const InputLine &command, bool append)
     } else {
         commands.insert(commands.begin(), command);
     }
-    
+
     // Process the command queue in the next update cycle
     emulator.put(Command(Cmd::RSH_EXECUTE));
 }
@@ -111,7 +151,7 @@ RetroShell::asyncExecScript(std::stringstream &ss)
                 .input = line
             });
         }
-    
+
         emulator.put(Command(Cmd::RSH_EXECUTE));
     }
 }
@@ -141,27 +181,6 @@ RetroShell::asyncExecScript(const string &contents)
     asyncExecScript(ss);
 }
 
-/*
-void
-RetroShell::asyncExecScript(const MediaFile &file)
-{
-    string s;
-    
-    switch (file.type()) {
-            
-        case FileType::SCRIPT:
-            
-            s = string((char *)file.getData(), file.getSize());
-            asyncExecScript(s);
-            break;
-            
-        default:
-            
-            throw  IOError(IOError::FILE_TYPE_MISMATCH);
-    }
-}
-*/
-
 void
 RetroShell::abortScript()
 {
@@ -172,15 +191,9 @@ RetroShell::abortScript()
             commands.clear();
 
             // Drops the pending wake-up along with the commands
-            c64.cancel<SLOT_RSH>();
+            cancelWakeup();
         }
     }
-}
-
-bool
-RetroShell::waiting() const
-{
-    return c64.hasEvent<SLOT_RSH>(RSH_WAKEUP);
 }
 
 void
@@ -207,18 +220,18 @@ RetroShell::exec()
 
             // The queue stays suspended until the scheduled RSH_WAKEUP
             // arrives; the command that threw is what scheduled it.
-            msgQueue.put(Msg::RSH_WAIT);
+            msgQueue.put(Msg::RSH_WAIT, objid);
 
         } catch (...) {
 
             // Remove all remaining commands
             commands = { };
 
-            msgQueue.put(Msg::RSH_ERROR);
+            msgQueue.put(Msg::RSH_ERROR, objid);
         }
 
         // Print prompt
-        if (current->lastLineIsEmpty()) *this << current->prompt();
+        if (console.lastLineIsEmpty()) *this << console.prompt();
     }
 }
 
@@ -228,7 +241,7 @@ RetroShell::exec(const InputLine &cmd)
     try {
 
         // Call the interpreter
-        current->exec(cmd);
+        console.exec(cmd);
 
     } catch (ScriptInterruption &) {
 
@@ -245,131 +258,134 @@ RetroShell::exec(const InputLine &cmd)
 RetroShell &
 RetroShell::operator<<(char value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(const char *value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(const string &value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(int value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(unsigned int value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(long value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(unsigned long value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(long long value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(unsigned long long value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 RetroShell &
 RetroShell::operator<<(std::stringstream &stream)
 {
-    *current << stream;
+    console << stream;
     return *this;
 }
 
 RetroShell&
 RetroShell::operator<<(const vspace &value)
 {
-    *current << value;
+    console << value;
     return *this;
 }
 
 const char *
 RetroShell::text()
 {
-    return current->text();
+    return console.text();
 }
 
 isize
 RetroShell::cursorRel()
 {
-    return current->cursorRel();
+    return console.cursorRel();
 }
 
 void
 RetroShell::press(RSKey key, bool shift)
 {
     if (shift) {
-        
+
         switch(key) {
-                
+
             case RSKey::TAB:
-                
-                if (current->objid == 0) current->input = "debugger";
-                if (current->objid == 1) current->input = "commander";
-                current->pressReturn(false);
+
+                // Cycle through the available command sets
+                switch (console.getCommandSet()) {
+
+                    case CommandSet::Commander:     console.input = "debugger"; break;
+                    case CommandSet::Debugger:      console.input = "commander"; break;
+                }
+                console.pressReturn(false);
                 return;
-                
+
             default:
                 break;
         }
     }
-    
-    current->press(key, shift);
+
+    console.press(key, shift);
 }
 
 void
 RetroShell::press(char c)
 {
-    current->press(c);
+    console.press(c);
 }
 
 void
 RetroShell::press(const string &s)
 {
-    current->press(s);
+    console.press(s);
 }
 
 void
 RetroShell::setStream(std::ostream &os)
 {
-    commander.setStream(os);
-    debugger.setStream(os);
+    console.setStream(os);
 }
 
 void
@@ -377,7 +393,7 @@ RetroShell::serviceEvent()
 {
     // Clear the wake-up first: it is what waiting() reads, so the queue must
     // no longer look suspended by the time the queued command is processed.
-    c64.cancel<SLOT_RSH>();
+    cancelWakeup();
 
     emulator.put(Command(Cmd::RSH_EXECUTE));
 }

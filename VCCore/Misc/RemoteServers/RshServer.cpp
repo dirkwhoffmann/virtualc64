@@ -20,7 +20,8 @@ namespace vc64 {
 void
 RshServer::_initialize()
 {
-    retroShell.registerDelegate(*this);
+    // The remote server drives its own shell, independent of the GUI's one
+    rshShell.console.delegates.push_back(this);
 }
 
 void
@@ -104,6 +105,9 @@ RshServer::didSwitch(SrvState from, SrvState to)
 void
 RshServer::didConnect()
 {
+    // Hand the client a fresh shell
+    rshShell.newSession();
+
     try {
 
         *this << "VirtualC64 RetroShell Remote Server ";
@@ -117,9 +121,16 @@ RshServer::didConnect()
         *this << "Type 'help' for help.\n";
         *this << '\n';
 
-        *this << retroShell.prompt();
+        *this << rshShell.prompt();
 
     } catch (...) { };
+}
+
+void
+RshServer::didDisconnect()
+{
+    // Discard the client's session
+    rshShell.newSession();
 }
 
 void
@@ -130,7 +141,7 @@ RshServer::didReceive(const string &payload)
 
     logmsg(LOG_INFO, "didReceive: %s\n", trimmed.c_str());
 
-    retroShell.asyncExec(InputLine {
+    rshShell.asyncExec(InputLine {
 
         .type = InputLine::Source::RSH,
         .input = trimmed
@@ -148,7 +159,7 @@ void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss)
 {
     *this << '\n' << ss.str() << '\n';
-    *this << retroShell.prompt();
+    *this << rshShell.prompt();
 }
 
 void
@@ -158,7 +169,7 @@ RshServer::didExecute(const InputLine &input, std::stringstream &ss, std::except
     if (!input.isRpcCommand()) { *this << input.input << '\n'; }
 
     *this << '\n' << ss.str() << e.what() << '\n';
-    *this << retroShell.prompt();
+    *this << rshShell.prompt();
 }
 
 }

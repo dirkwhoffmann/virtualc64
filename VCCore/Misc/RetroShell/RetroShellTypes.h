@@ -22,6 +22,32 @@ namespace vc64 {
 // Enumerations
 //
 
+enum class CommandSet
+{
+    Commander,      // Commands for controlling the emulator
+    Debugger        // Commands for debugging the emulator
+};
+
+struct CommandSetEnum : Reflectable<CommandSetEnum, CommandSet>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = long(CommandSet::Debugger);
+
+    static const char *_key(CommandSet value)
+    {
+        switch (value) {
+
+            case CommandSet::Commander:     return "COMMANDER";
+            case CommandSet::Debugger:      return "DEBUGGER";
+        }
+        return "???";
+    }
+    static const char *help(CommandSet value)
+    {
+        return "";
+    }
+};
+
 /// RetroShell special key
 enum class RSKey
 {

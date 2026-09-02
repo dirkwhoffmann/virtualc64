@@ -24,7 +24,8 @@ using nlohmann::json;
 void
 RpcServer::_initialize()
 {
-    retroShell.registerDelegate(*this);
+    // The RPC server drives its own shell, independent of the GUI's one
+    rpcShell.console.delegates.push_back(this);
 }
 
 void
@@ -162,7 +163,7 @@ optional<string>
 RpcServer::execNonBlocking(const string &command, isize id)
 {
     // Feed the command into the command queue and return a nullopt
-    retroShell.asyncExec(InputLine {
+    rpcShell.asyncExec(InputLine {
 
         .id = id,
         .type = InputLine::Source::RPC,
@@ -180,7 +181,7 @@ RpcServer::execBlocking(const string &command, isize id)
     auto future = promise->get_future();
 
     // Feed the command, with the promise attached, into the command queue
-    retroShell.asyncExec(InputLine {
+    rpcShell.asyncExec(InputLine {
 
         .id = id,
         .type = InputLine::Source::RPC,

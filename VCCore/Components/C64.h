@@ -167,7 +167,9 @@ public:
     MsgQueue msgQueue = MsgQueue();
 
     // Misc
-    RetroShell retroShell = RetroShell(*this);
+    RetroShell retroShell = RetroShell(*this, 0);
+    RetroShell rshShell = RetroShell(*this, 1);
+    RetroShell rpcShell = RetroShell(*this, 2);
     RemoteManager remoteManager = RemoteManager(*this);
     RegressionTester regressionTester = RegressionTester(*this);
 

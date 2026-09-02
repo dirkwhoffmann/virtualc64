@@ -73,7 +73,7 @@ private:
     void didStart() override { }
     void didStop() override { }
     void didConnect() override;
-    void didDisconnect() override { }
+    void didDisconnect() override;
     void didReceive(const string &payload) override;
 
 

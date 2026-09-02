@@ -45,6 +45,8 @@ C64::C64(class Emulator& ref, isize id) : CoreComponent(ref, id)
         &monitor,
         &remoteManager,
         &retroShell,
+        &rshShell,
+        &rpcShell,
         &regressionTester
     };
 

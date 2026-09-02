@@ -185,7 +185,9 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
-        case SLOT_RSH:
+        case SLOT_RSH0:
+        case SLOT_RSH1:
+        case SLOT_RSH2:
 
             switch (id) {
 
@@ -797,6 +799,8 @@ C64::update(CmdQueue &queue)
                 case Cmd::RSH_EXECUTE:
 
                     retroShell.exec();
+                    rshShell.exec();
+                    rpcShell.exec();
                     break;
 
                 case Cmd::FOCUS:
@@ -819,7 +823,9 @@ C64::update(CmdQueue &queue)
     if (cmdConfig) { msgQueue.put(Msg::CONFIG); }
 
     // Inform the GUI about new RetroShell content
-    if (retroShell.isDirty) { retroShell.isDirty = false; msgQueue.put(Msg::RSH_UPDATE); }
+    if (retroShell.isDirty) { retroShell.isDirty = false; msgQueue.put(Msg::RSH_UPDATE, 0); }
+    if (rshShell.isDirty)   { rshShell.isDirty = false;   msgQueue.put(Msg::RSH_UPDATE, 1); }
+    if (rpcShell.isDirty)   { rpcShell.isDirty = false;   msgQueue.put(Msg::RSH_UPDATE, 2); }
 }
 
 void
@@ -1336,8 +1342,14 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_SNP>(cycle)) {
                 processSNPEvent(eventid[SLOT_SNP]);
             }
-            if (isDue<SLOT_RSH>(cycle)) {
+            if (isDue<SLOT_RSH0>(cycle)) {
                 retroShell.serviceEvent();
+            }
+            if (isDue<SLOT_RSH1>(cycle)) {
+                rshShell.serviceEvent();
+            }
+            if (isDue<SLOT_RSH2>(cycle)) {
+                rpcShell.serviceEvent();
             }
             if (isDue<SLOT_KEY>(cycle)) {
                 keyboard.processKeyEvent(eventid[SLOT_KEY]);
