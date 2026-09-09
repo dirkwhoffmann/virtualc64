@@ -63,6 +63,7 @@
 		5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9620B6C2BE000D9193 /* SIDPanel.swift */; };
 		503C1DD124FC10F400D91141 /* SnapshotViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503C1DD024FC10F400D91141 /* SnapshotViewer.xib */; };
 		503C1DD324FCD1BF00D91141 /* SnapshotViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */; };
+		50AA100226A6FFDC000E7344 /* PrinterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA100126A6FFDC000E7344 /* PrinterController.swift */; };
 		503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Assets.xcassets */; };
 		5042FB112D4E121A00E4A167 /* FilePanels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5042FB102D4E121600E4A167 /* FilePanels.swift */; };
 		50461BBE26B522450019CEDF /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50461BBC26B522450019CEDF /* Thread.cpp */; };
@@ -116,6 +117,11 @@
 		504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VICII.cpp */; };
 		504C439124AF29AC00E69CAE /* VICIIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */; };
 		504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430F24AF29AC00E69CAE /* Datasette.cpp */; };
+		5005EF3662473F9B3D75C46D /* Printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5054C68A1575EE19B442E85A /* Printer.cpp */; };
+		50C6C9EAE2CC887B0D068E01 /* PrinterBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B0FAED83BAFAEC90064890 /* PrinterBase.cpp */; };
+		50DBAA8F975C42180B3F8C08 /* Paper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549E86279A6362BD9EC446 /* Paper.cpp */; };
+		501A9C3ADA6EF8B8B435BE99 /* IecListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5060DAC546FAF5345F53C8EB /* IecListener.cpp */; };
+		508D309B60CBFC046CC9BBF4 /* Mps803.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502C342FE57D25B2E8FDBC15 /* Mps803.cpp */; };
 		504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* SIDBridge.cpp */; };
 		504C439524AF29AC00E69CAE /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431724AF29AC00E69CAE /* envelope.cc */; };
 		504C439624AF29AC00E69CAE /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431824AF29AC00E69CAE /* pot.cc */; };
@@ -246,6 +252,11 @@
 		50726F752961C9DC0031F2F5 /* DriveMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434B24AF29AC00E69CAE /* DriveMemory.cpp */; };
 		50726F762961C9DC0031F2F5 /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434A24AF29AC00E69CAE /* VIA.cpp */; };
 		50726F772961C9DC0031F2F5 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430F24AF29AC00E69CAE /* Datasette.cpp */; };
+		503190FF122E6EE640EEC4A6 /* Printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5054C68A1575EE19B442E85A /* Printer.cpp */; };
+		506F2D2C0397C6B78A4E74CC /* PrinterBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B0FAED83BAFAEC90064890 /* PrinterBase.cpp */; };
+		507EB93353570D72BB6C4F1D /* Paper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549E86279A6362BD9EC446 /* Paper.cpp */; };
+		5004B6215556092A7EAA25F6 /* IecListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5060DAC546FAF5345F53C8EB /* IecListener.cpp */; };
+		505F1ED70C37238B62615B04 /* Mps803.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502C342FE57D25B2E8FDBC15 /* Mps803.cpp */; };
 		50726F782961C9DC0031F2F5 /* PIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AF2F8026AFFE9A002DC43B /* PIA.cpp */; };
 		50726F792961C9DC0031F2F5 /* ParallelCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParallelCable.cpp */; };
 		50726F7A2961C9DC0031F2F5 /* DiskAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */; };
@@ -823,6 +834,7 @@
 		503C0C362B9A4AD400112B4B /* RomDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RomDatabase.h; sourceTree = "<group>"; };
 		503C1DD024FC10F400D91141 /* SnapshotViewer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotViewer.xib; sourceTree = "<group>"; };
 		503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotViewer.swift; sourceTree = "<group>"; };
+		50AA100126A6FFDC000E7344 /* PrinterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinterController.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504268AC24F0F76F006BB841 /* C64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
 		504268AD24F12705006BB841 /* FloppyDiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloppyDiskTypes.h; sourceTree = "<group>"; };
@@ -957,6 +969,16 @@
 		504C430C24AF29AC00E69CAE /* VICII.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICII.h; sourceTree = "<group>"; };
 		504C430F24AF29AC00E69CAE /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		504C431024AF29AC00E69CAE /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
+		5076621A66E3111C3B6C0AC8 /* Printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Printer.h; sourceTree = "<group>"; };
+		5054C68A1575EE19B442E85A /* Printer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Printer.cpp; sourceTree = "<group>"; };
+		50B0FAED83BAFAEC90064890 /* PrinterBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrinterBase.cpp; sourceTree = "<group>"; };
+		5057662DCA6CA8EECE014095 /* PrinterTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrinterTypes.h; sourceTree = "<group>"; };
+		50C7F7870B0E97A771195B29 /* Paper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paper.h; sourceTree = "<group>"; };
+		50549E86279A6362BD9EC446 /* Paper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Paper.cpp; sourceTree = "<group>"; };
+		5021DE88AC64F9DFFE99497E /* IecListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IecListener.h; sourceTree = "<group>"; };
+		5060DAC546FAF5345F53C8EB /* IecListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IecListener.cpp; sourceTree = "<group>"; };
+		500E3DF94AC27DB004B5D300 /* Mps803.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mps803.h; sourceTree = "<group>"; };
+		502C342FE57D25B2E8FDBC15 /* Mps803.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mps803.cpp; sourceTree = "<group>"; };
 		504C431224AF29AC00E69CAE /* SIDBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridge.cpp; sourceTree = "<group>"; };
 		504C431424AF29AC00E69CAE /* siddefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = siddefs.h; sourceTree = "<group>"; };
 		504C431524AF29AC00E69CAE /* dac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dac.h; sourceTree = "<group>"; };
@@ -1717,6 +1739,7 @@
 				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
 				507E7A9F24FB881500AB433C /* ScreenshotViewer.swift */,
 				503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */,
+				50AA100126A6FFDC000E7344 /* PrinterController.swift */,
 				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
 				50DF719325021FCA00953E2E /* Keycap.swift */,
 				5058A91F281D109F00C223C9 /* DiskInspector.swift */,
@@ -2164,6 +2187,7 @@
 				5078BEC2264D745400EDA161 /* CMakeLists.txt */,
 				504C434724AF29AC00E69CAE /* Drive */,
 				504C430E24AF29AC00E69CAE /* Datasette */,
+				50D74AAAEFEB490EAEE420A2 /* Printer */,
 				5007E1DD26A6FFDC000E7344 /* Joystick */,
 				5007E1DE26A6FFE7000E7344 /* Mouse */,
 				508C1E6F2C0C59060097473C /* Paddle */,
@@ -2209,6 +2233,23 @@
 				504C430F24AF29AC00E69CAE /* Datasette.cpp */,
 			);
 			path = Datasette;
+			sourceTree = "<group>";
+		};
+		50D74AAAEFEB490EAEE420A2 /* Printer */ = {
+			isa = PBXGroup;
+			children = (
+				5057662DCA6CA8EECE014095 /* PrinterTypes.h */,
+				5076621A66E3111C3B6C0AC8 /* Printer.h */,
+				5054C68A1575EE19B442E85A /* Printer.cpp */,
+				50B0FAED83BAFAEC90064890 /* PrinterBase.cpp */,
+				50C7F7870B0E97A771195B29 /* Paper.h */,
+				50549E86279A6362BD9EC446 /* Paper.cpp */,
+				5021DE88AC64F9DFFE99497E /* IecListener.h */,
+				5060DAC546FAF5345F53C8EB /* IecListener.cpp */,
+				500E3DF94AC27DB004B5D300 /* Mps803.h */,
+				502C342FE57D25B2E8FDBC15 /* Mps803.cpp */,
+			);
+			path = Printer;
 			sourceTree = "<group>";
 		};
 		504C431124AF29AC00E69CAE /* SID */ = {
@@ -3484,6 +3525,11 @@
 				50726F4E2961C9940031F2F5 /* Host.cpp in Sources */,
 				50726F9E2961CA0D0031F2F5 /* StructuredBasic.cpp in Sources */,
 				50726F772961C9DC0031F2F5 /* Datasette.cpp in Sources */,
+				503190FF122E6EE640EEC4A6 /* Printer.cpp in Sources */,
+				506F2D2C0397C6B78A4E74CC /* PrinterBase.cpp in Sources */,
+				507EB93353570D72BB6C4F1D /* Paper.cpp in Sources */,
+				5004B6215556092A7EAA25F6 /* IecListener.cpp in Sources */,
+				505F1ED70C37238B62615B04 /* Mps803.cpp in Sources */,
 				506A8A892B88D00200B95383 /* Configurable.cpp in Sources */,
 				506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */,
 				50AC27C02F4467A50016265E /* DeviceError.cpp in Sources */,
@@ -3892,6 +3938,7 @@
 				50DF719425021FCA00953E2E /* Keycap.swift in Sources */,
 				504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */,
 				503C1DD324FCD1BF00D91141 /* SnapshotViewer.swift in Sources */,
+				50AA100226A6FFDC000E7344 /* PrinterController.swift in Sources */,
 				50D5F88024F4F12F0062EF13 /* TrackTableView.swift in Sources */,
 				50BE4B6024E7F8A1008F39C9 /* Date.swift in Sources */,
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
@@ -3997,6 +4044,11 @@
 				50BE4B7224E81266008F39C9 /* CIARegs.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
 				504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */,
+				5005EF3662473F9B3D75C46D /* Printer.cpp in Sources */,
+				50C6C9EAE2CC887B0D068E01 /* PrinterBase.cpp in Sources */,
+				50DBAA8F975C42180B3F8C08 /* Paper.cpp in Sources */,
+				501A9C3ADA6EF8B8B435BE99 /* IecListener.cpp in Sources */,
+				508D309B60CBFC046CC9BBF4 /* Mps803.cpp in Sources */,
 				508C1E752C0C59BA0097473C /* JoystickBase.cpp in Sources */,
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,
 				50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */,

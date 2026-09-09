@@ -50,6 +50,7 @@
 #include "Peripherals/Mouse/MouseTypes.h"
 #include "Peripherals/Paddle/PaddleTypes.h"
 #include "Peripherals/Drive/ParallelCableTypes.h"
+#include "Peripherals/Printer/PrinterTypes.h"
 
 // Media
 #include "Media/MediaFileTypes.h"

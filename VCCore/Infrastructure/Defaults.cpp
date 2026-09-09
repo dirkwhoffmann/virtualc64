@@ -147,6 +147,9 @@ Defaults::Defaults()
     setFallback(Opt::DAT_MODEL,                  (i64)DatasetteModel::C1530);
     setFallback(Opt::DAT_CONNECT,                true);
 
+    setFallback(Opt::PRT_CONNECTED,              false);
+    setFallback(Opt::PRT_DEVICE_NUM,             4);
+
     setFallback(Opt::MOUSE_MODEL,                (i64)MouseModel::C1350);
     setFallback(Opt::MOUSE_SHAKE_DETECT,         true);
     setFallback(Opt::MOUSE_VELOCITY,             100);
@@ -190,6 +193,7 @@ Defaults::Defaults()
     setFallback("CHAR_PATH", "");
     setFallback("KERNAL_PATH", "");
     setFallback("VC1541_PATH", "");
+    setFallback("MPS803_PATH", "");
 }
 
 void

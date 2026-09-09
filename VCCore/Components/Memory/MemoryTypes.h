@@ -102,13 +102,14 @@ enum class RomType : long
     BASIC,
     CHAR,
     KERNAL,
-    VC1541
+    VC1541,
+    MPS803
 };
 
 struct RomTypeEnum : Reflectable<RomTypeEnum, RomType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(RomType::VC1541);
+    static constexpr long maxVal = long(RomType::MPS803);
 
     static const char *_key(RomType value)
     {
@@ -118,10 +119,11 @@ struct RomTypeEnum : Reflectable<RomTypeEnum, RomType> {
             case RomType::CHAR:    return "CHAR";
             case RomType::KERNAL:  return "KERNAL";
             case RomType::VC1541:  return "VC1541";
+            case RomType::MPS803:  return "MPS803";
         }
         return "???";
     }
-    
+
     static const char *help(RomType value)
     {
         switch (value) {
@@ -130,6 +132,7 @@ struct RomTypeEnum : Reflectable<RomTypeEnum, RomType> {
             case RomType::CHAR:    return "Character ROM";
             case RomType::KERNAL:  return "Kernal ROM";
             case RomType::VC1541:  return "Floppy Drive ROM";
+            case RomType::MPS803:  return "MPS-803 Character ROM";
         }
         return "";
     }

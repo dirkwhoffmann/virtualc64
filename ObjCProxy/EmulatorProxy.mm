@@ -1096,6 +1096,72 @@ NSString *EventSlotName(EventSlot slot)
 
 
 //
+// Printer
+//
+
+@implementation PrinterProxy
+
+- (PrinterAPI *)printer
+{
+    return (PrinterAPI *)obj;
+}
+
+- (NSInteger)pages
+{
+    return [self printer]->pages();
+}
+
+- (NSInteger)rows
+{
+    return [self printer]->rows();
+}
+
+- (CGImageRef)createImageForPage:(NSInteger)page
+{
+    auto *printer = [self printer];
+
+    isize width = printer->pageWidth();
+    isize height = printer->pageHeight(page);
+    isize capacity = width * height;
+
+    auto *buffer = (u8 *)malloc((size_t)capacity);
+    isize written = printer->copyPage(page, buffer, capacity);
+
+    if (written == 0) {
+
+        free(buffer);
+        return NULL;
+    }
+
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, (size_t)capacity,
+        [](void *info, const void *data, size_t size) { free((void *)data); });
+
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+
+    CGImageRef image = CGImageCreate((size_t)width, (size_t)height,
+                                      8, 8, (size_t)width,
+                                      colorSpace,
+                                      kCGBitmapByteOrderDefault,
+                                      provider,
+                                      NULL,
+                                      false,
+                                      kCGRenderingIntentDefault);
+
+    CGColorSpaceRelease(colorSpace);
+    CGDataProviderRelease(provider);
+
+    return image;
+}
+
+- (void)clear
+{
+    [self printer]->clear();
+}
+
+@end
+
+
+//
 // RS232 proxy
 //
 
@@ -1680,6 +1746,11 @@ NSString *EventSlotName(EventSlot slot)
     return [self getRomTraits:RomType::VC1541];
 }
 
+- (RomTraits)mps803Rom
+{
+    return [self getRomTraits:RomType::MPS803];
+}
+
 - (SnapshotProxy *)takeSnapshot:(Compressor)compressor
 {
     try {
@@ -1754,6 +1825,7 @@ NSString *EventSlotName(EventSlot slot)
 @synthesize mem;
 @synthesize port1;
 @synthesize port2;
+@synthesize printer;
 @synthesize remoteManager;
 @synthesize retroShell;
 @synthesize sid;
@@ -1785,6 +1857,7 @@ NSString *EventSlotName(EventSlot slot)
     mem = [[MemoryProxy alloc] initWith:&emu->mem emu:emu];
     port1 = [[ControlPortProxy alloc] initWith:&emu->controlPort1 emu:emu];
     port2 = [[ControlPortProxy alloc] initWith:&emu->controlPort2 emu:emu];
+    printer = [[PrinterProxy alloc] initWith:&emu->printer emu:emu];
     remoteManager = [[RemoteManagerProxy alloc] initWith:&emu->remoteManager emu:emu];
     retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell emu:emu];
     sid = [[SIDProxy alloc] initWith:&emu->sid emu:emu];

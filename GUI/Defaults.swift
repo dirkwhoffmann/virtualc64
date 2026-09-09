@@ -22,6 +22,7 @@ extension DefaultsProxy {
         set("CHAR_PATH", UserDefaults.charRomUrl!.path)
         set("KERNAL_PATH", UserDefaults.kernalRomUrl!.path)
         set("VC1541_PATH", UserDefaults.vc1541RomUrl!.path)
+        set("MPS803_PATH", UserDefaults.mps803RomUrl!.path)
     }
     
     func load(url: URL) throws {
@@ -222,6 +223,7 @@ extension UserDefaults {
     static var charRomUrl: URL? { return romUrl(name: "char.bin") }
     static var kernalRomUrl: URL? { return romUrl(name: "kernal.bin") }
     static var vc1541RomUrl: URL? { return romUrl(name: "vc1541.bin") }
+    static var mps803RomUrl: URL? { return romUrl(name: "mps803.bin") }
 }
 
 //
@@ -699,6 +701,7 @@ extension Configuration {
             load(UserDefaults.charRomUrl, type: .CHAR)
             load(UserDefaults.kernalRomUrl, type: .KERNAL)
             load(UserDefaults.vc1541RomUrl, type: .VC1541)
+            load(UserDefaults.mps803RomUrl, type: .MPS803)
             emu.resume()
         }
     }
@@ -725,6 +728,7 @@ extension Configuration {
                 url = UserDefaults.charRomUrl;   try save(.CHAR)
                 url = UserDefaults.kernalRomUrl; try save(.KERNAL)
                 url = UserDefaults.vc1541RomUrl; try save(.VC1541)
+                url = UserDefaults.mps803RomUrl; try save(.MPS803)
                 
             } catch {
                 

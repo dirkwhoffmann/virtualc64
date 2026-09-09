@@ -34,6 +34,11 @@ SerialPort::_didReset(bool hard)
     ciaAtn = 1;
     ciaClock = 1;
     ciaData = 1;
+
+    // A disconnected or idle printer contributes nothing to the wired-AND
+    // (a stored value of 1 here would mean the printer pulls CLK/DATA low).
+    prtClock = 0;
+    prtData = 0;
 }
 
 bool SerialPort::_updateIecLines()
@@ -45,8 +50,8 @@ bool SerialPort::_updateIecLines()
     
     // Compute bus signals (inverted and "wired AND")
     atnLine = !ciaAtn;
-    clockLine = !device1Clock && !device2Clock && !ciaClock;
-    dataLine = !device1Data && !device2Data && !ciaData;
+    clockLine = !device1Clock && !device2Clock && !prtClock && !ciaClock;
+    dataLine = !device1Data && !device2Data && !prtData && !ciaData;
     
     // Auto-acknowdlege logic
     
@@ -78,6 +83,7 @@ bool SerialPort::_updateIecLines()
      */
     if (drive8.connectedAndOn()) dataLine &= (atnLine ^ device1Atn);
     if (drive9.connectedAndOn()) dataLine &= (atnLine ^ device2Atn);
+
     return (oldAtnLine != atnLine ||
             oldClockLine != clockLine ||
             oldDataLine != dataLine);
@@ -98,6 +104,22 @@ SerialPort::updateIecLines()
         // Wake up drives
         drive8.wakeUp();
         drive9.wakeUp();
+
+        // Feed the new line values to the printer's IEC state machine. A
+        // disconnected printer must not run the protocol state machine at
+        // all (it should behave as if electrically absent from the bus),
+        // not merely have its own line contribution masked at iecClock()/
+        // iecData() time. It is safe to feed this call the composite bus
+        // values unconditionally -- including recomputations caused
+        // solely by this device's own prtClock/prtData echoing back
+        // through the wired-AND -- because IecListener's EOI-detect arm
+        // is edge-triggered (see IecListener.cpp): a call in which CLK
+        // and ATN are unchanged from the previous call, which is exactly
+        // what a self-echo looks like, cannot arm or otherwise perturb
+        // its state machine.
+        if (printer.isConnected()) {
+            printer.iec.lineTransition(atnLine, clockLine, dataLine);
+        }
         
         // ATN signal is connected to CA1 pin of VIA 1
         drive8.via1.CA1action(!atnLine);
@@ -138,9 +160,24 @@ SerialPort::update()
     device2Clock = !!(device2Bits & 0x08);
     device2Data = !!(device2Bits & 0x02);
 
-    updateIecLines();
+    // Get bus signals from the printer
+    prtClock = printer.iecClock();
+    prtData = printer.iecData();
 
+    // Cancel the event that brought us here BEFORE recomputing the bus
+    // lines. updateIecLines() can itself call setNeedsUpdate() again (via
+    // cia2.updatePA(), or via the printer's iecLinesChanged() callback when
+    // its own line contribution changes as a side effect of the transition
+    // it was just fed) to ask for a follow-up recomputation once its own
+    // state has settled. If the cancel ran afterwards (as it used to), it
+    // would wipe out that freshly-scheduled follow-up unconditionally,
+    // silently dropping the printer's (or CIA's) own request to be
+    // resampled. Cancelling first only clears the trigger for the event
+    // instance being handled right now, so any new schedule made further
+    // down survives.
     c64.cancel<SLOT_SER>();
+
+    updateIecLines();
 }
 
 void
