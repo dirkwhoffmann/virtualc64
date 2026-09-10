@@ -655,6 +655,22 @@ CommanderConsole::initCommands(RSCommand &root)
 
 
     //
+    // Peripherals (Printer)
+    //
+
+    cmd = registerComponent(printer);
+
+    root.add({
+
+        .tokens = { cmd, "clear" },
+        .chelp  = { "Wipes the printed output" },
+        .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
+
+            printer.paper.clear();
+        }
+    });
+
+    //
     // Peripherals (Datasette)
     //
 

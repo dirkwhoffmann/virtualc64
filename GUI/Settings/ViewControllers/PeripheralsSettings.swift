@@ -28,6 +28,10 @@ class PeripheralsSettingsViewController: SettingsViewController {
     @IBOutlet weak var datasetteConnect: NSButton!
     @IBOutlet weak var datasetteModel: NSPopUpButton!
 
+    // Printer
+    @IBOutlet weak var printerConnect: NSButton!
+    @IBOutlet weak var printerDevice: NSPopUpButton!
+
     // Ports
     @IBOutlet weak var controlPort1: NSPopUpButton!
     @IBOutlet weak var controlPort2: NSPopUpButton!
@@ -105,6 +109,11 @@ class PeripheralsSettingsViewController: SettingsViewController {
         drive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
         drive9Type.selectItem(withTag: config.drive9Type)
         datasetteModel.isEnabled = config.datasetteConnected
+
+        // Printer
+        printerConnect.state = config.printerConnected ? .on : .off
+        printerDevice.selectItem(withTag: config.printerDeviceNum)
+        printerDevice.isEnabled = config.printerConnected
 
         // Ports
         gamePadManager?.refresh(popup: controlPort1, hide: true)
@@ -187,6 +196,16 @@ class PeripheralsSettingsViewController: SettingsViewController {
     @IBAction func datasetteModelAction(_ sender: NSPopUpButton!) {
 
         config?.datasetteModel = sender.selectedTag()
+    }
+
+    @IBAction func printerConnectAction(_ sender: NSButton!) {
+
+        config?.printerConnected = sender.state == .on
+    }
+
+    @IBAction func printerDeviceAction(_ sender: NSPopUpButton!) {
+
+        config?.printerDeviceNum = sender.selectedTag()
     }
 
     @IBAction func controlPortAction(_ sender: NSPopUpButton!) {

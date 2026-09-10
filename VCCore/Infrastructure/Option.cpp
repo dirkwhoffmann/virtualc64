@@ -149,6 +149,9 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::DAT_MODEL:                 return enumParser.template operator()<DatasetteModelEnum,DatasetteModel>();
         case Opt::DAT_CONNECT:               return boolParser();
 
+        case Opt::PRT_CONNECTED:             return boolParser();
+        case Opt::PRT_DEVICE_NUM:            return numParser();
+
         case Opt::MOUSE_MODEL:               return enumParser.template operator()<MouseModelEnum,MouseModel>();
         case Opt::MOUSE_SHAKE_DETECT:        return boolParser();
         case Opt::MOUSE_VELOCITY:            return numParser();

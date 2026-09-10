@@ -47,6 +47,7 @@ AnyFile::type(const fs::path &path)
         if (RomFile::isRomBuffer(RomType::CHAR, buffer)) return FileType::CHAR_ROM;
         if (RomFile::isRomBuffer(RomType::KERNAL, buffer)) return FileType::KERNAL_ROM;
         if (RomFile::isRomBuffer(RomType::VC1541, buffer)) return FileType::VC1541_ROM;
+        if (RomFile::isRomBuffer(RomType::MPS803, buffer)) return FileType::MPS803_ROM;
     }
 
     return FileType::UNKNOWN;
@@ -76,6 +77,7 @@ AnyFile::make(const fs::path &path, FileType type)
         case FileType::CHAR_ROM:   return new RomFile(path);
         case FileType::KERNAL_ROM: return new RomFile(path);
         case FileType::VC1541_ROM: return new RomFile(path);
+        case FileType::MPS803_ROM: return new RomFile(path);
 
         default:
             return nullptr;
@@ -99,7 +101,8 @@ AnyFile::make(const u8 *buf, isize len, FileType type)
         case FileType::CHAR_ROM:   return new RomFile(buf, len);
         case FileType::KERNAL_ROM: return new RomFile(buf, len);
         case FileType::VC1541_ROM: return new RomFile(buf, len);
-            
+        case FileType::MPS803_ROM: return new RomFile(buf, len);
+
         default:
             return nullptr;
     }

@@ -109,6 +109,7 @@ enum EventSlot : long
     SLOT_EXP,                       // Expansion port
     SLOT_TXD,                       // Serial data out (RS232)
     SLOT_RXD,                       // Serial data in (RS232)
+    SLOT_PRT,                       // Printer (IEC bus timing)
     SLOT_MOT,                       // Datasette motor
     SLOT_DC8,                       // Disk change (Drive 8)
     SLOT_DC9,                       // Disk change (Drive 9)
@@ -145,6 +146,7 @@ struct EventSlotEnum : Reflectable<EventSlotEnum, EventSlot>
             case SLOT_EXP:      return "EXP";
             case SLOT_TXD:      return "TXD";
             case SLOT_RXD:      return "RXD";
+            case SLOT_PRT:      return "PRT";
             case SLOT_MOT:      return "MOT";
             case SLOT_DC8:      return "DC8";
             case SLOT_DC9:      return "DC9";
@@ -175,6 +177,7 @@ struct EventSlotEnum : Reflectable<EventSlotEnum, EventSlot>
             case SLOT_EXP:      return "Expansion Port";
             case SLOT_TXD:      return "RS232 Out";
             case SLOT_RXD:      return "RS232 In";
+            case SLOT_PRT:      return "Printer";
             case SLOT_MOT:      return "Datasette Motor";
             case SLOT_DC8:      return "Disk Change Drive 8";
             case SLOT_DC9:      return "Disk Change Drive 9";
@@ -246,6 +249,10 @@ enum EventID : u8 // _i8(EventID)
     // Serial data in (RS232)
     RXD_BIT             = 1,
     RXD_EVENT_COUT,
+
+    // Printer
+    PRT_WAKEUP          = 1,
+    PRT_EVENT_COUNT,
 
     // Datasette motor
     MOT_START           = 1,

@@ -9,6 +9,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -17,49 +18,23 @@
 namespace vc64 {
 
 //
-// Enumerations
+// Structures
 //
 
-enum class Class : long
+/// Printer configuration
+typedef struct
 {
-    Generic,
-    
-    // Components
-    C64,
-    CPU,
-    CIA,
-    Host,
-    Memory,
-    PIA,
-    SID,
-    SIDBridge,
-    TOD,
-    VIA,
-    VICII,
-    
-    // Ports
-    AudioPort,
-    ControlPort,
-    ExpansionPort,
-    PowerPort,
-    RS232,
-    SerialPort,
-    UserPort,
-    VideoPort,
-    SampleRateDetector,
-    
-    // Peripherals
-    Cartridge,
-    Datasette,
-    Drive,
-    DriveMemory,
-    Joystick,
-    Keyboard,
-    Monitor,
-    Mouse,
-    Paddle,
-    ParallelCable,
-    Printer
-};
+    bool connected;             ///< Indicates whether the printer is attached to the IEC bus
+    isize deviceNum;            ///< Device number the printer listens on (4 or 5)
+}
+PrinterConfig;
+
+/// Printer current state
+typedef struct
+{
+    isize pages;                ///< Number of completed pages
+    isize rows;                 ///< Number of dot rows on the current page
+}
+PrinterInfo;
 
 }

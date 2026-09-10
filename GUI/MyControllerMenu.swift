@@ -127,6 +127,13 @@ extension MyController: NSMenuItemValidation {
             return emu.datasette.info.hasTape
 
             //
+            // Printer menu
+            //
+
+        case #selector(MyController.showPrinterAction(_:)):
+            return config.printerConnected
+
+            //
             // Cartridge menu
             //
 
@@ -944,6 +951,19 @@ extension MyController: NSMenuItemValidation {
                 }
             })
         }
+    }
+
+    //
+    // Action methods (Printer menu)
+    //
+
+    @IBAction func showPrinterAction(_ sender: Any!) {
+
+        if printerController == nil {
+            printerController = PrinterController(parent: self)
+        }
+        printerController?.showWindow(nil)
+        printerController?.window?.makeKeyAndOrderFront(nil)
     }
 
     //

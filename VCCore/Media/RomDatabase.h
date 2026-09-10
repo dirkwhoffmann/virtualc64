@@ -18,6 +18,7 @@ namespace vc64 {
 #define KERNAL      RomType::KERNAL
 #define CHAR        RomType::CHAR
 #define VC1541      RomType::VC1541
+#define MPS803      RomType::MPS803
 
 #define COMMODORE   RomVendor::COMMODORE
 #define MEGA65      RomVendor::MEGA65
@@ -545,6 +546,19 @@ static std::vector<RomTraits> roms = {
         .vendor     = OTHER,
         .type       = VC1541,
         .patched    = true
+    },
+
+    //
+    // Printer character ROMs
+    //
+
+    {
+        .fnv        = 0xD8BD47C336223AF9,
+        .title      = "Character Rom",
+        .subtitle   = "MPS-803 Printer",
+        .revision   = "",
+        .vendor     = COMMODORE,
+        .type       = MPS803
     }
 };
 
@@ -552,6 +566,7 @@ static std::vector<RomTraits> roms = {
 #undef KERNAL
 #undef CHAR
 #undef VC1541
+#undef MPS803
 
 #undef COMMODORE
 #undef MEGA65
