@@ -164,20 +164,27 @@ SerialPort::update()
     prtClock = printer.iecClock();
     prtData = printer.iecData();
 
-    // Cancel the event that brought us here BEFORE recomputing the bus
-    // lines. updateIecLines() can itself call setNeedsUpdate() again (via
+    // Recompute the bus lines before cancelling the event that brought us
+    // here. updateIecLines() can itself call setNeedsUpdate() again (via
     // cia2.updatePA(), or via the printer's iecLinesChanged() callback when
     // its own line contribution changes as a side effect of the transition
-    // it was just fed) to ask for a follow-up recomputation once its own
-    // state has settled. If the cancel ran afterwards (as it used to), it
-    // would wipe out that freshly-scheduled follow-up unconditionally,
-    // silently dropping the printer's (or CIA's) own request to be
-    // resampled. Cancelling first only clears the trigger for the event
-    // instance being handled right now, so any new schedule made further
-    // down survives.
-    c64.cancel<SLOT_SER>();
-
+    // it was just fed) to ask for a follow-up recomputation. That request
+    // is redundant, not lost: this call already reflects the state it
+    // would recompute, since cia2.updatePA() and the printer's line
+    // feedback both run synchronously inside updateIecLines() itself. If
+    // the cancel ran first instead, that redundant self-request would
+    // survive and immediately reschedule another pass, which reschedules
+    // another on its own signalsChanged, and so on -- a self-sustaining
+    // loop with no external cause, observed to hang LOAD indefinitely with
+    // a printer connected. Recomputing first and cancelling after removes
+    // exactly that spurious follow-up while leaving genuinely new
+    // requests -- e.g. the printer's own timer-driven wakeUp(), scheduled
+    // via the separate SLOT_PRT slot -- unaffected, since those arrive as
+    // later, distinct calls to this function rather than a nested one
+    // within the current call.
     updateIecLines();
+
+    c64.cancel<SLOT_SER>();
 }
 
 void
