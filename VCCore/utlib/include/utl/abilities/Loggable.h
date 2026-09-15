@@ -46,7 +46,7 @@ inline constexpr long LOG_TRACE = 6;
  * combine several independent libraries, each with its own debug flags,
  * the descriptor provides a uniform way to list and modify all of
  * them without any library having to know about the others. Both accessors
- * funnel through 'long', so that logging, bool, and plain value flags can
+ * funnel through 'isize', so that logging, bool, and plain value flags can
  * share a single descriptor type.
  *
  * Descriptor tables exist in debug builds only. In release builds the flags
@@ -66,8 +66,8 @@ struct FlagInfo {
     bool boolean;
 
     // Accessors
-    long (*get)();
-    void (*set)(long);
+    isize (*get)();
+    void (*set)(isize);
 };
 
 class Loggable {
