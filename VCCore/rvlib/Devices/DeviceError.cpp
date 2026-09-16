@@ -78,14 +78,14 @@ DeviceError::DeviceError(long code, const string &s) : utl::Error(code)
             break;
 
         case HDR_TOO_LARGE:
-            set_msg(string("Hard drives with a maximum capacity of ") +
-                    "504 MB are supported");
+            set_msg(string("This controller is limited to hard drives of ") +
+                    (s.empty() ? string("the configured capacity") : s + " MB") +
+                    " or less");
             break;
 
         case HDR_UNSUPPORTED_CYL_CNT:
             set_msg(string("The geometry of this drive is not supported. ") +
                     "Hard drives are supported with " +
-                    "at least " + std::to_string(HDR_C_MIN) + " and " +
                     "at most " + std::to_string(HDR_C_MAX) + " cylinders. " +
                     "This drive has " + s + " cylinders.");
             break;
@@ -93,7 +93,6 @@ DeviceError::DeviceError(long code, const string &s) : utl::Error(code)
         case HDR_UNSUPPORTED_HEAD_CNT:
             set_msg(string("The geometry of this drive is not supported. ") +
                     "Hard drives are supported with " +
-                    "at least " + std::to_string(HDR_H_MIN) + " and " +
                     "at most " + std::to_string(HDR_H_MAX) + " heads. " +
                     "The drive has " + s + " heads.");
             break;
@@ -101,7 +100,6 @@ DeviceError::DeviceError(long code, const string &s) : utl::Error(code)
         case HDR_UNSUPPORTED_SEC_CNT:
             set_msg(string("The geometry of this drive is not supported. ") +
                     "Hard drives are supported with " +
-                    "at least " + std::to_string(HDR_S_MIN) + " and " +
                     "at most " + std::to_string(HDR_S_MAX) + " sectors. " +
                     "The drive stores " + s + " sectors per track.");
             break;
@@ -135,6 +133,12 @@ DeviceError::DeviceError(long code, const string &s) : utl::Error(code)
 
         case HDR_UNSUPPORTED:
             set_msg("The hard drive is encoded in an unknown or unsupported format.");
+            break;
+
+        case HDR_TOO_LARGE_FOR_MEM:
+            set_msg(string("A hard drive can be held in memory up to a size of ") +
+                    (s.empty() ? string("the configured capacity") : s + " MB") +
+                    ". A larger drive has to live in an image file.");
             break;
 
         default:

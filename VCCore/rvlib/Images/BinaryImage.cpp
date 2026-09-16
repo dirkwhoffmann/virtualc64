@@ -9,6 +9,7 @@
 
 #include "rvconfig.h"
 #include "Images/BinaryImage.h"
+#include "Devices/LinearDevice.h"
 #include "utl/io.h"
 #include "utl/support.h"
 #include <fstream>
@@ -22,22 +23,8 @@ using utl::IOError;
 void
 BinaryImage::init(isize len)
 {
-    data.init(len);
+    data.init(len, nullptr);
 }
-
-void
-BinaryImage::init(const utl::Buffer<u8> &buffer)
-{
-    init(buffer.ptr, buffer.size);
-}
-
-/*
-void
-BinaryImage::init(const string &str)
-{
-    init((const u8 *)str.c_str(), (isize)str.length());
-}
-*/
 
 void
 BinaryImage::init(const fs::path &p)
@@ -45,22 +32,31 @@ BinaryImage::init(const fs::path &p)
     if (!validateURL(p))
         throw utl::IOError(utl::IOError::FILE_TYPE_MISMATCH, p);
 
-    std::fstream stream(p, std::ios::binary | std::ios::in);
+    // Open the file (throws if it does not exist or cannot be read)
+    auto backing = makeBacking(p);
 
-    if (!stream)
-        throw utl::IOError(utl::IOError::FILE_NOT_FOUND, p);
-
-    // Read file into a vector
-    std::vector<u8> buffer((std::istreambuf_iterator<char>(stream)),
-                           std::istreambuf_iterator<char>());
-
-    if (buffer.empty())
+    if (backing->size() == 0)
         throw utl::IOError(utl::IOError::FILE_CANT_READ, p);
+
+    // Determine the image size (before the backing is handed over below)
+    auto size = imageSize(*backing);
 
     this->path = p;
 
-    // Initialize image with the vector contents
-    init(buffer.data(), isize(buffer.size()));
+    // Put the image on top of it. Nothing is loaded yet.
+    data.init(size, std::move(backing));
+    didInitialize();
+}
+
+void
+BinaryImage::init(const LinearDevice &device)
+{
+    data.init(device.size(), nullptr);
+
+    // Pull in the contents
+    auto bytes = data.mutableByteView(0, data.size());
+    device.read(bytes.data(), 0, bytes.size());
+    didInitialize();
 }
 
 void
@@ -68,110 +64,80 @@ BinaryImage::init(const u8 *buf, isize len)
 {
     assert(buf);
 
-    // Allocate memory
-    data.alloc(len);
+    data.init(len, nullptr);
 
-    // Copy data
-    std::memcpy(data.ptr, buf, data.size);
+    if (len) std::memcpy(data.mutableByteView(0, len).data(), buf, size_t(len));
     didInitialize();
+}
+
+std::unique_ptr<utl::Backing>
+BinaryImage::makeBacking(const fs::path &p) const
+{
+    return std::make_unique<utl::FileBacking>(p);
+}
+
+utl::ByteView
+BinaryImage::byteView(isize offset, isize len) const
+{
+    return data.byteView(offset, len);
+}
+
+utl::MutableByteView
+BinaryImage::mutableByteView(isize offset, isize len)
+{
+    return data.mutableByteView(offset, len);
+}
+
+void
+BinaryImage::detach()
+{
+    data.detach();
+    path.clear();
 }
 
 void
 BinaryImage::copy(u8 *buf, isize offset, isize len) const
 {
     assert(buf);
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
 
-    std::memcpy(buf + offset, data.ptr, len);
-}
-
-utl::ByteView
-BinaryImage::byteView(isize offset) const
-{
-    return byteView(offset, data.size - offset);
-}
-
-utl::ByteView
-BinaryImage::byteView(isize offset, isize len) const
-{
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
-
-    return utl::ByteView(data.ptr + offset, len);
-}
-
-utl::MutableByteView
-BinaryImage::byteView(isize offset)
-{
-    return byteView(offset, data.size - offset);
-}
-
-utl::MutableByteView
-BinaryImage::byteView(isize offset, isize len)
-{
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
-
-    return utl::MutableByteView(data.ptr + offset, len);
+    std::memcpy(buf, byteView(offset, len).data(), len);
 }
 
 void
 BinaryImage::copy(u8 *buf, isize offset) const
 {
-    copy (buf, offset, data.size);
+    copy(buf, offset, getSize() - offset);
 }
 
 void
 BinaryImage::save()
 {
-    /* getSize(), not size(). While this lived on AnyImage there was no size()
-     * in scope at all, so the call resolved to the inherited Loggable::size()
-     * -- the number of registered log channels -- and every save() wrote that
-     * many bytes. The buffer is right here now, so ask it.
-     */
-    save(utl::Range<isize>{0, getSize()});
-}
+    // An image built in memory has nowhere to persist to yet
+    if (!data.backed()) { saveAs(path); return; }
 
-void
-BinaryImage::save(const utl::Range<isize> range)
-{
-    std::ofstream file(path, std::ios::binary);
-    if (!file) throw utl::IOError(utl::IOError::FILE_CANT_WRITE, path);
-
-    printf("Saving range %ld - %ld...\n", range.lower, range.upper - 1);
-
-    // Move to the correct position
-    file.seekp(range.lower, std::ios::beg);
-
-    // Write the data to the stream
-    file.write((char *)(data.ptr + range.lower), range.size());
-
-    // Update the file on disk
-    file.flush();
-}
-
-void
-BinaryImage::save(const std::vector<utl::Range<isize>> ranges)
-{
-    for (auto &range: ranges) save(range);
+    // Write the modified parts back to where the image came from
+    data.persist();
 }
 
 void
 BinaryImage::saveAs(const fs::path &newPath)
 {
+    // Write the entire image first, so that a failure changes nothing
+    writeToFile(newPath);
+
+    // Continue on top of the new file, which now holds exactly this image
+    auto size = getSize();
+    auto backing = makeBacking(newPath);
     path = newPath;
-    save();
+    data.init(size, std::move(backing));
 }
 
 isize
 BinaryImage::writeToStream(std::ostream &stream, isize offset, isize len) const
 {
-    assert(offset >= 0 && len >= 0 && offset + len <= data.size);
+    stream.write((const char *)byteView(offset, len).data(), len);
 
-    stream.write((char *)data.ptr + offset, len);
-
-    return data.size;
+    return len;
 }
 
 isize
@@ -181,6 +147,13 @@ BinaryImage::writeToFile(const fs::path &p, isize offset, isize len) const
         throw utl::IOError(utl::IOError::FILE_IS_DIRECTORY);
     }
 
+    /* The target may be the very file this image is loaded from. Opening it
+     * for writing truncates it, so whatever is still in there only has to
+     * come in first.
+     */
+    std::error_code ec;
+    if (fs::equivalent(p, path, ec)) (void)byteView(0, getSize());
+
     std::ofstream stream(p, std::ofstream::binary);
 
     if (!stream.is_open()) {
@@ -188,7 +161,7 @@ BinaryImage::writeToFile(const fs::path &p, isize offset, isize len) const
     }
 
     isize result = writeToStream(stream, offset, len);
-    assert(result == data.size);
+    assert(result == len);
 
     return result;
 }
@@ -196,13 +169,13 @@ BinaryImage::writeToFile(const fs::path &p, isize offset, isize len) const
 isize
 BinaryImage::writeToStream(std::ostream &stream) const
 {
-    return writeToStream(stream, 0, data.size);
+    return writeToStream(stream, 0, getSize());
 }
 
 isize
 BinaryImage::writeToFile(const fs::path &p) const
 {
-    return writeToFile(p, 0, data.size);
+    return writeToFile(p, 0, getSize());
 }
 
 }

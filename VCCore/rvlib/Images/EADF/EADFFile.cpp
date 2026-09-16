@@ -2,9 +2,9 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
@@ -38,9 +38,11 @@ EADFFile::about(const fs::path &path)
 void
 EADFFile::ensureEADF()
 {
+    auto head = byteView(0, std::min(getSize(), isize(16)));
+
     for (auto &header : extAdfHeaders) {
 
-        if (utl::matchingBufferHeader(data.ptr, data.size, header))
+        if (utl::matchingBufferHeader(head.data(), head.size(), header))
             return;
     }
     
@@ -87,7 +89,9 @@ EADFFile::checkIntegrity()
 {
     isize numTracks = storedTracks();
     
-    if (std::strcmp((char *)data.ptr, "UAE-1ADF") != 0) {
+    auto head = byteView(0, std::min(getSize(), isize(9)));
+
+    if (head.size() < 9 || std::memcmp(head.data(), "UAE-1ADF", 9) != 0) {
         
         logmsg(LOG_WARN, "Only UAE-1ADF files are supported\n");
         throw ImageError(ImageError::EXT_FACTOR5);
@@ -99,7 +103,7 @@ EADFFile::checkIntegrity()
         throw ImageError(ImageError::EXT_CORRUPTED);
     }
 
-    if (data.size < proposedHeaderSize() || data.size != proposedFileSize()) {
+    if (getSize() < proposedHeaderSize() || getSize() != proposedFileSize()) {
         
         logmsg(LOG_WARN, "File size mismatch\n");
         throw ImageError(ImageError::EXT_CORRUPTED);
@@ -148,7 +152,7 @@ EADFFile::didInitialize()
 
         if (isStandardTrack(t)) {
 
-            logmsg(LOG_IMG, "Reading standard track %ld from EADF\n", t);
+            logmsg(LOG_IMG, "Reading standard track %td from EADF\n", t);
 
             // Copy bytes from the EADF
             track.data.assign(trackData(t), trackData(t) + usedBitsForTrack(t) / 8);
@@ -164,7 +168,7 @@ EADFFile::didInitialize()
 
         if (isExtendedTrack(t)) {
 
-            logmsg(LOG_IMG, "Reading extended track %ld from EADF\n", t);
+            logmsg(LOG_IMG, "Reading extended track %td from EADF\n", t);
 
             // Copy MFM bits from the EADF
             track.mfm.assign(trackData(t), trackData(t) + availableBytesForTrack(t));
@@ -293,9 +297,10 @@ EADFFile::decode(TrackNr t, utl::BitView bits)
 isize
 EADFFile::storedTracks() const noexcept
 {
-    assert(!data.empty());
+    assert(!empty());
 
-    return HI_LO(data[10], data[11]);
+    auto p = byteView(10, 2);
+    return HI_LO(p[0], p[1]);
 }
 
 isize
@@ -303,8 +308,8 @@ EADFFile::typeOfTrack(isize t) const
 {
     validateTrackNr(t);
 
-    assert(!data.empty());
-    u8 *p = data.ptr + 12 + 12 * t + 2;
+    assert(!empty());
+    auto p = byteView(12 + 12 * t + 2, 2);
 
     return HI_LO(p[0], p[1]);
 }
@@ -314,8 +319,8 @@ EADFFile::availableBytesForTrack(isize t) const
 {
     validateTrackNr(t);
 
-    assert(!data.empty());
-    u8 *p = data.ptr + 12 + 12 * t + 4;
+    assert(!empty());
+    auto p = byteView(12 + 12 * t + 4, 4);
 
     return HI_HI_LO_LO(p[0], p[1], p[2], p[3]);
 }
@@ -325,8 +330,8 @@ EADFFile::usedBitsForTrack(isize t) const
 {
     validateTrackNr(t);
 
-    assert(!data.empty());
-    u8 *p = data.ptr + 12 + 12 * t + 8;
+    assert(!empty());
+    auto p = byteView(12 + 12 * t + 8, 4);
 
     return HI_HI_LO_LO(p[0], p[1], p[2], p[3]);
 }
@@ -334,38 +339,38 @@ EADFFile::usedBitsForTrack(isize t) const
 isize
 EADFFile::proposedHeaderSize() const noexcept
 {
-    assert(!data.empty());
-    
+    assert(!empty());
+
     return 12 + 12 * storedTracks();
 }
 
 isize
 EADFFile::proposedFileSize() const noexcept
 {
-    assert(!data.empty());
+    assert(!empty());
 
     isize result = proposedHeaderSize();
-    
+
     for (isize i = 0; i < storedTracks(); i++) {
         result += availableBytesForTrack(i);
     }
-    
+
     return result;
 }
 
-u8 *
+const u8 *
 EADFFile::trackData(isize t) const
 {
     validateTrackNr(t);
 
-    assert(!data.empty());
-    u8 *p = data.ptr + proposedHeaderSize();
-    
+    assert(!empty());
+    auto offset = proposedHeaderSize();
+
     for (isize i = 0; i < t; i++) {
-        p += availableBytesForTrack(i);
+        offset += availableBytesForTrack(i);
     }
-    
-    return p;
+
+    return byteView(offset, availableBytesForTrack(t)).data();
 }
 
 }

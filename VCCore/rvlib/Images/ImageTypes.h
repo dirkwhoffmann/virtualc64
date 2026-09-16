@@ -173,6 +173,44 @@ struct FSFamilyEnum : utl::Reflectable<FSFamilyEnum, FSFamily>
     }
 };
 
+/* Where the bytes of an image live
+ *
+ * An image read from a file stays on top of that file and loads its bytes as
+ * they are asked for; its modifications reach the file when it is saved. An
+ * image built in memory -- from a size, from bytes, or from a device -- holds
+ * all of its bytes itself and has no file to go back to.
+ */
+enum class StorageMode : long
+{
+    MEMORY_BACKED,
+    FILE_BACKED
+};
+
+struct StorageModeEnum : utl::Reflectable<StorageModeEnum, StorageMode>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = long(StorageMode::FILE_BACKED);
+
+    static const char *_key(StorageMode value)
+    {
+        switch (value) {
+
+            case StorageMode::MEMORY_BACKED:  return "MEMORY_BACKED";
+            case StorageMode::FILE_BACKED:    return "FILE_BACKED";
+        }
+        return "???";
+    }
+    static const char *help(StorageMode value)
+    {
+        switch (value) {
+
+            case StorageMode::MEMORY_BACKED:  return "Held in memory";
+            case StorageMode::FILE_BACKED:    return "Stored in a file";
+        }
+        return "???";
+    }
+};
+
 
 //
 // Structures

@@ -2,14 +2,15 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #pragma once
 
 #include "Images/HardDiskImage.h"
+#include "Images/HDF/HDFLayout.h"
 #include "Devices/DeviceDescriptors.h"
 #include "utl/common.h"
 #include "Images/ImageTypes.h"
@@ -34,7 +35,7 @@ public:
     static optional<ImageInfo> about(const fs::path &path);
 
     // Checks if the buffer is in ADF format (throws if not)
-    static void ensureHDF(u8 *buf, isize len);
+    static void ensureHDF(isize len);
 
     
     //
@@ -45,9 +46,8 @@ public:
 
     explicit HDFFile() { }
     explicit HDFFile(isize len) { init(len); }
-    explicit HDFFile(const u8 *buf, isize len) { init(buf, len); }
-    explicit HDFFile(const utl::Buffer<u8>& buffer) { init(buffer); }
     explicit HDFFile(const fs::path& path) { init(path); }
+    explicit HDFFile(const LinearDevice& device) { init(device); }
 
     using HardDiskImage::init;
 
@@ -68,6 +68,8 @@ public:
     isize writeToFile(const fs::path &path) const override;
     isize writeToFile(const fs::path &path, isize offset, isize len) const override;
     void didInitialize() override;
+    std::unique_ptr<utl::Backing> makeBacking(const fs::path &path) const override;
+    isize imageSize(utl::Backing &backing) const override;
 
 
     //
@@ -116,11 +118,21 @@ public:
 
 public:
 
-    GeometryDescriptor getGeometryDescriptor() const;
-    PartitionDescriptor getPartitionDescriptor(isize part = 0) const;
-    std::vector<PartitionDescriptor> getPartitionDescriptors() const;
-    DriverDescriptor getDriverDescriptor(isize driver = 0) const;
-    std::vector<DriverDescriptor> getDriverDescriptors() const;
+    GeometryDescriptor getGeometryDescriptor() const {
+        return layout().getGeometryDescriptor();
+    }
+    PartitionDescriptor getPartitionDescriptor(isize part = 0) const {
+        return layout().getPartitionDescriptor(part);
+    }
+    std::vector<PartitionDescriptor> getPartitionDescriptors() const {
+        return layout().getPartitionDescriptors();
+    }
+    DriverDescriptor getDriverDescriptor(isize driver = 0) const {
+        return layout().getDriverDescriptor(driver);
+    }
+    std::vector<DriverDescriptor> getDriverDescriptors() const {
+        return layout().getDriverDescriptors();
+    }
 
 
     //
@@ -129,12 +141,12 @@ public:
 
 public:
 
-    optional<string> getDiskVendor() const { return rdbString(160, 8); }
-    optional<string> getDiskProduct() const { return rdbString(168, 16); }
-    optional<string> getDiskRevision() const { return rdbString(184, 4); }
-    optional<string> getControllerVendor() const { return rdbString(188, 8); }
-    optional<string> getControllerProduct() const { return rdbString(196, 16); }
-    optional<string> getControllerRevision() const { return rdbString(212, 4); }
+    optional<string> getDiskVendor() const { return layout().getDiskVendor(); }
+    optional<string> getDiskProduct() const { return layout().getDiskProduct(); }
+    optional<string> getDiskRevision() const { return layout().getDiskRevision(); }
+    optional<string> getControllerVendor() const { return layout().getControllerVendor(); }
+    optional<string> getControllerProduct() const { return layout().getControllerProduct(); }
+    optional<string> getControllerRevision() const { return layout().getControllerRevision(); }
 
 
     //
@@ -147,19 +159,13 @@ public:
     const GeometryDescriptor getGeometry() const { return geometry; }
 
     // Returns true if this image contains a rigid disk block
-    bool hasRDB() const;
+    bool hasRDB() const { return layout().hasRDB(); }
 
     // Returns the number of loadable file system drivers
     isize numDrivers() const { return isize(drivers.size()); }
 
-
-    // Returns the byte count and the location of a certain partition
-    isize partitionSize(isize nr) const;
-    isize partitionOffset(isize nr) const;
-    u8 *partitionData(isize nr) const;
-
     // Predicts the number of blocks of this hard drive
-    isize predictNumBlocks() const;
+    isize predictNumBlocks() const { return layout().predictNumBlocks(); }
 
 
     //
@@ -168,35 +174,13 @@ public:
 
 private:
 
-    // Returns a pointer to a certain block if it exists
-    u8 *seekBlock(isize nr) const;
-
-    // Checks whether the provided pointer points to a Root Block
-    bool isRB(u8 *ptr) const;
-
-    // Return a pointer to the Root Block if it exists
-    u8 *seekRB() const;
-
-    // Return a pointer to the Rigid Disk Block if it exists
-    u8 *seekRDB() const;
-
-    // Returns a pointer to a certain partition block if it exists
-    u8 *seekPB(isize nr) const;
-
-    // Returns a pointer to a certain filesystem header block if it exists
-    u8 *seekFSH(isize nr) const;
+    // Reads this image's layout (geometry, partitions, drivers)
+    HDFLayout layout() const { return HDFLayout(*this); }
 
     // Returns a string from the Rigid Disk Block if it exists
-    optional<string> rdbString(isize offset, isize len) const;
-
-
-    //
-    // Serializing
-    //
-
-public:
-
-    isize writePartitionToFile(const fs::path &path, isize nr) const;
+    optional<string> rdbString(isize offset, isize len) const {
+        return layout().rdbString(offset, len);
+    }
 };
 
 }

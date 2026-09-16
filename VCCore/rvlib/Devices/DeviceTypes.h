@@ -59,13 +59,24 @@ constexpr bool operator!=(const TSLink &a, const TSLink &b) noexcept {
 // Constants
 //
 
-// Hard drive geometry limits
-static const isize HDR_C_MIN =  16;
-static const isize HDR_C_MAX =  16384;
-static const isize HDR_H_MIN =  1;
+/* Hard drive geometry limits
+ *
+ * What a drive geometry may look like (see
+ * GeometryDescriptor::checkCompatibility). A geometry beyond these values
+ * cannot be described by the CHS fields it has to pass through.
+ */
+static const isize HDR_C_MAX =  32768;
 static const isize HDR_H_MAX =  16;
+static const isize HDR_S_MAX =  256;
+
+/* Bounds for proposing a geometry
+ *
+ * Geometries this small are legal, but nothing to offer a user who is about
+ * to create a drive (see GeometryDescriptor::driveGeometries).
+ */
+static const isize HDR_C_MIN =  16;
+static const isize HDR_H_MIN =  1;
 static const isize HDR_S_MIN =  16;
-static const isize HDR_S_MAX =  63;
 
 
 //

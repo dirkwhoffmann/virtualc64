@@ -2,9 +2,9 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
@@ -44,15 +44,17 @@ HardDiskImage::make(const fs::path &path)
 isize
 HardDiskImage::writePartitionToStream(std::ostream &stream, isize nr) const
 {
+    // partition() is measured in blocks, the stream functions take bytes
     auto range = partition(nr);
-    return writeToStream(stream, range.lower, range.size());
+    return writeToStream(stream, range.lower * bsize(), range.size() * bsize());
 }
 
 isize
 HardDiskImage::writePartitionToFile(const fs::path &path, isize nr) const
 {
+    // partition() is measured in blocks, the file functions take bytes
     auto range = partition(nr);
-    return writeToFile(path, range.lower, range.size());
+    return writeToFile(path, range.lower * bsize(), range.size() * bsize());
 }
 
 }

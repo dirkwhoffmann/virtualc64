@@ -2,9 +2,9 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
@@ -65,7 +65,7 @@ ADFFile::about(const fs::path &path)
 void
 ADFFile::ensureADF()
 {
-    auto len = data.size;
+    auto len = getSize();
     
     // Some ADFs contain an additional byte at the end. Ignore it.
     len &= ~1;
@@ -79,8 +79,9 @@ ADFFile::ensureADF()
         throw ImageError(ImageError::SIZE_MISMATCH);
     
     // Make sure it's not an extended ADF
-    if (utl::matchingBufferHeader(data.ptr, data.size, "UAE--ADF") ||
-        utl::matchingBufferHeader(data.ptr, data.size, "UAE--1ADF"))
+    auto head = byteView(0, std::min(getSize(), isize(16)));
+    if (utl::matchingBufferHeader(head.data(), head.size(), "UAE--ADF") ||
+        utl::matchingBufferHeader(head.data(), head.size(), "UAE--1ADF"))
         throw ImageError(ImageError::FORMAT_MISMATCH);
 }
 
@@ -186,38 +187,40 @@ isize
 ADFFile::writeToFile(const fs::path &path, isize offset, isize len) const
 {
     if (utl::lowercased(path.extension().string()) == ".adz") {
-     
-        auto copy = data;
+
+        // Compress the requested range and write the result as a whole
+        utl::Buffer<u8> copy;
+        copy.init(byteView(offset, len).data(), len);
         copy.gzip();
-        copy.write(path, offset, len);
+        copy.write(path);
         return copy.size;
-        
+
     } else {
-        
-        data.write(path, offset, len);
-        return data.size;
+
+        return BinaryImage::writeToFile(path, offset, len);
     }
+}
+
+std::unique_ptr<utl::Backing>
+ADFFile::makeBacking(const fs::path &path) const
+{
+    // An .adz file is compressed and has to be unpacked as a whole
+    if (utl::lowercased(path.extension().string()) == ".adz") {
+        return std::make_unique<utl::GzipBacking>(path);
+    }
+    return FloppyDiskImage::makeBacking(path);
+}
+
+isize
+ADFFile::imageSize(utl::Backing &backing) const
+{
+    // Add some empty cylinders if the file contains less than 80
+    return std::max(backing.size(), isize(ADFSIZE_35_DD));
 }
 
 void
 ADFFile::didInitialize()
 {
-    if (utl::lowercased(path.extension().string()) == ".adz") {
-        
-        logmsg(LOG_IMG, "Decompressing %ld bytes...\n", data.size);
-        
-        try {
-            data.gunzip();
-        } catch (std::runtime_error &err) {
-            throw utl::IOError(utl::IOError::ZLIB_ERROR, err.what());
-        }
-        
-        logmsg(LOG_IMG, "Restored %ld bytes.\n", data.size);
-    }
-    
-    // Add some empty cylinders if the file contains less than 80
-    if (data.size < ADFSIZE_35_DD) data.resize(ADFSIZE_35_DD, 0);
-    
     // Run a consistency check on the buffer contents
     ensureADF();
 }
@@ -225,7 +228,7 @@ ADFFile::didInitialize()
 isize
 ADFFile::numCyls() const noexcept
 {
-    switch(data.size & ~1) {
+    switch(getSize() & ~1) {
             
         case ADFSIZE_35_DD:    return 80;
         case ADFSIZE_35_DD_81: return 81;
@@ -267,7 +270,7 @@ ADFFile::getDiameter() const noexcept
 Density
 ADFFile::getDensity() const noexcept
 {
-    return (data.size & ~1) == ADFSIZE_35_HD ? Density::HD : Density::DD;
+    return (getSize() & ~1) == ADFSIZE_35_HD ? Density::HD : Density::DD;
 }
 
 utl::BitView
@@ -278,7 +281,7 @@ ADFFile::encode(TrackNr t) const
 
     // Encode track
     AmigaEncoder encoder;
-    auto mfm = encoder.encodeTrack(byteView(t), t);
+    auto mfm = encoder.encodeTrack(trackView(t), t);
 
     // Copy the encoded track data
     track.assign(mfm.data(), mfm.data() + mfm.byteView().size());
@@ -299,7 +302,7 @@ ADFFile::decode(TrackNr t, utl::BitView bits)
     assert(bytes.size() == 11 * 512);
 
     // Copy decoded bytes back to the ADF
-    memcpy(byteView(t).data(), bytes.data(), bytes.size());
+    memcpy(mutableTrackView(t).data(), bytes.data(), bytes.size());
 }
 
 void
@@ -308,7 +311,7 @@ ADFFile::formatDisk(FSFormat dos, BootBlockId id, string name)
     retro::vault::amiga::FSFormatEnum::validate(dos);
 
     logmsg(LOG_IMG,
-            "Formatting disk (%ld, %s)\n",
+            "Formatting disk (%td, %s)\n",
             numBlocks(), retro::vault::amiga::FSFormatEnum::key(dos));
 
     // Only proceed if a file system is given

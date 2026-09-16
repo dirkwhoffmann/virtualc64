@@ -205,9 +205,10 @@ FloppyDisk::init(FSFormat type, const PETName<16> &name, const fs::path& content
                     
                     u8 buf[256];
                     retro::vault::BlockDevice::readBlock(span<u8>(buf, sizeof(buf)), b);
-                    
+
+                    auto view = d64.byteView(b * 256, 256);
                     for (isize i = 0; i < 256; ++i)
-                        assert(d64.data.ptr[b * 256 + i] == buf[i]);
+                        assert(view[i] == buf[i]);
                     
                 } catch (const Error &err) {
                     

@@ -171,6 +171,7 @@ FileSystem::mkdir(BlockNr at, const FSName &name)
     auto udb = newUserDirBlock(name);
     fetch(udb).mutate().setParentDirRef(at);
     addToHashTable(at, udb);
+    fetch(udb).mutate().updateChecksum();
 
     return udb;
 }
@@ -307,6 +308,7 @@ FileSystem::createFile(BlockNr at, const FSName &name)
     try {
 
         link(at, fhb);
+        fetch(fhb).mutate().updateChecksum();
         return fhb;
 
     } catch(...) {
@@ -640,9 +642,10 @@ FileSystem::collect(const BlockNr nr, BlockIterator succ) const
 std::vector<const FSBlock *>
 FileSystem::collectDataBlocks(const FSBlock &node) const
 {
-    // Gather all blocks containing data block references
+    // Gather all blocks containing data block references (file header first,
+    // followed by the extension blocks in chain order)
     auto blocks = collectListBlocks(node);
-    blocks.push_back(&node);
+    blocks.insert(blocks.begin(), &node);
 
     // Setup the result vector
     std::vector<const FSBlock *> result;

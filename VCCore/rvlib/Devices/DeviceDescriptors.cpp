@@ -31,20 +31,34 @@ GeometryDescriptor::GeometryDescriptor(isize c, isize h, isize s, isize b)
 
 GeometryDescriptor::GeometryDescriptor(isize size)
 {
-    // Create a default geometry for the provide size
-
+    /* Creates a default geometry for the given size
+     *
+     * The drive is described with 1024 cylinders or fewer for as long as
+     * that is possible, since more is unusual for a drive of the era. What
+     * grows instead is the number of sectors, and once those are exhausted,
+     * the number of heads. Both are doubled, which keeps the block count a
+     * round number and lands exactly on the largest value the drive may have
+     * (see checkCompatibility). Only a drive too large to be described that
+     * way is given more cylinders.
+     *
+     * The result holds at least the requested number of bytes, and more when
+     * the size is not a multiple of the track size.
+     */
     bsize = 512;
     sectors = 32;
     heads = 1;
 
-    auto tsize = bsize * sectors;
-    cylinders = (size / tsize) + (size % tsize ? 1 : 0);
+    // The number of cylinders the current track layout would need
+    auto needed = [&]() {
 
-    while (cylinders > 1024) {
+        auto tsize = bsize * heads * sectors;
+        return (size / tsize) + (size % tsize ? 1 : 0);
+    };
 
-        cylinders = (cylinders + 1) / 2;
-        heads = heads * 2;
-    }
+    while (needed() > 1024 && sectors < sMax) sectors *= 2;
+    while (needed() > 1024 && heads < hMax) heads *= 2;
+
+    cylinders = needed();
 }
 
 GeometryDescriptor::GeometryDescriptor(Diameter type, Density density)
@@ -176,7 +190,7 @@ GeometryDescriptor::dump(std::ostream &os) const
 }
 
 void
-GeometryDescriptor::checkCompatibility() const
+GeometryDescriptor::checkCompatibility(isize mbLimit) const
 {
     // if CONSTEXPR (HDR_ACCEPT_ALL) return;
 
@@ -200,24 +214,31 @@ GeometryDescriptor::checkCompatibility() const
         throw DeviceError(DeviceError::HDR_UNSUPPORTED_BSIZE);
     }
     
-    // Check for real error conditions
-    if (cylinders == 0) {
+    // A drive has to have a geometry to begin with
+    if (cylinders == 0 || heads == 0 || sectors == 0) {
         throw DeviceError(DeviceError::HDR_UNKNOWN_GEOMETRY);
     }
-    if (numBytes() > 504 * (1 << 20)) {
-        throw DeviceError(DeviceError::HDR_TOO_LARGE);
-    }
-    if ((cylinders < cMin && heads > 1) || cylinders > cMax) {
+
+    /* First layer: what the CHS fields of the emulated hardware can hold.
+     * Nothing else keeps a corrupted RDB from describing a drive of absurd
+     * proportions, which would then be taken at face value.
+     */
+    if (cylinders > cMax) {
         throw DeviceError(DeviceError::HDR_UNSUPPORTED_CYL_CNT, cylinders);
     }
-    if (heads < hMin || heads > hMax) {
+    if (heads > hMax) {
         throw DeviceError(DeviceError::HDR_UNSUPPORTED_HEAD_CNT, heads);
     }
-    if (sectors < sMin || sectors > sMax) {
+    if (sectors > sMax) {
         throw DeviceError(DeviceError::HDR_UNSUPPORTED_SEC_CNT, sectors);
     }
     if (bsize != 512) {
         throw DeviceError(DeviceError::HDR_UNSUPPORTED_BSIZE);
+    }
+
+    // Second layer: the capacity the caller is willing to accept
+    if (mbLimit && numBytes() > mbLimit * (1 << 20)) {
+        throw DeviceError(DeviceError::HDR_TOO_LARGE, std::to_string(mbLimit));
     }
 }
 

@@ -2,13 +2,14 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
 #include "Images/HDF/HDFFile.h"
+#include "Images/HDF/HDFLayout.h"
 #include "Images/ImageError.h"
 #include "FileSystems/Amiga/FSBlock.h"
 #include "Devices/DeviceError.h"
@@ -32,7 +33,7 @@ HDFFile::about(const fs::path &path)
     
     if (suffix == ".HDF") {
         
-        ensureHDF(nullptr, utl::getSizeOfFile(path));
+        // ensureHDF(utl::getSizeOfFile(path));
         return {{ ImageType::HARDDISK, ImageFormat::HDF }};
     }
     
@@ -40,10 +41,11 @@ HDFFile::about(const fs::path &path)
 }
 
 void
-HDFFile::ensureHDF(u8 *buf, isize len)
+HDFFile::ensureHDF(isize len)
 {
     // The size must be a multiple of 512 (block size)
-    if (len % 512) throw ImageError(ImageError::SIZE_MISMATCH);
+    // if (len % 512) throw ImageError(ImageError::SIZE_MISMATCH);
+    
 }
 
 std::vector<string>
@@ -68,43 +70,70 @@ isize
 HDFFile::writeToFile(const fs::path &path, isize offset, isize len) const
 {
     if (utl::lowercased(path.extension().string()) == ".hdz") {
-     
-        auto copy = data;
+
+        // Compress the requested range and write the result as a whole
+        utl::Buffer<u8> copy;
+        copy.init(byteView(offset, len).data(), len);
         copy.gzip();
-        copy.write(path, offset, len);
+        copy.write(path);
         return copy.size;
-        
+
     } else {
-        
-        data.write(path, offset, len);
-        return data.size;
+
+        return BinaryImage::writeToFile(path, offset, len);
     }
+}
+
+std::unique_ptr<utl::Backing>
+HDFFile::makeBacking(const fs::path &path) const
+{
+    // An .hdz file is compressed and has to be unpacked as a whole
+    if (utl::lowercased(path.extension().string()) == ".hdz") {
+        return std::make_unique<utl::GzipBacking>(path);
+    }
+    return HardDiskImage::makeBacking(path);
+}
+
+isize
+HDFFile::imageSize(utl::Backing &backing) const
+{
+    auto available = backing.size();
+
+    // Look for a rigid disk block, reading straight from the backing
+    HDFLayout lay([&backing](isize nr, u8 *dst) {
+
+        auto offset = nr * HDFLayout::bsize;
+        if (nr < 0 || offset + HDFLayout::bsize > backing.size()) return false;
+
+        backing.read(dst, offset, HDFLayout::bsize);
+        return true;
+
+    }, available);
+
+    // Without one, the geometry is derived from the file, which fits by definition
+    if (!lay.hasRDB()) return available;
+
+    /* Pad a file that is shorter than the drive its RDB describes. A geometry
+     * that is not plausible is left alone here, for didInitialize() to reject,
+     * rather than turned into an absurdly large image first.
+     */
+    auto geometry = lay.getGeometryDescriptor();
+    try { geometry.checkCompatibility(); } catch (...) { return available; }
+
+    return std::max(available, geometry.numBytes());
 }
 
 void
 HDFFile::didInitialize()
 {
-    if (utl::lowercased(path.extension().string()) == ".hdz") {
-        
-        logmsg(LOG_IMG, "Decompressing %ld bytes...\n", data.size);
-        
-        try {
-            data.gunzip();
-            data.write("/tmp/hd.hdf");
-        } catch (std::exception &err) {
-            throw utl::IOError(utl::IOError::ZLIB_ERROR, err.what());
-        }
-        
-        logmsg(LOG_IMG, "Restored %ld bytes.\n", data.size);
-    }
-        
     // Run a consistency check on the buffer contents
-    ensureHDF(data.ptr, data.size);
+    ensureHDF(getSize());
     
     // Retrieve geometry and partition information
-    geometry = getGeometryDescriptor();
-    ptable = getPartitionDescriptors();
-    drivers = getDriverDescriptors();
+    auto lay = layout();
+    geometry = lay.getGeometryDescriptor();
+    ptable = lay.getPartitionDescriptors();
+    drivers = lay.getDriverDescriptors();
 
     // Check the hard drive descriptor for consistency
     geometry.checkCompatibility();
@@ -134,134 +163,10 @@ HDFFile::numSectors() const
     return geometry.sectors;
 }
 
-GeometryDescriptor
-HDFFile::getGeometryDescriptor() const
-{
-    GeometryDescriptor result;
 
-    if (auto rdb = seekRDB(); rdb) {
 
-        // Read the information from the rigid disk block
-        result.cylinders    = R32BE(rdb + 64);
-        result.sectors      = R32BE(rdb + 68);
-        result.heads        = R32BE(rdb + 72);
-        result.bsize        = R32BE(rdb + 16);
 
-    } else {
 
-        // Predict the number of blocks
-        auto numBlocks = predictNumBlocks();
-
-        // Predict the drive geometry
-        auto geometries = GeometryDescriptor::driveGeometries(numBlocks, result.bsize);
-
-        // Use the first match by default
-        if (geometries.size()) result = geometries.front();
-    }
-
-    return result;
-}
-
-PartitionDescriptor
-HDFFile::getPartitionDescriptor(isize part) const
-{
-    PartitionDescriptor result;
-
-    if (auto pb = seekPB(part); pb) {
-
-        // Extract information from the partition block
-        result.name           = utl::createStr(pb + 37, 31);
-        result.flags          = R32BE(pb + 20);
-        result.sizeBlock      = R32BE(pb + 132);
-        result.heads          = R32BE(pb + 140);
-        result.sectors        = R32BE(pb + 148);
-        result.reserved       = R32BE(pb + 152);
-        result.interleave     = R32BE(pb + 160);
-        result.lowCyl         = R32BE(pb + 164);
-        result.highCyl        = R32BE(pb + 168);
-        result.numBuffers     = R32BE(pb + 172);
-        result.bufMemType     = R32BE(pb + 176);
-        result.maxTransfer    = R32BE(pb + 180);
-        result.mask           = R32BE(pb + 184);
-        result.bootPri        = R32BE(pb + 188);
-        result.dosType        = R32BE(pb + 192);
-
-    } else {
-
-        assert(part == 0);
-
-        // Add a default partition spanning the entire disk
-        auto geo = getGeometryDescriptor();
-        result = PartitionDescriptor(geo);
-
-        // Make the first partition bootable
-        result.flags |= 1;
-    }
-
-    return result;
-}
-
-std::vector<PartitionDescriptor>
-HDFFile::getPartitionDescriptors() const
-{
-    std::vector<PartitionDescriptor> result;
-
-    // Add the first partition (which always exists)
-    result.push_back(getPartitionDescriptor(0));
-
-    // Add other partitions (if any)
-    for (isize i = 1; i < 16 && seekPB(i); i++) {
-        result.push_back(getPartitionDescriptor(i));
-    }
-
-    return result;
-}
-
-DriverDescriptor
-HDFFile::getDriverDescriptor(isize driver) const
-{
-    DriverDescriptor result;
-
-    if (auto fsh = seekFSH(driver); fsh) {
-
-        // Extract information from the file system header block
-        result.dosType      = R32BE(fsh + 32);
-        result.dosVersion   = R32BE(fsh + 36);
-        result.patchFlags   = R32BE(fsh + 40);
-
-        // Traverse the seglist
-        auto lsegRef = R32BE(fsh + 72);
-
-        for (isize i = 0; lsegRef != u32(-1); i++) {
-
-            auto lsegBlock = seekBlock(lsegRef);
-
-            if (!lsegBlock || strcmp((const char *)lsegBlock, "LSEG")) {
-                throw DeviceError(DeviceError::HDR_CORRUPTED_LSEG);
-            }
-            if (i >= 1024) {
-                throw DeviceError(DeviceError::HDR_CORRUPTED_LSEG);
-            }
-
-            result.blocks.push_back(lsegRef);
-            lsegRef = R32BE(lsegBlock + 16);
-        }
-    }
-
-    return result;
-}
-
-std::vector<DriverDescriptor>
-HDFFile::getDriverDescriptors() const
-{
-    std::vector<DriverDescriptor> result;
-
-    for (isize i = 0; i < 16 && seekFSH(i); i++) {
-        result.push_back(getDriverDescriptor(i));
-    }
-
-    return result;
-}
 
 /*
 FSDescriptor
@@ -324,184 +229,5 @@ HDFFile::getFileSystemDescriptor(isize nr) const
 }
 */
 
-bool
-HDFFile::hasRDB() const
-{
-    // The rigid disk block must be among the first 16 blocks
-    if (data.size >= 16 * 512) {
-        for (isize i = 0; i < 16; i++) {
-            if (strcmp((const char *)data.ptr + i * 512, "RDSK") == 0) return true;
-        }
-    }
-    return false;
-}
-
-isize
-HDFFile::partitionSize(isize nr) const
-{
-    auto &part = ptable[nr];
-    return (part.highCyl - part.lowCyl + 1) * part.heads * part.sectors * 512;
-}
-
-isize
-HDFFile::partitionOffset(isize nr) const
-{
-    auto &part = ptable[nr];
-    return part.lowCyl * part.heads * part.sectors * 512;
-}
-
-u8 *
-HDFFile::partitionData(isize nr) const
-{
-    return data.ptr + partitionOffset(nr);
-}
-
-isize
-HDFFile::predictNumBlocks() const
-{
-    isize numReserved = 2;
-    isize highKey = 0;
-
-    auto match = [&]() {
-        return isRB(seekBlock((numReserved + highKey) / 2));
-    };
-
-    if (auto root = seekRB(); root) {
-
-        // Predict block count by analyzing the file size
-        highKey = data.size / bsize() - 1;
-        if (match()) return highKey + 1;
-
-        // Predict block count by assuming a 32 sector standard geometry
-        highKey = 32 * (data.size / (32 * bsize())) - 1;
-        if (match()) return highKey + 1;
-
-        // Predict by faking the numbers to fit
-        highKey = 2 * isize(root - data.ptr) / bsize() - numReserved;
-        if (match()) return highKey + 1;
-
-        fatalError;
-    }
-
-    // No root
-    return data.size / bsize();
-}
-
-u8 *
-HDFFile::seekBlock(isize nr) const
-{
-    return nr >= 0 && 512 * (nr + 1) <= data.size ? data.ptr + (512 * nr) : nullptr;
-}
-
-bool
-HDFFile::isRB(u8 *ptr) const
-{
-    return ptr && R32BE(ptr) == 2 && R32BE(ptr + bsize() - 4) == 1;
-}
-
-u8 *
-HDFFile::seekRB() const
-{
-    auto max = data.size - 512;
-
-    for (isize i = 0; i <= max; i += 512) {
-        if (isRB(data.ptr + i)) return data.ptr + i;
-    }
-
-    return nullptr;
-}
-
-u8 *
-HDFFile::seekRDB() const
-{
-    // The rigid disk block must be among the first 16 blocks
-    for (isize i = 0; i < 16; i++) {
-        if (auto p = seekBlock(i); p) {
-            if (strcmp((const char *)p, "RDSK") == 0) return p;
-        }
-    }
-    return nullptr;
-}
-
-u8 *
-HDFFile::seekPB(isize nr) const
-{
-    u8 *result = nullptr;
-
-    // Go to the rigid disk block
-    if (auto rdb = seekRDB(); rdb) {
-
-        // Go to the first partition block
-        result = seekBlock(R32BE(rdb + 28));
-
-        // Traverse the linked list
-        for (isize i = 0; i < nr && result; i++) {
-            result = seekBlock(R32BE(result + 16));
-        }
-
-        // Make sure the reached block is a partition block
-        if (result && strcmp((const char *)result, "PART")) result = nullptr;
-    }
-
-    return result;
-}
-
-u8 *
-HDFFile::seekFSH(isize nr) const
-{
-    u8 *result = nullptr;
-
-    // Go to the rigid disk block
-    if (auto rdb = seekRDB(); rdb) {
-
-        // Go to the first file system header block
-        result = seekBlock(R32BE(rdb + 32));
-
-        // Traverse the linked list
-        for (isize i = 0; i < nr && result; i++) {
-            result = seekBlock(R32BE(result + 16));
-        }
-
-        // Make sure the reached block is a partition block
-        if (result && strcmp((const char *)result, "FSHD")) result = nullptr;
-    }
-
-    return result;
-}
-
-std::optional<string>
-HDFFile::rdbString(isize offset, isize len) const
-{
-    if (auto rdb = seekRDB(); rdb) {
-        return utl::createStr(rdb + offset, len);
-    }
-
-    return { };
-}
-
-/*
-FSFormat
-HDFFile::dos(isize blockNr) const
-{
-    if (auto block = seekBlock(blockNr); block) {
-
-        if (strncmp((const char *)block, "DOS", 3) || block[3] > 7) {
-            return FSFormat::NODOS;
-        }
-        return (FSFormat)block[3];
-    }
-
-    return FSFormat::NODOS;
-}
-*/
-
-isize
-HDFFile::writePartitionToFile(const fs::path &path, isize nr) const
-{
-    auto offset = partitionOffset(nr);
-    auto size = partitionSize(nr);
-
-    return writeToFile(path, offset, size);
-}
 
 }

@@ -717,6 +717,10 @@
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F5B6A22959C44E000457A0 /* Host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F5B6A02959C44E000457A0 /* Host.cpp */; };
+		50F7147D305ABB2B006C02B8 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F7147C305ABB2B006C02B8 /* BackedBuffer.cpp */; };
+		50F7147E305ABB2B006C02B8 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F7147C305ABB2B006C02B8 /* BackedBuffer.cpp */; };
+		50F71481305ABB75006C02B8 /* HDFLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F71480305ABB75006C02B8 /* HDFLayout.cpp */; };
+		50F71482305ABB75006C02B8 /* HDFLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F71480305ABB75006C02B8 /* HDFLayout.cpp */; };
 		50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99563203AEC80004C4856 /* KeyViewItem.xib */; };
 		50FBB62D28294C29001366F9 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB62C28294C29001366F9 /* WaveformView.swift */; };
 		50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B352039B3B7006CE7C7 /* MacKey.swift */; };
@@ -1614,6 +1618,9 @@
 		50F5B6A02959C44E000457A0 /* Host.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Host.cpp; sourceTree = "<group>"; };
 		50F5B6A12959C44E000457A0 /* Host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Host.h; sourceTree = "<group>"; };
 		50F7147B30599C2B006C02B8 /* BackedBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackedBuffer.h; sourceTree = "<group>"; };
+		50F7147C305ABB2B006C02B8 /* BackedBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackedBuffer.cpp; sourceTree = "<group>"; };
+		50F7147F305ABB75006C02B8 /* HDFLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDFLayout.h; sourceTree = "<group>"; };
+		50F71480305ABB75006C02B8 /* HDFLayout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HDFLayout.cpp; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
 		50FBB62C28294C29001366F9 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		50FBB62F282A51FB001366F9 /* VirtualC64.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VirtualC64.entitlements; sourceTree = "<group>"; };
@@ -2745,6 +2752,7 @@
 			isa = PBXGroup;
 			children = (
 				50AC25822F41A8760016265E /* Buffer.cpp */,
+				50F7147C305ABB2B006C02B8 /* BackedBuffer.cpp */,
 				50DC243F303A37BE0054EA1F /* ZipArchive.cpp */,
 				50DC2440303A37BE0054EA1F /* ZipError.cpp */,
 			);
@@ -3004,6 +3012,8 @@
 				50AC278D2F436A2B0016265E /* CMakeLists.txt */,
 				50AC278E2F436A2B0016265E /* HDFFile.h */,
 				50AC278F2F436A2B0016265E /* HDFFile.cpp */,
+				50F7147F305ABB75006C02B8 /* HDFLayout.h */,
+				50F71480305ABB75006C02B8 /* HDFLayout.cpp */,
 			);
 			path = HDF;
 			sourceTree = "<group>";
@@ -3502,6 +3512,7 @@
 				50AC25AB2F41A8760016265E /* Loggable.cpp in Sources */,
 				50AC25AC2F41A8760016265E /* Buffer.cpp in Sources */,
 				50AC25AD2F41A8760016265E /* Parser.cpp in Sources */,
+				50F7147E305ABB2B006C02B8 /* BackedBuffer.cpp in Sources */,
 				50AC25AE2F41A8760016265E /* lz4.c in Sources */,
 				50DC2433303A32E50054EA1F /* BinaryImage.cpp in Sources */,
 				50AC25AF2F41A8760016265E /* Streams.cpp in Sources */,
@@ -3587,6 +3598,7 @@
 				50726F582961C9A10031F2F5 /* CIARegs.cpp in Sources */,
 				50726F982961CA0D0031F2F5 /* Kingsoft.cpp in Sources */,
 				50726F762961C9DC0031F2F5 /* VIA.cpp in Sources */,
+				50F71481305ABB75006C02B8 /* HDFLayout.cpp in Sources */,
 				50726F7C2961C9DC0031F2F5 /* FloppyDisk.cpp in Sources */,
 				50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */,
 				50316E4D2E9A41CD00BDF90F /* AudioStream.cpp in Sources */,
@@ -3695,6 +3707,7 @@
 				50AC259C2F41A8760016265E /* Streams.cpp in Sources */,
 				50AC259D2F41A8760016265E /* Strings.cpp in Sources */,
 				50AC28082F4467FC0016265E /* PosixView.cpp in Sources */,
+				50F71482305ABB75006C02B8 /* HDFLayout.cpp in Sources */,
 				50AC28092F4467FC0016265E /* FSError.cpp in Sources */,
 				50AC259E2F41A8760016265E /* Bits.cpp in Sources */,
 				50AC25C02F4257980016265E /* CoreError.cpp in Sources */,
@@ -3970,6 +3983,7 @@
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
 				50A5B7D52C74E44C00D6DDAD /* Socket.cpp in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
+				50F7147D305ABB2B006C02B8 /* BackedBuffer.cpp in Sources */,
 				50E99FE72EBF872600633978 /* RpcServer.cpp in Sources */,
 				50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */,
 				505F45762E9698EF00418105 /* AudioSettings.swift in Sources */,

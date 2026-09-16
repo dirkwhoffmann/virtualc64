@@ -47,8 +47,8 @@ FSAllocator::requiredBlocks(isize fileSize) const noexcept
     isize numFileListBlocks = requiredFileListBlocks(fileSize);
 
     logmsg(LOG_FS, "Required file header blocks : %d\n",  1);
-    logmsg(LOG_FS, "       Required data blocks : %ld\n", numDataBlocks);
-    logmsg(LOG_FS, "  Required file list blocks : %ld\n", numFileListBlocks);
+    logmsg(LOG_FS, "       Required data blocks : %td\n", numDataBlocks);
+    logmsg(LOG_FS, "  Required file list blocks : %td\n", numFileListBlocks);
 
     return 1 + numDataBlocks + numFileListBlocks;
 }
@@ -215,13 +215,13 @@ FSAllocator::allocateFileBlocks(isize bytes,
     isize refsInListBlocks      = numDataBlocks - refsInHeaderBlock;
     isize refsInLastListBlock   = refsInListBlocks % refsPerBlock;
 
-    logmsg(LOG_FS, "                   Data bytes : %ld\n", bytes);
-    logmsg(LOG_FS, "         Required data blocks : %ld\n", numDataBlocks);
-    logmsg(LOG_FS, "         Required list blocks : %ld\n", numListBlocks);
-    logmsg(LOG_FS, "         References per block : %ld\n", refsPerBlock);
-    logmsg(LOG_FS, "   References in header block : %ld\n", refsInHeaderBlock);
-    logmsg(LOG_FS, "    References in list blocks : %ld\n", refsInListBlocks);
-    logmsg(LOG_FS, "References in last list block : %ld\n", refsInLastListBlock);
+    logmsg(LOG_FS, "                   Data bytes : %td\n", bytes);
+    logmsg(LOG_FS, "         Required data blocks : %td\n", numDataBlocks);
+    logmsg(LOG_FS, "         Required list blocks : %td\n", numListBlocks);
+    logmsg(LOG_FS, "         References per block : %td\n", refsPerBlock);
+    logmsg(LOG_FS, "   References in header block : %td\n", refsInHeaderBlock);
+    logmsg(LOG_FS, "    References in list blocks : %td\n", refsInListBlocks);
+    logmsg(LOG_FS, "References in last list block : %td\n", refsInLastListBlock);
 
     // Free the surplus list blocks
     freeSurplus(listBlocks, numListBlocks);
@@ -285,14 +285,14 @@ FSAllocator::locateAllocationBit(BlockNr nr, isize *byte, isize *bit) const noex
 
     // Get the bitmap block
     if (bmNr >= (isize)bmBlocks.size()) {
-        logmsg(LOG_FS, "Bitmap block index %ld for block %ld is out of range \n", bmNr, nr);
+        logmsg(LOG_FS, "Bitmap block index %td for block %td is out of range \n", bmNr, nr);
         return nullptr;
     }
 
     auto &bm = fs.fetch(bmBlocks[bmNr]);
 
     if (!bm.is(FSBlockType::BITMAP)) {
-        logmsg(LOG_FS, "Failed to lookup allocation bit for block %ld (%ld)\n", nr, bmNr);
+        logmsg(LOG_FS, "Failed to lookup allocation bit for block %td (%td)\n", nr, bmNr);
         return nullptr;
     }
 
@@ -336,7 +336,7 @@ FSAllocator::numUnallocated() const noexcept
 
         isize count = 0;
         for (isize i = 0; i < fs.blocks(); i++) { if (isUnallocated(BlockNr(i))) count++; }
-        logmsg(LOG_FS, "Unallocated blocks: Fast code: %ld Slow code: %ld\n", result, count);
+        logmsg(LOG_FS, "Unallocated blocks: Fast code: %td Slow code: %td\n", result, count);
         assert(count == result);
     }
 

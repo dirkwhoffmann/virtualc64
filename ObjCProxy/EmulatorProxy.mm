@@ -1522,10 +1522,10 @@ NSString *EventSlotName(EventSlot slot)
 - (NSString *)asciidump:(NSInteger)b offset:(NSInteger)offset len:(NSInteger)len
 {
     string result;
-    auto p = [self file]->data.ptr + b * [self bsize] + offset;
+    auto view = [self file]->byteView(b * [self bsize] + offset, len);
 
     for (isize i = 0; i < len; i++) {
-        result += isprint(int(p[i])) ? char(p[i]) : '.';
+        result += isprint(int(view[i])) ? char(view[i]) : '.';
     }
 
     return @(result.c_str());

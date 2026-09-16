@@ -43,6 +43,7 @@ target_sources(rvlib PRIVATE rvdebug.cpp)
 add_subdirectory(Devices)
 add_subdirectory(Images)
 add_subdirectory(FileSystems)
+add_subdirectory(Roms)
 add_subdirectory(ThirdParty)
 
 # Libraries
