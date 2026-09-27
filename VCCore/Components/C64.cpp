@@ -152,6 +152,16 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_PRT:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case PRT_WAKEUP:    return "PRT_WAKEUP";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_MOT:
 
             switch (id) {
@@ -351,6 +361,7 @@ C64::initialize()
     if (auto path = Emulator::defaults.getRaw("CHAR_PATH");   path != "") load(path);
     if (auto path = Emulator::defaults.getRaw("KERNAL_PATH"); path != "") load(path);
     if (auto path = Emulator::defaults.getRaw("VC1541_PATH"); path != "") load(path);
+    if (auto path = Emulator::defaults.getRaw("MPS803_PATH"); path != "") load(path);
 
     CoreComponent::initialize();
 }
@@ -1324,6 +1335,9 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_RXD>(cycle)) {
                 userPort.rs232.processRxdEvent();
             }
+            if (isDue<SLOT_PRT>(cycle)) {
+                printer.processPrtEvent(eventid[SLOT_PRT]);
+            }
             if (isDue<SLOT_MOT>(cycle)) {
                 datasette.processMotEvent(eventid[SLOT_MOT]);
             }
@@ -1551,6 +1565,7 @@ C64::saveWorkspace(const fs::path &path)
     exportRom(RomType::KERNAL, "kernal.rom");
     exportRom(RomType::CHAR, "char.rom");
     exportRom(RomType::VC1541, "vc1541.rom");
+    exportRom(RomType::MPS803, "mps803.rom");
 
     // Export media
     ss << "\n# Floppy disks\n\n";
@@ -1746,6 +1761,7 @@ C64::romCRC32(RomType type) const
         case RomType::CHAR:   return utl::Hashable::crc32(mem.rom + 0xD000, 0x1000);
         case RomType::KERNAL: return utl::Hashable::crc32(mem.rom + 0xE000, 0x2000);
         case RomType::VC1541: return drive8.mem.romCRC32();
+        case RomType::MPS803: return utl::Hashable::crc32(printer.mps803.data(), printer.mps803.size());
 
         default:
             fatalError;
@@ -1756,13 +1772,14 @@ u64
 C64::romFNV64(RomType type) const
 {
     if (!hasRom(type)) return 0;
-    
+
     switch (type) {
-            
+
         case RomType::BASIC:  return utl::Hashable::fnv64(mem.rom + 0xA000, 0x2000);
         case RomType::CHAR:   return utl::Hashable::fnv64(mem.rom + 0xD000, 0x1000);
         case RomType::KERNAL: return utl::Hashable::fnv64(mem.rom + 0xE000, 0x2000);
         case RomType::VC1541: return drive8.mem.romFNV64();
+        case RomType::MPS803: return utl::Hashable::fnv64(printer.mps803.data(), printer.mps803.size());
 
         default:
             fatalError;
@@ -1791,6 +1808,10 @@ C64::hasRom(RomType type) const
             assert(drive8.mem.hasRom() == drive9.mem.hasRom());
             return drive8.mem.hasRom();
 
+        case RomType::MPS803:
+
+            return printer.mps803.hasCharset();
+
         default:
             fatalError;
     }
@@ -1800,7 +1821,7 @@ bool
 C64::hasMega65Rom(RomType type) const
 {
     switch (type) {
-            
+
         case RomType::BASIC:
 
             return mem.rom[0xBF52] == 'O' && mem.rom[0xBF53] == 'R';
@@ -1815,6 +1836,11 @@ C64::hasMega65Rom(RomType type) const
 
         case RomType::VC1541:
 
+            return false;
+
+        case RomType::MPS803:
+
+            // No MEGA65 replacement charset exists for the MPS-803.
             return false;
 
         default:
@@ -1867,8 +1893,9 @@ C64::loadRom(const fs::path &path, RomType type)
     if ((file.type() == FileType::BASIC_ROM  && type == RomType::BASIC)  ||
         (file.type() == FileType::CHAR_ROM   && type == RomType::CHAR)   ||
         (file.type() == FileType::KERNAL_ROM && type == RomType::KERNAL) ||
-        (file.type() == FileType::VC1541_ROM && type == RomType::VC1541)) {
-        
+        (file.type() == FileType::VC1541_ROM && type == RomType::VC1541) ||
+        (file.type() == FileType::MPS803_ROM && type == RomType::MPS803)) {
+
         loadRom(file);
         return;
     }
@@ -1904,14 +1931,30 @@ C64::loadRom(const RomFile &file)
             break;
             
         case FileType::VC1541_ROM:
-            
+
             drive8.mem.loadRom(file.getData(), file.getSize());
             drive9.mem.loadRom(file.getData(), file.getSize());
             logmsg(LOG_MEM, "VC1541 Rom flashed\n");
             break;
-            
+
+        case FileType::MPS803_ROM:
+
+            // The MPS-803 charset is not part of the C64 address space, so
+            // unlike the other ROM types it is never flashed into mem.rom.
+            printer.mps803.flashCharset(file.getData(), file.getSize());
+
+            // Installing the charset is an unambiguous statement of intent
+            // -- the only reason to supply this ROM is to use the printer
+            // -- so attach it to the bus right away instead of requiring a
+            // second, separate step in the settings. It can still be
+            // disconnected there at any time.
+            printer.setOption(Opt::PRT_CONNECTED, true);
+
+            logmsg(LOG_MEM, "MPS-803 charset flashed\n");
+            break;
+
         default:
-            
+
             throw IOError(IOError::FILE_TYPE_MISMATCH);
     }
 }
@@ -1937,23 +1980,33 @@ C64::deleteRom(RomType type)
             break;
             
         case RomType::VC1541:
-            
+
             drive8.mem.deleteRom();
             drive9.mem.deleteRom();
             break;
-            
+
+        case RomType::MPS803:
+
+            // Without its charset the printer cannot render anything, so
+            // deleting the ROM also detaches it from the bus -- the
+            // mirror image of the auto-connect on install.
+            printer.mps803.clear();
+            printer.setOption(Opt::PRT_CONNECTED, false);
+            break;
+
         default:
             fatalError;
     }
 }
 
-void 
+void
 C64::deleteRoms()
 {
     deleteRom(RomType::BASIC);
     deleteRom(RomType::KERNAL);
     deleteRom(RomType::CHAR);
     deleteRom(RomType::VC1541);
+    deleteRom(RomType::MPS803);
 }
 
 void
@@ -1991,7 +2044,15 @@ C64::saveRom(RomType type, const fs::path &path)
                 drive8.mem.saveRom(path);
             }
             break;
-            
+
+        case RomType::MPS803:
+
+            if (hasRom(RomType::MPS803)) {
+                RomFile file(printer.mps803.data(), printer.mps803.size());
+                file.writeToFile(path);
+            }
+            break;
+
         default:
             fatalError;
     }
@@ -2044,6 +2105,7 @@ C64::flash(const fs::path &path, isize item)
             case FileType::CHAR_ROM:
             case FileType::KERNAL_ROM:
             case FileType::VC1541_ROM:
+            case FileType::MPS803_ROM:
             case FileType::SNAPSHOT:
 
                 flashNew(*file);
@@ -2082,7 +2144,12 @@ C64::flashNew(const AnyFile &file)
             drive8.mem.loadRom(dynamic_cast<const RomFile &>(file));
             drive9.mem.loadRom(dynamic_cast<const RomFile &>(file));
             break;
-            
+
+        case FileType::MPS803_ROM:
+            printer.mps803.flashCharset(file.getData(), file.getSize());
+            printer.setOption(Opt::PRT_CONNECTED, true);   // see loadRom()
+            break;
+
         case FileType::SNAPSHOT:
             loadSnapshot(dynamic_cast<const Snapshot &>(file));
             break;

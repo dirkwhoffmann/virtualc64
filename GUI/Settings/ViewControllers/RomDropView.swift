@@ -130,3 +130,13 @@ class Vc1541RomDropView: RomDropView {
         return performDrag(type: .VC1541, url: sender.url)
     }
 }
+
+class Mps803RomDropView: RomDropView {
+
+    override func acceptDragSource(url: URL) -> Bool {
+        return emu != nil && emu!.poweredOff && emu!.isRom(.MPS803, url: url)
+    }
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+        return performDrag(type: .MPS803, url: sender.url)
+    }
+}

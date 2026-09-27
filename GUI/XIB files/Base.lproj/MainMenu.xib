@@ -901,6 +901,19 @@ CQ
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Printer" id="Pr1-00-mnu">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Printer" id="Pr1-00-sub">
+                        <items>
+                            <menuItem title="Show Printer Window" id="Pr1-00-shw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showPrinterAction:" target="-1" id="Pr1-00-ac1"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Expansion" id="6Nh-dL-Pbk" userLabel="Cartridge">
                     <menu key="submenu" title="Expansion" id="ZzZ-hT-u7h">
                         <items>

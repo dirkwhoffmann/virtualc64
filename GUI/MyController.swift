@@ -41,6 +41,9 @@ class MyController: NSWindowController, MessageReceiver {
     // Snapshot and screenshot browsers
     var snapshotBrowser: SnapshotViewer?
     var screenshotBrowser: ScreenshotViewer?
+
+    // Printer window
+    var printerController: PrinterController?
     
     // The current emulator configuration
     var config: Configuration!
@@ -472,7 +475,16 @@ extension MyController {
             
         case .VC1530_COUNTER:
             refreshStatusBar()
-            
+
+        case .PRT_CONNECT:
+            refreshStatusBar()
+            printerController?.refresh()
+
+        case .PRT_PAGE, .PRT_ROWS:
+            // Posted at bus speed while printing. The controller coalesces
+            // these into at most one redraw per frame.
+            printerController?.refresh()
+
         case .CRT_ATTACHED:
             refreshStatusBar()
             

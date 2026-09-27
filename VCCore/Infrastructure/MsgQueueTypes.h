@@ -91,6 +91,11 @@ enum class Msg : long
     VC1530_MOTOR,       ///< The drive motor has started or stopped
     VC1530_COUNTER,     ///< The tape counter has stepped
 
+    // Printer
+    PRT_CONNECT,        ///< The printer has been connected or disconnected
+    PRT_PAGE,           ///< A page has been completed
+    PRT_ROWS,           ///< New dot rows have been printed
+
     // Expansion port
     CRT_ATTACHED,       ///< A cartridge has been plugged into the expansion port
 
@@ -193,6 +198,10 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::VC1530_PLAY:           return "VC1530_PLAY";
             case Msg::VC1530_MOTOR:          return "VC1530_MOTOR";
             case Msg::VC1530_COUNTER:        return "VC1530_COUNTER";
+
+            case Msg::PRT_CONNECT:           return "PRT_CONNECT";
+            case Msg::PRT_PAGE:              return "PRT_PAGE";
+            case Msg::PRT_ROWS:              return "PRT_ROWS";
 
             case Msg::CRT_ATTACHED:          return "CRT_ATTACHED";
 

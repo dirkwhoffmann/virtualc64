@@ -548,6 +548,50 @@ struct DatasetteAPI : public API {
 };
 
 
+/** Printer Public API
+ */
+struct PrinterAPI : public API {
+
+    class Printer *printer = nullptr;
+
+    /** @brief  Returns the component's current state.
+     */
+    const PrinterInfo &getInfo() const;
+    const PrinterInfo &getCachedInfo() const;
+
+    /** @brief  Returns the number of pages completed so far.
+     */
+    isize pages() const;
+
+    /** @brief  Returns the number of dot rows printed so far (absolute,
+     *          across the whole roll, not page-relative).
+     */
+    isize rows() const;
+
+    /** @brief  Returns the width of a page in dots.
+     */
+    isize pageWidth() const;
+
+    /** @brief  Returns the height of page `page` in dots.
+     */
+    isize pageHeight(isize page) const;
+
+    /** @brief  Copies one page as 8-bit greyscale, one byte per dot,
+     *          row-major.
+     *  @param  page        The page to copy.
+     *  @param  dst         The destination buffer.
+     *  @param  capacity    The size of the destination buffer, in bytes.
+     *  @return The number of bytes written, or 0 if the page does not
+     *          exist.
+     */
+    isize copyPage(isize page, u8 *dst, isize capacity) const;
+
+    /** @brief  Wipes the printed output.
+     */
+    void clear();
+};
+
+
 /** RS232 Public API
  */
 struct RS232API : public API {
@@ -1259,6 +1303,7 @@ struct VirtualC64 : public API {
     DatasetteAPI datasette;
     DriveAPI drive8, drive9;
     KeyboardAPI keyboard;
+    PrinterAPI printer;
 
     // Misc
     DmaDebuggerAPI dmaDebugger;

@@ -119,6 +119,9 @@ VirtualC64::VirtualC64() {
     datasette.emu = emu;
     datasette.datasette = &emu->main.datasette;
 
+    printer.emu = emu;
+    printer.printer = &emu->main.printer;
+
     controlPort1.emu = emu;
     controlPort1.controlPort = &emu->main.port1;
     controlPort1.mouse.emu = emu;
@@ -1200,6 +1203,68 @@ void
 DatasetteAPI::exportTape(const fs::path &path) const
 {
     datasette->exportTAP(path);
+}
+
+
+//
+// Printer
+//
+
+const PrinterInfo &
+PrinterAPI::getInfo() const
+{
+    VC64_PUBLIC
+    return printer->getInfo();
+}
+
+const PrinterInfo &
+PrinterAPI::getCachedInfo() const
+{
+    VC64_PUBLIC
+    return printer->getCachedInfo();
+}
+
+isize
+PrinterAPI::pages() const
+{
+    VC64_PUBLIC
+    return printer->paper.pages();
+}
+
+isize
+PrinterAPI::rows() const
+{
+    VC64_PUBLIC
+    return printer->paper.rows();
+}
+
+isize
+PrinterAPI::pageWidth() const
+{
+    VC64_PUBLIC
+    return Paper::width;
+}
+
+isize
+PrinterAPI::pageHeight(isize page) const
+{
+    VC64_PUBLIC
+    return Paper::height;
+}
+
+isize
+PrinterAPI::copyPage(isize page, u8 *dst, isize capacity) const
+{
+    VC64_PUBLIC
+    return printer->paper.copyPage(page, dst, capacity);
+}
+
+void
+PrinterAPI::clear()
+{
+    VC64_PUBLIC
+    printer->paper.clear();
+    emu->markAsDirty();
 }
 
 

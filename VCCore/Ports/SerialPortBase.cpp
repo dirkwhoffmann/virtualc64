@@ -23,6 +23,14 @@ SerialPort::_dump(Category category, std::ostream &os) const
 
     if (category == Category::State) {
 
+        os << tab("ATN line");
+        os << bol(atnLine) << std::endl;
+        os << tab("CLOCK line");
+        os << bol(clockLine) << std::endl;
+        os << tab("DATA line");
+        os << bol(dataLine) << std::endl;
+        os << tab("Printer CLOCK / DATA");
+        os << bol(prtClock) << " / " << bol(prtData) << std::endl;
         os << tab("VIA1::DDRB (Drive8)");
         os << hex(drive8.via1.getDDRB()) << std::endl;
         os << tab("VIA1::DDRB (Drive9)");

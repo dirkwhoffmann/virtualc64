@@ -42,6 +42,7 @@ using namespace vc64;
 @class MemoryProxy;
 @class MouseProxy;
 @class MyController;
+@class PrinterProxy;
 @class RemoteManagerProxy;
 @class RetroShellProxy;
 @class RS232Proxy;
@@ -136,6 +137,7 @@ NSString *EventSlotName(EventSlot slot);
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
     MouseProxy *mouse;
+    PrinterProxy *printer;
     RetroShellProxy *retroShell;
     SIDProxy *sid;
     VICIIProxy *vic;
@@ -160,6 +162,7 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly, strong) SerialPortProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
+@property (readonly, strong) PrinterProxy *printer;
 @property (readonly, strong) RemoteManagerProxy *remoteManager;
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
@@ -294,6 +297,7 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) RomTraits charRom;
 @property (readonly) RomTraits kernalRom;
 @property (readonly) RomTraits vc1541Rom;
+@property (readonly) RomTraits mps803Rom;
 
 - (SnapshotProxy *)takeSnapshot:(Compressor)compressor;
 - (void)loadSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
@@ -612,6 +616,21 @@ struct GuardInfo {
 - (void)ejectTape;
 - (void)insertTape:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)exportTape:(NSURL *)url exception:(ExceptionWrapper *)ex;
+
+@end
+
+
+//
+// Printer
+//
+
+@interface PrinterProxy : SubComponentProxy { }
+
+@property (readonly) NSInteger pages;
+@property (readonly) NSInteger rows;
+
+- (nullable CGImageRef)createImageForPage:(NSInteger)page CF_RETURNS_RETAINED;
+- (void)clear;
 
 @end
 

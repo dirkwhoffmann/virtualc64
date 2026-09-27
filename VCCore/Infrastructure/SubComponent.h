@@ -40,6 +40,7 @@ public:
     class MsgQueue &msgQueue;
     class ParCable &parCable;
     class PowerPort &powerSupply;
+    class Printer &printer;
     class RegressionTester &regressionTester;
     class RemoteManager &remoteManager;
     class RetroShell &retroShell;

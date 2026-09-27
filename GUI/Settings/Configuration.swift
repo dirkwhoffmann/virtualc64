@@ -161,6 +161,16 @@ class Configuration {
         set { emu?.set(.DAT_MODEL, value: newValue )}
     }
 
+    var printerConnected: Bool {
+        get { return emu?.get(.PRT_CONNECTED) != 0 }
+        set { emu?.set(.PRT_CONNECTED, enable: newValue ) }
+    }
+
+    var printerDeviceNum: Int {
+        get { return emu?.get(.PRT_DEVICE_NUM) ?? 4 }
+        set { emu?.set(.PRT_DEVICE_NUM, value: newValue )}
+    }
+
     var gameDevice1 = -1 {
         didSet {
 

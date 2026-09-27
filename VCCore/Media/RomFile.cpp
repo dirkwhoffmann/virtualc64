@@ -42,7 +42,9 @@ const RomSignature RomFile::signatures[] = {
     { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0xDB, 0x43 } }, // Commodore
     { RomType::VC1541, 0x6000, 0x0000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
     { RomType::VC1541, 0x8000, 0x2000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
-    
+
+    { RomType::MPS803, 0x0E00, 0x01C0, { 0x70, 0x88, 0xB8 } }, // Commodore MPS-803
+
     { RomType(0),      0x0000, 0x0000, { 0x00, 0x00, 0x00 } }
 };
 
@@ -59,7 +61,8 @@ RomFile::isCompatible(const u8 *buf, isize len)
     isBasicRomBuffer(buf, len) ||
     isCharRomBuffer(buf, len) ||
     isKernalRomBuffer(buf, len) ||
-    isVC1541RomBuffer(buf, len);
+    isVC1541RomBuffer(buf, len) ||
+    isMps803RomBuffer(buf, len);
 }
 
 bool
@@ -102,6 +105,7 @@ RomFile::romType(const fs::path &path)
             case FileType::BASIC_ROM:  return RomType::BASIC;
             case FileType::KERNAL_ROM: return RomType::KERNAL;
             case FileType::VC1541_ROM: return RomType::VC1541;
+            case FileType::MPS803_ROM: return RomType::MPS803;
             default: break;
         }
     
@@ -135,6 +139,12 @@ RomFile::isVC1541RomBuffer(const u8 *buf, isize len)
 }
 
 bool
+RomFile::isMps803RomBuffer(const u8 *buf, isize len)
+{
+    return isRomBuffer(RomType::MPS803, buf, len);
+}
+
+bool
 RomFile::isRomBuffer(RomType type, const Buffer<u8> &buf)
 {
     return isRomBuffer(type, buf.ptr, buf.size);
@@ -164,6 +174,12 @@ RomFile::isVC1541RomBuffer(const Buffer<u8> &buf)
     return isRomBuffer(RomType::VC1541, buf.ptr, buf.size);
 }
 
+bool
+RomFile::isMps803RomBuffer(const Buffer<u8> &buf)
+{
+    return isRomBuffer(RomType::MPS803, buf.ptr, buf.size);
+}
+
 void
 RomFile::finalizeRead()
 {
@@ -173,6 +189,7 @@ RomFile::finalizeRead()
     isCharRomBuffer(data.ptr, data.size) ? FileType::CHAR_ROM :
     isKernalRomBuffer(data.ptr, data.size) ? FileType::KERNAL_ROM :
     isVC1541RomBuffer(data.ptr, data.size) ? FileType::VC1541_ROM :
+    isMps803RomBuffer(data.ptr, data.size) ? FileType::MPS803_ROM :
     FileType::UNKNOWN;
 
     // Count the number of 0xFF bytes at the beginning of the file

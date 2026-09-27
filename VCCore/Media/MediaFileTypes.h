@@ -36,13 +36,14 @@ enum class FileType : long
     BASIC_ROM,
     CHAR_ROM,
     KERNAL_ROM,
-    VC1541_ROM
+    VC1541_ROM,
+    MPS803_ROM
 };
 
 struct FileTypeEnum : Reflectable<FileTypeEnum, FileType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(FileType::VC1541_ROM);
+    static constexpr long maxVal = long(FileType::MPS803_ROM);
 
     static const char *_key(FileType value)
     {
@@ -62,6 +63,7 @@ struct FileTypeEnum : Reflectable<FileTypeEnum, FileType> {
             case FileType::CHAR_ROM:   return "CHAR_ROM";
             case FileType::KERNAL_ROM: return "KERNAL_ROM";
             case FileType::VC1541_ROM: return "VC1541_ROM";
+            case FileType::MPS803_ROM: return "MPS803_ROM";
         }
         return "???";
     }

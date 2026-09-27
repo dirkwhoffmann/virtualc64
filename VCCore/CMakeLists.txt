@@ -65,6 +65,7 @@ add_subdirectory(Media)
 add_subdirectory(Misc)
 add_subdirectory(Peripherals)
 add_subdirectory(ThirdParty)
+add_subdirectory(Tests)
 
 # Threads
 set(THREADS_PREFER_PTHREAD_FLAG ON)

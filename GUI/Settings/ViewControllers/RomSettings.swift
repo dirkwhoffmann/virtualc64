@@ -33,6 +33,12 @@ class RomSettingsViewController: SettingsViewController {
     @IBOutlet weak var vc1541Subsubtitle: NSTextField!
     @IBOutlet weak var vc1541DeleteButton: NSButton!
 
+    @IBOutlet weak var mps803DropView: RomDropView!
+    @IBOutlet weak var mps803Title: NSTextField!
+    @IBOutlet weak var mps803Subtitle: NSTextField!
+    @IBOutlet weak var mps803Subsubtitle: NSTextField!
+    @IBOutlet weak var mps803DeleteButton: NSButton!
+
     @IBOutlet weak var romLockText: NSTextField!
     @IBOutlet weak var romLockSubText: NSTextField!
 
@@ -49,6 +55,7 @@ class RomSettingsViewController: SettingsViewController {
         kernalDropView.parent = self
         charDropView.parent = self
         vc1541DropView.parent = self
+        mps803DropView.parent = self
     }
 
     override func refresh() {
@@ -61,6 +68,7 @@ class RomSettingsViewController: SettingsViewController {
         let charRom = emu.c64.charRom
         let kernalRom = emu.c64.kernalRom
         let vc1541Rom = emu.c64.vc1541Rom
+        let mps803Rom = emu.c64.mps803Rom
 
         let poweredOff         = emu.poweredOff
 
@@ -87,6 +95,11 @@ class RomSettingsViewController: SettingsViewController {
         let hasUnknownVC1541   = vc1541Rom.vendor == .UNKNOWN && hasVC1541
         let hasPatchedVC1541   = vc1541Rom.patched
 
+        let hasMps803          = mps803Rom.crc != 0
+        let hasCommodoreMps803 = mps803Rom.vendor == .COMMODORE
+        let hasUnknownMps803   = mps803Rom.vendor == .UNKNOWN && hasMps803
+        let hasPatchedMps803   = mps803Rom.patched
+
         let romMissing = NSImage(named: "rom_missing")
         let romOrig    = NSImage(named: "rom_original")
         let romMega    = NSImage(named: "rom_mega65")
@@ -103,6 +116,8 @@ class RomSettingsViewController: SettingsViewController {
         kernalDeleteButton.isEnabled = poweredOff
         vc1541DropView.isEnabled = poweredOff
         vc1541DeleteButton.isEnabled = poweredOff
+        mps803DropView.isEnabled = poweredOff
+        mps803DeleteButton.isEnabled = poweredOff
 
         // Icons
         basicDropView.image =
@@ -128,6 +143,11 @@ class RomSettingsViewController: SettingsViewController {
         hasPatchedVC1541   ? romPatched :
         hasVC1541          ? romUnknown : romMissing
 
+        mps803DropView.image =
+        hasCommodoreMps803 ? romOrig :
+        hasPatchedMps803   ? romPatched :
+        hasMps803          ? romUnknown : romMissing
+
         // Titles and subtitles
         basicTitle.stringValue = hasBasic ? String(cString: basicRom.title) : "Basic Rom"
         basicSubtitle.stringValue = hasBasic ? String(cString: basicRom.subtitle) : "Required"
@@ -149,15 +169,21 @@ class RomSettingsViewController: SettingsViewController {
         vc1541Subsubtitle.stringValue = String(cString: vc1541Rom.revision)
         if hasUnknownVC1541 { vc1541Subtitle.stringValue = "\(String(format: "%0lx", vc1541Rom.fnv))" }
 
+        mps803Title.stringValue = hasMps803 ? String(cString: mps803Rom.title) : "MPS-803 Rom"
+        mps803Subtitle.stringValue = hasMps803 ? String(cString: mps803Rom.subtitle) : "Optional"
+        mps803Subsubtitle.stringValue = String(cString: mps803Rom.revision)
+        if hasUnknownMps803 { mps803Subtitle.stringValue = "\(String(format: "%0lx", mps803Rom.fnv))" }
+
         // Hide some controls
         basicDeleteButton.isHidden = !hasBasic
         charDeleteButton.isHidden = !hasChar
         kernalDeleteButton.isHidden = !hasKernal
         vc1541DeleteButton.isHidden = !hasVC1541
+        mps803DeleteButton.isHidden = !hasMps803
 
         // Lock symbol and explanation
         if poweredOff {
-            romLockText.stringValue = "To add a Rom, drag a Rom image file onto one of the four chip icons."
+            romLockText.stringValue = "To add a Rom, drag a Rom image file onto one of the chip icons."
             romLockSubText.stringValue = "Original Roms are protected by copyright. Please obey legal regulations."
         } else {
             romLockText.stringValue = "The settings are locked because the emulator is running."
@@ -205,6 +231,16 @@ class RomSettingsViewController: SettingsViewController {
 
             emu.powerOff()
             emu.delete(.VC1541)
+            refresh()
+        }
+    }
+
+    @IBAction func romDeleteMps803Action(_ sender: Any!) {
+
+        if let emu = emu {
+
+            emu.powerOff()
+            emu.delete(.MPS803)
             refresh()
         }
     }

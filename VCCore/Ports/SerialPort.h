@@ -52,6 +52,10 @@ public:
     bool ciaAtn;
     bool ciaClock;
     bool ciaData;
+
+    // Bus driving values from the printer
+    bool prtClock;
+    bool prtData;
     
 private:
 
@@ -83,6 +87,8 @@ public:
         CLONE(ciaAtn)
         CLONE(ciaClock)
         CLONE(ciaData)
+        CLONE(prtClock)
+        CLONE(prtData)
         CLONE(stats)
 
         return *this;
@@ -112,6 +118,8 @@ public:
         << ciaAtn
         << ciaClock
         << ciaData
+        << prtClock
+        << prtData
         << stats.idle;
 
     } SERIALIZERS(serialize);

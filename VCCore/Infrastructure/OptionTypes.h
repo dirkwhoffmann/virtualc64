@@ -164,6 +164,10 @@ enum class Opt : long
     DAT_MODEL,              ///< Datasette model
     DAT_CONNECT,            ///< Connection status
 
+    // Printer
+    PRT_CONNECTED,          ///< Printer is attached to the IEC bus
+    PRT_DEVICE_NUM,         ///< Printer device number
+
     // Mouse
     MOUSE_MODEL,            ///< Mouse model
     MOUSE_SHAKE_DETECT,     ///< Detect a shaking mouse
@@ -326,6 +330,9 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::DAT_MODEL:             return "DAT.MODEL";
             case Opt::DAT_CONNECT:           return "DAT.CONNECT";
 
+            case Opt::PRT_CONNECTED:         return "PRT.CONNECTED";
+            case Opt::PRT_DEVICE_NUM:        return "PRT.DEVICE_NUM";
+
             case Opt::MOUSE_MODEL:           return "MOUSE.MODEL";
             case Opt::MOUSE_SHAKE_DETECT:    return "MOUSE.SHAKE_DETECTION";
             case Opt::MOUSE_VELOCITY:        return "MOUSE.VELOCITY";
@@ -477,6 +484,9 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
 
             case Opt::DAT_MODEL:             return "Datasette model";
             case Opt::DAT_CONNECT:           return "Datasette connected";
+
+            case Opt::PRT_CONNECTED:         return "Printer connected";
+            case Opt::PRT_DEVICE_NUM:        return "Printer device number";
 
             case Opt::MOUSE_MODEL:           return "Mouse model";
             case Opt::MOUSE_SHAKE_DETECT:    return "Detect a shaked mouse";
