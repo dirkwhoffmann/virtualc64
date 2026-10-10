@@ -13,6 +13,8 @@
 #include "vcconfig.h"
 #include "VideoPort.h"
 #include "VICII.h"
+#include "Host.h"
+#include "utl/gfx/Images.h"
 
 namespace vc64 {
 
@@ -131,6 +133,46 @@ VideoPort::getXrayTexture(isize offset) const
 
         return blank;
     }
+}
+
+void
+VideoPort::saveTexture(const fs::path &path, isize offset) const
+{
+    savePNG(getTexture(offset), path, 0, Texture::width, 0, Texture::height);
+}
+
+void
+VideoPort::saveTexture(const fs::path &path, isize x1, isize x2, isize y1, isize y2,
+                       isize offset) const
+{
+    savePNG(getTexture(offset), path, x1, x2, y1, y2);
+}
+
+void
+VideoPort::saveXrayTexture(const fs::path &path, isize offset) const
+{
+    savePNG(getXrayTexture(offset), path, 0, Texture::width, 0, Texture::height);
+}
+
+void
+VideoPort::saveXrayTexture(const fs::path &path, isize x1, isize x2, isize y1, isize y2,
+                           isize offset) const
+{
+    savePNG(getXrayTexture(offset), path, x1, x2, y1, y2);
+}
+
+void
+VideoPort::savePNG(const Texture &texture, const fs::path &path,
+                   isize x1, isize x2, isize y1, isize y2) const
+{
+    constexpr isize stride = Texture::width;
+
+    if (x1 < 0 || x2 > stride || x1 >= x2 || y1 < 0 || y2 > Texture::height || y1 >= y2)
+        throw utl::Error(0, "Invalid texture cutout");
+
+    auto format = static_cast<utl::TexelFormat>(host.getConfig().texFormat);
+
+    utl::exportPNG(path, texture.pixels.ptr + y1 * stride + x1, x2 - x1, y2 - y1, stride, 1, format);
 }
 
 void

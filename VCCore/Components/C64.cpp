@@ -701,6 +701,8 @@ C64::update(CmdQueue &queue)
                 case Cmd::ALARM_ABS:
                 case Cmd::ALARM_REL:
                 case Cmd::INSPECTION_TARGET:
+                case Cmd::SAVE_WORKSPACE:
+                case Cmd::SAVE_SNAPSHOT:
 
                     processCommand(cmd);
                     break;
@@ -1232,6 +1234,33 @@ C64::processCommand(const Command &cmd)
             setAutoInspectionMask(cmd.value);
             break;
 
+        case Cmd::SAVE_WORKSPACE:
+        case Cmd::SAVE_SNAPSHOT:
+        {
+            /* Both functions report success to the GUI themselves. Since
+             * nobody is waiting for an exception here, a failure is reported
+             * with the same message, carrying an error code and a description.
+             */
+            auto msg = cmd.type == Cmd::SAVE_WORKSPACE ? Msg::WORKSPACE_SAVED : Msg::SNAPSHOT_SAVED;
+
+            try {
+
+                if (cmd.type == Cmd::SAVE_WORKSPACE) {
+                    saveWorkspace(cmd.str);
+                } else {
+                    saveSnapshot(cmd.str, Compressor(cmd.value));
+                }
+
+            } catch (const std::exception &e) {
+
+                // A failure must never be reported as code 0 (success)
+                auto *error = dynamic_cast<const utl::Error *>(&e);
+                i64 code = error && error->fault() != 0 ? error->fault() : -1;
+                msgQueue.put(msg, code, 0, e.what());
+            }
+            break;
+        }
+
         case Cmd::HARD_RESET:
             
             emulator.hardReset();
@@ -1663,6 +1692,9 @@ void
 C64::saveSnapshot(const fs::path &path, Compressor compressor)
 {
     Snapshot(*this, compressor).writeToFile(path);
+
+    // Inform the GUI
+    msgQueue.put(Msg::SNAPSHOT_SAVED);
 }
 
 void

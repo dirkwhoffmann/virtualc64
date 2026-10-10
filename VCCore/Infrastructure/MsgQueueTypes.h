@@ -106,10 +106,11 @@ enum class Msg : long
     // Snapshots
     SNAPSHOT_TAKEN,     ///< A snapshot has been taken
     SNAPSHOT_RESTORED,  ///< A snapshot has been restored
+    SNAPSHOT_SAVED,     ///< A snapshot has been saved (value: error code, str: error description)
 
     // Workspaces
     WORKSPACE_LOADED,   ///< A workspace has been loaded
-    WORKSPACE_SAVED,    ///< A workspace has been saved
+    WORKSPACE_SAVED,    ///< A workspace has been saved (value: error code, str: error description)
 
     // Debugging
     DMA_DEBUG,          ///< The DMA debugger has been started or stopped
@@ -205,6 +206,7 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
 
             case Msg::SNAPSHOT_TAKEN:        return "SNAPSHOT_TAKEN";
             case Msg::SNAPSHOT_RESTORED:     return "SNAPSHOT_RESTORED";
+            case Msg::SNAPSHOT_SAVED:        return "SNAPSHOT_SAVED";
 
             case Msg::WORKSPACE_LOADED:      return "WORKSPACE_LOADED";
             case Msg::WORKSPACE_SAVED:       return "WORKSPACE_SAVED";

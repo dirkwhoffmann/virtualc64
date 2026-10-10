@@ -16,14 +16,17 @@
 namespace vc64 {
 
 void
-CmdQueue::put(const Command &cmd)
+CmdQueue::put(const Command &cmd, const string &str)
 {
     {   SYNCHRONIZED
 
         logmsg(LOG_CMD, "%s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
 
         if (!queue.isFull()) {
+            auto w = queue.end();
             queue.write(cmd);
+            attachments[w] = str;
+            queue.elements[w].str = attachments[w].c_str();
         } else {
             logmsg(LOG_WARN, "Command lost: %s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
         }

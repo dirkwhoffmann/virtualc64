@@ -500,6 +500,9 @@ extension MyController {
             refreshStatusBar()
             hideOrShowDriveMenus()
             
+        case .SNAPSHOT_SAVED:
+            break
+
         case .WORKSPACE_SAVED, .WORKSPACE_LOADED:
             break
             

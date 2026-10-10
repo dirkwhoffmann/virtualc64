@@ -45,6 +45,8 @@ enum class Cmd : long
     ALARM_ABS,              ///< Schedule an alarm (absolute cycle)
     ALARM_REL,              ///< Schedule an alarm (relative cycle)
     INSPECTION_TARGET,      ///< Sets the auto-inspection mask
+    SAVE_WORKSPACE,         ///< Save the workspace to a folder (path attached)
+    SAVE_SNAPSHOT,          ///< Save a snapshot to a file (path attached, value = compressor)
     
     // CPU
     CPU_BRK,                ///< Let the CPU execute a BRK instruction
@@ -141,6 +143,8 @@ struct CmdEnum : Reflectable<CmdEnum, Cmd> {
             case Cmd::ALARM_ABS:             return "ALARM_ABS";
             case Cmd::ALARM_REL:             return "ALARM_REL";
             case Cmd::INSPECTION_TARGET:     return "INSPECTION_TARGET";
+            case Cmd::SAVE_WORKSPACE:        return "SAVE_WORKSPACE";
+            case Cmd::SAVE_SNAPSHOT:         return "SAVE_SNAPSHOT";
 
             case Cmd::CPU_BRK:               return "CPU_BRK";
             case Cmd::CPU_NMI:               return "CPU_NMI";
@@ -275,6 +279,12 @@ struct Command
         KeyCmd key;
         TapeCmd tape;
     };
+
+    /* Attached string (may be null). Set by the command queue when a string
+     * is attached to the command. The string is owned by the queue and stays
+     * valid until the queue has recycled the slot it lives in.
+     */
+    const char *str = nullptr;
 
     Command() { }
     Command(Cmd type, i64 v1 = 0, i64 v2 = 0) : type(type), value(v1), value2(v2) { }

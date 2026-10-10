@@ -187,7 +187,8 @@ public:
 public:
 
     // Feeds a command into the command queue
-    void put(const Command &cmd);
+    void put(const Command &cmd, const string &str = "");
+    void put(Cmd type, const string &str) { put(Command(type), str); }
     void put(Cmd type, i64 payload) { put (Command(type, payload)); }
     void put(Cmd type, AlarmCmd payload) { put(Command(type, payload)); }
     void put(Cmd type, ConfigCmd payload) { put(Command(type, payload)); }
