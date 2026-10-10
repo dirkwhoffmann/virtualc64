@@ -193,14 +193,7 @@ Snapshot::compress(Compressor compressor)
 
         {   auto watch = utl::StopWatch(LOG_SNP != LOG_OFF, "");
             
-            switch (compressor) {
-                    
-                case Compressor::NONE:  break;
-                case Compressor::GZIP:  data.gzip(sizeof(SnapshotHeader)); break;
-                case Compressor::LZ4:   data.lz4 (sizeof(SnapshotHeader)); break;
-                case Compressor::RLE2:  data.rle2(sizeof(SnapshotHeader)); break;
-                case Compressor::RLE3:  data.rle3(sizeof(SnapshotHeader)); break;
-            }
+            data.compress(compressor, sizeof(SnapshotHeader));
             
             getHeader()->compressor = u8(compressor);
         }
@@ -232,14 +225,7 @@ Snapshot::uncompress()
         
         {   auto watch = utl::StopWatch(LOG_SNP != LOG_OFF, "");
         
-            switch (compressor()) {
-                    
-                case Compressor::NONE:  break;
-                case Compressor::GZIP:  data.gunzip(sizeof(SnapshotHeader), expectedSize); break;
-                case Compressor::LZ4:   data.unlz4 (sizeof(SnapshotHeader), expectedSize); break;
-                case Compressor::RLE2:  data.unrle2(sizeof(SnapshotHeader), expectedSize); break;
-                case Compressor::RLE3:  data.unrle3(sizeof(SnapshotHeader), expectedSize); break;
-            }
+            data.uncompress(compressor(), sizeof(SnapshotHeader), expectedSize);
             
             getHeader()->compressor = u8(Compressor::NONE);
         }

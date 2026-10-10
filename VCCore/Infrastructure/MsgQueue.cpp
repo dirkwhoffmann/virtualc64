@@ -24,10 +24,13 @@ MsgQueue::setListener(const void *listener, Callback *callback)
         this->callback = callback;
 
         // Send all pending messages
-        while (!queue.isEmpty()) {
+        if (callback) {
 
-            Message &msg = queue.read();
-            callback(listener, msg);
+            while (!queue.isEmpty()) {
+
+                Message &msg = queue.read();
+                callback(listener, msg);
+            }
         }
     }
 }

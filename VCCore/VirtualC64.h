@@ -1556,6 +1556,16 @@ struct VirtualC64 : public API {
      */
     void launch(const void *listener = nullptr, Callback *func = nullptr);
 
+    /** @brief  Stops delivering messages to the registered listener
+     *
+     *  The emulator outlives its client whenever the client is a stack or
+     *  static object torn down at exit: the core keeps running, keeps
+     *  posting, and calls into whatever the listener pointer used to be.
+     *  Call this before the client becomes unusable. It is synchronised
+     *  against message delivery, so it is safe while the emulator runs.
+     */
+    void removeListener();
+
     /* @brief  Registers a message receiver callback.
      *
      * If launch has been called without a listener and callback pointer,

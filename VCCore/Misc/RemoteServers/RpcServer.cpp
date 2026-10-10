@@ -110,17 +110,18 @@ RpcServer::process(const string &payload, bool blocking)
         if (!request.contains("method")) {
             throw AppException(RPC::INVALID_REQUEST, "Missing 'method'");
         }
-        if (!request.contains("params")) {
-            throw AppException(RPC::INVALID_REQUEST, "Missing 'params'");
-        }
         if (!request["method"].is_string()) {
             throw AppException(RPC::INVALID_PARAMS, "'method' must be a string");
         }
-        if (!request["params"].is_string()) {
-            throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
-        }
 
         if (request["method"] == "retroshell") {
+
+            if (!request.contains("params")) {
+                throw AppException(RPC::INVALID_REQUEST, "Missing 'params'");
+            }
+            if (!request["params"].is_string()) {
+                throw AppException(RPC::INVALID_PARAMS, "'params' must be a string");
+            }
 
             if (blocking) {
                 return execBlocking(request["params"], request.value("id", 0));

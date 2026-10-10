@@ -139,7 +139,7 @@ DapServer::reply(const string &payload)
     std::stringstream ss;
 
     ss << "Content-Length: " << payload.size() << "\r\n\r\n" << payload;
-    printf("T: %s\n", utl::makePrintable(payload).c_str());
+    // printf("T: %s\n", utl::makePrintable(payload).c_str());
 
     *this << ss.str();
 }
