@@ -205,9 +205,10 @@ FloppyDisk::init(FSFormat type, const PETName<16> &name, const fs::path& content
                     
                     u8 buf[256];
                     retro::vault::BlockDevice::readBlock(span<u8>(buf, sizeof(buf)), b);
-                    
+
+                    auto view = d64.byteView(b * 256, 256);
                     for (isize i = 0; i < 256; ++i)
-                        assert(d64.data.ptr[b * 256 + i] == buf[i]);
+                        assert(view[i] == buf[i]);
                     
                 } catch (const Error &err) {
                     
@@ -725,7 +726,7 @@ FloppyDisk::writeToFile(const fs::path& path, ImageFormat fmt)
 {
     switch (fmt) {
 
-        case ImageFormat::D64: Codec::makeD64(*this)->writeToFile(path); break;
+        case ImageFormat::D64: Codec::makeD64(*this)->copy(path); break;
 
         default:
             throw IOError(IOError::FILE_TYPE_UNSUPPORTED);

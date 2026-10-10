@@ -50,6 +50,7 @@ struct DeviceError : public utl::Error {
     static constexpr long HDR_CORRUPTED_FSH             = 39;
     static constexpr long HDR_CORRUPTED_LSEG            = 40;
     static constexpr long HDR_UNSUPPORTED               = 41;
+    static constexpr long HDR_TOO_LARGE_FOR_MEM         = 42;
 
     const char *errstr() const noexcept override {
 
@@ -88,6 +89,7 @@ struct DeviceError : public utl::Error {
             case HDR_CORRUPTED_FSH:           return "HDR_CORRUPTED_FSH";
             case HDR_CORRUPTED_LSEG:          return "HDR_CORRUPTED_LSEG";
             case HDR_UNSUPPORTED:             return "HDR_UNSUPPORTED";
+            case HDR_TOO_LARGE_FOR_MEM:       return "HDR_TOO_LARGE_FOR_MEM";
 
             default:
                 return "???";

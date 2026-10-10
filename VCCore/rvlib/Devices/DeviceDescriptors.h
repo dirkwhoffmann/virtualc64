@@ -17,13 +17,15 @@ namespace retro::vault {
 
 struct GeometryDescriptor : utl::Streamable {
 
-    // Constants
-    static constexpr isize cMin = HDR_C_MIN;
+    // The largest geometry a drive may have (see checkCompatibility)
     static constexpr isize cMax = HDR_C_MAX;
-    static constexpr isize hMin = HDR_H_MIN;
     static constexpr isize hMax = HDR_H_MAX;
-    static constexpr isize sMin = HDR_S_MIN;
     static constexpr isize sMax = HDR_S_MAX;
+
+    // The smallest geometry worth proposing (see driveGeometries)
+    static constexpr isize cMin = HDR_C_MIN;
+    static constexpr isize hMin = HDR_H_MIN;
+    static constexpr isize sMin = HDR_S_MIN;
     
     // Disk geometry (CHS)
     isize cylinders = 0;
@@ -76,8 +78,22 @@ struct GeometryDescriptor : utl::Streamable {
     void dump() const;
     void dump(std::ostream &os) const;
 
-    // Throws an exception if inconsistent or unsupported values are present
-    void checkCompatibility() const;
+    /* Throws if this geometry cannot describe a usable drive.
+     *
+     * Two layers, checked in this order:
+     *
+     * 1. The geometry itself. Cylinders, heads and sectors have to fit the
+     *    CHS fields they pass through (cMax, hMax, sMax), and a block has to
+     *    be 512 bytes. These limits belong to the hardware being emulated
+     *    and are the same for every drive.
+     *
+     * 2. The capacity. 'mbLimit' caps it in MB; 0 imposes no cap. This limit
+     *    belongs to the controller a drive is attached to, not to the
+     *    geometry itself, so it has to come from the caller. 504 MB is the
+     *    classic value -- what a controller addressing 1024 cylinders with
+     *    16 heads and 63 sectors can reach.
+     */
+    void checkCompatibility(isize mbLimit = 0) const;
 };
 
 struct PartitionDescriptor : utl::Streamable

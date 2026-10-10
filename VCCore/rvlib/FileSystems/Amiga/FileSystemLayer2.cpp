@@ -28,10 +28,19 @@ FileSystem::format(FSFormat dos) {
     cache.modify(0).init(FSBlockType::BOOT);
     cache.modify(1).init(FSBlockType::BOOT);
 
-    // Wipe out all other blocks
-    for (isize i = 2; i < traits.blocks; i++) {
-        (*this)[i].mutate().init(FSBlockType::EMPTY);
-    }
+    /* Note: the other blocks are deliberately left alone.
+     *
+     * This used to walk every block and init() it as EMPTY, which wiped
+     * nothing -- init() returns at once for EMPTY without touching the data
+     * -- but did read the whole drive into the block cache and mark it
+     * dirty, so the next flush wrote the whole drive back unchanged. What
+     * the walk really achieved was the type EMPTY on every cached block, for
+     * the benefit of the allocation loop below, and that loop no longer asks.
+     *
+     * A block the cache has never seen counts as EMPTY anyway (see
+     * FSCache::getType), so nothing else changes: an unallocated block holds
+     * whatever it held before, as it did before.
+     */
 
     // Create the root block
     (*this)[rootBlock].mutate().init(FSBlockType::ROOT);
@@ -56,11 +65,17 @@ FileSystem::format(FSFormat dos) {
     // Add all bitmap block references
     (*this)[rootBlock].mutate().addBitmapBlockRefs(bmBlocks);
 
-    // Mark free blocks as free in the bitmap block
-    // TODO: SPEED THIS UP
-    for (isize i = 0; i < blocks(); i++) {
-        if (cache.isEmpty(BlockNr(i))) allocator.markAsFree(BlockNr(i));
-    }
+    /* Mark every block free, then take back the ones in use.
+     *
+     * The blocks a fresh file system occupies are these few and no others,
+     * so saying it this way round costs one pass over the bitmap instead of
+     * a bitmap lookup per block of the drive. Blocks 0 and 1 are not in the
+     * map at all -- they are always allocated.
+     */
+    allocator.markAsFree(BlockNr(2), BlockNr(blocks() - 1));
+    allocator.markAsAllocated(rootBlock);
+    for (auto &ref : bmBlocks) { allocator.markAsAllocated(ref); }
+    for (auto &ref : bmExtBlocks) { allocator.markAsAllocated(ref); }
 
     // Rectify checksums
     fetch(0).mutate().updateChecksum();
@@ -171,6 +186,7 @@ FileSystem::mkdir(BlockNr at, const FSName &name)
     auto udb = newUserDirBlock(name);
     fetch(udb).mutate().setParentDirRef(at);
     addToHashTable(at, udb);
+    fetch(udb).mutate().updateChecksum();
 
     return udb;
 }
@@ -307,6 +323,7 @@ FileSystem::createFile(BlockNr at, const FSName &name)
     try {
 
         link(at, fhb);
+        fetch(fhb).mutate().updateChecksum();
         return fhb;
 
     } catch(...) {
@@ -640,9 +657,10 @@ FileSystem::collect(const BlockNr nr, BlockIterator succ) const
 std::vector<const FSBlock *>
 FileSystem::collectDataBlocks(const FSBlock &node) const
 {
-    // Gather all blocks containing data block references
+    // Gather all blocks containing data block references (file header first,
+    // followed by the extension blocks in chain order)
     auto blocks = collectListBlocks(node);
-    blocks.push_back(&node);
+    blocks.insert(blocks.begin(), &node);
 
     // Setup the result vector
     std::vector<const FSBlock *> result;

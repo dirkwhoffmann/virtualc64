@@ -15,7 +15,6 @@
 #include "Emulator.h"
 #include "Option.h"
 #include "Script.h"
-#include "RomDatabase.h"
 #include "OpenRoms.h"
 #include "utl/abilities/Hashable.h"
 #include "utl/chrono.h"
@@ -1028,15 +1027,15 @@ C64::fastForward(isize frames)
 void
 C64::_isReady() const
 {
-    bool mega = hasMega65Rom(RomType::BASIC) && hasMega65Rom(RomType::KERNAL);
+    bool mega = hasMega65Rom(RomType::C64_BASIC) && hasMega65Rom(RomType::C64_KERNAL);
     
-    if (!hasRom(RomType::BASIC)) {
+    if (!hasRom(RomType::C64_BASIC)) {
         throw CoreError(CoreError::ROM_BASIC_MISSING);
     }
-    if (!hasRom(RomType::CHAR)) {
+    if (!hasRom(RomType::C64_CHAR)) {
         throw CoreError(CoreError::ROM_CHAR_MISSING);
     }
-    if (!hasRom(RomType::KERNAL) || ROM_MISSING) {
+    if (!hasRom(RomType::C64_KERNAL) || ROM_MISSING) {
         throw CoreError(CoreError::ROM_KERNAL_MISSING);
     }
     if (MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
@@ -1588,10 +1587,10 @@ C64::saveWorkspace(const fs::path &path)
 
     // Export ROMs
     ss << "\n# ROMs\n\n";
-    exportRom(RomType::BASIC, "basic.rom");
-    exportRom(RomType::KERNAL, "kernal.rom");
-    exportRom(RomType::CHAR, "char.rom");
-    exportRom(RomType::VC1541, "vc1541.rom");
+    exportRom(RomType::C64_BASIC, "basic.rom");
+    exportRom(RomType::C64_KERNAL, "kernal.rom");
+    exportRom(RomType::C64_CHAR, "char.rom");
+    exportRom(RomType::C64_VC1541, "vc1541.rom");
 
     // Export media
     ss << "\n# Floppy disks\n\n";
@@ -1735,13 +1734,13 @@ RomTraits
 C64::getRomTraits(u64 fnv)
 {
     // Crawl through the Rom database
-    for (auto &traits : roms) if (traits.fnv == fnv) return traits;
+    if (auto traits = RomManager::shared().resolveFNV64(fnv)) return *traits;
 
     return RomTraits {
         .title = "Unknown ROM",
-        .subtitle = "",
         .revision = "",
-        .vendor = RomVendor::UNKNOWN
+        .vendor = RomVendor::UNKNOWN,
+        .type = RomType::UNKNOWN
     };
 }
 
@@ -1757,24 +1756,22 @@ C64::getRomTraits(RomType type) const
 
         result.title = "M.E.G.A. C64 OpenROM";
         result.vendor = RomVendor::MEGA65;
-        result.patched = false;
+        result.flags = 0;
+        result.platform = RomPlatform::C64;
 
         switch (type) {
 
-            case RomType::BASIC:
+            case RomType::C64_BASIC:
 
-                result.subtitle = "Free Basic Replacement";
-                result.revision =  mega65BasicRev();
+                result.revision = mega65BasicRev();
                 break;
 
-            case RomType::CHAR:
+            case RomType::C64_CHAR:
 
-                result.subtitle = "Free Charset Replacement";
                 break;
 
-            case RomType::KERNAL:
+            case RomType::C64_KERNAL:
 
-                result.subtitle = "Free Kernal Replacement";
                 result.revision = mega65KernalRev();
                 break;
 
@@ -1793,10 +1790,10 @@ C64::romCRC32(RomType type) const
     
     switch (type) {
             
-        case RomType::BASIC:  return utl::Hashable::crc32(mem.rom + 0xA000, 0x2000);
-        case RomType::CHAR:   return utl::Hashable::crc32(mem.rom + 0xD000, 0x1000);
-        case RomType::KERNAL: return utl::Hashable::crc32(mem.rom + 0xE000, 0x2000);
-        case RomType::VC1541: return drive8.mem.romCRC32();
+        case RomType::C64_BASIC:  return utl::Hashable::crc32(mem.rom + 0xA000, 0x2000);
+        case RomType::C64_CHAR:   return utl::Hashable::crc32(mem.rom + 0xD000, 0x1000);
+        case RomType::C64_KERNAL: return utl::Hashable::crc32(mem.rom + 0xE000, 0x2000);
+        case RomType::C64_VC1541: return drive8.mem.romCRC32();
 
         default:
             fatalError;
@@ -1810,10 +1807,10 @@ C64::romFNV64(RomType type) const
     
     switch (type) {
             
-        case RomType::BASIC:  return utl::Hashable::fnv64(mem.rom + 0xA000, 0x2000);
-        case RomType::CHAR:   return utl::Hashable::fnv64(mem.rom + 0xD000, 0x1000);
-        case RomType::KERNAL: return utl::Hashable::fnv64(mem.rom + 0xE000, 0x2000);
-        case RomType::VC1541: return drive8.mem.romFNV64();
+        case RomType::C64_BASIC:  return utl::Hashable::fnv64(mem.rom + 0xA000, 0x2000);
+        case RomType::C64_CHAR:   return utl::Hashable::fnv64(mem.rom + 0xD000, 0x1000);
+        case RomType::C64_KERNAL: return utl::Hashable::fnv64(mem.rom + 0xE000, 0x2000);
+        case RomType::C64_VC1541: return drive8.mem.romFNV64();
 
         default:
             fatalError;
@@ -1825,19 +1822,19 @@ C64::hasRom(RomType type) const
 {
     switch (type) {
             
-        case RomType::BASIC:
+        case RomType::C64_BASIC:
 
             return (mem.rom[0xA000] | mem.rom[0xA001]) != 0x00;
 
-        case RomType::CHAR:
+        case RomType::C64_CHAR:
 
             return (mem.rom[0xD000] | mem.rom[0xD001]) != 0x00;
 
-        case RomType::KERNAL:
+        case RomType::C64_KERNAL:
 
             return (mem.rom[0xE000] | mem.rom[0xE001]) != 0x00;
 
-        case RomType::VC1541:
+        case RomType::C64_VC1541:
 
             assert(drive8.mem.hasRom() == drive9.mem.hasRom());
             return drive8.mem.hasRom();
@@ -1852,19 +1849,19 @@ C64::hasMega65Rom(RomType type) const
 {
     switch (type) {
             
-        case RomType::BASIC:
+        case RomType::C64_BASIC:
 
             return mem.rom[0xBF52] == 'O' && mem.rom[0xBF53] == 'R';
 
-        case RomType::CHAR:
+        case RomType::C64_CHAR:
 
-            return getRomTraits(romFNV64(RomType::CHAR)).vendor == RomVendor::MEGA65;
+            return getRomTraits(romFNV64(RomType::C64_CHAR)).vendor == RomVendor::MEGA65;
 
-        case RomType::KERNAL:
+        case RomType::C64_KERNAL:
 
             return mem.rom[0xE4B9] == 'O' && mem.rom[0xE4BA] == 'R';
 
-        case RomType::VC1541:
+        case RomType::C64_VC1541:
 
             return false;
 
@@ -1879,7 +1876,7 @@ C64::mega65BasicRev() const
     static char rev[17];
     rev[0] = 0;
     
-    if (hasMega65Rom(RomType::BASIC)) std::memcpy(rev, &mem.rom[0xBF55], 16);
+    if (hasMega65Rom(RomType::C64_BASIC)) std::memcpy(rev, &mem.rom[0xBF55], 16);
     rev[16] = 0;
     
     return rev;
@@ -1891,7 +1888,7 @@ C64::mega65KernalRev() const
     static char rev[17];
     rev[0] = 0;
     
-    if (hasMega65Rom(RomType::KERNAL)) std::memcpy(rev, &mem.rom[0xE4BC], 16);
+    if (hasMega65Rom(RomType::C64_KERNAL)) std::memcpy(rev, &mem.rom[0xE4BC], 16);
     rev[16] = 0;
     
     return rev;
@@ -1915,10 +1912,10 @@ C64::loadRom(const fs::path &path, RomType type)
 {
     RomFile file(path);
 
-    if ((file.type() == FileType::BASIC_ROM  && type == RomType::BASIC)  ||
-        (file.type() == FileType::CHAR_ROM   && type == RomType::CHAR)   ||
-        (file.type() == FileType::KERNAL_ROM && type == RomType::KERNAL) ||
-        (file.type() == FileType::VC1541_ROM && type == RomType::VC1541)) {
+    if ((file.type() == FileType::BASIC_ROM  && type == RomType::C64_BASIC)  ||
+        (file.type() == FileType::CHAR_ROM   && type == RomType::C64_CHAR)   ||
+        (file.type() == FileType::KERNAL_ROM && type == RomType::C64_KERNAL) ||
+        (file.type() == FileType::VC1541_ROM && type == RomType::C64_VC1541)) {
         
         loadRom(file);
         return;
@@ -1936,7 +1933,7 @@ C64::loadRom(const RomFile &file)
             
             file.flash(mem.rom, 0xA000);
             logmsg(LOG_MEM, "Basic Rom flashed\n");
-            logmsg(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::BASIC));
+            logmsg(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::C64_BASIC));
             logmsg(LOG_MEM, "mega65BasicRev() = %s\n", mega65BasicRev());
             break;
             
@@ -1950,7 +1947,7 @@ C64::loadRom(const RomFile &file)
             
             file.flash(mem.rom, 0xE000);
             logmsg(LOG_MEM, "Kernal Rom flashed\n");
-            logmsg(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::KERNAL));
+            logmsg(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::C64_KERNAL));
             logmsg(LOG_MEM, "mega65KernalRev() = %s\n", mega65KernalRev());
             break;
             
@@ -1972,22 +1969,22 @@ C64::deleteRom(RomType type)
 {
     switch (type) {
             
-        case RomType::BASIC:
+        case RomType::C64_BASIC:
             
             memset(mem.rom + 0xA000, 0, 0x2000);
             break;
             
-        case RomType::CHAR:
+        case RomType::C64_CHAR:
             
             memset(mem.rom + 0xD000, 0, 0x1000);
             break;
             
-        case RomType::KERNAL:
+        case RomType::C64_KERNAL:
             
             memset(mem.rom + 0xE000, 0, 0x2000);
             break;
             
-        case RomType::VC1541:
+        case RomType::C64_VC1541:
             
             drive8.mem.deleteRom();
             drive9.mem.deleteRom();
@@ -2001,10 +1998,10 @@ C64::deleteRom(RomType type)
 void 
 C64::deleteRoms()
 {
-    deleteRom(RomType::BASIC);
-    deleteRom(RomType::KERNAL);
-    deleteRom(RomType::CHAR);
-    deleteRom(RomType::VC1541);
+    deleteRom(RomType::C64_BASIC);
+    deleteRom(RomType::C64_KERNAL);
+    deleteRom(RomType::C64_CHAR);
+    deleteRom(RomType::C64_VC1541);
 }
 
 void
@@ -2012,33 +2009,33 @@ C64::saveRom(RomType type, const fs::path &path)
 {
     switch (type) {
             
-        case RomType::BASIC:
+        case RomType::C64_BASIC:
 
-            if (hasRom(RomType::BASIC)) {
+            if (hasRom(RomType::C64_BASIC)) {
                 RomFile file(mem.rom + 0xA000, 0x2000);
                 file.writeToFile(path);
             }
             break;
 
-        case RomType::CHAR:
+        case RomType::C64_CHAR:
 
-            if (hasRom(RomType::CHAR)) {
+            if (hasRom(RomType::C64_CHAR)) {
                 RomFile file(mem.rom + 0xD000, 0x1000);
                 file.writeToFile(path);
             }
             break;
 
-        case RomType::KERNAL:
+        case RomType::C64_KERNAL:
 
-            if (hasRom(RomType::KERNAL)) {
+            if (hasRom(RomType::C64_KERNAL)) {
                 RomFile file(mem.rom + 0xE000, 0x2000);
                 file.writeToFile(path);
             }
             break;
 
-        case RomType::VC1541:
+        case RomType::C64_VC1541:
 
-            if (hasRom(RomType::VC1541)) {
+            if (hasRom(RomType::C64_VC1541)) {
                 drive8.mem.saveRom(path);
             }
             break;
@@ -2051,9 +2048,9 @@ C64::saveRom(RomType type, const fs::path &path)
 void 
 C64::installOpenRoms()
 {
-    installOpenRom(RomType::BASIC);
-    installOpenRom(RomType::KERNAL);
-    installOpenRom(RomType::CHAR);
+    installOpenRom(RomType::C64_BASIC);
+    installOpenRom(RomType::C64_KERNAL);
+    installOpenRom(RomType::C64_CHAR);
 }
 
 void
@@ -2061,19 +2058,19 @@ C64::installOpenRom(RomType type)
 {
     switch (type) {
             
-        case RomType::BASIC:
+        case RomType::C64_BASIC:
             
             assert(sizeof(basic_generic) == 0x2000);
             memcpy(mem.rom + 0xA000, basic_generic, 0x2000);
             break;
             
-        case RomType::CHAR:
+        case RomType::C64_CHAR:
             
             assert(sizeof(chargen_openroms) == 0x1000);
             memcpy(mem.rom + 0xD000, chargen_openroms, 0x1000);
             break;
             
-        case RomType::KERNAL:
+        case RomType::C64_KERNAL:
             
             assert(sizeof(kernel_generic) == 0x2000);
             memcpy(mem.rom + 0xE000, kernel_generic, 0x2000);

@@ -2,9 +2,9 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
@@ -115,7 +115,7 @@ D64File::describeImage() const noexcept
 isize
 D64File::numCyls() const noexcept
 {
-    switch (data.size) {
+    switch (getSize()) {
 
         case D64_683_SECTORS:
         case D64_683_SECTORS_ECC:   return 35;
@@ -162,7 +162,7 @@ D64File::encode(TrackNr t) const
     auto &track = gcrTracks.at(t);
 
     // Get the disk id bytes from the BAM
-    auto *bam = data.ptr + 357 * bsize();
+    auto bam = byteView(357 * bsize(), bsize());
     u8 id1 = bam[0xA2];
     u8 id2 = bam[0xA3];
 
@@ -170,7 +170,7 @@ D64File::encode(TrackNr t) const
     auto encoder = C64Encoder(id1, id2, ecc());
 
     // Encode track
-    auto gcr = encoder.encodeTrack(byteView(t), t);
+    auto gcr = encoder.encodeTrack(trackView(t), t);
 
     // Copy the encoded track data
     track.assign(gcr.data(), gcr.data() + gcr.byteView().size());
@@ -191,13 +191,13 @@ D64File::decode(TrackNr t, utl::BitView bits)
     assert(bytes.size() == D64File::trackDefaults(t).sectors * 256);
 
     // Copy back decoded bytes
-    memcpy(byteView(t).data(), bytes.data(), bytes.size());
+    memcpy(mutableTrackView(t).data(), bytes.data(), bytes.size());
 }
 
 bool
 D64File::hasEcc() const noexcept
 {
-    switch (data.size) {
+    switch (getSize()) {
 
         case D64_683_SECTORS_ECC: return true;
         case D64_768_SECTORS_ECC: return true;
@@ -213,8 +213,8 @@ D64File::ecc() const noexcept
 {
     if (!hasEcc()) return {};
 
-    return std::vector<u8>(data.ptr + bsize() * numBlocks(),
-                           data.ptr + bsize() * numBlocks() + numBlocks());
+    auto bytes = byteView(bsize() * numBlocks(), numBlocks());
+    return std::vector<u8>(bytes.data(), bytes.data() + bytes.size());
 }
 
 u8

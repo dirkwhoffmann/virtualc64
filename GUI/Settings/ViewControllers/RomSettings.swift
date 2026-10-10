@@ -68,24 +68,24 @@ class RomSettingsViewController: SettingsViewController {
         let hasCommodoreBasic  = basicRom.vendor == .COMMODORE
         let hasMega65Basic     = basicRom.vendor == .MEGA65
         let hasUnknownBasic    = basicRom.vendor == .UNKNOWN && hasBasic
-        let hasPatchedBasic    = basicRom.patched
+        let hasPatchedBasic    = (basicRom.flags & retro.vault.RomFlags.Patched) != 0
 
         let hasChar            = charRom.crc != 0
         let hasCommodoreChar   = charRom.vendor == .COMMODORE
         let hasMega65Char      = charRom.vendor == .MEGA65
         let hasUnknownChar     = charRom.vendor == .UNKNOWN && hasChar
-        let hasPatchedChar     = charRom.patched
+        let hasPatchedChar     = (charRom.flags & retro.vault.RomFlags.Patched) != 0
 
         let hasKernal          = kernalRom.crc != 0
         let hasCommodoreKernal = kernalRom.vendor == .COMMODORE
         let hasMega65Kernal    = kernalRom.vendor == .MEGA65
         let hasUnknownKernal   = kernalRom.vendor == .UNKNOWN && hasKernal
-        let hasPatchedKernal   = kernalRom.patched
+        let hasPatchedKernal   = (kernalRom.flags & retro.vault.RomFlags.Patched) != 0
 
         let hasVC1541          = vc1541Rom.crc != 0
         let hasCommodoreVC1541 = vc1541Rom.vendor == .COMMODORE
         let hasUnknownVC1541   = vc1541Rom.vendor == .UNKNOWN && hasVC1541
-        let hasPatchedVC1541   = vc1541Rom.patched
+        let hasPatchedVC1541   = (vc1541Rom.flags & retro.vault.RomFlags.Patched) != 0
 
         let romMissing = NSImage(named: "rom_missing")
         let romOrig    = NSImage(named: "rom_original")
@@ -130,23 +130,23 @@ class RomSettingsViewController: SettingsViewController {
 
         // Titles and subtitles
         basicTitle.stringValue = hasBasic ? String(cString: basicRom.title) : "Basic Rom"
-        basicSubtitle.stringValue = hasBasic ? String(cString: basicRom.subtitle) : "Required"
-        basicSubsubtitle.stringValue = String(cString: basicRom.revision)
+        basicSubtitle.stringValue = hasBasic ? String(cString: basicRom.revision) : "Required"
+        basicSubsubtitle.stringValue = ""
         if hasUnknownBasic { basicSubtitle.stringValue = "\(String(format: "%0lx", basicRom.fnv))" }
 
         charTitle.stringValue = hasChar ? String(cString: charRom.title) : "Character Rom"
-        charSubtitle.stringValue = hasChar ? String(cString: charRom.subtitle) : "Required"
-        charSubsubtitle.stringValue = String(cString: charRom.revision)
+        charSubtitle.stringValue = hasChar ? String(cString: charRom.revision) : "Required"
+        charSubsubtitle.stringValue = ""
         if hasUnknownChar { charSubtitle.stringValue = "\(String(format: "%0lx", charRom.fnv))" }
 
         kernalTitle.stringValue = hasKernal ? String(cString: kernalRom.title) : "Kernal Rom"
-        kernalSubtitle.stringValue = hasKernal ? String(cString: kernalRom.subtitle) : "Required"
-        kernalSubsubtitle.stringValue = String(cString: kernalRom.revision)
+        kernalSubtitle.stringValue = hasKernal ? String(cString: kernalRom.revision) : "Required"
+        kernalSubsubtitle.stringValue = ""
         if hasUnknownKernal { kernalSubtitle.stringValue = "\(String(format: "%0lx", kernalRom.fnv))" }
 
         vc1541Title.stringValue = hasVC1541 ? String(cString: vc1541Rom.title) : "VC1541 Rom"
-        vc1541Subtitle.stringValue = hasVC1541 ? String(cString: vc1541Rom.subtitle) : "Optional"
-        vc1541Subsubtitle.stringValue = String(cString: vc1541Rom.revision)
+        vc1541Subtitle.stringValue = hasVC1541 ? String(cString: vc1541Rom.revision) : "Optional"
+        vc1541Subsubtitle.stringValue = ""
         if hasUnknownVC1541 { vc1541Subtitle.stringValue = "\(String(format: "%0lx", vc1541Rom.fnv))" }
 
         // Hide some controls
@@ -174,7 +174,7 @@ class RomSettingsViewController: SettingsViewController {
         if let emu = emu {
 
             emu.powerOff()
-            emu.delete(.BASIC)
+            emu.delete(.C64_BASIC)
             refresh()
         }
     }
@@ -184,7 +184,7 @@ class RomSettingsViewController: SettingsViewController {
         if let emu = emu {
 
             emu.powerOff()
-            emu.delete(.CHAR)
+            emu.delete(.C64_CHAR)
             refresh()
         }
     }
@@ -194,7 +194,7 @@ class RomSettingsViewController: SettingsViewController {
         if let emu = emu {
 
             emu.powerOff()
-            emu.delete(.KERNAL)
+            emu.delete(.C64_KERNAL)
             refresh()
         }
     }
@@ -204,7 +204,7 @@ class RomSettingsViewController: SettingsViewController {
         if let emu = emu {
 
             emu.powerOff()
-            emu.delete(.VC1541)
+            emu.delete(.C64_VC1541)
             refresh()
         }
     }

@@ -12,6 +12,7 @@
 #include "Images/Encoders/MFM.h"
 #include "Devices/DeviceError.h"
 #include "utl/support/Bits.h"
+#include <algorithm>
 
 namespace retro::vault {
 
@@ -29,13 +30,16 @@ AmigaEncoder::encodeTrack(utl::ByteView src, TrackNr t)
     if (count != 11 && count != 22)
         throw DeviceError(DeviceError::DSK_WRONG_SECTOR_CNT);
 
-    logmsg(LOG_IMG, "Encoding Amiga track %ld with %ld sectors\n", t, count);
+    logmsg(LOG_IMG, "Encoding Amiga track %td with %td sectors\n", t, count);
 
-    // Start with a clean track
-    if (trackBuffer.empty()) trackBuffer.resize(16384, 0xAA);
+    // Start with a clean track of the full length, i.e., including the gap
+    auto trackBytes = count == 11 ? 12668 : 24636;
+    if (trackBuffer.empty()) trackBuffer.resize(trackBytes);
+    std::fill(trackBuffer.begin(), trackBuffer.end(), u8(0xAA));
 
     // Create views
-    auto bitView = utl::MutableBitView(trackBuffer.data(), count * ssize * 8);
+    auto trackBits = 8 * trackBytes;
+    auto bitView = utl::MutableBitView(trackBuffer.data(), trackBits);
     auto view = bitView.byteView();
 
     for (SectorNr s = 0; s < count; s++) {
@@ -53,7 +57,7 @@ AmigaEncoder::encodeTrack(utl::ByteView src, TrackNr t)
     }
 
     // Compute a debug checksum
-    logmsg(LOG_IMG, "Track %ld checksum = %x\n", t, view.fnv32());
+    logmsg(LOG_IMG, "Track %td checksum = %x\n", t, view.fnv32());
 
     return utl::BitView(view.data(), view.size() * 8);
 }
@@ -63,7 +67,7 @@ AmigaEncoder::encodeSector(utl::ByteView bytes, TrackNr t, SectorNr s)
 {
     assert(bytes.size() == bsize);
 
-    logmsg(LOG_IMG, "Encoding Amiga sector %ld:%ld\n", t, s);
+    logmsg(LOG_IMG, "Encoding Amiga sector %td:%td\n", t, s);
 
     // Start with a clean track
     if (sectorBuffer.empty()) sectorBuffer.resize(ssize, 0xAA);

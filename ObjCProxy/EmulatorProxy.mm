@@ -1460,7 +1460,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (NSInteger)writeToFile:(NSURL *)path exception:(ExceptionWrapper *)ex
 {
-    try { return [self file]->writeToFile([path fileSystemRepresentation]); }
+    try { return [self file]->copy([path fileSystemRepresentation]); }
     catch(Error &error) { [ex save:error]; return 0; }
 }
 
@@ -1522,7 +1522,7 @@ NSString *EventSlotName(EventSlot slot)
 - (NSString *)asciidump:(NSInteger)b offset:(NSInteger)offset len:(NSInteger)len
 {
     string result;
-    auto p = [self file]->data.ptr + b * [self bsize] + offset;
+    auto p = [self file]->byteView(b * [self bsize] + offset, len).data();
 
     for (isize i = 0; i < len; i++) {
         result += isprint(int(p[i])) ? char(p[i]) : '.';
@@ -1662,22 +1662,22 @@ NSString *EventSlotName(EventSlot slot)
 
 - (RomTraits)basicRom
 {
-    return [self getRomTraits:RomType::BASIC];
+    return [self getRomTraits:RomType::C64_BASIC];
 }
 
 - (RomTraits)charRom
 {
-    return [self getRomTraits:RomType::CHAR];
+    return [self getRomTraits:RomType::C64_CHAR];
 }
 
 - (RomTraits)kernalRom
 {
-    return [self getRomTraits:RomType::KERNAL];
+    return [self getRomTraits:RomType::C64_KERNAL];
 }
 
 - (RomTraits)vc1541Rom
 {
-    return [self getRomTraits:RomType::VC1541];
+    return [self getRomTraits:RomType::C64_VC1541];
 }
 
 - (SnapshotProxy *)takeSnapshot:(Compressor)compressor

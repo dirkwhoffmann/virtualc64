@@ -27,27 +27,20 @@ namespace retro::vault {
  *   |- workspace (folder)
  *   |- snapshots (folder)
  *
- * The class presents an SVM as a plain directory tree, rooted at root(), and
- * treats the storage format underneath as an implementation detail. Everything
- * inside is addressed relative to that root, so callers never need to know
- * which of the two formats they are working with:
+ * An SVM is a directory named *.svm, and nothing else -- it is its own root().
+ * Opening one costs nothing, persist() writes the manifest in place, and the
+ * tree on disk is at all times the machine: there is no second copy of it to
+ * unpack, repack, or lose in a crash.
  *
- *   ZipFile   The standard format: the machine is a single .svm archive with a
- *             small footprint. root() is a temporary directory, unpacked from
- *             the archive when it is first asked for and packed back up by
- *             persist(). Nothing is unpacked for a caller that only reads the
- *             manifest, which is what keeps listing a library of machines cheap.
- *
- *   Folder    An ordinary directory, useful for manual editing. It is already a
- *             tree, so it *is* its own root: there is no copy, opening it costs
- *             nothing, and persist() writes the manifest in place without
- *             packing anything.
- *
- * Both carry the .svm suffix.
+ * Earlier versions also stored a machine as a ZIP archive, so that an SVM
+ * would be a single file rather than a folder. Finder does that part on its
+ * own now -- Silicium's Info.plist declares the .svm type as a package, and
+ * utl::setPackageBit() marks the folder for Macs where it is not installed --
+ * and the archive cost more than it was worth: root() had to unpack the whole
+ * machine before a caller could read one file from it, and persist() repacked
+ * all of it on every save. With a hard drive attached, each snapshot rewrote
+ * the entire disk image.
  */
-
-// An SVM is a .svm ZIP archive or a .svm directory -- the suffix is the same
-enum class SVMType { ZipFile, Folder };
 
 class SVMFile : public AnyImage {
 
@@ -56,16 +49,13 @@ class SVMFile : public AnyImage {
     static constexpr auto workspaceDir = "workspace";
     static constexpr auto snapshotDir = "snapshots";
 
-  private:
+    // The suffix an SVM is named by
+    static constexpr auto suffix = ".svm";
 
-    // Storage format
-    SVMType svmType = SVMType::ZipFile;
+  private:
 
     // Meta information about the virtual machine
     Manifest manifest;
-
-    // The SVM's file tree, as an ordinary directory
-    fs::path rootFolder;
 
   public:
 
@@ -82,13 +72,13 @@ class SVMFile : public AnyImage {
     static optional<ImageInfo> about(const fs::path &path);
 
     // Creates an object from scratch
-    SVMFile(CreateTag, const fs::path &path, SVMType type = SVMType::ZipFile);
+    SVMFile(CreateTag, const fs::path &path);
 
     // Creates an object from an existing file
     SVMFile(OpenTag, const fs::path &path);
 
     // Creates an object from a copy of an existing file
-    SVMFile(CloneTag, const fs::path &path, const fs::path &clone, SVMType type = SVMType::ZipFile);
+    SVMFile(CloneTag, const fs::path &path, const fs::path &clone);
 
     // Default constructor (defaults to Open)
     SVMFile(const fs::path &path) : SVMFile(Open, path) { }
@@ -96,13 +86,15 @@ class SVMFile : public AnyImage {
     SVMFile(const SVMFile&) = delete;
     SVMFile& operator=(const SVMFile&) = delete;
 
-    ~SVMFile();
+    /* No destructor. The tree on disk is the machine, not a working copy of
+     * it, so there is nothing to write back and nothing to clean up.
+     */
 
   private:
 
-    void init(CreateTag, const fs::path &path, SVMType type = SVMType::ZipFile);
+    void init(CreateTag, const fs::path &path);
     void init(OpenTag, const fs::path &path);
-    void init(CloneTag, const fs::path &path, const fs::path &clonePath, SVMType type = SVMType::ZipFile);
+    void init(CloneTag, const fs::path &path, const fs::path &clonePath);
 
 
     //
@@ -151,19 +143,16 @@ class SVMFile : public AnyImage {
 
   public:
 
-    // Returns the path of the SVM archive on disk
+    // Returns the path of the SVM on disk
     const fs::path &getSourcePath() const { return path; }
 
-    // Returns how this machine is stored (ZIP archive or plain folder)
-    SVMType getSVMType() const { return svmType; }
+    // Returns the root of the SVM's file tree, which is the SVM itself
+    const fs::path &root() const { return path; }
 
-    // Returns the root of the SVM's file tree, materialising it on demand
-    const fs::path &root();
-
-    // Writes the working folder back to the SVM file
+    // Writes the manifest back to the file tree
     void persist();
 
-    // Loads the manifest, either from the file tree or the backing storage
+    // Loads the manifest from the file tree
     void readManifest();
 
     // True if another process has updated the manifest in the file tree
@@ -171,17 +160,8 @@ class SVMFile : public AnyImage {
 
 private:
 
-    // Materialises the root folder
-    void createRoot();
-
     // Reconciles the manifest with the contents of the root folder
     void tidyUp();
-
-    // Unpacks the source archive into the root folder (ZIP-backed only)
-    void unpackArchive();
-
-    // Packs the root folder back into the source archive (ZIP-backed only)
-    void packArchive();
 };
 
 }

@@ -9,15 +9,17 @@
 
 #include "rvconfig.h"
 #include "Images/BinaryImage.h"
+#include "Devices/LinearDevice.h"
+#include "utl/abilities/Compressible.h"
 #include "utl/io.h"
-#include "utl/support.h"
+#include "utl/storage/Buffer.h"
 #include <fstream>
+#include <sstream>
 
 namespace retro::vault {
 
-using utl::ByteView;
-using utl::MutableByteView;
 using utl::IOError;
+using utl::Compressor;
 
 void
 BinaryImage::init(isize len)
@@ -26,183 +28,188 @@ BinaryImage::init(isize len)
 }
 
 void
-BinaryImage::init(const utl::Buffer<u8> &buffer)
-{
-    init(buffer.ptr, buffer.size);
-}
-
-/*
-void
-BinaryImage::init(const string &str)
-{
-    init((const u8 *)str.c_str(), (isize)str.length());
-}
-*/
-
-void
-BinaryImage::init(const fs::path &p)
+BinaryImage::init(const fs::path &p, Compressor compressor)
 {
     if (!validateURL(p))
-        throw utl::IOError(utl::IOError::FILE_TYPE_MISMATCH, p);
+        throw IOError(IOError::FILE_TYPE_MISMATCH, p);
 
-    std::fstream stream(p, std::ios::binary | std::ios::in);
+    if (compressor != Compressor::NONE) {
 
-    if (!stream)
-        throw utl::IOError(utl::IOError::FILE_NOT_FOUND, p);
+        if (!fs::exists(p))
+            throw IOError(IOError::FILE_NOT_FOUND, p);
 
-    // Read file into a vector
-    std::vector<u8> buffer((std::istreambuf_iterator<char>(stream)),
-                           std::istreambuf_iterator<char>());
+        utl::Buffer<u8> bytes;
+        bytes.init(p);
 
-    if (buffer.empty())
-        throw utl::IOError(utl::IOError::FILE_CANT_READ, p);
+        if (bytes.empty())
+            throw IOError(IOError::FILE_CANT_READ, p);
+
+        bytes.uncompress(compressor);
+
+        init(bytes.ptr, bytes.size);
+        path.clear();
+        return;
+    }
+
+    if (utl::getSizeOfFile(p) <= 0)
+        throw IOError(IOError::FILE_CANT_READ, p);
 
     this->path = p;
 
-    // Initialize image with the vector contents
-    init(buffer.data(), isize(buffer.size()));
+    // Put the image on top of the file. Nothing is loaded yet.
+    data.init(utl::getSizeOfFile(p), p);
+    didInitialize();
 }
 
 void
-BinaryImage::init(const u8 *buf, isize len)
+BinaryImage::init(const LinearDevice &device)
+{
+    data.init(device.size());
+
+    // Pull in the contents
+    auto bytes = data.mutableByteView(0, data.size());
+    device.read(bytes.data(), 0, bytes.size());
+    didInitialize();
+}
+
+void
+BinaryImage::init(const u8 *buf, isize len, Compressor compressor)
 {
     assert(buf);
 
-    // Allocate memory
-    data.alloc(len);
+    if (compressor != Compressor::NONE) {
 
-    // Copy data
-    std::memcpy(data.ptr, buf, data.size);
+        utl::Buffer<u8> bytes(buf, len);
+        bytes.uncompress(compressor);
+        init(bytes.ptr, bytes.size);
+        return;
+    }
+
+    data.init(len);
+
+    if (len) std::memcpy(data.mutableByteView(0, len).data(), buf, size_t(len));
     didInitialize();
+}
+
+void
+BinaryImage::resize(isize len)
+{
+    data.resize(len);
+}
+
+utl::ByteView
+BinaryImage::byteView(isize offset, isize len) const
+{
+    return data.byteView(offset, len);
+}
+
+utl::MutableByteView
+BinaryImage::mutableByteView(isize offset, isize len)
+{
+    return data.mutableByteView(offset, len);
+}
+
+void
+BinaryImage::detach()
+{
+    data.detach();
+    path.clear();
+}
+
+void
+BinaryImage::copy(u8 *buf, isize offset) const
+{
+    copy(buf, offset, getSize() - offset);
 }
 
 void
 BinaryImage::copy(u8 *buf, isize offset, isize len) const
 {
     assert(buf);
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
-
-    std::memcpy(buf + offset, data.ptr, len);
-}
-
-utl::ByteView
-BinaryImage::byteView(isize offset) const
-{
-    return byteView(offset, data.size - offset);
-}
-
-utl::ByteView
-BinaryImage::byteView(isize offset, isize len) const
-{
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
-
-    return utl::ByteView(data.ptr + offset, len);
-}
-
-utl::MutableByteView
-BinaryImage::byteView(isize offset)
-{
-    return byteView(offset, data.size - offset);
-}
-
-utl::MutableByteView
-BinaryImage::byteView(isize offset, isize len)
-{
-    assert(offset >= 0 && offset < data.size);
-    assert(len >= 0 && offset + len <= data.size);
-
-    return utl::MutableByteView(data.ptr + offset, len);
-}
-
-void
-BinaryImage::copy(u8 *buf, isize offset) const
-{
-    copy (buf, offset, data.size);
+    std::memcpy(buf, byteView(offset, len).data(), len);
 }
 
 void
 BinaryImage::save()
 {
-    /* getSize(), not size(). While this lived on AnyImage there was no size()
-     * in scope at all, so the call resolved to the inherited Loggable::size()
-     * -- the number of registered log channels -- and every save() wrote that
-     * many bytes. The buffer is right here now, so ask it.
-     */
-    save(utl::Range<isize>{0, getSize()});
-}
-
-void
-BinaryImage::save(const utl::Range<isize> range)
-{
-    std::ofstream file(path, std::ios::binary);
-    if (!file) throw utl::IOError(utl::IOError::FILE_CANT_WRITE, path);
-
-    printf("Saving range %ld - %ld...\n", range.lower, range.upper - 1);
-
-    // Move to the correct position
-    file.seekp(range.lower, std::ios::beg);
-
-    // Write the data to the stream
-    file.write((char *)(data.ptr + range.lower), range.size());
-
-    // Update the file on disk
-    file.flush();
-}
-
-void
-BinaryImage::save(const std::vector<utl::Range<isize>> ranges)
-{
-    for (auto &range: ranges) save(range);
+    data.persist();
 }
 
 void
 BinaryImage::saveAs(const fs::path &newPath)
 {
+    // Saving as the file the image already lives in is saving
+    std::error_code ec;
+    if (data.backed() && fs::equivalent(newPath, path, ec)) { save(); return; }
+
+    // Write the entire image first, so that a failure changes nothing
+    copy(newPath);
+
+    // Continue on top of the new file
     path = newPath;
-    save();
+    data.init(getSize(), newPath);
 }
 
 isize
-BinaryImage::writeToStream(std::ostream &stream, isize offset, isize len) const
+BinaryImage::copy(std::ostream &stream, isize offset, isize len, Compressor compressor) const
 {
-    assert(offset >= 0 && len >= 0 && offset + len <= data.size);
+    if (compressor != Compressor::NONE) {
 
-    stream.write((char *)data.ptr + offset, len);
+        utl::Buffer<u8> bytes((const u8 *)byteView(offset, len).data(), len);
+        bytes.compress(compressor);
+        stream.write((const char *)bytes.ptr, bytes.size);
 
-    return data.size;
-}
-
-isize
-BinaryImage::writeToFile(const fs::path &p, isize offset, isize len) const
-{
-    if (utl::isDirectory(p)) {
-        throw utl::IOError(utl::IOError::FILE_IS_DIRECTORY);
+        return bytes.size;
     }
+
+    stream.write((const char *)byteView(offset, len).data(), len);
+
+    return len;
+}
+
+isize
+BinaryImage::copy(const fs::path &p, isize offset, isize len, Compressor compressor) const
+{
+    std::error_code ec;
+
+    if (utl::isDirectory(p))
+        throw IOError(IOError::FILE_IS_DIRECTORY);
+
+    if (data.backed() && fs::equivalent(p, path, ec))
+        throw IOError(IOError::FILE_IN_USE, p);
+
+    std::stringstream compressed;
+    if (compressor != Compressor::NONE) copy(compressed, offset, len, compressor);
 
     std::ofstream stream(p, std::ofstream::binary);
 
-    if (!stream.is_open()) {
-        throw utl::IOError(utl::IOError::FILE_CANT_WRITE, p);
+    if (!stream.is_open())
+        throw IOError(IOError::FILE_CANT_WRITE, p);
+
+    if (compressor != Compressor::NONE) {
+
+        const auto bytes = compressed.str();
+        stream.write(bytes.data(), std::streamsize(bytes.size()));
+
+        return isize(bytes.size());
     }
 
-    isize result = writeToStream(stream, offset, len);
-    assert(result == data.size);
+    isize result = copy(stream, offset, len);
+    assert(result == len);
 
     return result;
 }
 
 isize
-BinaryImage::writeToStream(std::ostream &stream) const
+BinaryImage::copy(std::ostream &stream, Compressor compressor) const
 {
-    return writeToStream(stream, 0, data.size);
+    return copy(stream, 0, getSize(), compressor);
 }
 
 isize
-BinaryImage::writeToFile(const fs::path &p) const
+BinaryImage::copy(const fs::path &p, Compressor compressor) const
 {
-    return writeToFile(p, 0, data.size);
+    return copy(p, 0, getSize(), compressor);
 }
 
 }

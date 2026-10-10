@@ -50,6 +50,16 @@ public:
     // Analyzes the type and format of the specified file
     static optional<ImageInfo> about(const fs::path& url);
 
+    /* Returns the compressor a file of this name is compressed with
+     *
+     * Compression is a property of the file name, not of the image: the same
+     * bytes are an .adf or an .adz, an .hdf or an .hdz. Reading such a file
+     * means uncompressing it, writing one means compressing it. Images do
+     * not do that by themselves (see BinaryImage), so whoever passes a file
+     * name on asks here which compressor goes with it.
+     */
+    static utl::Compressor compressorFor(const fs::path& path) noexcept;
+
     // Image factory
     static unique_ptr<AnyImage> tryMake(const fs::path& path);
     static unique_ptr<AnyImage> make(const fs::path& path);

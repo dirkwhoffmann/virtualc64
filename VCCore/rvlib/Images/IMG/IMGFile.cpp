@@ -2,9 +2,9 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
@@ -82,7 +82,7 @@ IMGFile::encode(TrackNr t) const
 
     // Encode track
     DOSEncoder encoder;
-    auto mfm = encoder.encodeTrack(byteView(t), t);
+    auto mfm = encoder.encodeTrack(trackView(t), t);
 
     // Copy the encoded track data
     track.assign(mfm.data(), mfm.data() + mfm.byteView().size());
@@ -102,7 +102,7 @@ IMGFile::decode(TrackNr t, utl::BitView bits)
     assert(bytes.size() == 9 * 512);
 
     // Copy back the decoded bytes
-    memcpy(byteView(t).data(), bytes.data(), bytes.size());
+    memcpy(mutableTrackView(t).data(), bytes.data(), bytes.size());
 }
 
 }

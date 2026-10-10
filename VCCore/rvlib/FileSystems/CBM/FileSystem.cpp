@@ -48,7 +48,7 @@ FileSystem::dumpStatfs(std::ostream &os) const noexcept
 
     if (isFormatted()) {
 
-        auto fill = 100.0 * st.usedBlocks / st.blocks;
+        auto fill = 100.0 * double(st.usedBlocks) / double(st.blocks);
 
         os << std::setw(5) << std::left << FSFormatEnum::key(traits.dos);
         os << "  ";
@@ -84,7 +84,7 @@ FileSystem::dumpProps(std::ostream &os) const noexcept
     using namespace utl;
 
     auto st   = stat();
-    auto fill = 100.0 * st.usedBlocks / st.blocks;
+    auto fill = 100.0 * double(st.usedBlocks) / double(st.blocks);
 
     os << tab("Name");
     os << st.name << std::endl;

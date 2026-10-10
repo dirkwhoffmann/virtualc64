@@ -18,32 +18,32 @@ namespace vc64 {
 
 const RomSignature RomFile::signatures[] = {
 
-    { RomType::BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0x7B } }, // Commodore
-    { RomType::BASIC,  0x2000, 0x0000, { 0x63, 0xA6, 0xC1 } }, // MEGA65
-    { RomType::BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0xB7 } }, // MEGA65
+    { RomType::C64_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0x7B } }, // Commodore
+    { RomType::C64_BASIC,  0x2000, 0x0000, { 0x63, 0xA6, 0xC1 } }, // MEGA65
+    { RomType::C64_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0xB7 } }, // MEGA65
     
-    { RomType::CHAR,   0x1000, 0x0000, { 0x3C, 0x66, 0x6E } }, // Commodore
-    { RomType::CHAR,   0x1000, 0x0000, { 0x00, 0x1C, 0x22 } }, // Japanese C64
-    { RomType::CHAR,   0x1000, 0x0000, { 0x66, 0x3C, 0x66 } }, // Croation C64
-    { RomType::CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x66 } }, // Atari800
-    { RomType::CHAR,   0x1000, 0x0000, { 0x70, 0x88, 0x08 } }, // MSX
-    { RomType::CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x4A } }, // Speccy
-    { RomType::CHAR,   0x1000, 0x0000, { 0x7C, 0xC6, 0xDE } }, // Amstrad, Amiga
-    { RomType::CHAR,   0x1000, 0x0000, { 0x38, 0x44, 0x5C } }, // Speccy
+    { RomType::C64_CHAR,   0x1000, 0x0000, { 0x3C, 0x66, 0x6E } }, // Commodore
+    { RomType::C64_CHAR,   0x1000, 0x0000, { 0x00, 0x1C, 0x22 } }, // Japanese C64
+    { RomType::C64_CHAR,   0x1000, 0x0000, { 0x66, 0x3C, 0x66 } }, // Croation C64
+    { RomType::C64_CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x66 } }, // Atari800
+    { RomType::C64_CHAR,   0x1000, 0x0000, { 0x70, 0x88, 0x08 } }, // MSX
+    { RomType::C64_CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x4A } }, // Speccy
+    { RomType::C64_CHAR,   0x1000, 0x0000, { 0x7C, 0xC6, 0xDE } }, // Amstrad, Amiga
+    { RomType::C64_CHAR,   0x1000, 0x0000, { 0x38, 0x44, 0x5C } }, // Speccy
 
-    { RomType::KERNAL, 0x2000, 0x0000, { 0x85, 0x56, 0x20 } }, // Commodore
-    { RomType::KERNAL, 0x2000, 0x0000, { 0xA9, 0x93, 0x20 } }, // MEGA65
-    { RomType::KERNAL, 0x2000, 0x0000, { 0x20, 0x2E, 0xBA } }, // MEGA65
-    { RomType::KERNAL, 0x2000, 0x0000, { 0x20, 0x02, 0xBE } }, // MEGA65
+    { RomType::C64_KERNAL, 0x2000, 0x0000, { 0x85, 0x56, 0x20 } }, // Commodore
+    { RomType::C64_KERNAL, 0x2000, 0x0000, { 0xA9, 0x93, 0x20 } }, // MEGA65
+    { RomType::C64_KERNAL, 0x2000, 0x0000, { 0x20, 0x2E, 0xBA } }, // MEGA65
+    { RomType::C64_KERNAL, 0x2000, 0x0000, { 0x20, 0x02, 0xBE } }, // MEGA65
 
-    { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0xAA, 0xAA } }, // Commodore
-    { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0xE0, 0x43 } }, // Commodore
-    { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0x46, 0xAD } }, // Commodore
-    { RomType::VC1541, 0x4000, 0x0000, { 0x97, 0xDB, 0x43 } }, // Commodore
-    { RomType::VC1541, 0x6000, 0x0000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
-    { RomType::VC1541, 0x8000, 0x2000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
+    { RomType::C64_VC1541, 0x4000, 0x0000, { 0x97, 0xAA, 0xAA } }, // Commodore
+    { RomType::C64_VC1541, 0x4000, 0x0000, { 0x97, 0xE0, 0x43 } }, // Commodore
+    { RomType::C64_VC1541, 0x4000, 0x0000, { 0x97, 0x46, 0xAD } }, // Commodore
+    { RomType::C64_VC1541, 0x4000, 0x0000, { 0x97, 0xDB, 0x43 } }, // Commodore
+    { RomType::C64_VC1541, 0x6000, 0x0000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
+    { RomType::C64_VC1541, 0x8000, 0x2000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
     
-    { RomType(0),      0x0000, 0x0000, { 0x00, 0x00, 0x00 } }
+    { RomType::UNKNOWN,    0x0000, 0x0000, { 0x00, 0x00, 0x00 } }
 };
 
 bool
@@ -98,10 +98,10 @@ RomFile::romType(const fs::path &path)
         
         switch (RomFile(path).romFileType) {
                 
-            case FileType::CHAR_ROM:   return RomType::CHAR;
-            case FileType::BASIC_ROM:  return RomType::BASIC;
-            case FileType::KERNAL_ROM: return RomType::KERNAL;
-            case FileType::VC1541_ROM: return RomType::VC1541;
+            case FileType::CHAR_ROM:   return RomType::C64_CHAR;
+            case FileType::BASIC_ROM:  return RomType::C64_BASIC;
+            case FileType::KERNAL_ROM: return RomType::C64_KERNAL;
+            case FileType::VC1541_ROM: return RomType::C64_VC1541;
             default: break;
         }
     
@@ -113,25 +113,25 @@ RomFile::romType(const fs::path &path)
 bool
 RomFile::isBasicRomBuffer(const u8 *buf, isize len)
 {
-    return isRomBuffer(RomType::BASIC, buf, len);
+    return isRomBuffer(RomType::C64_BASIC, buf, len);
 }
 
 bool
 RomFile::isCharRomBuffer(const u8 *buf, isize len)
 {
-    return isRomBuffer(RomType::CHAR, buf, len);
+    return isRomBuffer(RomType::C64_CHAR, buf, len);
 }
 
 bool
 RomFile::isKernalRomBuffer(const u8 *buf, isize len)
 {
-    return isRomBuffer(RomType::KERNAL, buf, len);
+    return isRomBuffer(RomType::C64_KERNAL, buf, len);
 }
 
 bool
 RomFile::isVC1541RomBuffer(const u8 *buf, isize len)
 {
-    return isRomBuffer(RomType::VC1541, buf, len);
+    return isRomBuffer(RomType::C64_VC1541, buf, len);
 }
 
 bool
@@ -143,25 +143,25 @@ RomFile::isRomBuffer(RomType type, const Buffer<u8> &buf)
 bool
 RomFile::isBasicRomBuffer(const Buffer<u8> &buf)
 {
-    return isRomBuffer(RomType::BASIC, buf.ptr, buf.size);
+    return isRomBuffer(RomType::C64_BASIC, buf.ptr, buf.size);
 }
 
 bool
 RomFile::isCharRomBuffer(const Buffer<u8> &buf)
 {
-    return isRomBuffer(RomType::CHAR, buf.ptr, buf.size);
+    return isRomBuffer(RomType::C64_CHAR, buf.ptr, buf.size);
 }
 
 bool
 RomFile::isKernalRomBuffer(const Buffer<u8> &buf)
 {
-    return isRomBuffer(RomType::KERNAL, buf.ptr, buf.size);
+    return isRomBuffer(RomType::C64_KERNAL, buf.ptr, buf.size);
 }
 
 bool
 RomFile::isVC1541RomBuffer(const Buffer<u8> &buf)
 {
-    return isRomBuffer(RomType::VC1541, buf.ptr, buf.size);
+    return isRomBuffer(RomType::C64_VC1541, buf.ptr, buf.size);
 }
 
 void

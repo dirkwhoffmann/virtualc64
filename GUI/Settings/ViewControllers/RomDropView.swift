@@ -94,39 +94,39 @@ class RomDropView: DropView {
 class BasicRomDropView: RomDropView {
 
     override func acceptDragSource(url: URL) -> Bool {
-        return emu != nil && emu!.poweredOff && emu!.isRom(.BASIC, url: url)
+        return emu != nil && emu!.poweredOff && emu!.isRom(.C64_BASIC, url: url)
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return performDrag(type: .BASIC, url: sender.url)
+        return performDrag(type: .C64_BASIC, url: sender.url)
     }
 }
 
 class CharRomDropView: RomDropView {
     override func acceptDragSource(url: URL) -> Bool {
-        return emu != nil && emu!.poweredOff && emu!.isRom(.CHAR, url: url)
+        return emu != nil && emu!.poweredOff && emu!.isRom(.C64_CHAR, url: url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return performDrag(type: .CHAR, url: sender.url)
+        return performDrag(type: .C64_CHAR, url: sender.url)
     }
 }
 
 class KernalRomDropView: RomDropView {
 
     override func acceptDragSource(url: URL) -> Bool {
-        return emu != nil && emu!.poweredOff && emu!.isRom(.KERNAL, url: url)
+        return emu != nil && emu!.poweredOff && emu!.isRom(.C64_KERNAL, url: url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return performDrag(type: .KERNAL, url: sender.url)
+        return performDrag(type: .C64_KERNAL, url: sender.url)
     }
 }
 
 class Vc1541RomDropView: RomDropView {
     
     override func acceptDragSource(url: URL) -> Bool {
-        return emu != nil && emu!.poweredOff && emu!.isRom(.VC1541, url: url)
+        return emu != nil && emu!.poweredOff && emu!.isRom(.C64_VC1541, url: url)
     }
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        return performDrag(type: .VC1541, url: sender.url)
+        return performDrag(type: .C64_VC1541, url: sender.url)
     }
 }

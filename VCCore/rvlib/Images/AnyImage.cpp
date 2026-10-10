@@ -17,9 +17,9 @@ namespace retro::vault {
 
 /* SVMs are probed first.
  *
- * Not for precedence -- no disk format claims a '.svm', since every one of them
- * tests its own suffix before anything else -- but because an SVM is the only
- * image that can be a *directory*, and the disk probes go on to size and read
+ * Not for precedence -- no disk format claims a '.svm', since every one of
+ * them tests its own suffix before anything else -- but because an SVM is the
+ * only image that IS a *directory*, and the disk probes go on to size and read
  * the path as a regular file. Asking the cheapest and most specific question
  * first keeps a folder from ever reaching them.
  */
@@ -32,13 +32,21 @@ AnyImage::about(const fs::path& url)
 }
 
 /* Note that this can throw rather than answer nullptr, and deliberately so.
- * SVMFile::about accepts a '.svm' on its suffix alone (opening the archive to
- * answer "what is this file" is what the class exists to avoid), so a corrupt
+ * SVMFile::about accepts a '.svm' on its suffix alone (reading the manifest
+ * to answer "what is this" is what about() exists to avoid), so a corrupt
  * machine is only diagnosed when the constructor reads its manifest. Letting
  * VM_NO_MANIFEST out beats reporting a broken machine as an unknown file type.
  * DiskImage::tryMake behaves the same way -- HDFFile::about throws on a .hdf
  * of the wrong size.
  */
+utl::Compressor
+AnyImage::compressorFor(const fs::path& path) noexcept
+{
+    auto suffix = utl::lowercased(path.extension().string());
+
+    return suffix == ".adz" || suffix == ".hdz" ? utl::Compressor::GZIP : utl::Compressor::NONE;
+}
+
 std::unique_ptr<AnyImage>
 AnyImage::tryMake(const fs::path& path)
 {

@@ -99,7 +99,7 @@ struct Manifest {
 
     bool isAmiga() const { return platform == Platform::AMIGA; }
     bool isC64() const { return platform == Platform::C64; }
-    bool isCompatible() const { return isC64(); }
+    bool isCompatible() const { return true; }
 
     /* Preinstalled showcases are exactly the machines carrying editorial data,
      * so this is derived from the meta entry rather than tracked separately.

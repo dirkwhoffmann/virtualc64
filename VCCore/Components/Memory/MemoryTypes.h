@@ -14,8 +14,22 @@
 #pragma once
 
 #include "BasicTypes.h"
+#include "Roms/RomManager.h"
 
 namespace vc64 {
+
+// The Rom vocabulary is shared by all cores and lives in rvlib
+using retro::vault::RomType;
+using retro::vault::RomTypeEnum;
+using retro::vault::RomVendor;
+using retro::vault::RomVendorEnum;
+using retro::vault::RomDate;
+using retro::vault::RomDateToString;
+using retro::vault::RomPlatform;
+using retro::vault::RomPlatformEnum;
+namespace RomFlags = retro::vault::RomFlags;
+using retro::vault::RomTraits;
+using retro::vault::RomManager;
 
 //
 // Enumerations
@@ -97,76 +111,6 @@ struct RamPatternEnum : Reflectable<RamPatternEnum, RamPattern> {
     }
 };
 
-enum class RomType : long
-{
-    BASIC,
-    CHAR,
-    KERNAL,
-    VC1541
-};
-
-struct RomTypeEnum : Reflectable<RomTypeEnum, RomType> {
-
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = long(RomType::VC1541);
-
-    static const char *_key(RomType value)
-    {
-        switch (value) {
-
-            case RomType::BASIC:   return "BASIC";
-            case RomType::CHAR:    return "CHAR";
-            case RomType::KERNAL:  return "KERNAL";
-            case RomType::VC1541:  return "VC1541";
-        }
-        return "???";
-    }
-    
-    static const char *help(RomType value)
-    {
-        switch (value) {
-
-            case RomType::BASIC:   return "Basic ROM";
-            case RomType::CHAR:    return "Character ROM";
-            case RomType::KERNAL:  return "Kernal ROM";
-            case RomType::VC1541:  return "Floppy Drive ROM";
-        }
-        return "";
-    }
-};
-
-enum class RomVendor
-{
-    UNKNOWN,
-    COMMODORE,
-    MEGA65,
-    OTHER,
-};
-
-struct RomVendorEnum : Reflectable<RomVendorEnum, RomVendor> {
-
-    static constexpr long minVal = 0;
-    static constexpr long maxVal = long(RomVendor::OTHER);
-
-    static const char *_key(RomVendor value)
-    {
-        switch (value) {
-
-            case RomVendor::UNKNOWN:    return "UNKNOWN";
-            case RomVendor::COMMODORE:  return "COMMODORE";
-            case RomVendor::MEGA65:     return "MEGA65";
-            case RomVendor::OTHER:      return "OTHER";
-        }
-        return "???";
-    }
-    
-    static const char *help(RomVendor value)
-    {
-        return "";
-    }
-};
-
-
 //
 // Structures
 //
@@ -200,19 +144,5 @@ typedef struct
 }
 MemStats;
 
-typedef struct {
-
-    u64 fnv;
-    u32 crc;
-
-    const char *title;
-    const char *subtitle;
-    const char *revision;
-
-    RomVendor vendor;
-    RomType type;
-    bool patched;
-}
-RomTraits;
 
 }

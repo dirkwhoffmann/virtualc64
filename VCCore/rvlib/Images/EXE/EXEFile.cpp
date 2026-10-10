@@ -2,9 +2,9 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
@@ -58,7 +58,7 @@ EXEFile::didInitialize()
     using amiga::FSName;
 
     // Check if this file requires a high-density disk
-    bool hd = data.size > 853000;
+    bool hd = getSize() > 853000;
 
     // Create a suitable ADF
     adf.init(Diameter::INCH_35, hd ? Density::HD : Density::DD);
@@ -73,7 +73,8 @@ EXEFile::didInitialize()
     fs.makeBootable(BootBlockId::AMIGADOS_13);
 
     // Add the executable, a script directory, and a script
-    fs.createFile(fs.root(), FSName("file"), data);
+    auto exe = byteView(0, getSize());
+    fs.createFile(fs.root(), FSName("file"), exe.data(), exe.size());
     fs.createFile(fs.mkdir(fs.root(), FSName("s")), FSName("startup-sequence"), "file");
 
     // Finalize

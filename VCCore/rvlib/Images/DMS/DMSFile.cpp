@@ -2,9 +2,9 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
@@ -54,7 +54,7 @@ DMSFile::didInitialize()
 
     int verbose = 0;
     if CONSTEXPR (LOG_IMG != LOG_OFF) verbose = 1;
-    if (extractDMS(data.ptr, (size_t)data.size, &adfData, &adfSize, verbose) == 0) {
+    if (extractDMS(byteView(0, getSize()).data(), size_t(getSize()), &adfData, &adfSize, verbose) == 0) {
 
         if CONSTEXPR (!DMS_CANT_CREATE) {
             adf.init(adfData, isize(adfSize));

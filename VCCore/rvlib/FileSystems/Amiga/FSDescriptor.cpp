@@ -132,8 +132,10 @@ FSDescriptor::checkCompatibility() const
     if CONSTEXPR (FS_WRONG_BSIZE)
         throw FSError(FSError::FS_WRONG_BSIZE);
 
+    /*
     if (numBytes() > 504_MB)
         throw FSError(FSError::FS_WRONG_CAPACITY);
+    */
 
     if (bsize != 512)
         throw FSError(FSError::FS_WRONG_BSIZE);

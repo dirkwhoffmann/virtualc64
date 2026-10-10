@@ -53,7 +53,7 @@ Drive::_run()
 bool
 Drive::canConnect()
 {
-    return c64.hasRom(RomType::VC1541);
+    return c64.hasRom(RomType::C64_VC1541);
 }
 
 void

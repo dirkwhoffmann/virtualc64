@@ -43,10 +43,10 @@ AnyFile::type(const fs::path &path)
     if (RomFile::isCompatible(path)) {
 
         Buffer<u8> buffer(path);
-        if (RomFile::isRomBuffer(RomType::BASIC, buffer)) return FileType::BASIC_ROM;
-        if (RomFile::isRomBuffer(RomType::CHAR, buffer)) return FileType::CHAR_ROM;
-        if (RomFile::isRomBuffer(RomType::KERNAL, buffer)) return FileType::KERNAL_ROM;
-        if (RomFile::isRomBuffer(RomType::VC1541, buffer)) return FileType::VC1541_ROM;
+        if (RomFile::isRomBuffer(RomType::C64_BASIC, buffer)) return FileType::BASIC_ROM;
+        if (RomFile::isRomBuffer(RomType::C64_CHAR, buffer)) return FileType::CHAR_ROM;
+        if (RomFile::isRomBuffer(RomType::C64_KERNAL, buffer)) return FileType::KERNAL_ROM;
+        if (RomFile::isRomBuffer(RomType::C64_VC1541, buffer)) return FileType::VC1541_ROM;
     }
 
     return FileType::UNKNOWN;

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50AD0420305C000000A1B2C3 /* HDFLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0401305C000000A1B2C3 /* HDFLayout.cpp */; };
+		50AD0421305C000000A1B2C3 /* RomManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0403305C000000A1B2C3 /* RomManager.cpp */; };
+		50AD0422305C000000A1B2C3 /* RomsAmiga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */; };
+		50AD0423305C000000A1B2C3 /* RomsC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0406305C000000A1B2C3 /* RomsC64.cpp */; };
+		50AD0440305C000000A1B2C3 /* HDFLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0401305C000000A1B2C3 /* HDFLayout.cpp */; };
+		50AD0441305C000000A1B2C3 /* RomManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0403305C000000A1B2C3 /* RomManager.cpp */; };
+		50AD0442305C000000A1B2C3 /* RomsAmiga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */; };
+		50AD0443305C000000A1B2C3 /* RomsC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0406305C000000A1B2C3 /* RomsC64.cpp */; };
 		50AD0022305C000000A1B2C3 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */; };
 		50AD0023305C000000A1B2C3 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
@@ -747,6 +755,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		50AD0400305C000000A1B2C3 /* HDFLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDFLayout.h; sourceTree = "<group>"; };
+		50AD0401305C000000A1B2C3 /* HDFLayout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HDFLayout.cpp; sourceTree = "<group>"; };
+		50AD0402305C000000A1B2C3 /* RomManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RomManager.h; sourceTree = "<group>"; };
+		50AD0403305C000000A1B2C3 /* RomManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomManager.cpp; sourceTree = "<group>"; };
+		50AD0404305C000000A1B2C3 /* RomTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RomTypes.h; sourceTree = "<group>"; };
+		50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomsAmiga.cpp; sourceTree = "<group>"; };
+		50AD0406305C000000A1B2C3 /* RomsC64.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomsC64.cpp; sourceTree = "<group>"; };
 		50AD0031305C000000A1B2C3 /* TempFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempFile.h; sourceTree = "<group>"; };
 		50AD0020305C000000A1B2C3 /* BackedBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackedBuffer.h; sourceTree = "<group>"; };
 		50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackedBuffer.cpp; sourceTree = "<group>"; };
@@ -820,7 +835,6 @@
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
 		5038CA9420B6C2AC000D9193 /* VICPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VICPanel.swift; sourceTree = "<group>"; };
 		5038CA9620B6C2BE000D9193 /* SIDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIDPanel.swift; sourceTree = "<group>"; };
-		503C0C362B9A4AD400112B4B /* RomDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RomDatabase.h; sourceTree = "<group>"; };
 		503C1DD024FC10F400D91141 /* SnapshotViewer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotViewer.xib; sourceTree = "<group>"; };
 		503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotViewer.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1646,6 +1660,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50AD0460305C000000A1B2C3 /* Roms */ = {
+			isa = PBXGroup;
+			children = (
+				50AD0402305C000000A1B2C3 /* RomManager.h */,
+				50AD0403305C000000A1B2C3 /* RomManager.cpp */,
+				50AD0404305C000000A1B2C3 /* RomTypes.h */,
+				50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */,
+				50AD0406305C000000A1B2C3 /* RomsC64.cpp */,
+			);
+			path = Roms;
+			sourceTree = "<group>";
+		};
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2093,7 +2119,6 @@
 				508AB17C2EA37F7E00E226DE /* Workspace.cpp */,
 				504C42D724AF29AB00E69CAE /* RomFile.h */,
 				504C42C724AF29AB00E69CAE /* RomFile.cpp */,
-				503C0C362B9A4AD400112B4B /* RomDatabase.h */,
 				50EAF52A2C7A5DC5005AC890 /* OpenRoms.h */,
 				504C42DD24AF29AB00E69CAE /* Snapshot.h */,
 				504C42D524AF29AB00E69CAE /* Snapshot.cpp */,
@@ -2985,6 +3010,8 @@
 				50AC278D2F436A2B0016265E /* CMakeLists.txt */,
 				50AC278E2F436A2B0016265E /* HDFFile.h */,
 				50AC278F2F436A2B0016265E /* HDFFile.cpp */,
+				50AD0400305C000000A1B2C3 /* HDFLayout.h */,
+				50AD0401305C000000A1B2C3 /* HDFLayout.cpp */,
 			);
 			path = HDF;
 			sourceTree = "<group>";
@@ -3050,6 +3077,7 @@
 				50AC27162F436A2B0016265E /* Devices */,
 				50AC275F2F436A2B0016265E /* FileSystems */,
 				50AC27A92F436A2B0016265E /* Images */,
+				50AD0460305C000000A1B2C3 /* Roms */,
 				5020D0382F45C87E006D3BF1 /* ThirdParty */,
 				50AC27AA2F436A2B0016265E /* AmigaFileSystem.h */,
 				50AC27AB2F436A2B0016265E /* CBMFileSystem.h */,
@@ -3422,6 +3450,10 @@
 				50726F9D2961CA0D0031F2F5 /* Isepic.cpp in Sources */,
 				50AC282B2F4468460016265E /* IMGFile.cpp in Sources */,
 				50AC282C2F4468460016265E /* HDFFile.cpp in Sources */,
+				50AD0420305C000000A1B2C3 /* HDFLayout.cpp in Sources */,
+				50AD0421305C000000A1B2C3 /* RomManager.cpp in Sources */,
+				50AD0422305C000000A1B2C3 /* RomsAmiga.cpp in Sources */,
+				50AD0423305C000000A1B2C3 /* RomsC64.cpp in Sources */,
 				50AC282D2F4468460016265E /* EXEFile.cpp in Sources */,
 				50726FAC2961CA1C0031F2F5 /* TAPFile.cpp in Sources */,
 				50726F572961C9A10031F2F5 /* CIA.cpp in Sources */,
@@ -3999,6 +4031,10 @@
 				50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */,
 				50AC28262F4468460016265E /* IMGFile.cpp in Sources */,
 				50AC28272F4468460016265E /* HDFFile.cpp in Sources */,
+				50AD0440305C000000A1B2C3 /* HDFLayout.cpp in Sources */,
+				50AD0441305C000000A1B2C3 /* RomManager.cpp in Sources */,
+				50AD0442305C000000A1B2C3 /* RomsAmiga.cpp in Sources */,
+				50AD0443305C000000A1B2C3 /* RomsC64.cpp in Sources */,
 				50AC28282F4468460016265E /* EXEFile.cpp in Sources */,
 				50A22A2A2618725200C9FB1E /* Console.swift in Sources */,
 				500C1C752965D10F00071AF3 /* StrWriter.cpp in Sources */,

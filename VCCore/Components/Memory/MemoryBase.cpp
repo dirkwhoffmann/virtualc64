@@ -37,20 +37,20 @@ Memory::_dump(Category category, std::ostream &os) const
             if (traits.crc) {
 
                 os << tab("Title") << traits.title << std::endl;
-                os << tab("Subtitle") << traits.subtitle << std::endl;
                 os << tab("Revision") << traits.revision << std::endl;
+                os << tab("Patched") << ((traits.flags & RomFlags::Patched) ? "Yes" : "No") << std::endl;
                 os << tab("CRC32") << hex(traits.crc) << std::endl;
                 os << tab("FNV64") << hex(traits.fnv) << std::endl;
             }
         };
 
-        info("Basic ROM", RomType::BASIC);
+        info("Basic ROM", RomType::C64_BASIC);
         os << std::endl;
-        info("Character ROM", RomType::CHAR);
+        info("Character ROM", RomType::C64_CHAR);
         os << std::endl;
-        info("Kernal ROM", RomType::KERNAL);
+        info("Kernal ROM", RomType::C64_KERNAL);
         os << std::endl;
-        info("Drive ROM", RomType::VC1541);
+        info("Drive ROM", RomType::C64_VC1541);
     }
 }
 

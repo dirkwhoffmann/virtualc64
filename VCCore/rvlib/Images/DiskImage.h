@@ -2,11 +2,10 @@
 // This file is part of RetroVault
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v3
+// Licensed under the Mozilla Public License v2
 //
-// See https://www.gnu.org for license information
+// See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
-
 #pragma once
 
 #include "Images/BinaryImage.h"
@@ -29,7 +28,7 @@ public:
 
 public:
 
-    isize size() const override { return data.size; }
+    isize size() const override { return getSize(); }
     void read(u8 *dst, isize offset, isize count) const override;
     void write(const u8 *src, isize offset, isize count) override;
 
@@ -48,22 +47,16 @@ public:
 
 public:
 
-    using BinaryImage::byteView;
-    utl::ByteView byteView(TrackNr t) const;
-    utl::ByteView byteView(TrackNr t, SectorNr s) const;
-    utl::MutableByteView byteView(TrackNr t);
-    utl::MutableByteView byteView(TrackNr t, SectorNr s);
-    
-    
-    //
-    // Exporting
-    //
-
-public:
-
-    // Update portions of the image file on disk with the current contents
-    void saveBlocks(const utl::Range<BlockNr>);
-    void saveBlocks(const std::vector<utl::Range<BlockNr>>);
+    /* Views on a single track or sector.
+     *
+     * Named apart from byteView() on purpose: track and sector numbers are
+     * plain integers, so a byteView(t, s) would quietly stand in for
+     * byteView(offset, len).
+     */
+    utl::ByteView trackView(TrackNr t) const;
+    utl::ByteView sectorView(TrackNr t, SectorNr s) const;
+    utl::MutableByteView mutableTrackView(TrackNr t);
+    utl::MutableByteView mutableSectorView(TrackNr t, SectorNr s);
 };
 
 }

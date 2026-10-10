@@ -11,6 +11,7 @@
 #include "FileSystems/Amiga/FileSystem.h"
 #include "utl/support.h"
 #include <bit>
+#include <algorithm>
 
 namespace retro::vault::amiga {
 
@@ -47,8 +48,8 @@ FSAllocator::requiredBlocks(isize fileSize) const noexcept
     isize numFileListBlocks = requiredFileListBlocks(fileSize);
 
     logmsg(LOG_FS, "Required file header blocks : %d\n",  1);
-    logmsg(LOG_FS, "       Required data blocks : %ld\n", numDataBlocks);
-    logmsg(LOG_FS, "  Required file list blocks : %ld\n", numFileListBlocks);
+    logmsg(LOG_FS, "       Required data blocks : %td\n", numDataBlocks);
+    logmsg(LOG_FS, "  Required file list blocks : %td\n", numFileListBlocks);
 
     return 1 + numDataBlocks + numFileListBlocks;
 }
@@ -215,13 +216,13 @@ FSAllocator::allocateFileBlocks(isize bytes,
     isize refsInListBlocks      = numDataBlocks - refsInHeaderBlock;
     isize refsInLastListBlock   = refsInListBlocks % refsPerBlock;
 
-    logmsg(LOG_FS, "                   Data bytes : %ld\n", bytes);
-    logmsg(LOG_FS, "         Required data blocks : %ld\n", numDataBlocks);
-    logmsg(LOG_FS, "         Required list blocks : %ld\n", numListBlocks);
-    logmsg(LOG_FS, "         References per block : %ld\n", refsPerBlock);
-    logmsg(LOG_FS, "   References in header block : %ld\n", refsInHeaderBlock);
-    logmsg(LOG_FS, "    References in list blocks : %ld\n", refsInListBlocks);
-    logmsg(LOG_FS, "References in last list block : %ld\n", refsInLastListBlock);
+    logmsg(LOG_FS, "                   Data bytes : %td\n", bytes);
+    logmsg(LOG_FS, "         Required data blocks : %td\n", numDataBlocks);
+    logmsg(LOG_FS, "         Required list blocks : %td\n", numListBlocks);
+    logmsg(LOG_FS, "         References per block : %td\n", refsPerBlock);
+    logmsg(LOG_FS, "   References in header block : %td\n", refsInHeaderBlock);
+    logmsg(LOG_FS, "    References in list blocks : %td\n", refsInListBlocks);
+    logmsg(LOG_FS, "References in last list block : %td\n", refsInLastListBlock);
 
     // Free the surplus list blocks
     freeSurplus(listBlocks, numListBlocks);
@@ -285,31 +286,20 @@ FSAllocator::locateAllocationBit(BlockNr nr, isize *byte, isize *bit) const noex
 
     // Get the bitmap block
     if (bmNr >= (isize)bmBlocks.size()) {
-        logmsg(LOG_FS, "Bitmap block index %ld for block %ld is out of range \n", bmNr, nr);
+        logmsg(LOG_FS, "Bitmap block index %td for block %td is out of range \n", bmNr, nr);
         return nullptr;
     }
 
     auto &bm = fs.fetch(bmBlocks[bmNr]);
 
     if (!bm.is(FSBlockType::BITMAP)) {
-        logmsg(LOG_FS, "Failed to lookup allocation bit for block %ld (%ld)\n", nr, bmNr);
+        logmsg(LOG_FS, "Failed to lookup allocation bit for block %td (%td)\n", nr, bmNr);
         return nullptr;
     }
 
-    // Locate the byte position (note: the long word ordering will be reversed)
+    // Locate the byte position
     nr = nr % bitsPerBlock;
-    isize rByte = nr / 8;
-
-    // Rectifiy the ordering
-    switch (rByte % 4) {
-        case 0: rByte += 3; break;
-        case 1: rByte += 1; break;
-        case 2: rByte -= 1; break;
-        case 3: rByte -= 3; break;
-    }
-
-    // Skip the checksum which is located in the first four bytes
-    rByte += 4;
+    isize rByte = allocationByte(nr / 8);
     assert(rByte >= 4 && rByte < traits.bsize);
 
     *byte = rByte;
@@ -318,13 +308,20 @@ FSAllocator::locateAllocationBit(BlockNr nr, isize *byte, isize *bit) const noex
     return &bm;
 }
 
-/*
-const FSBlock *
-FSAllocator::locateAllocationBit(BlockNr nr, isize *byte, isize *bit) const noexcept
+isize
+FSAllocator::allocationByte(isize nr) noexcept
 {
-    return const_cast<const FSBlock *>(const_cast<FSAllocator *>(this)->locateAllocationBit(nr, byte, bit));
+    // Rectify the ordering (the bits are stored as big endian long words)
+    switch (nr % 4) {
+        case 0: nr += 3; break;
+        case 1: nr += 1; break;
+        case 2: nr -= 1; break;
+        case 3: nr -= 3; break;
+    }
+
+    // Skip the checksum, which occupies the first four bytes
+    return nr + 4;
 }
-*/
 
 isize
 FSAllocator::numUnallocated() const noexcept
@@ -336,7 +333,7 @@ FSAllocator::numUnallocated() const noexcept
 
         isize count = 0;
         for (isize i = 0; i < fs.blocks(); i++) { if (isUnallocated(BlockNr(i))) count++; }
-        logmsg(LOG_FS, "Unallocated blocks: Fast code: %ld Slow code: %ld\n", result, count);
+        logmsg(LOG_FS, "Unallocated blocks: Fast code: %td Slow code: %td\n", result, count);
         assert(count == result);
     }
 
@@ -391,6 +388,58 @@ FSAllocator::setAllocBit(BlockNr nr, bool value)
 
         auto *data = bm->mutate().data();
         REPLACE_BIT(data[byte], bit, value);
+    }
+}
+
+void
+FSAllocator::setAllocBits(BlockNr from, BlockNr to, bool value)
+{
+    auto &bmBlocks = fs.getBmBlocks();
+    const isize bitsPerBlock = (traits.bsize - 4) * 8;
+
+    /* The first two blocks are always allocated and not part of the map, so
+     * the range is shifted down by two, exactly as a single lookup shifts a
+     * block number (see locateAllocationBit).
+     */
+    const isize first = std::max(isize(from), isize(2)) - 2;
+    const isize last = std::min(isize(to), traits.blocks - 1) - 2;
+
+    if (last < first) return;
+
+    for (isize i = first / bitsPerBlock; i <= last / bitsPerBlock; i++) {
+
+        if (i >= isize(bmBlocks.size())) {
+
+            logmsg(LOG_FS, "Bitmap block index %td is out of range\n", i);
+            return;
+        }
+
+        auto &bm = fs.fetch(bmBlocks[i]);
+
+        if (!bm.is(FSBlockType::BITMAP)) {
+
+            logmsg(LOG_FS, "Failed to lookup allocation bits in block %td\n", i);
+            continue;
+        }
+
+        // The part of the range this bitmap block holds, in its own numbering
+        const isize base = i * bitsPerBlock;
+        const isize lo = std::max(first, base) - base;
+        const isize hi = std::min(last, base + bitsPerBlock - 1) - base;
+
+        auto *data = bm.mutate().data();
+
+        for (isize byte = lo / 8; byte <= hi / 8; byte++) {
+
+            // Which bits of this byte the range covers. All of them, save at
+            // the two ends, which is what makes this worth doing.
+            const isize lsb = std::max(lo - byte * 8, isize(0));
+            const isize msb = std::min(hi - byte * 8, isize(7));
+            const u8 mask = u8(((1 << (msb - lsb + 1)) - 1) << lsb);
+
+            auto &b = data[allocationByte(byte)];
+            b = value ? u8(b | mask) : u8(b & ~mask);
+        }
     }
 }
 

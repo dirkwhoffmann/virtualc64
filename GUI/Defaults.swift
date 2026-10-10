@@ -695,10 +695,10 @@ extension Configuration {
         if let emu = emu {
 
             emu.suspend()
-            load(UserDefaults.basicRomUrl, type: .BASIC)
-            load(UserDefaults.charRomUrl, type: .CHAR)
-            load(UserDefaults.kernalRomUrl, type: .KERNAL)
-            load(UserDefaults.vc1541RomUrl, type: .VC1541)
+            load(UserDefaults.basicRomUrl, type: .C64_BASIC)
+            load(UserDefaults.charRomUrl, type: .C64_CHAR)
+            load(UserDefaults.kernalRomUrl, type: .C64_KERNAL)
+            load(UserDefaults.vc1541RomUrl, type: .C64_VC1541)
             emu.resume()
         }
     }
@@ -721,10 +721,10 @@ extension Configuration {
             emu.suspend()
             
             do {
-                url = UserDefaults.basicRomUrl;  try save(.BASIC)
-                url = UserDefaults.charRomUrl;   try save(.CHAR)
-                url = UserDefaults.kernalRomUrl; try save(.KERNAL)
-                url = UserDefaults.vc1541RomUrl; try save(.VC1541)
+                url = UserDefaults.basicRomUrl;  try save(.C64_BASIC)
+                url = UserDefaults.charRomUrl;   try save(.C64_CHAR)
+                url = UserDefaults.kernalRomUrl; try save(.C64_KERNAL)
+                url = UserDefaults.vc1541RomUrl; try save(.C64_VC1541)
                 
             } catch {
                 

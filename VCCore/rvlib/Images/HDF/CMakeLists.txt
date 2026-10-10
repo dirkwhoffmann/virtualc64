@@ -1,3 +1,4 @@
 target_include_directories(rvlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_sources(rvlib PRIVATE HDFFile.cpp)
+target_sources(rvlib PRIVATE HDFFile.cpp
+        HDFLayout.cpp)

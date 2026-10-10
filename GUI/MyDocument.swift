@@ -167,10 +167,10 @@ class MyDocument: NSDocument {
         var dictionary: [String: Any] = [:]
 
         let vicRev = VICIIRev(rawValue: emu.get(.VICII_REVISION))
-        let basic = emu.c64.getRomTraits(.BASIC)
-        let kernal = emu.c64.getRomTraits(.KERNAL)
-        let char = emu.c64.getRomTraits(.CHAR)
-        let vc1541 = emu.c64.getRomTraits(.VC1541)
+        let basic = emu.c64.getRomTraits(.C64_BASIC)
+        let kernal = emu.c64.getRomTraits(.C64_KERNAL)
+        let char = emu.c64.getRomTraits(.C64_CHAR)
+        let vc1541 = emu.c64.getRomTraits(.C64_VC1541)
 
         // Collect some info about the emulated machine
         dictionary["VICII"] = vicRev

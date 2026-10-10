@@ -193,10 +193,9 @@ FileSystem::stat() const noexcept
         .cachedBlocks = cache.cachedBlocks(),
         .dirtyBlocks  = cache.dirtyBlocks(),
         .fill         = (double)numAllocated / (double)traits.blocks,
-
-        .name  = rb.name(),
-        .bDate = rb.getCreationDate(),
-        .mDate = rb.getModificationDate(),
+        .name         = rb.getName(),
+        .bDate        = rb.getCreationDate(),
+        .mDate        = rb.getModificationDate(),
 
         .generation = generation
     };

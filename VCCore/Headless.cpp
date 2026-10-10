@@ -157,7 +157,7 @@ Headless::runScript(const fs::path &path)
 
     // Plug in the three MEGA65 OpenROMs
     c64.c64.installOpenRoms();
-    c64.c64.deleteRom(RomType::VC1541);
+    c64.c64.deleteRom(RomType::C64_VC1541);
     c64.set(Opt::DRV_CONNECT, false, 0);
     c64.set(Opt::DRV_CONNECT, false, 1);
 

@@ -83,11 +83,33 @@ public:
     void markAsFree(BlockNr nr) { setAllocBit(nr, 1); }
     void setAllocBit(BlockNr nr, bool value);
 
+    /* Marks a whole range of blocks, 'from' and 'to' included.
+     *
+     * The same thing as calling the single-block versions in a loop, but it
+     * does not look up each bit on its own: a run of blocks is a run of bits,
+     * so this walks the bitmap blocks it touches and writes whole bytes,
+     * masking only the two ends. Formatting a drive marks every block free
+     * at once this way (see FileSystem::format), which for a large drive is
+     * the difference between a bitmap write per block and one per 4096.
+     */
+    void markAsAllocated(BlockNr from, BlockNr to) { setAllocBits(from, to, 0); }
+    void markAsFree(BlockNr from, BlockNr to) { setAllocBits(from, to, 1); }
+    void setAllocBits(BlockNr from, BlockNr to, bool value);
+
 private:
 
     // Locates the allocation bit for a certain block
     // FSBlock *locateAllocationBit(BlockNr nr, isize *byte, isize *bit) noexcept;
     const FSBlock *locateAllocationBit(BlockNr nr, isize *byte, isize *bit) const noexcept;
+
+    /* Where a byte of allocation bits sits inside a bitmap block.
+     *
+     * The bits are stored as big endian long words, so the bytes of each
+     * long word appear in reverse order; the first four bytes of the block
+     * hold the checksum. Factored out of locateAllocationBit(), which does
+     * the same arithmetic for a single bit.
+     */
+    static isize allocationByte(isize nr) noexcept;
 
     // Translate the bitmap into to a vector with the n-th bit set iff the n-th block is free
     std::vector<u32> readBitmap() const;
