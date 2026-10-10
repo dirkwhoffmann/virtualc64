@@ -302,6 +302,8 @@ NSString *EventSlotName(EventSlot slot);
 
 - (void)loadWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)saveWorkspace:(NSURL *)url exception:(ExceptionWrapper *)ex;
+- (void)saveWorkspaceAsync:(NSURL *)url;
+- (void)saveSnapshotAsync:(NSURL *)url compressor:(Compressor)c;
 
 - (BOOL) getMessage:(Message *)msg;
 

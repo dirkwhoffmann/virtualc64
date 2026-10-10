@@ -62,12 +62,12 @@ Defaults::Defaults()
     // Fixed, portable encoding (ABGR) for a persisted option value --
     // independent of the live HOST_TEX_FORMAT, which DmaDebugger re-derives
     // its actual on-screen shades from (see DmaDebugger::updateDebugColors).
-    setFallback(Opt::XRAY_DMA_COLOR0,           GpuColor<TexelFormat::ABGR>(0xFF, 0x00, 0x00).rawValue);
-    setFallback(Opt::XRAY_DMA_COLOR1,           GpuColor<TexelFormat::ABGR>(0xFF, 0xC0, 0x00).rawValue);
-    setFallback(Opt::XRAY_DMA_COLOR2,           GpuColor<TexelFormat::ABGR>(0xFF, 0xFF, 0x00).rawValue);
-    setFallback(Opt::XRAY_DMA_COLOR3,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0xFF).rawValue);
-    setFallback(Opt::XRAY_DMA_COLOR4,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0x00).rawValue);
-    setFallback(Opt::XRAY_DMA_COLOR5,           GpuColor<TexelFormat::ABGR>(0x00, 0x80, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COLOR0,           GpuColor<TexelFormat::ABGR>(0xFF, 0x00, 0x00).rawValue);
+    setFallback(Opt::XRAY_COLOR1,           GpuColor<TexelFormat::ABGR>(0xFF, 0xC0, 0x00).rawValue);
+    setFallback(Opt::XRAY_COLOR2,           GpuColor<TexelFormat::ABGR>(0xFF, 0xFF, 0x00).rawValue);
+    setFallback(Opt::XRAY_COLOR3,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COLOR4,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0x00).rawValue);
+    setFallback(Opt::XRAY_COLOR5,           GpuColor<TexelFormat::ABGR>(0x00, 0x80, 0xFF).rawValue);
 
     setFallback(Opt::EXP_REU_SPEED,              1);
 

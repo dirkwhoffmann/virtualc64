@@ -311,6 +311,7 @@ extension MyController {
     func process(messsage msg: Message) {
         
         var value: Int { return Int(msg.value) }
+        var attachedString: String { return msg.str.map { String(cString: $0) } ?? "" }
         var nr: Int { return Int(msg.drive.nr) }
         var halftrack: Int { return Int(msg.drive.value) }
         var drive: vc64.DriveMsg { return msg.drive }
@@ -501,9 +502,14 @@ extension MyController {
             hideOrShowDriveMenus()
             
         case .SNAPSHOT_SAVED:
-            break
+            if value != 0 {
+                showAlert(.cantSaveSnapshot, what: attachedString, async: true)
+            }
 
-        case .WORKSPACE_SAVED, .WORKSPACE_LOADED:
+        case .WORKSPACE_SAVED:
+            mydocument.workspaceDidSave(errorCode: value, what: attachedString)
+
+        case .WORKSPACE_LOADED:
             break
             
         case .DMA_DEBUG:

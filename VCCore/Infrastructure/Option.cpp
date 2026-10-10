@@ -61,12 +61,12 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::XRAY_DMA_CHANNEL3:        return boolParser();
         case Opt::XRAY_DMA_CHANNEL4:        return boolParser();
         case Opt::XRAY_DMA_CHANNEL5:        return boolParser();
-        case Opt::XRAY_DMA_COLOR0:          return numParser();
-        case Opt::XRAY_DMA_COLOR1:          return numParser();
-        case Opt::XRAY_DMA_COLOR2:          return numParser();
-        case Opt::XRAY_DMA_COLOR3:          return numParser();
-        case Opt::XRAY_DMA_COLOR4:          return numParser();
-        case Opt::XRAY_DMA_COLOR5:          return numParser();
+        case Opt::XRAY_COLOR0:          return numParser();
+        case Opt::XRAY_COLOR1:          return numParser();
+        case Opt::XRAY_COLOR2:          return numParser();
+        case Opt::XRAY_COLOR3:          return numParser();
+        case Opt::XRAY_COLOR4:          return numParser();
+        case Opt::XRAY_COLOR5:          return numParser();
 
         case Opt::EXP_REU_SPEED:             return numParser();
 

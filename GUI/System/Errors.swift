@@ -88,6 +88,7 @@ enum Failure {
     case cantRestore
     case cantRun
     case cantSaveRoms
+    case cantSaveSnapshot
     case noMetalSupport
     case unsupportedOSVersion
     case unknown
@@ -153,6 +154,9 @@ enum Failure {
 
         case .cantSaveRoms:
             return "Failed to save Roms."
+
+        case .cantSaveSnapshot:
+            return "Failed to save snapshot."
 
         case .noMetalSupport:
             return "No suitable GPU hardware found."

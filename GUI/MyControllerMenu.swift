@@ -403,12 +403,8 @@ extension MyController: NSMenuItemValidation {
 
             if result == .OK, let url = self.mySavePanel.url {
 
-                do {
-                    try self.emu?.c64.saveSnapshot(url: url, compressor: self.pref.snapshotCompressor)
-                } catch {
-                    NSSound.beep()
-                    // self.showAlert(.cantExport(url: url), error: error, async: true)
-                }
+                // Errors are reported back by a SNAPSHOT_SAVED message
+                self.emu?.c64.saveSnapshotAsync(url, compressor: self.pref.snapshotCompressor)
             }
         })
     }

@@ -1725,6 +1725,16 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
+- (void)saveWorkspaceAsync:(NSURL *)url
+{
+    [self c64]->saveWorkspaceAsync([url fileSystemRepresentation]);
+}
+
+- (void)saveSnapshotAsync:(NSURL *)url compressor:(Compressor)c
+{
+    [self c64]->saveSnapshotAsync([url fileSystemRepresentation], c);
+}
+
 - (BOOL)getMessage:(Message *)msg
 {
     return [self c64]->getMsg(*msg);

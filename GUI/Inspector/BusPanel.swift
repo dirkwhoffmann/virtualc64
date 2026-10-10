@@ -59,12 +59,12 @@ extension Inspector {
         let bgr = (b << 16) | (g << 8) | (r << 0)
 
         switch sender.tag {
-        case 0:  emu?.set(.XRAY_DMA_COLOR0, value: bgr)
-        case 1:  emu?.set(.XRAY_DMA_COLOR1, value: bgr)
-        case 2:  emu?.set(.XRAY_DMA_COLOR2, value: bgr)
-        case 3:  emu?.set(.XRAY_DMA_COLOR3, value: bgr)
-        case 4:  emu?.set(.XRAY_DMA_COLOR4, value: bgr)
-        case 5:  emu?.set(.XRAY_DMA_COLOR5, value: bgr)
+        case 0:  emu?.set(.XRAY_COLOR0, value: bgr)
+        case 1:  emu?.set(.XRAY_COLOR1, value: bgr)
+        case 2:  emu?.set(.XRAY_COLOR2, value: bgr)
+        case 3:  emu?.set(.XRAY_COLOR3, value: bgr)
+        case 4:  emu?.set(.XRAY_COLOR4, value: bgr)
+        case 5:  emu?.set(.XRAY_COLOR5, value: bgr)
         default: break
         }
     }

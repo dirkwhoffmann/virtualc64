@@ -47,12 +47,12 @@ DmaDebugger::getOption(Opt option) const
         case Opt::XRAY_DMA_CHANNEL3:    return (i64)config.dmaChannel[3];
         case Opt::XRAY_DMA_CHANNEL4:    return (i64)config.dmaChannel[4];
         case Opt::XRAY_DMA_CHANNEL5:    return (i64)config.dmaChannel[5];
-        case Opt::XRAY_DMA_COLOR0:      return (i64)config.dmaColor[0];
-        case Opt::XRAY_DMA_COLOR1:      return (i64)config.dmaColor[1];
-        case Opt::XRAY_DMA_COLOR2:      return (i64)config.dmaColor[2];
-        case Opt::XRAY_DMA_COLOR3:      return (i64)config.dmaColor[3];
-        case Opt::XRAY_DMA_COLOR4:      return (i64)config.dmaColor[4];
-        case Opt::XRAY_DMA_COLOR5:      return (i64)config.dmaColor[5];
+        case Opt::XRAY_COLOR0:      return (i64)config.dmaColor[0];
+        case Opt::XRAY_COLOR1:      return (i64)config.dmaColor[1];
+        case Opt::XRAY_COLOR2:      return (i64)config.dmaColor[2];
+        case Opt::XRAY_COLOR3:      return (i64)config.dmaColor[3];
+        case Opt::XRAY_COLOR4:      return (i64)config.dmaColor[4];
+        case Opt::XRAY_COLOR5:      return (i64)config.dmaColor[5];
 
         default:
             fatalError;
@@ -90,12 +90,12 @@ DmaDebugger::checkOption(Opt opt, i64 value)
         case Opt::XRAY_DMA_CHANNEL4:
         case Opt::XRAY_DMA_CHANNEL5:
 
-        case Opt::XRAY_DMA_COLOR0:
-        case Opt::XRAY_DMA_COLOR1:
-        case Opt::XRAY_DMA_COLOR2:
-        case Opt::XRAY_DMA_COLOR3:
-        case Opt::XRAY_DMA_COLOR4:
-        case Opt::XRAY_DMA_COLOR5:
+        case Opt::XRAY_COLOR0:
+        case Opt::XRAY_COLOR1:
+        case Opt::XRAY_COLOR2:
+        case Opt::XRAY_COLOR3:
+        case Opt::XRAY_COLOR4:
+        case Opt::XRAY_COLOR5:
 
             return;
 
@@ -139,12 +139,12 @@ DmaDebugger::setOption(Opt opt, i64 value)
         case Opt::XRAY_DMA_CHANNEL4:    config.dmaChannel[4] = value; return;
         case Opt::XRAY_DMA_CHANNEL5:    config.dmaChannel[5] = value; return;
 
-        case Opt::XRAY_DMA_COLOR0:      setDmaDebugColor(MemAccess::R, GpuColor<TexelFormat::ABGR>((u32)value)); return;
-        case Opt::XRAY_DMA_COLOR1:      setDmaDebugColor(MemAccess::I, GpuColor<TexelFormat::ABGR>((u32)value)); return;
-        case Opt::XRAY_DMA_COLOR2:      setDmaDebugColor(MemAccess::C, GpuColor<TexelFormat::ABGR>((u32)value)); return;
-        case Opt::XRAY_DMA_COLOR3:      setDmaDebugColor(MemAccess::G, GpuColor<TexelFormat::ABGR>((u32)value)); return;
-        case Opt::XRAY_DMA_COLOR4:      setDmaDebugColor(MemAccess::P, GpuColor<TexelFormat::ABGR>((u32)value)); return;
-        case Opt::XRAY_DMA_COLOR5:      setDmaDebugColor(MemAccess::S, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_COLOR0:      setDmaDebugColor(MemAccess::R, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_COLOR1:      setDmaDebugColor(MemAccess::I, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_COLOR2:      setDmaDebugColor(MemAccess::C, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_COLOR3:      setDmaDebugColor(MemAccess::G, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_COLOR4:      setDmaDebugColor(MemAccess::P, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_COLOR5:      setDmaDebugColor(MemAccess::S, GpuColor<TexelFormat::ABGR>((u32)value)); return;
 
         default:
             fatalError;

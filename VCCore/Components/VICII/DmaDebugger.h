@@ -43,12 +43,12 @@ class DmaDebugger final : public SubComponent {
         Opt::XRAY_DMA_CHANNEL3,
         Opt::XRAY_DMA_CHANNEL4,
         Opt::XRAY_DMA_CHANNEL5,
-        Opt::XRAY_DMA_COLOR0,
-        Opt::XRAY_DMA_COLOR1,
-        Opt::XRAY_DMA_COLOR2,
-        Opt::XRAY_DMA_COLOR3,
-        Opt::XRAY_DMA_COLOR4,
-        Opt::XRAY_DMA_COLOR5
+        Opt::XRAY_COLOR0,
+        Opt::XRAY_COLOR1,
+        Opt::XRAY_COLOR2,
+        Opt::XRAY_COLOR3,
+        Opt::XRAY_COLOR4,
+        Opt::XRAY_COLOR5
     };
 
     // Current configuration
@@ -129,18 +129,11 @@ public:
     // Managing colors
     //
 
-    // 'color' is the fixed, portable ABGR encoding the option system stores
-    // (see Defaults.cpp / XRAY_DMA_COLORn) -- independent of the live
-    // HOST_TEX_FORMAT. Re-derives the four shades in debugColor[][] in
-    // whatever format the host is actually running in right now.
+    // Sets a debug color in ABGR format
     void setDmaDebugColor(MemAccess type, GpuColor<TexelFormat::ABGR> color);
     void setDmaDebugColor(MemAccess type, RgbColor color);
 
-    // Re-derives every channel's debugColor[][] shades for the host's
-    // current HOST_TEX_FORMAT. Called whenever a channel's color changes,
-    // and whenever HOST_TEX_FORMAT itself changes (see Host::setOption),
-    // since debugColor[][] caches already-packed texels rather than
-    // recomputing them per pixel in the hot path (visualizeDma).
+    // Derives all color shades in the host's current HOST_TEX_FORMAT
     void updateDebugColors();
 
 private:
@@ -158,11 +151,7 @@ public:
     void visualizeDma(isize offset, u8 data, MemAccess type);
     void visualizeDma(u32 *ptr, u8 data, MemAccess type);
 
-    // Superimposes the debug output onto the current scanline. Dispatches
-    // once (per call, not per pixel) to the templated overload below,
-    // matching the host's current HOST_TEX_FORMAT -- mirrors vAmiga's own
-    // DmaDebugger::computeOverlay (Components/Agnus/DmaDebugger/
-    // DmaDebugger.h), see its class comment for why.
+    // Superimposes the debug output onto the current scanline
     void computeOverlay(u32 *emuTexture, u32 *xrayTexture);
 
     template <TexelFormat F> void computeOverlay(u32 *emuTexture, u32 *xrayTexture);
