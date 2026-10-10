@@ -66,10 +66,6 @@ BackedBuffer::init(isize size)
 
     dealloc();
 
-    /* calloc rather than new[]: for a region of this size the allocator asks
-     * the operating system for fresh pages, which are zero already and are not
-     * backed by memory until they are touched.
-     */
     if (size) {
 
         mem = (u8 *)std::calloc(size_t(size), 1);
@@ -92,13 +88,62 @@ BackedBuffer::init(isize size, const fs::path &path, bool readOnly)
     if (!stream.is_open())
         throw IOError(IOError::FILE_CANT_READ, path);
 
-    // Nothing is allowed to fail after the buffer has been given its memory
     init(size);
 
     file = path;
     in = std::move(stream);
     fileBytes = isize(fs::file_size(path));
     this->readOnly = readOnly;
+}
+
+void
+BackedBuffer::resize(isize size)
+{
+    assert(size >= 0);
+
+    if (size == bytes) return;
+
+    auto oldBytes = bytes;
+
+    // Get the memory first, so that a failure changes nothing
+    u8 *newMem = nullptr;
+
+    if (size) {
+
+        newMem = (u8 *)std::realloc(mem, size_t(size));
+        if (!newMem) throw std::bad_alloc();
+
+    } else {
+
+        std::free(mem);
+    }
+
+    mem = newMem;
+    bytes = size;
+
+    // Forget the pages that are gone
+    if (size < oldBytes) {
+
+        for (auto p = (size + pageSize - 1) / pageSize; p < isize(pages.size()); p++) {
+            if (pages[p] == Page::Dirty) dirtyPages--;
+        }
+    }
+    pages.resize(size_t((size + pageSize - 1) / pageSize), Page::Absent);
+
+    if (size <= oldBytes) return;
+
+    /* The last page of the old buffer may have been loaded up to its end only.
+     * Complete it, the way fetch() would have: from the file where it has the
+     * bytes, zero elsewhere. What is there already is left alone.
+     */
+    if (auto page = oldBytes / pageSize; oldBytes % pageSize && pages[page] != Page::Absent) {
+
+        auto end = std::min((page + 1) * pageSize, bytes);
+        auto covered = std::clamp(fileBytes, oldBytes, end);
+
+        if (covered > oldBytes) readFile(mem + oldBytes, oldBytes, covered - oldBytes);
+        if (end > covered) std::memset(mem + covered, 0, size_t(end - covered));
+    }
 }
 
 void

@@ -747,7 +747,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		50AD0030305C000000A1B2C3 /* ProgressTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressTask.h; sourceTree = "<group>"; };
 		50AD0031305C000000A1B2C3 /* TempFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempFile.h; sourceTree = "<group>"; };
 		50AD0020305C000000A1B2C3 /* BackedBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackedBuffer.h; sourceTree = "<group>"; };
 		50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackedBuffer.cpp; sourceTree = "<group>"; };
@@ -2584,7 +2583,6 @@
 			isa = PBXGroup;
 			children = (
 				50AC25482F41A8760016265E /* AutoMutex.h */,
-				50AD0030305C000000A1B2C3 /* ProgressTask.h */,
 				50AC25492F41A8760016265E /* ReentrantMutex.h */,
 			);
 			path = concurrency;

@@ -108,31 +108,37 @@ template <class T> struct Buffer : public Hashable, public Dumpable {
     void patch(const u8 *seq, const u8 *subst);
     void patch(const char *seq, const char *subst);
 
-    // Compresses or uncompresses a buffer
-    void gzip(isize offset = 0) {
-        compress(Compressible::gzip, offset);
+    // Compresses or uncompresses a buffer with the given compressor
+    void compress(Compressor compressor, isize offset = 0) {
+        switch (compressor) {
+
+            case Compressor::NONE:  break;
+            case Compressor::GZIP:  compress(Compressible::gzip, offset); break;
+            case Compressor::LZ4:   compress(Compressible::lz4, offset);  break;
+            case Compressor::RLE2:  compress(Compressible::rle2, offset); break;
+            case Compressor::RLE3:  compress(Compressible::rle3, offset); break;
+        }
     }
-    void gunzip(isize offset = 0, isize sizeEstimate = 0) {
-        uncompress(Compressible::gunzip, offset, sizeEstimate);
+    void uncompress(Compressor compressor, isize offset = 0, isize sizeEstimate = 0) {
+        switch (compressor) {
+
+            case Compressor::NONE:  break;
+            case Compressor::GZIP:  uncompress(Compressible::gunzip, offset, sizeEstimate); break;
+            case Compressor::LZ4:   uncompress(Compressible::unlz4, offset, sizeEstimate);  break;
+            case Compressor::RLE2:  uncompress(Compressible::unrle2, offset, sizeEstimate); break;
+            case Compressor::RLE3:  uncompress(Compressible::unrle3, offset, sizeEstimate); break;
+        }
     }
-    void lz4(isize offset = 0) {
-        compress(Compressible::lz4, offset);
-    }
-    void unlz4(isize offset = 0, isize sizeEstimate = 0) {
-        uncompress(Compressible::unlz4, offset, sizeEstimate);
-    }
-    void rle2(isize offset = 0) {
-        compress(Compressible::rle2, offset);
-    }
-    void unrle2(isize offset = 0, isize sizeEstimate = 0) {
-        uncompress(Compressible::unrle2, offset, sizeEstimate);
-    }
-    void rle3(isize offset = 0) {
-        compress(Compressible::rle3, offset);
-    }
-    void unrle3(isize offset = 0, isize sizeEstimate = 0) {
-        uncompress(Compressible::unrle3, offset, sizeEstimate);
-    }
+
+    // Shortcuts for the individual algorithms
+    void gzip(isize offset = 0) { compress(Compressor::GZIP, offset); }
+    void gunzip(isize offset = 0, isize sizeEstimate = 0) { uncompress(Compressor::GZIP, offset, sizeEstimate); }
+    void lz4(isize offset = 0) { compress(Compressor::LZ4, offset); }
+    void unlz4(isize offset = 0, isize sizeEstimate = 0) { uncompress(Compressor::LZ4, offset, sizeEstimate); }
+    void rle2(isize offset = 0) { compress(Compressor::RLE2, offset); }
+    void unrle2(isize offset = 0, isize sizeEstimate = 0) { uncompress(Compressor::RLE2, offset, sizeEstimate); }
+    void rle3(isize offset = 0) { compress(Compressor::RLE3, offset); }
+    void unrle3(isize offset = 0, isize sizeEstimate = 0) { uncompress(Compressor::RLE3, offset, sizeEstimate); }
 
     // Exports the buffer
     void write(std::ostream &stream) const { write(stream, 0, size); }

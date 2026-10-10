@@ -32,6 +32,7 @@ struct IOError : public Error {
     static constexpr long FILE_CANT_CREATE      = 18;
     static constexpr long FILE_CANT_DELETE      = 19;
     static constexpr long FILE_INVALID_DATA     = 20;
+    static constexpr long FILE_IN_USE           = 21;
 
     static constexpr long JSON_ERROR            = 30;
     static constexpr long ZLIB_ERROR            = 31;
@@ -57,6 +58,7 @@ struct IOError : public Error {
             case FILE_CANT_CREATE:      return "FILE_CANT_CREATE";
             case FILE_CANT_DELETE:      return "FILE_CANT_DELETE";
             case FILE_INVALID_DATA:     return "FILE_INVALID_DATA";
+            case FILE_IN_USE:           return "FILE_IN_USE";
 
             case JSON_ERROR:            return "JSON_ERROR";
             case ZLIB_ERROR:            return "ZLIB_ERROR";
@@ -134,6 +136,10 @@ struct IOError : public Error {
 
             case FILE_INVALID_DATA:
                 set_msg("File \"" + msg + "\" contains invalid data.");
+                break;
+
+            case FILE_IN_USE:
+                set_msg("File \"" + msg + "\" is in use.");
                 break;
 
             case JSON_ERROR:
