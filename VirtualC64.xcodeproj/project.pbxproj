@@ -207,7 +207,6 @@
 		50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MsgQueue.cpp */; };
 		50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E924AF29AB00E69CAE /* CPU.cpp */; };
 		50726F4B2961C9940031F2F5 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50461BBC26B522450019CEDF /* Thread.cpp */; };
-		50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F420C8250BA3460043DE56 /* Colors.cpp */; };
 		50726F4D2961C9940031F2F5 /* PowerPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerPort.cpp */; };
 		50726F4E2961C9940031F2F5 /* Host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F5B6A02959C44E000457A0 /* Host.cpp */; };
 		50726F4F2961C9940031F2F5 /* CoreObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42ED24AF29AB00E69CAE /* CoreObject.cpp */; };
@@ -597,6 +596,10 @@
 		50AC286D2F44AA050016265E /* Codecs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC286C2F44AA030016265E /* Codecs.cpp */; };
 		50AC286E2F44AA050016265E /* Codecs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AC286C2F44AA030016265E /* Codecs.cpp */; };
 		50ACF4DB256EB43B003B5690 /* PowerPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerPort.cpp */; };
+		50AD0007305C000000A1B2C3 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0005305C000000A1B2C3 /* Colors.cpp */; };
+		50AD0008305C000000A1B2C3 /* Images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0006305C000000A1B2C3 /* Images.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		50AD0009305C000000A1B2C3 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0005305C000000A1B2C3 /* Colors.cpp */; };
+		50AD0010305C000000A1B2C3 /* Images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0006305C000000A1B2C3 /* Images.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50AE19392632B787005A5898 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE19372632B787005A5898 /* Script.cpp */; };
 		50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
 		50AEEE7326305625001DED20 /* C64Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AEEE7126305625001DED20 /* C64Key.cpp */; };
@@ -707,7 +710,6 @@
 		50F0C2482EADFB1200BCC7BB /* PromServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C2462EADFB0F00BCC7BB /* PromServer.cpp */; };
 		50F0EB7A25CC33B3002D0D72 /* GameKiller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */; };
 		50F2381E12DF505B00B1F275 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F2381D12DF505B00B1F275 /* Quartz.framework */; };
-		50F420CA250BA3460043DE56 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F420C8250BA3460043DE56 /* Colors.cpp */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
 		50F5B6A22959C44E000457A0 /* Host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F5B6A02959C44E000457A0 /* Host.cpp */; };
@@ -1443,6 +1445,11 @@
 		50AC286C2F44AA030016265E /* Codecs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Codecs.cpp; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPort.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPort.h; sourceTree = "<group>"; };
+		50AD0002305C000000A1B2C3 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
+		50AD0003305C000000A1B2C3 /* GraphicsTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphicsTypes.h; sourceTree = "<group>"; };
+		50AD0004305C000000A1B2C3 /* Images.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Images.h; sourceTree = "<group>"; };
+		50AD0005305C000000A1B2C3 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
+		50AD0006305C000000A1B2C3 /* Images.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Images.cpp; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
 		50AE19382632B787005A5898 /* Script.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Script.h; sourceTree = "<group>"; };
 		50AE193A2633E9B0005A5898 /* RegressionTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RegressionTester.cpp; sourceTree = "<group>"; };
@@ -1595,8 +1602,6 @@
 		50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameKiller.cpp; sourceTree = "<group>"; };
 		50F0EB7925CC33B3002D0D72 /* GameKiller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameKiller.h; sourceTree = "<group>"; };
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
-		50F420C8250BA3460043DE56 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
-		50F420C9250BA3460043DE56 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
 		50F5B6A02959C44E000457A0 /* Host.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Host.cpp; sourceTree = "<group>"; };
 		50F5B6A12959C44E000457A0 /* Host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Host.h; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
@@ -2445,8 +2450,6 @@
 				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
 				500C7C43259FC09B00F5CC1F /* Error.h */,
 				5055D5B32615886E005D3DA6 /* Error.cpp */,
-				50F420C9250BA3460043DE56 /* Colors.h */,
-				50F420C8250BA3460043DE56 /* Colors.cpp */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
 				5093D6A824B19E9200BDF924 /* Serializable.h */,
 				506A8A872B88D00200B95383 /* Configurable.h */,
@@ -2647,6 +2650,7 @@
 				50AC25442F41A8760016265E /* abilities */,
 				50AC25472F41A8760016265E /* chrono */,
 				50AC254A2F41A8760016265E /* concurrency */,
+				50AD0000305C000000A1B2C3 /* gfx */,
 				50AC25512F41A8760016265E /* io */,
 				50AC25552F41A8760016265E /* primitives */,
 				50AC25592F41A8760016265E /* storage */,
@@ -2741,6 +2745,7 @@
 			children = (
 				50AC257A2F41A8760016265E /* abilities */,
 				50AC257D2F41A8760016265E /* chrono */,
+				50AD0001305C000000A1B2C3 /* gfx */,
 				50AC25812F41A8760016265E /* io */,
 				50AC25832F41A8760016265E /* storage */,
 				50AC25872F41A8760016265E /* support */,
@@ -3117,6 +3122,25 @@
 			path = Ports;
 			sourceTree = "<group>";
 		};
+		50AD0000305C000000A1B2C3 /* gfx */ = {
+			isa = PBXGroup;
+			children = (
+				50AD0002305C000000A1B2C3 /* Colors.h */,
+				50AD0003305C000000A1B2C3 /* GraphicsTypes.h */,
+				50AD0004305C000000A1B2C3 /* Images.h */,
+			);
+			path = gfx;
+			sourceTree = "<group>";
+		};
+		50AD0001305C000000A1B2C3 /* gfx */ = {
+			isa = PBXGroup;
+			children = (
+				50AD0005305C000000A1B2C3 /* Colors.cpp */,
+				50AD0006305C000000A1B2C3 /* Images.cpp */,
+			);
+			path = gfx;
+			sourceTree = "<group>";
+		};
 		50B114B72E8FB0EE00EC854D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -3405,7 +3429,6 @@
 				50AC25BA2F4221780016265E /* vcdebug.cpp in Sources */,
 				50AC286E2F44AA050016265E /* Codecs.cpp in Sources */,
 				50AC25BF2F4257980016265E /* CoreError.cpp in Sources */,
-				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
 				50726F602961C9AC0031F2F5 /* VICIIDraw.cpp in Sources */,
 				508C1E732C0C59A20097473C /* PaddleBase.cpp in Sources */,
 				50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */,
@@ -3460,6 +3483,8 @@
 				50AC25A22F41A8760016265E /* Time.cpp in Sources */,
 				50AC25A32F41A8760016265E /* Compressible.cpp in Sources */,
 				50AC25A42F41A8760016265E /* Files.cpp in Sources */,
+				50AD0007305C000000A1B2C3 /* Colors.cpp in Sources */,
+				50AD0008305C000000A1B2C3 /* Images.cpp in Sources */,
 				50AC25A52F41A8760016265E /* Dumpable.cpp in Sources */,
 				50AC25A62F41A8760016265E /* Hashable.cpp in Sources */,
 				50AC25A72F41A8760016265E /* Reflectable.cpp in Sources */,
@@ -3647,6 +3672,8 @@
 				50AC258F2F41A8760016265E /* Time.cpp in Sources */,
 				50AC25902F41A8760016265E /* Compressible.cpp in Sources */,
 				50AC25912F41A8760016265E /* Files.cpp in Sources */,
+				50AD0009305C000000A1B2C3 /* Colors.cpp in Sources */,
+				50AD0010305C000000A1B2C3 /* Images.cpp in Sources */,
 				50AC25922F41A8760016265E /* Dumpable.cpp in Sources */,
 				50AC25932F41A8760016265E /* Hashable.cpp in Sources */,
 				50AC25942F41A8760016265E /* Reflectable.cpp in Sources */,
@@ -4005,7 +4032,6 @@
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507E7AA024FB881500AB433C /* ScreenshotViewer.swift in Sources */,
-				50F420CA250BA3460043DE56 /* Colors.cpp in Sources */,
 				50995F2A24DBCDE400F40713 /* PeddleDebugger.cpp in Sources */,
 				505F45562E96953F00418105 /* SettingsOutlineView.swift in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,

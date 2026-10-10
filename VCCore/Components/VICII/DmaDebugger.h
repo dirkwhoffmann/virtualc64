@@ -14,7 +14,7 @@
 
 #include "DmaDebuggerTypes.h"
 #include "SubComponent.h"
-#include "Colors.h"
+#include "utl/gfx/Colors.h"
 
 namespace vc64 {
 
@@ -31,24 +31,24 @@ class DmaDebugger final : public SubComponent {
 
     Options options = {
 
-        Opt::DMA_DEBUG_ENABLE,
-        Opt::DMA_DEBUG_OVERLAY,
-        Opt::DMA_DEBUG_MODE,
-        Opt::DMA_DEBUG_OPACITY,
+        Opt::XRAY_MODE,
+        Opt::XRAY_OVERLAY,
+        Opt::XRAY_OVERLAY_STYLE,
+        Opt::XRAY_OVERLAY_OPACITY,
         Opt::VICII_CUT_LAYERS,
         Opt::VICII_CUT_OPACITY,
-        Opt::DMA_DEBUG_CHANNEL0,
-        Opt::DMA_DEBUG_CHANNEL1,
-        Opt::DMA_DEBUG_CHANNEL2,
-        Opt::DMA_DEBUG_CHANNEL3,
-        Opt::DMA_DEBUG_CHANNEL4,
-        Opt::DMA_DEBUG_CHANNEL5,
-        Opt::DMA_DEBUG_COLOR0,
-        Opt::DMA_DEBUG_COLOR1,
-        Opt::DMA_DEBUG_COLOR2,
-        Opt::DMA_DEBUG_COLOR3,
-        Opt::DMA_DEBUG_COLOR4,
-        Opt::DMA_DEBUG_COLOR5
+        Opt::XRAY_DMA_CHANNEL0,
+        Opt::XRAY_DMA_CHANNEL1,
+        Opt::XRAY_DMA_CHANNEL2,
+        Opt::XRAY_DMA_CHANNEL3,
+        Opt::XRAY_DMA_CHANNEL4,
+        Opt::XRAY_DMA_CHANNEL5,
+        Opt::XRAY_DMA_COLOR0,
+        Opt::XRAY_DMA_COLOR1,
+        Opt::XRAY_DMA_COLOR2,
+        Opt::XRAY_DMA_COLOR3,
+        Opt::XRAY_DMA_COLOR4,
+        Opt::XRAY_DMA_COLOR5
     };
 
     // Current configuration
@@ -90,7 +90,7 @@ public:
 
         << debugColor
 
-        << config.dmaDebug
+        << config.mode
         << config.dmaChannel
         << config.dmaColor
         << config.dmaDisplayMode
@@ -128,33 +128,57 @@ public:
     //
     // Managing colors
     //
-    
-    void setDmaDebugColor(MemAccess type, GpuColor color);
+
+    // 'color' is the fixed, portable ABGR encoding the option system stores
+    // (see Defaults.cpp / XRAY_DMA_COLORn) -- independent of the live
+    // HOST_TEX_FORMAT. Re-derives the four shades in debugColor[][] in
+    // whatever format the host is actually running in right now.
+    void setDmaDebugColor(MemAccess type, GpuColor<TexelFormat::ABGR> color);
     void setDmaDebugColor(MemAccess type, RgbColor color);
 
-    
+    // Re-derives every channel's debugColor[][] shades for the host's
+    // current HOST_TEX_FORMAT. Called whenever a channel's color changes,
+    // and whenever HOST_TEX_FORMAT itself changes (see Host::setOption),
+    // since debugColor[][] caches already-packed texels rather than
+    // recomputing them per pixel in the hot path (visualizeDma).
+    void updateDebugColors();
+
+private:
+
+    template <TexelFormat F> void updateDebugColor(long channel, const RgbColor &color);
+
+
     //
     // Visualizing DMA
     //
-    
+
 public:
-    
+
     // Visualizes a memory access by drawing into the DMA debuger texture
     void visualizeDma(isize offset, u8 data, MemAccess type);
     void visualizeDma(u32 *ptr, u8 data, MemAccess type);
-    
-    // Superimposes the debug output onto the current scanline
-    void computeOverlay(u32 *emuTexture, u32 *dmaTexture);
 
-    
+    // Superimposes the debug output onto the current scanline. Dispatches
+    // once (per call, not per pixel) to the templated overload below,
+    // matching the host's current HOST_TEX_FORMAT -- mirrors vAmiga's own
+    // DmaDebugger::computeOverlay (Components/Agnus/DmaDebugger/
+    // DmaDebugger.h), see its class comment for why.
+    void computeOverlay(u32 *emuTexture, u32 *xrayTexture);
+
+    template <TexelFormat F> void computeOverlay(u32 *emuTexture, u32 *xrayTexture);
+
+
     //
     // Cutting layers
     //
-    
+
 public:
-    
-    // Cuts out certain graphics layers
+
+    // Cuts out certain graphics layers. Same dispatch shape as
+    // computeOverlay -- see there.
     void cutLayers();
+
+    template <TexelFormat F> void cutLayers();
 };
 
 }

@@ -640,7 +640,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (u32 *)oldDmaTexture
 {
-    return [self port]->oldGetDmaTexture();
+    return [self port]->oldGetXrayTexture();
 }
 */
 
@@ -656,7 +656,7 @@ NSString *EventSlotName(EventSlot slot)
 {
     isize frame, width, height;
 
-    *ptr = [self port]->getDmaTexture(&frame, &width, &height);
+    *ptr = [self port]->getXrayTexture(&frame, &width, &height);
     *nr = frame;
 }
 

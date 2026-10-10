@@ -21,6 +21,41 @@ namespace vc64 {
 // Enumerations
 //
 
+/// X-Ray mode
+enum class XRayMode : long
+{
+    XRAY_NONE,
+    XRAY_DMA,
+    XRAY_LAYERS
+};
+
+struct XRayModeEnum : Reflectable<XRayModeEnum, XRayMode> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = long(XRayMode::XRAY_LAYERS);
+
+    static const char *_key(XRayMode value)
+    {
+        switch (value) {
+
+            case XRayMode::XRAY_NONE:   return "XRAY_NONE";
+            case XRayMode::XRAY_DMA:    return "XRAY_DMA";
+            case XRayMode::XRAY_LAYERS: return "XRAY_LAYERS";
+        }
+        return "???";
+    }
+    static const char *help(XRayMode value)
+    {
+        switch (value) {
+
+            case XRayMode::XRAY_NONE:   return "Off";
+            case XRayMode::XRAY_DMA:    return "DMA debugger";
+            case XRayMode::XRAY_LAYERS: return "Layer inspector";
+        }
+        return "???";
+    }
+};
+
 /// DMA debugger display mode
 enum class DmaDisplayMode : long
 {
@@ -63,8 +98,8 @@ struct DmaDisplayModeEnum : Reflectable<DmaDisplayModeEnum, DmaDisplayMode> {
 
 typedef struct
 {
-    // DMA debugger
-    bool dmaDebug;
+    // X-Ray mode (off, DMA debugger, layer inspector)
+    XRayMode mode;
     bool dmaOverlay;
     bool dmaChannel[6];
     u32 dmaColor[6];

@@ -925,9 +925,9 @@ VideoPortAPI::oldGetTexture() const
 }
 
 u32 *
-VideoPortAPI::oldGetDmaTexture() const
+VideoPortAPI::oldGetXrayTexture() const
 {
-    return emu->oldGetDmaTexture();
+    return emu->oldGetXrayTexture();
 }
 */
 
@@ -952,17 +952,17 @@ VideoPortAPI::getTexture(isize *nr, isize *width, isize *height) const
 }
 
 const u32 *
-VideoPortAPI::getDmaTexture() const
+VideoPortAPI::getXrayTexture() const
 {
     VC64_PUBLIC
-    return (u32 *)emu->getDmaTexture().pixels.ptr;
+    return (u32 *)emu->getXrayTexture().pixels.ptr;
 }
 
 const u32 *
-VideoPortAPI::getDmaTexture(isize *nr, isize *width, isize *height) const
+VideoPortAPI::getXrayTexture(isize *nr, isize *width, isize *height) const
 {
     VC64_PUBLIC
-    auto &texture = emu->getDmaTexture();
+    auto &texture = emu->getXrayTexture();
 
     *nr = isize(texture.nr);
     *width = isize(Texture::width);

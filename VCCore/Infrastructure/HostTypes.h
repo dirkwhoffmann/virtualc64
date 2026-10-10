@@ -20,7 +20,11 @@ namespace vc64 {
 // Enumerations
 //
 
-/// Texture format
+/* Byte layout of a 32-bit host pixel. Same three values, in the same order,
+ * as utl::TexelFormat (see GpuColor<F> in utl/types/Colors.h) -- a plain
+ * static_cast moves a value from this Reflectable-paired, UI/option-facing
+ * enum to the one GpuColor<F> is templated on, and back.
+ */
 enum class TexFormat : long
 {
     ABGR,                       ///< AABBGGRR
@@ -64,7 +68,7 @@ typedef struct
 {
     // Refresh rate of the host display
     isize refreshRate;
-    
+
     // Audio sample rate of the host computer
     isize sampleRate;
 

@@ -322,8 +322,8 @@ struct VideoPortAPI : public API {
     const u32 *getTexture() const;
     const u32 *getTexture(isize *nr, isize *width, isize *height) const;
 
-    const u32 *getDmaTexture() const;
-    const u32 *getDmaTexture(isize *nr, isize *width, isize *height) const;
+    const u32 *getXrayTexture() const;
+    const u32 *getXrayTexture(isize *nr, isize *width, isize *height) const;
 
     /** @brief Analyzes the current texture and determines coordinates for border cropping
      */

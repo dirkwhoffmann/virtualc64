@@ -441,39 +441,39 @@ Emulator::getTexture() const
 
 /*
 u32 *
-Emulator::oldGetDmaTexture() const
+Emulator::oldGetXrayTexture() const
 {
     if (isRunning()) {
 
         // In run-ahead mode, return the texture from the run-ahead instance
         if (main.config.runAhead > 0) {
-            return ahead.videoPort.oldGetDmaTexture();
+            return ahead.videoPort.oldGetXrayTexture();
         }
     }
 
     // Return the most recent texture from the main instance
-    return main.videoPort.oldGetDmaTexture();
+    return main.videoPort.oldGetXrayTexture();
 }
 */
 
 const Texture &
-Emulator::getDmaTexture() const
+Emulator::getXrayTexture() const
 {
     if (isRunning()) {
 
         // In run-ahead mode, return the texture from the run-ahead instance
         if (main.config.runAhead > 0) {
-            return ahead.videoPort.getDmaTexture();
+            return ahead.videoPort.getXrayTexture();
         }
 
         // In run-behind mode, return a texture from the texture buffer
         if (main.config.runAhead < 0) {
-            return main.videoPort.getDmaTexture(main.config.runAhead);
+            return main.videoPort.getXrayTexture(main.config.runAhead);
         }
     }
 
     // Return the most recent texture from the main instance
-    return main.videoPort.getDmaTexture();
+    return main.videoPort.getXrayTexture();
 }
 
 void

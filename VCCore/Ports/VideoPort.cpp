@@ -121,11 +121,11 @@ VideoPort::getTexture(isize offset) const
 }
 
 const class Texture &
-VideoPort::getDmaTexture(isize offset) const
+VideoPort::getXrayTexture(isize offset) const
 {
     if (isPoweredOn()) {
 
-        return vic.getStableDmaBuffer(offset);
+        return vic.getStableXrayBuffer(offset);
 
     } else {
 

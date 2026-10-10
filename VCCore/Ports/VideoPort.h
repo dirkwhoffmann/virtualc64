@@ -112,7 +112,7 @@ public:
     const class Texture &getTexture(isize offset = 0) const;
 
     // Returns a pointer to the bus debugger texture
-    const class Texture &getDmaTexture(isize offset = 0) const;
+    const class Texture &getXrayTexture(isize offset = 0) const;
 
     // Informs the video port about a buffer swap
     void buffersWillSwap();

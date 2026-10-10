@@ -33,26 +33,26 @@ DmaDebugger::getOption(Opt option) const
 {
     switch (option) {
 
-        case Opt::DMA_DEBUG_ENABLE:      return (i64)config.dmaDebug;
-        case Opt::DMA_DEBUG_OVERLAY:     return (i64)config.dmaOverlay;
-        case Opt::DMA_DEBUG_MODE:        return (i64)config.dmaDisplayMode;
-        case Opt::DMA_DEBUG_OPACITY:     return (i64)config.dmaOpacity;
+        case Opt::XRAY_MODE:        return (i64)config.mode;
+        case Opt::XRAY_OVERLAY:     return (i64)config.dmaOverlay;
+        case Opt::XRAY_OVERLAY_STYLE: return (i64)config.dmaDisplayMode;
+        case Opt::XRAY_OVERLAY_OPACITY: return (i64)config.dmaOpacity;
 
         case Opt::VICII_CUT_LAYERS:      return (i64)config.cutLayers;
         case Opt::VICII_CUT_OPACITY:     return (i64)config.cutOpacity;
 
-        case Opt::DMA_DEBUG_CHANNEL0:    return (i64)config.dmaChannel[0];
-        case Opt::DMA_DEBUG_CHANNEL1:    return (i64)config.dmaChannel[1];
-        case Opt::DMA_DEBUG_CHANNEL2:    return (i64)config.dmaChannel[2];
-        case Opt::DMA_DEBUG_CHANNEL3:    return (i64)config.dmaChannel[3];
-        case Opt::DMA_DEBUG_CHANNEL4:    return (i64)config.dmaChannel[4];
-        case Opt::DMA_DEBUG_CHANNEL5:    return (i64)config.dmaChannel[5];
-        case Opt::DMA_DEBUG_COLOR0:      return (i64)config.dmaColor[0];
-        case Opt::DMA_DEBUG_COLOR1:      return (i64)config.dmaColor[1];
-        case Opt::DMA_DEBUG_COLOR2:      return (i64)config.dmaColor[2];
-        case Opt::DMA_DEBUG_COLOR3:      return (i64)config.dmaColor[3];
-        case Opt::DMA_DEBUG_COLOR4:      return (i64)config.dmaColor[4];
-        case Opt::DMA_DEBUG_COLOR5:      return (i64)config.dmaColor[5];
+        case Opt::XRAY_DMA_CHANNEL0:    return (i64)config.dmaChannel[0];
+        case Opt::XRAY_DMA_CHANNEL1:    return (i64)config.dmaChannel[1];
+        case Opt::XRAY_DMA_CHANNEL2:    return (i64)config.dmaChannel[2];
+        case Opt::XRAY_DMA_CHANNEL3:    return (i64)config.dmaChannel[3];
+        case Opt::XRAY_DMA_CHANNEL4:    return (i64)config.dmaChannel[4];
+        case Opt::XRAY_DMA_CHANNEL5:    return (i64)config.dmaChannel[5];
+        case Opt::XRAY_DMA_COLOR0:      return (i64)config.dmaColor[0];
+        case Opt::XRAY_DMA_COLOR1:      return (i64)config.dmaColor[1];
+        case Opt::XRAY_DMA_COLOR2:      return (i64)config.dmaColor[2];
+        case Opt::XRAY_DMA_COLOR3:      return (i64)config.dmaColor[3];
+        case Opt::XRAY_DMA_COLOR4:      return (i64)config.dmaColor[4];
+        case Opt::XRAY_DMA_COLOR5:      return (i64)config.dmaColor[5];
 
         default:
             fatalError;
@@ -64,35 +64,38 @@ DmaDebugger::checkOption(Opt opt, i64 value)
 {
     switch (opt) {
 
-        case Opt::DMA_DEBUG_ENABLE:
-        case Opt::DMA_DEBUG_OVERLAY:
-            
+        case Opt::XRAY_MODE:
+            if (!XRayModeEnum::isValid(value)) {
+                throw CoreError(CoreError::OPT_INV_ARG, XRayModeEnum::keyList());
+            }
             return;
 
-        case Opt::DMA_DEBUG_MODE:
+        case Opt::XRAY_OVERLAY:
 
+            return;
+
+        case Opt::XRAY_OVERLAY_STYLE: 
             if (!DmaDisplayModeEnum::isValid(value)) {
                 throw CoreError(CoreError::OPT_INV_ARG, DmaDisplayModeEnum::keyList());
             }
             return;
 
-        case Opt::DMA_DEBUG_OPACITY:
-        case Opt::VICII_CUT_LAYERS:
+        case Opt::XRAY_OVERLAY_OPACITY:         case Opt::VICII_CUT_LAYERS:
         case Opt::VICII_CUT_OPACITY:
 
-        case Opt::DMA_DEBUG_CHANNEL0:
-        case Opt::DMA_DEBUG_CHANNEL1:
-        case Opt::DMA_DEBUG_CHANNEL2:
-        case Opt::DMA_DEBUG_CHANNEL3:
-        case Opt::DMA_DEBUG_CHANNEL4:
-        case Opt::DMA_DEBUG_CHANNEL5:
+        case Opt::XRAY_DMA_CHANNEL0:
+        case Opt::XRAY_DMA_CHANNEL1:
+        case Opt::XRAY_DMA_CHANNEL2:
+        case Opt::XRAY_DMA_CHANNEL3:
+        case Opt::XRAY_DMA_CHANNEL4:
+        case Opt::XRAY_DMA_CHANNEL5:
 
-        case Opt::DMA_DEBUG_COLOR0:
-        case Opt::DMA_DEBUG_COLOR1:
-        case Opt::DMA_DEBUG_COLOR2:
-        case Opt::DMA_DEBUG_COLOR3:
-        case Opt::DMA_DEBUG_COLOR4:
-        case Opt::DMA_DEBUG_COLOR5:
+        case Opt::XRAY_DMA_COLOR0:
+        case Opt::XRAY_DMA_COLOR1:
+        case Opt::XRAY_DMA_COLOR2:
+        case Opt::XRAY_DMA_COLOR3:
+        case Opt::XRAY_DMA_COLOR4:
+        case Opt::XRAY_DMA_COLOR5:
 
             return;
 
@@ -108,41 +111,40 @@ DmaDebugger::setOption(Opt opt, i64 value)
 
     switch (opt) {
 
-        case Opt::DMA_DEBUG_ENABLE:
+        case Opt::XRAY_MODE:
 
-            config.dmaDebug = value;
-            vic.resetDmaTextures();
+            config.mode = (XRayMode)value;
+            vic.resetXrayTextures();
             vic.resetEmuTextures();
             return;
 
-        case Opt::DMA_DEBUG_OVERLAY:
+        case Opt::XRAY_OVERLAY:
             
             config.dmaOverlay = value;
             msgQueue.put(Msg::DMA_DEBUG, value);
             return;
             
-        case Opt::DMA_DEBUG_MODE:
-
+        case Opt::XRAY_OVERLAY_STYLE: 
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return;
 
-        case Opt::DMA_DEBUG_OPACITY:     config.dmaOpacity = (u8)value; return;
+        case Opt::XRAY_OVERLAY_OPACITY: config.dmaOpacity = (u8)value; return;
         case Opt::VICII_CUT_LAYERS:      config.cutLayers = (u16)value; return;
         case Opt::VICII_CUT_OPACITY:     config.cutOpacity = (u8)value; return;
 
-        case Opt::DMA_DEBUG_CHANNEL0:    config.dmaChannel[0] = value; return;
-        case Opt::DMA_DEBUG_CHANNEL1:    config.dmaChannel[1] = value; return;
-        case Opt::DMA_DEBUG_CHANNEL2:    config.dmaChannel[2] = value; return;
-        case Opt::DMA_DEBUG_CHANNEL3:    config.dmaChannel[3] = value; return;
-        case Opt::DMA_DEBUG_CHANNEL4:    config.dmaChannel[4] = value; return;
-        case Opt::DMA_DEBUG_CHANNEL5:    config.dmaChannel[5] = value; return;
+        case Opt::XRAY_DMA_CHANNEL0:    config.dmaChannel[0] = value; return;
+        case Opt::XRAY_DMA_CHANNEL1:    config.dmaChannel[1] = value; return;
+        case Opt::XRAY_DMA_CHANNEL2:    config.dmaChannel[2] = value; return;
+        case Opt::XRAY_DMA_CHANNEL3:    config.dmaChannel[3] = value; return;
+        case Opt::XRAY_DMA_CHANNEL4:    config.dmaChannel[4] = value; return;
+        case Opt::XRAY_DMA_CHANNEL5:    config.dmaChannel[5] = value; return;
 
-        case Opt::DMA_DEBUG_COLOR0:      setDmaDebugColor(MemAccess::R, GpuColor((u32)value)); return;
-        case Opt::DMA_DEBUG_COLOR1:      setDmaDebugColor(MemAccess::I, GpuColor((u32)value)); return;
-        case Opt::DMA_DEBUG_COLOR2:      setDmaDebugColor(MemAccess::C, GpuColor((u32)value)); return;
-        case Opt::DMA_DEBUG_COLOR3:      setDmaDebugColor(MemAccess::G, GpuColor((u32)value)); return;
-        case Opt::DMA_DEBUG_COLOR4:      setDmaDebugColor(MemAccess::P, GpuColor((u32)value)); return;
-        case Opt::DMA_DEBUG_COLOR5:      setDmaDebugColor(MemAccess::S, GpuColor((u32)value)); return;
+        case Opt::XRAY_DMA_COLOR0:      setDmaDebugColor(MemAccess::R, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_DMA_COLOR1:      setDmaDebugColor(MemAccess::I, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_DMA_COLOR2:      setDmaDebugColor(MemAccess::C, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_DMA_COLOR3:      setDmaDebugColor(MemAccess::G, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_DMA_COLOR4:      setDmaDebugColor(MemAccess::P, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+        case Opt::XRAY_DMA_COLOR5:      setDmaDebugColor(MemAccess::S, GpuColor<TexelFormat::ABGR>((u32)value)); return;
 
         default:
             fatalError;

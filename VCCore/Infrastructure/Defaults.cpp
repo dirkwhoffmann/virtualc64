@@ -49,22 +49,25 @@ Defaults::Defaults()
     setFallback(Opt::VICII_CUT_LAYERS,           0xFF);
     setFallback(Opt::VICII_CUT_OPACITY,          0xFF);
 
-    setFallback(Opt::DMA_DEBUG_ENABLE,           false);
-    setFallback(Opt::DMA_DEBUG_OVERLAY,          false);
-    setFallback(Opt::DMA_DEBUG_MODE,             (i64)DmaDisplayMode::FG_LAYER);
-    setFallback(Opt::DMA_DEBUG_OPACITY,          0x80);
-    setFallback(Opt::DMA_DEBUG_CHANNEL0,         true);
-    setFallback(Opt::DMA_DEBUG_CHANNEL1,         true);
-    setFallback(Opt::DMA_DEBUG_CHANNEL2,         true);
-    setFallback(Opt::DMA_DEBUG_CHANNEL3,         true);
-    setFallback(Opt::DMA_DEBUG_CHANNEL4,         true);
-    setFallback(Opt::DMA_DEBUG_CHANNEL5,         true);
-    setFallback(Opt::DMA_DEBUG_COLOR0,           GpuColor(0xFF, 0x00, 0x00).abgr);
-    setFallback(Opt::DMA_DEBUG_COLOR1,           GpuColor(0xFF, 0xC0, 0x00).abgr);
-    setFallback(Opt::DMA_DEBUG_COLOR2,           GpuColor(0xFF, 0xFF, 0x00).abgr);
-    setFallback(Opt::DMA_DEBUG_COLOR3,           GpuColor(0x00, 0xFF, 0xFF).abgr);
-    setFallback(Opt::DMA_DEBUG_COLOR4,           GpuColor(0x00, 0xFF, 0x00).abgr);
-    setFallback(Opt::DMA_DEBUG_COLOR5,           GpuColor(0x00, 0x80, 0xFF).abgr);
+    setFallback(Opt::XRAY_MODE,             (i64)XRayMode::XRAY_NONE);
+    setFallback(Opt::XRAY_OVERLAY,          false);
+    setFallback(Opt::XRAY_OVERLAY_STYLE,    (i64)DmaDisplayMode::FG_LAYER);
+    setFallback(Opt::XRAY_OVERLAY_OPACITY,  0x80);
+    setFallback(Opt::XRAY_DMA_CHANNEL0,         true);
+    setFallback(Opt::XRAY_DMA_CHANNEL1,         true);
+    setFallback(Opt::XRAY_DMA_CHANNEL2,         true);
+    setFallback(Opt::XRAY_DMA_CHANNEL3,         true);
+    setFallback(Opt::XRAY_DMA_CHANNEL4,         true);
+    setFallback(Opt::XRAY_DMA_CHANNEL5,         true);
+    // Fixed, portable encoding (ABGR) for a persisted option value --
+    // independent of the live HOST_TEX_FORMAT, which DmaDebugger re-derives
+    // its actual on-screen shades from (see DmaDebugger::updateDebugColors).
+    setFallback(Opt::XRAY_DMA_COLOR0,           GpuColor<TexelFormat::ABGR>(0xFF, 0x00, 0x00).rawValue);
+    setFallback(Opt::XRAY_DMA_COLOR1,           GpuColor<TexelFormat::ABGR>(0xFF, 0xC0, 0x00).rawValue);
+    setFallback(Opt::XRAY_DMA_COLOR2,           GpuColor<TexelFormat::ABGR>(0xFF, 0xFF, 0x00).rawValue);
+    setFallback(Opt::XRAY_DMA_COLOR3,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0xFF).rawValue);
+    setFallback(Opt::XRAY_DMA_COLOR4,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0x00).rawValue);
+    setFallback(Opt::XRAY_DMA_COLOR5,           GpuColor<TexelFormat::ABGR>(0x00, 0x80, 0xFF).rawValue);
 
     setFallback(Opt::EXP_REU_SPEED,              1);
 

@@ -13,7 +13,7 @@ extension Inspector {
           
         if let dma = emu?.dmaDebugger.getConfig() {
             
-            let enabled = dma.dmaDebug
+            let enabled = dma.mode == XRayMode.XRAY_DMA
 
             // DMA debugger
             busDebug.state = enabled ? .on : .off
@@ -48,7 +48,7 @@ extension Inspector {
     
     @IBAction func busDebugAction(_ sender: NSButton!) {
 
-        emu?.set(.DMA_DEBUG_ENABLE, enable: sender.state == .on)
+        emu?.set(.XRAY_MODE, value: (sender.state == .on ? XRayMode.XRAY_DMA : XRayMode.XRAY_NONE).rawValue)
     }
 
     @IBAction func busColorAction(_ sender: NSColorWell!) {
@@ -59,12 +59,12 @@ extension Inspector {
         let bgr = (b << 16) | (g << 8) | (r << 0)
 
         switch sender.tag {
-        case 0:  emu?.set(.DMA_DEBUG_COLOR0, value: bgr)
-        case 1:  emu?.set(.DMA_DEBUG_COLOR1, value: bgr)
-        case 2:  emu?.set(.DMA_DEBUG_COLOR2, value: bgr)
-        case 3:  emu?.set(.DMA_DEBUG_COLOR3, value: bgr)
-        case 4:  emu?.set(.DMA_DEBUG_COLOR4, value: bgr)
-        case 5:  emu?.set(.DMA_DEBUG_COLOR5, value: bgr)
+        case 0:  emu?.set(.XRAY_DMA_COLOR0, value: bgr)
+        case 1:  emu?.set(.XRAY_DMA_COLOR1, value: bgr)
+        case 2:  emu?.set(.XRAY_DMA_COLOR2, value: bgr)
+        case 3:  emu?.set(.XRAY_DMA_COLOR3, value: bgr)
+        case 4:  emu?.set(.XRAY_DMA_COLOR4, value: bgr)
+        case 5:  emu?.set(.XRAY_DMA_COLOR5, value: bgr)
         default: break
         }
     }
@@ -72,28 +72,28 @@ extension Inspector {
     @IBAction func busChannelAction(_ sender: NSButton!) {
 
         switch sender.tag {
-        case 0:  emu?.set(.DMA_DEBUG_CHANNEL0, enable: sender.state == .on)
-        case 1:  emu?.set(.DMA_DEBUG_CHANNEL1, enable: sender.state == .on)
-        case 2:  emu?.set(.DMA_DEBUG_CHANNEL2, enable: sender.state == .on)
-        case 3:  emu?.set(.DMA_DEBUG_CHANNEL3, enable: sender.state == .on)
-        case 4:  emu?.set(.DMA_DEBUG_CHANNEL4, enable: sender.state == .on)
-        case 5:  emu?.set(.DMA_DEBUG_CHANNEL5, enable: sender.state == .on)
+        case 0:  emu?.set(.XRAY_DMA_CHANNEL0, enable: sender.state == .on)
+        case 1:  emu?.set(.XRAY_DMA_CHANNEL1, enable: sender.state == .on)
+        case 2:  emu?.set(.XRAY_DMA_CHANNEL2, enable: sender.state == .on)
+        case 3:  emu?.set(.XRAY_DMA_CHANNEL3, enable: sender.state == .on)
+        case 4:  emu?.set(.XRAY_DMA_CHANNEL4, enable: sender.state == .on)
+        case 5:  emu?.set(.XRAY_DMA_CHANNEL5, enable: sender.state == .on)
         default: break
         }
     }
     
     @IBAction func busOverlayAction(_ sender: NSButton!) {
 
-        emu?.set(.DMA_DEBUG_OVERLAY, enable: sender.state == .on)
+        emu?.set(.XRAY_OVERLAY, enable: sender.state == .on)
     }
 
     @IBAction func busDisplayModeAction(_ sender: NSPopUpButton!) {
         
-        emu?.set(.DMA_DEBUG_MODE, value: sender.selectedTag())
+        emu?.set(.XRAY_OVERLAY_STYLE, value: sender.selectedTag())
     }
     
     @IBAction func busOpacityAction(_ sender: NSSlider!) {
         
-        emu?.set(.DMA_DEBUG_OPACITY, value: sender.integerValue)
+        emu?.set(.XRAY_OVERLAY_OPACITY, value: sender.integerValue)
     }
 }

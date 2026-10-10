@@ -51,23 +51,23 @@ enum class Opt : long
     VICII_SS_COLLISIONS,    ///< Check for sprite-sprite collisions
     VICII_SB_COLLISIONS,    ///< Check for sprite-background collisions
 
-    // DMA Debugger
-    DMA_DEBUG_ENABLE,       ///< Global on/off switch for the DMA debugger
-    DMA_DEBUG_OVERLAY,      ///< Overlay DMA texture onto emulator texture
-    DMA_DEBUG_MODE,         ///< DMA texture overlay mode
-    DMA_DEBUG_OPACITY,      ///< DMA texture opacity
-    DMA_DEBUG_CHANNEL0,     ///< Enable or disable channel 0
-    DMA_DEBUG_CHANNEL1,     ///< Enable or disable channel 1
-    DMA_DEBUG_CHANNEL2,     ///< Enable or disable channel 2
-    DMA_DEBUG_CHANNEL3,     ///< Enable or disable channel 3
-    DMA_DEBUG_CHANNEL4,     ///< Enable or disable channel 4
-    DMA_DEBUG_CHANNEL5,     ///< Enable or disable channel 5
-    DMA_DEBUG_COLOR0,       ///< Color for channel 0
-    DMA_DEBUG_COLOR1,       ///< Color for channel 1
-    DMA_DEBUG_COLOR2,       ///< Color for channel 2
-    DMA_DEBUG_COLOR3,       ///< Color for channel 3
-    DMA_DEBUG_COLOR4,       ///< Color for channel 4
-    DMA_DEBUG_COLOR5,       ///< Color for channel 5
+    // X-Ray
+    XRAY_MODE,         ///< X-Ray mode (off, DMA debugger, layer inspector)
+    XRAY_OVERLAY,      ///< Overlay DMA texture onto emulator texture
+    XRAY_OVERLAY_STYLE,         ///< DMA texture overlay mode
+    XRAY_OVERLAY_OPACITY,      ///< DMA texture opacity
+    XRAY_DMA_CHANNEL0,     ///< Enable or disable channel 0
+    XRAY_DMA_CHANNEL1,     ///< Enable or disable channel 1
+    XRAY_DMA_CHANNEL2,     ///< Enable or disable channel 2
+    XRAY_DMA_CHANNEL3,     ///< Enable or disable channel 3
+    XRAY_DMA_CHANNEL4,     ///< Enable or disable channel 4
+    XRAY_DMA_CHANNEL5,     ///< Enable or disable channel 5
+    XRAY_DMA_COLOR0,       ///< Color for channel 0
+    XRAY_DMA_COLOR1,       ///< Color for channel 1
+    XRAY_DMA_COLOR2,       ///< Color for channel 2
+    XRAY_DMA_COLOR3,       ///< Color for channel 3
+    XRAY_DMA_COLOR4,       ///< Color for channel 4
+    XRAY_DMA_COLOR5,       ///< Color for channel 5
 
     // Expansion port
     EXP_REU_SPEED,          ///< Transfer speed of the RAM Extension Unit
@@ -227,22 +227,22 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::VICII_SS_COLLISIONS:   return "VICII.SS_COLLISIONS";
             case Opt::VICII_SB_COLLISIONS:   return "VICII.SB_COLLISIONS";
 
-            case Opt::DMA_DEBUG_ENABLE:      return "DMA_DEBUG.ENABLE";
-            case Opt::DMA_DEBUG_OVERLAY:     return "DMA_DEBUG.OVERLAY";
-            case Opt::DMA_DEBUG_MODE:        return "DMA_DEBUG.MODE";
-            case Opt::DMA_DEBUG_OPACITY:     return "DMA_DEBUG.OPACITY";
-            case Opt::DMA_DEBUG_CHANNEL0:    return "DMA_DEBUG.CHANNEL0";
-            case Opt::DMA_DEBUG_CHANNEL1:    return "DMA_DEBUG.CHANNEL1";
-            case Opt::DMA_DEBUG_CHANNEL2:    return "DMA_DEBUG.CHANNEL2";
-            case Opt::DMA_DEBUG_CHANNEL3:    return "DMA_DEBUG.CHANNEL3";
-            case Opt::DMA_DEBUG_CHANNEL4:    return "DMA_DEBUG.CHANNEL4";
-            case Opt::DMA_DEBUG_CHANNEL5:    return "DMA_DEBUG.CHANNEL5";
-            case Opt::DMA_DEBUG_COLOR0:      return "DMA_DEBUG.COLOR0";
-            case Opt::DMA_DEBUG_COLOR1:      return "DMA_DEBUG.COLOR1";
-            case Opt::DMA_DEBUG_COLOR2:      return "DMA_DEBUG.COLOR2";
-            case Opt::DMA_DEBUG_COLOR3:      return "DMA_DEBUG.COLOR3";
-            case Opt::DMA_DEBUG_COLOR4:      return "DMA_DEBUG.COLOR4";
-            case Opt::DMA_DEBUG_COLOR5:      return "DMA_DEBUG.COLOR5";
+            case Opt::XRAY_MODE:            return "XRAY.MODE";
+            case Opt::XRAY_OVERLAY:         return "XRAY.OVERLAY";
+            case Opt::XRAY_OVERLAY_STYLE:   return "XRAY.OVERLAY_STYLE";
+            case Opt::XRAY_OVERLAY_OPACITY: return "XRAY.OVERLAY_OPACITY";
+            case Opt::XRAY_DMA_CHANNEL0:    return "XRAY.DMA_CHANNEL0";
+            case Opt::XRAY_DMA_CHANNEL1:    return "XRAY.DMA_CHANNEL1";
+            case Opt::XRAY_DMA_CHANNEL2:    return "XRAY.DMA_CHANNEL2";
+            case Opt::XRAY_DMA_CHANNEL3:    return "XRAY.DMA_CHANNEL3";
+            case Opt::XRAY_DMA_CHANNEL4:    return "XRAY.DMA_CHANNEL4";
+            case Opt::XRAY_DMA_CHANNEL5:    return "XRAY.DMA_CHANNEL5";
+            case Opt::XRAY_DMA_COLOR0:      return "XRAY.DMA_COLOR0";
+            case Opt::XRAY_DMA_COLOR1:      return "XRAY.DMA_COLOR1";
+            case Opt::XRAY_DMA_COLOR2:      return "XRAY.DMA_COLOR2";
+            case Opt::XRAY_DMA_COLOR3:      return "XRAY.DMA_COLOR3";
+            case Opt::XRAY_DMA_COLOR4:      return "XRAY.DMA_COLOR4";
+            case Opt::XRAY_DMA_COLOR5:      return "XRAY.DMA_COLOR5";
 
             case Opt::EXP_REU_SPEED:         return "EXP.REU_SPEED";
 
@@ -380,22 +380,22 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::VICII_SS_COLLISIONS:   return "Sprite-sprite collisions";
             case Opt::VICII_SB_COLLISIONS:   return "Sprite-background collisions";
 
-            case Opt::DMA_DEBUG_ENABLE:      return "DMA Debugger";
-            case Opt::DMA_DEBUG_OVERLAY:     return "Enable DMA Overlay";
-            case Opt::DMA_DEBUG_MODE:        return "Overlay style";
-            case Opt::DMA_DEBUG_OPACITY:     return "Overlay opacity";
-            case Opt::DMA_DEBUG_CHANNEL0:    return "Refresh cycles";
-            case Opt::DMA_DEBUG_CHANNEL1:    return "Idle reads";
-            case Opt::DMA_DEBUG_CHANNEL2:    return "Character accesses";
-            case Opt::DMA_DEBUG_CHANNEL3:    return "Graphics accesses";
-            case Opt::DMA_DEBUG_CHANNEL4:    return "Sprite-pointer accesses";
-            case Opt::DMA_DEBUG_CHANNEL5:    return "Sprite-data accesses";
-            case Opt::DMA_DEBUG_COLOR0:      return "Color of channel 0";
-            case Opt::DMA_DEBUG_COLOR1:      return "Color of channel 1";
-            case Opt::DMA_DEBUG_COLOR2:      return "Color of channel 2";
-            case Opt::DMA_DEBUG_COLOR3:      return "Color of channel 3";
-            case Opt::DMA_DEBUG_COLOR4:      return "Color of channel 4";
-            case Opt::DMA_DEBUG_COLOR5:      return "Color of channel 5";
+            case Opt::XRAY_MODE:        return "X-Ray mode";
+            case Opt::XRAY_OVERLAY:     return "Enable DMA Overlay";
+            case Opt::XRAY_OVERLAY_STYLE: return "Overlay style";
+            case Opt::XRAY_OVERLAY_OPACITY: return "Overlay opacity";
+            case Opt::XRAY_DMA_CHANNEL0:    return "Refresh cycles";
+            case Opt::XRAY_DMA_CHANNEL1:    return "Idle reads";
+            case Opt::XRAY_DMA_CHANNEL2:    return "Character accesses";
+            case Opt::XRAY_DMA_CHANNEL3:    return "Graphics accesses";
+            case Opt::XRAY_DMA_CHANNEL4:    return "Sprite-pointer accesses";
+            case Opt::XRAY_DMA_CHANNEL5:    return "Sprite-data accesses";
+            case Opt::XRAY_DMA_COLOR0:      return "Color of channel 0";
+            case Opt::XRAY_DMA_COLOR1:      return "Color of channel 1";
+            case Opt::XRAY_DMA_COLOR2:      return "Color of channel 2";
+            case Opt::XRAY_DMA_COLOR3:      return "Color of channel 3";
+            case Opt::XRAY_DMA_COLOR4:      return "Color of channel 4";
+            case Opt::XRAY_DMA_COLOR5:      return "Color of channel 5";
 
             case Opt::EXP_REU_SPEED:         return "REU transfer speed";
 

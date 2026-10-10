@@ -74,7 +74,7 @@ VICII::_didReset(bool hard)
         
         // Reset the screen buffer pointers
         emuTexture = getWorkingBuffer().pixels.ptr;
-        dmaTexture = getWorkingDmaBuffer().pixels.ptr;
+        xrayTexture = getWorkingXrayBuffer().pixels.ptr;
     }
 }
 
@@ -94,20 +94,20 @@ VICII::resetEmuTextures()
 }
 
 void
-VICII::resetDmaTexture(isize nr)
+VICII::resetXrayTexture(isize nr)
 {
     assert(nr < NUM_TEXTURES);
 
-    dmaTex[nr].clear(Texture::black, Texture::black);
+    xrayTex[nr].clear(Texture::black, Texture::black);
 }
 
 void
-VICII::resetDmaTextures()
+VICII::resetXrayTextures()
 {
-    // resetDmaTexture(1); resetDmaTexture(2);
+    // resetXrayTexture(1); resetXrayTexture(2);
 
     // Wipe out all textures
-    for (isize i = 0; i < NUM_TEXTURES; i++) resetDmaTexture(i);
+    for (isize i = 0; i < NUM_TEXTURES; i++) resetXrayTexture(i);
 }
 
 void
@@ -169,7 +169,7 @@ VICII::setRevision(VICIIRev revision)
     isFirstDMAcycle = isSecondDMAcycle = 0;
     updatePalette();
     resetEmuTextures();
-    resetDmaTextures();
+    resetXrayTextures();
 
     isPAL =
     revision == VICIIRev::PAL_6569_R1 ||
@@ -285,15 +285,15 @@ VICII::getStableBuffer(isize offset) const
 }
 
 Texture &
-VICII::getWorkingDmaBuffer()
+VICII::getWorkingXrayBuffer()
 {
-    return dmaTex[activeBuffer];
+    return xrayTex[activeBuffer];
 }
 
 const Texture &
-VICII::getStableDmaBuffer(isize offset) const
+VICII::getStableXrayBuffer(isize offset) const
 {
-    return dmaTex[(activeBuffer + offset - 1 + NUM_TEXTURES) % NUM_TEXTURES];
+    return xrayTex[(activeBuffer + offset - 1 + NUM_TEXTURES) % NUM_TEXTURES];
 }
 
 void
@@ -702,7 +702,7 @@ VICII::beginFrame()
 void
 VICII::endFrame()
 {
-    bool debug = dmaDebugger.config.dmaDebug;
+    bool debug = dmaDebugger.config.mode == XRayMode::XRAY_DMA;
 
     // Update the VICII revision if requested
     updateRevision();
@@ -711,7 +711,7 @@ VICII::endFrame()
     if (c64.getHeadless()) return;
 
     // Run the DMA debugger if enabled
-    if (debug) dmaDebugger.computeOverlay(emuTexture, dmaTexture);
+    if (debug) dmaDebugger.computeOverlay(emuTexture, xrayTexture);
 
     // Switch texture buffers
     emulator.lockTexture();
@@ -720,14 +720,14 @@ VICII::endFrame()
     
     activeBuffer = (activeBuffer + 1) % NUM_TEXTURES;
     emuTex[activeBuffer].nr = c64.frame;
-    dmaTex[activeBuffer].nr = c64.frame;
+    xrayTex[activeBuffer].nr = c64.frame;
     emuTexture = emuTex[activeBuffer].pixels.ptr;
-    dmaTexture = dmaTex[activeBuffer].pixels.ptr;
+    xrayTexture = xrayTex[activeBuffer].pixels.ptr;
 
     if (debug) {
 
         resetEmuTexture(activeBuffer);
-        resetDmaTexture(activeBuffer);
+        resetXrayTexture(activeBuffer);
     }
 
     emulator.unlockTexture();
@@ -791,7 +791,7 @@ VICII::beginScanline()
 
     // Adjust the texture pointers
     emuTexturePtr = emuTexture + line * Texture::width;
-    dmaTexturePtr = dmaTexture + line * Texture::width;
+    xrayTexturePtr = xrayTexture + line * Texture::width;
 
     // Determine if we're inside the VBLANK area
     vblank = isVBlankLine(line);

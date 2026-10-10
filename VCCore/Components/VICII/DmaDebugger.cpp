@@ -22,29 +22,53 @@ DmaDebugger::DmaDebugger(C64 &ref) : SubComponent(ref)
 }
 
 void
-DmaDebugger::setDmaDebugColor(MemAccess type, GpuColor color)
+DmaDebugger::setDmaDebugColor(MemAccess type, GpuColor<TexelFormat::ABGR> color)
 {
-    assert(MemAccessEnum::isValid(type));
-    
-    auto channel = (long)type;
-    config.dmaColor[channel] = color.abgr;
-
-    debugColor[channel][0] = color.shade(0.3).abgr;
-    debugColor[channel][1] = color.shade(0.1).abgr;
-    debugColor[channel][2] = color.tint(0.1).abgr;
-    debugColor[channel][3] = color.tint(0.3).abgr;
+    setDmaDebugColor(type, RgbColor(color));
 }
 
 void
 DmaDebugger::setDmaDebugColor(MemAccess type, RgbColor color)
 {
-    setDmaDebugColor(type, GpuColor(color));
+    assert(MemAccessEnum::isValid(type));
+
+    auto channel = (long)type;
+    config.dmaColor[channel] = GpuColor<TexelFormat::ABGR>(color).rawValue;
+
+    switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
+
+        case TexelFormat::ABGR: updateDebugColor<TexelFormat::ABGR>(channel, color); break;
+        case TexelFormat::ARGB: updateDebugColor<TexelFormat::ARGB>(channel, color); break;
+
+        default: // RGBA
+            updateDebugColor<TexelFormat::RGBA>(channel, color); break;
+    }
+}
+
+void
+DmaDebugger::updateDebugColors()
+{
+    for (long channel = 0; channel < 6; channel++) {
+        setDmaDebugColor(MemAccess(channel), RgbColor(GpuColor<TexelFormat::ABGR>(config.dmaColor[channel])));
+    }
+}
+
+template <TexelFormat F>
+void
+DmaDebugger::updateDebugColor(long channel, const RgbColor &color)
+{
+    GpuColor<F> gpuColor(color);
+
+    debugColor[channel][0] = gpuColor.shade(0.3).rawValue;
+    debugColor[channel][1] = gpuColor.shade(0.1).rawValue;
+    debugColor[channel][2] = gpuColor.tint(0.1).rawValue;
+    debugColor[channel][3] = gpuColor.tint(0.3).rawValue;
 }
 
 void
 DmaDebugger::visualizeDma(isize offset, u8 data, MemAccess type)
 {
-    visualizeDma((u32 *)vic.dmaTexturePtr + offset, data, type);
+    visualizeDma((u32 *)vic.xrayTexturePtr + offset, data, type);
 }
 
 void
@@ -62,70 +86,88 @@ DmaDebugger::visualizeDma(u32 *p, u8 data, MemAccess type)
 }
 
 void
-DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
+DmaDebugger::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
+{
+    // Dispatched once per call (not per pixel) -- see the class comment in
+    // DmaDebugger.h. Each branch below calls a separate instantiation of
+    // the templated overload, so the format is a compile-time constant for
+    // the whole per-pixel loop inside it.
+    switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
+
+        case TexelFormat::ABGR: computeOverlay<TexelFormat::ABGR>(emuTexture, xrayTexture); return;
+        case TexelFormat::ARGB: computeOverlay<TexelFormat::ARGB>(emuTexture, xrayTexture); return;
+
+        default: // RGBA
+            computeOverlay<TexelFormat::RGBA>(emuTexture, xrayTexture); return;
+    }
+}
+
+template <TexelFormat F>
+void
+DmaDebugger::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
 {
     double weight = config.dmaOpacity / 255.0;
-    
+
     if (config.dmaOverlay) {
-        
+
         switch (config.dmaDisplayMode) {
-                
+
             case DmaDisplayMode::FG_LAYER:
-                
+
                 for (isize y = 0; y < Texture::height; y++) {
-                    
+
                     u32 *emu = emuTexture + (y * Texture::width);
-                    u32 *dma = dmaTexture + (y * Texture::width);
-                    
+                    u32 *dma = xrayTexture + (y * Texture::width);
+
                     for (isize x = 0; x < Texture::width; x++) {
-                        
+
                         if ((dma[x] & 0xFFFFFF) == 0) continue;
-                        
-                        GpuColor emuColor = emu[x];
-                        GpuColor dmaColor = dma[x];
-                        GpuColor mixColor = emuColor.mix(dmaColor, weight);
-                        emu[x] = mixColor.abgr;
+
+                        GpuColor<F> emuColor(emu[x]);
+                        GpuColor<F> dmaColor(dma[x]);
+                        GpuColor<F> mixColor = emuColor.mix(dmaColor, weight);
+                        emu[x] = mixColor.rawValue;
                     }
                 }
                 break;
-                
+
             case DmaDisplayMode::BG_LAYER:
-                
+
                 for (isize y = 0; y < Texture::height; y++) {
-                    
+
                     u32 *emu = emuTexture + (y * Texture::width);
-                    u32 *dma = dmaTexture + (y * Texture::width);
-                    
+                    u32 *dma = xrayTexture + (y * Texture::width);
+
                     for (isize x = 0; x < Texture::width; x++) {
-                        
+
                         if ((dma[x] & 0xFFFFFF) != 0) {
                             emu[x] = dma[x];
                         } else {
-                            GpuColor emuColor = emu[x];
-                            GpuColor mixColor = emuColor.shade(weight);
-                            emu[x] = mixColor.abgr;
+                            GpuColor<F> emuColor(emu[x]);
+                            GpuColor<F> mixColor = emuColor.shade(weight);
+                            emu[x] = mixColor.rawValue;
                         }
                     }
                 }
                 break;
-                
+
             case DmaDisplayMode::ODD_EVEN_LAYERS:
-                
+
                 for (isize y = 0; y < Texture::height; y++) {
-                    
+
                     u32 *emu = emuTexture + (y * Texture::width);
-                    u32 *dma = dmaTexture + (y * Texture::width);
-                    
+                    u32 *dma = xrayTexture + (y * Texture::width);
+
                     for (isize x = 0; x < Texture::width; x++) {
-                        
-                        GpuColor emuColor = emu[x];
-                        GpuColor dmaColor = dma[x];
-                        GpuColor mixColor = dmaColor.mix(emuColor, weight);
-                        emu[x] = mixColor.abgr;
+
+                        GpuColor<F> emuColor(emu[x]);
+                        GpuColor<F> dmaColor(dma[x]);
+                        GpuColor<F> mixColor = dmaColor.mix(emuColor, weight);
+                        emu[x] = mixColor.rawValue;
                     }
                 }
                 break;
-                
+
             default:
                 fatalError;
         }
@@ -135,15 +177,30 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
 void
 DmaDebugger::cutLayers()
 {
+    // Dispatched once per call (not per pixel) -- see computeOverlay above.
+    switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
+
+        case TexelFormat::ABGR: cutLayers<TexelFormat::ABGR>(); return;
+        case TexelFormat::ARGB: cutLayers<TexelFormat::ARGB>(); return;
+
+        default: // RGBA
+            cutLayers<TexelFormat::RGBA>(); return;
+    }
+}
+
+template <TexelFormat F>
+void
+DmaDebugger::cutLayers()
+{
     // Check master switch
     if (!(config.cutLayers & 0x1000)) return;
-    
+
     // Only proceed if at least one channel is enabled
     if (!(config.cutLayers & 0x0F00)) return;
-    
+
     u32 *emuTexturePtr = vic.emuTexturePtr;
     u8 *zBuffer = vic.zBuffer;
-    
+
     for (isize i = 0; i < Texture::width; i++) {
         
         bool cut;
@@ -173,18 +230,16 @@ DmaDebugger::cutLayers()
         }
         
         if (cut) {
-            
-            u8 r = emuTexturePtr[i] & 0xFF;
-            u8 g = (emuTexturePtr[i] >> 8) & 0xFF;
-            u8 b = (emuTexturePtr[i] >> 16) & 0xFF;
+
+            GpuColor<F> color(emuTexturePtr[i]);
 
             double scale = config.cutOpacity / 255.0;
             u8 bg = (vic.scanline() / 4) % 2 == (i / 4) % 2 ? 0x22 : 0x44;
-            u8 newr = (u8)(r * (1 - scale) + bg * scale);
-            u8 newg = (u8)(g * (1 - scale) + bg * scale);
-            u8 newb = (u8)(b * (1 - scale) + bg * scale);
-            
-            emuTexturePtr[i] = 0xFF000000 | newb << 16 | newg << 8 | newr;
+            u8 newr = (u8)(color.r() * (1 - scale) + bg * scale);
+            u8 newg = (u8)(color.g() * (1 - scale) + bg * scale);
+            u8 newb = (u8)(color.b() * (1 - scale) + bg * scale);
+
+            emuTexturePtr[i] = GpuColor<F>(newr, newg, newb).rawValue;
         }
     }
 }

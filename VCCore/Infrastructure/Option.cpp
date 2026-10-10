@@ -51,22 +51,22 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::GLUE_LOGIC:                return enumParser.template operator()<GlueLogicEnum,GlueLogic>();
         case Opt::VICII_CUT_LAYERS:          return numParser();
         case Opt::VICII_CUT_OPACITY:         return numParser("%");
-        case Opt::DMA_DEBUG_ENABLE:          return boolParser();
-        case Opt::DMA_DEBUG_OVERLAY:         return boolParser();
-        case Opt::DMA_DEBUG_MODE:            return enumParser.template operator()<DmaDisplayModeEnum,DmaDisplayMode>();
-        case Opt::DMA_DEBUG_OPACITY:         return numParser("%");
-        case Opt::DMA_DEBUG_CHANNEL0:        return boolParser();
-        case Opt::DMA_DEBUG_CHANNEL1:        return boolParser();
-        case Opt::DMA_DEBUG_CHANNEL2:        return boolParser();
-        case Opt::DMA_DEBUG_CHANNEL3:        return boolParser();
-        case Opt::DMA_DEBUG_CHANNEL4:        return boolParser();
-        case Opt::DMA_DEBUG_CHANNEL5:        return boolParser();
-        case Opt::DMA_DEBUG_COLOR0:          return numParser();
-        case Opt::DMA_DEBUG_COLOR1:          return numParser();
-        case Opt::DMA_DEBUG_COLOR2:          return numParser();
-        case Opt::DMA_DEBUG_COLOR3:          return numParser();
-        case Opt::DMA_DEBUG_COLOR4:          return numParser();
-        case Opt::DMA_DEBUG_COLOR5:          return numParser();
+        case Opt::XRAY_MODE:            return enumParser.template operator()<XRayModeEnum,XRayMode>();
+        case Opt::XRAY_OVERLAY:         return boolParser();
+        case Opt::XRAY_OVERLAY_STYLE: return enumParser.template operator()<DmaDisplayModeEnum,DmaDisplayMode>();
+        case Opt::XRAY_OVERLAY_OPACITY: return numParser("%");
+        case Opt::XRAY_DMA_CHANNEL0:        return boolParser();
+        case Opt::XRAY_DMA_CHANNEL1:        return boolParser();
+        case Opt::XRAY_DMA_CHANNEL2:        return boolParser();
+        case Opt::XRAY_DMA_CHANNEL3:        return boolParser();
+        case Opt::XRAY_DMA_CHANNEL4:        return boolParser();
+        case Opt::XRAY_DMA_CHANNEL5:        return boolParser();
+        case Opt::XRAY_DMA_COLOR0:          return numParser();
+        case Opt::XRAY_DMA_COLOR1:          return numParser();
+        case Opt::XRAY_DMA_COLOR2:          return numParser();
+        case Opt::XRAY_DMA_COLOR3:          return numParser();
+        case Opt::XRAY_DMA_COLOR4:          return numParser();
+        case Opt::XRAY_DMA_COLOR5:          return numParser();
 
         case Opt::EXP_REU_SPEED:             return numParser();
 
