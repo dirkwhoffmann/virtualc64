@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50AD0022305C000000A1B2C3 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */; };
+		50AD0023305C000000A1B2C3 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		5003382B266F7F3C00D5456E /* VICIITable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICIITable.cpp */; };
 		500375062C23F26000979A1B /* C64Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500375052C23F26000979A1B /* C64Base.cpp */; };
@@ -745,6 +747,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		50AD0020305C000000A1B2C3 /* BackedBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackedBuffer.h; sourceTree = "<group>"; };
+		50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackedBuffer.cpp; sourceTree = "<group>"; };
 		025229EE0AF27E740024DAB3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -2609,6 +2613,7 @@
 		50AC25592F41A8760016265E /* storage */ = {
 			isa = PBXGroup;
 			children = (
+				50AD0020305C000000A1B2C3 /* BackedBuffer.h */,
 				50AC25562F41A8760016265E /* Buffer.h */,
 				50AC25572F41A8760016265E /* Mailbox.h */,
 				50AC25582F41A8760016265E /* RingBuffer.h */,
@@ -2716,6 +2721,7 @@
 		50AC25832F41A8760016265E /* storage */ = {
 			isa = PBXGroup;
 			children = (
+				50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */,
 				50AC25822F41A8760016265E /* Buffer.cpp */,
 				50DC243F303A37BE0054EA1F /* ZipArchive.cpp */,
 				50DC2440303A37BE0054EA1F /* ZipError.cpp */,
@@ -3493,6 +3499,7 @@
 				50AC25AA2F41A8760016265E /* Clock.cpp in Sources */,
 				50AC25AB2F41A8760016265E /* Loggable.cpp in Sources */,
 				50AC25AC2F41A8760016265E /* Buffer.cpp in Sources */,
+				50AD0022305C000000A1B2C3 /* BackedBuffer.cpp in Sources */,
 				50AC25AD2F41A8760016265E /* Parser.cpp in Sources */,
 				50AC25AE2F41A8760016265E /* lz4.c in Sources */,
 				50DC2433303A32E50054EA1F /* BinaryImage.cpp in Sources */,
@@ -3682,6 +3689,7 @@
 				50AC25972F41A8760016265E /* Clock.cpp in Sources */,
 				50AC25982F41A8760016265E /* Loggable.cpp in Sources */,
 				50AC25992F41A8760016265E /* Buffer.cpp in Sources */,
+				50AD0023305C000000A1B2C3 /* BackedBuffer.cpp in Sources */,
 				50AC259A2F41A8760016265E /* Parser.cpp in Sources */,
 				50AC259B2F41A8760016265E /* lz4.c in Sources */,
 				50AC259C2F41A8760016265E /* Streams.cpp in Sources */,
