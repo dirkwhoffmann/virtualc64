@@ -1602,6 +1602,13 @@ C64::saveWorkspace(const fs::path &path)
     ss << "\n# Cartridge\n\n";
     exportCRT(expansionport);
 
+    /* Add a preview image to the workspace bundle: The most recent frame,
+     * cropped to the largest visible area (no HBLANK, no VBLANK).
+     */
+    try {
+        videoPort.saveTexture(path / "preview.png", 104, 487, 16, vic.pal() ? 299 : 249);
+    } catch (...) { }
+
     // Write the script into the workspace bundle
     std::ofstream file(path / "config.retrosh");
     file << ss.str();

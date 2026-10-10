@@ -133,16 +133,6 @@ class MyDocument: NSDocument {
                 // Save the workspace
                 try emu?.c64.saveWorkspace(url: url)
 
-                // Add a screenshot to the workspace bundle
-                if let image = canvas.screenshot(source: .emulator, cutout: .visible) {
-
-                    // Convert to target format
-                    let data = image.representation(using: .png)
-
-                    // Save to file
-                    try data?.write(to: url.appendingPathComponent("preview.png"))
-                }
-
                 // Save a plist file containing the machine properties
                 saveMachineDescription(to: url.appendingPathComponent("machine.plist"))
 
