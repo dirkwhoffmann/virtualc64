@@ -148,7 +148,7 @@ template <class T, typename E> struct Reflectable {
         std::string result;
 
         for (isize i = T::minVal; i <= T::maxVal; i += isBitField() ? i : 1) {
-            if (mask & (isBitField() ? i : 1 << i)) {
+            if (mask & (isBitField() ? i : isize(1) << i)) {
                 result += (result.empty() ? "" : " | ") + string(key(E(i), withPrefix));
             }
         }

@@ -285,6 +285,11 @@ template <class T> struct ResizableRingBuffer
         return elements[prev(w)];
     }
 
+    T *latestAddr()
+    {
+        return &elements[prev(w)];
+    }
+
     std::vector<T> vector() const
     {
         std::vector<T> result;
@@ -378,6 +383,12 @@ template <class T, isize capacity> struct RingBuffer
         w = next(w);
     }
 
+    void put(T element)
+    {
+        elements[w] = element;
+        if ((w = next(w)) == r) r = next(r);
+    }
+    
     void skip()
     {
         r = next(r);
@@ -411,6 +422,11 @@ template <class T, isize capacity> struct RingBuffer
     const T& latest() const
     {
         return elements[prev(w)];
+    }
+
+    T *latestAddr()
+    {
+        return &elements[prev(w)];
     }
 
     std::vector<T> vector() const

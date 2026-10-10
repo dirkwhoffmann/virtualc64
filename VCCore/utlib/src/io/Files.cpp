@@ -13,6 +13,10 @@
 #include <cassert>
 #include <sys/stat.h>
 
+#ifdef __APPLE__
+#include <sys/xattr.h>
+#endif
+
 namespace utl {
 
 fs::path
@@ -93,6 +97,36 @@ createDirectory(const fs::path &path)
     }
 }
 
+bool
+createEmptyFile(const fs::path &path, isize size)
+{
+    if (size < 0) return false;
+
+    try {
+
+        std::ofstream os(path, std::ios::binary | std::ios::trunc);
+        if (!os) return false;
+
+        if (size > 0) {
+
+            // Note: Only the last byte is written. Seeking past the end of a
+            // new file and writing there leaves a hole, which reads back as
+            // zeros. This allows the OS to create the file as a sparse file
+            // if such files are supported.
+
+            os.seekp(std::streamoff(size - 1));
+            os.put('\0');
+        }
+
+        os.close();
+        return bool(os);
+
+    } catch (...) {
+
+        return false;
+    }
+}
+
 void
 remove(const fs::path &path)
 {
@@ -108,6 +142,58 @@ remove(const fs::path &path)
                   IOError(IOError::FILE_CANT_DELETE, path);
         }
     }
+}
+
+/* Marks a directory as a package by hand.
+ *
+ * Finder shows a directory as a single file in one of two cases: its type
+ * conforms to com.apple.package, which needs an installed app declaring that
+ * type, or the directory itself carries the kHasBundle flag. Only the flag
+ * travels with the folder, so it is what makes a directory look right after
+ * being copied to a machine that has never run the app that owns it.
+ *
+ * The flag lives in the 'com.apple.FinderInfo' extended attribute -- a fixed
+ * 32-byte block the kernel refuses at any other size. Its first half is a
+ * FileInfo for files and a FolderInfo for directories; the two layouts agree
+ * on almost nothing, but both place the 16-bit big-endian finderFlags at
+ * offset 8, which is the only field touched here. Whatever else is in there
+ * is read back and preserved: overwriting it would throw away the folder's
+ * saved window position and its colour tag.
+ *
+ * Best-effort on purpose. A read-only volume, or a file system with no xattr
+ * support, costs an icon -- not a reason to fail whatever we were doing.
+ */
+bool
+setPackageBit(const fs::path &path) noexcept
+{
+#ifdef __APPLE__
+
+    constexpr isize size = 32;      // The only length the kernel accepts
+    constexpr isize flags = 8;      // Offset of finderFlags, in both layouts
+    constexpr u8 hasBundle = 0x20;  // High byte of kHasBundle (0x2000)
+
+    u8 info[size] = { };
+
+    /* Read before writing. A missing attribute is not a failure -- it means
+     * the folder has no Finder info yet, which is what the zeroed buffer
+     * already describes.
+     */
+    const auto len = ::getxattr(path.c_str(), XATTR_FINDERINFO_NAME, info, size, 0, 0);
+    if (len != size && len != -1) return false;
+
+    // Nothing to do if the folder is already marked
+    if (info[flags] & hasBundle) return true;
+
+    info[flags] |= hasBundle;
+
+    return ::setxattr(path.c_str(), XATTR_FINDERINFO_NAME, info, size, 0, 0) == 0;
+
+#else
+
+    (void)path;
+    return false;
+
+#endif
 }
 
 isize

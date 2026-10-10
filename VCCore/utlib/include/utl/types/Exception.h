@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "utl/types/Integers.h"
 #include <exception>
 #include <string>
 #include <any>
@@ -37,13 +38,13 @@ struct GenericException : public Exception {
     void set_payload(T value) { payload = std::move(value); }
 };
 
-class Error : public GenericException<long> {
+class Error : public GenericException<i64> {
 
 public:
 
-    Error(long d = 0, const std::string &s = "") : GenericException<long>(d, s) { }
+    Error(i64 d = 0, const std::string &s = "") : GenericException<i64>(d, s) { }
 
-    virtual long fault() const { return payload; }
+    virtual i64 fault() const { return payload; }
     virtual const char *errstr() const noexcept { return "GENERIC"; }
 };
 

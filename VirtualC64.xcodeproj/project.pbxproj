@@ -747,6 +747,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		50AD0030305C000000A1B2C3 /* ProgressTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressTask.h; sourceTree = "<group>"; };
+		50AD0031305C000000A1B2C3 /* TempFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempFile.h; sourceTree = "<group>"; };
 		50AD0020305C000000A1B2C3 /* BackedBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackedBuffer.h; sourceTree = "<group>"; };
 		50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackedBuffer.cpp; sourceTree = "<group>"; };
 		025229EE0AF27E740024DAB3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
@@ -2582,6 +2584,7 @@
 			isa = PBXGroup;
 			children = (
 				50AC25482F41A8760016265E /* AutoMutex.h */,
+				50AD0030305C000000A1B2C3 /* ProgressTask.h */,
 				50AC25492F41A8760016265E /* ReentrantMutex.h */,
 			);
 			path = concurrency;
@@ -2595,6 +2598,7 @@
 				50AC254D2F41A8760016265E /* IOError.h */,
 				50AC254E2F41A8760016265E /* ParseError.h */,
 				50AC254F2F41A8760016265E /* Parser.h */,
+				50AD0031305C000000A1B2C3 /* TempFile.h */,
 				50AC25502F41A8760016265E /* Streams.h */,
 			);
 			path = io;

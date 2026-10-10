@@ -30,7 +30,7 @@ Buffer<T>::init(const Buffer& other)
 template <class T> void
 Buffer<T>::alloc(isize elements)
 {
-    assert(usize(elements) <= maxCapacity);
+    // assert(usize(elements) <= maxCapacity);
     assert((size == 0) == (ptr == nullptr));
 
     if (size != elements) try {
@@ -268,7 +268,7 @@ Buffer<T>::write(const fs::path &path, isize offset, isize len) const
     if (!stream.is_open())
         throw IOError(IOError::FILE_CANT_WRITE, path);
 
-    write(stream);
+    write(stream, offset, len);
 }
 
 

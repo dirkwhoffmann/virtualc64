@@ -9,5 +9,6 @@
 
 #include "concurrency/ReentrantMutex.h"
 #include "concurrency/AutoMutex.h"
+#include "concurrency/ProgressTask.h"
 #include "abilities/Synchronizable.h"
 #include "abilities/Wakeable.h"

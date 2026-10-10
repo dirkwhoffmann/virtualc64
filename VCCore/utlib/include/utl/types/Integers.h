@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <limits>
 
 namespace utl {
@@ -18,7 +19,7 @@ typedef signed char        i8;
 typedef signed short       i16;
 typedef signed int         i32;
 typedef signed long long   i64;
-typedef signed long        isize;
+typedef std::ptrdiff_t     isize;  // Pointer sized. Print with %td.
 
 static constexpr i8    MIN_I8    = std::numeric_limits<i8>::min();
 static constexpr i16   MIN_I16   = std::numeric_limits<i16>::min();
@@ -37,7 +38,7 @@ typedef unsigned char      u8;
 typedef unsigned short     u16;
 typedef unsigned int       u32;
 typedef unsigned long long u64;
-typedef unsigned long      usize;
+typedef std::size_t        usize;  // Pointer sized. Print with %zu.
 
 static constexpr u8    MIN_U8    = std::numeric_limits<u8>::min();
 static constexpr u16   MIN_U16   = std::numeric_limits<u16>::min();
