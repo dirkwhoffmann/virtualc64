@@ -66,6 +66,11 @@
 #include "RetroShell.h"
 #include "RshServer.h"
 
+namespace retro::vault {
+
+    class SVMFile;
+}
+
 namespace retro::vault::cbm {
 
     class FileSystem;
@@ -680,9 +685,32 @@ public:
 
     // Loads a workspace from a file
     void loadWorkspace(const fs::path &path);
+    void loadWorkspace(retro::vault::SVMFile &svm);
 
     // Saves the current workspace to a file
     void saveWorkspace(const fs::path &path);
+    void saveWorkspace(retro::vault::SVMFile &svm);
+
+    /* Hibernates the machine: saves the workspace and/or a snapshot
+     * (including a screenshot) into an SVM and updates its manifest. The GUI
+     * is told with a WORKSPACE_SAVED and a SNAPSHOT_SAVED message as soon as
+     * the respective part is done, and with a HIBERNATED message at the end.
+     */
+    void hibernate(const fs::path &path, bool snapshot, bool workspace);
+    void hibernate(retro::vault::SVMFile &svm, bool snapshot, bool workspace);
+
+private:
+
+    // Writes the workspace into a folder
+    void writeWorkspace(const fs::path &path);
+
+    // Replaces the workspace of an SVM and notes it in the manifest
+    void updateWorkspace(retro::vault::SVMFile &svm);
+
+    // Adds a snapshot, including a screenshot, to an SVM and notes it in the manifest
+    void updateSnapshot(retro::vault::SVMFile &svm, Compressor compressor);
+
+public:
 
     // Called by (hidden) RetroShell 'workspace' commands
     void initWorkspace();
@@ -705,6 +733,9 @@ public:
 
     // Saves a snapshot to a file
     void saveSnapshot(const fs::path &path, Compressor compressor);
+
+    // Saves a snapshot into an SVM and updates its manifest (see hibernate)
+    void saveSnapshot(retro::vault::SVMFile &svm, Compressor compressor);
 
 private:
 

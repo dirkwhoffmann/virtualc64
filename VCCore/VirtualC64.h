@@ -20,6 +20,8 @@
 
 using retro::vault::cbm::FSFormat;
 
+namespace retro::vault { class SVMFile; }
+
 namespace vc64 {
 
 using peddle::Guard;
@@ -1172,6 +1174,18 @@ struct C64API : public API {
      */
     void saveWorkspaceAsync(const std::filesystem::path &path) const;
 
+    /** @brief  Loads, saves, or asynchronously saves the workspace of an SVM
+     *
+     *  These work on the workspace folder of an SVM that is already open.
+     *  Saving replaces the workspace, notes its preview image in the manifest
+     *  and persists the SVM. As with hibernateAsync, the object is used on
+     *  the emulator thread and must stay alive, and untouched, until the
+     *  WORKSPACE_SAVED message has arrived.
+     */
+    void loadWorkspace(retro::vault::SVMFile &svm);
+    void saveWorkspace(retro::vault::SVMFile &svm) const;
+    void saveWorkspaceAsync(retro::vault::SVMFile &svm) const;
+
     /** @brief  Takes a snapshot
      *
      *  @param  compressor   The snapshot compression method
@@ -1213,6 +1227,48 @@ struct C64API : public API {
      *  @param  path    Destination path
      */
     void saveSnapshotAsync(const std::filesystem::path &path, Compressor compressor) const;
+
+    /** @brief  Saves a snapshot, including a screenshot, into an SVM
+     *
+     *  Works on an SVM that is already open: the snapshot is added to its
+     *  manifest, and the SVM is persisted. As with hibernateAsync, the object
+     *  is used on the emulator thread by the asynchronous version and must
+     *  stay alive, and untouched, until the SNAPSHOT_SAVED message has
+     *  arrived.
+     */
+    void saveSnapshot(retro::vault::SVMFile &svm, Compressor compressor) const;
+    void saveSnapshotAsync(retro::vault::SVMFile &svm, Compressor compressor) const;
+
+    /** @brief  Hibernates the machine into a virtual machine bundle
+     *
+     *  Saves the workspace (if workspace is true) and a snapshot including a
+     *  screenshot (if snapshot is true) into the SVM, and updates its
+     *  manifest.
+     *
+     *  @param  path        Path of the SVM
+     *  @param  snapshot    Save a snapshot
+     *  @param  workspace   Save the workspace
+     */
+    void hibernate(const std::filesystem::path &path, bool snapshot, bool workspace) const;
+
+    /** @brief  Hibernates the machine asynchronously.
+     *
+     *  The request is handed to the emulator thread, which carries it out
+     *  when it processes its command queue. The function returns immediately.
+     *  The GUI is informed by a HIBERNATED message, which carries an error
+     *  code and description if the operation failed.
+     */
+    void hibernateAsync(const std::filesystem::path &path, bool snapshot, bool workspace) const;
+
+    /** @brief  Hibernates the machine into an SVM that is already open
+     *
+     *  Works like the versions that take a path, but updates and persists the
+     *  given object, so its manifest is current afterwards. The asynchronous
+     *  version uses the object on the emulator thread: it must stay alive
+     *  and must not be touched until the HIBERNATED message has arrived.
+     */
+    void hibernate(retro::vault::SVMFile &svm, bool snapshot, bool workspace) const;
+    void hibernateAsync(retro::vault::SVMFile &svm, bool snapshot, bool workspace) const;
 
 
     /// @}

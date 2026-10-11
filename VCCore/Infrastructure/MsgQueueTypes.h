@@ -112,6 +112,9 @@ enum class Msg : long
     WORKSPACE_LOADED,   ///< A workspace has been loaded
     WORKSPACE_SAVED,    ///< A workspace has been saved (value: error code, str: error description)
 
+    // Hibernation
+    HIBERNATED,         ///< The machine has been hibernated (value: error code, str: error description)
+
     // Debugging
     DMA_DEBUG,          ///< The DMA debugger has been started or stopped
 
@@ -210,6 +213,7 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
 
             case Msg::WORKSPACE_LOADED:      return "WORKSPACE_LOADED";
             case Msg::WORKSPACE_SAVED:       return "WORKSPACE_SAVED";
+            case Msg::HIBERNATED:            return "HIBERNATED";
                 
             case Msg::DMA_DEBUG:             return "DMA_DEBUG";
 

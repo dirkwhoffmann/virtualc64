@@ -13,6 +13,7 @@
 #include "vcconfig.h"
 #include "VirtualC64.h"
 #include "Emulator.h"
+#include "SVMFile.h"
 
 namespace vc64 {
 
@@ -549,6 +550,27 @@ C64API::saveWorkspaceAsync(const fs::path &path) const
     emu->put(Cmd::SAVE_WORKSPACE, path.string());
 }
 
+void
+C64API::loadWorkspace(retro::vault::SVMFile &svm)
+{
+    VC64_PUBLIC_SUSPEND
+    c64->loadWorkspace(svm);
+}
+
+void
+C64API::saveWorkspace(retro::vault::SVMFile &svm) const
+{
+    VC64_PUBLIC_SUSPEND
+    c64->saveWorkspace(svm);
+}
+
+void
+C64API::saveWorkspaceAsync(retro::vault::SVMFile &svm) const
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::SAVE_WORKSPACE, i64(0), i64(&svm)));
+}
+
 std::unique_ptr<Snapshot>
 C64API::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
@@ -602,6 +624,48 @@ C64API::saveSnapshotAsync(const fs::path &path, Compressor compressor) const
 {
     VC64_PUBLIC
     emu->put(Command(Cmd::SAVE_SNAPSHOT, i64(compressor)), path.string());
+}
+
+void
+C64API::saveSnapshot(retro::vault::SVMFile &svm, Compressor compressor) const
+{
+    VC64_PUBLIC_SUSPEND
+    c64->saveSnapshot(svm, compressor);
+}
+
+void
+C64API::saveSnapshotAsync(retro::vault::SVMFile &svm, Compressor compressor) const
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::SAVE_SNAPSHOT, i64(compressor), i64(&svm)));
+}
+
+void
+C64API::hibernate(const fs::path &path, bool snapshot, bool workspace) const
+{
+    VC64_PUBLIC_SUSPEND
+    c64->hibernate(path, snapshot, workspace);
+}
+
+void
+C64API::hibernateAsync(const fs::path &path, bool snapshot, bool workspace) const
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::HIBERNATE, i64(snapshot) | i64(workspace) << 1), path.string());
+}
+
+void
+C64API::hibernate(retro::vault::SVMFile &svm, bool snapshot, bool workspace) const
+{
+    VC64_PUBLIC_SUSPEND
+    c64->hibernate(svm, snapshot, workspace);
+}
+
+void
+C64API::hibernateAsync(retro::vault::SVMFile &svm, bool snapshot, bool workspace) const
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::HIBERNATE, i64(snapshot) | i64(workspace) << 1, i64(&svm)));
 }
 
 void

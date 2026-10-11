@@ -1099,7 +1099,7 @@ public:
 
     // Returns the number of visible scanlines in a single frame
     static isize numVisibleLines(VICIIRev rev);
-    long numVisibleLines() const { return numVisibleLines(config.revision); }
+    isize numVisibleLines() const { return numVisibleLines(config.revision); }
     
     // Indicates if VICII is affected by the gray-dot bug
     static bool hasGrayCodeBug(VICIIRev rev);

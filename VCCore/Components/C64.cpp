@@ -18,6 +18,7 @@
 #include "OpenRoms.h"
 #include "utl/abilities/Hashable.h"
 #include "utl/chrono.h"
+#include "SVMFile.h"
 #include <algorithm>
 #include <format>
 #include <queue>
@@ -702,6 +703,7 @@ C64::update(CmdQueue &queue)
                 case Cmd::INSPECTION_TARGET:
                 case Cmd::SAVE_WORKSPACE:
                 case Cmd::SAVE_SNAPSHOT:
+                case Cmd::HIBERNATE:
 
                     processCommand(cmd);
                     break;
@@ -1233,6 +1235,26 @@ C64::processCommand(const Command &cmd)
             setAutoInspectionMask(cmd.value);
             break;
 
+        case Cmd::HIBERNATE:
+        {
+            // Reports success to the GUI itself, a failure with the same message
+            try {
+
+                if (cmd.value2) {
+                    hibernate(*reinterpret_cast<retro::vault::SVMFile *>(cmd.value2), cmd.value & 1, cmd.value & 2);
+                } else {
+                    hibernate(cmd.str, cmd.value & 1, cmd.value & 2);
+                }
+
+            } catch (const std::exception &e) {
+
+                auto *error = dynamic_cast<const utl::Error *>(&e);
+                i64 code = error && error->fault() != 0 ? error->fault() : -1;
+                msgQueue.put(Msg::HIBERNATED, code, 0, e.what());
+            }
+            break;
+        }
+
         case Cmd::SAVE_WORKSPACE:
         case Cmd::SAVE_SNAPSHOT:
         {
@@ -1245,7 +1267,14 @@ C64::processCommand(const Command &cmd)
             try {
 
                 if (cmd.type == Cmd::SAVE_WORKSPACE) {
-                    saveWorkspace(cmd.str);
+                    // An SVM that is already open travels as a pointer, otherwise as a path
+                    if (cmd.value2) {
+                        saveWorkspace(*reinterpret_cast<retro::vault::SVMFile *>(cmd.value2));
+                    } else {
+                        saveWorkspace(cmd.str);
+                    }
+                } else if (cmd.value2) {
+                    saveSnapshot(*reinterpret_cast<retro::vault::SVMFile *>(cmd.value2), Compressor(cmd.value));
                 } else {
                     saveSnapshot(cmd.str, Compressor(cmd.value));
                 }
@@ -1493,6 +1522,15 @@ C64::loadWorkspace(const fs::path &path)
 void
 C64::saveWorkspace(const fs::path &path)
 {
+    writeWorkspace(path);
+
+    // Inform the GUI
+    msgQueue.put(Msg::WORKSPACE_SAVED);
+}
+
+void
+C64::writeWorkspace(const fs::path &path)
+{
     std::stringstream ss, tap;
 
     auto exportG64 = [&](Drive& drive) {
@@ -1611,9 +1649,107 @@ C64::saveWorkspace(const fs::path &path)
     // Write the script into the workspace bundle
     std::ofstream file(path / "config.retrosh");
     file << ss.str();
+}
+
+void
+C64::loadWorkspace(retro::vault::SVMFile &svm)
+{
+    loadWorkspace(svm.root() / retro::vault::SVMFile::workspaceDir);
+}
+
+void
+C64::saveWorkspace(retro::vault::SVMFile &svm)
+{
+    updateWorkspace(svm);
+    svm.persist();
 
     // Inform the GUI
     msgQueue.put(Msg::WORKSPACE_SAVED);
+}
+
+void
+C64::updateWorkspace(retro::vault::SVMFile &svm)
+{
+    using namespace retro::vault;
+
+    auto folder = svm.root() / SVMFile::workspaceDir;
+    fs::remove_all(folder);
+    writeWorkspace(folder);
+
+    svm.getManifest().screenshot = "preview.png";
+}
+
+void
+C64::hibernate(const fs::path &path, bool snapshot, bool workspace)
+{
+    using namespace retro::vault;
+
+    SVMFile svm(SVMFile::Open, path);
+    hibernate(svm, snapshot, workspace);
+}
+
+void
+C64::hibernate(retro::vault::SVMFile &svm, bool snapshot, bool workspace)
+{
+    // Refuse before anything is done
+    if (snapshot && svm.isReadOnly()) throw utl::Error(0, "The virtual machine is read-only.");
+
+    // Each part is persisted and reported when it is done
+    if (workspace) {
+
+        updateWorkspace(svm);
+        svm.persist();
+        msgQueue.put(Msg::WORKSPACE_SAVED);
+    }
+
+    if (snapshot) {
+
+        updateSnapshot(svm, Compressor::LZ4);
+        svm.persist();
+        msgQueue.put(Msg::SNAPSHOT_SAVED);
+    }
+
+    // Inform the GUI
+    msgQueue.put(Msg::HIBERNATED);
+}
+
+void
+C64::saveSnapshot(retro::vault::SVMFile &svm, Compressor compressor)
+{
+    updateSnapshot(svm, compressor);
+    svm.persist();
+
+    // Inform the GUI
+    msgQueue.put(Msg::SNAPSHOT_SAVED);
+}
+
+void
+C64::updateSnapshot(retro::vault::SVMFile &svm, Compressor compressor)
+{
+    using namespace retro::vault;
+
+    if (svm.isReadOnly()) throw utl::Error(0, "The virtual machine is read-only.");
+
+    /* Bring the snapshot folder into being. Nothing else creates it, and the
+     * first snapshot of an SVM is exactly the case where it is not there yet.
+     */
+    auto folder = svm.root() / SVMFile::snapshotDir;
+    fs::create_directories(folder);
+
+    SnapshotInfo info {};
+    info.version    = snapshotVersion();
+    info.uuid       = utl::UUID::v4();
+    info.platform   = Platform::C64;
+    info.created    = time(nullptr);
+    info.modified   = info.created;
+    info.screenshot = fs::path(info.uuid.toString() + ".png");
+    info.binary     = fs::path(info.uuid.toString() + ".vcsnap");
+
+    // Take the screenshot and the snapshot, both of the same moment
+    videoPort.saveTexture(folder / info.screenshot, 104, 487, 16, vic.pal() ? 299 : 249);
+    Snapshot(*this, compressor).writeToFile(folder / info.binary);
+
+    svm.getManifest().appendSnapshot(info);
 }
 
 void
