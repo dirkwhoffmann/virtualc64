@@ -66,10 +66,10 @@ extension EmulatorProxy {
         if let _ = exc.fault { throw AppError(exc) }
     }
     
-    func launch(_ listener: UnsafeRawPointer, _ callback: @escaping @convention(c) (UnsafeRawPointer?, Message) -> Void) throws
+    func launch(listener: MessageListener) throws
     {
         let exc = ExceptionWrapper()
-        launch(listener, function: callback, exception: exc)
+        launch(listener, exception: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
     

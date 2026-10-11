@@ -24,6 +24,53 @@ using retro::vault::DiskImage;
 using retro::vault::FloppyDiskImage;
 using retro::vault::cbm::FileSystem;
 
+//
+// Message passing
+//
+
+/* Sits between the emulator thread and the GUI. It copies what the message
+ * queue only lends out, and hands the message over to the main thread.
+ */
+@interface MessageBridge : NSObject
+
+@property (nonatomic, weak) id<MessageListener> listener;
+
+@end
+
+@implementation MessageBridge
+
+@synthesize listener = _listener;
+
+@end
+
+// Called by the message queue, on the emulator thread
+static void forwardMessage(const void *context, Message msg)
+{
+    // The bridge is owned by the emulator proxy, which outlives the emulator
+    MessageBridge *bridge = (__bridge MessageBridge *)context;
+
+    /* The string lives in the queue's ring buffer and is recycled after this
+     * call, so it is copied here. Swift never sees the pointer.
+     */
+    NSString *attachment = @"";
+    if (msg.str) {
+        NSString *text = [NSString stringWithUTF8String:msg.str];
+        if (text) attachment = text;
+    }
+    msg.str = nullptr;
+
+    // A main queue is first-in, first-out, so messages keep their order
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [bridge.listener processMessage:msg attachment:attachment];
+    });
+}
+
+@interface EmulatorProxy ()
+{
+    MessageBridge *messageBridge;
+}
+@end
+
 NSString *EventSlotName(EventSlot slot)
 {
     return @(EventSlotEnum::help(slot));
@@ -1852,9 +1899,12 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)launch:(const void *)listener function:(Callback *)func exception:(ExceptionWrapper *)ex
+- (void)launch:(id<MessageListener>)listener exception:(ExceptionWrapper *)ex
 {
-    try { [self emu]->launch(listener, func); }
+    messageBridge = [MessageBridge new];
+    messageBridge.listener = listener;
+
+    try { [self emu]->launch((__bridge const void *)messageBridge, forwardMessage); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 

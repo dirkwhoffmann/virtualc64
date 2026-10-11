@@ -198,7 +198,7 @@ class Renderer: NSObject, MTKViewDelegate {
             // Process all pending messages
             var msg = Message()
             while emu?.c64.getMessage(&msg) == true {
-                parent.process(messsage: msg)
+                parent.process(messsage: msg, attachment: msg.str.map { String(cString: $0) } ?? "")
             }
         }
 
