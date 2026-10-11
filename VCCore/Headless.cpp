@@ -174,7 +174,7 @@ Headless::runScript(const fs::path &path)
 }
 
 void
-process(const void *listener, Message msg)
+process(const void *listener, Message msg, std::exception_ptr)
 {
     ((Headless *)listener)->process(msg);
 }

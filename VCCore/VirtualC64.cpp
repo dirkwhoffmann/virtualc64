@@ -516,10 +516,10 @@ C64API::dump(Category category, std::ostream &os) const
 }
 
 bool
-C64API::getMsg(Message &msg)
+C64API::getMsg(Message &msg, std::exception_ptr &exception)
 {
     VC64_PUBLIC
-    return c64->msgQueue.get(msg);
+    return c64->msgQueue.get(msg, exception);
 }
 
 RomTraits

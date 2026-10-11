@@ -28,15 +28,16 @@ MsgQueue::setListener(const void *listener, Callback *callback)
 
             while (!queue.isEmpty()) {
 
-                Message &msg = queue.read();
-                callback(listener, msg);
+                Entry &entry = queue.read();
+                callback(listener, entry.message, entry.exception);
+                entry.exception = nullptr;
             }
         }
     }
 }
 
 bool
-MsgQueue::get(Message &msg)
+MsgQueue::get(Message &msg, std::exception_ptr &exception)
 {
     if (!enabled) return false;
 
@@ -44,13 +45,16 @@ MsgQueue::get(Message &msg)
 
         if (queue.isEmpty()) return false;
 
-        msg = queue.read();
+        Entry &entry = queue.read();
+        msg = entry.message;
+        exception = entry.exception;
+        entry.exception = nullptr;
         return true;
     }
 }
 
 void
-MsgQueue::put(const Message &msg, const string &str)
+MsgQueue::put(const Message &msg, const string &str, std::exception_ptr exception)
 {
     if (enabled) {
 
@@ -60,25 +64,27 @@ MsgQueue::put(const Message &msg, const string &str)
 
         // Delete the oldest element if the queue is full
         if (queue.isFull()) {
-            
+
             if (!listener) {
-                
+
                 auto &lost = queue.read();
-                logmsg(LOG_WARN, "Message lost: %s [%llx]\n", MsgEnum::key(lost.type), lost.value);
+                logmsg(LOG_WARN, "Message lost: %s [%llx]\n", MsgEnum::key(lost.message.type), lost.message.value);
+                lost.exception = nullptr;
             }
         }
-        
+
         // Add message to the ringbuffer
         auto w = queue.w;
-        queue.write(msg);
+        queue.write(Entry { msg, exception });
         attachments[w] = str;
-        queue.elements[w].str = attachments[w].c_str();
+        queue.elements[w].message.str = attachments[w].c_str();
 
         // Send the message immediately if a lister has been registered
         if (listener) {
 
-            callback(listener, queue.elements[w]);
+            callback(listener, queue.elements[w].message, queue.elements[w].exception);
             (void) queue.read();
+            queue.elements[w].exception = nullptr;
         }
     }
 }
@@ -93,6 +99,12 @@ void
 MsgQueue::put(Msg type, const string &payload)
 {
     put( Message { .type = type }, payload);
+}
+
+void
+MsgQueue::put(Msg type, std::exception_ptr exception)
+{
+    put( Message { .type = type }, "", exception );
 }
 
 void

@@ -28,6 +28,13 @@ using retro::vault::cbm::FileSystem;
 // Message passing
 //
 
+// Declared here because the message queue callback below needs it (implemented further down)
+@interface ExceptionWrapper ()
+
+- (void)save:(const std::exception &)exception;
+
+@end
+
 /* Sits between the emulator thread and the GUI. It copies what the message
  * queue only lends out, and hands the message over to the main thread.
  */
@@ -44,7 +51,7 @@ using retro::vault::cbm::FileSystem;
 @end
 
 // Called by the message queue, on the emulator thread
-static void forwardMessage(const void *context, Message msg)
+static void forwardMessage(const void *context, Message msg, std::exception_ptr exception)
 {
     // The bridge is owned by the emulator proxy, which outlives the emulator
     MessageBridge *bridge = (__bridge MessageBridge *)context;
@@ -59,9 +66,18 @@ static void forwardMessage(const void *context, Message msg)
     }
     msg.str = nullptr;
 
+    // The exception is handed over as a wrapper, which stays valid for as long as it is needed
+    ExceptionWrapper *wrapper = nil;
+    if (exception) {
+        wrapper = [ExceptionWrapper new];
+        try { std::rethrow_exception(exception); }
+        catch (const std::exception &e) { [wrapper save:e]; }
+        catch (...) { wrapper.what = @"Unknown error"; }
+    }
+
     // A main queue is first-in, first-out, so messages keep their order
     dispatch_async(dispatch_get_main_queue(), ^{
-        [bridge.listener processMessage:msg attachment:attachment];
+        [bridge.listener processMessage:msg attachment:attachment exception:wrapper];
     });
 }
 
@@ -1782,9 +1798,18 @@ NSString *EventSlotName(EventSlot slot)
     [self c64]->saveSnapshotAsync([url fileSystemRepresentation], c);
 }
 
-- (BOOL)getMessage:(Message *)msg
+- (BOOL)getMessage:(Message *)msg exception:(ExceptionWrapper *)ex
 {
-    return [self c64]->getMsg(*msg);
+    std::exception_ptr exception;
+
+    if (![self c64]->getMsg(*msg, exception)) return NO;
+
+    if (exception) {
+        try { std::rethrow_exception(exception); }
+        catch (const std::exception &e) { [ex save:e]; }
+        catch (...) { ex.what = @"Unknown error"; }
+    }
+    return YES;
 }
 
 @end

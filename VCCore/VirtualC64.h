@@ -1116,10 +1116,11 @@ struct C64API : public API {
 
     /** @brief  Reads a message from the message queue
      *
-     *  @param  msg    The returned message (if any)
+     *  @param  msg         The returned message (if any)
+     *  @param  exception   The exception the message reports (null if none)
      *  @return True if a message could be read, false if the queue was empty
      */
-    bool getMsg(Message &msg);
+    bool getMsg(Message &msg, std::exception_ptr &exception);
 
 
     /// @}
@@ -1168,7 +1169,7 @@ struct C64API : public API {
      *  The request is handed to the emulator thread, which carries it out
      *  when it processes its command queue. The function returns immediately.
      *  The GUI is informed by a WORKSPACE_SAVED message, which carries an
-     *  error code and description if the operation failed.
+     *  exception if the operation failed.
      *
      *  @param  path    Destination path
      */
@@ -1222,7 +1223,7 @@ struct C64API : public API {
      *  The request is handed to the emulator thread, which carries it out
      *  when it processes its command queue. The function returns immediately.
      *  The GUI is informed by a SNAPSHOT_SAVED message, which carries an
-     *  error code and description if the operation failed.
+     *  exception if the operation failed.
      *
      *  @param  path    Destination path
      */

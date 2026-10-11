@@ -14,6 +14,7 @@
 #pragma once
 
 #include "BasicTypes.h"
+#include <exception>
 
 namespace vc64 {
 
@@ -106,14 +107,14 @@ enum class Msg : long
     // Snapshots
     SNAPSHOT_TAKEN,     ///< A snapshot has been taken
     SNAPSHOT_RESTORED,  ///< A snapshot has been restored
-    SNAPSHOT_SAVED,     ///< A snapshot has been saved (value: error code, str: error description)
+    SNAPSHOT_SAVED,     ///< A snapshot has been saved (carries the exception if it failed)
 
     // Workspaces
     WORKSPACE_LOADED,   ///< A workspace has been loaded
-    WORKSPACE_SAVED,    ///< A workspace has been saved (value: error code, str: error description)
+    WORKSPACE_SAVED,    ///< A workspace has been saved (carries the exception if it failed)
 
     // Hibernation
-    HIBERNATED,         ///< The machine has been hibernated (value: error code, str: error description)
+    HIBERNATED,         ///< The machine has been hibernated (carries the exception if it failed)
 
     // Debugging
     DMA_DEBUG,          ///< The DMA debugger has been started or stopped
@@ -268,6 +269,11 @@ Message;
 // Signatures
 //
 
-typedef void Callback(const void *, Message);
+/* The callback receives the message and, for a message that reports a
+ * failure, the exception that caused it (null otherwise). Both are only valid
+ * for the duration of the call as far as pointers inside the message go; the
+ * exception is a shared handle and can be kept.
+ */
+typedef void Callback(const void *, Message, std::exception_ptr);
 
 }

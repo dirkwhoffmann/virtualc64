@@ -24,18 +24,20 @@ using retro::vault::cbm::FSFormat;
 
 using namespace vc64;
 
+@class ExceptionWrapper;
+
 /* Receives the messages of the emulator.
  *
  * Messages are delivered on the main thread (hence the main actor on the Swift
- * side), in the order they were sent. The
- * string that a message may carry (error descriptions, for example) is passed
- * on as an attachment, because the pointer in the message itself is only valid
- * while the emulator thread is delivering it.
+ * side), in the order they were sent. The string that a message may carry is
+ * passed on as an attachment, because the pointer in the message itself is
+ * only valid while the emulator thread is delivering it. A message that
+ * reports a failure carries the exception, which is nil otherwise.
  */
 NS_SWIFT_UI_ACTOR
 @protocol MessageListener <NSObject>
 
-- (void)processMessage:(Message)msg attachment:(NSString *)attachment;
+- (void)processMessage:(Message)msg attachment:(NSString *)attachment exception:(ExceptionWrapper *)exception;
 
 @end
 
@@ -320,7 +322,7 @@ NSString *EventSlotName(EventSlot slot);
 - (void)saveWorkspaceAsync:(NSURL *)url;
 - (void)saveSnapshotAsync:(NSURL *)url compressor:(Compressor)c;
 
-- (BOOL) getMessage:(Message *)msg;
+- (BOOL) getMessage:(Message *)msg exception:(ExceptionWrapper *)ex;
 
 @end
 

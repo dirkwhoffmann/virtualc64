@@ -1237,7 +1237,7 @@ C64::processCommand(const Command &cmd)
 
         case Cmd::HIBERNATE:
         {
-            // Reports success to the GUI itself, a failure with the same message
+            // Reports success to the GUI itself, a failure with the same message (and the exception)
             try {
 
                 if (cmd.value2) {
@@ -1246,11 +1246,9 @@ C64::processCommand(const Command &cmd)
                     hibernate(cmd.str, cmd.value & 1, cmd.value & 2);
                 }
 
-            } catch (const std::exception &e) {
+            } catch (...) {
 
-                auto *error = dynamic_cast<const utl::Error *>(&e);
-                i64 code = error && error->fault() != 0 ? error->fault() : -1;
-                msgQueue.put(Msg::HIBERNATED, code, 0, e.what());
+                msgQueue.put(Msg::HIBERNATED, std::current_exception());
             }
             break;
         }
@@ -1260,7 +1258,7 @@ C64::processCommand(const Command &cmd)
         {
             /* Both functions report success to the GUI themselves. Since
              * nobody is waiting for an exception here, a failure is reported
-             * with the same message, carrying an error code and a description.
+             * with the same message, carrying the exception.
              */
             auto msg = cmd.type == Cmd::SAVE_WORKSPACE ? Msg::WORKSPACE_SAVED : Msg::SNAPSHOT_SAVED;
 
@@ -1279,12 +1277,9 @@ C64::processCommand(const Command &cmd)
                     saveSnapshot(cmd.str, Compressor(cmd.value));
                 }
 
-            } catch (const std::exception &e) {
+            } catch (...) {
 
-                // A failure must never be reported as code 0 (success)
-                auto *error = dynamic_cast<const utl::Error *>(&e);
-                i64 code = error && error->fault() != 0 ? error->fault() : -1;
-                msgQueue.put(msg, code, 0, e.what());
+                msgQueue.put(msg, std::current_exception());
             }
             break;
         }

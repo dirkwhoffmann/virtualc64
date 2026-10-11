@@ -295,12 +295,12 @@ extension MyController {
     }
     
     // Receives the messages of the emulator (see MessageListener)
-    func processMessage(_ msg: Message, attachment: String) {
+    func processMessage(_ msg: Message, attachment: String, exception: ExceptionWrapper?) {
         
-        process(messsage: msg, attachment: attachment)
+        process(messsage: msg, attachment: attachment, exception: exception)
     }
     
-    func process(messsage msg: Message, attachment attachedString: String) {
+    func process(messsage msg: Message, attachment attachedString: String, exception: ExceptionWrapper?) {
         
         var value: Int { return Int(msg.value) }
         var nr: Int { return Int(msg.drive.nr) }
@@ -493,12 +493,12 @@ extension MyController {
             hideOrShowDriveMenus()
             
         case .SNAPSHOT_SAVED:
-            if value != 0 {
-                showAlert(.cantSaveSnapshot, what: attachedString, async: true)
+            if let exception = exception {
+                showAlert(.cantSaveSnapshot, what: exception.what, async: true)
             }
 
         case .WORKSPACE_SAVED:
-            mydocument.workspaceDidSave(errorCode: value, what: attachedString)
+            mydocument.workspaceDidSave(error: exception.map { AppError($0) })
 
         case .WORKSPACE_LOADED:
             break

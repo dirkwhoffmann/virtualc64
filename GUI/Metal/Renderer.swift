@@ -197,8 +197,15 @@ class Renderer: NSObject, MTKViewDelegate {
 
             // Process all pending messages
             var msg = Message()
-            while emu?.c64.getMessage(&msg) == true {
-                parent.process(messsage: msg, attachment: msg.str.map { String(cString: $0) } ?? "")
+            let exception = ExceptionWrapper()
+            while emu?.c64.getMessage(&msg, exception: exception) == true {
+                
+                // A message that reports a failure carries a description
+                let failed = exception.what != ""
+                parent.process(messsage: msg,
+                               attachment: msg.str.map { String(cString: $0) } ?? "",
+                               exception: failed ? exception : nil)
+                if failed { exception.what = ""; exception.key = ""; exception.fault = nil }
             }
         }
 

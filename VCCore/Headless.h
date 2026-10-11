@@ -23,7 +23,7 @@ struct SyntaxError : public std::runtime_error {
 };
 
 // The message listener
-void process(const void *listener, Message msg);
+void process(const void *listener, Message msg, std::exception_ptr exception);
 
 class Headless : utl::Wakeable {
 
