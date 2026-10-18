@@ -24,13 +24,13 @@ namespace vc64 {
 
 #define LOG_FLAG_ENTRY(name, dflt, help) \
     { #name, help, false, \
-      []() -> long { return (long)name; }, \
-      [](long value) { name = value; } },
+      []() -> utl::isize { return (utl::isize)name; }, \
+      [](utl::isize value) { name = (long)value; } },
 
 #define DEBUG_FLAG_ENTRY(name, dflt, help) \
     { #name, help, true, \
-      []() -> long { return (long)name; }, \
-      [](long value) { name = (bool)value; } },
+      []() -> utl::isize { return (utl::isize)name; }, \
+      [](utl::isize value) { name = (bool)value; } },
 
 const std::vector<FlagInfo> logFlags = { VC_LOG_FLAGS(LOG_FLAG_ENTRY) };
 const std::vector<FlagInfo> debugFlags = { VC_DEBUG_FLAGS(DEBUG_FLAG_ENTRY) };

@@ -48,7 +48,7 @@ Guards::~Guards()
 }
 
 Guard *
-Guards::guardNr(long nr) const
+Guards::guardNr(isize nr) const
 {
     return nr < count ? &guards[nr] : nullptr;
 }
@@ -64,14 +64,14 @@ Guards::guardAt(u32 addr) const
 }
 
 void
-Guards::setAt(u32 addr, long skip)
+Guards::setAt(u32 addr, isize skip)
 {
     if (isSetAt(addr)) return;
 
     if (count >= capacity) {
 
         Guard *newguards = new Guard[2 * capacity];
-        for (long i = 0; i < capacity; i++) newguards[i] = guards[i];
+        for (isize i = 0; i < capacity; i++) newguards[i] = guards[i];
         delete [] guards;
         guards = newguards;
         capacity *= 2;
@@ -86,7 +86,7 @@ Guards::setAt(u32 addr, long skip)
 }
 
 void
-Guards::remove(long nr)
+Guards::remove(isize nr)
 {
     if (nr < count) removeAt(guards[nr].addr);
 }
@@ -107,14 +107,14 @@ Guards::removeAt(u32 addr)
 }
 
 void
-Guards::moveTo(long nr, u32 newAddr)
+Guards::moveTo(isize nr, u32 newAddr)
 {
     if (nr >= count || isSetAt(newAddr)) return;
     guards[nr].moveTo(newAddr);
 }
 
 bool
-Guards::isEnabled(long nr) const
+Guards::isEnabled(isize nr) const
 {
     Guard *guard = guardNr(nr);
     return guard != nullptr && guard->enabled;
@@ -128,7 +128,7 @@ Guards::isEnabledAt(u32 addr) const
 }
 
 bool
-Guards::isDisabled(long nr) const
+Guards::isDisabled(isize nr) const
 {
     Guard *guard = guardNr(nr);
     return guard != nullptr && !guard->enabled;
@@ -142,7 +142,7 @@ Guards::isDisabledAt(u32 addr) const
 }
 
 void
-Guards::setEnable(long nr, bool val)
+Guards::setEnable(isize nr, bool val)
 {
     if (nr < count) guards[nr].enabled = val;
 }
@@ -164,7 +164,7 @@ Guards::setEnableAll(bool val)
 }
 
 void
-Guards::ignore(long nr, long count)
+Guards::ignore(isize nr, isize count)
 {
     Guard *guard = guardNr(nr);
     if (guard) guard->ignore = count;

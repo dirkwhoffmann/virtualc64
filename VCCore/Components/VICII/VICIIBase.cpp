@@ -171,9 +171,9 @@ VICII::clearStats()
 {
     if CONSTEXPR (VICII_STATS) {
 
-        double canvasTotal = stats.canvasFastPath + stats.canvasSlowPath;
-        double spriteTotal = stats.spriteFastPath + stats.spriteSlowPath;
-        double exitTotal = stats.quickExitHit + stats.quickExitMiss;
+        double canvasTotal = double(stats.canvasFastPath + stats.canvasSlowPath);
+        double spriteTotal = double(stats.spriteFastPath + stats.spriteSlowPath);
+        double exitTotal = double(stats.quickExitHit + stats.quickExitMiss);
 
         logmsg(LOG_INFO, "Canvas: Fast path: %ld Slow path: %ld Ratio: %f\n",
             stats.canvasFastPath,

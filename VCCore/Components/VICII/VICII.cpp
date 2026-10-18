@@ -115,7 +115,7 @@ VICII::resetTexture(u32 *p)
 {
     // Determine the HBLANK / VBLANK area
     long width = isPAL ? PAL::PIXELS_PER_LINE : NTSC::PIXELS_PER_LINE;
-    long height = getLinesPerFrame();
+    isize height = getLinesPerFrame();
     
     for (int y = 0; y < Texture::height; y++) {
         for (int x = 0; x < Texture::width; x++) {

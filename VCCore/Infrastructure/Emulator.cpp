@@ -230,7 +230,7 @@ Emulator::shouldWarp() const
 {
     auto &config = main.getConfig();
 
-    if (main.cpu.clock < C64::sec(config.warpBoot)) {
+    if (main.cpu.clock < C64::sec(double(config.warpBoot))) {
 
         return true;
 

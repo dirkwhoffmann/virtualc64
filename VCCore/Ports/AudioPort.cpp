@@ -247,7 +247,7 @@ AudioPort::handleBufferUnderflow()
         logmsg(LOG_AUDBUF, "Audio buffer underflow after %f seconds\n", elapsedTime.asSeconds());
 
         // Adjust the sample rate
-        setSampleRate(host.getConfig().sampleRate);
+        setSampleRate(double(host.getConfig().sampleRate));
         logmsg(LOG_AUDBUF, "New sample rate = %.2f\n", sampleRate);
     }
 }
@@ -282,7 +282,7 @@ AudioPort::handleBufferOverflow(isize &numSamples)
         logmsg(LOG_AUDBUF, "Audio buffer overflow after %f seconds\n", elapsedTime.asSeconds());
 
         // Adjust the sample rate
-        setSampleRate(host.getConfig().sampleRate);
+        setSampleRate(double(host.getConfig().sampleRate));
         logmsg(LOG_AUDBUF, "New sample rate = %.2f\n", sampleRate);
     }
 }

@@ -111,7 +111,7 @@ DapAdapter::process<dap::Command::BreakpointLocations> (isize seq, const string 
 template <> void
 DapAdapter::process<dap::Command::ConfigurationDone> (isize seq, const string &packet)
 {
-    printf("dap::Command::ConfigurationDone: %ld\n", seq);
+    printf("dap::Command::ConfigurationDone: %td\n", seq);
 
     replySuccess(seq, "configurationDone");
 }
@@ -119,7 +119,7 @@ DapAdapter::process<dap::Command::ConfigurationDone> (isize seq, const string &p
 template <> void
 DapAdapter::process<dap::Command::Disconnect> (isize seq, const string &packet)
 {
-    printf("dap::Command::Disconnect: %ld\n", seq);
+    printf("dap::Command::Disconnect: %td\n", seq);
 
     replySuccess(seq, "disconnect");
 
@@ -138,7 +138,7 @@ DapAdapter::process<dap::Command::Disconnect> (isize seq, const string &packet)
 template <> void
 DapAdapter::process <dap::Command::Initialize> (isize seq, const string &packet)
 {
-    printf("dap::Command::Initialize: %ld\n", seq);
+    printf("dap::Command::Initialize: %td\n", seq);
 
     json capabilities = {
 

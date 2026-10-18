@@ -1770,7 +1770,7 @@ C64::takeSnapshotNew(Compressor compressor, isize delay, bool repeat)
     if (delay != 0) {
 
         i64 payload = (i64)compressor << 24 | repeat << 16 | delay;
-        scheduleRel<SLOT_SNP>(C64::sec(delay), SNP_TAKE, payload);
+        scheduleRel<SLOT_SNP>(C64::sec(double(delay)), SNP_TAKE, payload);
         return nullptr;
     }
 
@@ -1789,7 +1789,7 @@ C64::takeSnapshot(Compressor compressor, isize delay, bool repeat)
     if (delay != 0) {
 
         i64 payload = (i64)compressor << 24 | repeat << 16 | delay;
-        scheduleRel<SLOT_SNP>(C64::sec(delay), SNP_TAKE, payload);
+        scheduleRel<SLOT_SNP>(C64::sec(double(delay)), SNP_TAKE, payload);
         return nullptr;
     }
 
@@ -1855,7 +1855,7 @@ C64::scheduleNextSNPEvent()
     auto delay = double(data[SLOT_SNP] & 0xFFFF);
 
     if (repeat) {
-        scheduleRel<SLOT_SNP>(C64::sec(delay), SNP_TAKE, data[SLOT_SNP]);
+        scheduleRel<SLOT_SNP>(C64::sec(double(delay)), SNP_TAKE, data[SLOT_SNP]);
     } else {
         cancel<SLOT_SNP>();
     }

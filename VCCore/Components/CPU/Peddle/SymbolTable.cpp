@@ -168,7 +168,7 @@ void
 SymbolMap::dump()
 {
     for (auto &sym: map) {
-        printf("%ld: %s %d\n", sym.first, sym.second.name.c_str(), sym.second.val);
+        printf("%td: %s %d\n", sym.first, sym.second.name.c_str(), sym.second.val);
     }
 }
 
