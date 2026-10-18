@@ -24,11 +24,9 @@ namespace vc64 {
 std::unique_ptr<D64File>
 Codec::makeD64(FloppyDisk &disk)
 {
-    // auto d64 = make_unique<D64File>(disk.getDiameter(), disk.getDensity());
     auto d64 = make_unique<D64File>(D64File::D64_683_SECTORS);
     
     auto size = disk.decodeDisk(nullptr);
-    printf("size = %ld d64.size = %ld\n", size, d64->getSize());
 
     disk.decodeDisk(d64->mutableByteView(0, d64->getSize()).data());
     return d64;

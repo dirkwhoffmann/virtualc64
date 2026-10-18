@@ -21,10 +21,10 @@ struct Guard {
     bool enabled;
 
     // Counts the number of hits
-    long hits;
+    isize hits;
 
     // Ignore counter
-    long ignore;
+    isize ignore;
 
 public:
 
