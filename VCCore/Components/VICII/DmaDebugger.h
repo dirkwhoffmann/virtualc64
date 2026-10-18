@@ -48,7 +48,8 @@ class DmaDebugger final : public SubComponent {
         Opt::XRAY_COLOR2,
         Opt::XRAY_COLOR3,
         Opt::XRAY_COLOR4,
-        Opt::XRAY_COLOR5
+        Opt::XRAY_COLOR5,
+        Opt::XRAY_COMPOSITOR
     };
 
     // Current configuration

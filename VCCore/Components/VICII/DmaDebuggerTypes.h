@@ -56,6 +56,38 @@ struct XRayModeEnum : Reflectable<XRayModeEnum, XRayMode> {
     }
 };
 
+/// Who merges the X-Ray texture into the emulator texture
+enum class XRayCompositor : long
+{
+    CPU,    // The emulator does it
+    GPU     // The host does it (e.g., in its merge shader)
+};
+
+struct XRayCompositorEnum : Reflectable<XRayCompositorEnum, XRayCompositor> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = long(XRayCompositor::GPU);
+
+    static const char *_key(XRayCompositor value)
+    {
+        switch (value) {
+
+            case XRayCompositor::CPU:   return "CPU";
+            case XRayCompositor::GPU:   return "GPU";
+        }
+        return "???";
+    }
+    static const char *help(XRayCompositor value)
+    {
+        switch (value) {
+
+            case XRayCompositor::CPU:   return "Composed by the emulator";
+            case XRayCompositor::GPU:   return "Composed by the host";
+        }
+        return "???";
+    }
+};
+
 /// DMA debugger display mode
 enum class DmaDisplayMode : long
 {
@@ -101,6 +133,7 @@ typedef struct
     // X-Ray mode (off, DMA debugger, layer inspector)
     XRayMode mode;
     bool dmaOverlay;
+    XRayCompositor compositor;
     bool dmaChannel[6];
     u32 dmaColor[6];
     DmaDisplayMode dmaDisplayMode;

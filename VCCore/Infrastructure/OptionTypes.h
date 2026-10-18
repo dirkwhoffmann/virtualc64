@@ -68,6 +68,7 @@ enum class Opt : long
     XRAY_COLOR3,            ///< Color for channel 3
     XRAY_COLOR4,            ///< Color for channel 4
     XRAY_COLOR5,            ///< Color for channel 5
+    XRAY_COMPOSITOR,        ///< Who merges the X-Ray texture into the picture
 
     // Expansion port
     EXP_REU_SPEED,          ///< Transfer speed of the RAM Extension Unit
@@ -243,6 +244,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::XRAY_COLOR3:              return "XRAY.COLOR3";
             case Opt::XRAY_COLOR4:              return "XRAY.COLOR4";
             case Opt::XRAY_COLOR5:              return "XRAY.COLOR5";
+            case Opt::XRAY_COMPOSITOR:          return "XRAY.COMPOSITOR";
 
             case Opt::EXP_REU_SPEED:            return "EXP.REU_SPEED";
 
@@ -396,6 +398,7 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::XRAY_COLOR3:              return "Color of channel 3";
             case Opt::XRAY_COLOR4:              return "Color of channel 4";
             case Opt::XRAY_COLOR5:              return "Color of channel 5";
+            case Opt::XRAY_COMPOSITOR:          return "X-Ray compositor";
 
             case Opt::EXP_REU_SPEED:            return "REU transfer speed";
     

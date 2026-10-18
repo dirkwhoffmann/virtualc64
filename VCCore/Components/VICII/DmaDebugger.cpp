@@ -88,6 +88,9 @@ DmaDebugger::visualizeDma(u32 *p, u8 data, MemAccess type)
 void
 DmaDebugger::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
 {
+    // The host merges the textures itself (e.g., in a shader)
+    if (config.compositor != XRayCompositor::CPU) return;
+
     // Dispatched once per call (not per pixel) -- see the class comment in
     // DmaDebugger.h. Each branch below calls a separate instantiation of
     // the templated overload, so the format is a compile-time constant for

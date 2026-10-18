@@ -67,6 +67,7 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::XRAY_COLOR3:          return numParser();
         case Opt::XRAY_COLOR4:          return numParser();
         case Opt::XRAY_COLOR5:          return numParser();
+        case Opt::XRAY_COMPOSITOR:      return enumParser.template operator()<XRayCompositorEnum,XRayCompositor>();
 
         case Opt::EXP_REU_SPEED:             return numParser();
 

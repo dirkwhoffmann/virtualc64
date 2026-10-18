@@ -68,6 +68,7 @@ Defaults::Defaults()
     setFallback(Opt::XRAY_COLOR3,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0xFF).rawValue);
     setFallback(Opt::XRAY_COLOR4,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0x00).rawValue);
     setFallback(Opt::XRAY_COLOR5,           GpuColor<TexelFormat::ABGR>(0x00, 0x80, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COMPOSITOR,       (i64)XRayCompositor::CPU);
 
     setFallback(Opt::EXP_REU_SPEED,              1);
 

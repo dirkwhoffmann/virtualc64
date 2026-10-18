@@ -229,8 +229,9 @@ C64::checkOption(Opt opt, i64 value)
 
         case Opt::C64_RUN_AHEAD:
 
-            if (value < -7 || value > 7) {
-                throw CoreError(CoreError::OPT_INV_ARG, "-7...7");
+            if (value < -RUN_BEHIND_FRAMES || value > RUN_AHEAD_FRAMES) {
+                throw CoreError(CoreError::OPT_INV_ARG,
+                                std::to_string(-RUN_BEHIND_FRAMES) + "..." + std::to_string(RUN_AHEAD_FRAMES));
             }
             return;
 

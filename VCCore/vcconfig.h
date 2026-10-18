@@ -40,6 +40,14 @@ static constexpr int SNP_BETA       = 0;
 
 
 //
+// Execution settings
+//
+
+static constexpr int RUN_AHEAD_FRAMES   = 7; // Maximum number of run-ahead frames
+static constexpr int RUN_BEHIND_FRAMES  = 6; // Maximum number of run-behind frames
+
+
+//
 // Debug settings
 //
 

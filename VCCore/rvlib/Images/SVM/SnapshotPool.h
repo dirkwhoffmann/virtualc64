@@ -27,7 +27,6 @@ struct SnapshotInfo {
 
     bool isAmiga() const { return platform == Platform::AMIGA; }
     bool isC64() const { return platform == Platform::C64; }
-    bool isCompatible() const;
 };
 
 

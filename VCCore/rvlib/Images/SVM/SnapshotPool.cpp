@@ -13,12 +13,6 @@
 
 namespace retro::vault {
 
-bool
-SnapshotInfo::isCompatible() const
-{
-    return isC64();
-}
-
 const SnapshotInfo *
 SnapshotPool::get(isize nr) const
 {

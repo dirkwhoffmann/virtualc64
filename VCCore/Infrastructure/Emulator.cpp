@@ -31,6 +31,8 @@ Emulator::defaults;
 
 Emulator::Emulator()
 {
+    if constexpr (RUN_AHEAD_FRAMES > 0) ahead = std::make_unique<C64>(*this, 1);
+
 
 }
 
@@ -48,7 +50,7 @@ Emulator::launch(const void *listener, Callback *func)
     if (listener && func) { main.msgQueue.setListener(listener, func); }
 
     // Disable the message queue of the run-ahead instance
-    ahead.msgQueue.disable();
+    if (ahead) ahead->msgQueue.disable();
 
     // Launch the emulator thread
     Thread::launch();
@@ -64,13 +66,13 @@ Emulator::initialize()
 
     // Initialize all components
     main.initialize();
-    ahead.initialize();
+    if (ahead) ahead->initialize();
 
     // Setup the default configuration
     revertToDefaultConfig();
 
     // Get the runahead instance up-to-date
-    ahead = main;
+    if (ahead) *ahead = main;
 
     // Switch state
     state = ExecState::OFF;
@@ -100,16 +102,19 @@ Emulator::_dump(Category category, std::ostream &os) const
         os << tab("Cycle");
         os << dec(main.cpu.clock) << std::endl << std::endl;
 
-        os << "Run-ahead instance:" << std::endl << std::endl;
+        if (ahead) {
 
-        os << tab("Clone nr");
-        os << dec(stats.clones) << std::endl;
-        os << tab("Frame");
-        os << dec(ahead.frame) << std::endl;
-        os << tab("Beam");
-        os << " (" << dec(ahead.scanline) << "," << dec(ahead.rasterCycle) << ")" << std::endl;
-        os << tab("Cycle");
-        os << dec(ahead.cpu.clock) << std::endl;
+            os << "Run-ahead instance:" << std::endl << std::endl;
+
+            os << tab("Clone nr");
+            os << dec(stats.clones) << std::endl;
+            os << tab("Frame");
+            os << dec(ahead->frame) << std::endl;
+            os << tab("Beam");
+            os << " (" << dec(ahead->scanline) << "," << dec(ahead->rasterCycle) << ")" << std::endl;
+            os << tab("Cycle");
+            os << dec(ahead->cpu.clock) << std::endl;
+        }
     }
 
     if (category == Category::State) {
@@ -200,11 +205,11 @@ Emulator::revertToDefaultConfig()
 
     // Setup the default configuration
     main.resetConfig();
-    ahead.resetConfig();
+    if (ahead) ahead->resetConfig();
 
     // Perform a hard reset
     main.hardReset();
-    ahead.hardReset();
+    if (ahead) ahead->hardReset();
 }
 
 void
@@ -277,7 +282,7 @@ Emulator::computeFrame()
             if (isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
 
             // Run the runahead instance
-            ahead.computeFrame();
+            ahead->computeFrame();
 
         } catch (StateChangeException &) {
 
@@ -304,13 +309,14 @@ Emulator::cloneRunAheadInstance()
     stats.clones++;
 
     // Recreate the runahead instance from scratch
-    ahead = main; isDirty = false;
+    assert(ahead);
+    *ahead = main; isDirty = false;
 
     if CONSTEXPR (RUA_CHECKSUM) {
         
-        if (ahead != main) {
+        if (*ahead != main) {
             
-            main.diff(ahead);
+            main.diff(*ahead);
             logmsg(LOG_FATAL, "Corrupted run-ahead clone detected");
             fatalError;
         }
@@ -335,9 +341,9 @@ Emulator::recreateRunAheadInstance()
     // Advance to the proper frame
     if CONSTEXPR (LOG_RUA != LOG_OFF) {
         utl::StopWatch watch("Run-ahead: Fast-forward");
-        ahead.fastForward(config.runAhead - 1);
+        ahead->fastForward(config.runAhead - 1);
     } else {
-        ahead.fastForward(config.runAhead - 1);
+        ahead->fastForward(config.runAhead - 1);
     }
 }
 
@@ -426,7 +432,7 @@ Emulator::getTexture() const
 
         // In run-ahead mode, return the texture from the run-ahead instance
         if (main.config.runAhead > 0) {
-            return ahead.videoPort.getTexture();
+            return ahead->videoPort.getTexture();
         }
 
         // In run-behind mode, return a texture from the texture buffer
@@ -463,7 +469,7 @@ Emulator::getXrayTexture() const
 
         // In run-ahead mode, return the texture from the run-ahead instance
         if (main.config.runAhead > 0) {
-            return ahead.videoPort.getXrayTexture();
+            return ahead->videoPort.getXrayTexture();
         }
 
         // In run-behind mode, return a texture from the texture buffer

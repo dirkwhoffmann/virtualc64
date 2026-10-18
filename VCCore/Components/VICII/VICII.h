@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include "vcconfig.h"
 #include "VICIITypes.h"
 #include "SubComponent.h"
 #include "utl/gfx/Colors.h"
@@ -731,7 +732,10 @@ private:
     
 private:
 
-    static constexpr isize NUM_TEXTURES = 9;
+    /* One texture is the working buffer and one is the newest stable frame.
+     * All remaining ones can be accessed in run-behind mode.
+     */
+    static constexpr isize NUM_TEXTURES = RUN_BEHIND_FRAMES + 2;
 
     // C64 colors in RGBA format (updated in updatePalette())
     u32 rgbaTable[16];
