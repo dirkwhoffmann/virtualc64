@@ -674,13 +674,13 @@ C64::update(CmdQueue &queue)
                 case Cmd::CONFIG:
 
                     cmdConfig = true;
-                    emulator.set(cmd.config.option, cmd.config.value, {cmd.config.id});
+                    set(cmd.config.option, cmd.config.value, {cmd.config.id});
                     break;
 
                 case Cmd::CONFIG_ALL:
 
                     cmdConfig = true;
-                    emulator.set(cmd.config.option, cmd.config.value, {});
+                    set(cmd.config.option, cmd.config.value, {});
                     break;
 
                 case Cmd::CONFIG_SCHEME:

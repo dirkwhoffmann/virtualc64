@@ -68,7 +68,14 @@ BackedBuffer::init(isize size)
 
     if (size) {
 
-        mem = (u8 *)std::calloc(size_t(size), 1);
+        // Memory is allocated with malloc to leave it intentionally uninitialized.
+        // For large regions, the allocator requests fresh pages from the operating
+        // system, which are backed by physical memory only when accessed. This keeps
+        // the memory footprint low when only part of the buffer is used.
+        // Since fetch() initializes each page before handing it out, the initial
+        // contents do not matter.
+        
+        mem = (u8 *)std::malloc(size_t(size));
         if (!mem) throw std::bad_alloc();
     }
 

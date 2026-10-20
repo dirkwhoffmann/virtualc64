@@ -176,19 +176,20 @@ Emulator::check(Opt opt, i64 value, const std::vector<isize> objids)
 void
 Emulator::set(Opt opt, i64 value, const std::vector<isize> objids)
 {
-    return main.set(opt, value, objids);
+    main.check(opt, value, objids);
+    main.set(opt, value, objids);
 }
 
 void
 Emulator::set(Opt opt, const string &value, const std::vector<isize> objids)
 {
-    return main.set(opt, value, objids);
+    set(opt, OptionParser::parse(opt, value), objids);
 }
 
 void
 Emulator::set(const string &opt, const string &value, const std::vector<isize> objids)
 {
-    return main.set(opt, value, objids);
+    set(Opt(utl::parseEnum<OptEnum>(opt)), value, objids);
 }
 
 void

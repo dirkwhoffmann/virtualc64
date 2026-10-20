@@ -26,7 +26,7 @@ namespace retro::vault {
 optional<ImageInfo>
 AnyImage::about(const fs::path& url)
 {
-    if (auto info = SVMFile::about(url))  return info;
+    if (auto info = SVMFile::about(url)) return info;
     if (auto info = DiskImage::about(url)) return info;
     return {};
 }

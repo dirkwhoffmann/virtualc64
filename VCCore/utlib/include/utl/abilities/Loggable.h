@@ -101,11 +101,26 @@ protected:
 #undef logmsg
 #endif
 
+/* In debug builds, CONSTEXPR expands to nothing. If the key is one of the
+ * constant severities (e.g., LOG_WARN), the condition below is then a
+ * compile-time constant and MSVC reports warning C4127. The condition is
+ * deliberate, so the warning is silenced for this macro only.
+ */
+#ifdef _MSC_VER
+#define UTL_SUPPRESS_CONSTANT_CONDITION_BEGIN __pragma(warning(push)) __pragma(warning(disable: 4127))
+#define UTL_SUPPRESS_CONSTANT_CONDITION_END   __pragma(warning(pop))
+#else
+#define UTL_SUPPRESS_CONSTANT_CONDITION_BEGIN
+#define UTL_SUPPRESS_CONSTANT_CONDITION_END
+#endif
+
 #define logmsg(key, format, ...) \
     do { \
+        UTL_SUPPRESS_CONSTANT_CONDITION_BEGIN \
         if CONSTEXPR (key != LOG_OFF) \
             log(key, std::source_location::current(), \
                 format __VA_OPT__(,) __VA_ARGS__); \
+        UTL_SUPPRESS_CONSTANT_CONDITION_END \
     } while (0)
 
 #define xfiles(format, ...) \

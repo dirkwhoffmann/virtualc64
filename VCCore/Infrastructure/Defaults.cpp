@@ -18,177 +18,174 @@ namespace vc64 {
 
 Defaults::Defaults()
 {
-    setFallback(Opt::HOST_REFRESH_RATE,          60);
-    setFallback(Opt::HOST_SAMPLE_RATE,           44100);
-    setFallback(Opt::HOST_TEX_FORMAT,            (i64)TexFormat::RGBA);
-    setFallback(Opt::HOST_FRAMEBUF_WIDTH,        0);
-    setFallback(Opt::HOST_FRAMEBUF_HEIGHT,       0);
+    setFallback(Opt::HOST_REFRESH_RATE,         60);
+    setFallback(Opt::HOST_SAMPLE_RATE,          44100);
+    setFallback(Opt::HOST_TEX_FORMAT,           (i64)TexFormat::RGBA);
+    setFallback(Opt::HOST_FRAMEBUF_WIDTH,       0);
+    setFallback(Opt::HOST_FRAMEBUF_HEIGHT,      0);
 
-    setFallback(Opt::C64_WARP_BOOT,              0);
-    setFallback(Opt::C64_WARP_MODE,              (i64)Warp::NEVER);
-    setFallback(Opt::C64_VSYNC,                  false);
-    setFallback(Opt::C64_SPEED_BOOST,            100);
-    setFallback(Opt::C64_RUN_AHEAD,              0);
+    setFallback(Opt::C64_WARP_BOOT,             0);
+    setFallback(Opt::C64_WARP_MODE,             (i64)Warp::NEVER);
+    setFallback(Opt::C64_VSYNC,                 false);
+    setFallback(Opt::C64_SPEED_BOOST,           100);
+    setFallback(Opt::C64_RUN_AHEAD,             0);
 
-    setFallback(Opt::DASM_NUMBERS,               (i64)DasmNumbers::HEX0);
-    
-    setFallback(Opt::POWER_GRID,                 (i64)PowerGrid::STABLE_50HZ);
+    setFallback(Opt::DASM_NUMBERS,              (i64)DasmNumbers::HEX0);
 
-    setFallback(Opt::GLUE_LOGIC,                 (i64)GlueLogic::DISCRETE);
+    setFallback(Opt::POWER_GRID,                (i64)PowerGrid::STABLE_50HZ);
 
-    setFallback(Opt::CIA_REVISION,               (i64)CIARev::MOS_6526);
-    setFallback(Opt::CIA_TIMER_B_BUG,            true);
-    setFallback(Opt::CIA_IDLE_SLEEP,             true);
+    setFallback(Opt::GLUE_LOGIC,                (i64)GlueLogic::DISCRETE);
 
-    setFallback(Opt::VICII_REVISION,             (i64)VICIIRev::PAL_8565);
-    setFallback(Opt::VICII_POWER_SAVE,           true);
-    setFallback(Opt::VICII_GRAY_DOT_BUG,         true);
-    setFallback(Opt::VICII_HIDE_SPRITES,         false);
-    setFallback(Opt::VICII_SB_COLLISIONS,        true);
-    setFallback(Opt::VICII_SS_COLLISIONS,        true);
-    setFallback(Opt::VICII_CUT_LAYERS,           0xFF);
-    setFallback(Opt::VICII_CUT_OPACITY,          0xFF);
+    setFallback(Opt::CIA_REVISION,              (i64)CIARev::MOS_6526);
+    setFallback(Opt::CIA_TIMER_B_BUG,           true);
+    setFallback(Opt::CIA_IDLE_SLEEP,            true);
 
-    setFallback(Opt::XRAY_MODE,             (i64)XRayMode::XRAY_NONE);
-    setFallback(Opt::XRAY_OVERLAY,          false);
-    setFallback(Opt::XRAY_OVERLAY_STYLE,    (i64)DmaDisplayMode::FG_LAYER);
-    setFallback(Opt::XRAY_OVERLAY_OPACITY,  0x80);
+    setFallback(Opt::VICII_REVISION,            (i64)VICIIRev::PAL_8565);
+    setFallback(Opt::VICII_POWER_SAVE,          true);
+    setFallback(Opt::VICII_GRAY_DOT_BUG,        true);
+    setFallback(Opt::VICII_HIDE_SPRITES,        false);
+    setFallback(Opt::VICII_SB_COLLISIONS,       true);
+    setFallback(Opt::VICII_SS_COLLISIONS,       true);
+    setFallback(Opt::VICII_CUT_LAYERS,          0xFF);
+    setFallback(Opt::VICII_CUT_OPACITY,         0xFF);
+
+    setFallback(Opt::XRAY_MODE,                 (i64)XRayMode::XRAY_NONE);
+    setFallback(Opt::XRAY_OVERLAY,              false);
+    setFallback(Opt::XRAY_OVERLAY_STYLE,        (i64)DmaDisplayMode::FG_LAYER);
+    setFallback(Opt::XRAY_OVERLAY_OPACITY,      0x80);
     setFallback(Opt::XRAY_DMA_CHANNEL0,         true);
     setFallback(Opt::XRAY_DMA_CHANNEL1,         true);
     setFallback(Opt::XRAY_DMA_CHANNEL2,         true);
     setFallback(Opt::XRAY_DMA_CHANNEL3,         true);
     setFallback(Opt::XRAY_DMA_CHANNEL4,         true);
     setFallback(Opt::XRAY_DMA_CHANNEL5,         true);
-    // Fixed, portable encoding (ABGR) for a persisted option value --
-    // independent of the live HOST_TEX_FORMAT, which DmaDebugger re-derives
-    // its actual on-screen shades from (see DmaDebugger::updateDebugColors).
-    setFallback(Opt::XRAY_COLOR0,           GpuColor<TexelFormat::ABGR>(0xFF, 0x00, 0x00).rawValue);
-    setFallback(Opt::XRAY_COLOR1,           GpuColor<TexelFormat::ABGR>(0xFF, 0xC0, 0x00).rawValue);
-    setFallback(Opt::XRAY_COLOR2,           GpuColor<TexelFormat::ABGR>(0xFF, 0xFF, 0x00).rawValue);
-    setFallback(Opt::XRAY_COLOR3,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0xFF).rawValue);
-    setFallback(Opt::XRAY_COLOR4,           GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0x00).rawValue);
-    setFallback(Opt::XRAY_COLOR5,           GpuColor<TexelFormat::ABGR>(0x00, 0x80, 0xFF).rawValue);
-    setFallback(Opt::XRAY_COMPOSITOR,       (i64)XRayCompositor::CPU);
+    setFallback(Opt::XRAY_COLOR0,               GpuColor<TexelFormat::ABGR>(0xFF, 0x00, 0x00).rawValue);
+    setFallback(Opt::XRAY_COLOR1,               GpuColor<TexelFormat::ABGR>(0xFF, 0xC0, 0x00).rawValue);
+    setFallback(Opt::XRAY_COLOR2,               GpuColor<TexelFormat::ABGR>(0xFF, 0xFF, 0x00).rawValue);
+    setFallback(Opt::XRAY_COLOR3,               GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COLOR4,               GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0x00).rawValue);
+    setFallback(Opt::XRAY_COLOR5,               GpuColor<TexelFormat::ABGR>(0x00, 0x80, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COMPOSITOR,           (i64)XRayCompositor::GPU);
 
-    setFallback(Opt::EXP_REU_SPEED,              1);
+    setFallback(Opt::EXP_REU_SPEED,             1);
 
-    setFallback(Opt::USR_DEVICE,                 (i64)UserPortDevice::RS232);
+    setFallback(Opt::USR_DEVICE,                (i64)UserPortDevice::RS232);
 
-    setFallback(Opt::VID_WHITE_NOISE,            true);
+    setFallback(Opt::VID_WHITE_NOISE,           true);
 
-    setFallback(Opt::MON_PALETTE,                (i64)Palette::COLOR);
-    setFallback(Opt::MON_BRIGHTNESS,             50);
-    setFallback(Opt::MON_CONTRAST,               100);
-    setFallback(Opt::MON_SATURATION,             50);
-    setFallback(Opt::MON_HCENTER,                0);
-    setFallback(Opt::MON_VCENTER,                0);
-    setFallback(Opt::MON_HZOOM,                  0);
-    setFallback(Opt::MON_VZOOM,                  46);
-    setFallback(Opt::MON_UPSCALER,               (i64)Upscaler::NONE);
-    setFallback(Opt::MON_BLUR,                   true);
-    setFallback(Opt::MON_BLUR_RADIUS,            0);
-    setFallback(Opt::MON_BLOOM,                  false);
-    setFallback(Opt::MON_BLOOM_RADIUS,           200);
-    setFallback(Opt::MON_BLOOM_BRIGHTNESS,       200);
-    setFallback(Opt::MON_BLOOM_WEIGHT,           100);
-    setFallback(Opt::MON_DOTMASK,                (i64)Dotmask::NONE);
-    setFallback(Opt::MON_DOTMASK_BRIGHTNESS,     550);
-    setFallback(Opt::MON_SCANLINES,              (i64)Scanlines::NONE);
-    setFallback(Opt::MON_SCANLINE_BRIGHTNESS,    550);
-    setFallback(Opt::MON_SCANLINE_WEIGHT,        110);
-    setFallback(Opt::MON_DISALIGNMENT,           0);
-    setFallback(Opt::MON_DISALIGNMENT_H,         250);
-    setFallback(Opt::MON_DISALIGNMENT_V,         250);
+    setFallback(Opt::MON_PALETTE,               (i64)Palette::COLOR);
+    setFallback(Opt::MON_BRIGHTNESS,            50);
+    setFallback(Opt::MON_CONTRAST,              100);
+    setFallback(Opt::MON_SATURATION,            50);
+    setFallback(Opt::MON_HCENTER,               0);
+    setFallback(Opt::MON_VCENTER,               0);
+    setFallback(Opt::MON_HZOOM,                 0);
+    setFallback(Opt::MON_VZOOM,                 46);
+    setFallback(Opt::MON_UPSCALER,              (i64)Upscaler::NONE);
+    setFallback(Opt::MON_BLUR,                  true);
+    setFallback(Opt::MON_BLUR_RADIUS,           0);
+    setFallback(Opt::MON_BLOOM,                 false);
+    setFallback(Opt::MON_BLOOM_RADIUS,          200);
+    setFallback(Opt::MON_BLOOM_BRIGHTNESS,      200);
+    setFallback(Opt::MON_BLOOM_WEIGHT,          100);
+    setFallback(Opt::MON_DOTMASK,               (i64)Dotmask::NONE);
+    setFallback(Opt::MON_DOTMASK_BRIGHTNESS,    550);
+    setFallback(Opt::MON_SCANLINES,             (i64)Scanlines::NONE);
+    setFallback(Opt::MON_SCANLINE_BRIGHTNESS,   550);
+    setFallback(Opt::MON_SCANLINE_WEIGHT,       110);
+    setFallback(Opt::MON_DISALIGNMENT,          0);
+    setFallback(Opt::MON_DISALIGNMENT_H,        250);
+    setFallback(Opt::MON_DISALIGNMENT_V,        250);
 
-    setFallback(Opt::AUD_VOL0,                   100);
-    setFallback(Opt::AUD_VOL1,                   100);
-    setFallback(Opt::AUD_VOL2,                   100);
-    setFallback(Opt::AUD_VOL3,                   100);
-    setFallback(Opt::AUD_PAN0,                   0);
-    setFallback(Opt::AUD_PAN1,                   0);
-    setFallback(Opt::AUD_PAN2,                   0);
-    setFallback(Opt::AUD_PAN3,                   0);
-    setFallback(Opt::AUD_VOL_L,                  50);
-    setFallback(Opt::AUD_VOL_R,                  50);
-    setFallback(Opt::AUD_BUFFER_SIZE,            4096);
-    setFallback(Opt::AUD_ASR,                    true);
+    setFallback(Opt::AUD_VOL0,                  100);
+    setFallback(Opt::AUD_VOL1,                  100);
+    setFallback(Opt::AUD_VOL2,                  100);
+    setFallback(Opt::AUD_VOL3,                  100);
+    setFallback(Opt::AUD_PAN0,                  0);
+    setFallback(Opt::AUD_PAN1,                  0);
+    setFallback(Opt::AUD_PAN2,                  0);
+    setFallback(Opt::AUD_PAN3,                  0);
+    setFallback(Opt::AUD_VOL_L,                 50);
+    setFallback(Opt::AUD_VOL_R,                 50);
+    setFallback(Opt::AUD_BUFFER_SIZE,           4096);
+    setFallback(Opt::AUD_ASR,                   true);
 
-    setFallback(Opt::SID_ENABLE,                 true,                   {0});
-    setFallback(Opt::SID_ENABLE,                 false,                  {1, 2, 3});
-    setFallback(Opt::SID_ADDRESS,                0xD400,                 {0});
-    setFallback(Opt::SID_ADDRESS,                0xD420,                 {1});
-    setFallback(Opt::SID_ADDRESS,                0xD440,                 {2});
-    setFallback(Opt::SID_ADDRESS,                0xD460,                 {3});
-    setFallback(Opt::SID_REV,                    (i64)SIDRevision::MOS_8580, {0, 1, 2, 3});
-    setFallback(Opt::SID_FILTER,                 false,                  {0, 1, 2, 3});
-    setFallback(Opt::SID_ENGINE,                 (i64)SIDEngine::RESID,  {0, 1, 2, 3});
-    setFallback(Opt::SID_SAMPLING,               (i64)SamplingMethod::INTERPOLATE, {0, 1, 2, 3});
-    setFallback(Opt::SID_POWER_SAVE,             false,                  {0, 1, 2, 3});
+    setFallback(Opt::SID_ENABLE,                true,                   {0});
+    setFallback(Opt::SID_ENABLE,                false,                  {1, 2, 3});
+    setFallback(Opt::SID_ADDRESS,               0xD400,                 {0});
+    setFallback(Opt::SID_ADDRESS,               0xD420,                 {1});
+    setFallback(Opt::SID_ADDRESS,               0xD440,                 {2});
+    setFallback(Opt::SID_ADDRESS,               0xD460,                 {3});
+    setFallback(Opt::SID_REV,                   (i64)SIDRevision::MOS_8580, {0, 1, 2, 3});
+    setFallback(Opt::SID_FILTER,                false,                  {0, 1, 2, 3});
+    setFallback(Opt::SID_ENGINE,                (i64)SIDEngine::RESID,  {0, 1, 2, 3});
+    setFallback(Opt::SID_SAMPLING,              (i64)SamplingMethod::INTERPOLATE, {0, 1, 2, 3});
+    setFallback(Opt::SID_POWER_SAVE,            false,                  {0, 1, 2, 3});
 
-    setFallback(Opt::MEM_INIT_PATTERN,           (i64)RamPattern::VICE);
-    setFallback(Opt::MEM_HEATMAP,                false);
-    setFallback(Opt::MEM_SAVE_ROMS,              true);
+    setFallback(Opt::MEM_INIT_PATTERN,          (i64)RamPattern::VICE);
+    setFallback(Opt::MEM_HEATMAP,               false);
+    setFallback(Opt::MEM_SAVE_ROMS,             true);
 
-    setFallback(Opt::DRV_AUTO_CONFIG,            true,               {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_TYPE,                   (i64)DriveType::VC1541II, {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_RAM,                    (i64)DriveRam::NONE, {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_SAVE_ROMS,              true,               {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_PARCABLE,               (i64)ParCableType::NONE,{DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_CONNECT,                true,               {DRIVE8});
-    setFallback(Opt::DRV_CONNECT,                false,              {DRIVE9});
-    setFallback(Opt::DRV_POWER_SWITCH,           true,               {DRIVE8});
-    setFallback(Opt::DRV_POWER_SWITCH,           true,               {DRIVE9});
-    setFallback(Opt::DRV_POWER_SAVE,             true,               {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_EJECT_DELAY,            30,                 {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_SWAP_DELAY,             30,                 {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_INSERT_DELAY,           30,                 {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_PAN,                    0,                  {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_POWER_VOL,              50,                 {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_STEP_VOL,               50,                 {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_INSERT_VOL,             50,                 {DRIVE8, DRIVE9});
-    setFallback(Opt::DRV_EJECT_VOL,              50,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_AUTO_CONFIG,           true,               {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_TYPE,                  (i64)DriveType::VC1541II, {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_RAM,                   (i64)DriveRam::NONE, {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_SAVE_ROMS,             true,               {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_PARCABLE,              (i64)ParCableType::NONE,{DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_CONNECT,               true,               {DRIVE8});
+    setFallback(Opt::DRV_CONNECT,               false,              {DRIVE9});
+    setFallback(Opt::DRV_POWER_SWITCH,          true,               {DRIVE8});
+    setFallback(Opt::DRV_POWER_SWITCH,          true,               {DRIVE9});
+    setFallback(Opt::DRV_POWER_SAVE,            true,               {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_EJECT_DELAY,           30,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_SWAP_DELAY,            30,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_INSERT_DELAY,          30,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_PAN,                   0,                  {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_POWER_VOL,             50,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_STEP_VOL,              50,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_INSERT_VOL,            50,                 {DRIVE8, DRIVE9});
+    setFallback(Opt::DRV_EJECT_VOL,             50,                 {DRIVE8, DRIVE9});
 
-    setFallback(Opt::DAT_MODEL,                  (i64)DatasetteModel::C1530);
-    setFallback(Opt::DAT_CONNECT,                true);
+    setFallback(Opt::DAT_MODEL,                 (i64)DatasetteModel::C1530);
+    setFallback(Opt::DAT_CONNECT,               true);
 
-    setFallback(Opt::MOUSE_MODEL,                (i64)MouseModel::C1350);
-    setFallback(Opt::MOUSE_SHAKE_DETECT,         true);
-    setFallback(Opt::MOUSE_VELOCITY,             100);
+    setFallback(Opt::MOUSE_MODEL,               (i64)MouseModel::C1350);
+    setFallback(Opt::MOUSE_SHAKE_DETECT,        true);
+    setFallback(Opt::MOUSE_VELOCITY,            100);
 
-    setFallback(Opt::AUTOFIRE,                   false);
-    setFallback(Opt::AUTOFIRE_BURSTS,            false);
-    setFallback(Opt::AUTOFIRE_BULLETS,           3);
-    setFallback(Opt::AUTOFIRE_DELAY,             5);
+    setFallback(Opt::AUTOFIRE,                  false);
+    setFallback(Opt::AUTOFIRE_BURSTS,           false);
+    setFallback(Opt::AUTOFIRE_BULLETS,          3);
+    setFallback(Opt::AUTOFIRE_DELAY,            5);
 
-    setFallback(Opt::RS232_DEVICE,               (i64)CommunicationDevice::NONE);
-    setFallback(Opt::RS232_BAUD,                 600);
+    setFallback(Opt::RS232_DEVICE,              (i64)CommunicationDevice::NONE);
+    setFallback(Opt::RS232_BAUD,                600);
 
-    setFallback(Opt::PADDLE_ORIENTATION,         (i64)PaddleOrientation::HORIZONTAL);
+    setFallback(Opt::PADDLE_ORIENTATION,        (i64)PaddleOrientation::HORIZONTAL);
 
-    setFallback(Opt::RS232_BAUD,                 600);
+    setFallback(Opt::RS232_BAUD,                600);
 
-    setFallback(Opt::SRV_ENABLE,                 false,                  { (i64)ServerType::RSH });
-    setFallback(Opt::SRV_PORT,                   8081,                   { (i64)ServerType::RSH });
-    setFallback(Opt::SRV_TRANSPORT,               (i64)TransportProtocol::TCP, { (i64)ServerType::RSH });
-    setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::RSH });
+    setFallback(Opt::SRV_ENABLE,                false,                  { (i64)ServerType::RSH });
+    setFallback(Opt::SRV_PORT,                  8081,                   { (i64)ServerType::RSH });
+    setFallback(Opt::SRV_TRANSPORT,             (i64)TransportProtocol::TCP, { (i64)ServerType::RSH });
+    setFallback(Opt::SRV_VERBOSE,               true,                   { (i64)ServerType::RSH });
 
-    setFallback(Opt::SRV_ENABLE,                 false,                  { (i64)ServerType::RPC });
-    setFallback(Opt::SRV_PORT,                   8082,                   { (i64)ServerType::RPC });
-    setFallback(Opt::SRV_TRANSPORT,               (i64)TransportProtocol::TCP, { (i64)ServerType::RPC });
-    setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::RPC });
+    setFallback(Opt::SRV_ENABLE,                false,                  { (i64)ServerType::RPC });
+    setFallback(Opt::SRV_PORT,                  8082,                   { (i64)ServerType::RPC });
+    setFallback(Opt::SRV_TRANSPORT,             (i64)TransportProtocol::TCP, { (i64)ServerType::RPC });
+    setFallback(Opt::SRV_VERBOSE,               true,                   { (i64)ServerType::RPC });
 
-    setFallback(Opt::SRV_ENABLE,                 false,                  { (i64)ServerType::DAP });
-    setFallback(Opt::SRV_PORT,                   8083,                   { (i64)ServerType::DAP });
-    setFallback(Opt::SRV_TRANSPORT,               (i64)TransportProtocol::TCP, { (i64)ServerType::DAP });
-    setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::DAP });
+    setFallback(Opt::SRV_ENABLE,                false,                  { (i64)ServerType::DAP });
+    setFallback(Opt::SRV_PORT,                  8083,                   { (i64)ServerType::DAP });
+    setFallback(Opt::SRV_TRANSPORT,             (i64)TransportProtocol::TCP, { (i64)ServerType::DAP });
+    setFallback(Opt::SRV_VERBOSE,               true,                   { (i64)ServerType::DAP });
 
-    setFallback(Opt::SRV_ENABLE,                 false,                  { (i64)ServerType::PROM });
-    setFallback(Opt::SRV_PORT,                   8084,                   { (i64)ServerType::PROM });
-    setFallback(Opt::SRV_TRANSPORT,               (i64)TransportProtocol::HTTP, { (i64)ServerType::PROM });
-    setFallback(Opt::SRV_VERBOSE,                true,                   { (i64)ServerType::PROM });
+    setFallback(Opt::SRV_ENABLE,                false,                  { (i64)ServerType::PROM });
+    setFallback(Opt::SRV_PORT,                  8084,                   { (i64)ServerType::PROM });
+    setFallback(Opt::SRV_TRANSPORT,             (i64)TransportProtocol::HTTP, { (i64)ServerType::PROM });
+    setFallback(Opt::SRV_VERBOSE,               true,                   { (i64)ServerType::PROM });
 
-    setFallback(Opt::DBG_DEBUGCART,              0);
-    setFallback(Opt::DBG_WATCHDOG,               0);
+    setFallback(Opt::DBG_DEBUGCART,             0);
+    setFallback(Opt::DBG_WATCHDOG,              0);
 
     setFallback("BASIC_PATH", "");
     setFallback("CHAR_PATH", "");

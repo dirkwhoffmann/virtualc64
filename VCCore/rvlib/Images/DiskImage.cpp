@@ -29,8 +29,8 @@ using TS  = TrackDevice::TS;
 optional<ImageInfo>
 DiskImage::about(const fs::path& path)
 {
+    if (auto info = HardDiskImage::about(path)) return info;
     if (auto info = FloppyDiskImage::about(path)) return info;
-    if (auto info = HardDiskImage::about(path))   return info;
 
     return {};
 }
