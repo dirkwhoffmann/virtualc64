@@ -193,21 +193,73 @@ RpcServer::execNonBlocking(const string &command, isize id)
 optional<string>
 RpcServer::execBlocking(const string &command, isize id)
 {
-    // To block the thread, we pass a promise to RetroShell
+    // To block the thread, we attach a completion handler fulfilling a promise
     auto promise = std::make_shared<std::promise<std::string>>();
     auto future = promise->get_future();
 
-    // Feed the command, with the promise attached, into the command queue
+    // Feed the command, with the handler attached, into the command queue
     rpcShell.asyncExec(InputLine {
 
         .id = id,
         .type = InputLine::Source::RPC,
         .input = command,
-        .promise = promise
+        .completion = [this, promise, id](const string &output, std::exception_ptr error) {
+
+            promise->set_value(error ? makeError(id, error) : makeResult(id, output));
+        }
     });
 
     // Wait until the promise gets fulfilled
     return future.get();
+}
+
+string
+RpcServer::makeResult(isize id, const string &output)
+{
+    json response = {
+
+        {"jsonrpc", "2.0"},
+        {"result", output},
+        {"id", id}
+    };
+
+    return response.dump();
+}
+
+string
+RpcServer::makeError(isize id, std::exception_ptr error)
+{
+    // By default, signal an internal error
+    i64 code = RPC::INTERNAL_ERROR;
+    string message = "Unknown error";
+
+    try { std::rethrow_exception(error); } catch (std::exception &exc) {
+
+        message = exc.what();
+
+        // For parse errors, use a value from the server-defined error range
+        if (dynamic_cast<const utl::ParseError *>(&exc)) {
+            code = RPC::SERVER_ERROR;
+        }
+
+        // For application errors, use the fault identifier
+        if (const auto *e = dynamic_cast<const CoreError *>(&exc)) {
+            code = i64(e->fault());
+        }
+
+    } catch (...) { }
+
+    json response = {
+
+        {"jsonrpc", "2.0"},
+        {"error", {
+            {"code", code},
+            {"message", message}
+        }},
+        {"id", id}
+    };
+
+    return response.dump();
 }
 
 void
@@ -215,17 +267,7 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss)
 {
     if (!input.isRpcCommand()) return;
 
-    json response = {
-
-        {"jsonrpc", "2.0"},
-        {"result", ss.str()},
-        {"id", input.id}
-    };
-
-    // If a promise is attached, fulfill it
-    if (input.promise) { input.promise->set_value(response.dump()); }
-
-    send(response.dump() + "\n");
+    send(makeResult(input.id, ss.str()) + "\n");
 }
 
 void
@@ -233,33 +275,8 @@ RpcServer::didExecute(const InputLine& input, std::stringstream &ss, std::except
 {
     if (!input.isRpcCommand()) return;
 
-    // By default, signal an internal error
-    i64 code = RPC::INTERNAL_ERROR;
-
-    // For parse errors, use a value from the server-defined error range
-    if (dynamic_cast<const utl::ParseError *>(&exc)) {
-        code = RPC::SERVER_ERROR;
-    }
-
-    // For application errors, use the fault identifier
-    if (const auto *error = dynamic_cast<const CoreError *>(&exc)) {
-        code = i64(error->fault());
-    }
-
-    json response = {
-
-        {"jsonrpc", "2.0"},
-        {"error", {
-            {"code", code},
-            {"message", exc.what()}
-        }},
-        {"id", input.id}
-    };
-
-    // If a promise is attached, fulfill it
-    if (input.promise) { input.promise->set_value(response.dump()); }
-
-    send(response.dump() + "\n");
+    // Called from within the catch block of the failed command
+    send(makeError(input.id, std::current_exception()) + "\n");
 }
 
 }

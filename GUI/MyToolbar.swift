@@ -88,14 +88,14 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
                  itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier,
                  willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
         
-        let portItems = [ (SFSymbol.nosign, "None", -1),
-                          (SFSymbol.mouse, "Mouse", 0),
-                          (SFSymbol.arrowkeys, "Keyset 1", 1),
-                          (SFSymbol.arrowkeys, "Keyset 2", 2),
-                          (SFSymbol.gamecontroller, "Gamepad 1", 3),
-                          (SFSymbol.gamecontroller, "Gamepad 2", 4),
-                          (SFSymbol.gamecontroller, "Gamepad 3", 5),
-                          (SFSymbol.gamecontroller, "Gamepad 4", 6) ]
+        let portItems = [ (Symbol.nosign, "None", -1),
+                          (Symbol.mouse, "Mouse", 0),
+                          (Symbol.arrowkeys, "Keyset 1", 1),
+                          (Symbol.arrowkeys, "Keyset 2", 2),
+                          (Symbol.gamecontroller, "Gamepad 1", 3),
+                          (Symbol.gamecontroller, "Gamepad 2", 4),
+                          (Symbol.gamecontroller, "Gamepad 3", 5),
+                          (Symbol.gamecontroller, "Gamepad 4", 6) ]
         
         switch itemIdentifier {
 
@@ -110,7 +110,7 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
             
         case .inspectors:
             
-            let images: [SFSymbol] = [
+            let images: [Symbol] = [
                 
                 .magnifyingglass,
                 .gauge,
@@ -133,7 +133,7 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
             
         case .snapshots:
             
-            let images: [SFSymbol] = [
+            let images: [Symbol] = [
                 
                 .arrowDown,
                 .arrowUp,
@@ -185,7 +185,7 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
 
         case .controls:
             
-            let images: [SFSymbol] = [
+            let images: [Symbol] = [
                 
                 .pause,
                 .reset,
@@ -255,12 +255,12 @@ class MyToolbar: NSToolbar, NSToolbarDelegate {
         if emu.running {
             
             controls.setToolTip("Pause", forSegment: 0)
-            controls.setImage(SFSymbol.get(.pause), forSegment: 0)
+            controls.setImage(Symbol.get(.pause), forSegment: 0)
             
         } else {
             
             controls.setToolTip("Run", forSegment: 0)
-            controls.setImage(SFSymbol.get(.play), forSegment: 0)
+            controls.setImage(Symbol.get(.play), forSegment: 0)
         }
     }
     

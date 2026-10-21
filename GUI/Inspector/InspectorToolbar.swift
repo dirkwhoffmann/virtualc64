@@ -94,7 +94,7 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
 
         case .execution:
 
-            let images: [SFSymbol] = [
+            let images: [Symbol] = [
 
                 .pause,
                 .stepInto,
@@ -123,13 +123,13 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
 
         case .target:
 
-            let menuItems = [ (SFSymbol.chip, "CPU", 0),
-                              (SFSymbol.chip, "Memory", 1),
-                              (SFSymbol.bus, "Bus", 2),
-                              (SFSymbol.chip, "CIAs", 3),
-                              (SFSymbol.chip, "VICII", 4),
-                              (SFSymbol.chip, "SID", 5),
-                              (SFSymbol.alarm, "Events", 6) ]
+            let menuItems = [ (Symbol.chip, "CPU", 0),
+                              (Symbol.chip, "Memory", 1),
+                              (Symbol.bus, "Bus", 2),
+                              (Symbol.chip, "CIAs", 3),
+                              (Symbol.chip, "VICII", 4),
+                              (Symbol.chip, "SID", 5),
+                              (Symbol.alarm, "Events", 6) ]
 
             target = MyToolbarMenuItem(identifier: .target,
                                        menuItems: menuItems,
@@ -141,10 +141,10 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
 
         case .format:
 
-            let menuItems = [ (SFSymbol.bulletlist, "Hexadecimal", 0),
-                              (SFSymbol.bulletlist, "Hexadecimal, zero padded", 1),
-                              (SFSymbol.bulletlist, "Decimal", 2),
-                              (SFSymbol.bulletlist, "Decimal, zero padded", 3) ]
+            let menuItems = [ (Symbol.bulletlist, "Hexadecimal", 0),
+                              (Symbol.bulletlist, "Hexadecimal, zero padded", 1),
+                              (Symbol.bulletlist, "Decimal", 2),
+                              (Symbol.bulletlist, "Decimal, zero padded", 3) ]
 
             format = MyToolbarMenuItem(identifier: .format,
                                        menuItems: menuItems,
@@ -190,12 +190,12 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
             if emu.running {
 
                 execution.setToolTip("Pause", forSegment: 0)
-                execution.setImage(SFSymbol.get(.pause), forSegment: 0)
+                execution.setImage(Symbol.get(.pause), forSegment: 0)
 
             } else {
 
                 execution.setToolTip("Run", forSegment: 0)
-                execution.setImage(SFSymbol.get(.play), forSegment: 0)
+                execution.setImage(Symbol.get(.play), forSegment: 0)
             }
         }
 

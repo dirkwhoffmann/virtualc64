@@ -18,6 +18,7 @@
 #include "Host.h"
 #include "Thread.h"
 #include "CmdQueue.h"
+#include <future>
 
 namespace vc64 {
 
@@ -188,6 +189,15 @@ public:
 
     // Feeds a command into the command queue
     void put(const Command &cmd, const string &str = "");
+    void put(const Command &cmd, const string &str, CmdQueue::Completion completion);
+
+    /* Sends a command and returns a future that becomes ready once the
+     * emulator thread has carried it out. A command that fails makes get()
+     * throw the exception. Like CmdQueue::wait(), this only works while the
+     * emulator thread is running: a thread that polls nothing never fulfills
+     * the promise, so waiting on the future would block forever.
+     */
+    std::future<void> send(const Command &cmd, const string &str = "");
     void put(Cmd type, const string &str) { put(Command(type), str); }
     void put(Cmd type, i64 payload) { put (Command(type, payload)); }
     void put(Cmd type, AlarmCmd payload) { put(Command(type, payload)); }

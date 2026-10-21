@@ -53,17 +53,17 @@ class GamePadManager {
         // Add default devices
         gamePads[0] = GamePad(manager: self, type: .MOUSE)
         gamePads[0]!.name = "Mouse"
-        gamePads[0]!.icon = SFSymbol.get(.mouse)
+        gamePads[0]!.icon = Symbol.get(.mouse)
         gamePads[0]!.keyMap = 0
         
         gamePads[1] = GamePad(manager: self, type: .JOYSTICK)
         gamePads[1]!.name = "Joystick Keyset 1"
-        gamePads[1]!.icon = SFSymbol.get(.arrowkeys)
+        gamePads[1]!.icon = Symbol.get(.arrowkeys)
         gamePads[1]!.keyMap = 1
         
         gamePads[2] = GamePad(manager: self, type: .JOYSTICK)
         gamePads[2]!.name = "Joystick Keyset 2"
-        gamePads[2]!.icon = SFSymbol.get(.arrowkeys)
+        gamePads[2]!.icon = Symbol.get(.arrowkeys)
         gamePads[2]!.keyMap = 2
         
         // Tell the mouse event receiver where the mouse resides
@@ -166,7 +166,7 @@ class GamePadManager {
     }
     
     func icon(slot: Int) -> NSImage {
-        return gamePads[slot]?.icon ?? SFSymbol.get(.gamecontroller)
+        return gamePads[slot]?.icon ?? Symbol.get(.gamecontroller)
     }
     
     //

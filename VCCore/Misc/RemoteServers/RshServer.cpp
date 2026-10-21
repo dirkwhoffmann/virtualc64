@@ -129,8 +129,8 @@ RshServer::didReceive(const httplib::Request &req, httplib::Response &res)
     auto trimmed = utl::rtrim(req.body, "\n\r");
 
     // HTTP has no persistent session to stream output into, so the command
-    // is executed synchronously: a promise is attached to the input line
-    // and fulfilled from didExecute, and this function blocks on it.
+    // is executed synchronously: a completion handler is attached to the
+    // input line and fulfills a promise, and this function blocks on it.
     auto promise = std::make_shared<std::promise<string>>();
     auto future = promise->get_future();
 
@@ -138,7 +138,17 @@ RshServer::didReceive(const httplib::Request &req, httplib::Response &res)
 
         .type = InputLine::Source::RSH,
         .input = trimmed,
-        .promise = promise
+        .completion = [promise](const string &output, std::exception_ptr error) {
+
+            string text = output;
+
+            if (error) {
+                try { std::rethrow_exception(error); }
+                catch (std::exception &e) { text += e.what(); }
+                catch (...) { }
+            }
+            promise->set_value(text);
+        }
     });
 
     res.set_content(future.get(), "text/plain");
@@ -195,8 +205,8 @@ RshServer::willExecute(const InputLine &input)
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss)
 {
-    // If a promise is attached (HTTP), fulfill it instead of streaming
-    if (input.promise) { input.promise->set_value(ss.str()); return; }
+    // The output of a command with a completion handler (HTTP) is not streamed
+    if (input.completion) return;
 
     *this << '\n' << ss.str() << '\n';
     *this << rshShell.prompt();
@@ -205,8 +215,8 @@ RshServer::didExecute(const InputLine &input, std::stringstream &ss)
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss, std::exception &e)
 {
-    // If a promise is attached (HTTP), fulfill it instead of streaming
-    if (input.promise) { input.promise->set_value(ss.str() + e.what()); return; }
+    // The output of a command with a completion handler (HTTP) is not streamed
+    if (input.completion) return;
 
     // Echo the command if it came from somewhere else
     if (!input.isRshCommand()) { *this << input.input << '\n'; }

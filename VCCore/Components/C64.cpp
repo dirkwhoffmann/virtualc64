@@ -659,11 +659,23 @@ void
 C64::update(CmdQueue &queue)
 {
     Command cmd;
+    CmdQueue::Completion completion;
     bool cmdConfig = false;
 
     auto drive = [&]() -> Drive& { return cmd.value == 0 ? drive8 : drive9; };
 
-    while (queue.poll(cmd)) {
+    while (queue.poll(cmd, completion)) {
+
+        /* Report the command as carried out however this iteration ends. A
+         * handler that throws would otherwise leave the command counted
+         * forever, and CmdQueue::wait() would never return.
+         */
+        struct Done {
+            CmdQueue &queue;
+            ~Done() { queue.done(); }
+        } done { queue };
+
+        std::exception_ptr error;
 
         logmsg(LOG_CMD, "Command: %s\n", CmdEnum::key(cmd.type));
 
@@ -819,7 +831,11 @@ C64::update(CmdQueue &queue)
         } catch (std::exception &e) {
 
             logmsg(LOG_WARN, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
+            error = std::current_exception();
         }
+
+        // Tell the sender that the command has been carried out
+        if (completion) { try { completion(error); } catch (...) { } completion = nullptr; }
     }
 
     // Inform the GUI about a changed machine configuration

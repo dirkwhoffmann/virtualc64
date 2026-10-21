@@ -489,4 +489,26 @@ Emulator::put(const Command &cmd, const string &str)
     cmdQueue.put(cmd, str);
 }
 
+void
+Emulator::put(const Command &cmd, const string &str, CmdQueue::Completion completion)
+{
+    cmdQueue.put(cmd, str, std::move(completion));
+}
+
+std::future<void>
+Emulator::send(const Command &cmd, const string &str)
+{
+    // The promise travels with the handler. If the handler is destroyed
+    // without having been called, get() throws std::future_error.
+    auto promise = std::make_shared<std::promise<void>>();
+    auto future = promise->get_future();
+
+    cmdQueue.put(cmd, str, [promise](std::exception_ptr error) {
+
+        if (error) { promise->set_exception(error); } else { promise->set_value(); }
+    });
+
+    return future;
+}
+
 }

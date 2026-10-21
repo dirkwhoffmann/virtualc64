@@ -224,7 +224,9 @@ RetroShell::exec()
 
         } catch (...) {
 
-            // Remove all remaining commands
+            // Remove all remaining commands, telling their senders why
+            auto error = std::current_exception();
+            for (auto &cmd : commands) { if (cmd.completion) cmd.completion("", error); }
             commands = { };
 
             msgQueue.put(Msg::RSH_ERROR, objid);

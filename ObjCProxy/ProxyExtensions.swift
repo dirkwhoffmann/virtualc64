@@ -241,8 +241,8 @@ extension RemoteManagerProxy {
         count(info.dapInfo)
         count(info.promInfo)
 
-        if numConnected > 0 { return SFSymbol.get(.serverConnected) }
-        if numActive > 0 { return SFSymbol.get(.serverListening) }
+        if numConnected > 0 { return Symbol.get(.serverConnected) }
+        if numActive > 0 { return Symbol.get(.serverListening) }
 
         return nil
     }

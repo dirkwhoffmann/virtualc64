@@ -10,7 +10,6 @@ CoreComponent.cpp
 Defaults.cpp
 Dumpable.cpp
 Emulator.cpp
-Error.cpp
 Host.cpp
 Inspectable.cpp
 MsgQueue.cpp

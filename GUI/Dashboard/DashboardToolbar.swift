@@ -67,15 +67,15 @@ class DashboardToolbar: NSToolbar, NSToolbarDelegate {
 
         case .dashboardPanel:
 
-            let menuItems = [ (SFSymbol.magnifyingglass3, "Overview", 0),
-                              (SFSymbol.magnifyingglass3, "CIA1 Activity", 1),
-                              (SFSymbol.magnifyingglass3, "CIA2 Activity", 2),
-                              (SFSymbol.magnifyingglass3, "C64 Clock Frequency", 3),
-                              (SFSymbol.magnifyingglass3, "C64 Refresh Rate", 4),
-                              (SFSymbol.magnifyingglass3, "Host CPU Load", 5),
-                              (SFSymbol.magnifyingglass3, "Host Refresh Rate", 6),
-                              (SFSymbol.magnifyingglass3, "Audio Buffer Fill Level", 7),
-                              (SFSymbol.magnifyingglass3, "Waveform", 8) ]
+            let menuItems = [ (Symbol.magnifyingglass3, "Overview", 0),
+                              (Symbol.magnifyingglass3, "CIA1 Activity", 1),
+                              (Symbol.magnifyingglass3, "CIA2 Activity", 2),
+                              (Symbol.magnifyingglass3, "C64 Clock Frequency", 3),
+                              (Symbol.magnifyingglass3, "C64 Refresh Rate", 4),
+                              (Symbol.magnifyingglass3, "Host CPU Load", 5),
+                              (Symbol.magnifyingglass3, "Host Refresh Rate", 6),
+                              (Symbol.magnifyingglass3, "Audio Buffer Fill Level", 7),
+                              (Symbol.magnifyingglass3, "Waveform", 8) ]
 
             panel = MyToolbarMenuItem(identifier: .dashboardPanel,
                                       menuItems: menuItems,

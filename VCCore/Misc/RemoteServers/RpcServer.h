@@ -107,6 +107,10 @@ private:
 
     // Executes a RetroShell command synchroneously (blocking)
     optional<string> execBlocking(const string &command, isize id);
+
+    // Assembles a JSON-RPC response
+    string makeResult(isize id, const string &output);
+    string makeError(isize id, std::exception_ptr error);
 };
 
 }

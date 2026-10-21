@@ -13,6 +13,9 @@
 
 #pragma once
 
+#include <exception>
+#include <functional>
+
 #include "BasicTypes.h"
 #include <future>
 
@@ -122,8 +125,17 @@ struct InputLine {
     // The command to execute
     string input;
 
-    // A pointer to a promise (may be nullptr)
-    std::shared_ptr<std::promise<string>> promise;
+    /* Completion handler (may be empty).
+     *
+     * Called on the emulator thread once the command has been executed, with
+     * the console output and a null exception pointer on success, or with the
+     * exception on failure. A command that is dropped without being executed
+     * (e.g., because a previous command of the same batch failed) is
+     * completed with that failure. The handler runs while the shell is
+     * locked, so it must be short and must not block.
+     */
+    using Completion = std::function<void(const string &output, std::exception_ptr error)>;
+    Completion completion;
 
     bool isUserCommand() const { return type == Source::USER; }
     bool isScriptCommand() const { return type == Source::SCRIPT; }
