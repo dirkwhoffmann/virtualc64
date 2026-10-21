@@ -157,7 +157,6 @@
 		5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052A7C025A0AC0700E62EDD /* Errors.swift */; };
 		50549B49257D288E006FE39C /* AudioPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* AudioPort.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
-		5055D5B42615886E005D3DA6 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
 		5058A918281D03D200C223C9 /* DiskInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A917281D03D200C223C9 /* DiskInspector.xib */; };
 		5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5058A919281D041400C223C9 /* DiskExporter.xib */; };
 		5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A91D281D107A00C223C9 /* DiskExporter.swift */; };
@@ -211,7 +210,6 @@
 		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
 		50726F3D2961C96B0031F2F5 /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
-		50726F462961C9940031F2F5 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
 		50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
 		50726F482961C9940031F2F5 /* Defaults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD369A2817D69000E40BFC /* Defaults.cpp */; };
 		50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MsgQueue.cpp */; };
@@ -787,7 +785,6 @@
 		500A52B02DD4F93800B06D23 /* BusPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusPanel.swift; sourceTree = "<group>"; };
 		500C1C772965E7D300071AF3 /* PeddleDisassembler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleDisassembler.cpp; sourceTree = "<group>"; };
 		500C1C782965E7D300071AF3 /* PeddleDisassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleDisassembler.h; sourceTree = "<group>"; };
-		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
 		500E2D632824EBE30015C46F /* CartridgeInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartridgeInspector.xib; sourceTree = "<group>"; };
 		500E2D652824EC130015C46F /* CartridgeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartridgeInspector.swift; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* SubComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SubComponent.cpp; sourceTree = "<group>"; };
@@ -1037,8 +1034,6 @@
 		50549B47257D288E006FE39C /* AudioPort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioPort.cpp; sourceTree = "<group>"; };
 		50549B48257D288E006FE39C /* AudioPort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioPort.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		5055D5B226158849005D3DA6 /* ErrorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorTypes.h; sourceTree = "<group>"; };
-		5055D5B32615886E005D3DA6 /* Error.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Error.cpp; sourceTree = "<group>"; };
 		5058A917281D03D200C223C9 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
 		5058A919281D041400C223C9 /* DiskExporter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskExporter.xib; sourceTree = "<group>"; };
 		5058A91D281D107A00C223C9 /* DiskExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskExporter.swift; sourceTree = "<group>"; };
@@ -2477,9 +2472,6 @@
 				50E17E242B8B26EB0029747D /* OptionTypes.h */,
 				50E17E232B8B26D70029747D /* Option.h */,
 				50E17E1F2B8B26AC0029747D /* Option.cpp */,
-				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
-				500C7C43259FC09B00F5CC1F /* Error.h */,
-				5055D5B32615886E005D3DA6 /* Error.cpp */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
 				5093D6A824B19E9200BDF924 /* Serializable.h */,
 				506A8A872B88D00200B95383 /* Configurable.h */,
@@ -3444,7 +3436,6 @@
 				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
 				506F30482B7692180083EAEA /* VirtualC64.cpp in Sources */,
 				50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */,
-				50726F462961C9940031F2F5 /* Error.cpp in Sources */,
 				50726F4B2961C9940031F2F5 /* Thread.cpp in Sources */,
 				50726FA02961CA0D0031F2F5 /* Rex.cpp in Sources */,
 				50726F9D2961CA0D0031F2F5 /* Isepic.cpp in Sources */,
@@ -3815,7 +3806,6 @@
 				50A22A252618723200C9FB1E /* Canvas.swift in Sources */,
 				506D57B72EC27E6200E21501 /* RangeField.swift in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
-				5055D5B42615886E005D3DA6 /* Error.cpp in Sources */,
 				5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				50AC25B92F4221780016265E /* vcdebug.cpp in Sources */,

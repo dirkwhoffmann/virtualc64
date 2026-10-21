@@ -37,14 +37,11 @@ class RpcServer final : public RemoteServer, public ConsoleDelegate {
     TcpTransport tcp = TcpTransport(*this);
     HttpTransport http = HttpTransport(*this);
 
-
-    //
-    // Methods
-    //
+public:
 
     using RemoteServer::RemoteServer;
 
-    RpcServer& operator=(const RpcServer& other) {
+    RpcServer& operator= (const RpcServer& other) {
 
         RemoteServer::operator=(other);
         return *this;
@@ -68,18 +65,21 @@ protected:
     Transport &transport() override;
     const Transport &transport() const override;
     bool isSupported(TransportProtocol protocol) const override;
-    void start() override { transport().start(config.port, "/rpc"); }
+    bool canRun() override { return true; }
+    string endpoint() const override { return "/rpc"; }
+
+public:
+
+    void send(const string &payload) override;
+
+private:
 
 
     //
     // Methods from TransportDelegate
     //
 
-    void didSwitch(SrvState from, SrvState to) override;
-    void didStart() override { }
-    void didStop() override { }
-    void didConnect() override { }
-    void didDisconnect() override { }
+    void didStart() override;
     void didReceive(const string &payload) override;
     void didReceive(const struct httplib::Request &req, struct httplib::Response &res) override;
 
@@ -99,8 +99,8 @@ protected:
 
 private:
 
-    // Processes a received command
-    optional<string> process(const string &payload, bool blocking = false);
+    // Processes a received command, returning the response if one is available immediately
+    optional<string> process(const string &payload, bool blocking);
 
     // Executes a RetroShell command asynchroneously (non blocking)
     optional<string> execNonBlocking(const string &command, isize id);

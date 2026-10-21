@@ -106,9 +106,7 @@ RemoteManagerInfo;
 /* A single entry of the traffic log. The remote servers record all transmitted
  * packets in a bounded log inside the RemoteManager. Each recorded packet is
  * assigned a monotonically increasing sequence number which is passed to the
- * GUI in the Msg::SRV_RECEIVE and Msg::SRV_SEND notification messages. The GUI
- * reads the log incrementally by passing the sequence number of the last seen
- * entry to RemoteManagerAPI::getTraffic().
+ * GUI in the Msg::SRV_RECEIVE and Msg::SRV_SEND notification messages.
  */
 typedef struct
 {

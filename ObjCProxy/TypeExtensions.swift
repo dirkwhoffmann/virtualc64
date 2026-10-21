@@ -14,7 +14,6 @@ typealias Compressor = utl.Compressor
 typealias FSFormat = retro.vault.cbm.FSFormat
 
 // 'vc64' namespace
-typealias AppClass = vc64.AppError
 typealias CartridgeType = vc64.CartridgeType
 typealias Class = vc64.Class
 typealias ConfigScheme = vc64.ConfigScheme
@@ -22,7 +21,6 @@ typealias ControlPortDevice = vc64.ControlPortDevice
 typealias EventSlot = vc64.EventSlot
 typealias EventSlotEnum = vc64.EventSlotEnum
 typealias EventSlotInfo = vc64.EventSlotInfo
-typealias Fault = vc64.Fault
 typealias FileType = vc64.FileType
 // typealias FSBlockType = vc64.FSBlockType
 // typealias FSFileType = vc64.FSFileType
@@ -186,27 +184,6 @@ extension FSUsage: CustomStringConvertible {
     }
 }
 */
-
-extension Fault {
-
-    func description(expected exp: Int = 0) -> String {
-        
-        switch self {
-        
-        case .OK:
-            return ""
-        case .FS_EXPECTED_VAL:
-            return String(format: "Expected $%02X", exp)
-        case .FS_EXPECTED_MIN:
-            return String(format: "Expected a value greater or equal %d", exp)
-        case .FS_EXPECTED_MAX:
-            return String(format: "Expected a value less or equal %d", exp)
-
-        default:
-            fatalError("\(self)")
-        }
-    }
-}
 
 extension CartridgeType {
     

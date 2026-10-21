@@ -27,8 +27,6 @@ PromServer::_initialize()
 void
 PromServer::_dump(Category category, std::ostream &os) const
 {
-    using namespace utl;
-
     RemoteServer::_dump(category, os);
 }
 
@@ -45,7 +43,8 @@ PromServer::transport()
 }
 
 const Transport &
-PromServer::transport() const {
+PromServer::transport() const
+{
     return const_cast<PromServer *>(this)->transport();
 }
 
@@ -56,20 +55,20 @@ PromServer::isSupported(TransportProtocol protocol) const
 }
 
 void
-PromServer::didSwitch(SrvState from, SrvState to)
+PromServer::didReceive(const httplib::Request &req, httplib::Response &res)
 {
-    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
+    res.set_content(respond(req), "text/plain");
 }
 
-void
-PromServer::didReceive(const httplib::Request &req, httplib::Response &res)
+string
+PromServer::respond(const httplib::Request& request)
 {
     std::ostringstream output;
 
     auto translate = [&](const string& metric,
                          const string& help,
                          const string& type,
-                         const string& value,
+                         auto value,
                          const std::map<string, string>& labels = {}) {
 
         if (!help.empty()) {
@@ -158,7 +157,7 @@ PromServer::didReceive(const httplib::Request &req, httplib::Response &res)
                   {{"component","audio"}});
     }
 
-    res.set_content(output.str(), "text/plain");
+    return output.str();
 }
 
 /*

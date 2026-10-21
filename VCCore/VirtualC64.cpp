@@ -1430,13 +1430,13 @@ MouseAPI::detectShakeDxDy(double dx, double dy)
 const RemoteManagerInfo &
 RemoteManagerAPI::getInfo() const
 {
-    return remoteManager->getInfo();
+    return remoteManager->info.current();
 }
 
 const RemoteManagerInfo &
 RemoteManagerAPI::getCachedInfo() const
 {
-    return remoteManager->getCachedInfo();
+    return remoteManager->info.backed();
 }
 
 void

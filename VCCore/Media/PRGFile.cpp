@@ -42,7 +42,7 @@ PRGFile::init(const FileSystem &fs)
     auto dir = fs.readDir();
     
     // Only proceed if the requested file exists
-    if (dir.size() == 0) throw AppError(Fault::FS_HAS_NO_FILES);
+    if (dir.size() == 0) throw retro::vault::FSError(retro::vault::FSError::FS_NOT_FOUND, "Directory is empty.");
     
     // Get the first item
     fs.extractData(dir[0], data);

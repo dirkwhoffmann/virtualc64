@@ -14,13 +14,14 @@
 #include "RemoteServer.h"
 #include "RemoteManager.h"
 #include "Emulator.h"
+#include "MsgQueue.h"
+#include "RetroShell.h"
 
 namespace vc64 {
 
-void
-RemoteServer::recordTraffic(TrafficDirection direction, const string &payload)
+RemoteServer::RemoteServer(C64& ref, isize id) : SubComponent(ref, id)
 {
-    remoteManager.recordTraffic(ServerType(objid), direction, payload);
+    info.bind([this] { return cacheInfo(); } );
 }
 
 void
@@ -43,13 +44,14 @@ RemoteServer::_dump(Category category, std::ostream &os) const
 void
 RemoteServer::_powerOff()
 {
-    // try { stop(); } catch(...) { }
+    
 }
 
 void
 RemoteServer::_didLoad()
 {
-    config.enable ? start() : stop();
+    // Stop the server (will be restarted by the launch daemon in auto-run mode)
+    stop();
 }
 
 i64
@@ -83,7 +85,7 @@ RemoteServer::checkOption(Opt opt, i64 value)
             if (!isSupported(TransportProtocol(value))) {
 
                 auto name = string(TransportProtocolEnum::key(TransportProtocol(value)));
-                throw CoreError(CoreError::OPT_UNSUPPORTED, "Unsupported protocol: " + name);
+                throw CoreError(CoreError::OPT_UNSUPPORTED, "Unsupported transport: " + name);
             }
             return;
 
@@ -101,11 +103,7 @@ RemoteServer::setOption(Opt opt, i64 value)
 
         case Opt::SRV_ENABLE:
 
-            if (config.enable != (bool)value) {
-                
-                config.enable = (bool)value;
-                config.enable ? start() : stop();
-            }
+            config.enable = (bool)value;
             return;
 
         case Opt::SRV_PORT:
@@ -152,10 +150,53 @@ RemoteServer::setOption(Opt opt, i64 value)
     }
 }
 
-void
-RemoteServer::cacheInfo(RemoteServerInfo &result) const
+RemoteServerInfo
+RemoteServer::cacheInfo() const
 {
+    RemoteServerInfo info;
+
     info.state = getState();
+
+    return info;
+}
+
+void
+RemoteServer::start()
+{
+    transport().start(config.port, endpoint());
+}
+
+void
+RemoteServer::stop()
+{
+    if (isOff() || isStopping()) return;
+
+    transport().stop();
+}
+
+void
+RemoteServer::waitForLaunch()
+{
+    transport().wait();
+}
+
+void
+RemoteServer::recordTraffic(TrafficDirection direction, const string &payload)
+{
+    remoteManager.recordTraffic(ServerType(objid), direction, payload);
+}
+
+void
+RemoteServer::didSwitch(SrvState from, SrvState to)
+{
+    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
+}
+
+void
+RemoteServer::didTerminate(const string &error)
+{
+    transport().switchState(SrvState::INVALID);
+    retroShell << "Server Error: " << error << '\n';
 }
 
 void

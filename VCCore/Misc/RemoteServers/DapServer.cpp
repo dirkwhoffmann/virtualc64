@@ -78,12 +78,6 @@ DapServer::isSupported(TransportProtocol protocol) const
 }
 
 void
-DapServer::didSwitch(SrvState from, SrvState to)
-{
-    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
-}
-
-void
 DapServer::didReceive(const string &cmd)
 {
     // Try to find the header terminator
@@ -120,7 +114,7 @@ DapServer::didReceive(const string &cmd)
 
         adapter->process(jsonStr);
 
-    } catch (AppError &err) {
+    } catch (std::exception &err) {
 
         auto msg = "DAP server error: " + string(err.what());
         logmsg(LOG_SRV, "%s\n", msg.c_str());

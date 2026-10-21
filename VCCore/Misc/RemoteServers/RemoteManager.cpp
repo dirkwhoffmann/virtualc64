@@ -70,7 +70,9 @@ RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
         &rpcServer,
         &dapServer,
         &promServer,
-    };    
+    };
+
+    info.bind([this] { return cacheInfo(); } );
 }
 
 void
@@ -93,30 +95,21 @@ RemoteManager::_dump(Category category, std::ostream &os) const
             os << TransportProtocolEnum::key(transport);
             if (transport != TransportProtocol::STDIO) { os << ":" << dec(port); }
             os << " (" << SrvStateEnum::key(server->getState()) << ")" << std::endl;
-
-            /*
-             if (server->isOff()) {
-             os << "Off" << std::endl;
-             } else {
-             os << TransportProtocolEnum::key(transport);
-             if (transport != TransportProtocol::STDIO) { os << ":" << dec(port);
-             os << " (" << SrvStateEnum::key(server->getState()) << ")" << std::endl;
-             }
-             */
         }
     }
 }
 
-void
-RemoteManager::cacheInfo(RemoteManagerInfo &result) const
+RemoteManagerInfo
+RemoteManager::cacheInfo() const
 {
-    {   SYNCHRONIZED
+    RemoteManagerInfo info;
 
-        info.rshInfo = rshServer.getInfo();
-        info.rpcInfo = rpcServer.getInfo();
-        info.dapInfo = dapServer.getInfo();
-        info.promInfo = promServer.getInfo();
-    }
+    info.rshInfo = rshServer.cacheInfo();
+    info.rpcInfo = rpcServer.cacheInfo();
+    info.dapInfo = dapServer.cacheInfo();
+    info.promInfo = promServer.cacheInfo();
+
+    return info;
 }
 
 isize
@@ -152,15 +145,45 @@ RemoteManager::numErroneous() const
 }
 
 void
+RemoteManager::update()
+{
+    if (frame++ % 32 != 0) return;
+
+    auto launchDaemon = [&](RemoteServer &server, ServerConfig &config) {
+
+        if (config.enable) {
+            if (server.isOff()) server.waitForLaunch();
+        } else {
+            if (!server.isOff()) server.stop();
+        }
+
+        if (server.canRun()) {
+            if (server.isWaiting()) server.start();
+        } else {
+            if (!server.isOff() && !server.isWaiting()) server.stop();
+        }
+    };
+
+    launchDaemon(rshServer, rshServer.config);
+    launchDaemon(rpcServer, rpcServer.config);
+    launchDaemon(dapServer, dapServer.config);
+    launchDaemon(promServer, promServer.config);
+}
+
+void
 RemoteManager::recordTraffic(ServerType server, TrafficDirection direction, const string &payload)
 {
-    // Ignore empty packets (e.g., HTTP responses without content)
+    // Ignore empty packets
     if (payload.empty()) return;
 
     // Store the packet in the traffic log
     auto nr = trafficLog.append(server, direction, payload);
 
-    // Inform the GUI
+    /* Inform the GUI. The packet itself rides along in the message's string
+     * attachment: the GUI has no way back to the traffic log from the message
+     * alone, and app-level RPC notifications (Silicium's "prefsChanged", say)
+     * are handled by reading this payload -- see SiAmController::rpcReceive().
+     */
     auto msg = direction == TrafficDirection::SENT ? Msg::SRV_SEND : Msg::SRV_RECEIVE;
     msgQueue.put(msg, i64(server), i64(nr), payload);
 }

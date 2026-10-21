@@ -14,6 +14,8 @@
 #include "RshServer.h"
 #include "C64.h"
 #include "RetroShell.h"
+#include "httplib.h"
+#include "utl/support.h"
 
 namespace vc64 {
 
@@ -27,8 +29,6 @@ RshServer::_initialize()
 void
 RshServer::_dump(Category category, std::ostream &os) const
 {
-    using namespace utl;
-    
     RemoteServer::_dump(category, os);
 }
 
@@ -39,6 +39,7 @@ RshServer::transport()
 
         case TransportProtocol::STDIO: return stdio;
         case TransportProtocol::TCP:   return tcp;
+        case TransportProtocol::HTTP:  return http;
 
         default:
             fatalError;
@@ -58,48 +59,20 @@ RshServer::isSupported(TransportProtocol protocol) const
 
         case TransportProtocol::STDIO:  return true;
         case TransportProtocol::TCP:    return true;
+        case TransportProtocol::HTTP:   return true;
 
         default:
             return false;
     }
 }
 
-/*
-SrvState
-RshServer::getState() const
-{
-    return transport().getState();
-}
-
 void
-RshServer::start()
+RshServer::didStart()
 {
-    transport().start(config.port);
-}
+    if (config.verbose) {
 
-void
-RshServer::stop()
-{
-    transport().stop();
-}
-
-void
-RshServer::disconnect()
-{
-    transport().disconnect();
-}
-
-void
-RshServer::send(const string &payload)
-{
-    transport().send(payload);
-}
-*/
-
-void
-RshServer::didSwitch(SrvState from, SrvState to)
-{
-    if (from != to) msgQueue.put(Msg::SRV_STATE, (i64)to);
+        *this << "Remote server is listening at port " << config.port << "\n";
+    }
 }
 
 void
@@ -108,22 +81,25 @@ RshServer::didConnect()
     // Hand the client a fresh shell
     rshShell.newSession();
 
-    try {
+    if (config.verbose) {
 
-        *this << "VirtualC64 RetroShell Remote Server ";
-        *this << C64::build() << '\n';
-        *this << '\n';
+        try {
 
-        *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-        *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
-        *this << '\n';
+            *this << "VirtualC64 RetroShell Remote Server ";
+            *this << C64::build() << '\n';
+            *this << '\n';
 
-        *this << "Type 'help' for help.\n";
-        *this << '\n';
+            *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+            *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
+            *this << '\n';
 
-        *this << rshShell.prompt();
+            *this << "Type 'help' for help.\n";
+            *this << '\n';
 
-    } catch (...) { };
+            *this << rshShell.prompt();
+
+        } catch (...) { };
+    }
 }
 
 void
@@ -139,13 +115,74 @@ RshServer::didReceive(const string &payload)
     // Remove LF and CR (if present)
     auto trimmed = utl::rtrim(payload, "\n\r");
 
-    logmsg(LOG_INFO, "didReceive: %s\n", trimmed.c_str());
-
     rshShell.asyncExec(InputLine {
 
         .type = InputLine::Source::RSH,
         .input = trimmed
     });
+}
+
+void
+RshServer::didReceive(const httplib::Request &req, httplib::Response &res)
+{
+    // Remove LF and CR (if present)
+    auto trimmed = utl::rtrim(req.body, "\n\r");
+
+    // HTTP has no persistent session to stream output into, so the command
+    // is executed synchronously: a promise is attached to the input line
+    // and fulfilled from didExecute, and this function blocks on it.
+    auto promise = std::make_shared<std::promise<string>>();
+    auto future = promise->get_future();
+
+    rshShell.asyncExec(InputLine {
+
+        .type = InputLine::Source::RSH,
+        .input = trimmed,
+        .promise = promise
+    });
+
+    res.set_content(future.get(), "text/plain");
+}
+
+void
+RshServer::send(const string &payload)
+{
+    string mapped;
+
+    for (auto c : payload) {
+
+        switch (c) {
+
+            case '\r':
+
+                mapped += "\33[2K\r";
+                break;
+
+            case '\n':
+
+                mapped += "\n";
+                break;
+
+            default:
+
+                if (isprint(c)) mapped += c;
+                break;
+        }
+    }
+
+    transport().send(mapped);
+}
+
+void
+RshServer::didActivate()
+{
+
+}
+
+void
+RshServer::didDeactivate()
+{
+
 }
 
 void
@@ -158,6 +195,9 @@ RshServer::willExecute(const InputLine &input)
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss)
 {
+    // If a promise is attached (HTTP), fulfill it instead of streaming
+    if (input.promise) { input.promise->set_value(ss.str()); return; }
+
     *this << '\n' << ss.str() << '\n';
     *this << rshShell.prompt();
 }
@@ -165,8 +205,11 @@ RshServer::didExecute(const InputLine &input, std::stringstream &ss)
 void
 RshServer::didExecute(const InputLine &input, std::stringstream &ss, std::exception &e)
 {
+    // If a promise is attached (HTTP), fulfill it instead of streaming
+    if (input.promise) { input.promise->set_value(ss.str() + e.what()); return; }
+
     // Echo the command if it came from somewhere else
-    if (!input.isRpcCommand()) { *this << input.input << '\n'; }
+    if (!input.isRshCommand()) { *this << input.input << '\n'; }
 
     *this << '\n' << ss.str() << e.what() << '\n';
     *this << rshShell.prompt();

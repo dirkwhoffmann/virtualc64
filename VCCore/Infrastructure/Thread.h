@@ -27,7 +27,7 @@ namespace vc64 {
  *  execution in the middle of frame. This happens when a breakpoint or
  *  watchpoint is hit, or when the CPU halts due to the execution of a jamming
  *  instruction */
-typedef AppException StateChangeException;
+typedef GenericException<i64> StateChangeException;
 
 /** Implements the emulator's state model.
  *  This class is one of the base classes of the Emulator class and provides

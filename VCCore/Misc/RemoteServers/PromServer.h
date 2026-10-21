@@ -21,6 +21,7 @@ class PromServer final : public RemoteServer {
 
     HttpTransport http = HttpTransport(*this);
 
+public:
 
     //
     // Methods
@@ -52,19 +53,27 @@ protected:
     Transport &transport() override;
     const Transport &transport() const override;
     bool isSupported(TransportProtocol protocol) const override;
-    void start() override { transport().start(config.port, "/metrics"); }
+    bool canRun() override { return true; }
+    string endpoint() const override { return "/metrics"; }
 
     
     //
     // Methods from TransportDelegate
     //
 
-    void didSwitch(SrvState from, SrvState to) override;
     void didStart() override { }
     void didStop() override { }
     void didConnect() override { }
     void didDisconnect() override { }
     void didReceive(const httplib::Request &req, httplib::Response &res) override;
+
+
+    //
+    // Handling requests
+    //
+
+    // Generate a response
+    string respond(const httplib::Request& request);
 };
 
 }

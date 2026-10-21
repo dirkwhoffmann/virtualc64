@@ -138,22 +138,6 @@ TcpTransport::sessionLoop()
     connection.close();
 }
 
-/*
-string
-TcpTransport::receive()
-{
-    string payload;
-
-    if (isConnected()) {
-
-        payload = connection.recv();
-        delegate.didReceive(payload);
-    }
-
-    return payload;
-}
-*/
-
 void
 TcpTransport::send(const string &payload)
 {

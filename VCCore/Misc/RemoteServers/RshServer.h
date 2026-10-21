@@ -16,27 +16,23 @@
 #include "Console.h"
 #include "StdioTransport.h"
 #include "TcpTransport.h"
+#include "HttpTransport.h"
 
 namespace vc64 {
 
 class RshServer final : public RemoteServer, public ConsoleDelegate {
 
-public:
-
-    // Supported transport protocols
     StdioTransport stdio = StdioTransport(*this);
     TcpTransport tcp = TcpTransport(*this);
+    HttpTransport http = HttpTransport(*this);
 
-
-    //
-    // Methods
-    //
+public:
 
     using RemoteServer::RemoteServer;
 
-    RshServer& operator=(const RshServer& other) {
+    RshServer& operator= (const RshServer& other) {
 
-        RemoteServer::operator=(other);
+        RemoteServer::operator = (other);
         return *this;
     }
 
@@ -44,43 +40,48 @@ public:
     //
     // Methods from CoreObject
     //
-    
+
 private:
 
     void _initialize() override;
     void _dump(Category category, std::ostream &os) const override;
 
-
     //
     // Methods from RemoteServer
     //
 
+    bool canRun() override { return true; }
+    string endpoint() const override { return "/rsh"; }
+
     Transport &transport() override;
     const Transport &transport() const override;
     bool isSupported(TransportProtocol protocol) const override;
-    // SrvState getState() const override;
-    // void start() override;
-    // void stop() override;
-    // void disconnect() override;
-    // void send(const string &payload) override;
+
+public:
+
+    // Sends a packet, mapping control characters for terminal display
+    void send(const string &payload) override;
+
+private:
 
 
     //
     // Methods from TransportDelegate
     //
 
-    void didSwitch(SrvState from, SrvState to) override;
-    void didStart() override { }
-    void didStop() override { }
+    void didStart() override;
     void didConnect() override;
     void didDisconnect() override;
     void didReceive(const string &payload) override;
+    void didReceive(const httplib::Request &req, httplib::Response &res) override;
 
 
     //
     // Methods from ConsoleDelegate
     //
 
+    void didActivate() override;
+    void didDeactivate() override;
     void willExecute(const InputLine &input) override;
     void didExecute(const InputLine &input, std::stringstream &ss) override;
     void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) override;

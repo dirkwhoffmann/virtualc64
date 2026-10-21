@@ -121,17 +121,11 @@ NSString *EventSlotName(EventSlot slot)
         self.key   = @(error->errstr());
         self.what  = @(error->what());
         
-    } else if (const auto *error = dynamic_cast<const AppError *>(&exception)) {
-        
-        self.fault = @(error->data);
-        self.key   = @("");
-        self.what  = @(error->what());
-        
     } else {
 
         self.fault = @(0);
         self.key   = @("");
-        self.what  = @(error->what());
+        self.what  = @(exception.what());
     }
 }
 

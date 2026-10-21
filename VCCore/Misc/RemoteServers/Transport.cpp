@@ -39,9 +39,15 @@ Transport::deliver(const string &payload)
 }
 
 void
+Transport::wait()
+{
+    if (isOff()) switchState(SrvState::WAITING);
+}
+
+void
 Transport::start(u16 port, const string &endpoint)
 {
-    if (!isOff()) return;
+    if (!isOff() && !isWaiting()) return;
 
     logmsg(LOG_SRV, "Starting server...\n");
     switchState(SrvState::STARTING);
@@ -74,7 +80,8 @@ Transport::stop()
      */
     stopRequested = true;
 
-    if (!isOff()) {
+    // A waiting transport has no thread to interrupt
+    if (!isOff() && !isWaiting()) {
 
         logmsg(LOG_SRV, "Stopping server...\n");
         switchState(SrvState::STOPPING);
@@ -87,12 +94,6 @@ Transport::stop()
     if (serverThread.joinable()) serverThread.join();
 
     switchState(SrvState::OFF);
-}
-
-void
-Transport::disconnect()
-{
-
 }
 
 void
@@ -123,39 +124,7 @@ Transport::switchState(SrvState newState)
         if (oldState == SrvState::CONNECTED) {
             delegate.didDisconnect();
         }
-
-        // Inform the GUI
-        // msgQueue.put(Msg::SRV_STATE, (i64)newState); MOVE TO DELEGATE
     }
 }
-
-/*
-void
-Transport::send(char payload)
-{
-    send(string(1, payload));
-}
-
-void
-Transport::send(int payload)
-{
-    send(std::to_string(payload));
-}
-
-void
-Transport::send(long payload)
-{
-    send(std::to_string(payload));
-}
-
-void
-Transport::send(std::stringstream &payload)
-{
-    string line;
-    while(std::getline(payload, line)) {
-        send(line + "\n");
-    }
-}
-*/
 
 }

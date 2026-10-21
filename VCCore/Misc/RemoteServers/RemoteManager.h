@@ -18,18 +18,13 @@
 #include "RshServer.h"
 #include "DapServer.h"
 #include "PromServer.h"
+#include "utl/wrappers.h"
 #include <deque>
 #include <mutex>
 
 namespace vc64 {
 
-/* A bounded log keeping the most recently transmitted packets of all remote
- * servers. The log is filled by the transport layers (via
- * RemoteServer::recordTraffic) and read by the GUI (via
- * RemoteManagerAPI::getTraffic). Because packets are recorded on the
- * transports' session threads and read from the GUI thread, all access is
- * mutex-protected.
- */
+// A bounded log keeping the most recently transmitted packets of all servers
 class TrafficLog {
 
     // Maximum number of entries to keep
@@ -56,7 +51,7 @@ public:
     void clear();
 };
 
-class RemoteManager final : public SubComponent, public Inspectable<RemoteManagerInfo> {
+class RemoteManager final : public SubComponent {
 
     Descriptions descriptions = {{
 
@@ -80,7 +75,15 @@ public:
     // Convenience wrapper
     std::vector <RemoteServer *> servers = { &rshServer, &rpcServer, &dapServer, &promServer };
 
-    
+    // Result of the latest inspection
+    utl::Backed<RemoteManagerInfo> info;
+
+private:
+
+    // Frame counter
+    usize frame = 0;
+
+
     //
     // Initializing
     //
@@ -90,6 +93,11 @@ public:
     RemoteManager(C64& ref);
     
     RemoteManager& operator= (const RemoteManager& other) {
+
+        CLONE(rshServer)
+        CLONE(rpcServer)
+        CLONE(dapServer)
+        CLONE(promServer)
 
         return *this;
     }
@@ -127,12 +135,12 @@ public:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(RemoteManagerInfo &result) const override;
+    RemoteManagerInfo cacheInfo() const;
 
 
     //
@@ -146,6 +154,15 @@ public:
     isize numListening() const;
     isize numConnected() const;
     isize numErroneous() const;
+
+
+    //
+    // Running the launch daemon
+    //
+
+public:
+
+    void update();
 
 
     //

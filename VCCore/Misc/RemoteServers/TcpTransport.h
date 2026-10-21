@@ -23,10 +23,6 @@ class TcpTransport : public Transport {
     Socket listener;
     Socket connection;
 
-    // Number of transmitted packages
-    // isize numSent = 0;
-    // isize numReceived = 0;
-
     using Transport::Transport;
 
     TcpTransport& operator=(const TcpTransport& other) {
@@ -50,7 +46,7 @@ public:
     void main(u16 port, const string &endpoint = "") override;
 
 private:
-    
+
     // Inner loops (called from main)
     void mainLoop(u16 port);
     void sessionLoop();

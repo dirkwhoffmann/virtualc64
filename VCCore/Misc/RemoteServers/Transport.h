@@ -38,19 +38,7 @@ protected:
     // The current server state
     SrvState state = SrvState::OFF;
 
-    /* Sticky "please go away" flag for the server thread.
-     *
-     * 'state' cannot carry this on its own: the server thread overwrites it
-     * as it goes -- mainLoop() switches to LISTENING the moment it is
-     * scheduled -- so a stop() that runs in the window between start()
-     * spawning the thread and the thread actually starting has its STOPPING
-     * erased again. Nothing is then left to tell the thread to quit, and the
-     * join() at the end of stop() waits forever. Since stop() runs on the
-     * emulator thread, that hangs the whole emulator.
-     *
-     * This flag is only ever raised by stop() and lowered by start(), so no
-     * interleaving can lose it.
-     */
+    // Sticky "go away" flag for the server thread
     std::atomic<bool> stopRequested { false };
 
 
@@ -79,6 +67,7 @@ public:
 
     SrvState getState() const { return state; }
     bool isOff() const { return state == SrvState::OFF; }
+    bool isWaiting() const { return state == SrvState::WAITING; }
     bool isStarting() const { return state == SrvState::STARTING; }
     bool isListening() const { return state == SrvState::LISTENING; }
     bool isConnected() const { return state == SrvState::CONNECTED; }
@@ -95,6 +84,9 @@ public:
     //
 
 public:
+
+    // Arms the server: it is enabled, but waits for its launch condition
+    void wait();
 
     // Launch the remote server
     virtual void start(u16 port, const string &endpoint = "");

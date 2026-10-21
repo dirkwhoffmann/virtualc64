@@ -70,13 +70,13 @@ private:
     Transport &transport() override;
     const Transport &transport() const override;
     bool isSupported(TransportProtocol protocol) const override;
+    bool canRun() override { return true; }
 
 
     //
     // Methods from TransportDelegate
     //
 
-    virtual void didSwitch(SrvState from, SrvState to) override;
     virtual void didStart() override { }
     virtual void didStop() override { }
     virtual void didConnect() override { }

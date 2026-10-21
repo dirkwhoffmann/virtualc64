@@ -15,10 +15,11 @@
 #include "RemoteServerTypes.h"
 #include "RemoteManagerTypes.h"
 #include "SubComponent.h"
-#include "Socket.h"
-#include "Thread.h"
+// #include "Socket.h"
+// #include "Thread.h"
 #include "Transport.h"
-#include <thread>
+#include "utl/wrappers.h"
+// #include <thread>
 
 namespace vc64 {
 
@@ -27,7 +28,7 @@ namespace vc64 {
  * subclasses) so that common functionality, such as traffic recording, can
  * be implemented in a single place.
  */
-class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo>, public TransportDelegate {
+class RemoteServer : public SubComponent, public TransportDelegate {
 
     friend class RemoteManager;
 
@@ -42,7 +43,7 @@ class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo>, 
         .shell          = "server rpc"
     }, {
         .name           = "DapServer",
-        .description    = "Debug Adaper",
+        .description    = "Debug Adapter",
         .shell          = "server dap"
     }, {
         .name           = "PromServer",
@@ -50,21 +51,21 @@ class RemoteServer : public SubComponent, public Inspectable<RemoteServerInfo>, 
         .shell          = "server prom"
     }};
 
-    /* ENABLE comes last on purpose. exportConfig() emits the options in this
-     * order, and a generated config.retrosh is replayed line by line: with
-     * ENABLE first, the server is started on whatever transport and port
-     * happened to be current, and the following lines then have to stop and
-     * restart it (see setOption). Configuring first and switching on last
-     * means the server is only ever started once, already on the settings it
-     * is meant to run with.
-     */
     Options options = {
+
+        // ENABLE comes last so it is executed last when a config script is read,
+        // ensuring the server starts with the correct settings.
 
         Opt::SRV_TRANSPORT,
         Opt::SRV_PORT,
         Opt::SRV_VERBOSE,
         Opt::SRV_ENABLE
     };
+
+public:
+
+    // Result of the latest inspection
+    utl::Backed<RemoteServerInfo> info;
 
 protected:
     
@@ -73,16 +74,17 @@ protected:
 
 
     //
-    // Methods
+    // Initializing
     //
-    
+
 public:
     
-    using SubComponent::SubComponent;
+    RemoteServer(C64& ref, isize id);
 
     RemoteServer& operator= (const RemoteServer& other) {
 
         CLONE(config)
+
         return *this;
     }
 
@@ -145,12 +147,12 @@ public:
 
     
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(RemoteServerInfo &result) const override;
+    RemoteServerInfo cacheInfo() const;
 
 
     //
@@ -166,8 +168,9 @@ private:
 public:
 
     virtual bool isSupported(TransportProtocol protocol) const = 0;
-    virtual SrvState getState() const { return transport().getState(); }
+    SrvState getState() const { return transport().getState(); }
     bool isOff() const { return getState() == SrvState::OFF; }
+    bool isWaiting() const { return getState() == SrvState::WAITING; }
     bool isStarting() const { return getState() == SrvState::STARTING; }
     bool isListening() const { return getState() == SrvState::LISTENING; }
     bool isConnected() const { return getState() == SrvState::CONNECTED; }
@@ -181,14 +184,23 @@ public:
 
 public:
 
+    // Indicates if the server is ready to launch
+    virtual bool canRun() = 0;
+
     // Launch the remote server
-    virtual void start() { transport().start(config.port); }
+    void start();
+
+    // Returns the endpoint the transport is started with (HTTP-based servers)
+    virtual string endpoint() const { return ""; }
 
     // Shuts down the remote server
-    virtual void stop() { transport().stop(); }
+    virtual void stop();
 
     // Disconnects the client (if any)
     virtual void disconnect() { transport().disconnect(); }
+
+    // Switches into the WAITING state
+    void waitForLaunch();
 
 
     //
@@ -224,6 +236,16 @@ public:
     RemoteServer &operator<<(int payload) { send(payload); return *this; }
     RemoteServer &operator<<(long payload) { send(payload); return *this; }
     RemoteServer &operator<<(std::stringstream &payload) { send(payload); return *this; }
+
+
+    //
+    // Methods from TransportDelegate
+    //
+
+public:
+
+    void didSwitch(SrvState from, SrvState to) override;
+    void didTerminate(const string &error) override;
 };
 
 }

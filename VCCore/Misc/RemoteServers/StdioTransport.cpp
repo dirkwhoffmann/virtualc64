@@ -27,10 +27,7 @@ namespace vc64 {
 void
 Stdio::put(const string &str)
 {
-    /* Flush after every packet. stdout is fully buffered when connected to a
-     * pipe, and a packet sitting in the buffer is invisible to the client on
-     * the other end (e.g., the Hub controlling this emulator instance).
-     */
+    // Flush after every packet because stdout is fully buffered when connected to a pipe
     std::cout << str << std::flush;
 }
 
@@ -45,7 +42,10 @@ StdioTransport::disconnect()
     logmsg(LOG_SRV, "Disconnecting stdio transport...\n");
 
     switchState(SrvState::STOPPING);
-    stdio.terminate();
+
+    if (!stdio.terminate()) {
+        logmsg(LOG_WARN, "Failed to interrupt the stdio reader\n");
+    }
 }
 
 void
@@ -106,11 +106,11 @@ StdioTransport::send(const string &payload)
 
 namespace vc64 {
 
-/* A parent process such as the Hub wires up our stdin to an anonymous pipe.
- * Unlike POSIX file descriptors, such a pipe handle does not become signaled
- * when data arrives, so it cannot be waited on with WaitForSingleObject. We
- * therefore poll it with PeekNamedPipe and, while no data is pending, sleep on
- * a wake event. terminate() signals that event to interrupt the wait at once.
+/* A parent process wires up our stdin to an anonymous pipe. Unlike POSIX
+ * file descriptors, such a pipe handle does not become signaled when data
+ * arrives, so it cannot be waited on with WaitForSingleObject. We therefore
+ * poll it with PeekNamedPipe and, while no data is pending, sleep on a wake
+ * event. terminate() signals that event to interrupt the wait at once.
  */
 static constexpr DWORD pollIntervalMs = 20;
 
@@ -126,10 +126,10 @@ Stdio::~Stdio()
     if (wakeEvent) CloseHandle((HANDLE)wakeEvent);
 }
 
-void
+bool
 Stdio::terminate()
 {
-    SetEvent((HANDLE)wakeEvent);
+    return SetEvent((HANDLE)wakeEvent) != 0;
 }
 
 string
@@ -206,10 +206,19 @@ Stdio::~Stdio() {
     close(term[1]);
 }
 
-void
+bool
 Stdio::terminate() {
 
-    write(term[1], "x", 1);
+    // Wake up get() with a byte on the termination pipe
+    while (true) {
+
+        auto n = write(term[1], "x", 1);
+
+        if (n == 1) return true;
+        if (n < 0 && errno == EINTR) continue;
+
+        return false;
+    }
 }
 
 string
@@ -217,38 +226,48 @@ Stdio::get()
 {
     std::array<char, 4096> buffer;
 
-    // Setup the descriptor set
     fd_set fds;
-    FD_ZERO(&fds);
-    FD_SET(STDIN_FILENO, &fds);
-    FD_SET(term[0], &fds);
+    int ret;
 
-    // Block until stdin or the termination pipe is ready
-    int ret = select(std::max(STDIN_FILENO, term[0]) + 1, &fds, nullptr, nullptr, nullptr);
+    do {
+
+        // Setup the descriptor set
+        FD_ZERO(&fds);
+        FD_SET(STDIN_FILENO, &fds);
+        FD_SET(term[0], &fds);
+
+        // Block until stdin or the termination pipe is ready
+        ret = select(std::max(STDIN_FILENO, term[0]) + 1, &fds, nullptr, nullptr, nullptr);
+
+    } while (ret < 0 && errno == EINTR);
 
     // Check for errors
-    if (ret < 0) throw std::runtime_error("select() failed");
+    if (ret < 0) throw std::runtime_error(string("select() failed: ") + strerror(errno));
 
     // Check if the termination pipe has data
     if (FD_ISSET(term[0], &fds)) {
 
         // Clear the pipe and exit the loop
         char tmp;
-        read(term[0], &tmp, 1);
+        ssize_t n;
+        do { n = read(term[0], &tmp, 1); } while (n < 0 && errno == EINTR);
+
+        // Check for errors
+        if (n != 1) throw std::runtime_error("termination pipe read error");
+
         return "";
     }
 
     // Check if stdin has data
     if (FD_ISSET(STDIN_FILENO, &fds)) {
 
-        auto n = read(STDIN_FILENO, buffer.data(), buffer.size());
+        ssize_t n;
+        do { n = read(STDIN_FILENO, buffer.data(), buffer.size()); } while (n < 0 && errno == EINTR);
 
         // Check for errors
-        if (n < 0) throw std::runtime_error("stdin read error");
+        if (n < 0) throw std::runtime_error(string("stdin read error: ") + strerror(errno));
 
-        // Treat EOF as a disconnect. Returning an empty string here would
-        // make the session loop spin at full speed, as every subsequent
-        // read would report EOF immediately, too.
+        // Treat EOF as a disconnect
         if (n == 0) throw std::runtime_error("stdin closed");
 
         return string(buffer.data(), n);

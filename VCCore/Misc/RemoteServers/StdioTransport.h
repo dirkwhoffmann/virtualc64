@@ -32,8 +32,8 @@ public:
     Stdio();
     ~Stdio();
 
-    // Terminates a blocking read
-    void terminate();
+    // Interrupts a blocking get()
+    [[nodiscard]] bool terminate();
 
     // Blocking read from stdin
     string get();
