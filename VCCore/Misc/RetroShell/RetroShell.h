@@ -38,7 +38,7 @@
 
 namespace vc64 {
 
-class RetroShell final : public SubComponent, public Inspectable<RetroShellInfo> {
+class RetroShell final : public SubComponent {
 
     Descriptions descriptions = {
         {
@@ -148,12 +148,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
-private:
+public:
 
-    void cacheInfo(RetroShellInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<RetroShellInfo> info = utl::Backed<RetroShellInfo>([this] { return cacheInfo(); });
+
+    RetroShellInfo cacheInfo() const;
 
 
     //

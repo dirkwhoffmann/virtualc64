@@ -108,7 +108,7 @@ VideoPort::getTexture(isize offset) const
     if (isPoweredOn()) {
 
         auto &result = vic.getStableBuffer(offset);
-        info.latestGrabbedFrame = result.nr;
+        info.value.latestGrabbedFrame = result.nr;
         return result;
     }
     if (config.whiteNoise) {
@@ -179,14 +179,14 @@ void
 VideoPort::buffersWillSwap()
 {
     // Check if the texture has been grabbed
-    auto grabbed = info.latestGrabbedFrame;
+    auto grabbed = info.value.latestGrabbedFrame;
     auto current = vic.getStableBuffer().nr;
 
     if (grabbed < current) {
 
-        stats.droppedFrames++;
+        droppedFrames++;
         logmsg(LOG_TIM, "Frame %lld dropped (total: %ld latest: %lld)\n",
-            current, stats.droppedFrames, grabbed);
+            current, droppedFrames, grabbed);
     }
 }
 

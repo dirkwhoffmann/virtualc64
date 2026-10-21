@@ -22,7 +22,7 @@
 
 namespace vc64 {
 
-class Emulator : public Thread, public utl::Synchronizable, public Inspectable<EmulatorInfo, EmulatorStats> {
+class Emulator : public Thread, public utl::Synchronizable {
 
     friend struct API;
     friend struct VirtualC64;
@@ -83,13 +83,22 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(EmulatorInfo &result) const override;
-    void cacheStats(EmulatorStats &result) const override;
+    // State and metrics
+    utl::Backed<EmulatorInfo> info = utl::Backed<EmulatorInfo>([this] { return cacheInfo(); });
+    utl::Backed<EmulatorMetrics> metrics = utl::Backed<EmulatorMetrics>([this] { return cacheMetrics(); });
+
+    EmulatorInfo cacheInfo() const;
+    EmulatorMetrics cacheMetrics() const;
+
+private:
+
+    // Number of created run-ahead instances
+    isize clones = 0;
 
 
     //

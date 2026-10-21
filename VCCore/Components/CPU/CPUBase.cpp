@@ -126,9 +126,11 @@ CPU::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-CPU::cacheInfo(CPUInfo &result) const
+CPUInfo
+CPU::cacheInfo() const
 {
+    CPUInfo result = { };
+
     {   SYNCHRONIZED
         
         result.cycle = clock;
@@ -152,6 +154,8 @@ CPU::cacheInfo(CPUInfo &result) const
         result.processorPort = readPort();
         result.processorPortDir = readPortDir();
     }
+
+    return result;
 }
 
 void

@@ -93,7 +93,7 @@ PromServer::respond(const httplib::Request& request)
 
     output << std::fixed << std::setprecision(4);
 
-    {   auto stats = emulator.getStats();
+    {   auto stats = emulator.metrics.current();
 
         translate("vc64_cpu_load", "",
                   "gauge", std::to_string(stats.cpuLoad),
@@ -108,8 +108,8 @@ PromServer::respond(const httplib::Request& request)
                   {{"component","emulator"}});
     }
 
-    {   auto stats_1 = cia1.getStats();
-        auto stats_2 = cia2.getStats();
+    {   auto stats_1 = cia1.metrics.current();
+        auto stats_2 = cia2.metrics.current();
 
         translate("vc64_ciaa_idle_sec", "",
                   "gauge", std::to_string(stats_1.idleCycles),
@@ -133,7 +133,7 @@ PromServer::respond(const httplib::Request& request)
                   {{"component","cia2"}});
     }
 
-    {   auto stats = audioPort.getStats();
+    {   auto stats = audioPort.metrics.current();
 
         translate("vc64_audio_buffer_exceptions", "",
                   "gauge", std::to_string(stats.bufferOverflows),

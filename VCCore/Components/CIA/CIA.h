@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
+class CIA : public SubComponent {
 
     friend class TOD;
     friend class ParCable;
@@ -417,13 +417,23 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
-    
-    void cacheInfo(CIAInfo &result) const override;
-    void cacheStats(CIAStats &result) const override;
+
+    // State and metrics
+    utl::Backed<CIAInfo> info = utl::Backed<CIAInfo>([this] { return cacheInfo(); });
+    utl::Backed<CIAMetrics> metrics = utl::Backed<CIAMetrics>([this] { return cacheMetrics(); });
+
+    CIAInfo cacheInfo() const;
+    CIAMetrics cacheMetrics() const;
+
+private:
+
+    // The totals the previous call of cacheMetrics() has seen
+    mutable Cycle prevTotalCycles = 0;
+    mutable Cycle prevIdleCycles = 0;
 
 
     //

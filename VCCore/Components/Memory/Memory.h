@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class Memory final : public SubComponent, public Inspectable<MemInfo, MemStats> {
+class Memory final : public SubComponent {
 
     friend class Heatmap;
 
@@ -172,12 +172,23 @@ public:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(MemInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<MemInfo> info = utl::Backed<MemInfo>([this] { return cacheInfo(); });
+
+    MemInfo cacheInfo() const;
+
+private:
+
+    /* Access counters for the heatmap. These are neither exposed through the
+     * API nor snapshotted, so they are kept in a plain member: wrapping them
+     * in a Backed would triple their size (value, cache, live) for nothing.
+     */
+    MemMetrics metrics = { };
 
 
     //

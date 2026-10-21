@@ -33,7 +33,7 @@ namespace vc64 {
  * Schematics:  http://www.baltissen.org/images/1540.gif
  */
 
-class Drive final : public SubComponent, public Inspectable<DriveInfo> {
+class Drive final : public SubComponent {
 
     Descriptions descriptions = {
         {
@@ -384,12 +384,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(DriveInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<DriveInfo> info = utl::Backed<DriveInfo>([this] { return cacheInfo(); });
+
+    DriveInfo cacheInfo() const;
 
 
     //

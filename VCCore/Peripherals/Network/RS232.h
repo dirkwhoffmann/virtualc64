@@ -117,14 +117,6 @@ private:
     void _didReset(bool hard) override;
 
 
-    //
-    // Methods from Inspectable
-    //
-
-private:
-
-    // void cacheInfo(RS232Info &result) const override;
-
 
     //
     // Methods from Configurable

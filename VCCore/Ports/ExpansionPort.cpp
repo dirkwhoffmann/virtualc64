@@ -29,8 +29,22 @@ const CartridgeInfo &
 ExpansionPort::getInfo() const
 {
     static CartridgeInfo dummy = { };
-    
-    return cartridge ? cartridge->getInfo() : dummy;
+
+    return cartridge ? cartridge->info.current() : dummy;
+}
+
+const CartridgeInfo &
+ExpansionPort::getCachedInfo() const
+{
+    static CartridgeInfo dummy = { };
+
+    return cartridge ? cartridge->info.backed() : dummy;
+}
+
+void
+ExpansionPort::recordInfo() const
+{
+    if (cartridge) cartridge->info.record();
 }
 
 CartridgeRomInfo

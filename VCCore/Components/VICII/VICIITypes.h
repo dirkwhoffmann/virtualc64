@@ -352,7 +352,7 @@ typedef struct
     isize quickExitHit;
     isize quickExitMiss;
 }
-VICIIStats;
+VICIIMetrics;
 
 typedef struct
 {

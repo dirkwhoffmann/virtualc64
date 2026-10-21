@@ -191,7 +191,7 @@ NSString *EventSlotName(EventSlot slot);
 
 @property (readonly) EmulatorInfo info;
 @property (readonly) EmulatorInfo cachedInfo;
-@property (readonly) EmulatorStats stats;
+@property (readonly) EmulatorMetrics stats;
 
 @property (readonly) BOOL poweredOn;
 @property (readonly) BOOL poweredOff;
@@ -374,7 +374,7 @@ struct GuardInfo {
 @property (readonly) CIAConfig config;
 @property (readonly) CIAInfo info;
 @property (readonly) CIAInfo cachedInfo;
-@property (readonly) CIAStats stats;
+@property (readonly) CIAMetrics stats;
 
 @end
 
@@ -447,7 +447,7 @@ struct GuardInfo {
 
 @interface AudioPortProxy : SubComponentProxy { }
 
-@property (readonly) AudioPortStats stats;
+@property (readonly) AudioPortMetrics stats;
 
 - (NSInteger)copyMono:(float *)target size:(NSInteger)n;
 - (NSInteger)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;

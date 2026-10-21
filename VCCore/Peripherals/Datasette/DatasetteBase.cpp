@@ -74,14 +74,18 @@ Datasette::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-Datasette::cacheInfo(DatasetteInfo &result) const
+DatasetteInfo
+Datasette::cacheInfo() const
 {
-    info.hasTape = hasTape();
-    info.type = type;
-    info.motor = motor;
-    info.playKey = playKey;
-    info.counter = (isize)counter.asSeconds();
+    DatasetteInfo result = { };
+
+    result.hasTape = hasTape();
+    result.type = type;
+    result.motor = motor;
+    result.playKey = playKey;
+    result.counter = (isize)counter.asSeconds();
+
+    return result;
 }
 
 Datasette&

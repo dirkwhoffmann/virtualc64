@@ -41,15 +41,19 @@ TOD::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-TOD::cacheInfo(TODInfo &info) const
+TODInfo
+TOD::cacheInfo() const
 {
+    TODInfo result = { };
+
     {   SYNCHRONIZED
 
-        info.time = tod;
-        info.latch = latch;
-        info.alarm = alarm;
+        result.time = tod;
+        result.latch = latch;
+        result.alarm = alarm;
     }
+
+    return result;
 }
 
 }

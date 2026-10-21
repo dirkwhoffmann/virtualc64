@@ -94,14 +94,18 @@ RetroShell::_initialize()
     exec();
 }
 
-void
-RetroShell::cacheInfo(RetroShellInfo &result) const
+RetroShellInfo
+RetroShell::cacheInfo() const
 {
+    RetroShellInfo result = { };
+
     {   SYNCHRONIZED
 
         result.console = isize(console.getCommandSet());
         result.cursorRel = console.cursorRel();
     }
+
+    return result;
 }
 
 void

@@ -228,7 +228,7 @@ Memory::updatePeekPokeLookupTables()
 u8
 Memory::peek(u16 addr, MemType source)
 {
-    if (config.heatmap) stats.reads[addr]++;
+    if (config.heatmap) metrics.reads[addr]++;
 
     switch(source) {
             
@@ -281,7 +281,7 @@ Memory::peek(u16 addr, bool gameLine, bool exromLine)
 u8
 Memory::peekZP(u8 addr)
 {
-    if (config.heatmap) stats.reads[addr]++;
+    if (config.heatmap) metrics.reads[addr]++;
 
     if (likely(addr >= 0x02)) {
         return ram[addr];
@@ -293,7 +293,7 @@ Memory::peekZP(u8 addr)
 u8
 Memory::peekStack(u8 sp)
 {
-    if (config.heatmap) stats.reads[sp]++;
+    if (config.heatmap) metrics.reads[sp]++;
 
     return ram[0x100 + sp];
 }
@@ -303,7 +303,7 @@ Memory::peekIO(u16 addr)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
-    if (config.heatmap) stats.reads[addr]++;
+    if (config.heatmap) metrics.reads[addr]++;
 
     switch ((addr >> 8) & 0xF) {
             
@@ -453,7 +453,7 @@ Memory::spypeekColor(u16 addr) const
 void
 Memory::poke(u16 addr, u8 value, MemType target)
 {
-    if (config.heatmap) stats.writes[addr]++;
+    if (config.heatmap) metrics.writes[addr]++;
 
     switch(target) {
             
@@ -507,7 +507,7 @@ Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
 void
 Memory::pokeZP(u8 addr, u8 value)
 {
-    if (config.heatmap) stats.writes[addr]++;
+    if (config.heatmap) metrics.writes[addr]++;
 
     if (likely(addr >= 0x02)) {
         ram[addr] = value;
@@ -521,7 +521,7 @@ Memory::pokeZP(u8 addr, u8 value)
 void
 Memory::pokeStack(u8 sp, u8 value)
 {
-    if (config.heatmap) stats.writes[sp]++;
+    if (config.heatmap) metrics.writes[sp]++;
 
     ram[0x100 + sp] = value;
 }
@@ -531,7 +531,7 @@ Memory::pokeIO(u16 addr, u8 value)
 {
     assert(addr >= 0xD000 && addr <= 0xDFFF);
  
-    if (config.heatmap) stats.writes[addr]++;
+    if (config.heatmap) metrics.writes[addr]++;
 
     switch ((addr >> 8) & 0xF) {
             

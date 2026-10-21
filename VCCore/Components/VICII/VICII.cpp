@@ -52,7 +52,7 @@ VICII::_didReset(bool hard)
 {
     if (hard) {
 
-        clearStats();
+        clearMetrics();
         
         // See README of VICE test VICII/spritemcbase
         for (isize i = 0; i < 8; i++) mcbase[i] = is656x ? 0x3F : 0x00;
@@ -696,7 +696,7 @@ VICII::beginFrame()
     lpIrqHasOccurred = false;
 
     // Clear statistics
-    clearStats();
+    clearMetrics();
 }
 
 void

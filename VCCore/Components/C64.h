@@ -96,7 +96,7 @@ static constexpr Cycle NEVER = INT64_MAX;
 static constexpr double inspectionInterval = 0.1;
 
 
-class C64 final : public CoreComponent, public Inspectable<C64Info> {
+class C64 final : public CoreComponent {
 
     friend class Emulator;
 
@@ -423,13 +423,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    // virtual void record() const override;
-    void cacheInfo(C64Info &result) const override;
+    // Result of the latest inspection
+    utl::Backed<C64Info> info = utl::Backed<C64Info>([this] { return cacheInfo(); });
+
+    C64Info cacheInfo() const;
 
     u64 getAutoInspectionMask() const;
     void setAutoInspectionMask(u64 mask);

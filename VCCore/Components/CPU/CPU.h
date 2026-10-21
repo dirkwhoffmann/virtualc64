@@ -20,7 +20,7 @@ using namespace vc64::peddle;
 
 namespace vc64 {
 
-class CPU final : public Peddle, public Inspectable<CPUInfo> {
+class CPU final : public Peddle {
 
     friend class C64;
 
@@ -186,12 +186,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(CPUInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<CPUInfo> info = utl::Backed<CPUInfo>([this] { return cacheInfo(); });
+
+    CPUInfo cacheInfo() const;
 
 
     //

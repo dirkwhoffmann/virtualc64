@@ -57,15 +57,19 @@ Joystick::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-Joystick::cacheInfo(JoystickInfo &result) const
+JoystickInfo
+Joystick::cacheInfo() const
 {
+    JoystickInfo result = { };
+
     {   SYNCHRONIZED
 
         result.button = button;
         result.axisX = axisX;
         result.axisY = axisY;
     }
+
+    return result;
 }
 
 i64

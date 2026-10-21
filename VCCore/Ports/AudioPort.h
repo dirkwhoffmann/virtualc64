@@ -23,7 +23,7 @@ namespace vc64 {
 
 class SIDBridge;
 
-class AudioPort final : public SubComponent, public Inspectable<AudioPortInfo, AudioPortStats> {
+class AudioPort final : public SubComponent {
 
     friend class SIDBridge;
     
@@ -173,13 +173,22 @@ public:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(AudioPortInfo &result) const override;
-    void cacheStats(AudioPortStats &result) const override;
+    // State and metrics
+    utl::Backed<AudioPortInfo> info = utl::Backed<AudioPortInfo>([this] { return cacheInfo(); });
+    utl::Backed<AudioPortMetrics> metrics = utl::Backed<AudioPortMetrics>([this] { return cacheMetrics(); });
+
+    AudioPortInfo cacheInfo() const;
+    AudioPortMetrics cacheMetrics() const;
+
+private:
+
+    // Internal metrics
+    AudioPortMetrics stats = { };
 
 
     //

@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class Cartridge : public SubComponent, public Inspectable<CartridgeInfo> {
+class Cartridge : public SubComponent {
 
     Descriptions descriptions = {{
 
@@ -257,12 +257,15 @@ protected:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(CartridgeInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<CartridgeInfo> info = utl::Backed<CartridgeInfo>([this] { return cacheInfo(); });
+
+    CartridgeInfo cacheInfo() const;
 
 
     //

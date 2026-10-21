@@ -33,7 +33,7 @@ namespace vc64 {
  *     - Vortex (LMan)
  */
 
-class ReSID final : public SubComponent, public Inspectable<SIDInfo> {
+class ReSID final : public SubComponent {
 
     friend class SID;
     
@@ -52,7 +52,6 @@ class ReSID final : public SubComponent, public Inspectable<SIDInfo> {
     reSID::SID *sid;
     
     // Result of the latest inspection
-    mutable VoiceInfo voiceInfo[3] = { };
 
 private:
     
@@ -157,13 +156,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    virtual void record() const override;
-    void cacheInfo(SIDInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<SIDInfo> info = utl::Backed<SIDInfo>([this] { return cacheInfo(); });
+
+    SIDInfo cacheInfo() const;
 
 
     //

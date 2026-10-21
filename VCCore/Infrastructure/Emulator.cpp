@@ -107,7 +107,7 @@ Emulator::_dump(Category category, std::ostream &os) const
             os << "Run-ahead instance:" << std::endl << std::endl;
 
             os << tab("Clone nr");
-            os << dec(stats.clones) << std::endl;
+            os << dec(clones) << std::endl;
             os << tab("Frame");
             os << dec(ahead->frame) << std::endl;
             os << tab("Beam");
@@ -135,9 +135,11 @@ Emulator::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-Emulator::cacheInfo(EmulatorInfo &result) const
+EmulatorInfo
+Emulator::cacheInfo() const
 {
+    EmulatorInfo result = { };
+
     {   SYNCHRONIZED
 
         result.state = state;
@@ -148,17 +150,24 @@ Emulator::cacheInfo(EmulatorInfo &result) const
         result.warping = isWarping();
         result.tracking = isTracking();
     }
+
+    return result;
 }
 
-void
-Emulator::cacheStats(EmulatorStats &result) const
+EmulatorMetrics
+Emulator::cacheMetrics() const
 {
+    EmulatorMetrics result = { };
+
     {   SYNCHRONIZED
 
         result.cpuLoad = cpuLoad;
         result.fps = fps;
         result.resyncs = resyncs;
+        result.clones = clones;
     }
+
+    return result;
 }
 
 i64
@@ -307,7 +316,7 @@ Emulator::isReady()
 void
 Emulator::cloneRunAheadInstance()
 {
-    stats.clones++;
+    clones++;
 
     // Recreate the runahead instance from scratch
     assert(ahead);

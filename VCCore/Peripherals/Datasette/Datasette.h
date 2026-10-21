@@ -35,7 +35,7 @@ public:
     utl::Time delay() const;
 };
 
-class Datasette final : public SubComponent, public Inspectable<DatasetteInfo> {
+class Datasette final : public SubComponent {
 
     Descriptions descriptions = {{
 
@@ -159,12 +159,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(DatasetteInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<DatasetteInfo> info = utl::Backed<DatasetteInfo>([this] { return cacheInfo(); });
+
+    DatasetteInfo cacheInfo() const;
 
 
     //

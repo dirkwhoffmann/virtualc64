@@ -1142,9 +1142,11 @@ C64::_trackOff()
     msgQueue.put(Msg::TRACK, 0);
 }
 
-void
-C64::cacheInfo(C64Info &result) const
+C64Info
+C64::cacheInfo() const
 {
+    C64Info result = { };
+
     {   SYNCHRONIZED
 
         result.cpuProgress = cpu.clock;
@@ -1178,6 +1180,8 @@ C64::cacheInfo(C64Info &result) const
             result.slotInfo[i].eventName = eventName(EventSlot(i), eventid[i]);
         }
     }
+
+    return result;
 }
 
 u64
@@ -1465,15 +1469,21 @@ C64::processINSEvent()
     u64 mask = data[SLOT_INS];
 
     // Analyze bit mask
-    if (mask & 1LL << long(Class::C64))             { record(); }
-    if (mask & 1LL << long(Class::CPU))             { cpu.record(); }
-    if (mask & 1LL << long(Class::Memory))          { mem.record(); }
-    if (mask & 1LL << long(Class::CIA))             { cia1.record(); cia2.record(); }
-    if (mask & 1LL << long(Class::VICII))           { vic.record(); }
+    if (mask & 1LL << long(Class::C64))             { info.record(); }
+    if (mask & 1LL << long(Class::CPU))             { cpu.info.record(); }
+    if (mask & 1LL << long(Class::Memory))          { mem.info.record(); }
+    if (mask & 1LL << long(Class::CIA))             { cia1.info.record(); cia1.metrics.record(); cia2.info.record(); cia2.metrics.record(); }
+    if (mask & 1LL << long(Class::VICII))           { vic.info.record(); }
     
     if (mask & 1LL << long(Class::SID)) {
-        for (isize i = 0; i < 4; i++) sidBridge.sid[i].record();
+        for (isize i = 0; i < 4; i++) sidBridge.sid[i].info.record();
     }
+    if (mask & 1LL << long(Class::AudioPort))       { audioPort.info.record(); audioPort.metrics.record(); }
+    if (mask & 1LL << long(Class::Drive))           { drive8.info.record(); drive9.info.record(); }
+    if (mask & 1LL << long(Class::Datasette))       { datasette.info.record(); }
+    if (mask & 1LL << long(Class::Joystick))        { port1.joystick.info.record(); port2.joystick.info.record(); }
+    if (mask & 1LL << long(Class::Paddle))          { port1.paddle.info.record(); port2.paddle.info.record(); }
+    if (mask & 1LL << long(Class::ExpansionPort))   { expansionport.recordInfo(); }
 
     // Reschedule the event
     scheduleRel<SLOT_INS>(Cycle(inspectionInterval * PAL::CYCLES_PER_SECOND), INS_INSPECT, mask);

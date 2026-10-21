@@ -68,6 +68,6 @@ typedef struct
     // Total number of sampels grabbed by the audio backend
     i64 consumedSamples;
 }
-AudioPortStats;
+AudioPortMetrics;
 
 }

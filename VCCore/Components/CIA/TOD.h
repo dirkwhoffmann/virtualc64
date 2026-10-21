@@ -22,7 +22,7 @@ namespace vc64 {
  * features an alarm mechanism. When the alarm time is reached, an interrupt
  * is triggered.
  */
-class TOD final : public SubComponent, public Inspectable<TODInfo> {
+class TOD final : public SubComponent {
     
     friend class CIA;
     
@@ -39,9 +39,6 @@ class TOD final : public SubComponent, public Inspectable<TODInfo> {
     };
 
 private:
-    
-    // Result of the latest inspection
-    mutable TODInfo info = { };
     
     // Reference to the connected CIA
     class CIA &cia;
@@ -138,12 +135,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
 public:
 
-    void cacheInfo(TODInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<TODInfo> info = utl::Backed<TODInfo>([this] { return cacheInfo(); });
+
+    TODInfo cacheInfo() const;
 
 
     //

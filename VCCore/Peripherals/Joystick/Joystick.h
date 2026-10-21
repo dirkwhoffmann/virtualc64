@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class Joystick final : public SubComponent, public Inspectable<JoystickInfo> {
+class Joystick final : public SubComponent {
 
     Descriptions descriptions = {
         {
@@ -141,12 +141,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
-private:
+public:
 
-    void cacheInfo(JoystickInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<JoystickInfo> info = utl::Backed<JoystickInfo>([this] { return cacheInfo(); });
+
+    JoystickInfo cacheInfo() const;
 
 
     //

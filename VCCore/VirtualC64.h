@@ -168,7 +168,8 @@ struct CIAAPI : public API {
 
     /** @brief  Returns statistical information about the components.
      */
-    const CIAStats &getStats() const;
+    const CIAMetrics &getMetrics() const;
+    const CIAMetrics &getCachedMetrics() const;
 };
 
 
@@ -241,7 +242,7 @@ struct AudioPortAPI : public API {
 
     /** @brief  Returns statistical information about the components.
      */
-    const AudioPortStats &getStats() const;
+    const AudioPortMetrics &getStats() const;
 
 
     /// @}
@@ -1399,7 +1400,8 @@ struct VirtualC64 : public API {
 
     /** @brief  Returns statistical information about the components.
      */
-    const EmulatorStats &getStats() const;
+    const EmulatorMetrics &getMetrics() const;
+    const EmulatorMetrics &getCachedMetrics() const;
 
     /// @}
     /// @name Querying the emulator state

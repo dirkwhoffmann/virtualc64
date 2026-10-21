@@ -58,12 +58,16 @@ Paddle::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-Paddle::cacheInfo(PaddleInfo &result) const
+PaddleInfo
+Paddle::cacheInfo() const
 {
+    PaddleInfo result = { };
+
     {   SYNCHRONIZED
 
     }
+
+    return result;
 }
 
 i64

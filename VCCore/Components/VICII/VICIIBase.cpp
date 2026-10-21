@@ -16,9 +16,11 @@
 
 namespace vc64 {
 
-void
-VICII::cacheInfo(VICIIInfo &result) const
+VICIIInfo
+VICII::cacheInfo() const
 {
+    VICIIInfo result = { };
+
     {   SYNCHRONIZED
 
         u8 ctrl1 = reg.current.ctrl1;
@@ -81,14 +83,8 @@ VICII::cacheInfo(VICIIInfo &result) const
             spriteInfo[i].sbCollision = GET_BIT(spriteBackgroundColllision, i);
         }
     }
-}
 
-void
-VICII::cacheStats(VICIIStats &result) const
-{
-    {   SYNCHRONIZED
-
-    }
+    return result;
 }
 
 void
@@ -167,30 +163,30 @@ VICII::_dump(Category category, std::ostream &os) const
 }
 
 void
-VICII::clearStats()
+VICII::clearMetrics()
 {
     if CONSTEXPR (VICII_STATS) {
 
-        double canvasTotal = double(stats.canvasFastPath + stats.canvasSlowPath);
-        double spriteTotal = double(stats.spriteFastPath + stats.spriteSlowPath);
-        double exitTotal = double(stats.quickExitHit + stats.quickExitMiss);
+        double canvasTotal = double(metrics.canvasFastPath + metrics.canvasSlowPath);
+        double spriteTotal = double(metrics.spriteFastPath + metrics.spriteSlowPath);
+        double exitTotal = double(metrics.quickExitHit + metrics.quickExitMiss);
 
         logmsg(LOG_INFO, "Canvas: Fast path: %ld Slow path: %ld Ratio: %f\n",
-            stats.canvasFastPath,
-            stats.canvasSlowPath,
-            canvasTotal != 0 ? stats.canvasFastPath / canvasTotal : -1);
+            metrics.canvasFastPath,
+            metrics.canvasSlowPath,
+            canvasTotal != 0 ? metrics.canvasFastPath / canvasTotal : -1);
 
         logmsg(LOG_INFO, "Sprites: Fast path: %ld Slow path: %ld Ratio: %f\n",
-            stats.spriteFastPath,
-            stats.spriteSlowPath,
-            spriteTotal != 0 ? stats.spriteFastPath / spriteTotal : -1);
+            metrics.spriteFastPath,
+            metrics.spriteSlowPath,
+            spriteTotal != 0 ? metrics.spriteFastPath / spriteTotal : -1);
 
         logmsg(LOG_INFO, "Exits: Hit: %ld Miss: %ld Ratio: %f\n",
-            stats.quickExitHit,
-            stats.quickExitMiss,
-            exitTotal != 0 ? stats.quickExitHit / exitTotal : -1);
+            metrics.quickExitHit,
+            metrics.quickExitMiss,
+            exitTotal != 0 ? metrics.quickExitHit / exitTotal : -1);
 
-        memset(&stats, 0, sizeof(stats));
+        memset(&metrics, 0, sizeof(metrics));
     }
 }
 

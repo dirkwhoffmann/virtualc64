@@ -86,7 +86,7 @@ bool SerialPort::_updateIecLines()
 void
 SerialPort::updateIecLines()
 {
-    bool wasIdle = stats.idle;
+    bool wasIdle = metrics.idle;
 
     // Update bus lines
     bool signalsChanged = _updateIecLines();
@@ -104,7 +104,7 @@ SerialPort::updateIecLines()
         drive9.via1.CA1action(!atnLine);
 
         // Reset the idle counter
-        stats.idle = 0;
+        metrics.idle = 0;
 
         // Update the transfer status if the bus was idle
         if (wasIdle) updateTransferStatus();
@@ -146,7 +146,7 @@ SerialPort::update()
 void
 SerialPort::execute()
 {
-    if (++stats.idle == 32) {
+    if (++metrics.idle == 32) {
         updateTransferStatus();
     }
 }
@@ -155,7 +155,7 @@ void
 SerialPort::updateTransferStatus()
 {
     bool rotating = drive8.isRotating() || drive9.isRotating();
-    bool newValue = rotating && stats.idle < 32;
+    bool newValue = rotating && metrics.idle < 32;
     
     if (transferring != newValue) {
 

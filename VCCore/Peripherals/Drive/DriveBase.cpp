@@ -119,9 +119,11 @@ Drive::operator << (SerWriter &worker)
     if (config.saveRoms) worker << mem.rom;
 }
 
-void 
-Drive::cacheInfo(DriveInfo &result) const
+DriveInfo
+Drive::cacheInfo() const
 {
+    DriveInfo result = { };
+
     result.id = objid;
 
     result.hasRom = mem.hasRom();
@@ -140,6 +142,8 @@ Drive::cacheInfo(DriveInfo &result) const
 
     result.halftrack = halftrack;
     result.offset = offset;
+
+    return result;
 }
 
 void

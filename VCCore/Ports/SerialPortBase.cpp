@@ -28,7 +28,7 @@ SerialPort::_dump(Category category, std::ostream &os) const
         os << tab("VIA1::DDRB (Drive9)");
         os << hex(drive9.via1.getDDRB()) << std::endl;
         os << tab("Idle");
-        os << dec(stats.idle) << " frames" << std::endl;
+        os << dec(metrics.idle) << " frames" << std::endl;
     }
 }
 

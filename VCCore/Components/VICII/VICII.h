@@ -146,7 +146,7 @@ struct SpriteSR : Serializable
     */
 };
 
-class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStats> {
+class VICII final : public SubComponent {
 
     friend class Memory;
     friend class DmaDebugger;
@@ -1008,14 +1008,23 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
+
+public:
+
+    // Result of the latest inspection
+    utl::Backed<VICIIInfo> info = utl::Backed<VICIIInfo>([this] { return cacheInfo(); });
+
+    VICIIInfo cacheInfo() const;
 
 private:
 
-    void cacheInfo(VICIIInfo &result) const override;
-    void cacheStats(VICIIStats &result) const override;
-    void clearStats() override;
+    // Debug counters of the graphics synthesizer (see VICII_STATS)
+    VICIIMetrics metrics = { };
+
+    // Reports and resets the debug counters
+    void clearMetrics();
 
 public:
 

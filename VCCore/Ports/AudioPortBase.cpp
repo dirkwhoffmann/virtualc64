@@ -63,19 +63,23 @@ AudioPort::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-AudioPort::cacheInfo(AudioPortInfo &result) const
+AudioPortInfo
+AudioPort::cacheInfo() const
 {
-
+    return AudioPortInfo { };
 }
 
-void
-AudioPort::cacheStats(AudioPortStats &result) const
+AudioPortMetrics
+AudioPort::cacheMetrics() const
 {
+    AudioPortMetrics result = stats;
+
     {   SYNCHRONIZED
-        
+
         result.fillLevel = stream.fillLevel();
     }
+
+    return result;
 }
 
 bool

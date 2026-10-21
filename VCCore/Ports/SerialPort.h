@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class SerialPort final : public SubComponent, public Inspectable<Void, SerialPortStats> {
+class SerialPort final : public SubComponent {
 
     Descriptions descriptions = {{
 
@@ -52,6 +52,9 @@ public:
     bool ciaAtn;
     bool ciaClock;
     bool ciaData;
+
+    // Bus idle time measured in frames
+    SerialPortMetrics metrics = { };
     
 private:
 
@@ -83,7 +86,7 @@ public:
         CLONE(ciaAtn)
         CLONE(ciaClock)
         CLONE(ciaData)
-        CLONE(stats)
+        CLONE(metrics)
 
         return *this;
     }
@@ -112,7 +115,7 @@ public:
         << ciaAtn
         << ciaClock
         << ciaData
-        << stats.idle;
+        << metrics.idle;
 
     } SERIALIZERS(serialize);
 

@@ -254,9 +254,11 @@ Cartridge::cloneRomAndRam(const Cartridge& other)
     }
 }
 
-void 
-Cartridge::cacheInfo(CartridgeInfo &result) const
+CartridgeInfo
+Cartridge::cacheInfo() const
 {
+    CartridgeInfo result = { };
+
     result.type = getCartridgeType();
     result.supported = isSupported();
     result.gameLineInCrtFile = gameLineInCrtFile;
@@ -264,6 +266,8 @@ Cartridge::cacheInfo(CartridgeInfo &result) const
     result.numPackets = numPackets;
     result.switchPos = switchPos;
     result.led = led;
+
+    return result;
 }
 
 CartridgeRomInfo

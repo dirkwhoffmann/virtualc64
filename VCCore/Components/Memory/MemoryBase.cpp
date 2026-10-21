@@ -54,9 +54,11 @@ Memory::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-Memory::cacheInfo(MemInfo &result) const
+MemInfo
+Memory::cacheInfo() const
 {
+    MemInfo result = { };
+
     {   SYNCHRONIZED
 
         result.exrom = expansionPort.getExromLine();
@@ -72,6 +74,8 @@ Memory::cacheInfo(MemInfo &result) const
         for (isize i = 0; i < 16; i++) result.peekSrc[i] = peekSrc[i];
         for (isize i = 0; i < 16; i++) result.vicPeekSrc[i] = vic.memSrc[i];
     }
+
+    return result;
 }
 
 i64

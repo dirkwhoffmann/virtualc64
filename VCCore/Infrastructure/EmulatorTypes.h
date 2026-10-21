@@ -334,6 +334,6 @@ typedef struct
     isize resyncs;          ///< Number of out-of-sync conditions
     isize clones;           ///< Number of created run-ahead instances
 }
-EmulatorStats;
+EmulatorMetrics;
 
 }

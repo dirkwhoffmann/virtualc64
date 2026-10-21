@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class SID final : public SubComponent, public Inspectable<SIDInfo>
+class SID final : public SubComponent
 {
     friend class SIDBridge;
     friend class AudioPort;
@@ -149,12 +149,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
-private:
+public:
 
-    void cacheInfo(SIDInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<SIDInfo> info = utl::Backed<SIDInfo>([this] { return cacheInfo(); });
+
+    SIDInfo cacheInfo() const;
 
 
     //

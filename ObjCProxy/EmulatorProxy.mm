@@ -504,9 +504,9 @@ NSString *EventSlotName(EventSlot slot)
     return [self cia]->getCachedInfo();
 }
 
-- (CIAStats)stats
+- (CIAMetrics)stats
 {
-    return [self cia]->getStats();
+    return [self cia]->getMetrics();
 }
 
 @end
@@ -645,7 +645,7 @@ NSString *EventSlotName(EventSlot slot)
     return (AudioPortAPI *)obj;
 }
 
-- (AudioPortStats)stats
+- (AudioPortMetrics)stats
 {
     return [self port]->getStats();
 }
@@ -1964,9 +1964,9 @@ NSString *EventSlotName(EventSlot slot)
     return [self emu]->getCachedInfo();
 }
 
-- (EmulatorStats)stats
+- (EmulatorMetrics)stats
 {
-    return [self emu]->getStats();
+    return [self emu]->getMetrics();
 }
 
 - (BOOL)poweredOn

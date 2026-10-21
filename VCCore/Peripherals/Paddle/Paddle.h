@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class Paddle final : public SubComponent, public Inspectable<PaddleInfo> {
+class Paddle final : public SubComponent {
 
     Descriptions descriptions = {
         {
@@ -107,12 +107,15 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Analyzing
     //
 
-private:
+public:
 
-    void cacheInfo(PaddleInfo &result) const override;
+    // Result of the latest inspection
+    utl::Backed<PaddleInfo> info = utl::Backed<PaddleInfo>([this] { return cacheInfo(); });
+
+    PaddleInfo cacheInfo() const;
 
 
     //

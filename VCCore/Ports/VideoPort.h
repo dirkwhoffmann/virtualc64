@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class VideoPort final : public SubComponent, public Inspectable<VideoPortInfo, VideoPortStats> {
+class VideoPort final : public SubComponent {
 
     Descriptions descriptions = {{
 
@@ -35,6 +35,17 @@ class VideoPort final : public SubComponent, public Inspectable<VideoPortInfo, V
 
     // Current configuration
     VideoPortConfig config = { };
+
+public:
+
+    // State and metrics (the info is backed by a variable, see grabbing)
+    mutable utl::Backed<VideoPortInfo> info;
+    utl::Backed<VideoPortStats> metrics = utl::Backed<VideoPortStats>([this] { return cacheStats(); });
+
+private:
+
+    // Number of frames that have not been grabbed in time
+    isize droppedFrames = 0;
 
     // Predefined frame buffers
     mutable Texture whiteNoise;
@@ -53,6 +64,8 @@ public:
     ~VideoPort();
     
     const Descriptions &getDescriptions() const override { return descriptions; }
+
+    VideoPortStats cacheStats() const { return VideoPortStats { .droppedFrames = droppedFrames }; }
 
     VideoPort& operator= (const VideoPort& other) {
 

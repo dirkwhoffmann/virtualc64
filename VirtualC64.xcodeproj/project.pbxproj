@@ -626,8 +626,6 @@
 		50B98B4A2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */; };
 		50B98B4B2BFDF5FC00FA1EC6 /* AudioPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */; };
 		50B9F2812826392400BDFE7B /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B9F2802826392400BDFE7B /* MediaManager.swift */; };
-		50BB3E912B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
-		50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
 		50BB3E952B7A426800B2D87B /* CmdQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E932B7A426800B2D87B /* CmdQueue.cpp */; };
 		50BB3E962B7A426800B2D87B /* CmdQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E932B7A426800B2D87B /* CmdQueue.cpp */; };
 		50BD640A2C01FADC007CD347 /* VideoPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64082C01FADC007CD347 /* VideoPort.cpp */; };
@@ -1497,8 +1495,6 @@
 		50B98B492BFDF5FC00FA1EC6 /* AudioPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AudioPortBase.cpp; sourceTree = "<group>"; };
 		50B9F2802826392400BDFE7B /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		50B9F2822826C23100BDFE7B /* DatasetteTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatasetteTypes.h; sourceTree = "<group>"; };
-		50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Inspectable.cpp; sourceTree = "<group>"; };
-		50BB3E902B7A232800B2D87B /* Inspectable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Inspectable.h; sourceTree = "<group>"; };
 		50BB3E932B7A426800B2D87B /* CmdQueue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CmdQueue.cpp; sourceTree = "<group>"; };
 		50BB3E942B7A426800B2D87B /* CmdQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdQueue.h; sourceTree = "<group>"; };
 		50BB3E972B7A429500B2D87B /* CmdQueueTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CmdQueueTypes.h; sourceTree = "<group>"; };
@@ -2478,8 +2474,6 @@
 				506A8A862B88D00200B95383 /* Configurable.cpp */,
 				50EFB0C32C18D6200013B73C /* Dumpable.h */,
 				50EFB0C22C18D6200013B73C /* Dumpable.cpp */,
-				50BB3E902B7A232800B2D87B /* Inspectable.h */,
-				50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */,
 				50650F432DF0E715008AD660 /* CoreObjectTypes.h */,
 				504C42EC24AF29AB00E69CAE /* CoreObject.h */,
 				504C42ED24AF29AB00E69CAE /* CoreObject.cpp */,
@@ -3554,7 +3548,6 @@
 				50A5B7D02C74E44C00D6DDAD /* RemoteManager.cpp in Sources */,
 				50726F862961C9F10031F2F5 /* FlashRom.cpp in Sources */,
 				50726F782961C9DC0031F2F5 /* PIA.cpp in Sources */,
-				50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */,
 				50AC28502F446B2D0016265E /* getbits.c in Sources */,
 				50AC28512F446B2D0016265E /* maketbl.c in Sources */,
 				502DD2D82F9E539400ACBE45 /* rvdebug.cpp in Sources */,
@@ -4032,7 +4025,6 @@
 				50BD640A2C01FADC007CD347 /* VideoPort.cpp in Sources */,
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,
 				50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */,
-				50BB3E912B7A232800B2D87B /* Inspectable.cpp in Sources */,
 				500375062C23F26000979A1B /* C64Base.cpp in Sources */,
 				50461BBE26B522450019CEDF /* Thread.cpp in Sources */,
 				505F45632E96961500418105 /* GeneralSettings.swift in Sources */,

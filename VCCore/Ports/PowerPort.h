@@ -69,7 +69,7 @@ private:
 
 
     //
-    // Methods from Inspectable
+    // Methods from Configurable
     //
 
 public:

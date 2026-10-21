@@ -67,9 +67,11 @@ CIA::_dump(Category category, std::ostream &os) const
     }
 }
 
-void
-CIA::cacheInfo(CIAInfo &result) const
+CIAInfo
+CIA::cacheInfo() const
 {
+    CIAInfo result = { };
+
     {   SYNCHRONIZED
 
         result.portA.port = computePA();
@@ -100,28 +102,37 @@ CIA::cacheInfo(CIAInfo &result) const
         result.imr = imr;
         result.intLine = INT;
 
-        result.tod = tod.info;
+        result.tod = tod.cacheInfo();
         result.todIntEnable= imr & 0x04;
     }
+
+    return result;
 }
-void
-CIA::cacheStats(CIAStats &result) const
+CIAMetrics
+CIA::cacheMetrics() const
 {
+    CIAMetrics result = { };
+
     {   SYNCHRONIZED
-        
+
         auto total = cpu.clock;
         auto idle = idleTotal() + idleSince();
-        
-        auto totalDiff = total - result.totalCycles;
-        auto idleDiff = idle - result.idleCycles;
-        
+
+        auto totalDiff = total - prevTotalCycles;
+        auto idleDiff = idle - prevIdleCycles;
+
+        if (totalDiff < 0 || idleDiff < 0) { totalDiff = 0; idleDiff = 0; }
+
+        prevTotalCycles = total;
+        prevIdleCycles = idle;
+
         result.totalCycles = total;
         result.idleCycles = idle;
         result.idleSince = idleSince();
-
-        // logmsg(LOG_INFO, "totalDiff: %lld idleDiff: %lld\n", totalDiff, idleDiff);
-        result.idlePercentage =  totalDiff ? double(idleDiff) / double(totalDiff) : 1.0;
+        result.idlePercentage = totalDiff ? double(idleDiff) / double(totalDiff) : 1.0;
     }
+
+    return result;
 }
 
 i64

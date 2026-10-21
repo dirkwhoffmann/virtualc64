@@ -142,7 +142,7 @@ typedef struct
     isize reads[65536];
     isize writes[65536];
 }
-MemStats;
+MemMetrics;
 
 
 }

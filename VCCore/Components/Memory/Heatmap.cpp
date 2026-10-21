@@ -66,7 +66,7 @@ Heatmap::update(const class Memory &mem)
         if (i & (1 << 1)) y += 1;
         if (i & (1 << 0)) x += 1;
 
-        auto totalAccesses = mem.stats.reads[i] + mem.stats.writes[i];
+        auto totalAccesses = mem.metrics.reads[i] + mem.metrics.writes[i];
         auto accesses = totalAccesses - history[i];
         history[i] = totalAccesses;
 
