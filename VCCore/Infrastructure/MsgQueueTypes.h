@@ -29,6 +29,7 @@ enum class Msg : long
 
     // Execution state
     CONFIG,             ///< The configuration has changed
+    CONFIG_ERROR,       ///< A configuration request has failed (the exception is attached)
     POWER,              ///< The emulator has been powered on or off
     RUN,                ///< The emulator has entered ExecState::RUNNING
     PAUSE,              ///< The emulator has entered ExecState::PAUSED
@@ -143,6 +144,7 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::NONE:                  return "NONE";
 
             case Msg::CONFIG:                return "CONFIG";
+            case Msg::CONFIG_ERROR:          return "CONFIG_ERROR";
             case Msg::POWER:                 return "POWER";
             case Msg::RUN:                   return "RUN";
             case Msg::PAUSE:                 return "PAUSE";

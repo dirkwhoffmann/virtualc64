@@ -320,6 +320,13 @@ extension MyController {
             refreshStatusBar()
             settings?.refresh()
             
+        case .CONFIG_ERROR:
+
+            // Re-read the configuration to drop the rejected value
+            settings?.refresh()
+            let reason = (attachedString.isEmpty ? "" : attachedString + ": ") + (exception?.what ?? "")
+            showAlert(.cantConfigure, what: reason, async: true)
+
         case .POWER:
             
             if value != 0 {

@@ -447,16 +447,28 @@ void
 VirtualC64::set(Opt opt, i64 value)
 {
     VC64_PUBLIC
-    emu->check(opt, value);
     put(Cmd::CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
     emu->markAsDirty();
+}
+
+void
+VirtualC64::check(Opt opt, i64 value)
+{
+    VC64_PUBLIC
+    emu->check(opt, value);
+}
+
+void
+VirtualC64::check(Opt opt, i64 value, long id)
+{
+    VC64_PUBLIC
+    emu->check(opt, value, { id });
 }
 
 void
 VirtualC64::set(Opt opt, i64 value, long id)
 {
     VC64_PUBLIC
-    emu->check(opt, value, { id });
     put(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
     emu->markAsDirty();
 }

@@ -1692,6 +1692,26 @@ struct VirtualC64 : public API {
      */
     void set(Opt opt, i64 value, long id);
 
+    /** @brief  Checks if a configuration option would be accepted.
+     *
+     *  The check is performed in the calling thread and does not change the
+     *  configuration. It is not needed before set(), which validates the value
+     *  itself, but it lets a caller skip a request that is known to fail.
+     *
+     *  @param opt      The option to check
+     *  @param value    The option's value
+     *  @throw CoreError if the value would be rejected
+     */
+    void check(Opt opt, i64 value);
+
+    /** @brief  Checks if a configuration option would be accepted.
+     *  @param opt      The option to check
+     *  @param value    The option's value
+     *  @param id       The component to configure
+     *  @throw CoreError if the value would be rejected
+     */
+    void check(Opt opt, i64 value, long id);
+
 
     /** @brief  Exports the current configuration.
      *

@@ -11,7 +11,6 @@ Defaults.cpp
 Dumpable.cpp
 Emulator.cpp
 Host.cpp
-Inspectable.cpp
 MsgQueue.cpp
 Option.cpp
 SubComponent.cpp

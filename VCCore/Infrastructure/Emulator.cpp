@@ -185,7 +185,6 @@ Emulator::check(Opt opt, i64 value, const std::vector<isize> objids)
 void
 Emulator::set(Opt opt, i64 value, const std::vector<isize> objids)
 {
-    main.check(opt, value, objids);
     main.set(opt, value, objids);
 }
 
