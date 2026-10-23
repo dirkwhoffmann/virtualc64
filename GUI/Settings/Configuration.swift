@@ -47,11 +47,6 @@ class Configuration {
         set { emu?.set(.VICII_CUT_LAYERS, value: newValue) }
     }
 
-    var vicCutOpacity: Int {
-        get { return emu?.get(.VICII_CUT_OPACITY) ?? 0 }
-        set { emu?.set(.VICII_CUT_OPACITY, value: newValue) }
-    }
-
     var ciaRevision: Int {
         get { return emu?.get(.CIA_REVISION) ?? 0 }
         set { emu?.set(.CIA_REVISION, value: newValue) }

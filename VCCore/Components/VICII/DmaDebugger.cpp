@@ -180,6 +180,9 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
 void
 DmaDebugger::cutLayers()
 {
+    // Cutting is a feature of the layer scan
+    if (config.mode != XRayMode::XRAY_LAYERS) return;
+
     // Dispatched once per call (not per pixel) -- see computeOverlay above.
     switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
 
@@ -195,55 +198,57 @@ template <TexelFormat F>
 void
 DmaDebugger::cutLayers()
 {
-    // Check master switch
-    if (!(config.cutLayers & 0x1000)) return;
-
-    // Only proceed if at least one channel is enabled
-    if (!(config.cutLayers & 0x0F00)) return;
-
-    u32 *emuTexturePtr = vic.emuTexturePtr;
+    /* Paints a checkerboard into the X-ray texture for each pixel that
+     * belongs to a cut layer, and black (no effect) for all others. The
+     * emulator texture is not touched, see computeOverlay() for how (and if)
+     * the result ends up in the picture. The z buffer tells which layer
+     * provided a pixel (see the depth constants in VICIITypes.h).
+     */
+    u32 *ptr = vic.xrayTexturePtr;
     u8 *zBuffer = vic.zBuffer;
 
+    // Resolve the color slots into a light and a dark checkerboard shade
+    u32 colA[XRAY_COLOR_COUNT], colB[XRAY_COLOR_COUNT];
+    for (isize n = 0; n < XRAY_COLOR_COUNT; n++) {
+
+        GpuColor<F> base(RgbColor(GpuColor<TexelFormat::ABGR>(config.dmaColor[n])));
+        colA[n] = base.shade(0.3).rawValue;
+        colB[n] = base.shade(0.1).rawValue;
+    }
+
+    bool rowBit = ((vic.scanline() / 4) & 1) != 0;
+
     for (isize i = 0; i < Texture::width; i++) {
-        
-        bool cut;
+
+        isize slot = -1;
 
         switch (zBuffer[i] & 0xE0) {
 
             case DEPTH_BORDER & 0xE0:
-                cut = config.cutLayers & 0x800;
+                if (config.cutLayers & 0x800) slot = 8;
                 break;
 
             case DEPTH_FG & 0xE0:
-                cut = config.cutLayers & 0x400;
+                if (config.cutLayers & 0x400) slot = 9;
                 break;
-                
+
             case DEPTH_BG & 0xE0:
-                cut = config.cutLayers & 0x200;
+                if (config.cutLayers & 0x200) slot = 10;
                 break;
-                
+
             case DEPTH_SPRITE_BG & 0xE0:
             case DEPTH_SPRITE_FG & 0xE0:
-                cut = GET_BIT(config.cutLayers, zBuffer[i] & 0xF);
-                if (!(config.cutLayers & 0x100)) cut = false;
+                if (GET_BIT(config.cutLayers, zBuffer[i] & 0xF)) {
+                    slot = zBuffer[i] & 0xF;
+                }
                 break;
-                
+
             default:
-                cut = false;
+                break;
         }
-        
-        if (cut) {
 
-            GpuColor<F> color(emuTexturePtr[i]);
-
-            double scale = config.cutOpacity / 255.0;
-            u8 bg = (vic.scanline() / 4) % 2 == (i / 4) % 2 ? 0x22 : 0x44;
-            u8 newr = (u8)(color.r() * (1 - scale) + bg * scale);
-            u8 newg = (u8)(color.g() * (1 - scale) + bg * scale);
-            u8 newb = (u8)(color.b() * (1 - scale) + bg * scale);
-
-            emuTexturePtr[i] = GpuColor<F>(newr, newg, newb).rawValue;
-        }
+        bool colBit = ((i / 4) & 1) != 0;
+        ptr[i] = slot < 0 ? Texture::black : (rowBit == colBit ? colA[slot] : colB[slot]);
     }
 }
 

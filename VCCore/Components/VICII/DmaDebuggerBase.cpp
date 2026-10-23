@@ -39,7 +39,6 @@ DmaDebugger::getOption(Opt option) const
         case Opt::XRAY_OVERLAY_OPACITY: return (i64)config.dmaOpacity;
 
         case Opt::VICII_CUT_LAYERS:     return (i64)config.cutLayers;
-        case Opt::VICII_CUT_OPACITY:    return (i64)config.cutOpacity;
 
         case Opt::XRAY_DMA_CHANNEL0:    return (i64)config.dmaChannel[0];
         case Opt::XRAY_DMA_CHANNEL1:    return (i64)config.dmaChannel[1];
@@ -53,6 +52,11 @@ DmaDebugger::getOption(Opt option) const
         case Opt::XRAY_COLOR3:          return (i64)config.dmaColor[3];
         case Opt::XRAY_COLOR4:          return (i64)config.dmaColor[4];
         case Opt::XRAY_COLOR5:          return (i64)config.dmaColor[5];
+        case Opt::XRAY_COLOR6:          return (i64)config.dmaColor[6];
+        case Opt::XRAY_COLOR7:          return (i64)config.dmaColor[7];
+        case Opt::XRAY_COLOR8:          return (i64)config.dmaColor[8];
+        case Opt::XRAY_COLOR9:          return (i64)config.dmaColor[9];
+        case Opt::XRAY_COLOR10:         return (i64)config.dmaColor[10];
         case Opt::XRAY_COMPOSITOR:      return (i64)config.compositor;
 
         default:
@@ -89,8 +93,6 @@ DmaDebugger::checkOption(Opt opt, i64 value)
 
         case Opt::XRAY_OVERLAY_OPACITY:
         case Opt::VICII_CUT_LAYERS:
-        case Opt::VICII_CUT_OPACITY:
-
         case Opt::XRAY_DMA_CHANNEL0:
         case Opt::XRAY_DMA_CHANNEL1:
         case Opt::XRAY_DMA_CHANNEL2:
@@ -104,6 +106,11 @@ DmaDebugger::checkOption(Opt opt, i64 value)
         case Opt::XRAY_COLOR3:
         case Opt::XRAY_COLOR4:
         case Opt::XRAY_COLOR5:
+        case Opt::XRAY_COLOR6:
+        case Opt::XRAY_COLOR7:
+        case Opt::XRAY_COLOR8:
+        case Opt::XRAY_COLOR9:
+        case Opt::XRAY_COLOR10:
 
             return;
 
@@ -139,7 +146,6 @@ DmaDebugger::setOption(Opt opt, i64 value)
         case Opt::XRAY_COMPOSITOR:      config.compositor = (XRayCompositor)value; return;
         case Opt::XRAY_OVERLAY_OPACITY: config.dmaOpacity = (u8)value; return;
         case Opt::VICII_CUT_LAYERS:      config.cutLayers = (u16)value; return;
-        case Opt::VICII_CUT_OPACITY:     config.cutOpacity = (u8)value; return;
 
         case Opt::XRAY_DMA_CHANNEL0:    config.dmaChannel[0] = value; return;
         case Opt::XRAY_DMA_CHANNEL1:    config.dmaChannel[1] = value; return;
@@ -154,6 +160,16 @@ DmaDebugger::setOption(Opt opt, i64 value)
         case Opt::XRAY_COLOR3:      setDmaDebugColor(MemAccess::G, GpuColor<TexelFormat::ABGR>((u32)value)); return;
         case Opt::XRAY_COLOR4:      setDmaDebugColor(MemAccess::P, GpuColor<TexelFormat::ABGR>((u32)value)); return;
         case Opt::XRAY_COLOR5:      setDmaDebugColor(MemAccess::S, GpuColor<TexelFormat::ABGR>((u32)value)); return;
+
+        // Layer colors only: they have no DMA channel, hence no shade table
+        case Opt::XRAY_COLOR6:
+        case Opt::XRAY_COLOR7:
+        case Opt::XRAY_COLOR8:
+        case Opt::XRAY_COLOR9:
+        case Opt::XRAY_COLOR10:
+
+            config.dmaColor[long(opt) - long(Opt::XRAY_COLOR0)] = GpuColor<TexelFormat::ABGR>((u32)value).rawValue;
+            return;
 
         default:
             fatalError;

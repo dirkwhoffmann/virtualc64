@@ -703,6 +703,7 @@ void
 VICII::endFrame()
 {
     bool debug = dmaDebugger.config.mode == XRayMode::XRAY_DMA;
+    bool xray = dmaDebugger.config.mode != XRayMode::XRAY_NONE;
 
     // Update the VICII revision if requested
     updateRevision();
@@ -710,8 +711,8 @@ VICII::endFrame()
     // Only proceed if the current frame hasn't been executed in headless mode
     if (c64.getHeadless()) return;
 
-    // Run the DMA debugger if enabled
-    if (debug) dmaDebugger.computeOverlay(emuTexture, xrayTexture);
+    // Merge the X-ray texture into the picture if enabled
+    if (xray) dmaDebugger.computeOverlay(emuTexture, xrayTexture);
 
     // Switch texture buffers
     emulator.lockTexture();
@@ -724,11 +725,8 @@ VICII::endFrame()
     emuTexture = emuTex[activeBuffer].pixels.ptr;
     xrayTexture = xrayTex[activeBuffer].pixels.ptr;
 
-    if (debug) {
-
-        resetEmuTexture(activeBuffer);
-        resetXrayTexture(activeBuffer);
-    }
+    if (debug) resetEmuTexture(activeBuffer);
+    if (xray) resetXrayTexture(activeBuffer);
 
     emulator.unlockTexture();
 }
@@ -815,7 +813,7 @@ VICII::endScanline()
     // Set vertical flipflop if condition was hit
     if (verticalFrameFFsetCond) setVerticalFrameFF(true);
     
-    // Cut out layers if requested
+    // Paint the cut-out layers into the X-ray texture (if requested)
     dmaDebugger.cutLayers();
 
     // Prepare buffers for the next line

@@ -22,6 +22,9 @@ namespace vc64 {
 //
 
 /// X-Ray mode
+/// Number of persisted Opt::XRAY_COLORn slots
+constexpr isize XRAY_COLOR_COUNT = 11;
+
 enum class XRayMode : long
 {
     XRAY_NONE,
@@ -135,13 +138,16 @@ typedef struct
     bool dmaOverlay;
     XRayCompositor compositor;
     bool dmaChannel[6];
-    u32 dmaColor[6];
+    // Colors of the DMA channels (0 - 5) and of the cut-out layers (0 - 10).
+    // The layers use sprite n : color n, border : 8, foreground : 9,
+    // background : 10. Hence, the colors of the first channels are shared.
+    u32 dmaColor[XRAY_COLOR_COUNT];
     DmaDisplayMode dmaDisplayMode;
     u8 dmaOpacity;
     
-    // Cutter
+    // Layers cut out in XRayMode::XRAY_LAYERS
+    // Bits 0 - 7: sprites, 9: background, 10: foreground, 11: border
     u16 cutLayers;
-    u8 cutOpacity;
 }
 DmaDebuggerConfig;
 

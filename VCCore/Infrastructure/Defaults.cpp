@@ -47,7 +47,6 @@ Defaults::Defaults()
     setFallback(Opt::VICII_SB_COLLISIONS,       true);
     setFallback(Opt::VICII_SS_COLLISIONS,       true);
     setFallback(Opt::VICII_CUT_LAYERS,          0xFF);
-    setFallback(Opt::VICII_CUT_OPACITY,         0xFF);
 
     setFallback(Opt::XRAY_MODE,                 (i64)XRayMode::XRAY_NONE);
     setFallback(Opt::XRAY_OVERLAY,              false);
@@ -65,6 +64,11 @@ Defaults::Defaults()
     setFallback(Opt::XRAY_COLOR3,               GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0xFF).rawValue);
     setFallback(Opt::XRAY_COLOR4,               GpuColor<TexelFormat::ABGR>(0x00, 0xFF, 0x00).rawValue);
     setFallback(Opt::XRAY_COLOR5,               GpuColor<TexelFormat::ABGR>(0x00, 0x80, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COLOR6,               GpuColor<TexelFormat::ABGR>(0xFF, 0x00, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COLOR7,               GpuColor<TexelFormat::ABGR>(0xFF, 0xFF, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COLOR8,               GpuColor<TexelFormat::ABGR>(0x80, 0x40, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COLOR9,               GpuColor<TexelFormat::ABGR>(0x00, 0x40, 0xFF).rawValue);
+    setFallback(Opt::XRAY_COLOR10,              GpuColor<TexelFormat::ABGR>(0xFF, 0x80, 0x80).rawValue);
     setFallback(Opt::XRAY_COMPOSITOR,           (i64)XRayCompositor::GPU);
 
     setFallback(Opt::EXP_REU_SPEED,             1);

@@ -49,7 +49,6 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::VICII_SB_COLLISIONS:       return boolParser();
         case Opt::GLUE_LOGIC:                return enumParser.template operator()<GlueLogicEnum,GlueLogic>();
         case Opt::VICII_CUT_LAYERS:          return numParser();
-        case Opt::VICII_CUT_OPACITY:         return numParser("%");
         case Opt::XRAY_MODE:            return enumParser.template operator()<XRayModeEnum,XRayMode>();
         case Opt::XRAY_OVERLAY:         return boolParser();
         case Opt::XRAY_OVERLAY_STYLE: return enumParser.template operator()<DmaDisplayModeEnum,DmaDisplayMode>();
@@ -66,6 +65,11 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::XRAY_COLOR3:          return numParser();
         case Opt::XRAY_COLOR4:          return numParser();
         case Opt::XRAY_COLOR5:          return numParser();
+        case Opt::XRAY_COLOR6:          return numParser();
+        case Opt::XRAY_COLOR7:          return numParser();
+        case Opt::XRAY_COLOR8:          return numParser();
+        case Opt::XRAY_COLOR9:          return numParser();
+        case Opt::XRAY_COLOR10:         return numParser();
         case Opt::XRAY_COMPOSITOR:      return enumParser.template operator()<XRayCompositorEnum,XRayCompositor>();
 
         case Opt::EXP_REU_SPEED:             return numParser();

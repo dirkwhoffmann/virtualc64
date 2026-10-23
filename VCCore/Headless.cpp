@@ -354,7 +354,6 @@ Headless::smokeTestScript[] = {
     "dmadebugger set OVERLAY_STYLE ODD_EVEN_LAYERS",
     "dmadebugger set OVERLAY_OPACITY 50",
     "dmadebugger set CUT_LAYERS 4",
-    "dmadebugger set CUT_OPACITY 50",
     "dmadebugger set DMA_CHANNEL0 true",
     "dmadebugger set DMA_CHANNEL0 false",
     "dmadebugger set DMA_CHANNEL1 true",

@@ -106,13 +106,15 @@ extension Inspector {
             sprExtra1.color = emu.vic.color(Int(sprInfo.extraColor1))
             sprExtra2.color = emu.vic.color(Int(sprInfo.extraColor2))
             
-            // Stencils
+            // Stencils (the layer scan of the X-ray debugger)
             let layers = config.vicCutLayers
-            cutEnable.state = (layers & 0x1000) != 0 ? .on : .off
+            let dma = emu.dmaDebugger.getConfig()
+            let enabled = dma.mode == XRayMode.XRAY_LAYERS
+            cutEnable.state = enabled ? .on : .off
             cutBorder.state = (layers & 0x800) != 0 ? .on : .off
             cutForeground.state = (layers & 0x400) != 0 ? .on : .off
             cutBackground.state = (layers & 0x200) != 0 ? .on : .off
-            cutSprites.state = (layers & 0x100) != 0 ? .on : .off
+            cutSprites.state = (layers & 0xFF) == 0xFF ? .on : .off
             cutSprite7.state = (layers & 0x80) != 0 ? .on : .off
             cutSprite6.state = (layers & 0x40) != 0 ? .on : .off
             cutSprite5.state = (layers & 0x20) != 0 ? .on : .off
@@ -121,21 +123,21 @@ extension Inspector {
             cutSprite2.state = (layers & 0x04) != 0 ? .on : .off
             cutSprite1.state = (layers & 0x02) != 0 ? .on : .off
             cutSprite0.state = (layers & 0x01) != 0 ? .on : .off
-            cutOpacity.integerValue = config.vicCutOpacity
+            cutOpacity.integerValue = Int(dma.dmaOpacity)
 
-            cutOpacity.isEnabled = (layers & 0x1000) != 0
-            cutBorder.isEnabled = (layers & 0x1000) != 0
-            cutForeground.isEnabled = (layers & 0x1000) != 0
-            cutBackground.isEnabled = (layers & 0x1000) != 0
-            cutSprites.isEnabled = (layers & 0x1000) != 0
-            cutSprite7.isEnabled = (layers & 0x1100) == 0x1100
-            cutSprite6.isEnabled = (layers & 0x1100) == 0x1100
-            cutSprite5.isEnabled = (layers & 0x1100) == 0x1100
-            cutSprite4.isEnabled = (layers & 0x1100) == 0x1100
-            cutSprite3.isEnabled = (layers & 0x1100) == 0x1100
-            cutSprite2.isEnabled = (layers & 0x1100) == 0x1100
-            cutSprite1.isEnabled = (layers & 0x1100) == 0x1100
-            cutSprite0.isEnabled = (layers & 0x1100) == 0x1100
+            cutOpacity.isEnabled = enabled
+            cutBorder.isEnabled = enabled
+            cutForeground.isEnabled = enabled
+            cutBackground.isEnabled = enabled
+            cutSprites.isEnabled = enabled
+            cutSprite7.isEnabled = enabled
+            cutSprite6.isEnabled = enabled
+            cutSprite5.isEnabled = enabled
+            cutSprite4.isEnabled = enabled
+            cutSprite3.isEnabled = enabled
+            cutSprite2.isEnabled = enabled
+            cutSprite1.isEnabled = enabled
+            cutSprite0.isEnabled = enabled
         }
     }
     
@@ -150,7 +152,8 @@ extension Inspector {
         
     @IBAction func cutOpacityAction(_ sender: NSSlider!) {
         
-        config.vicCutOpacity = sender.integerValue
+        // The opacity is the one of the X-ray overlay
+        emu?.set(.XRAY_OVERLAY_OPACITY, value: sender.integerValue)
     }
     
     func addLayer(_ mask: Int) {
@@ -162,7 +165,13 @@ extension Inspector {
 
     @IBAction func cutEnableAction(_ sender: NSButton!) {
 
-        if sender.state == .on { addLayer(0x1000) } else { removeLayer(0x1000) }
+        // Cutting layers is the layer scan of the X-ray debugger
+        if sender.state == .on {
+            emu?.set(.XRAY_MODE, value: XRayMode.XRAY_LAYERS.rawValue)
+            emu?.set(.XRAY_OVERLAY, enable: true)
+        } else {
+            emu?.set(.XRAY_MODE, value: XRayMode.XRAY_NONE.rawValue)
+        }
     }
     
     @IBAction func cutBorderAction(_ sender: NSButton!) {
@@ -182,7 +191,8 @@ extension Inspector {
 
     @IBAction func cutSpritesAction(_ sender: NSButton!) {
     
-        if sender.state == .on { addLayer(0x100) } else { removeLayer(0x100) }
+        // Selects or deselects all sprites
+        if sender.state == .on { addLayer(0xFF) } else { removeLayer(0xFF) }
     }
 
     @IBAction func cutSingleSpriteAction(_ sender: NSButton!) {

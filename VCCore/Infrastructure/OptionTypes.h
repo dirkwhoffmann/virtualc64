@@ -47,7 +47,6 @@ enum class Opt : long
     VICII_POWER_SAVE,       ///< Enable fast-paths
     VICII_HIDE_SPRITES,     ///< Hide some sprites
     VICII_CUT_LAYERS,       ///< Cutout some graphics layers
-    VICII_CUT_OPACITY,      ///< Cutout opacity
     VICII_SS_COLLISIONS,    ///< Check for sprite-sprite collisions
     VICII_SB_COLLISIONS,    ///< Check for sprite-background collisions
 
@@ -68,6 +67,11 @@ enum class Opt : long
     XRAY_COLOR3,            ///< Color for channel 3
     XRAY_COLOR4,            ///< Color for channel 4
     XRAY_COLOR5,            ///< Color for channel 5
+    XRAY_COLOR6,            ///< Color for layer 6 (sprite 6)
+    XRAY_COLOR7,            ///< Color for layer 7 (sprite 7)
+    XRAY_COLOR8,            ///< Color for layer 8 (border)
+    XRAY_COLOR9,            ///< Color for layer 9 (foreground graphics)
+    XRAY_COLOR10,           ///< Color for layer 10 (background graphics)
     XRAY_COMPOSITOR,        ///< Who merges the X-Ray texture into the picture
 
     // Expansion port
@@ -224,7 +228,6 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::VICII_POWER_SAVE:         return "VICII.POWER_SAVE";
             case Opt::VICII_HIDE_SPRITES:       return "VICII.HIDE_SPRITES";
             case Opt::VICII_CUT_LAYERS:         return "VICII.CUT_LAYERS";
-            case Opt::VICII_CUT_OPACITY:        return "VICII.CUT_OPACITY";
             case Opt::VICII_SS_COLLISIONS:      return "VICII.SS_COLLISIONS";
             case Opt::VICII_SB_COLLISIONS:      return "VICII.SB_COLLISIONS";
 
@@ -244,6 +247,11 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::XRAY_COLOR3:              return "XRAY.COLOR3";
             case Opt::XRAY_COLOR4:              return "XRAY.COLOR4";
             case Opt::XRAY_COLOR5:              return "XRAY.COLOR5";
+            case Opt::XRAY_COLOR6:              return "XRAY.COLOR6";
+            case Opt::XRAY_COLOR7:              return "XRAY.COLOR7";
+            case Opt::XRAY_COLOR8:              return "XRAY.COLOR8";
+            case Opt::XRAY_COLOR9:              return "XRAY.COLOR9";
+            case Opt::XRAY_COLOR10:             return "XRAY.COLOR10";
             case Opt::XRAY_COMPOSITOR:          return "XRAY.COMPOSITOR";
 
             case Opt::EXP_REU_SPEED:            return "EXP.REU_SPEED";
@@ -378,7 +386,6 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::VICII_POWER_SAVE:         return "Take fast paths";
             case Opt::VICII_HIDE_SPRITES:       return "Hide sprites";
             case Opt::VICII_CUT_LAYERS:         return "Cut out graphics layers";
-            case Opt::VICII_CUT_OPACITY:        return "Opacity";
             case Opt::VICII_SS_COLLISIONS:      return "Sprite-sprite collisions";
             case Opt::VICII_SB_COLLISIONS:      return "Sprite-background collisions";
 
@@ -398,6 +405,11 @@ struct OptEnum : Reflectable<OptEnum, Opt> {
             case Opt::XRAY_COLOR3:              return "Color of channel 3";
             case Opt::XRAY_COLOR4:              return "Color of channel 4";
             case Opt::XRAY_COLOR5:              return "Color of channel 5";
+            case Opt::XRAY_COLOR6:              return "Color of sprite 6 layer";
+            case Opt::XRAY_COLOR7:              return "Color of sprite 7 layer";
+            case Opt::XRAY_COLOR8:              return "Color of border layer";
+            case Opt::XRAY_COLOR9:              return "Color of foreground layer";
+            case Opt::XRAY_COLOR10:             return "Color of background layer";
             case Opt::XRAY_COMPOSITOR:          return "X-Ray compositor";
 
             case Opt::EXP_REU_SPEED:            return "REU transfer speed";

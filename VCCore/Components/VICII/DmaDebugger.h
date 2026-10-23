@@ -36,7 +36,6 @@ class DmaDebugger final : public SubComponent {
         Opt::XRAY_OVERLAY_STYLE,
         Opt::XRAY_OVERLAY_OPACITY,
         Opt::VICII_CUT_LAYERS,
-        Opt::VICII_CUT_OPACITY,
         Opt::XRAY_DMA_CHANNEL0,
         Opt::XRAY_DMA_CHANNEL1,
         Opt::XRAY_DMA_CHANNEL2,
@@ -49,6 +48,11 @@ class DmaDebugger final : public SubComponent {
         Opt::XRAY_COLOR3,
         Opt::XRAY_COLOR4,
         Opt::XRAY_COLOR5,
+        Opt::XRAY_COLOR6,
+        Opt::XRAY_COLOR7,
+        Opt::XRAY_COLOR8,
+        Opt::XRAY_COLOR9,
+        Opt::XRAY_COLOR10,
         Opt::XRAY_COMPOSITOR
     };
 
