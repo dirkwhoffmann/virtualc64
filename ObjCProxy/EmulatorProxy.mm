@@ -1814,6 +1814,11 @@ NSString *EventSlotName(EventSlot slot)
 
 @implementation EmulatorProxy
 
++ (NSString *)keyForOption:(NSInteger)opt
+{
+    return @(OptEnum::key(Opt(opt)));
+}
+
 @synthesize audioPort;
 @synthesize c64;
 @synthesize cia1;

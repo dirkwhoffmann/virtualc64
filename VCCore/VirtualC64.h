@@ -1713,7 +1713,7 @@ struct VirtualC64 : public API {
      *  or when the emulator thread is suspended.
      *
      *  The value is validated when the emulator thread carries out the
-     *  command. A rejected value is reported by Msg::CONFIG_ERROR.
+     *  command. A rejected value is reported by Msg::CONFIG, which then carries the exception.
      *
      *  @param opt      The option to set
      *  @param value    The option's value

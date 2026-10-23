@@ -28,8 +28,7 @@ enum class Msg : long
     NONE,               ///< Unclassified
 
     // Execution state
-    CONFIG,             ///< The configuration has changed
-    CONFIG_ERROR,       ///< A configuration request has failed (the exception is attached)
+    CONFIG,             ///< A configuration request has been carried out (the exception is attached if it failed)
     POWER,              ///< The emulator has been powered on or off
     RUN,                ///< The emulator has entered ExecState::RUNNING
     PAUSE,              ///< The emulator has entered ExecState::PAUSED
@@ -144,7 +143,6 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::NONE:                  return "NONE";
 
             case Msg::CONFIG:                return "CONFIG";
-            case Msg::CONFIG_ERROR:          return "CONFIG_ERROR";
             case Msg::POWER:                 return "POWER";
             case Msg::RUN:                   return "RUN";
             case Msg::PAUSE:                 return "PAUSE";
@@ -243,6 +241,12 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
 //
 
 typedef struct { u16 pc; } CpuMsg;
+/* Reports a configuration request. The option is -1 if the request has changed
+ * several options (e.g., a configuration scheme, in which case 'value' is the
+ * scheme) or if it is not known which ones. The component id is -1 if the
+ * request was not targeted at a single component.
+ */
+typedef struct { i32 option; i32 id; i64 value; } ConfigMsg;
 typedef struct { i16 nr; i16 value; i16 volume; i16 pan; } DriveMsg;
 typedef struct { isize line; i16 delay; } ScriptMsg;
 typedef struct { void *snapshot; } SnapshotMsg;
@@ -257,6 +261,7 @@ typedef struct
 
         struct { i64 value; i64 value2; };
         CpuMsg cpu;
+        ConfigMsg config;
         DriveMsg drive;
         ScriptMsg script;
         SnapshotMsg snapshot;

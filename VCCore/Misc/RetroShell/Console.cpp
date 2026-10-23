@@ -1188,8 +1188,9 @@ Console::registerComponent(CoreComponent &c, RSCommand &root, usize flags)
                     },
                         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
-                            emulator.set(Opt(values[0]), args.at("value"), { values[1] });
-                            msgQueue.put(Msg::CONFIG);
+                            auto value = OptionParser::parse(Opt(values[0]), args.at("value"));
+                            emulator.set(Opt(values[0]), value, { values[1] });
+                            msgQueue.put(Msg::CONFIG, ConfigMsg { .option = i32(values[0]), .id = i32(values[1]), .value = value });
 
                         }, .payload = { isize(opt), c.objid }
                 });
@@ -1214,7 +1215,7 @@ Console::registerComponent(CoreComponent &c, RSCommand &root, usize flags)
                         .func   = [this] (std::ostream &os, const Arguments &args, const std::vector<isize> &values) {
 
                             emulator.set(Opt(values[0]), values[1], { values[2] });
-                            msgQueue.put(Msg::CONFIG);
+                            msgQueue.put(Msg::CONFIG, ConfigMsg { .option = i32(values[0]), .id = i32(values[2]), .value = values[1] });
 
                         },  .payload = { isize(opt), isize(second), c.objid }
                     });

@@ -114,6 +114,12 @@ MsgQueue::put(Msg type, CpuMsg payload)
 }
 
 void
+MsgQueue::put(Msg type, ConfigMsg payload, const string &str, std::exception_ptr exception)
+{
+    put( Message { .type = type, .config = payload }, str, exception);
+}
+
+void
 MsgQueue::put(Msg type, DriveMsg payload)
 {
     put( Message { .type = type, .drive = payload } );

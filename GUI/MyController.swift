@@ -65,6 +65,9 @@ class MyController: NSWindowController, MessageListener {
     
     // Indicates if a status bar is shown
     var statusBar = true
+
+    // Indicates that the configuration has changed and the GUI needs a refresh
+    var configIsDirty = false
     
     // Information message shown in the status bar
     var infoText: String?
@@ -257,6 +260,13 @@ extension MyController {
     
     func update(frames: Int64) {
         
+        // Refresh the GUI if the configuration has changed (once per frame)
+        if configIsDirty {
+            configIsDirty = false
+            refreshStatusBar()
+            settings?.refresh()
+        }
+        
         if frames % 5 == 0 {
             
             // Animate the inspectors
@@ -317,15 +327,19 @@ extension MyController {
             
         case .CONFIG:
             
-            refreshStatusBar()
-            settings?.refresh()
-            
-        case .CONFIG_ERROR:
+            // The status bar and the settings are refreshed once per frame (see update(frames:))
+            configIsDirty = true
+            if let exception = exception {
 
-            // Re-read the configuration to drop the rejected value
-            settings?.refresh()
-            let reason = (attachedString.isEmpty ? "" : attachedString + ": ") + (exception?.what ?? "")
-            showAlert(.cantConfigure, what: reason, async: true)
+                // Tell the user why the request has been rejected
+                let cfg = msg.config
+                var item = "configuration scheme"
+                if cfg.option >= 0 {
+                    item = EmulatorProxy.key(forOption: Int(cfg.option)) + " = \(cfg.value)"
+                    if cfg.id >= 0 { item += " (component \(cfg.id))" }
+                }
+                showAlert(.cantConfigure, what: item + ": " + exception.what, async: true)
+            }
 
         case .POWER:
             

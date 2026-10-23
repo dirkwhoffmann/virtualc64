@@ -502,7 +502,7 @@ C64::set(Opt opt, i64 value, const std::vector<isize> objids)
 
     /* Validate first: either all targets accept the value or none of them is
      * changed. A rejected value is reported by throwing; for a queued command,
-     * the exception is caught in update() and sent to the GUI (Msg::CONFIG_ERROR).
+     * the exception is caught in update() and sent to the GUI (Msg::CONFIG with the exception attached).
      */
     check(opt, value, objids);
 
@@ -666,7 +666,6 @@ C64::update(CmdQueue &queue)
 {
     Command cmd;
     CmdQueue::Completion completion;
-    bool cmdConfig = false;
 
     auto drive = [&]() -> Drive& { return cmd.value == 0 ? drive8 : drive9; };
 
@@ -691,19 +690,16 @@ C64::update(CmdQueue &queue)
 
                 case Cmd::CONFIG:
 
-                    cmdConfig = true;
                     set(cmd.config.option, cmd.config.value, {cmd.config.id});
                     break;
 
                 case Cmd::CONFIG_ALL:
 
-                    cmdConfig = true;
                     set(cmd.config.option, cmd.config.value, {});
                     break;
 
                 case Cmd::CONFIG_SCHEME:
 
-                    cmdConfig = true;
                     set(ConfigScheme(cmd.value));
                     break;
 
@@ -839,25 +835,24 @@ C64::update(CmdQueue &queue)
             logmsg(LOG_WARN, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
             error = std::current_exception();
 
-            // Tell the GUI that a configuration request has failed (a sender
-            // that waits for the outcome gets the exception instead)
-            if (!completion && (cmd.type == Cmd::CONFIG || cmd.type == Cmd::CONFIG_ALL || cmd.type == Cmd::CONFIG_SCHEME)) {
-                bool scheme = cmd.type == Cmd::CONFIG_SCHEME;
-                string detail = scheme ? string("configuration scheme") :
-                    string(OptEnum::key(cmd.config.option)) + " = " + std::to_string(cmd.config.value) +
-                    (cmd.type == Cmd::CONFIG ? " (component " + std::to_string(cmd.config.id) + ")" : "");
+        }
 
-                msgQueue.put(Message { .type = Msg::CONFIG_ERROR,
-                                       .value = scheme ? 0 : i64(cmd.config.option) }, detail, error);
-            }
+        // Tell the GUI about a configuration request (a sender that waits for
+        // the outcome gets the exception from its completion handler instead)
+        if (cmd.type == Cmd::CONFIG || cmd.type == Cmd::CONFIG_ALL || cmd.type == Cmd::CONFIG_SCHEME) {
+
+            ConfigMsg cfg = cmd.type == Cmd::CONFIG_SCHEME ?
+                ConfigMsg { .option = -1, .id = -1, .value = cmd.value } :
+                ConfigMsg { .option = i32(cmd.config.option),
+                            .id = cmd.type == Cmd::CONFIG ? i32(cmd.config.id) : -1,
+                            .value = cmd.config.value };
+
+            msgQueue.put(Msg::CONFIG, cfg, "", completion ? nullptr : error);
         }
 
         // Tell the sender that the command has been carried out
         if (completion) { try { completion(error); } catch (...) { } completion = nullptr; }
     }
-
-    // Inform the GUI about a changed machine configuration
-    if (cmdConfig) { msgQueue.put(Msg::CONFIG); }
 
     // Inform the GUI about new RetroShell content
     if (retroShell.isDirty) { retroShell.isDirty = false; msgQueue.put(Msg::RSH_UPDATE, 0); }

@@ -263,6 +263,10 @@ NSString *EventSlotName(EventSlot slot);
 
 - (void)flashFile:(NSURL *)url exception:(ExceptionWrapper *)ex;
 
+
+// Returns the name of a configuration option (e.g., for error messages)
++ (NSString *)keyForOption:(NSInteger)opt;
+
 @end
 
 
