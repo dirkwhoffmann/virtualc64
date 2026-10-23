@@ -31,6 +31,17 @@ class Canvas: Layer {
      * which is called periodically in drawRect().
      */
     var emulatorTexture: MTLTexture! = nil
+
+    /* X-ray texture as provided by the emulator and the result of merging it
+     * into the emulator texture. The merge is performed by a compute kernel
+     * if the emulator is told to leave this to the GPU (XRAY_COMPOSITOR).
+     */
+    var xrayTexture: MTLTexture! = nil
+    var mergedTexture: MTLTexture! = nil
+
+    // Indicates if the X-ray texture is merged into the picture by the GPU
+    var xrayMerge = false
+    var xrayUniforms = XrayUniforms(fgWeight: 0, bgWeight: 0)
     
     /* Bloom textures. To emulate a bloom effect, the emulator texture is first
      * split into it's R, G, and B parts. Each texture is then run through a
@@ -112,6 +123,12 @@ class Canvas: Layer {
         renderer.metalAssert(emulatorTexture != nil,
                              "Failed to create emulatorTexture.")
         
+        // X-ray textures
+        xrayTexture = device.makeTexture(size: TextureSize.original, usage: r)
+        mergedTexture = device.makeTexture(size: TextureSize.original, usage: [ .shaderRead, .shaderWrite ])
+        renderer.metalAssert(xrayTexture != nil, "Failed to create xrayTexture.")
+        renderer.metalAssert(mergedTexture != nil, "Failed to create mergedTexture.")
+
         // Build bloom textures
         bloomTextureR = device.makeTexture(size: TextureSize.original, usage: rwt)
         bloomTextureG = device.makeTexture(size: TextureSize.original, usage: rwt)
@@ -175,6 +192,26 @@ class Canvas: Layer {
         let h = Constants.texHeight
         emulatorTexture.replace(w: w, h: h, buffer: buffer)
         
+        // Check if the GPU has to merge the X-ray texture into the picture
+        xrayMerge = emu.get(.XRAY_MODE) != Int(XRayMode.XRAY_NONE.rawValue)
+            && emu.get(.XRAY_OVERLAY) != 0
+            && emu.get(.XRAY_COMPOSITOR) == Int(XRayCompositor.GPU.rawValue)
+
+        if xrayMerge {
+
+            // The weights are those of DmaDebugger::computeOverlay()
+            let opacity = Float(emu.get(.XRAY_OVERLAY_OPACITY)) / 255.0
+            switch emu.get(.XRAY_OVERLAY_STYLE) {
+            case 0:  xrayUniforms = XrayUniforms(fgWeight: 1.0 - opacity, bgWeight: 0.0)
+            case 1:  xrayUniforms = XrayUniforms(fgWeight: 0.0, bgWeight: 1.0 - opacity)
+            default: xrayUniforms = XrayUniforms(fgWeight: 1.0 - opacity, bgWeight: opacity)
+            }
+
+            var xray: UnsafePointer<UInt32>!
+            emu.videoPort.dmaTexture(&xray, nr: &nr)
+            xrayTexture.replace(w: w, h: h, buffer: xray)
+        }
+
         // Release the texture lock
         emu.videoPort.unlockTexture()
     }
@@ -194,11 +231,22 @@ class Canvas: Layer {
             }
         }
         
+        // Merge the X-ray texture into the picture (if requested)
+        var picture: MTLTexture = emulatorTexture
+        if xrayMerge, let overlay = ressourceManager.xrayOverlay {
+
+            overlay.apply(commandBuffer: buffer,
+                          textures: [emulatorTexture, xrayTexture, mergedTexture],
+                          options: &xrayUniforms,
+                          length: MemoryLayout<XrayUniforms>.stride)
+            picture = mergedTexture
+        }
+
         // Compute the bloom textures
         if renderer.shaderOptions.bloom != 0 {
             
             bloomFilter.apply(commandBuffer: buffer,
-                              textures: [emulatorTexture,
+                              textures: [picture,
                                          bloomTextureR,
                                          bloomTextureG,
                                          bloomTextureB],
@@ -212,7 +260,7 @@ class Canvas: Layer {
         
         // Compute the upscaled texture
         upscaler.apply(commandBuffer: buffer,
-                       source: emulatorTexture,
+                       source: picture,
                        target: upscaledTexture,
                        options: nil,
                        length: 0)

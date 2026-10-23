@@ -60,6 +60,16 @@ struct FragmentUniforms {
 }
 
 //
+// Uniforms passed to the X-ray overlay kernel
+//
+
+struct XrayUniforms {
+
+    var fgWeight: Float
+    var bgWeight: Float
+}
+
+//
 // Static texture parameters
 // 
 
@@ -207,6 +217,18 @@ class XBRUpscaler: ComputeKernel {
     
     convenience init?(device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
         self.init(name: "xbrupscaler",
+                  device: device, library: library, cutout: cutout)
+    }
+}
+
+//
+// X-ray overlay
+//
+
+class XrayOverlay: ComputeKernel {
+
+    convenience init?(device: MTLDevice, library: MTLLibrary, cutout: (Int, Int)) {
+        self.init(name: "overlayxray",
                   device: device, library: library, cutout: cutout)
     }
 }

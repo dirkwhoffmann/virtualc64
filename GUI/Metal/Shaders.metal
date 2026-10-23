@@ -187,6 +187,44 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
 
 
 //
+// X-ray overlay
+//
+
+struct XrayUniforms {
+
+    float fgWeight;
+    float bgWeight;
+};
+
+/* Merges the X-ray texture into the emulator texture. This is what the
+ * emulator does on the CPU if Opt::XRAY_COMPOSITOR is set to CPU (see
+ * DmaDebugger::computeOverlay): A non-black X-ray pixel is an effect pixel
+ * that is mixed with the picture. A black one dims the picture.
+ */
+kernel void overlayxray(texture2d<half, access::read>  inTexture   [[ texture(0) ]],
+                        texture2d<half, access::read>  xrayTexture [[ texture(1) ]],
+                        texture2d<half, access::write> outTexture  [[ texture(2) ]],
+                        constant XrayUniforms          &uniforms   [[ buffer(0) ]],
+                        uint2                          gid         [[ thread_position_in_grid ]])
+{
+    half4 color = inTexture.read(gid);
+    half4 xray = xrayTexture.read(gid);
+
+    if (any(xray.rgb > 0.0h)) {
+
+        float fg = uniforms.fgWeight;
+        color = fg != 0.0 ? half4(mix(xray.rgb, color.rgb, half(fg)), color.a) : xray;
+
+    } else if (uniforms.bgWeight != 0.0) {
+
+        color = half4(color.rgb * half(1.0 - uniforms.bgWeight), color.a);
+    }
+
+    outTexture.write(color, gid);
+}
+
+
+//
 // Texture upscalers
 //
 

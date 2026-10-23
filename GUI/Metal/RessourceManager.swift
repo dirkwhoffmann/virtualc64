@@ -42,6 +42,7 @@ class RessourceManager {
     
     // The currently selected shaders
     var upscaler: ComputeKernel!
+    var xrayOverlay: ComputeKernel!
     var bloomFilter: ComputeKernel!
     var scanlineFilter: ComputeKernel!
     
@@ -183,6 +184,10 @@ class RessourceManager {
         library = device.makeDefaultLibrary()
         renderer.metalAssert(library != nil, "The Shader Library could not be built.")
         
+        // Build the X-ray overlay kernel (runs on the emulator texture)
+        xrayOverlay = XrayOverlay(device: device, library: library,
+                                  cutout: (TextureSize.original.width, TextureSize.original.height))
+
         // Build upscalers
         upscalerGallery[0] = BypassUpscaler(device: device, library: library, cutout: uc)
         upscalerGallery[1] = EPXUpscaler(device: device, library: library, cutout: uc)

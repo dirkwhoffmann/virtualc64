@@ -35,6 +35,7 @@ typealias TAPVersion = vc64.TAPVersion
 typealias VICIIRev = vc64.VICIIRev
 typealias Warp = vc64.Warp
 typealias XRayMode = vc64.XRayMode
+typealias XRayCompositor = vc64.XRayCompositor
 
 let DRIVE8 = vc64.DRIVE8
 let DRIVE9 = vc64.DRIVE9
