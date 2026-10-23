@@ -11,7 +11,7 @@ extension Inspector {
     
     func refreshBus(count: Int = 0, full: Bool = false) {
           
-        if let dma = emu?.dmaDebugger.getConfig() {
+        if let dma = emu?.xray.getConfig() {
             
             let enabled = dma.mode == XRayMode.XRAY_DMA
 

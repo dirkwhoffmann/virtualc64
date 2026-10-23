@@ -576,14 +576,14 @@ NSString *EventSlotName(EventSlot slot)
 // Dma Debugger
 //
 
-@implementation DmaDebuggerProxy
+@implementation XRayProxy
 
-- (DmaDebuggerAPI *)debugger
+- (XRayAPI *)debugger
 {
-    return (DmaDebuggerAPI *)obj;
+    return (XRayAPI *)obj;
 }
 
-- (DmaDebuggerConfig)getConfig
+- (XRayConfig)getConfig
 {
     return [self debugger]->getConfig();
 }
@@ -1820,7 +1820,7 @@ NSString *EventSlotName(EventSlot slot)
 @synthesize cia2;
 @synthesize cpu;
 @synthesize datasette;
-@synthesize dmaDebugger;
+@synthesize xray;
 @synthesize drive8;
 @synthesize drive9;
 @synthesize expansionport;
@@ -1851,7 +1851,7 @@ NSString *EventSlotName(EventSlot slot)
     cia2 = [[CIAProxy alloc] initWith:&emu->cia2 emu:emu];
     cpu = [[CPUProxy alloc] initWith:&emu->cpu emu:emu];
     datasette = [[DatasetteProxy alloc] initWith:&emu->datasette emu:emu];
-    dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
+    xray = [[XRayProxy alloc] initWith:&emu->xray];
     drive8 = [[DriveProxy alloc] initWith:&emu->drive8 emu:emu];
     drive9 = [[DriveProxy alloc] initWith:&emu->drive9 emu:emu];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionPort emu:emu];

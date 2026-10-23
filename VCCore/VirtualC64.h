@@ -352,13 +352,13 @@ struct VideoPortAPI : public API {
 
 /** DMA Debugger Public API
  */
-struct DmaDebuggerAPI : public API {
+struct XRayAPI : public API {
 
-    class DmaDebugger *dmaDebugger = nullptr;
+    class XRay *xray = nullptr;
 
     /** @brief  Returns the component's current configuration
      */
-    const DmaDebuggerConfig &getConfig() const;
+    const XRayConfig &getConfig() const;
 
 };
 
@@ -1356,7 +1356,7 @@ struct VirtualC64 : public API {
     KeyboardAPI keyboard;
 
     // Misc
-    DmaDebuggerAPI dmaDebugger;
+    XRayAPI xray;
     RemoteManagerAPI remoteManager;
     RetroShellAPI retroShell;
 

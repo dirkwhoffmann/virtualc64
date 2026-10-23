@@ -17,7 +17,7 @@
 #include "SubComponent.h"
 #include "utl/gfx/Colors.h"
 #include "Constants.h"
-#include "DmaDebugger.h"
+#include "XRay.h"
 #include "MemoryTypes.h"
 #include "MonitorTypes.h"
 #include "TimeDelayed.h"
@@ -149,7 +149,7 @@ struct SpriteSR : Serializable
 class VICII final : public SubComponent {
 
     friend class Memory;
-    friend class DmaDebugger;
+    friend class XRay;
     friend class VideoPort;
     friend class Reu;
     
@@ -265,7 +265,7 @@ class VICII final : public SubComponent {
 public:
     
     // Subcomponents
-    DmaDebugger dmaDebugger;
+    XRay xray;
 
     /* The VICII function table. Each entry in this table is a pointer to a
      * VICII method executed in a certain scanline cycle:
@@ -817,7 +817,7 @@ public:
 
     VICII& operator= (const VICII& other) {
 
-        CLONE(dmaDebugger)
+        CLONE(xray)
 
         CLONE(reg)
         CLONE(rasterIrqLine)
@@ -1043,7 +1043,7 @@ public:
     void checkOption(Opt opt, i64 value) override;
     void setOption(Opt opt, i64 value) override;
 
-    bool dmaDebug() const { return dmaDebugger.config.mode == XRayMode::XRAY_DMA; }
+    bool dmaDebug() const { return xray.config.mode == XRayMode::XRAY_DMA; }
 
 private:
     

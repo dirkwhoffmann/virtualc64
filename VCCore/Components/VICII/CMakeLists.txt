@@ -9,8 +9,8 @@ VICIISprites.cpp
 VICIIMemory.cpp
 VICIICycles.cpp
 VICIITable.cpp
-DmaDebugger.cpp
-DmaDebuggerBase.cpp
+XRay.cpp
+XRayBase.cpp
 Texture.cpp
 
 )

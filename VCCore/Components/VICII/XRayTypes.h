@@ -149,6 +149,6 @@ typedef struct
     // Bits 0 - 7: sprites, 9: background, 10: foreground, 11: border
     u16 cutLayers;
 }
-DmaDebuggerConfig;
+XRayConfig;
 
 }

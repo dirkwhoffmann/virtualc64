@@ -198,7 +198,7 @@ struct XrayUniforms {
 
 /* Merges the X-ray texture into the emulator texture. This is what the
  * emulator does on the CPU if Opt::XRAY_COMPOSITOR is set to CPU (see
- * DmaDebugger::computeOverlay): A non-black X-ray pixel is an effect pixel
+ * XRay::computeOverlay): A non-black X-ray pixel is an effect pixel
  * that is mixed with the picture. A black one dims the picture.
  */
 kernel void overlayxray(texture2d<half, access::read>  inTexture   [[ texture(0) ]],

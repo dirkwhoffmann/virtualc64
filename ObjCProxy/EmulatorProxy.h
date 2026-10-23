@@ -50,7 +50,7 @@ NS_SWIFT_UI_ACTOR
 @class CPUProxy;
 @class DatasetteProxy;
 @class DefaultsProxy;
-@class DmaDebuggerProxy;
+@class XRayProxy;
 @class DriveProxy;
 @class ExpansionPortProxy;
 @class SerialPortProxy;
@@ -144,7 +144,7 @@ NSString *EventSlotName(EventSlot slot);
     ControlPortProxy *port2;
     CPUProxy *cpu;
     DatasetteProxy *datasette;
-    DmaDebuggerProxy *dmaDebugger;
+    XRayProxy *xray;
     DriveProxy *drive8;
     DriveProxy *drive9;
     ExpansionPortProxy *expansionport;
@@ -169,7 +169,7 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly, strong) ControlPortProxy *port2;
 @property (readonly, strong) CPUProxy *cpu;
 @property (readonly, strong) DatasetteProxy *datasette;
-@property (readonly, strong) DmaDebuggerProxy *dmaDebugger;
+@property (readonly, strong) XRayProxy *xray;
 @property (readonly, strong) DriveProxy *drive8;
 @property (readonly, strong) DriveProxy *drive9;
 @property (readonly, strong) ExpansionPortProxy *expansionport;
@@ -417,12 +417,12 @@ struct GuardInfo {
 
 
 //
-// DmaDebugger
+// XRay
 //
 
-@interface DmaDebuggerProxy : SubComponentProxy { }
+@interface XRayProxy : SubComponentProxy { }
 
-- (DmaDebuggerConfig)getConfig;
+- (XRayConfig)getConfig;
 
 @end
 

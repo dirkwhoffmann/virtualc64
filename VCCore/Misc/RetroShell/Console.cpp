@@ -2111,7 +2111,7 @@ Console::initCommanderCommands(RSCommand &root)
     // Components (DMA Debugger)
     //
 
-    cmd = registerComponent(vic.dmaDebugger);
+    cmd = registerComponent(vic.xray);
 
 
     //

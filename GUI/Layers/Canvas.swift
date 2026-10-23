@@ -199,7 +199,7 @@ class Canvas: Layer {
 
         if xrayMerge {
 
-            // The weights are those of DmaDebugger::computeOverlay()
+            // The weights are those of XRay::computeOverlay()
             let opacity = Float(emu.get(.XRAY_OVERLAY_OPACITY)) / 255.0
             switch emu.get(.XRAY_OVERLAY_STYLE) {
             case 0:  xrayUniforms = XrayUniforms(fgWeight: 1.0 - opacity, bgWeight: 0.0)

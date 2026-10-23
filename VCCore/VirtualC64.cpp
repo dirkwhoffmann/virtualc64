@@ -111,8 +111,8 @@ VirtualC64::VirtualC64() {
     videoPort.emu = emu;
     videoPort.videoPort = &emu->main.videoPort;
 
-    dmaDebugger.emu = emu;
-    dmaDebugger.dmaDebugger = &emu->main.vic.dmaDebugger;
+    xray.emu = emu;
+    xray.xray = &emu->main.vic.xray;
 
     keyboard.emu =emu;
     keyboard.keyboard = &emu->main.keyboard;
@@ -1140,10 +1140,10 @@ VideoPortAPI::findInnerAreaNormalized(double &x1, double &x2, double &y1, double
 // DMA Debugger
 //
 
-const DmaDebuggerConfig &
-DmaDebuggerAPI::getConfig() const
+const XRayConfig &
+XRayAPI::getConfig() const
 {
-    return dmaDebugger->getConfig();
+    return xray->getConfig();
 }
 
 

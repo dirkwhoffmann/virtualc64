@@ -108,7 +108,7 @@ extension Inspector {
             
             // Stencils (the layer scan of the X-ray debugger)
             let layers = config.vicCutLayers
-            let dma = emu.dmaDebugger.getConfig()
+            let dma = emu.xray.getConfig()
             let enabled = dma.mode == XRayMode.XRAY_LAYERS
             cutEnable.state = enabled ? .on : .off
             cutBorder.state = (layers & 0x800) != 0 ? .on : .off

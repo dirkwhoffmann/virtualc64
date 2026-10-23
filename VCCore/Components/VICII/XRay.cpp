@@ -11,24 +11,24 @@
 // -----------------------------------------------------------------------------
 
 #include "vcconfig.h"
-#include "DmaDebugger.h"
+#include "XRay.h"
 #include "Emulator.h"
 
 namespace vc64 {
 
-DmaDebugger::DmaDebugger(C64 &ref) : SubComponent(ref)
+XRay::XRay(C64 &ref) : SubComponent(ref)
 {
 
 }
 
 void
-DmaDebugger::setDmaDebugColor(MemAccess type, GpuColor<TexelFormat::ABGR> color)
+XRay::setXRayColor(MemAccess type, GpuColor<TexelFormat::ABGR> color)
 {
-    setDmaDebugColor(type, RgbColor(color));
+    setXRayColor(type, RgbColor(color));
 }
 
 void
-DmaDebugger::setDmaDebugColor(MemAccess type, RgbColor color)
+XRay::setXRayColor(MemAccess type, RgbColor color)
 {
     assert(MemAccessEnum::isValid(type));
 
@@ -46,16 +46,16 @@ DmaDebugger::setDmaDebugColor(MemAccess type, RgbColor color)
 }
 
 void
-DmaDebugger::updateDebugColors()
+XRay::updateDebugColors()
 {
     for (long channel = 0; channel < 6; channel++) {
-        setDmaDebugColor(MemAccess(channel), RgbColor(GpuColor<TexelFormat::ABGR>(config.dmaColor[channel])));
+        setXRayColor(MemAccess(channel), RgbColor(GpuColor<TexelFormat::ABGR>(config.dmaColor[channel])));
     }
 }
 
 template <TexelFormat F>
 void
-DmaDebugger::updateDebugColor(long channel, const RgbColor &color)
+XRay::updateDebugColor(long channel, const RgbColor &color)
 {
     GpuColor<F> gpuColor(color);
 
@@ -66,13 +66,13 @@ DmaDebugger::updateDebugColor(long channel, const RgbColor &color)
 }
 
 void
-DmaDebugger::visualizeDma(isize offset, u8 data, MemAccess type)
+XRay::visualizeDma(isize offset, u8 data, MemAccess type)
 {
     visualizeDma((u32 *)vic.xrayTexturePtr + offset, data, type);
 }
 
 void
-DmaDebugger::visualizeDma(u32 *p, u8 data, MemAccess type)
+XRay::visualizeDma(u32 *p, u8 data, MemAccess type)
 {
     auto channel = (long)type;
     
@@ -86,13 +86,13 @@ DmaDebugger::visualizeDma(u32 *p, u8 data, MemAccess type)
 }
 
 void
-DmaDebugger::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
+XRay::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
 {
     // The host merges the textures itself (e.g., in a shader)
     if (config.compositor != XRayCompositor::CPU) return;
 
     // Dispatched once per call (not per pixel) -- see the class comment in
-    // DmaDebugger.h. Each branch below calls a separate instantiation of
+    // XRay.h. Each branch below calls a separate instantiation of
     // the templated overload, so the format is a compile-time constant for
     // the whole per-pixel loop inside it.
     switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
@@ -107,7 +107,7 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
 
 template <TexelFormat F>
 void
-DmaDebugger::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
+XRay::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
 {
     if (!config.dmaOverlay) return;
 
@@ -166,7 +166,7 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
 }
 
 void
-DmaDebugger::cutLayers()
+XRay::cutLayers()
 {
     // Cutting is a feature of the layer scan
     if (config.mode != XRayMode::XRAY_LAYERS) return;
@@ -184,7 +184,7 @@ DmaDebugger::cutLayers()
 
 template <TexelFormat F>
 void
-DmaDebugger::cutLayers()
+XRay::cutLayers()
 {
     /* Paints a checkerboard into the X-ray texture for each pixel that
      * belongs to a cut layer, and black (no effect) for all others. The

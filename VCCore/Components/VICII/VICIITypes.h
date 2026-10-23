@@ -14,7 +14,7 @@
 #pragma once
 
 #include "BusTypes.h"
-#include "DmaDebuggerTypes.h"
+#include "XRayTypes.h"
 
 namespace vc64 {
 

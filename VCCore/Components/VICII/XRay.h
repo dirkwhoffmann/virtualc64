@@ -12,21 +12,21 @@
 
 #pragma once
 
-#include "DmaDebuggerTypes.h"
+#include "XRayTypes.h"
 #include "SubComponent.h"
 #include "utl/gfx/Colors.h"
 
 namespace vc64 {
 
-class DmaDebugger final : public SubComponent {
+class XRay final : public SubComponent {
 
     friend class VICII;
     
     Descriptions descriptions = {{
 
-        .name           = "DmaDebugger",
+        .name           = "XRay",
         .description    = "Bus Monitor",
-        .shell          = "dmadebugger"
+        .shell          = "xray"
     }};
 
     Options options = {
@@ -57,7 +57,7 @@ class DmaDebugger final : public SubComponent {
     };
 
     // Current configuration
-    DmaDebuggerConfig config = { };
+    XRayConfig config = { };
     
     // Color lookup table. There are 6 colors with 4 different shades
     u32 debugColor[6][4];
@@ -69,9 +69,9 @@ class DmaDebugger final : public SubComponent {
     
 public:
     
-    DmaDebugger(C64 &ref);
+    XRay(C64 &ref);
 
-    DmaDebugger& operator= (const DmaDebugger& other) {
+    XRay& operator= (const XRay& other) {
 
         for (isize i = 0; i < 6; i++) CLONE_ARRAY(debugColor[i])
         CLONE(config)
@@ -123,7 +123,7 @@ private:
 
 public:
 
-    const DmaDebuggerConfig &getConfig() const { return config; }
+    const XRayConfig &getConfig() const { return config; }
     const Options &getOptions() const override { return options; }
     i64 getOption(Opt opt) const override;
     void checkOption(Opt opt, i64 value) override;
@@ -135,8 +135,8 @@ public:
     //
 
     // Sets a debug color in ABGR format
-    void setDmaDebugColor(MemAccess type, GpuColor<TexelFormat::ABGR> color);
-    void setDmaDebugColor(MemAccess type, RgbColor color);
+    void setXRayColor(MemAccess type, GpuColor<TexelFormat::ABGR> color);
+    void setXRayColor(MemAccess type, RgbColor color);
 
     // Derives all color shades in the host's current HOST_TEX_FORMAT
     void updateDebugColors();

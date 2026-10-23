@@ -78,7 +78,7 @@ Host::setOption(Opt opt, i64 value)
 
             config.texFormat = TexFormat(value);
             vic.updatePalette();
-            vic.dmaDebugger.updateDebugColors();
+            vic.xray.updateDebugColors();
             break;
 
         case Opt::HOST_FRAMEBUF_WIDTH:

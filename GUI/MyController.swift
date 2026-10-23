@@ -510,7 +510,7 @@ extension MyController {
         case .WORKSPACE_LOADED:
             break
             
-        case .DMA_DEBUG:
+        case .XRAY:
             if value != 0 { renderer.zoomTextureOut() } else { renderer.zoomTextureIn() }
             
         case .ALARM:

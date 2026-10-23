@@ -25,9 +25,9 @@ namespace vc64 {
 #define SPR6 0x40
 #define SPR7 0x80
 
-VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
+VICII::VICII(C64 &ref) : SubComponent(ref), xray(ref)
 {    
-    subComponents = std::vector<CoreComponent *> { &dmaDebugger };
+    subComponents = std::vector<CoreComponent *> { &xray };
 
     initFuncTable(VICIIRev::PAL_6569_R1);
     initFuncTable(VICIIRev::PAL_6569_R3);
@@ -702,8 +702,8 @@ VICII::beginFrame()
 void
 VICII::endFrame()
 {
-    bool debug = dmaDebugger.config.mode == XRayMode::XRAY_DMA;
-    bool xray = dmaDebugger.config.mode != XRayMode::XRAY_NONE;
+    bool debug = xray.config.mode == XRayMode::XRAY_DMA;
+    bool merge = xray.config.mode != XRayMode::XRAY_NONE;
 
     // Update the VICII revision if requested
     updateRevision();
@@ -712,7 +712,7 @@ VICII::endFrame()
     if (c64.getHeadless()) return;
 
     // Merge the X-ray texture into the picture if enabled
-    if (xray) dmaDebugger.computeOverlay(emuTexture, xrayTexture);
+    if (merge) xray.computeOverlay(emuTexture, xrayTexture);
 
     // Switch texture buffers
     emulator.lockTexture();
@@ -726,7 +726,7 @@ VICII::endFrame()
     xrayTexture = xrayTex[activeBuffer].pixels.ptr;
 
     if (debug) resetEmuTexture(activeBuffer);
-    if (xray) resetXrayTexture(activeBuffer);
+    if (merge) resetXrayTexture(activeBuffer);
 
     emulator.unlockTexture();
 }
@@ -814,7 +814,7 @@ VICII::endScanline()
     if (verticalFrameFFsetCond) setVerticalFrameFF(true);
     
     // Paint the cut-out layers into the X-ray texture (if requested)
-    dmaDebugger.cutLayers();
+    xray.cutLayers();
 
     // Prepare buffers for the next line
     for (isize i = 0; i < Texture::width; i++) { zBuffer[i] = 0; }

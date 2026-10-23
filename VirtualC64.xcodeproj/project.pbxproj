@@ -228,7 +228,7 @@
 		50726F572961C9A10031F2F5 /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435824AF29AC00E69CAE /* CIA.cpp */; };
 		50726F582961C9A10031F2F5 /* CIARegs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B7124E81266008F39C9 /* CIARegs.cpp */; };
 		50726F592961C9A10031F2F5 /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435524AF29AC00E69CAE /* TOD.cpp */; };
-		50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */; };
+		50726F5A2961C9AC0031F2F5 /* XRay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB3CF2641101E006F45E6 /* XRay.cpp */; };
 		50726F5B2961C9AC0031F2F5 /* VICIICycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICIICycles.cpp */; };
 		50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VICII.cpp */; };
 		50726F5F2961C9AC0031F2F5 /* VICIIMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */; };
@@ -336,8 +336,8 @@
 		508C1E572C0B20760097473C /* ExpansionPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E552C0B20760097473C /* ExpansionPortBase.cpp */; };
 		508C1E5A2C0B20EE0097473C /* SerialPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E582C0B20EE0097473C /* SerialPortBase.cpp */; };
 		508C1E5B2C0B20EE0097473C /* SerialPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E582C0B20EE0097473C /* SerialPortBase.cpp */; };
-		508C1E5D2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */; };
-		508C1E5E2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */; };
+		508C1E5D2C0B31320097473C /* XRayBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* XRayBase.cpp */; };
+		508C1E5E2C0B31320097473C /* XRayBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5C2C0B31320097473C /* XRayBase.cpp */; };
 		508C1E602C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */; };
 		508C1E612C0B4A6A0097473C /* DriveMemoryBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */; };
 		508C1E632C0B5EE80097473C /* KeyboardBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E622C0B5EE80097473C /* KeyboardBase.cpp */; };
@@ -676,7 +676,7 @@
 		50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88924F5573D0062EF13 /* DiskErrorController.swift */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
 		50DA1BBC2DD5B80900004964 /* InspectorToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DA1BBB2DD5B80400004964 /* InspectorToolbar.swift */; };
-		50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */; };
+		50DBB3D12641101E006F45E6 /* XRay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB3CF2641101E006F45E6 /* XRay.cpp */; };
 		50DBB44B2025CE5700489271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Utils.swift */; };
 		50DC2429303A32BC0054EA1F /* SVMFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2426303A32BC0054EA1F /* SVMFile.cpp */; };
 		50DC242A303A32BC0054EA1F /* Manifest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DC2422303A32BC0054EA1F /* Manifest.cpp */; };
@@ -1136,7 +1136,7 @@
 		508C1E552C0B20760097473C /* ExpansionPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExpansionPortBase.cpp; sourceTree = "<group>"; };
 		508C1E582C0B20EE0097473C /* SerialPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SerialPortBase.cpp; sourceTree = "<group>"; };
 		508C1E592C0B20EE0097473C /* SerialPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialPortTypes.h; sourceTree = "<group>"; };
-		508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DmaDebuggerBase.cpp; sourceTree = "<group>"; };
+		508C1E5C2C0B31320097473C /* XRayBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = XRayBase.cpp; sourceTree = "<group>"; };
 		508C1E5F2C0B4A6A0097473C /* DriveMemoryBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DriveMemoryBase.cpp; sourceTree = "<group>"; };
 		508C1E622C0B5EE80097473C /* KeyboardBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardBase.cpp; sourceTree = "<group>"; };
 		508C1E652C0B5F770097473C /* MonitorBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MonitorBase.cpp; sourceTree = "<group>"; };
@@ -1551,9 +1551,9 @@
 		50DA1BBB2DD5B80400004964 /* InspectorToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorToolbar.swift; sourceTree = "<group>"; };
 		50DA83DE2C143C2C001209AA /* KeyboardTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardTypes.h; sourceTree = "<group>"; };
 		50DAABD824F0108A005D426F /* VICIITypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIITypes.h; sourceTree = "<group>"; };
-		50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DmaDebugger.cpp; sourceTree = "<group>"; };
-		50DBB3D02641101E006F45E6 /* DmaDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DmaDebugger.h; sourceTree = "<group>"; };
-		50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DmaDebuggerTypes.h; sourceTree = "<group>"; };
+		50DBB3CF2641101E006F45E6 /* XRay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = XRay.cpp; sourceTree = "<group>"; };
+		50DBB3D02641101E006F45E6 /* XRay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XRay.h; sourceTree = "<group>"; };
+		50DBB3D22641107E006F45E6 /* XRayTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XRayTypes.h; sourceTree = "<group>"; };
 		50DBB3D3264115B4006F45E6 /* BusTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BusTypes.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		50DC2420303A32BC0054EA1F /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -2196,10 +2196,10 @@
 				504C430B24AF29AC00E69CAE /* VICIIMemory.cpp */,
 				50D20B742508F6D70088E8F2 /* VICIICycles.cpp */,
 				5003382A266F7F3C00D5456E /* VICIITable.cpp */,
-				50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */,
-				50DBB3D02641101E006F45E6 /* DmaDebugger.h */,
-				508C1E5C2C0B31320097473C /* DmaDebuggerBase.cpp */,
-				50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */,
+				50DBB3D22641107E006F45E6 /* XRayTypes.h */,
+				50DBB3D02641101E006F45E6 /* XRay.h */,
+				508C1E5C2C0B31320097473C /* XRayBase.cpp */,
+				50DBB3CF2641101E006F45E6 /* XRay.cpp */,
 				50650F442DF23C81008AD660 /* Texture.h */,
 				50650F452DF23C8A008AD660 /* Texture.cpp */,
 			);
@@ -3476,7 +3476,7 @@
 				50726FB52961CA290031F2F5 /* RetroShell.cpp in Sources */,
 				50726F6F2961C9C60031F2F5 /* wave.cc in Sources */,
 				50E99FE22EBE1F9B00633978 /* SymbolTable.cpp in Sources */,
-				50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */,
+				50726F5A2961C9AC0031F2F5 /* XRay.cpp in Sources */,
 				50726F952961CA0D0031F2F5 /* Funplay.cpp in Sources */,
 				50726F6C2961C9C60031F2F5 /* envelope.cc in Sources */,
 				501C46BF2965C54200C4B27B /* StrWriter.h in Sources */,
@@ -3642,7 +3642,7 @@
 				50AC28062F4467EA0016265E /* FileSystemLayer3.cpp in Sources */,
 				50AC28072F4467EA0016265E /* FSContract.cpp in Sources */,
 				50726F792961C9DC0031F2F5 /* ParallelCable.cpp in Sources */,
-				508C1E5E2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */,
+				508C1E5E2C0B31320097473C /* XRayBase.cpp in Sources */,
 				50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */,
 				50BD641A2C0373F9007CD347 /* PowerPortBase.cpp in Sources */,
 				50A5B7D42C74E44C00D6DDAD /* RshServer.cpp in Sources */,
@@ -4003,8 +4003,8 @@
 				504C438224AF29AC00E69CAE /* CoreObject.cpp in Sources */,
 				5098C57F2658E1F400E05EFC /* DragImageView.swift in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
-				50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */,
-				508C1E5D2C0B31320097473C /* DmaDebuggerBase.cpp in Sources */,
+				50DBB3D12641101E006F45E6 /* XRay.cpp in Sources */,
+				508C1E5D2C0B31320097473C /* XRayBase.cpp in Sources */,
 				50A194872BDA5D4D0046849E /* VICIIInfo.cpp in Sources */,
 				50BE4B7224E81266008F39C9 /* CIARegs.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,

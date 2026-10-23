@@ -118,7 +118,7 @@ enum class Msg : long
     HIBERNATED,         ///< The machine has been hibernated (carries the exception if it failed)
 
     // Debugging
-    DMA_DEBUG,          ///< The DMA debugger has been started or stopped
+    XRAY,          ///< The X-Ray debugger has been started or stopped
 
     // Scheduled alarms
     ALARM,              ///< A user-set alarm event has fired
@@ -218,7 +218,7 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::WORKSPACE_SAVED:       return "WORKSPACE_SAVED";
             case Msg::HIBERNATED:            return "HIBERNATED";
                 
-            case Msg::DMA_DEBUG:             return "DMA_DEBUG";
+            case Msg::XRAY:             return "XRAY";
 
             case Msg::ALARM:                 return "ALARM";
             case Msg::RS232:                 return "RS232";
