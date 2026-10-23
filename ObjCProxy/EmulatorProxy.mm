@@ -2090,69 +2090,69 @@ NSString *EventSlotName(EventSlot slot)
     return [self emu]->get(opt, (long)id);
 }
 
-- (BOOL)set:(Opt)opt value:(NSInteger)val
+- (BOOL)setAsync:(Opt)opt value:(NSInteger)val
 {
     try {
-        [self emu]->set(opt, val);
+        [self emu]->setAsync(opt, val);
         return true;
     } catch (std::exception &stdex) {
         return false;
     }
 }
 
-- (BOOL)set:(Opt)opt enable:(BOOL)val
+- (BOOL)setAsync:(Opt)opt enable:(BOOL)val
 {
     try {
-        [self emu]->set(opt, val ? 1 : 0);
+        [self emu]->setAsync(opt, val ? 1 : 0);
         return true;
     } catch (std::exception &stdex) {
         return false;
     }
 }
 
-- (BOOL)set:(Opt)opt id:(NSInteger)id value:(NSInteger)val
+- (BOOL)setAsync:(Opt)opt id:(NSInteger)id value:(NSInteger)val
 {
     try {
-        [self emu]->set(opt, val, id);
+        [self emu]->setAsync(opt, val, id);
         return true;
     } catch (std::exception &stdex) {
         return false;
     }
 }
 
-- (BOOL)set:(Opt)opt id:(NSInteger)id enable:(BOOL)val
+- (BOOL)setAsync:(Opt)opt id:(NSInteger)id enable:(BOOL)val
 {
     try {
-        [self emu]->set(opt, val ? 1 : 0, id);
+        [self emu]->setAsync(opt, val ? 1 : 0, id);
         return true;
     } catch (std::exception &stdex) {
         return false;
     }
 }
 
-- (BOOL)set:(Opt)opt drive:(NSInteger)id value:(NSInteger)val
+- (BOOL)setAsync:(Opt)opt drive:(NSInteger)id value:(NSInteger)val
 {
     try {
-        [self emu]->set(opt, val, (long)id);
+        [self emu]->setAsync(opt, val, (long)id);
         return true;
     } catch (std::exception &stdex) {
         return false;
     }
 }
 
-- (BOOL)set:(Opt)opt drive:(NSInteger)id enable:(BOOL)val
+- (BOOL)setAsync:(Opt)opt drive:(NSInteger)id enable:(BOOL)val
 {
     try {
-        [self emu]->set(opt, val ? 1 : 0, (long)id);
+        [self emu]->setAsync(opt, val ? 1 : 0, (long)id);
         return true;
     } catch (std::exception &stdex) {
         return false;
     }
 }
 
-- (void)set:(ConfigScheme)model
+- (void)setAsync:(ConfigScheme)model
 {
-    [self emu]->set(model);
+    [self emu]->setAsync(model);
 }
 
 - (void)exportConfig:(NSURL *)url exception:(ExceptionWrapper *)ex

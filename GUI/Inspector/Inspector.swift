@@ -30,7 +30,7 @@ class Inspector: DialogController {
             default:
                 fatalError()
             }
-            emu?.set(.DASM_NUMBERS, value: format)
+            emu?.setAsync(.DASM_NUMBERS, value: format)
         }
     }
     var hex = true {
@@ -369,7 +369,7 @@ class Inspector: DialogController {
 
         // Enter debug mode
         emu?.trackOn()
-        emu?.set(.MEM_HEATMAP, enable: true)
+        emu?.setAsync(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
         
         // Adjust window height to match what we see in interface builder
@@ -396,7 +396,7 @@ class Inspector: DialogController {
 
         // Enter debug mode
         emu?.trackOn()
-        emu?.set(.MEM_HEATMAP, enable: true)
+        emu?.setAsync(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
     }
     */
@@ -628,7 +628,7 @@ extension Inspector {
 
             // Leave debug mode
             emu?.trackOff()
-            emu?.set(.MEM_HEATMAP, enable: false)
+            emu?.setAsync(.MEM_HEATMAP, enable: false)
             emu?.c64.autoInspectionMask = 0
         }
     }

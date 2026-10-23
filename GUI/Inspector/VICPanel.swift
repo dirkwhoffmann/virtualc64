@@ -153,7 +153,7 @@ extension Inspector {
     @IBAction func cutOpacityAction(_ sender: NSSlider!) {
         
         // The opacity is the one of the X-ray overlay
-        emu?.set(.XRAY_OVERLAY_OPACITY, value: sender.integerValue)
+        emu?.setAsync(.XRAY_OVERLAY_OPACITY, value: sender.integerValue)
     }
     
     func addLayer(_ mask: Int) {
@@ -167,10 +167,10 @@ extension Inspector {
 
         // Cutting layers is the layer scan of the X-ray debugger
         if sender.state == .on {
-            emu?.set(.XRAY_MODE, value: XRayMode.XRAY_LAYERS.rawValue)
-            emu?.set(.XRAY_OVERLAY, enable: true)
+            emu?.setAsync(.XRAY_MODE, value: XRayMode.XRAY_LAYERS.rawValue)
+            emu?.setAsync(.XRAY_OVERLAY, enable: true)
         } else {
-            emu?.set(.XRAY_MODE, value: XRayMode.XRAY_NONE.rawValue)
+            emu?.setAsync(.XRAY_MODE, value: XRayMode.XRAY_NONE.rawValue)
         }
     }
     

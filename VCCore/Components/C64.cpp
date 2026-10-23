@@ -839,8 +839,9 @@ C64::update(CmdQueue &queue)
             logmsg(LOG_WARN, "Command: %s Exception: %s\n", CmdEnum::key(cmd.type), e.what());
             error = std::current_exception();
 
-            // Tell the GUI that a configuration request has failed
-            if (cmd.type == Cmd::CONFIG || cmd.type == Cmd::CONFIG_ALL || cmd.type == Cmd::CONFIG_SCHEME) {
+            // Tell the GUI that a configuration request has failed (a sender
+            // that waits for the outcome gets the exception instead)
+            if (!completion && (cmd.type == Cmd::CONFIG || cmd.type == Cmd::CONFIG_ALL || cmd.type == Cmd::CONFIG_SCHEME)) {
                 bool scheme = cmd.type == Cmd::CONFIG_SCHEME;
                 string detail = scheme ? string("configuration scheme") :
                     string(OptEnum::key(cmd.config.option)) + " = " + std::to_string(cmd.config.value) +

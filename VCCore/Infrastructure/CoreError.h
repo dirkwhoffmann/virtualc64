@@ -23,6 +23,7 @@ struct CoreError : public Error {
 
     // Execution state
     static constexpr long LAUNCH            = 100; ///< Launch error
+    static constexpr long NOT_LAUNCHED      = 104; ///< The emulator thread is not running
     static constexpr long POWERED_OFF       = 101; ///< The emulator is powered off
     static constexpr long POWERED_ON        = 102; ///< The emulator is powered on
     static constexpr long RUNNING           = 103; ///< The emulator is running
@@ -67,6 +68,7 @@ struct CoreError : public Error {
             case UNKNOWN:               return "UNKNOWN";
 
             case LAUNCH:                return "LAUNCH";
+            case NOT_LAUNCHED:       return "NOT_LAUNCHED";
             case POWERED_OFF:           return "POWERED_OFF";
             case POWERED_ON:            return "POWERED_ON";
             case RUNNING:               return "RUNNING";

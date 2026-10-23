@@ -157,7 +157,7 @@ class OnboardingLayerViewController: NSViewController {
         case 2: scheme = pal ? .PAL_II : .NTSC_II
         default: fatalError()
         }
-        emu.set(scheme)
+        emu.setAsync(scheme)
 
         // Roms
         emu.installOpenRoms()

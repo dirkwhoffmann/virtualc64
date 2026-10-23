@@ -237,7 +237,7 @@ class Renderer: NSObject, MTKViewDelegate {
                 if [50, 60, 100, 120, 200, 240].contains(newfps) {
 
                     fps = newfps
-                    emu?.set(.HOST_REFRESH_RATE, value: Int(fps))
+                    emu?.setAsync(.HOST_REFRESH_RATE, value: Int(fps))
                     loginfo(.vsync, "New GPU frame rate: \(fps)")
                 }
             }

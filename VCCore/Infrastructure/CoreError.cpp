@@ -29,6 +29,10 @@ CoreError::CoreError(long code, const string &s) : Error(code)
             set_msg("Launch error.");
             break;
 
+        case NOT_LAUNCHED:
+            set_msg(s == "" ? "The emulator thread is not running." : s);
+            break;
+
         case POWERED_OFF:
             set_msg("The emulator is powered off.");
             break;
