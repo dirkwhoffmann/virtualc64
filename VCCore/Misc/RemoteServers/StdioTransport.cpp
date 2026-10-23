@@ -69,12 +69,23 @@ StdioTransport::sessionLoop()
 {
     switchState(SrvState::CONNECTED);
 
-    string line;
+    // The stdio reader hands out whatever a single read() returned, which
+    // can be a fraction of a packet or several packets glued together.
+
+    string chunk, pending;
 
     while (!terminating()) {
 
-        stdio >> line;
-        deliver(line);
+        stdio >> chunk;
+        pending += chunk;
+
+        for (auto pos = pending.find('\n'); pos != string::npos; pos = pending.find('\n')) {
+
+            auto line = pending.substr(0, pos);
+            pending.erase(0, pos + 1);
+
+            if (!line.empty()) deliver(line);
+        }
     }
 }
 
