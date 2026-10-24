@@ -220,6 +220,8 @@ RetroShell::exec()
                 exec(cmd);
             }
 
+            msgQueue.put(Msg::RSH_DONE, objid);
+
         } catch (ScriptInterruption &) {
 
             // The queue stays suspended until the scheduled RSH_WAKEUP

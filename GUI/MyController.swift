@@ -411,6 +411,9 @@ extension MyController {
         case .RSH_ERROR:
             NSSound.beep()
             renderer.console.isDirty = true
+
+        case .RSH_DONE:
+            break
             
         case .BREAKPOINT_UPDATED, .WATCHPOINT_UPDATED:
             break

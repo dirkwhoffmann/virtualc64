@@ -50,6 +50,7 @@ enum class Msg : long
     RSH_DEBUGGER,       ///< DEPRECATED: The RetroShell debugger has been opend or closed
     RSH_WAIT,           ///< Execution has peen postponed due to a wait command
     RSH_ERROR,          ///< Command execution has been aborted due to an error
+    RSH_DONE,           ///< All pending commands have been executed
 
     // CPU
     BREAKPOINT_UPDATED, ///< The breakpoint list has beed modified
@@ -163,6 +164,7 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::RSH_DEBUGGER:          return "RSH_DEBUGGER";
             case Msg::RSH_WAIT:              return "RSH_WAIT";
             case Msg::RSH_ERROR:             return "RSH_ERROR";
+            case Msg::RSH_DONE:              return "RSH_DONE";
                 
             case Msg::BREAKPOINT_UPDATED:    return "BREAKPOINT_UPDATED";
             case Msg::BREAKPOINT_REACHED:    return "BREAKPOINT_REACHED";
