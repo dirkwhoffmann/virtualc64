@@ -44,7 +44,8 @@ Emulator::~Emulator()
 void
 Emulator::launch(const void *listener, Callback *func)
 {
-    if (LAUNCH_ERROR) throw CoreError(CoreError::LAUNCH);
+    if (LAUNCH_ERROR) throw CoreError(CoreError::LAUNCH_FAILED);
+    if (isLaunched()) throw CoreError(CoreError::ALREADY_LAUNCHED);
 
     // Connect the listener to the message queue of the main instance
     if (listener && func) { main.msgQueue.setListener(listener, func); }
@@ -62,7 +63,7 @@ Emulator::initialize()
     baseTime = utl::Time::now();
 
     // Make sure this function is only called once
-    if (isInitialized()) throw CoreError(CoreError::LAUNCH, "The emulator is already initialized.");
+    if (isInitialized()) throw CoreError(CoreError::ALREADY_LAUNCHED);
 
     // Initialize all components
     main.initialize();

@@ -1691,6 +1691,11 @@ struct VirtualC64 : public API {
      *  from any thread except the emulator thread. In particular, the callback
      *  registered here is invoked on the emulator thread and must not call into
      *  the API. Forward the message to a user thread instead.
+     *
+     *  @throw CoreError (#Fault::ALREADY_LAUNCHED) if the emulator thread has
+     *  already been launched.
+     *  @throw CoreError (#Fault::LAUNCH_FAILED) if the emulator thread could not
+     *  be launched.
      */
     void launch(const void *listener = nullptr, Callback *func = nullptr);
 
@@ -1834,10 +1839,21 @@ struct VirtualC64 : public API {
 
 
     /// @}
-    /// @name Using the command queue
+    /// @name Using the command queue (advanced)
     /// @{
 
+    /* ADVANCED INTERFACE
+     *
+     * The functions below feed raw commands into the command queue. Almost all
+     * functionality is available through dedicated functions of this API, which
+     * should be preferred. The set of commands, their payload layout and their
+     * lifetime requirements (some commands carry pointers to objects owned by
+     * the caller) are internal to the emulator and may change between versions.
+     */
+
     /** @brief  Feeds a command into the command queue and waits for the result.
+     *
+     *  @warning This is an advanced interface, see above.
      *
      *  The function returns when the emulator thread has carried out the
      *  command. A command that fails throws the corresponding exception.
@@ -1866,6 +1882,8 @@ struct VirtualC64 : public API {
     void put(Cmd type, AlarmCmd payload) { put(Command(type, payload)); }
 
     /** @brief  Feeds a command into the command queue without waiting for the result.
+     *
+     *  @warning This is an advanced interface, see put().
      *
      *  This is the asynchronous counterpart of put(). The command is carried out
      *  by the emulator thread at some later time. The caller must keep objects

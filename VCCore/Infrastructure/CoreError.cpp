@@ -25,12 +25,16 @@ CoreError::CoreError(long code, const string &s) : Error(code)
             fatalError;
             break;
 
-        case LAUNCH:
-            set_msg("Launch error.");
+        case LAUNCH_FAILED:
+            set_msg("Failed to launch the emulator thread.");
             break;
 
         case NOT_LAUNCHED:
             set_msg(s == "" ? "The emulator thread is not running." : s);
+            break;
+
+        case ALREADY_LAUNCHED:
+            set_msg("The emulator thread has already been launched.");
             break;
 
         case POWERED_OFF:
