@@ -153,8 +153,8 @@ Headless::runScript(const fs::path &path)
     // Plug in the three MEGA65 OpenROMs
     c64.c64.installOpenRoms();
     c64.c64.deleteRom(RomType::C64_VC1541);
-    c64.set(Opt::DRV_CONNECT, false, 0);
-    c64.set(Opt::DRV_CONNECT, false, 1);
+    c64.setAsync(Opt::DRV_CONNECT, false, 0);
+    c64.setAsync(Opt::DRV_CONNECT, false, 1);
 
     // Redirect shell output to the console in verbose mode
     if (keys.find("verbose") != keys.end()) c64.retroShell.setStream(std::cout);

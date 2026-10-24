@@ -527,15 +527,9 @@ Emulator::sendAndWait(const Command &cmd, const string &str)
         throw CoreError(CoreError::NOT_LAUNCHED, "The emulator thread cannot wait for itself.");
     }
 
-    // Without an emulator thread, carry out the commands in the calling thread
     if (!isLaunched()) {
-
-        auto future = send(cmd, str);
-        main.update(cmdQueue);
-        future.get();
-        return;
+        throw CoreError(CoreError::NOT_LAUNCHED);
     }
-
     if (isHalted()) {
         throw CoreError(CoreError::NOT_LAUNCHED, "The emulator thread has been halted.");
     }

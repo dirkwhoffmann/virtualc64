@@ -169,8 +169,8 @@ Thread::switchState(ExecState newState)
 
     if (!isLaunched()) {
 
-        throw std::runtime_error(string("The emulator thread hasn't been lauchend yet. "
-                                        "Missing call to launch()."));
+        throw CoreError(CoreError::NOT_LAUNCHED,
+                        "The emulator thread has not been launched yet. Missing call to launch().");
     }
 
     while (state != newState) {

@@ -869,7 +869,7 @@ struct RetroShellAPI : public API {
     /// @{
 
     /** @brief  Executes a script.
-     *  The script is executes asynchroneously. However, RetroShell will
+     *  The script is executed asynchronously. However, RetroShell will
      *  send messages back to the GUI thread to inform about the execution
      *  state. After the last script command has been executed,
      *  MSG\_SCRIPT\_DONE is sent. If shell execution has been aborted due
@@ -1440,7 +1440,7 @@ struct VirtualC64 : public API {
     bool isTracking() const;
 
     /** @brief  Checks if the emulator is runnable.
-     *  The function checks if the necessary ROMs are installed to lauch the
+     *  The function checks if the necessary ROMs are installed to launch the
      *  emulator. On success, the functions returns. Otherwise, an exception
      *  is thrown.
      */
@@ -1453,16 +1453,22 @@ struct VirtualC64 : public API {
 
     /** @brief  Switches the emulator on
      *
-     *  Powering on the emulator changes the interal state to #STATE\_PAUSED,
+     *  Powering on the emulator changes the internal state to #STATE\_PAUSED,
      *  the same state that is entered when the user hits the pause button.
      *  Calling this function on an already powered-on emulator has no effect.
+     *
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      *  */
     void powerOn();
 
     /** @brief  Switches the emulator off
      *
-     *  Powering off the emulator changes the interal state of #STATE\_OFF.
+     *  Powering off the emulator changes the internal state to #STATE\_OFF.
      *  Calling this function on an already powered-off emulator has no effect.
+     *
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void powerOff();
 
@@ -1471,16 +1477,23 @@ struct VirtualC64 : public API {
      *  Running the emulator changes the internal state to #STATE\_RUNNING,
      *  which is the normal operation state. Frames are computed at normal
      *  pace, if warp mode is switched off, or as fast as possible, if warp
-     *  mode is switched on. If this function is called for a powere-off
+     *  mode is switched on. If this function is called for a powered-off
      *  emulator, an implicit call to powerOn() will be performed.
+     *
+     *  @throw CoreError if the emulator is not ready to run (see isReady()). The
+     *  request itself is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void run();
 
     /** @brief   Pauses emulation
      *
-     * Pausing the emulator changes the interal state from #STATE\_RUNNING
-     * to #STATE\_PAUSED after completing the curent frame. The emulator
-     * enteres a frozes state where no more frames are computed.
+     * Pausing the emulator changes the internal state from #STATE\_RUNNING
+     * to #STATE\_PAUSED after completing the current frame. The emulator
+     * enters a frozen state where no more frames are computed.
+     *
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void pause();
 
@@ -1492,13 +1505,19 @@ struct VirtualC64 : public API {
      *
      *  A hard reset affects all components. The effect is similar to
      *  switching power off and on.
+     *
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void hardReset();
 
-    /** @brief  Performs a hard reset
+    /** @brief  Performs a soft reset
      *
      *  A soft reset emulates a real reset of the C64 which can be initiated
      *  via the reset line on the expansion port.
+     *
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void softReset();
     
@@ -1507,22 +1526,34 @@ struct VirtualC64 : public API {
      *  Halting the emulator changes the internal state to #STATE\_HALTED.
      *  This state is part of the shutdown procedure and never entered during
      *  normal operation.
+     *
+     *  @note The function blocks until the emulator thread has terminated.
      */
     void halt();
 
     /** @brief  Enables warp mode.
+     *
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void warpOn(isize source = 0);
 
     /** @brief  Disables warp mode.
+     *
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void warpOff(isize source = 0);
 
     /** @brief  Enables track mode.
+     *
+     *  @note The change is made synchronously (the emulator is suspended meanwhile).
      */
     void trackOn(isize source = 0);
 
     /** @brief  Disables track mode.
+     *
+     *  @note The change is made synchronously (the emulator is suspended meanwhile).
      */
     void trackOff(isize source = 0);
 
@@ -1537,6 +1568,9 @@ struct VirtualC64 : public API {
      *  a single instruction. Otherwise, calling this function
      *  has no effect. The CPU debugger utilizes this function to implement single
      *  stepping.
+     *
+     *  @note The run state is changed right away in the calling thread, not
+     *  through the command queue.
      */
     void stepInto();
 
@@ -1556,26 +1590,35 @@ struct VirtualC64 : public API {
      *  returns, the emulator will remain in running state. Calling this
      *  function will then be equivalent to a calling run(), with the exception
      *  of a small runtime overhead since the emulator will check after the
-     *  each instruction if the program counter has reached it's target
+     *  each instruction if the program counter has reached its target
      *  location.
+     *
+     *  @note The run state is changed right away in the calling thread, not
+     *  through the command queue.
      */
     void stepOver();
 
     /** @brief  Steps one cycle
      *
-     *  Calling this functions runs the CPU for a single cycle.
+     *  Calling this function runs the CPU for a single cycle.
      */
     void stepCycle();
     
-    /** @brief  Fnishes the current rasterline
+    /** @brief  Finishes the current rasterline
      *
-     *  Calling this functions runs the CPU until the end of the current rasterline.
+     *  Calling this function runs the CPU until the end of the current rasterline.
+     *
+     *  @note The run state is changed right away in the calling thread, not
+     *  through the command queue.
      */
     void finishLine();
     
-    /** @brief  Fnishes the current frame
+    /** @brief  Finishes the current frame
      *
-     *  Calling this functions runs the CPU until the end of the current frame.
+     *  Calling this function runs the CPU until the end of the current frame.
+     *
+     *  @note The run state is changed right away in the calling thread, not
+     *  through the command queue.
      */
     void finishFrame();
     
@@ -1612,6 +1655,11 @@ struct VirtualC64 : public API {
      *  callback you can utilize the pointer to invoke a message processing
      *  function on that object.
      *  @param  func        The callback function.
+     *
+     *  @note All functions of this API must be called from a user thread, i.e.,
+     *  from any thread except the emulator thread. In particular, the callback
+     *  registered here is invoked on the emulator thread and must not call into
+     *  the API. Forward the message to a user thread instead.
      */
     void launch(const void *listener = nullptr, Callback *func = nullptr);
 
@@ -1669,18 +1717,17 @@ struct VirtualC64 : public API {
      *  requests issued earlier (e.g., via setAsync()) have been carried out as
      *  well. A rejected value throws the corresponding exception.
      *
-     *  If the emulator thread has not been launched yet, the change is made
-     *  immediately in the calling thread.
-     *
      *  @param opt      The option to set
      *  @param value    The option's value
      *
      *  @note If this function is called for an options that applies to multiple
      *  components, all components are configured with the specified value.
      *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
-     *  carry out the request, because it is halted or suspended. The same
-     *  applies if the function is called from the emulator thread. Use
-     *  setAsync() in these situations.
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use setAsync() in these situations (it can also be called before
+     *  the emulator thread is launched, in which case the request is carried out
+     *  at launch).
      */
     void set(Opt opt, i64 value);
 
@@ -1708,9 +1755,10 @@ struct VirtualC64 : public API {
      *  These functions hand the request to the emulator thread and return at
      *  once. They are the asynchronous counterparts of set(). Use them if
      *  waiting is impossible or undesirable, e.g., when many options are
-     *  changed in a row (follow up with sync() if needed), when the call
-     *  happens inside a message callback (which runs on the emulator thread),
-     *  or when the emulator thread is suspended.
+     *  changed in a row (follow up with sync() if needed), before the emulator
+     *  thread has been launched (the request is carried out at launch), or
+     *  while the emulator thread is suspended (it is carried out when the thread
+     *  resumes).
      *
      *  The value is validated when the emulator thread carries out the
      *  command. A rejected value is reported by Msg::CONFIG, which then carries the exception.
@@ -1758,7 +1806,23 @@ struct VirtualC64 : public API {
     /// @name Using the command queue
     /// @{
 
-    /** @brief  Feeds a command into the command queue.
+    /** @brief  Feeds a command into the command queue and waits for the result.
+     *
+     *  The function returns when the emulator thread has carried out the
+     *  command. A command that fails throws the corresponding exception.
+     *
+     *  Because the queue is processed in order, all commands issued earlier
+     *  (e.g., via putAsync()) have been carried out when the call returns.
+     *  Commands that carry a pointer to an object of the caller can rely on
+     *  that object being alive for the whole duration of the command.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the command, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use putAsync() in these situations (it can also be called before
+     *  the emulator thread is launched, in which case the command is carried out
+     *  at launch), and for events that occur at a high rate (e.g., key presses
+     *  or mouse movements).
      */
     void put(const Command &cmd, const std::string &str = "");
     void put(Cmd type, const std::string &str) { put(Command(type), str); }
@@ -1769,6 +1833,36 @@ struct VirtualC64 : public API {
     void put(Cmd type, GamePadCmd payload) { put(Command(type, payload)); }
     void put(Cmd type, TapeCmd payload) { put(Command(type, payload)); }
     void put(Cmd type, AlarmCmd payload) { put(Command(type, payload)); }
+
+    /** @brief  Feeds a command into the command queue without waiting for the result.
+     *
+     *  This is the asynchronous counterpart of put(). The command is carried out
+     *  by the emulator thread at some later time. The caller must keep objects
+     *  referenced by the command alive until it has been carried out (see sync()).
+     */
+    void putAsync(const Command &cmd, const std::string &str = "");
+    void putAsync(Cmd type, const std::string &str) { putAsync(Command(type), str); }
+    void putAsync(Cmd type, i64 payload = 0, i64 payload2 = 0) { putAsync(Command(type, payload, payload2)); }
+    void putAsync(Cmd type, ConfigCmd payload) { putAsync(Command(type, payload)); }
+    void putAsync(Cmd type, KeyCmd payload) { putAsync(Command(type, payload)); }
+    void putAsync(Cmd type, CoordCmd payload) { putAsync(Command(type, payload)); }
+    void putAsync(Cmd type, GamePadCmd payload) { putAsync(Command(type, payload)); }
+    void putAsync(Cmd type, TapeCmd payload) { putAsync(Command(type, payload)); }
+    void putAsync(Cmd type, AlarmCmd payload) { putAsync(Command(type, payload)); }
+
+    /** @brief  Waits until every command sent so far has been carried out.
+     *
+     *  Most calls on this API hand the emulator thread a command and return
+     *  at once, so a caller that reads back what it just changed, or exports
+     *  the configuration, can still see the old state. Calling this
+     *  afterwards closes that gap.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out commands, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread.
+     */
+    void sync();
     /// @}
 };
 

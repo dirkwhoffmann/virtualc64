@@ -150,7 +150,7 @@ class BreakTableView: GuardTableView {
                 if col == 0 {
 
                     // Toggle enable flag
-                    emu?.put(bp.enabled ? .BP_DISABLE_NR : .BP_ENABLE_NR, value: row)
+                    emu?.putAsync(bp.enabled ? .BP_DISABLE_NR : .BP_ENABLE_NR, value: row)
                     inspector.fullRefresh()
                 }
 
@@ -164,7 +164,7 @@ class BreakTableView: GuardTableView {
                 if col == 2 {
 
                     // Delete
-                    emu?.put(.BP_REMOVE_NR, value: row)
+                    emu?.putAsync(.BP_REMOVE_NR, value: row)
                     inspector.fullRefresh()
                 }
             }
@@ -181,9 +181,9 @@ class BreakTableView: GuardTableView {
             emu?.suspend()
 
             if row < numRows {
-                emu?.put(.BP_MOVE_TO, value: row, value2: addr)
+                emu?.putAsync(.BP_MOVE_TO, value: row, value2: addr)
             } else {
-                emu?.put(.BP_SET_AT, value: addr)
+                emu?.putAsync(.BP_SET_AT, value: addr)
             }
 
             inspector.cpuInstrView.jumpTo(addr: addr)
@@ -222,14 +222,14 @@ class WatchTableView: GuardTableView {
 
                 if col == 0 {
 
-                    emu?.put(wp.enabled ? .WP_DISABLE_NR : .WP_ENABLE_NR, value: row)
+                    emu?.putAsync(wp.enabled ? .WP_DISABLE_NR : .WP_ENABLE_NR, value: row)
                     inspector.fullRefresh()
                 }
 
                 if col == 2 {
 
                     // Delete
-                    emu?.put(.WP_REMOVE_NR, value: row)
+                    emu?.putAsync(.WP_REMOVE_NR, value: row)
                     inspector.fullRefresh()
                 }
             }
@@ -246,9 +246,9 @@ class WatchTableView: GuardTableView {
             emu?.suspend()
 
             if row < numRows {
-                emu?.put(.WP_MOVE_TO, value: row)
+                emu?.putAsync(.WP_MOVE_TO, value: row)
             } else {
-                emu?.put(.WP_SET_AT, value: addr)
+                emu?.putAsync(.WP_SET_AT, value: addr)
             }
 
             emu?.resume()

@@ -109,8 +109,8 @@ extension MyAppDelegate {
     static var currentController: MyController? {
         didSet {
             if currentController !== oldValue {
-                oldValue?.emu?.put(.FOCUS, value: 0)
-                currentController?.emu?.put(.FOCUS, value: 1)
+                oldValue?.emu?.putAsync(.FOCUS, value: 0)
+                currentController?.emu?.putAsync(.FOCUS, value: 1)
             }
         }
     }

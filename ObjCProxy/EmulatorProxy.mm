@@ -1119,17 +1119,17 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)pressPlay
 {
-    [self emu]->put(Cmd::DATASETTE_PLAY);
+    [self emu]->putAsync(Cmd::DATASETTE_PLAY);
 }
 
 - (void)pressStop
 {
-    [self emu]->put(Cmd::DATASETTE_STOP);
+    [self emu]->putAsync(Cmd::DATASETTE_STOP);
 }
 
 - (void)rewind
 {
-    [self emu]->put(Cmd::DATASETTE_REWIND);
+    [self emu]->putAsync(Cmd::DATASETTE_REWIND);
 }
 
 - (void)ejectTape
@@ -2247,34 +2247,34 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)put:(Cmd)type
+- (void)putAsync:(Cmd)type
 {
-    [self emu]->put(type, 0);
+    [self emu]->putAsync(type, 0);
 }
 
-- (void)put:(Cmd)type value:(NSInteger)value
+- (void)putAsync:(Cmd)type value:(NSInteger)value
 {
-    [self emu]->put(type, value);
+    [self emu]->putAsync(type, value);
 }
 
-- (void)put:(Cmd)type value:(NSInteger)value value2:(NSInteger)value2
+- (void)putAsync:(Cmd)type value:(NSInteger)value value2:(NSInteger)value2
 {
-    [self emu]->put(type, value, value2);
+    [self emu]->putAsync(type, value, value2);
 }
 
-- (void)put:(Cmd)type key:(KeyCmd)cmd
+- (void)putAsync:(Cmd)type key:(KeyCmd)cmd
 {
-    [self emu]->put(type, cmd);
+    [self emu]->putAsync(type, cmd);
 }
 
-- (void)put:(Cmd)type coord:(CoordCmd)cmd
+- (void)putAsync:(Cmd)type coord:(CoordCmd)cmd
 {
-    [self emu]->put(type, cmd);
+    [self emu]->putAsync(type, cmd);
 }
 
-- (void)put:(Cmd)type action:(GamePadCmd)cmd
+- (void)putAsync:(Cmd)type action:(GamePadCmd)cmd
 {
-    [self emu]->put(type, cmd);
+    [self emu]->putAsync(type, cmd);
 }
 
 @end

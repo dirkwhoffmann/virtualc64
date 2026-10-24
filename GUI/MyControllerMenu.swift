@@ -535,7 +535,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func brkAction(_ sender: Any!) {
         
         if let emu = emu {
-            emu.put(.CPU_BRK)
+            emu.putAsync(.CPU_BRK)
         }
     }
     
@@ -836,7 +836,7 @@ extension MyController: NSMenuItemValidation {
         if let emu = emu {
             
             precondition(nr == DRIVE8 || nr == DRIVE9)
-            emu.put(.DSK_TOGGLE_WP, value: nr)
+            emu.putAsync(.DSK_TOGGLE_WP, value: nr)
         }
     }
     
@@ -1022,10 +1022,10 @@ extension MyController: NSMenuItemValidation {
         
         if let emu = emu {
             
-            emu.put(.CRT_BUTTON_PRESS, value: 1)
+            emu.putAsync(.CRT_BUTTON_PRESS, value: 1)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.emu!.put(.CRT_BUTTON_RELEASE, value: 1)
+                self.emu!.putAsync(.CRT_BUTTON_RELEASE, value: 1)
             }
         }
     }
@@ -1034,10 +1034,10 @@ extension MyController: NSMenuItemValidation {
         
         if let emu = emu {
             
-            emu.put(.CRT_BUTTON_PRESS, value: 2)
+            emu.putAsync(.CRT_BUTTON_PRESS, value: 2)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.emu!.put(.CRT_BUTTON_RELEASE, value: 2)
+                self.emu!.putAsync(.CRT_BUTTON_RELEASE, value: 2)
             }
         }
     }
@@ -1049,21 +1049,21 @@ extension MyController: NSMenuItemValidation {
     @IBAction func setSwitchNeutralAction(_ sender: Any!) {
         
         if let emu = emu {
-            emu.put(.CRT_SWITCH_NEUTRAL)
+            emu.putAsync(.CRT_SWITCH_NEUTRAL)
         }
     }
     
     @IBAction func setSwitchLeftAction(_ sender: Any!) {
         
         if let emu = emu {
-            emu.put(.CRT_SWITCH_LEFT)
+            emu.putAsync(.CRT_SWITCH_LEFT)
         }
     }
     
     @IBAction func setSwitchRightAction(_ sender: Any!) {
         
         if let emu = emu {
-            emu.put(.CRT_SWITCH_RIGHT)
+            emu.putAsync(.CRT_SWITCH_RIGHT)
         }
     }
     

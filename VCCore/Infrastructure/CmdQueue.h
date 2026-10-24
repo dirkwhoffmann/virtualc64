@@ -59,15 +59,6 @@ public:
     /// Indicates if the queue is empty
     std::atomic<bool> empty = true;
 
-    /* Number of commands that have been sent but not carried out yet.
-     *
-     * Counted rather than derived from the queue, because a command stops
-     * being queued the moment it is polled and only takes effect a moment
-     * later. Anyone waiting for a command to have happened has to wait for
-     * that second moment, which is what done() reports.
-     */
-    std::atomic<isize> pending = 0;
-
     //
     // Methods
     //
@@ -88,17 +79,6 @@ public:
 
     // Polls a command together with its completion handler (may be empty)
     bool poll(Command &cmd, Completion &completion);
-
-    // Reports that a polled command has been carried out
-    void done();
-
-    /* Blocks until every command sent so far has been carried out.
-     *
-     * Only ever called from the user thread, and only while the emulator
-     * thread is actually running: a suspended or halted thread polls nothing,
-     * so the wait would never end.
-     */
-    void wait();
 };
 
 }

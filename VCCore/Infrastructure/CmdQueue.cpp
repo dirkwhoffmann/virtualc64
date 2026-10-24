@@ -33,8 +33,6 @@ CmdQueue::put(const Command &cmd, const string &str, Completion completion)
             queue.elements[w].str = attachments[w].c_str();
             completions[w] = std::move(completion);
 
-            pending++;
-
         } else {
             logmsg(LOG_WARN, "Command lost: %s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
             lost = true;
@@ -47,18 +45,6 @@ CmdQueue::put(const Command &cmd, const string &str, Completion completion)
     if (lost && completion) {
         completion(std::make_exception_ptr(std::runtime_error("Command queue is full")));
     }
-}
-
-void
-CmdQueue::done()
-{
-    if (--pending == 0) pending.notify_all();
-}
-
-void
-CmdQueue::wait()
-{
-    for (isize n; (n = pending.load()) != 0; ) pending.wait(n);
 }
 
 bool

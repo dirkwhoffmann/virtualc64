@@ -671,15 +671,6 @@ C64::update(CmdQueue &queue)
 
     while (queue.poll(cmd, completion)) {
 
-        /* Report the command as carried out however this iteration ends. A
-         * handler that throws would otherwise leave the command counted
-         * forever, and CmdQueue::wait() would never return.
-         */
-        struct Done {
-            CmdQueue &queue;
-            ~Done() { queue.done(); }
-        } done { queue };
-
         std::exception_ptr error;
 
         logmsg(LOG_CMD, "Command: %s\n", CmdEnum::key(cmd.type));
@@ -701,6 +692,11 @@ C64::update(CmdQueue &queue)
                 case Cmd::CONFIG_SCHEME:
 
                     set(ConfigScheme(cmd.value));
+                    break;
+
+                case Cmd::NONE:
+
+                    // Does nothing (used as a barrier, see VAmiga::sync())
                     break;
 
                 case Cmd::HARD_RESET:

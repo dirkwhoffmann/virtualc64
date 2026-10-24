@@ -323,6 +323,6 @@ class MediaManager {
 
         try drive.write(toFile: url)
         
-        emu?.put(.DSK_MODIFIED, value: id)
+        emu?.putAsync(.DSK_MODIFIED, value: id)
     }
 }

@@ -439,7 +439,7 @@ void
 VirtualC64::setAsync(ConfigScheme model)
 {
     VC64_PUBLIC_SUSPEND
-    put(Cmd::CONFIG_SCHEME, (i64)model);
+    putAsync(Cmd::CONFIG_SCHEME, (i64)model);
     emu->markAsDirty();
 }
 
@@ -447,7 +447,7 @@ void
 VirtualC64::setAsync(Opt opt, i64 value)
 {
     VC64_PUBLIC
-    put(Cmd::CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
+    putAsync(Cmd::CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
     emu->markAsDirty();
 }
 
@@ -493,8 +493,17 @@ void
 VirtualC64::setAsync(Opt opt, i64 value, long id)
 {
     VC64_PUBLIC
-    put(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
+    putAsync(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
     emu->markAsDirty();
+}
+
+void
+VirtualC64::sync()
+{
+    VC64_PUBLIC
+
+    // A command that does nothing: once it has been carried out, so has everything before it
+    emu->sendAndWait(Command(Cmd::NONE));
 }
 
 void
@@ -513,6 +522,13 @@ VirtualC64::exportConfig(std::ostream &stream) const
 
 void
 VirtualC64::put(const Command &cmd, const std::string &str)
+{
+    VC64_PUBLIC
+    emu->sendAndWait(cmd, str);
+}
+
+void
+VirtualC64::putAsync(const Command &cmd, const std::string &str)
 {
     VC64_PUBLIC
     emu->put(cmd, str);

@@ -202,23 +202,19 @@ public:
 
     /* Sends a command and returns a future that becomes ready once the
      * emulator thread has carried it out. A command that fails makes get()
-     * throw the exception. Like CmdQueue::wait(), this only works while the
-     * emulator thread is running: a thread that polls nothing never fulfills
-     * the promise, so waiting on the future would block forever.
+     * throw the exception. This only works while the emulator
+     * thread is running: a thread that polls nothing never fulfills the
+     * promise, so waiting on the future would block forever.
      */
     std::future<void> send(const Command &cmd, const string &str = "");
 
     /* Sends a command and waits until it has been carried out. A command that
      * fails makes this function throw the exception.
      *
-     * If the emulator thread has not been launched, nobody is competing for
-     * the command queue. In this case, the pending commands, including the
-     * new one, are carried out right here in the calling thread.
-     *
-     * Otherwise, the function waits for the emulator thread. Because waiting
-     * for a thread that does not process commands would block forever, the
-     * function throws CoreError::NOT_LAUNCHED if the emulator thread is halted
-     * or suspended, or if it is called from the emulator thread itself.
+     * Because waiting for a thread that does not process commands would block
+     * forever, the function throws CoreError::NOT_LAUNCHED if the emulator
+     * thread has not been launched yet, is halted or suspended, or if the
+     * function is called from the emulator thread itself.
      */
     void sendAndWait(const Command &cmd, const string &str = "");
     void put(Cmd type, const string &str) { put(Command(type), str); }

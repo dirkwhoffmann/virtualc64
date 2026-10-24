@@ -214,7 +214,7 @@ class DiskExporter: DialogController {
                 fatalError()
             }
 
-            emu?.put(.DSK_UNMODIFIED, value: drive.info.id)
+            emu?.putAsync(.DSK_UNMODIFIED, value: drive.info.id)
             
         } catch {
 
