@@ -1138,10 +1138,6 @@ public:
 
 private:
 
-    // Returns pointers to the stable textures
-    // [[deprecated]] u32 *oldGetTexture() const;
-    // [[deprecated]] u32 *oldGetXrayTexture() const;
-
     // Returns the working buffer or the stable buffer
     Texture &getWorkingBuffer();
     const Texture &getStableBuffer(isize offset = 0) const;

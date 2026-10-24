@@ -91,7 +91,7 @@ RegressionTester::dumpTexture(C64 &c64, std::ostream &os)
         return ((y >> 3) & 1) == ((x >> 3) & 1) ? grey2 : grey4;
     };
 
-    auto buffer = (u32 *)c64.videoPort.getTexture().pixels.ptr; // oldGetTexture();
+    auto buffer = (u32 *)c64.videoPort.getTexture().pixels.ptr;
     char *cptr;
 
     for (isize y = Y1; y < Y2; y++) {

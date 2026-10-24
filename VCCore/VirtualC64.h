@@ -29,6 +29,24 @@ using peddle::DasmStyle;
 using peddle::DasmNumberFormat;
 using peddle::RecordedInstruction;
 
+/* Error handling
+ *
+ * Functions of this API report failures by throwing exceptions that are
+ * derived from class Error:
+ *
+ *   CoreError  : The request does not match the state of the emulator, e.g.,
+ *                an invalid option value, a missing ROM, or an emulator thread
+ *                that cannot carry out the request (see #Fault).
+ *   IOError    : A file could not be accessed.
+ *   MediaError : A ROM, snapshot, disk image or similar file is invalid or
+ *                not supported.
+ *
+ * Functions that hand a request to the emulator thread asynchronously (the
+ * ones with the suffix "Async" and the input events) cannot report failures
+ * that occur later on the emulator thread. Use the blocking counterpart if
+ * the result matters.
+ */
+
 //
 // Base class for all APIs
 //
@@ -341,12 +359,16 @@ struct VideoPortAPI : public API {
      *
      * The cutout is given in texels of the texture. The upper bounds x2 and
      * y2 are exclusive. Without a cutout, the entire texture is saved.
+     *
+     *  @throw Error if the file cannot be written.
      */
     void saveTexture(const std::filesystem::path &path) const;
     void saveTexture(const std::filesystem::path &path,
                      isize x1, isize x2, isize y1, isize y2) const;
 
     /** @brief  Saves the most recent stable X-Ray texture as a PNG file
+     *
+     *  @throw Error if the file cannot be written.
      */
     void saveXrayTexture(const std::filesystem::path &path) const;
     void saveXrayTexture(const std::filesystem::path &path,
@@ -560,6 +582,8 @@ struct DatasetteAPI : public API {
 
     /** @brief  Inserts a tape.
      *  @param  path    The tape to insert.
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void insertTape(const fs::path &path);
 
@@ -677,6 +701,8 @@ struct ExpansionPortAPI : public API {
     /// @{
 
     /** @brief  Attaches a cartridge to the expansion port.
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void attachCartridge(const std::filesystem::path &path, bool reset = true);
 
@@ -763,6 +789,8 @@ struct DriveAPI : public API {
     /** @brief  Inserts a disk created from an image file.
      *  @param  path   Path to the disk image.
      *  @param  wp      Write-protection status of the disk.
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void insert(const std::filesystem::path& path, bool wp);
 
@@ -883,6 +911,8 @@ struct RetroShellAPI : public API {
      *  state. After the last script command has been executed,
      *  MSG\_SCRIPT\_DONE is sent. If shell execution has been aborted due
      *  to an error, MSG\_SCRIPT\_ABORT is sent.
+     *
+     *  @throw Error if the file cannot be opened.
      */
     void execScriptAsync(const fs::path &path);
     void execScriptAsync(std::stringstream &ss);
@@ -928,26 +958,38 @@ struct DefaultsAPI : public API {
     /// @name Loading and saving the key-value storage
 
     /** @brief  Loads a storage file from disk
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void load(const std::filesystem::path &path);
 
     /** @brief  Loads a storage file from a stream
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void load(std::ifstream &stream);
 
     /** @brief  Loads a storage file from a string stream
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void load(std::stringstream &stream);
 
     /** @brief  Saves a storage file to disk
+     *
+     *  @throw Error if the file cannot be written.
      */
     void save(const std::filesystem::path &path);
 
     /** @brief  Saves a storage file to stream
+     *
+     *  @throw Error if the file cannot be written.
      */
     void save(std::ofstream &stream);
 
     /** @brief  Saves a storage file to a string stream
+     *
+     *  @throw Error if the file cannot be written.
      */
     void save(std::stringstream &stream);
 
@@ -1169,12 +1211,16 @@ struct C64API : public API {
     /** @brief  Loads a workspace.
      *
      *  @param  path    Path to a workspace folder
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void loadWorkspace(const std::filesystem::path &path);
 
     /** @brief  Saves a workspace to disk.
      *
      *  @param  path    Destination path
+     *
+     *  @throw Error if the file cannot be written.
      */
     void saveWorkspace(const std::filesystem::path &path) const;
 
@@ -1196,6 +1242,9 @@ struct C64API : public API {
      *  and persists the SVM. As with hibernateAsync, the object is used on
      *  the emulator thread and must stay alive, and untouched, until the
      *  WORKSPACE_SAVED message has arrived.
+     *
+     *  @throw Error if the SVM file cannot be read or written, or if its content
+     *  is invalid (synchronous versions).
      */
     void loadWorkspace(retro::vault::SVMFile &svm);
     void saveWorkspace(retro::vault::SVMFile &svm) const;
@@ -1223,12 +1272,16 @@ struct C64API : public API {
     /** @brief  Loads a snapshot
      *
      *  @param  path    Source path
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void loadSnapshot(const std::filesystem::path &path);
 
     /** @brief  Saves a snapshot to disk
      *
      *  @param  path    Destination path
+     *
+     *  @throw Error if the file cannot be written.
      */
     void saveSnapshot(const std::filesystem::path &path, Compressor compressor) const;
 
@@ -1250,6 +1303,9 @@ struct C64API : public API {
      *  is used on the emulator thread by the asynchronous version and must
      *  stay alive, and untouched, until the SNAPSHOT_SAVED message has
      *  arrived.
+     *
+     *  @throw Error if the SVM file cannot be read or written, or if its content
+     *  is invalid (synchronous versions).
      */
     void saveSnapshot(retro::vault::SVMFile &svm, Compressor compressor) const;
     void saveSnapshotAsync(retro::vault::SVMFile &svm, Compressor compressor) const;
@@ -1281,6 +1337,9 @@ struct C64API : public API {
      *  given object, so its manifest is current afterwards. The asynchronous
      *  version uses the object on the emulator thread: it must stay alive
      *  and must not be touched until the HIBERNATED message has arrived.
+     *
+     *  @throw Error if the SVM file cannot be read or written, or if its content
+     *  is invalid (synchronous versions).
      */
     void hibernate(retro::vault::SVMFile &svm, bool snapshot, bool workspace) const;
     void hibernateAsync(retro::vault::SVMFile &svm, bool snapshot, bool workspace) const;
@@ -1292,6 +1351,8 @@ struct C64API : public API {
 
     /** @brief  Loads a ROM from a file
      *          The ROM type is determined automatically.
+     *
+     *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void loadRom(const std::filesystem::path &path);
     void loadRom(const std::filesystem::path &path, RomType rom);
@@ -1307,6 +1368,8 @@ struct C64API : public API {
     void deleteRoms();
 
     /** @brief  Saves a ROM to disk
+     *
+     *  @throw Error if the file cannot be written.
      */
     void saveRom(const std::filesystem::path &path, RomType rom);
 
@@ -1456,6 +1519,8 @@ struct VirtualC64 : public API {
      *  The function checks if the necessary ROMs are installed to launch the
      *  emulator. On success, the functions returns. Otherwise, an exception
      *  is thrown.
+     *
+     *  @throw CoreError if the emulator cannot run, e.g., because a ROM is missing.
      */
     void checkReady() const;
 
@@ -1995,6 +2060,8 @@ struct VirtualC64 : public API {
      *
      *  The current configuration is exported in form of a RetroShell script.
      *  Reading in the script at a later point will restore the configuration.
+     *
+     *  @throw Error if the file cannot be written.
      */
     void exportConfig(const std::filesystem::path &path) const;
     void exportConfig(std::ostream &stream) const;

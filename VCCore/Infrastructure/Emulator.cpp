@@ -419,28 +419,6 @@ Emulator::finishFrame()
     run();
 }
 
-/*
-u32 *
-Emulator::oldGetTexture() const
-{
-    if (isRunning()) {
-
-        // In run-ahead mode, return the texture from the run-ahead instance
-        if (main.config.runAhead > 0) {
-            return ahead.videoPort.oldGetTexture();
-        }
-
-        // In run-behind mode, return a texture from the texture buffer
-        if (main.config.runAhead < 0) {
-            return main.videoPort.oldGetTexture(main.config.runAhead);
-        }
-    }
-
-    // Return the most recent texture from the main instance
-    return main.videoPort.oldGetTexture();
-}
-*/
-
 const Texture &
 Emulator::getTexture() const
 {
@@ -460,23 +438,6 @@ Emulator::getTexture() const
     // Return the most recent texture from the main instance
     return main.videoPort.getTexture();
 }
-
-/*
-u32 *
-Emulator::oldGetXrayTexture() const
-{
-    if (isRunning()) {
-
-        // In run-ahead mode, return the texture from the run-ahead instance
-        if (main.config.runAhead > 0) {
-            return ahead.videoPort.oldGetXrayTexture();
-        }
-    }
-
-    // Return the most recent texture from the main instance
-    return main.videoPort.oldGetXrayTexture();
-}
-*/
 
 const Texture &
 Emulator::getXrayTexture() const

@@ -1182,20 +1182,6 @@ VideoPortAPI::unlockTexture()
     emu->unlockTexture();
 }
 
-/*
-u32 *
-VideoPortAPI::oldGetTexture() const
-{
-    return emu->oldGetTexture();
-}
-
-u32 *
-VideoPortAPI::oldGetXrayTexture() const
-{
-    return emu->oldGetXrayTexture();
-}
-*/
-
 const u32 *
 VideoPortAPI::getTexture() const
 {
