@@ -371,7 +371,8 @@ Emulator::softReset()
 void
 Emulator::stepInto()
 {
-    if (isRunning()) return;
+    if (isRunning()) throw CoreError(CoreError::RUNNING);
+
 
     main.stepTo = { };
     main.setFlag(RL::SINGLE_STEP);
@@ -381,7 +382,8 @@ Emulator::stepInto()
 void 
 Emulator::stepOver()
 {
-    if (isRunning()) return;
+    if (isRunning()) throw CoreError(CoreError::RUNNING);
+
 
     main.stepTo = main.cpu.getAddressOfNextInstruction();
     main.setFlag(RL::SINGLE_STEP);
@@ -391,7 +393,8 @@ Emulator::stepOver()
 void
 Emulator::stepCycle()
 {
-    if (isRunning()) return;
+    if (isRunning()) throw CoreError(CoreError::RUNNING);
+
     main.setFlag(RL::SINGLE_CYCLE);
     run();
 }
@@ -399,7 +402,8 @@ Emulator::stepCycle()
 void
 Emulator::finishLine()
 {
-    if (isRunning()) return;
+    if (isRunning()) throw CoreError(CoreError::RUNNING);
+
     main.setFlag(RL::FINISH_LINE);
     run();
 }
@@ -407,7 +411,8 @@ Emulator::finishLine()
 void
 Emulator::finishFrame()
 {
-    if (isRunning()) return;
+    if (isRunning()) throw CoreError(CoreError::RUNNING);
+
     main.setFlag(RL::FINISH_FRAME);
     run();
 }

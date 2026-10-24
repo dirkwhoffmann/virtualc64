@@ -1527,7 +1527,11 @@ struct VirtualC64 : public API {
      *  This state is part of the shutdown procedure and never entered during
      *  normal operation.
      *
-     *  @note The function blocks until the emulator thread has terminated.
+     *  @note The function blocks until the emulator thread has terminated. It
+     *  does nothing if there is no running emulator thread (e.g., if the
+     *  thread has already been halted), so it is safe to call it more than
+     *  once. It must not be called while the emulator thread is suspended,
+     *  because a suspended thread cannot terminate.
      */
     void halt();
 
@@ -1566,23 +1570,25 @@ struct VirtualC64 : public API {
 
     /** @brief  Steps a single instruction
      *
-     *  If the emulator is paused, calling this functions steps the CPU for
-     *  a single instruction. Otherwise, calling this function
-     *  has no effect. The CPU debugger utilizes this function to implement single
+     *  Steps the CPU for a single instruction. The emulator must not be
+     *  running. The CPU debugger utilizes this function to implement single
      *  stepping.
      *
-     *  @note The run state is changed right away in the calling thread, not
-     *  through the command queue.
+     *  The function returns when the emulator has been started for the step. It
+     *  is paused again when the step is done.
+     *
+     *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
+     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request (see put()).
      */
     void stepInto();
 
     /** @brief  Steps over the current instruction
      *
-     *  If the emulator is paused, calling this functions runs the emulator
-     *  until the instruction following the current
-     *  instruction has been reached. Otherwise, calling this function
-     *  has no effect. The CPU debugger utilizes this function to implement single
-     *  stepping.
+     *  Runs the emulator until the instruction following the current
+     *  instruction has been reached. The emulator must not be running. The CPU
+     *  debugger utilizes this function to implement single stepping.
      *
      *  stepOver() acts like stepInto() except for branching instructions.
      *  For instance, if the current instruction is a `JSR` instruction, the
@@ -1595,14 +1601,27 @@ struct VirtualC64 : public API {
      *  each instruction if the program counter has reached its target
      *  location.
      *
-     *  @note The run state is changed right away in the calling thread, not
-     *  through the command queue.
+     *  The function returns when the emulator has been started for the step. It
+     *  is paused again when the step is done.
+     *
+     *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
+     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request (see put()).
      */
     void stepOver();
 
     /** @brief  Steps one cycle
      *
      *  Calling this function runs the CPU for a single cycle.
+     *
+     *  The function returns when the emulator has been started for the step. It
+     *  is paused again when the step is done.
+     *
+     *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
+     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request (see put()).
      */
     void stepCycle();
     
@@ -1610,8 +1629,13 @@ struct VirtualC64 : public API {
      *
      *  Calling this function runs the CPU until the end of the current rasterline.
      *
-     *  @note The run state is changed right away in the calling thread, not
-     *  through the command queue.
+     *  The function returns when the emulator has been started for the step. It
+     *  is paused again when the step is done.
+     *
+     *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
+     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request (see put()).
      */
     void finishLine();
     
@@ -1619,8 +1643,13 @@ struct VirtualC64 : public API {
      *
      *  Calling this function runs the CPU until the end of the current frame.
      *
-     *  @note The run state is changed right away in the calling thread, not
-     *  through the command queue.
+     *  The function returns when the emulator has been started for the step. It
+     *  is paused again when the step is done.
+     *
+     *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
+     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request (see put()).
      */
     void finishFrame();
     

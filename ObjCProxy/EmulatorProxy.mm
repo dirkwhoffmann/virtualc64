@@ -2173,27 +2173,37 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)stepInto
 {
-    [self emu]->stepInto();
+    // Stepping is only possible if the emulator is not running. The GUI
+    // validates this, so a rejected request is ignored here
+    try { [self emu]->stepInto(); } catch (Error &) { }
 }
 
 - (void)stepOver
 {
-    [self emu]->stepOver();
+    // Stepping is only possible if the emulator is not running. The GUI
+    // validates this, so a rejected request is ignored here
+    try { [self emu]->stepOver(); } catch (Error &) { }
 }
 
 - (void)stepCycle
 {
-    [self emu]->stepCycle();
+    // Stepping is only possible if the emulator is not running. The GUI
+    // validates this, so a rejected request is ignored here
+    try { [self emu]->stepCycle(); } catch (Error &) { }
 }
 
 - (void)finishLine
 {
-    [self emu]->finishLine();
+    // Stepping is only possible if the emulator is not running. The GUI
+    // validates this, so a rejected request is ignored here
+    try { [self emu]->finishLine(); } catch (Error &) { }
 }
 
 - (void)finishFrame
 {
-    [self emu]->finishFrame();
+    // Stepping is only possible if the emulator is not running. The GUI
+    // validates this, so a rejected request is ignored here
+    try { [self emu]->finishFrame(); } catch (Error &) { }
 }
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url

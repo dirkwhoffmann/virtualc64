@@ -709,6 +709,11 @@ C64::update(CmdQueue &queue)
                 case Cmd::WARP_OFF:
                 case Cmd::TRACK_ON:
                 case Cmd::TRACK_OFF:
+                case Cmd::STEP_INTO:
+                case Cmd::STEP_OVER:
+                case Cmd::STEP_CYCLE:
+                case Cmd::FINISH_LINE:
+                case Cmd::FINISH_FRAME:
                 case Cmd::HALT:
                 case Cmd::ALARM_ABS:
                 case Cmd::ALARM_REL:
@@ -1372,6 +1377,31 @@ C64::processCommand(const Command &cmd)
         case Cmd::TRACK_OFF:
 
             emulator.trackOff(isize(cmd.value));
+            break;
+
+        case Cmd::STEP_INTO:
+
+            emulator.stepInto();
+            break;
+
+        case Cmd::STEP_OVER:
+
+            emulator.stepOver();
+            break;
+
+        case Cmd::STEP_CYCLE:
+
+            emulator.stepCycle();
+            break;
+
+        case Cmd::FINISH_LINE:
+
+            emulator.finishLine();
+            break;
+
+        case Cmd::FINISH_FRAME:
+
+            emulator.finishFrame();
             break;
 
         case Cmd::HALT:

@@ -313,9 +313,13 @@ VirtualC64::softReset()
 }
 
 void
-VirtualC64::halt() 
+VirtualC64::halt()
 {
     VC64_PUBLIC
+
+    // Nothing to do without a running emulator thread
+    if (!emu->isLaunched()) return;
+
     // Signal the emulator to halt
     emu->put(Cmd::HALT);
     
@@ -355,35 +359,40 @@ void
 VirtualC64::stepInto()
 {
     VC64_PUBLIC
-    emu->stepInto();
+    isReady();
+    emu->sendAndWait(Command(Cmd::STEP_INTO));
 }
 
 void
 VirtualC64::stepOver()
 {
     VC64_PUBLIC
-    emu->stepOver();
+    isReady();
+    emu->sendAndWait(Command(Cmd::STEP_OVER));
 }
 
 void
 VirtualC64::stepCycle()
 {
     VC64_PUBLIC
-    emu->stepCycle();
+    isReady();
+    emu->sendAndWait(Command(Cmd::STEP_CYCLE));
 }
 
 void
 VirtualC64::finishLine()
 {
     VC64_PUBLIC
-    emu->finishLine();
+    isReady();
+    emu->sendAndWait(Command(Cmd::FINISH_LINE));
 }
 
 void
 VirtualC64::finishFrame()
 {
     VC64_PUBLIC
-    emu->finishFrame();
+    isReady();
+    emu->sendAndWait(Command(Cmd::FINISH_FRAME));
 }
 
 void
