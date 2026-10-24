@@ -647,7 +647,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (AudioPortMetrics)stats
 {
-    return [self port]->getStats();
+    return [self port]->getMetrics();
 }
 
 - (NSInteger)copyMono:(float *)target size:(NSInteger)n

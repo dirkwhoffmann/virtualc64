@@ -904,66 +904,77 @@ CPUAPI::getInfo() const
 const CPUInfo &
 CPUAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return cpu->info.backed();
 }
 
 isize
 CPUAPI::loggedInstructions() const
 {
+    VC64_PUBLIC
     return cpu->debugger.loggedInstructions();
 }
 
 void
 CPUAPI::clearLog()
 {
+    VC64_PUBLIC_SUSPEND
     return cpu->debugger.clearLog();
 }
 
 void
 CPUAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
 {
+    VC64_PUBLIC_SUSPEND
     return cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
 isize
 CPUAPI::disassemble(char *dst, const char *fmt, u16 addr) const
 {
+    VC64_PUBLIC
     return cpu->disassembler.disass(dst, fmt, addr);
 }
 
 isize
 CPUAPI::disassembleRecorded(char *dst, const char *fmt, isize nr) const
 {
+    VC64_PUBLIC
     return cpu->debugger.disassRecorded(dst, fmt, nr);
 }
 
 RecordedInstruction
 CPUAPI::logEntry(isize nr) const
 {
+    VC64_PUBLIC
     return cpu->debugger.logEntryAbs(nr);
 }
 
 Guard *
 CPUAPI::breakpointNr(long nr) const
 {
+    VC64_PUBLIC
     return cpu->debugger.breakpoints.guardNr(nr);
 }
 
 Guard *
 CPUAPI::breakpointAt(u32 addr) const
 {
+    VC64_PUBLIC
     return cpu->debugger.breakpoints.guardAt(addr);
 }
 
 Guard *
 CPUAPI::watchpointNr(long nr) const
 {
+    VC64_PUBLIC
     return cpu->debugger.watchpoints.guardNr(nr);
 }
 
 Guard *
 CPUAPI::watchpointAt(u32 addr) const
 {
+    VC64_PUBLIC
     return cpu->debugger.watchpoints.guardAt(addr);
 }
 
@@ -975,36 +986,42 @@ CPUAPI::watchpointAt(u32 addr) const
 const MemConfig &
 MemoryAPI::getConfig() const
 {
+    VC64_PUBLIC
     return mem->getConfig();
 }
 
 const MemInfo &
 MemoryAPI::getInfo() const
 {
+    VC64_PUBLIC
     return mem->info.current();
 }
 
 const MemInfo &
 MemoryAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return mem->info.backed();
 }
 
 string
 MemoryAPI::memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const
 {
+    VC64_PUBLIC
     return mem->memdump(addr, num, hex, pads, src);
 }
 
 string
 MemoryAPI::txtdump(u16 addr, isize num, MemType src) const
 {
+    VC64_PUBLIC
     return mem->txtdump(addr, num, src);
 }
 
 void
 MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 {
+    VC64_PUBLIC
     return mem->heatmap.draw(buffer, width, height);
 }
 
@@ -1016,30 +1033,35 @@ MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 const CIAConfig &
 CIAAPI::getConfig() const
 {
+    VC64_PUBLIC
     return cia->getConfig();
 }
 
 const CIAInfo &
 CIAAPI::getInfo() const
 {
+    VC64_PUBLIC
     return cia->info.current();
 }
 
 const CIAInfo &
 CIAAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return cia->info.backed();
 }
 
 const CIAMetrics &
 CIAAPI::getMetrics() const
 {
+    VC64_PUBLIC
     return cia->metrics.current();
 }
 
 const CIAMetrics &
 CIAAPI::getCachedMetrics() const
 {
+    VC64_PUBLIC
     return cia->metrics.backed();
 }
 
@@ -1051,42 +1073,49 @@ CIAAPI::getCachedMetrics() const
 const VICIITraits &
 VICIIAPI::getTraits() const
 {
+    VC64_PUBLIC
     return vicii->getTraits();
 }
 
 const VICIIConfig &
 VICIIAPI::getConfig() const
 {
+    VC64_PUBLIC
     return vicii->getConfig();
 }
 
 const VICIIInfo &
 VICIIAPI::getInfo() const
 {
+    VC64_PUBLIC
     return vicii->info.current();
 }
 
 const VICIIInfo &
 VICIIAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return vicii->info.backed();
 }
 
 SpriteInfo
 VICIIAPI::getSpriteInfo(isize nr) const
 {
+    VC64_PUBLIC
     return vicii->getSpriteInfo(nr);
 }
 
 u32
 VICIIAPI::getColor(isize nr) const
 {
+    VC64_PUBLIC
     return vicii->getColor(nr);
 }
 
 u32
 VICIIAPI::getColor(isize nr, Palette palette) const
 {
+    VC64_PUBLIC
     return vicii->getColor(nr, palette);
 }
 
@@ -1098,6 +1127,7 @@ VICIIAPI::getColor(isize nr, Palette palette) const
 SIDInfo
 SIDAPI::getInfo(isize nr) const
 {
+    VC64_PUBLIC
     assert(nr <= 3);
 
     return sidBridge->sid[nr].info.current();
@@ -1106,6 +1136,7 @@ SIDAPI::getInfo(isize nr) const
 SIDInfo
 SIDAPI::getCachedInfo(isize nr) const
 {
+    VC64_PUBLIC
     assert(nr <= 3);
 
     return sidBridge->sid[nr].info.backed();
@@ -1115,6 +1146,7 @@ float
 SIDAPI::draw(u32 *buffer, isize width, isize height,
                          float maxAmp, u32 color, isize sid) const
 {
+    VC64_PUBLIC
     return sidBridge->draw(buffer, width, height, maxAmp, color, sid);
 }
 
@@ -1124,14 +1156,14 @@ SIDAPI::draw(u32 *buffer, isize width, isize height,
 //
 
 const AudioPortMetrics &
-AudioPortAPI::getStats() const
+AudioPortAPI::getMetrics() const
 {
     VC64_PUBLIC
     return audioPort->metrics.current();
 }
 
 const AudioPortMetrics &
-AudioPortAPI::getCachedStats() const
+AudioPortAPI::getCachedMetrics() const
 {
     VC64_PUBLIC
     return audioPort->metrics.backed();
@@ -1148,18 +1180,21 @@ AudioPortAPI::getConfig() const
 isize
 AudioPortAPI::copyMono(float *buffer, isize n)
 {
+    VC64_PUBLIC
     return audioPort->copyMono(buffer, n);
 }
 
 isize
 AudioPortAPI::copyStereo(float *left, float *right, isize n)
 {
+    VC64_PUBLIC
     return audioPort->copyStereo(left, right, n);
 }
 
 isize
 AudioPortAPI::copyInterleaved(float *buffer, isize n)
 {
+    VC64_PUBLIC
     return audioPort->copyInterleaved(buffer, n);
 }
 
@@ -1284,6 +1319,7 @@ VideoPortAPI::findInnerAreaNormalized(double &x1, double &x2, double &y1, double
 const XRayConfig &
 XRayAPI::getConfig() const
 {
+    VC64_PUBLIC
     return xray->getConfig();
 }
 
@@ -1295,99 +1331,82 @@ XRayAPI::getConfig() const
 bool 
 KeyboardAPI::isPressed(C64Key key) const
 {
+    VC64_PUBLIC
     return keyboard->isPressed(key);
 }
 
 void
 KeyboardAPI::press(C64Key key, double delay, double duration)
 {
-    if (delay == 0.0) {
+    VC64_PUBLIC
 
-        keyboard->press(key);
-        emu->markAsDirty();
-
-    } else {
-        
-        emu->put(Command(Cmd::KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
-    }
+    emu->put(Command(Cmd::KEY_PRESS, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
 
     if (duration != 0.0) {
-        
+
         emu->put(Command(Cmd::KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
     }
 }
 
-void 
+void
 KeyboardAPI::toggle(C64Key key, double delay, double duration)
 {
-    if (delay == 0.0) {
-        
-        keyboard->toggle(key);
-        emu->markAsDirty();
-        
-    } else {
+    VC64_PUBLIC
 
-        emu->put(Command(Cmd::KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
-    }
+    emu->put(Command(Cmd::KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
 
     if (duration != 0.0) {
-        
+
         emu->put(Command(Cmd::KEY_TOGGLE, KeyCmd { .keycode = (u8)key.nr, .delay = delay + duration }));
     }
-
 }
 
 void
 KeyboardAPI::release(C64Key key, double delay)
 {
-    if (delay > 0.0) {
-
-        emu->put(Command(Cmd::KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
-        return;
-    }
-    keyboard->release(key);
-    emu->markAsDirty();
+    VC64_PUBLIC
+    emu->put(Command(Cmd::KEY_RELEASE, KeyCmd { .keycode = (u8)key.nr, .delay = delay }));
 }
 
-void 
+void
 KeyboardAPI::releaseAll(double delay)
 {
-    if (delay > 0.0) {
-
-        emu->put(Command(Cmd::KEY_RELEASE_ALL, KeyCmd { .delay = delay }));
-        return;
-    }
-    keyboard->releaseAll();
-    emu->markAsDirty();
+    VC64_PUBLIC
+    emu->put(Command(Cmd::KEY_RELEASE_ALL, KeyCmd { .delay = delay }));
 }
 
 bool
 KeyboardAPI::isLocked(C64Key key) const
 {
+    VC64_PUBLIC
     return keyboard->isLocked(key);
 }
 
 void
 KeyboardAPI::lock(C64Key key)
 {
+    VC64_PUBLIC_SUSPEND
     keyboard->lock(key);
 }
 
 void
 KeyboardAPI::unlock(C64Key key)
 {
+    VC64_PUBLIC_SUSPEND
     keyboard->unlock(key);
 }
 
 void
 KeyboardAPI::unlockAll()
 {
+    VC64_PUBLIC_SUSPEND
     keyboard->unlockAll();
 }
 
 void
 KeyboardAPI::autoType(const string &text)
 {
+    VC64_PUBLIC_SUSPEND
     keyboard->autoType(text);
     emu->markAsDirty();
 }
@@ -1395,6 +1414,7 @@ KeyboardAPI::autoType(const string &text)
 void
 KeyboardAPI::abortAutoTyping()
 {
+    VC64_PUBLIC_SUSPEND
     keyboard->abortAutoTyping();
     emu->markAsDirty();
 }
@@ -1473,7 +1493,7 @@ DatasetteAPI::getCachedInfo() const
 void
 DatasetteAPI::insertTape(const fs::path &path)
 {
-    VC64_PUBLIC
+    VC64_PUBLIC_SUSPEND
     datasette->insertTape(path);
     emu->markAsDirty();
 }
@@ -1481,7 +1501,7 @@ DatasetteAPI::insertTape(const fs::path &path)
 void
 DatasetteAPI::ejectTape()
 {
-    VC64_PUBLIC
+    VC64_PUBLIC_SUSPEND
     datasette->ejectTape();
     emu->markAsDirty();
 }
@@ -1490,6 +1510,7 @@ DatasetteAPI::ejectTape()
 void
 DatasetteAPI::exportTape(const fs::path &path) const
 {
+    VC64_PUBLIC
     datasette->exportTAP(path);
 }
 
@@ -1596,12 +1617,14 @@ MouseAPI::detectShakeDxDy(double dx, double dy)
 const RemoteManagerInfo &
 RemoteManagerAPI::getInfo() const
 {
+    VC64_PUBLIC
     return remoteManager->info.current();
 }
 
 const RemoteManagerInfo &
 RemoteManagerAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return remoteManager->info.backed();
 }
 
@@ -1641,21 +1664,21 @@ RetroShellAPI::text()
 void
 RetroShellAPI::press(RSKey key, bool shift)
 {
-    VC64_PUBLIC
+    VC64_PUBLIC_SUSPEND
     retroShell->press(key, shift);
 }
 
 void
 RetroShellAPI::press(char c)
 {
-    VC64_PUBLIC
+    VC64_PUBLIC_SUSPEND
     retroShell->press(c);
 }
 
 void
 RetroShellAPI::press(const string &s)
 {
-    VC64_PUBLIC
+    VC64_PUBLIC_SUSPEND
     retroShell->press(s);
 }
 
@@ -1669,25 +1692,28 @@ RetroShellAPI::execScriptAsync(const fs::path &path)
 void
 RetroShellAPI::execScriptAsync(std::stringstream &ss)
 {
-    VC64_PUBLIC
+    VC64_PUBLIC_SUSPEND
     retroShell->asyncExecScript(ss);
 }
 
 void
 RetroShellAPI::execScriptAsync(const std::ifstream &fs)
 {
+    VC64_PUBLIC_SUSPEND
     retroShell->asyncExecScript(fs);
 }
 
 void
 RetroShellAPI::execScriptAsync(const string &contents)
 {
+    VC64_PUBLIC_SUSPEND
     retroShell->asyncExecScript(contents);
 }
 
 void
 RetroShellAPI::setStream(std::ostream &os)
 {
+    VC64_PUBLIC_SUSPEND
     retroShell->setStream(os);
 }
 
@@ -1699,30 +1725,35 @@ RetroShellAPI::setStream(std::ostream &os)
 CartridgeTraits
 ExpansionPortAPI::getCartridgeTraits() const
 {
+    VC64_PUBLIC
     return expansionPort->getCartridgeTraits();
 }
 
 const CartridgeInfo &
 ExpansionPortAPI::getInfo() const
 {
+    VC64_PUBLIC
     return expansionPort->getInfo();
 }
 
 const CartridgeInfo &
 ExpansionPortAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return expansionPort->getCachedInfo();
 }
 
 CartridgeRomInfo
 ExpansionPortAPI::getRomInfo(isize nr) const
 {
+    VC64_PUBLIC
     return expansionPort->getRomInfo(nr);
 }
 
 void
 ExpansionPortAPI::attachCartridge(const std::filesystem::path &path, bool reset)
 {
+    VC64_PUBLIC_SUSPEND
     expansionPort->attachCartridge(path, reset);
     emu->markAsDirty();
 }
@@ -1730,6 +1761,7 @@ ExpansionPortAPI::attachCartridge(const std::filesystem::path &path, bool reset)
 void
 ExpansionPortAPI::attachReu(isize capacity)
 {
+    VC64_PUBLIC_SUSPEND
     expansionPort->attachReu(capacity);
     emu->markAsDirty();
 }
@@ -1737,6 +1769,7 @@ ExpansionPortAPI::attachReu(isize capacity)
 void
 ExpansionPortAPI::attachGeoRam(isize capacity)
 {
+    VC64_PUBLIC_SUSPEND
     expansionPort->attachGeoRam(capacity);
     emu->markAsDirty();
 }
@@ -1744,6 +1777,7 @@ ExpansionPortAPI::attachGeoRam(isize capacity)
 void
 ExpansionPortAPI::attachIsepicCartridge()
 {
+    VC64_PUBLIC_SUSPEND
     expansionPort->attachIsepicCartridge();
     emu->markAsDirty();
 }
@@ -1751,6 +1785,7 @@ ExpansionPortAPI::attachIsepicCartridge()
 void
 ExpansionPortAPI::detachCartridge()
 {
+    VC64_PUBLIC_SUSPEND
     expansionPort->detachCartridge();
     emu->markAsDirty();
 }
@@ -1758,6 +1793,7 @@ ExpansionPortAPI::detachCartridge()
 void
 ExpansionPortAPI::exportCRT(const fs::path &path) const
 {
+    VC64_PUBLIC
     expansionPort->exportCRT(path);
 }
 
@@ -1769,6 +1805,7 @@ ExpansionPortAPI::exportCRT(const fs::path &path) const
 FloppyDisk *
 DiskAPI::get()
 {
+    VC64_PUBLIC
     return drive->disk.get();
 }
 
@@ -1780,18 +1817,21 @@ DiskAPI::get()
 const DriveConfig &
 DriveAPI::getConfig() const
 {
+    VC64_PUBLIC
     return drive->getConfig();
 }
 
 const DriveInfo &
 DriveAPI::getInfo() const
 {
+    VC64_PUBLIC
     return drive->info.current();
 }
 
 const DriveInfo &
 DriveAPI::getCachedInfo() const
 {
+    VC64_PUBLIC
     return drive->info.backed();
 }
 
@@ -1841,156 +1881,182 @@ DriveAPI::saveFiles(const std::filesystem::path& path)
 void
 DefaultsAPI::load(const fs::path &path)
 {
+    VC64_PUBLIC
     defaults->load(path);
 }
 
 void
 DefaultsAPI::load(std::ifstream &stream)
 {
+    VC64_PUBLIC
     defaults->load(stream);
 }
 
 void
 DefaultsAPI::load(std::stringstream &stream)
 {
+    VC64_PUBLIC
     defaults->load(stream);
 }
 
 void
 DefaultsAPI::save(const fs::path &path)
 {
+    VC64_PUBLIC
     defaults->save(path);
 }
 
 void
 DefaultsAPI::save(std::ofstream &stream)
 {
+    VC64_PUBLIC
     defaults->save(stream);
 }
 
 void
 DefaultsAPI::save(std::stringstream &stream)
 {
+    VC64_PUBLIC
     defaults->save(stream);
 }
 
 string
 DefaultsAPI::getRaw(const string &key) const
 {
+    VC64_PUBLIC
     return defaults->getRaw(key);
 }
 
 i64
 DefaultsAPI::get(const string &key) const
 {
+    VC64_PUBLIC
     return defaults->get(key);
 }
 
 i64
 DefaultsAPI::get(Opt option, isize nr) const
 {
+    VC64_PUBLIC
     return defaults->get(option, nr);
 }
 
 string
 DefaultsAPI::getFallbackRaw(const string &key) const
 {
+    VC64_PUBLIC
     return defaults->getFallbackRaw(key);
 }
 
 i64
 DefaultsAPI::getFallback(const string &key) const
 {
+    VC64_PUBLIC
     return defaults->getFallback(key);
 }
 
 i64
 DefaultsAPI::getFallback(Opt option, isize nr) const
 {
+    VC64_PUBLIC
     return defaults->getFallback(option, nr);
 }
 
 void
 DefaultsAPI::set(const string &key, const string &value)
 {
+    VC64_PUBLIC
     defaults->set(key, value);
 }
 
 void
 DefaultsAPI::set(Opt opt, const string &value)
 {
+    VC64_PUBLIC
     defaults->set(opt, value);
 }
 
 void
 DefaultsAPI::set(Opt opt, const string &value, std::vector<isize> objids)
 {
+    VC64_PUBLIC
     defaults->set(opt, value, objids);
 }
 
 void
 DefaultsAPI::set(Opt opt, i64 value)
 {
+    VC64_PUBLIC
     defaults->set(opt, value);
 }
 
 void
 DefaultsAPI::set(Opt opt, i64 value, std::vector<isize> objids)
 {
+    VC64_PUBLIC
     defaults->set(opt, value, objids);
 }
 
 void
 DefaultsAPI::setFallback(const string &key, const string &value)
 {
+    VC64_PUBLIC
     defaults->setFallback(key, value);
 }
 
 void
 DefaultsAPI::setFallback(Opt opt, const string &value)
 {
+    VC64_PUBLIC
     defaults->setFallback(opt, value);
 }
 
 void
 DefaultsAPI::setFallback(Opt opt, const string &value, std::vector<isize> objids)
 {
+    VC64_PUBLIC
     defaults->setFallback(opt, value, objids);
 }
 
 void
 DefaultsAPI::setFallback(Opt opt, i64 value)
 {
+    VC64_PUBLIC
     defaults->setFallback(opt, value);
 }
 
 void
 DefaultsAPI::setFallback(Opt opt, i64 value, std::vector<isize> objids)
 {
+    VC64_PUBLIC
     defaults->setFallback(opt, value, objids);
 }
 
 void
 DefaultsAPI::remove()
 {
+    VC64_PUBLIC
     defaults->remove();
 }
 
 void
 DefaultsAPI::remove(const string &key)
 {
+    VC64_PUBLIC
     defaults->remove(key);
 }
 
 void
 DefaultsAPI::remove(Opt option)
 {
+    VC64_PUBLIC
     defaults->remove(option);
 }
 
 void
 DefaultsAPI::remove(Opt option, std::vector <isize> objids)
 {
+    VC64_PUBLIC
     defaults->remove(option, objids);
 }
 
