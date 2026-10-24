@@ -498,13 +498,6 @@ VirtualC64::removeListener()
     emu->main.msgQueue.setListener(nullptr, nullptr);
 }
 
-void
-VirtualC64::setListener(const void *listener, Callback *func)
-{
-    VC64_PUBLIC
-    emu->main.msgQueue.setListener(listener, func);
-}
-
 bool
 VirtualC64::isLaunched() const
 {
@@ -642,6 +635,13 @@ C64API::setAutoInspectionMask(u64 mask)
 {
     VC64_PUBLIC_SUSPEND
     c64->setAutoInspectionMask(mask);
+}
+
+const C64Config &
+C64API::getConfig() const
+{
+    VC64_PUBLIC
+    return c64->getConfig();
 }
 
 const C64Info &
@@ -887,9 +887,17 @@ C64API::flash(const fs::path &path, isize item)
 // CPU
 //
 
+const CPUConfig &
+CPUAPI::getConfig() const
+{
+    VC64_PUBLIC
+    return cpu->getConfig();
+}
+
 const CPUInfo &
 CPUAPI::getInfo() const
 {
+    VC64_PUBLIC
     return cpu->info.current();
 }
 
@@ -1118,8 +1126,24 @@ SIDAPI::draw(u32 *buffer, isize width, isize height,
 const AudioPortMetrics &
 AudioPortAPI::getStats() const
 {
+    VC64_PUBLIC
     return audioPort->metrics.current();
 }
+
+const AudioPortMetrics &
+AudioPortAPI::getCachedStats() const
+{
+    VC64_PUBLIC
+    return audioPort->metrics.backed();
+}
+
+const AudioPortConfig &
+AudioPortAPI::getConfig() const
+{
+    VC64_PUBLIC
+    return audioPort->getConfig();
+}
+
 
 isize
 AudioPortAPI::copyMono(float *buffer, isize n)

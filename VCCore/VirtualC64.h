@@ -77,6 +77,10 @@ struct CPUAPI : public API {
 
     class CPU *cpu = nullptr;
 
+    /** @brief  Returns the component's current configuration.
+     */
+    const CPUConfig &getConfig() const;
+
     /** @brief  Returns the component's current state.
      */
     const CPUInfo &getInfo() const;
@@ -240,9 +244,14 @@ struct AudioPortAPI : public API {
 
     class AudioPort *audioPort = nullptr;
 
+    /** @brief  Returns the component's current configuration.
+     */
+    const AudioPortConfig &getConfig() const;
+
     /** @brief  Returns statistical information about the components.
      */
     const AudioPortMetrics &getStats() const;
+    const AudioPortMetrics &getCachedStats() const;
 
 
     /// @}
@@ -1092,6 +1101,10 @@ struct C64API : public API {
     /// @name Analyzing the emulator
     /// @{
 
+    /** @brief  Returns the component's current configuration.
+     */
+    const C64Config &getConfig() const;
+
     /** @brief  Returns the component's current state.
      */
     const C64Info &getInfo() const;
@@ -1865,14 +1878,6 @@ struct VirtualC64 : public API {
      *  against message delivery, so it is safe while the emulator runs.
      */
     void removeListener();
-
-    /* @brief  Registers a message receiver callback.
-     *
-     * If launch has been called without a listener and callback pointer,
-     * the callback can be registered at a later point in time by calling this
-     * function.
-     */
-    void setListener(const void *listener, Callback *func);
 
     /** @brief  Returns true if the emulator has been launched.
      */
