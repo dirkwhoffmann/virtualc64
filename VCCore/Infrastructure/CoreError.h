@@ -68,7 +68,7 @@ struct CoreError : public Error {
             case UNKNOWN:               return "UNKNOWN";
 
             case LAUNCH:                return "LAUNCH";
-            case NOT_LAUNCHED:       return "NOT_LAUNCHED";
+            case NOT_LAUNCHED:          return "NOT_LAUNCHED";
             case POWERED_OFF:           return "POWERED_OFF";
             case POWERED_ON:            return "POWERED_ON";
             case RUNNING:               return "RUNNING";

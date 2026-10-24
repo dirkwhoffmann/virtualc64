@@ -259,10 +259,10 @@ VirtualC64::isTracking() const
 }
 
 void 
-VirtualC64::isReady() const
+VirtualC64::checkReady() const
 {
     VC64_PUBLIC
-    return emu->isReady();
+    return emu->checkReady();
 }
 
 void 
@@ -285,7 +285,7 @@ VirtualC64::run()
     VC64_PUBLIC
     
     // Throw an exception if the emulator is not ready to run
-    isReady();
+    checkReady();
     
     emu->put(Cmd::RUN);
 }
@@ -359,7 +359,7 @@ void
 VirtualC64::stepInto()
 {
     VC64_PUBLIC
-    isReady();
+    checkReady();
     emu->sendAndWait(Command(Cmd::STEP_INTO));
 }
 
@@ -367,7 +367,7 @@ void
 VirtualC64::stepOver()
 {
     VC64_PUBLIC
-    isReady();
+    checkReady();
     emu->sendAndWait(Command(Cmd::STEP_OVER));
 }
 
@@ -375,7 +375,7 @@ void
 VirtualC64::stepCycle()
 {
     VC64_PUBLIC
-    isReady();
+    checkReady();
     emu->sendAndWait(Command(Cmd::STEP_CYCLE));
 }
 
@@ -383,7 +383,7 @@ void
 VirtualC64::finishLine()
 {
     VC64_PUBLIC
-    isReady();
+    checkReady();
     emu->sendAndWait(Command(Cmd::FINISH_LINE));
 }
 
@@ -391,7 +391,7 @@ void
 VirtualC64::finishFrame()
 {
     VC64_PUBLIC
-    isReady();
+    checkReady();
     emu->sendAndWait(Command(Cmd::FINISH_FRAME));
 }
 
@@ -1568,27 +1568,27 @@ RetroShellAPI::press(const string &s)
 }
 
 void
-RetroShellAPI::execScript(const fs::path &path)
+RetroShellAPI::execScriptAsync(const fs::path &path)
 {
     VC64_PUBLIC_SUSPEND
     retroShell->asyncExecScript(path);
 }
 
 void
-RetroShellAPI::execScript(std::stringstream &ss)
+RetroShellAPI::execScriptAsync(std::stringstream &ss)
 {
     VC64_PUBLIC
     retroShell->asyncExecScript(ss);
 }
 
 void
-RetroShellAPI::execScript(const std::ifstream &fs)
+RetroShellAPI::execScriptAsync(const std::ifstream &fs)
 {
     retroShell->asyncExecScript(fs);
 }
 
 void
-RetroShellAPI::execScript(const string &contents)
+RetroShellAPI::execScriptAsync(const string &contents)
 {
     retroShell->asyncExecScript(contents);
 }

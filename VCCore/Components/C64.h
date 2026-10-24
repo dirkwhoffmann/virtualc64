@@ -410,7 +410,7 @@ private:
     void _dump(Category category, std::ostream &os) const override;
 
     void _didReset(bool hard) override;
-    void _isReady() const override;
+    void _checkReady() const override;
     void _powerOn() override;
     void _powerOff() override;
     void _run() override;

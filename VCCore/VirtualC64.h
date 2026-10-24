@@ -875,10 +875,10 @@ struct RetroShellAPI : public API {
      *  MSG\_SCRIPT\_DONE is sent. If shell execution has been aborted due
      *  to an error, MSG\_SCRIPT\_ABORT is sent.
      */
-    void execScript(const fs::path &path);
-    void execScript(std::stringstream &ss);
-    void execScript(const std::ifstream &fs);
-    void execScript(const string &contents);
+    void execScriptAsync(const fs::path &path);
+    void execScriptAsync(std::stringstream &ss);
+    void execScriptAsync(const std::ifstream &fs);
+    void execScriptAsync(const string &contents);
 
     /// @}
 };
@@ -1444,7 +1444,7 @@ struct VirtualC64 : public API {
      *  emulator. On success, the functions returns. Otherwise, an exception
      *  is thrown.
      */
-    void isReady() const;
+    void checkReady() const;
 
 
     /// @}
@@ -1480,7 +1480,7 @@ struct VirtualC64 : public API {
      *  mode is switched on. If this function is called for a powered-off
      *  emulator, an implicit call to powerOn() will be performed.
      *
-     *  @throw CoreError if the emulator is not ready to run (see isReady()). The
+     *  @throw CoreError if the emulator is not ready to run (see checkReady()). The
      *  request itself is queued and carried out asynchronously by the emulator
      *  thread. Use sync() to wait for it.
      */
@@ -1578,7 +1578,7 @@ struct VirtualC64 : public API {
      *  is paused again when the step is done.
      *
      *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
-     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError if the emulator is not ready to run (see checkReady()).
      *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
@@ -1605,7 +1605,7 @@ struct VirtualC64 : public API {
      *  is paused again when the step is done.
      *
      *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
-     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError if the emulator is not ready to run (see checkReady()).
      *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
@@ -1619,7 +1619,7 @@ struct VirtualC64 : public API {
      *  is paused again when the step is done.
      *
      *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
-     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError if the emulator is not ready to run (see checkReady()).
      *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
@@ -1633,7 +1633,7 @@ struct VirtualC64 : public API {
      *  is paused again when the step is done.
      *
      *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
-     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError if the emulator is not ready to run (see checkReady()).
      *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
@@ -1647,7 +1647,7 @@ struct VirtualC64 : public API {
      *  is paused again when the step is done.
      *
      *  @throw CoreError (#Fault::RUNNING) if the emulator is already running.
-     *  @throw CoreError if the emulator is not ready to run (see isReady()).
+     *  @throw CoreError if the emulator is not ready to run (see checkReady()).
      *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */

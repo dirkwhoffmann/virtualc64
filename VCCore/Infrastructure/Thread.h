@@ -202,7 +202,7 @@ public:
 private:
 
     // Returns if the emulator is ready to runs, throws an exception otherwise
-    virtual void isReady() = 0;
+    virtual void checkReady() = 0;
 
 
     //

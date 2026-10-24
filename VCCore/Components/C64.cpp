@@ -1062,7 +1062,7 @@ C64::fastForward(isize frames)
 }
 
 void
-C64::_isReady() const
+C64::_checkReady() const
 {
     bool mega = hasMega65Rom(RomType::C64_BASIC) && hasMega65Rom(RomType::C64_KERNAL);
     

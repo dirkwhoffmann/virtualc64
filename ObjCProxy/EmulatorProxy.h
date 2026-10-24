@@ -202,7 +202,7 @@ NSString *EventSlotName(EventSlot slot);
 @property (readonly) BOOL warping;
 @property (readonly) BOOL tracking;
 
-- (void)isReady:(ExceptionWrapper *)ex;
+- (void)checkReady:(ExceptionWrapper *)ex;
 - (void)powerOn:(ExceptionWrapper *)ex;
 - (void)powerOff;
 - (void)run:(ExceptionWrapper *)ex;

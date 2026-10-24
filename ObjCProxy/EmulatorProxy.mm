@@ -1318,13 +1318,13 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)executeScript:(NSURL *)url exception:(ExceptionWrapper *)ex
 {
-    try { [self shell]->execScript(fs::path(url.fileSystemRepresentation)); }
+    try { [self shell]->execScriptAsync(fs::path(url.fileSystemRepresentation)); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
 - (void)executeString:(NSString *)str
 {
-    [self shell]->execScript(std::string([str UTF8String]));
+    [self shell]->execScriptAsync(std::string([str UTF8String]));
 }
 
 @end
@@ -1942,9 +1942,9 @@ NSString *EventSlotName(EventSlot slot)
     [self emu]->softReset();
 }
 
-- (void)isReady:(ExceptionWrapper *)ex
+- (void)checkReady:(ExceptionWrapper *)ex
 {
-    try { [self emu]->isReady(); }
+    try { [self emu]->checkReady(); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 

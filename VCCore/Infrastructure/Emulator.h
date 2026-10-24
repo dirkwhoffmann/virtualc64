@@ -148,7 +148,7 @@ private:
     void _trackOn() override { main.trackOn(); }
     void _trackOff() override { main.trackOff(); }
 
-    void isReady() override;
+    void checkReady() override;
 
 
     //

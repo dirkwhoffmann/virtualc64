@@ -91,10 +91,10 @@ CoreComponent::isHalted() const
 }
 
 void
-CoreComponent::isReady() const
+CoreComponent::checkReady() const
 {
-    for (auto c : subComponents) { c->isReady(); }
-    _isReady();
+    for (auto c : subComponents) { c->checkReady(); }
+    _checkReady();
 }
 
 u64
