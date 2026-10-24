@@ -340,15 +340,15 @@ VirtualC64::warpOff(isize source)
 void 
 VirtualC64::trackOn(isize source)
 {
-    VC64_PUBLIC_SUSPEND
-    emu->trackOn(source);
+    VC64_PUBLIC
+    emu->put(Cmd::TRACK_ON, source);
 }
 
 void 
 VirtualC64::trackOff(isize source)
 {
-    VC64_PUBLIC_SUSPEND
-    emu->trackOff(source);
+    VC64_PUBLIC
+    emu->put(Cmd::TRACK_OFF, source);
 }
 
 void

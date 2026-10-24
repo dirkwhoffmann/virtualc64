@@ -39,6 +39,8 @@ enum class Cmd : long
     PAUSE,                  ///< Pause emulation
     WARP_ON,                ///< Switch on warp mode
     WARP_OFF,               ///< Switch off warp mode
+    TRACK_ON,               ///< Switch on track mode
+    TRACK_OFF,              ///< Switch off track mode
     HALT,                   ///< Terminate the emulator thread
 
     // C64
@@ -139,6 +141,8 @@ struct CmdEnum : Reflectable<CmdEnum, Cmd> {
             case Cmd::PAUSE:                 return "PAUSE";
             case Cmd::WARP_ON:               return "WARP_ON";
             case Cmd::WARP_OFF:              return "WARP_OFF";
+            case Cmd::TRACK_ON:              return "TRACK_ON";
+            case Cmd::TRACK_OFF:             return "TRACK_OFF";
             case Cmd::HALT:                  return "HALT";
 
             case Cmd::ALARM_ABS:             return "ALARM_ABS";

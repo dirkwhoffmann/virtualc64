@@ -707,6 +707,8 @@ C64::update(CmdQueue &queue)
                 case Cmd::PAUSE:
                 case Cmd::WARP_ON:
                 case Cmd::WARP_OFF:
+                case Cmd::TRACK_ON:
+                case Cmd::TRACK_OFF:
                 case Cmd::HALT:
                 case Cmd::ALARM_ABS:
                 case Cmd::ALARM_REL:
@@ -1360,6 +1362,16 @@ C64::processCommand(const Command &cmd)
                 throw std::runtime_error("Source 0 is reserved for implementing config.warpMode.");
             }
             emulator.warpOff(isize(cmd.value));
+            break;
+
+        case Cmd::TRACK_ON:
+
+            emulator.trackOn(isize(cmd.value));
+            break;
+
+        case Cmd::TRACK_OFF:
+
+            emulator.trackOff(isize(cmd.value));
             break;
 
         case Cmd::HALT:

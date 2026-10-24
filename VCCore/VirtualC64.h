@@ -1547,13 +1547,15 @@ struct VirtualC64 : public API {
 
     /** @brief  Enables track mode.
      *
-     *  @note The change is made synchronously (the emulator is suspended meanwhile).
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void trackOn(isize source = 0);
 
     /** @brief  Disables track mode.
      *
-     *  @note The change is made synchronously (the emulator is suspended meanwhile).
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
      */
     void trackOff(isize source = 0);
 
