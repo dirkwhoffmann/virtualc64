@@ -2042,7 +2042,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)warpOn
 {
-    [self emu]->warpOn();
+    [self emu]->warpOn(0);
 }
 
 - (void)warpOn:(NSInteger)source
@@ -2052,7 +2052,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)warpOff
 {
-    [self emu]->warpOff();
+    [self emu]->warpOff(0);
 }
 
 - (void)warpOff:(NSInteger)source
@@ -2062,7 +2062,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)trackOn
 {
-    [self emu]->trackOn();
+    [self emu]->trackOn(0);
 }
 
 - (void)trackOn:(NSInteger)source
@@ -2072,7 +2072,7 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void)trackOff
 {
-    [self emu]->trackOff();
+    [self emu]->trackOff(0);
 }
 
 - (void)trackOff:(NSInteger)source

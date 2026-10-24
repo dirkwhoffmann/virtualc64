@@ -1537,31 +1537,58 @@ struct VirtualC64 : public API {
 
     /** @brief  Enables warp mode.
      *
+     *  Several clients can request the mode independently. Each client uses its
+     *  own source, and the mode stays on as long as at least one source has
+     *  requested it. Valid sources are 0 to 6.
+     *
+     *  @param  source      The client requesting the change.
+     *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
+     *
      *  @note The request is queued and carried out asynchronously by the emulator
      *  thread. Use sync() to wait for it.
      */
-    void warpOn(isize source = 0);
+    void warpOn(isize source);
 
     /** @brief  Disables warp mode.
      *
+     *  Withdraws the request made by the given source. The mode is switched off
+     *  when no other source requests it (the emulator itself may keep warp mode
+     *  on to implement the warp mode option). Valid sources are 0 to 6.
+     *
+     *  @param  source      The client requesting the change.
+     *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
+     *
      *  @note The request is queued and carried out asynchronously by the emulator
      *  thread. Use sync() to wait for it.
      */
-    void warpOff(isize source = 0);
+    void warpOff(isize source);
 
     /** @brief  Enables track mode.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
-     */
-    void trackOn(isize source = 0);
-
-    /** @brief  Disables track mode.
+     *  Several clients can request the mode independently. Each client uses its
+     *  own source, and the mode stays on as long as at least one source has
+     *  requested it. Valid sources are 0 to 6.
+     *
+     *  @param  source      The client requesting the change.
+     *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
      *
      *  @note The request is queued and carried out asynchronously by the emulator
      *  thread. Use sync() to wait for it.
      */
-    void trackOff(isize source = 0);
+    void trackOn(isize source);
+
+    /** @brief  Disables track mode.
+     *
+     *  Withdraws the request made by the given source. The mode is switched off
+     *  when no other source requests it. Valid sources are 0 to 6.
+     *
+     *  @param  source      The client requesting the change.
+     *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
+     *
+     *  @note The request is queued and carried out asynchronously by the emulator
+     *  thread. Use sync() to wait for it.
+     */
+    void trackOff(isize source);
 
 
     /// @}

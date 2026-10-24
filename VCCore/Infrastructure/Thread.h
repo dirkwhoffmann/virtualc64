@@ -183,10 +183,10 @@ public:
     void pause();
     void halt();
 
-    void warpOn(isize source = 0);
-    void warpOff(isize source = 0);
-    void trackOn(isize source = 0);
-    void trackOff(isize source = 0);
+    void warpOn(isize source);
+    void warpOff(isize source);
+    void trackOn(isize source);
+    void trackOff(isize source);
 
     // Signals a state transition
     virtual void _powerOn() = 0;

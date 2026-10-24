@@ -331,6 +331,7 @@ void
 VirtualC64::warpOn(isize source)
 {
     VC64_PUBLIC
+    if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
     emu->put(Cmd::WARP_ON, source);
 }
 
@@ -338,6 +339,7 @@ void
 VirtualC64::warpOff(isize source)
 {
     VC64_PUBLIC
+    if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
     emu->put(Cmd::WARP_OFF, source);
 }
 
@@ -345,6 +347,7 @@ void
 VirtualC64::trackOn(isize source)
 {
     VC64_PUBLIC
+    if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
     emu->put(Cmd::TRACK_ON, source);
 }
 
@@ -352,6 +355,7 @@ void
 VirtualC64::trackOff(isize source)
 {
     VC64_PUBLIC
+    if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
     emu->put(Cmd::TRACK_OFF, source);
 }
 

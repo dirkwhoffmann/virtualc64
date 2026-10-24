@@ -1355,27 +1355,33 @@ C64::processCommand(const Command &cmd)
             
         case Cmd::WARP_ON:
             
-            if (cmd.value == 0) {
-                throw std::runtime_error("Source 0 is reserved for implementing config.warpMode.");
+            if (cmd.value < 0 || cmd.value > 6) {
+                throw CoreError(CoreError::OPT_INV_ARG, "0...6");
             }
             emulator.warpOn(isize(cmd.value));
             break;
             
         case Cmd::WARP_OFF:
 
-            if (cmd.value == 0) {
-                throw std::runtime_error("Source 0 is reserved for implementing config.warpMode.");
+            if (cmd.value < 0 || cmd.value > 6) {
+                throw CoreError(CoreError::OPT_INV_ARG, "0...6");
             }
             emulator.warpOff(isize(cmd.value));
             break;
 
         case Cmd::TRACK_ON:
 
+            if (cmd.value < 0 || cmd.value > 6) {
+                throw CoreError(CoreError::OPT_INV_ARG, "0...6");
+            }
             emulator.trackOn(isize(cmd.value));
             break;
 
         case Cmd::TRACK_OFF:
 
+            if (cmd.value < 0 || cmd.value > 6) {
+                throw CoreError(CoreError::OPT_INV_ARG, "0...6");
+            }
             emulator.trackOff(isize(cmd.value));
             break;
 
