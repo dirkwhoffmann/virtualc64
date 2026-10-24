@@ -216,7 +216,7 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
 
         switch sender.selectedSegment {
 
-        case 0: emu.running ? emu.pause() : try? emu.run()
+        case 0: emu.running ? emu.pauseAsync() : try? emu.runAsync()
         case 1: emu.stepOver()
         case 2: emu.stepInto()
         case 3: emu.stepCycle()
@@ -230,7 +230,7 @@ class InspectorToolbar: NSToolbar, NSToolbarDelegate {
 
     @objc private func pauseAction() {
 
-        emu.running ? emu.pause() : try? emu.run()
+        emu.running ? emu.pauseAsync() : try? emu.runAsync()
     }
 
     @objc private func stepOverAction() {

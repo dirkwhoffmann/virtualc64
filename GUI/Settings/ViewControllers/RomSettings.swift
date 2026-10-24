@@ -173,7 +173,7 @@ class RomSettingsViewController: SettingsViewController {
 
         if let emu = emu {
 
-            emu.powerOff()
+            emu.powerOffAsync()
             emu.delete(.C64_BASIC)
             refresh()
         }
@@ -183,7 +183,7 @@ class RomSettingsViewController: SettingsViewController {
 
         if let emu = emu {
 
-            emu.powerOff()
+            emu.powerOffAsync()
             emu.delete(.C64_CHAR)
             refresh()
         }
@@ -193,7 +193,7 @@ class RomSettingsViewController: SettingsViewController {
 
         if let emu = emu {
 
-            emu.powerOff()
+            emu.powerOffAsync()
             emu.delete(.C64_KERNAL)
             refresh()
         }
@@ -203,7 +203,7 @@ class RomSettingsViewController: SettingsViewController {
 
         if let emu = emu {
 
-            emu.powerOff()
+            emu.powerOffAsync()
             emu.delete(.C64_VC1541)
             refresh()
         }

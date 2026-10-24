@@ -1932,14 +1932,14 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)hardReset
+- (void)hardResetAsync
 {
-    [self emu]->hardReset();
+    [self emu]->hardResetAsync();
 }
 
-- (void)softReset
+- (void)softResetAsync
 {
-    [self emu]->softReset();
+    [self emu]->softResetAsync();
 }
 
 - (void)checkReady:(ExceptionWrapper *)ex
@@ -1948,15 +1948,15 @@ NSString *EventSlotName(EventSlot slot)
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)powerOn:(ExceptionWrapper *)ex
+- (void)powerOnAsync:(ExceptionWrapper *)ex
 {
-    try { [self emu]->powerOn(); }
+    try { [self emu]->powerOnAsync(); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)powerOff
+- (void)powerOffAsync
 {
-    [self emu]->powerOff();
+    [self emu]->powerOffAsync();
 }
 
 - (EmulatorInfo)info
@@ -2014,15 +2014,15 @@ NSString *EventSlotName(EventSlot slot)
     return [self emu]->isTracking();
 }
 
-- (void)run:(ExceptionWrapper *)ex
+- (void)runAsync:(ExceptionWrapper *)ex
 {
-    try { [self emu]->run(); }
+    try { [self emu]->runAsync(); }
     catch (std::exception &stdex) { [ex save:stdex]; }
 }
 
-- (void)pause
+- (void)pauseAsync
 {
-    [self emu]->pause();
+    [self emu]->pauseAsync();
 }
 
 - (void)halt
@@ -2040,44 +2040,44 @@ NSString *EventSlotName(EventSlot slot)
     [self emu]->resume();
 }
 
-- (void)warpOn
+- (void)warpOnAsync
 {
-    [self emu]->warpOn(0);
+    [self emu]->warpOnAsync(0);
 }
 
-- (void)warpOn:(NSInteger)source
+- (void)warpOnAsync:(NSInteger)source
 {
-    [self emu]->warpOn(source);
+    [self emu]->warpOnAsync(source);
 }
 
-- (void)warpOff
+- (void)warpOffAsync
 {
-    [self emu]->warpOff(0);
+    [self emu]->warpOffAsync(0);
 }
 
-- (void)warpOff:(NSInteger)source
+- (void)warpOffAsync:(NSInteger)source
 {
-    [self emu]->warpOff(source);
+    [self emu]->warpOffAsync(source);
 }
 
-- (void)trackOn
+- (void)trackOnAsync
 {
-    [self emu]->trackOn(0);
+    [self emu]->trackOnAsync(0);
 }
 
-- (void)trackOn:(NSInteger)source
+- (void)trackOnAsync:(NSInteger)source
 {
-    [self emu]->trackOn(source);
+    [self emu]->trackOnAsync(source);
 }
 
-- (void)trackOff
+- (void)trackOffAsync
 {
-    [self emu]->trackOff(0);
+    [self emu]->trackOffAsync(0);
 }
 
-- (void)trackOff:(NSInteger)source
+- (void)trackOffAsync:(NSInteger)source
 {
-    [self emu]->trackOff(source);
+    [self emu]->trackOffAsync(source);
 }
 
 - (NSInteger)get:(Opt)opt

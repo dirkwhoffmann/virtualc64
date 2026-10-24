@@ -371,7 +371,7 @@ class Inspector: DialogController {
         super.dialogWillShow()
 
         // Enter debug mode
-        emu?.trackOn()
+        emu?.trackOnAsync()
         emu?.setAsync(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
         
@@ -398,7 +398,7 @@ class Inspector: DialogController {
         super.showWindow(self)
 
         // Enter debug mode
-        emu?.trackOn()
+        emu?.trackOnAsync()
         emu?.setAsync(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
     }
@@ -635,7 +635,7 @@ extension Inspector {
         if parent.inspectors.isEmpty {
 
             // Leave debug mode
-            emu?.trackOff()
+            emu?.trackOffAsync()
             emu?.setAsync(.MEM_HEATMAP, enable: false)
             emu?.c64.autoInspectionMask = 0
         }

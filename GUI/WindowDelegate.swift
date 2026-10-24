@@ -28,7 +28,7 @@ extension MyController: NSWindowDelegate {
         hideOrShowDriveMenus()
         
         // Restart the emulator if it was paused when the window lost focus
-        if pref.pauseInBackground && pauseInBackgroundSavedState { try? emu?.run() }
+        if pref.pauseInBackground && pauseInBackgroundSavedState { try? emu?.runAsync() }
         
         // Register to receive mouse movement events
         window.acceptsMouseMovedEvents = true
@@ -48,7 +48,7 @@ extension MyController: NSWindowDelegate {
         if let emu = emu {
             
             pauseInBackgroundSavedState = emu.running
-            if pref.pauseInBackground { emu.pause() }
+            if pref.pauseInBackground { emu.pauseAsync() }
         }        
     }
     
@@ -68,7 +68,7 @@ extension MyController: NSWindowDelegate {
         loginfo(.lifetime)
         
         loginfo(.shutdown, "Pause emulation...")
-        emu?.pause()
+        emu?.pauseAsync()
         
         loginfo(.shutdown, "Shut down the audio unit...")
         macAudio.shutDown()

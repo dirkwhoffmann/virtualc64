@@ -1457,20 +1457,44 @@ struct VirtualC64 : public API {
      *  the same state that is entered when the user hits the pause button.
      *  Calling this function on an already powered-on emulator has no effect.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
-     *  */
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use powerOnAsync() in these situations.
+     */
     void powerOn();
+
+    /** @brief  Switches the emulator on without waiting for the result
+     *
+     *  This is the asynchronous counterpart of powerOn(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     */
+    void powerOnAsync();
 
     /** @brief  Switches the emulator off
      *
      *  Powering off the emulator changes the internal state to #STATE\_OFF.
      *  Calling this function on an already powered-off emulator has no effect.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use powerOffAsync() in these situations.
      */
     void powerOff();
+
+    /** @brief  Switches the emulator off without waiting for the result
+     *
+     *  This is the asynchronous counterpart of powerOff(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     */
+    void powerOffAsync();
 
     /** @brief  Starts emulation
      *
@@ -1480,11 +1504,25 @@ struct VirtualC64 : public API {
      *  mode is switched on. If this function is called for a powered-off
      *  emulator, an implicit call to powerOn() will be performed.
      *
-     *  @throw CoreError if the emulator is not ready to run (see checkReady()). The
-     *  request itself is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  @throw CoreError if the emulator is not ready to run (see checkReady()).
+     *
+     *  The function returns when the emulator has been started.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use runAsync() in these situations.
      */
     void run();
+
+    /** @brief  Starts emulation without waiting for the result
+     *
+     *  This is the asynchronous counterpart of run(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     *
+     *  @throw CoreError if the emulator is not ready to run (see checkReady()).
+     */
+    void runAsync();
 
     /** @brief   Pauses emulation
      *
@@ -1492,10 +1530,22 @@ struct VirtualC64 : public API {
      * to #STATE\_PAUSED after completing the current frame. The emulator
      * enters a frozen state where no more frames are computed.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use pauseAsync() in these situations.
      */
     void pause();
+
+    /** @brief  Pauses emulation without waiting for the result
+     *
+     *  This is the asynchronous counterpart of pause(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     */
+    void pauseAsync();
 
     /// @}
     /// @name Resetting the C64
@@ -1506,20 +1556,44 @@ struct VirtualC64 : public API {
      *  A hard reset affects all components. The effect is similar to
      *  switching power off and on.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use hardResetAsync() in these situations.
      */
     void hardReset();
+
+    /** @brief  Performs a hard reset without waiting for the result
+     *
+     *  This is the asynchronous counterpart of hardReset(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     */
+    void hardResetAsync();
 
     /** @brief  Performs a soft reset
      *
      *  A soft reset emulates a real reset of the C64 which can be initiated
      *  via the reset line on the expansion port.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use softResetAsync() in these situations.
      */
     void softReset();
+
+    /** @brief  Performs a soft reset without waiting for the result
+     *
+     *  This is the asynchronous counterpart of softReset(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     */
+    void softResetAsync();
     
     /** @brief   Terminates the emulator thread
      *
@@ -1544,10 +1618,24 @@ struct VirtualC64 : public API {
      *  @param  source      The client requesting the change.
      *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use warpOnAsync() in these situations.
      */
     void warpOn(isize source);
+
+    /** @brief  Enables warp mode without waiting for the result
+     *
+     *  This is the asynchronous counterpart of warpOn(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     *
+     *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
+     */
+    void warpOnAsync(isize source);
 
     /** @brief  Disables warp mode.
      *
@@ -1558,10 +1646,24 @@ struct VirtualC64 : public API {
      *  @param  source      The client requesting the change.
      *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use warpOffAsync() in these situations.
      */
     void warpOff(isize source);
+
+    /** @brief  Disables warp mode without waiting for the result
+     *
+     *  This is the asynchronous counterpart of warpOff(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     *
+     *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
+     */
+    void warpOffAsync(isize source);
 
     /** @brief  Enables track mode.
      *
@@ -1572,10 +1674,24 @@ struct VirtualC64 : public API {
      *  @param  source      The client requesting the change.
      *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use trackOnAsync() in these situations.
      */
     void trackOn(isize source);
+
+    /** @brief  Enables track mode without waiting for the result
+     *
+     *  This is the asynchronous counterpart of trackOn(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     *
+     *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
+     */
+    void trackOnAsync(isize source);
 
     /** @brief  Disables track mode.
      *
@@ -1585,10 +1701,24 @@ struct VirtualC64 : public API {
      *  @param  source      The client requesting the change.
      *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
      *
-     *  @note The request is queued and carried out asynchronously by the emulator
-     *  thread. Use sync() to wait for it.
+     *  The function returns when the emulator thread has carried out the
+     *  request. A failure throws the corresponding exception.
+     *
+     *  @throw CoreError (#Fault::NOT_LAUNCHED) if the emulator thread cannot
+     *  carry out the request, because it has not been launched yet, is halted or
+     *  suspended. The same applies if the function is called from the emulator
+     *  thread. Use trackOffAsync() in these situations.
      */
     void trackOff(isize source);
+
+    /** @brief  Disables track mode without waiting for the result
+     *
+     *  This is the asynchronous counterpart of trackOff(). The request is queued and
+     *  carried out by the emulator thread at some later time (see sync()).
+     *
+     *  @throw CoreError (#Fault::OPT_INV_ARG) if the source is out of range.
+     */
+    void trackOffAsync(isize source);
 
 
     /// @}

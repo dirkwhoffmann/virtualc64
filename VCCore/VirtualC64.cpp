@@ -265,22 +265,47 @@ VirtualC64::checkReady() const
     return emu->checkReady();
 }
 
+void
+VirtualC64::powerOn()
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::POWER_ON));
+}
+
 void 
-VirtualC64::powerOn() 
+VirtualC64::powerOnAsync() 
 {
     VC64_PUBLIC
     emu->put(Cmd::POWER_ON);
 }
 
+void
+VirtualC64::powerOff()
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::POWER_OFF));
+}
+
 void 
-VirtualC64::powerOff() 
+VirtualC64::powerOffAsync() 
 {
     VC64_PUBLIC
     emu->put(Cmd::POWER_OFF);
 }
 
+void
+VirtualC64::run()
+{
+    VC64_PUBLIC
+    
+    // Throw an exception if the emulator is not ready to run
+    checkReady();
+    
+    emu->sendAndWait(Command(Cmd::RUN));
+}
+
 void 
-VirtualC64::run() 
+VirtualC64::runAsync() 
 {
     VC64_PUBLIC
     
@@ -290,8 +315,15 @@ VirtualC64::run()
     emu->put(Cmd::RUN);
 }
 
+void
+VirtualC64::pause()
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::PAUSE));
+}
+
 void 
-VirtualC64::pause() 
+VirtualC64::pauseAsync() 
 {
     VC64_PUBLIC
 
@@ -302,11 +334,25 @@ void
 VirtualC64::hardReset()
 {
     VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::HARD_RESET));
+}
+
+void
+VirtualC64::hardResetAsync()
+{
+    VC64_PUBLIC
     emu->put(Cmd::HARD_RESET);
 }
 
 void
 VirtualC64::softReset()
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::SOFT_RESET));
+}
+
+void
+VirtualC64::softResetAsync()
 {
     VC64_PUBLIC
     emu->put(Cmd::SOFT_RESET);
@@ -332,27 +378,59 @@ VirtualC64::warpOn(isize source)
 {
     VC64_PUBLIC
     if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
+    emu->sendAndWait(Command(Cmd::WARP_ON, source));
+}
+
+void
+VirtualC64::warpOnAsync(isize source)
+{
+    VC64_PUBLIC
+    if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
     emu->put(Cmd::WARP_ON, source);
 }
 
-void 
+void
 VirtualC64::warpOff(isize source)
+{
+    VC64_PUBLIC
+    if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
+    emu->sendAndWait(Command(Cmd::WARP_OFF, source));
+}
+
+void 
+VirtualC64::warpOffAsync(isize source)
 {
     VC64_PUBLIC
     if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
     emu->put(Cmd::WARP_OFF, source);
 }
 
-void 
+void
 VirtualC64::trackOn(isize source)
+{
+    VC64_PUBLIC
+    if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
+    emu->sendAndWait(Command(Cmd::TRACK_ON, source));
+}
+
+void 
+VirtualC64::trackOnAsync(isize source)
 {
     VC64_PUBLIC
     if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
     emu->put(Cmd::TRACK_ON, source);
 }
 
-void 
+void
 VirtualC64::trackOff(isize source)
+{
+    VC64_PUBLIC
+    if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");
+    emu->sendAndWait(Command(Cmd::TRACK_OFF, source));
+}
+
+void 
+VirtualC64::trackOffAsync(isize source)
 {
     VC64_PUBLIC
     if (source < 0 || source > 6) throw CoreError(CoreError::OPT_INV_ARG, "0...6");

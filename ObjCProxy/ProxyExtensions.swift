@@ -80,17 +80,17 @@ extension EmulatorProxy {
         if let _ = exc.fault { throw AppError(exc) }
     }
 
-    func powerOn() throws {
+    func powerOnAsync() throws {
         
         let exc = ExceptionWrapper()
-        power(on: exc)
+        power(onAsync: exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
 
-    func run() throws {
+    func runAsync() throws {
         
         let exc = ExceptionWrapper()
-        run(exc)
+        runAsync(exc)
         if let _ = exc.fault { throw AppError(exc) }
     }
 

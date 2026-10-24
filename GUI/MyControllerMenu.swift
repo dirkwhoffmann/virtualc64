@@ -464,21 +464,21 @@ extension MyController: NSMenuItemValidation {
     @IBAction func pauseAction(_ sender: Any!) {
         
         if let emu = emu {
-            if emu.running { emu.pause() }
+            if emu.running { emu.pauseAsync() }
         }
     }
     
     @IBAction func continueAction(_ sender: Any!) {
         
         if let emu = emu {
-            if emu.paused { try? emu.run() }
+            if emu.paused { try? emu.runAsync() }
         }
     }
     
     @IBAction func stopAndGoAction(_ sender: Any!) {
         
         if let emu = emu {
-            if emu.running { emu.pause() } else { try? emu.run() }
+            if emu.running { emu.pauseAsync() } else { try? emu.runAsync() }
         }
     }
     
@@ -501,15 +501,15 @@ extension MyController: NSMenuItemValidation {
         if let emu = emu {
             
             renderer.rotateLeft()
-            emu.hardReset()
-            try? emu.run()
+            emu.hardResetAsync()
+            try? emu.runAsync()
         }
     }
     
     @IBAction func softResetAction(_ sender: Any!) {
         
         if let emu = emu {
-            emu.softReset()
+            emu.softResetAsync()
         }
     }
     
@@ -519,12 +519,12 @@ extension MyController: NSMenuItemValidation {
             
             if emu.poweredOn {
                 
-                emu.powerOff()
+                emu.powerOffAsync()
                 
             } else {
                 
                 do {
-                    try emu.run()
+                    try emu.runAsync()
                 } catch {
                     showAlert(.cantRun, error: error)
                 }
@@ -981,7 +981,7 @@ extension MyController: NSMenuItemValidation {
         if let emu = emu {
             
             emu.expansionport.detachCartridge()
-            emu.hardReset()
+            emu.hardResetAsync()
         }
     }
     

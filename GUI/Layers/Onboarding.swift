@@ -166,7 +166,7 @@ class OnboardingLayerViewController: NSViewController {
     func finish() {
 
         layer.close(delay: 1.0)
-        try? emu.run()
+        try? emu.runAsync()
     }
 
     @IBAction func previousPage(_ sender: Any?) {

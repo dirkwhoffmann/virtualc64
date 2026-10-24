@@ -42,7 +42,7 @@ class SnapshotViewer: DialogController {
         now = Date()
 
         wasRunning = emu?.running ?? false
-        if wasRunning { emu?.pause() }
+        if wasRunning { emu?.pauseAsync() }
 
         updateLabels()
         self.carousel.type = iCarouselType.timeMachine
@@ -156,7 +156,7 @@ class SnapshotViewer: DialogController {
             NSSound.beep()
         }
 
-        if wasRunning { try? emu?.run() }
+        if wasRunning { try? emu?.runAsync() }
     }
     
     @IBAction override func cancelAction(_ sender: Any!) {
@@ -177,7 +177,7 @@ class SnapshotViewer: DialogController {
         ]
         for item in items { item.isHidden = true }
 
-        if wasRunning { try? emu?.run() }
+        if wasRunning { try? emu?.runAsync() }
     }
 }
 

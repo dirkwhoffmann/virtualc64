@@ -187,15 +187,15 @@ extension MyController {
         
         do {
             // Press the virtual power switch
-            try emu?.powerOn()
+            try emu?.powerOnAsync()
             
             // Start emulation
-            try emu?.run()
+            try emu?.runAsync()
             
         } catch {
             
             // Switch off
-            emu?.powerOff()
+            emu?.powerOffAsync()
             
             // Open the onboarding agent
             renderer.onboarding.open(delay: 1.0)

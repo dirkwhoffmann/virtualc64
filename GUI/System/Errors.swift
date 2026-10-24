@@ -367,7 +367,7 @@ extension MyDocument {
             alert.addButton(withTitle: "Cancel")
 
             if alert.runSheet(for: windowForSheet!) == .alertFirstButtonReturn {
-                emu!.powerOff()
+                emu!.powerOffAsync()
             } else {
                 return false
             }
