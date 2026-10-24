@@ -667,7 +667,7 @@ struct DatasetteAPI : public API {
      *
      *  @throw Error if the file cannot be read or does not contain valid data.
      */
-    void insertTape(const fs::path &path);
+    void insertTape(const std::filesystem::path &path);
 
     /** @brief  Ejects a tape.
      *  This function has no effect if no tape is inserted.
@@ -677,7 +677,7 @@ struct DatasetteAPI : public API {
     /** @brief  Export tape to a file.
      *  @param  path    Export path.
      */
-    void exportTape(const fs::path &path) const;
+    void exportTape(const std::filesystem::path &path) const;
 };
 
 
@@ -813,7 +813,7 @@ struct ExpansionPortAPI : public API {
 
     /** @brief  Export cartridge
      */
-    void exportCRT(const fs::path &path) const;
+    void exportCRT(const std::filesystem::path &path) const;
     
     /// @}
 
@@ -1024,7 +1024,7 @@ struct RetroShellAPI : public API {
      *
      *  @throw Error if the file cannot be opened.
      */
-    void execScriptAsync(const fs::path &path);
+    void execScriptAsync(const std::filesystem::path &path);
     void execScriptAsync(std::stringstream &ss);
     void execScriptAsync(const std::ifstream &fs);
     void execScriptAsync(const string &contents);
@@ -1505,7 +1505,7 @@ struct C64API : public API {
 
     /** @brief  Flashes a file into memory
      */
-    void flash(const fs::path &path, isize item = 0);
+    void flash(const std::filesystem::path &path, isize item = 0);
     void flashNew(const AnyFile &file);
     
     /** @brief  Flashes a file from a collection into memory

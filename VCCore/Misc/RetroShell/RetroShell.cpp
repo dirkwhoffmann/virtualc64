@@ -155,7 +155,7 @@ RetroShell::asyncExecScript(std::stringstream &ss)
                 .input = line
             });
         }
-
+    
         emulator.put(Command(Cmd::RSH_EXECUTE));
     }
 }
