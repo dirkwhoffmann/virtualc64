@@ -153,6 +153,154 @@ public:
 };
 
 
+/** Guards API
+ *
+ *  Gives access to the breakpoints or the watchpoints of the CPU. The
+ *  functions that modify the list hand a request to the emulator thread and
+ *  return at once, so a change shows up in the query functions only after the
+ *  emulator thread has carried it out (see VirtualC64::sync()).
+ */
+class GuardsAPI : public API {
+
+public:
+
+    class CPU *cpu = nullptr;
+
+    // Selects the list this API operates on
+    bool watchpoints = false;
+
+    /** @brief  Returns the number of guards in the guard list.
+     */
+    isize elements() const;
+
+    /** @brief  Returns information about a guard.
+     *  @param  nr      Number of the guard in the guard list
+     *  @return A copy of the guard's state, or nothing if it does not exist.
+     */
+    std::optional<GuardInfo> guardNr(isize nr) const;
+
+    /** @brief  Returns information about a guard.
+     *  @param  addr    The address of the guard to query
+     *  @return A copy of the guard's state, or nothing if the address is not guarded.
+     */
+    std::optional<GuardInfo> guardAt(u32 addr) const;
+
+    /** @brief  Sets a guard.
+     *  @param  addr    The observed memory address.
+     *  @param  ignores If a value greater zero is given, the guard has to
+     *                  be hit the specified number of times until program
+     *                  execution is paused.
+     */
+    void setAt(u32 addr, isize ignores = 0);
+
+    /** @brief  Relocates a guard.
+     *  @param  nr      Number of the guard in the guard list
+     *  @param  addr    New address
+     */
+    void moveTo(isize nr, u32 addr);
+
+    /** @brief  Deletes a guard.
+     *  @param  nr      Number of the guard in the guard list
+     */
+    void remove(isize nr);
+
+    /** @brief  Deletes a guard.
+     *  @param  addr    The address of the guard to be deleted.
+     */
+    void removeAt(u32 addr);
+
+    /** @brief  Deletes all guards.
+     */
+    void removeAll();
+
+    /** @brief  Enables a guard.
+     *  @param  nr      Number of the guard in the guard list
+     */
+    void enable(isize nr);
+
+    /** @brief  Enables a guard.
+     *  @param  addr    The address of the guard to be enabled
+     */
+    void enableAt(u32 addr);
+
+    /** @brief  Enables all guards.
+     */
+    void enableAll();
+
+    /** @brief  Disables a guard.
+     *  @param  nr      Number of the guard in the guard list
+     */
+    void disable(isize nr);
+
+    /** @brief  Disables a guard.
+     *  @param  addr    The address of the guard to be disabled
+     */
+    void disableAt(u32 addr);
+
+    /** @brief  Disables all guards.
+     */
+    void disableAll();
+
+    /** @brief  Enables a disabled guard and disables an enabled one.
+     *  @param  nr      Number of the guard in the guard list
+     */
+    void toggle(isize nr);
+};
+
+/** CPU Debugger API
+ */
+class CPUDebuggerAPI : public API {
+
+public:
+
+    class CPU *cpu = nullptr;
+
+    /** @brief  Returns the number of instructions in the record buffer.
+     *  @note   The record buffer is only filled in track mode. To save
+     *          computation time, the GUI enables track mode when the CPU
+     *          inspector is opened and disables track mode when it is
+     *          closed.
+     */
+    isize loggedInstructions() const;
+
+    /** @brief  Empties the record buffer.
+     */
+    void clearLog();
+
+    /** Returns an entry from the record buffer. Returned by value (rather
+     *  than by reference) since the log buffer is written concurrently by
+     *  the emulator thread.
+     *  @param  nr      Index of the instruction in the record buffer
+     *  @return The recorded instruction, including the address (pc) it was
+     *          fetched from.
+     */
+    RecordedInstruction logEntry(isize nr) const;
+
+    /** Determines how the disassembler displays numbers.
+     *  @param  instrFormat Format for numbers inside instructions
+     *  @param  dataFormat  Format for printed data values
+     */
+    void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
+
+    /** Disassembles an instruction.
+     *  @param  addr    Address of the instruction to disassemble
+     *  @param  fmt     String defining the output format. The directives are
+     *                  %p (address), %b (instruction bytes), %i (instruction),
+     *                  and %f (flags, recorded instructions only).
+     *  @param  len     If given, receives the length of the instruction in bytes.
+     *  @return The disassembled text.
+     */
+    string disassemble(u16 addr, const string &fmt, isize *len = nullptr) const;
+
+    /** Disassembles an instruction from the record buffer.
+     *  @param  nr      Index of the instruction in the record buffer
+     *  @param  fmt     String defining the output format (see disassemble())
+     *  @param  len     If given, receives the length of the instruction in bytes.
+     *  @return The disassembled text.
+     */
+    string disassembleRecorded(isize nr, const string &fmt, isize *len = nullptr) const;
+};
+
 /** CPU API
  */
 class CPUAPI : public API {
@@ -160,6 +308,10 @@ class CPUAPI : public API {
 public:
 
     class CPU *cpu = nullptr;
+
+    CPUDebuggerAPI debugger;
+    GuardsAPI breakpoints;
+    GuardsAPI watchpoints;
 
     /** @brief  Returns the component's current configuration.
      */
@@ -176,73 +328,6 @@ public:
      */
     const CPUInfo &getInfo() const;
     const CPUInfo &getCachedInfo() const;
-
-    /** @brief  Returns the number of instructions in the record buffer.
-     *  @note   The record buffer is only filled in track mode. To save
-     *          computation time, the GUI enables track mode when the CPU
-     *          inspector is opened and disables track mode when it is
-     *          closed.
-     */
-    isize loggedInstructions() const;
-
-    /** @brief  Empties the record buffer.
-     */
-    void clearLog();
-
-    /** Determines how the disassembler displays numbers.
-     *  @param  instrFormat Format for numbers inside instructions
-     *  @param  dataFormat  Format for printed data values
-     */
-    void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
-
-    /** Disassembles an instruction.
-     *  @param  dst     Destination buffer
-     *  @param  fmt     String definining the output format
-     *  @param  addr    Address of the instruction to disassemble
-     *  @return Length of the disassembled instruction in bytes.
-     */
-    isize disassemble(char *dst, const char *fmt, u16 addr) const;
-
-    /** Disassembles an instruction from the record buffer.
-     *  @param  dst     Destination buffer
-     *  @param  fmt     String definining the output format
-     *  @param  nr      Index of the instruction in the record buffer
-     *  @return Length of the disassembled instruction in bytes.
-     */
-    isize disassembleRecorded(char *dst, const char *fmt, isize nr) const;
-
-    /** Returns an entry from the record buffer. Returned by value (rather
-     *  than by reference) since the log buffer is written concurrently by
-     *  the emulator thread.
-     *  @param  nr      Index of the instruction in the record buffer
-     *  @return The recorded instruction, including the address (pc) it was
-     *          fetched from.
-     */
-    RecordedInstruction logEntry(isize nr) const;
-
-    /** @brief  Returns a breakpoint from the breakpoint list.
-     *  @param  nr      Number of the breakpoint.
-     *  @return A copy of the breakpoint's state, or nothing if it does not exist.
-     */
-    std::optional<GuardInfo> breakpointNr(isize nr) const;
-
-    /** @brief  Returns the breakpoint set on a specific address.
-     *  @param  addr    Memory address.
-     *  @return A copy of the breakpoint's state, or nothing if it is not guarded.
-     */
-    std::optional<GuardInfo> breakpointAt(u32 addr) const;
-
-    /** @brief  Returns a watchpoint from the watchpoint list.
-     *  @param  nr      Number of the watchpoint.
-     *  @return A copy of the watchpoint's state, or nothing if it does not exist.
-     */
-    std::optional<GuardInfo> watchpointNr(isize nr) const;
-
-    /** @brief  Returns the watchpoint set on a specific address.
-     *  @param  addr    Memory address.
-     *  @return A copy of the watchpoint's state, or nothing if it is not guarded.
-     */
-    std::optional<GuardInfo> watchpointAt(u32 addr) const;
 };
 
 

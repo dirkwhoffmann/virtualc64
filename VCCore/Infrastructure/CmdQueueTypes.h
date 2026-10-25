@@ -72,6 +72,7 @@ enum class Cmd : long
     BP_DISABLE_NR,          ///< Disable the n-th breakpoint
     BP_DISABLE_AT,          ///< Disable the breakpoint at an address
     BP_DISABLE_ALL,         ///< Disable all brekpoints
+    BP_TOGGLE_NR,           ///< Toggle the n-th breakpoint
 
     // CPU (Watchpoints)
     WP_SET_AT,              ///< Set a watchpoint
@@ -85,6 +86,7 @@ enum class Cmd : long
     WP_DISABLE_NR,          ///< Disable the n-th watchpoint
     WP_DISABLE_AT,          ///< Disable the watchpoint at an address
     WP_DISABLE_ALL,         ///< Disable all watchpoints
+    WP_TOGGLE_NR,           ///< Toggle the n-th watchpoint
 
     // Keyboard
     KEY_PRESS,              ///< Press a key on the C64 keyboard
@@ -176,6 +178,7 @@ struct CmdEnum : Reflectable<CmdEnum, Cmd> {
             case Cmd::BP_DISABLE_NR:         return "BP_DISABLE_NR";
             case Cmd::BP_DISABLE_AT:         return "BP_DISABLE_AT";
             case Cmd::BP_DISABLE_ALL:        return "BP_DISABLE_ALL";
+            case Cmd::BP_TOGGLE_NR:          return "BP_TOGGLE_NR";
 
             case Cmd::WP_SET_AT:             return "WP_SET_AT";
             case Cmd::WP_MOVE_TO:            return "WP_MOVE_TO";
@@ -188,6 +191,7 @@ struct CmdEnum : Reflectable<CmdEnum, Cmd> {
             case Cmd::WP_DISABLE_NR:         return "WP_DISABLE_NR";
             case Cmd::WP_DISABLE_AT:         return "WP_DISABLE_AT";
             case Cmd::WP_DISABLE_ALL:        return "WP_DISABLE_ALL";
+            case Cmd::WP_TOGGLE_NR:          return "WP_TOGGLE_NR";
 
             case Cmd::KEY_PRESS:             return "KEY_PRESS";
             case Cmd::KEY_RELEASE:           return "KEY_RELEASE";

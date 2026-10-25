@@ -307,12 +307,12 @@ NSString *EventSlotName(EventSlot slot)
 
 - (NSInteger)loggedInstructions
 {
-    return [self cpu]->loggedInstructions();
+    return [self cpu]->debugger.loggedInstructions();
 }
 
 - (void)clearLog
 {
-    [self cpu]->clearLog();
+    [self cpu]->debugger.clearLog();
 }
 
 // DEPPRECATED
@@ -336,7 +336,7 @@ NSString *EventSlotName(EventSlot slot)
         .plainZero = false
     };
 
-    [self cpu]->setNumberFormat(instrFormat, dataFormat);
+    [self cpu]->debugger.setNumberFormat(instrFormat, dataFormat);
 }
 
 - (void)setDec
@@ -359,64 +359,64 @@ NSString *EventSlotName(EventSlot slot)
         .plainZero = false
     };
 
-    [self cpu]->setNumberFormat(instrFormat, dataFormat);
+    [self cpu]->debugger.setNumberFormat(instrFormat, dataFormat);
 }
 
 - (NSString *)disassemble:(NSInteger)addr format:(NSString *)fmt length:(NSInteger *)len
 {
-    char result[128];
+    isize length = 0;
 
-    auto length = [self cpu]->disassemble(result, [fmt UTF8String], u16(addr));
+    auto result = [self cpu]->debugger.disassemble(u16(addr), [fmt UTF8String], &length);
     *len = (NSInteger)length;
-    return @(result);
+    return @(result.c_str());
 }
 
 - (NSString *)disassembleRecorded:(NSInteger)addr format:(NSString *)fmt length:(NSInteger *)len
 {
-    char result[128];
+    isize length = 0;
 
-    auto length = [self cpu]->disassembleRecorded(result, [fmt UTF8String], u16(addr));
+    auto result = [self cpu]->debugger.disassembleRecorded(addr, [fmt UTF8String], &length);
     *len = (NSInteger)length;
-    return @(result);
+    return @(result.c_str());
 }
 
 - (BOOL) hasBreakpointWithNr:(NSInteger)nr
 {
-    return [self cpu]->breakpointNr(nr).has_value();
+    return [self cpu]->breakpoints.guardNr(nr).has_value();
 }
 
 - (GuardInfo) breakpointWithNr:(NSInteger)nr
 {
-    return [self cpu]->breakpointNr(nr).value_or(GuardInfo { });
+    return [self cpu]->breakpoints.guardNr(nr).value_or(GuardInfo { });
 }
 
 - (BOOL) hasBreakpointAtAddr:(NSInteger)addr
 {
-    return [self cpu]->breakpointAt(u32(addr)).has_value();
+    return [self cpu]->breakpoints.guardAt(u32(addr)).has_value();
 }
 
 - (GuardInfo) breakpointAtAddr:(NSInteger)addr
 {
-    return [self cpu]->breakpointAt(u32(addr)).value_or(GuardInfo { });
+    return [self cpu]->breakpoints.guardAt(u32(addr)).value_or(GuardInfo { });
 }
 
 - (BOOL) hasWatchpointWithNr:(NSInteger)nr
 {
-    return [self cpu]->watchpointNr(nr).has_value();
+    return [self cpu]->watchpoints.guardNr(nr).has_value();
 }
 
 - (GuardInfo) watchpointWithNr:(NSInteger)nr
 {
-    return [self cpu]->watchpointNr(nr).value_or(GuardInfo { });
+    return [self cpu]->watchpoints.guardNr(nr).value_or(GuardInfo { });
 }
 
 - (BOOL) hasWatchpointAtAddr:(NSInteger)addr
 {
-    return [self cpu]->watchpointAt(u32(addr)).has_value();
+    return [self cpu]->watchpoints.guardAt(u32(addr)).has_value();
 }
 - (GuardInfo) watchpointAtAddr:(NSInteger)addr
 {
-    return [self cpu]->watchpointAt(u32(addr)).value_or(GuardInfo { });
+    return [self cpu]->watchpoints.guardAt(u32(addr)).value_or(GuardInfo { });
 }
 
 @end

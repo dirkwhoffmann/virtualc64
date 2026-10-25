@@ -169,7 +169,7 @@ CPU::processCommand(const Command &cmd)
             }
             break;
             
-        case Cmd::BP_SET_AT:         cpu.setBreakpoint(u32(cmd.value)); break;
+        case Cmd::BP_SET_AT:         cpu.setBreakpoint(u32(cmd.value), isize(cmd.value2)); break;
         case Cmd::BP_MOVE_TO:        cpu.moveBreakpoint(isize(cmd.value), u32(cmd.value2)); break;
         case Cmd::BP_REMOVE_NR:      cpu.deleteBreakpoint(isize(cmd.value)); break;
         case Cmd::BP_REMOVE_AT:      cpu.deleteBreakpointAt(u32(cmd.value)); break;
@@ -180,18 +180,20 @@ CPU::processCommand(const Command &cmd)
         case Cmd::BP_DISABLE_NR:     cpu.disableBreakpoint(isize(cmd.value)); break;
         case Cmd::BP_DISABLE_AT:     cpu.disableBreakpointAt(u32(cmd.value)); break;
         case Cmd::BP_DISABLE_ALL:    cpu.disableAllBreakpoints(); break;
+        case Cmd::BP_TOGGLE_NR:      cpu.toggleBreakpoint(isize(cmd.value)); break;
 
-        case Cmd::WP_SET_AT:         cpu.setWatchpoint(u32(cmd.value)); break;
+        case Cmd::WP_SET_AT:         cpu.setWatchpoint(u32(cmd.value), isize(cmd.value2)); break;
         case Cmd::WP_MOVE_TO:        cpu.moveWatchpoint(isize(cmd.value), u32(cmd.value2)); break;
         case Cmd::WP_REMOVE_NR:      cpu.deleteWatchpoint(isize(cmd.value)); break;
         case Cmd::WP_REMOVE_AT:      cpu.deleteWatchpointAt(u32(cmd.value)); break;
         case Cmd::WP_REMOVE_ALL:     cpu.deleteAllWatchpoints(); break;
         case Cmd::WP_ENABLE_NR:      cpu.enableWatchpoint(isize(cmd.value)); break;
-        case Cmd::WP_ENABLE_AT:      cpu.enableWatchpoint(u32(cmd.value)); break;
+        case Cmd::WP_ENABLE_AT:      cpu.enableWatchpointAt(u32(cmd.value)); break;
         case Cmd::WP_ENABLE_ALL:     cpu.enableAllWatchpoints(); break;
         case Cmd::WP_DISABLE_NR:     cpu.disableWatchpoint(isize(cmd.value)); break;
-        case Cmd::WP_DISABLE_AT:     cpu.disableWatchpoint(u32(cmd.value)); break;
+        case Cmd::WP_DISABLE_AT:     cpu.disableWatchpointAt(u32(cmd.value)); break;
         case Cmd::WP_DISABLE_ALL:    cpu.disableAllWatchpoints(); break;
+        case Cmd::WP_TOGGLE_NR:      cpu.toggleWatchpoint(isize(cmd.value)); break;
 
         default:
             fatalError;

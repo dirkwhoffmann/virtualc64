@@ -739,6 +739,7 @@ C64::update(CmdQueue &queue)
                 case Cmd::BP_DISABLE_NR:
                 case Cmd::BP_DISABLE_AT:
                 case Cmd::BP_DISABLE_ALL:
+                case Cmd::BP_TOGGLE_NR:
                 case Cmd::WP_SET_AT:
                 case Cmd::WP_MOVE_TO:
                 case Cmd::WP_REMOVE_NR:
@@ -750,6 +751,7 @@ C64::update(CmdQueue &queue)
                 case Cmd::WP_DISABLE_NR:
                 case Cmd::WP_DISABLE_AT:
                 case Cmd::WP_DISABLE_ALL:
+                case Cmd::WP_TOGGLE_NR:
 
                     cpu.processCommand(cmd);
                     break;
