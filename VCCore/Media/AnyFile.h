@@ -82,7 +82,7 @@ public:
     static AnyFile *make(const fs::path &path);
     static AnyFile *make(const fs::path &path, FileType type);
     static AnyFile *make(const u8 *buf, isize len, FileType type);
-    static AnyFile *make(struct DriveAPI &drive, FileType type);
+    static AnyFile *make(class DriveAPI &drive, FileType type);
 
     
     //

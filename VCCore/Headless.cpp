@@ -194,6 +194,12 @@ Headless::process(Message msg)
             wakeUp();
             break;
 
+        case Msg::RSH_DONE:
+
+            // The script runs in the main shell (id 0)
+            if (msg.value == 0) wakeUp();
+            break;
+
         case Msg::ABORT:
 
             wakeUp();
