@@ -100,7 +100,8 @@ VirtualC64::VirtualC64() {
     cpu.breakpoints.cpu = &emu->main.cpu;
     cpu.watchpoints.emu = emu;
     cpu.watchpoints.cpu = &emu->main.cpu;
-    cpu.watchpoints.watchpoints = true;
+    cpu.breakpoints.id = GuardId::CPU_BREAKPOINTS;
+    cpu.watchpoints.id = GuardId::CPU_WATCHPOINTS;
 
     cia1.emu = emu;
     cia1.cia = &emu->main.cia1;
@@ -1005,9 +1006,9 @@ guardInfo(const Guard *g)
 
 // Returns the guard list selected by the API
 static const peddle::Guards &
-guardList(const CPU *cpu, bool watchpoints)
+guardList(const CPU *cpu, GuardId id)
 {
-    if (watchpoints) return cpu->debugger.watchpoints;
+    if (id == GuardId::CPU_WATCHPOINTS) return cpu->debugger.watchpoints;
     return cpu->debugger.breakpoints;
 }
 
@@ -1015,105 +1016,105 @@ isize
 GuardsAPI::elements() const
 {
     VC64_PUBLIC
-    return guardList(cpu, watchpoints).elements();
+    return guardList(cpu, id).elements();
 }
 
 std::optional<GuardInfo>
 GuardsAPI::guardNr(isize nr) const
 {
     VC64_PUBLIC
-    return guardInfo(guardList(cpu, watchpoints).guardNr(nr));
+    return guardInfo(guardList(cpu, id).guardNr(nr));
 }
 
 std::optional<GuardInfo>
 GuardsAPI::guardAt(u32 addr) const
 {
     VC64_PUBLIC
-    return guardInfo(guardList(cpu, watchpoints).guardAt(addr));
+    return guardInfo(guardList(cpu, id).guardAt(addr));
 }
 
 void
 GuardsAPI::setAt(u32 addr, isize ignores)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_SET_AT : Cmd::BP_SET_AT, i64(addr), i64(ignores)));
+    emu->put(Command(Cmd::GUARD_SET_AT, GuardCmd { .list = id, .addr = addr, .ignores = ignores }));
 }
 
 void
 GuardsAPI::moveTo(isize nr, u32 addr)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_MOVE_TO : Cmd::BP_MOVE_TO, i64(nr), i64(addr)));
+    emu->put(Command(Cmd::GUARD_MOVE_NR, GuardCmd { .list = id, .nr = nr, .addr = addr }));
 }
 
 void
 GuardsAPI::remove(isize nr)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_REMOVE_NR : Cmd::BP_REMOVE_NR, i64(nr)));
+    emu->put(Command(Cmd::GUARD_REMOVE_NR, GuardCmd { .list = id, .nr = nr }));
 }
 
 void
 GuardsAPI::removeAt(u32 addr)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_REMOVE_AT : Cmd::BP_REMOVE_AT, i64(addr)));
+    emu->put(Command(Cmd::GUARD_REMOVE_AT, GuardCmd { .list = id, .addr = addr }));
 }
 
 void
 GuardsAPI::removeAll()
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_REMOVE_ALL : Cmd::BP_REMOVE_ALL));
+    emu->put(Command(Cmd::GUARD_REMOVE_ALL, GuardCmd { .list = id }));
 }
 
 void
 GuardsAPI::enable(isize nr)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_ENABLE_NR : Cmd::BP_ENABLE_NR, i64(nr)));
+    emu->put(Command(Cmd::GUARD_ENABLE_NR, GuardCmd { .list = id, .nr = nr }));
 }
 
 void
 GuardsAPI::enableAt(u32 addr)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_ENABLE_AT : Cmd::BP_ENABLE_AT, i64(addr)));
+    emu->put(Command(Cmd::GUARD_ENABLE_AT, GuardCmd { .list = id, .addr = addr }));
 }
 
 void
 GuardsAPI::enableAll()
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_ENABLE_ALL : Cmd::BP_ENABLE_ALL));
+    emu->put(Command(Cmd::GUARD_ENABLE_ALL, GuardCmd { .list = id }));
 }
 
 void
 GuardsAPI::disable(isize nr)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_DISABLE_NR : Cmd::BP_DISABLE_NR, i64(nr)));
+    emu->put(Command(Cmd::GUARD_DISABLE_NR, GuardCmd { .list = id, .nr = nr }));
 }
 
 void
 GuardsAPI::disableAt(u32 addr)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_DISABLE_AT : Cmd::BP_DISABLE_AT, i64(addr)));
+    emu->put(Command(Cmd::GUARD_DISABLE_AT, GuardCmd { .list = id, .addr = addr }));
 }
 
 void
 GuardsAPI::disableAll()
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_DISABLE_ALL : Cmd::BP_DISABLE_ALL));
+    emu->put(Command(Cmd::GUARD_DISABLE_ALL, GuardCmd { .list = id }));
 }
 
 void
 GuardsAPI::toggle(isize nr)
 {
     VC64_PUBLIC
-    emu->put(Command(watchpoints ? Cmd::WP_TOGGLE_NR : Cmd::BP_TOGGLE_NR, i64(nr)));
+    emu->put(Command(Cmd::GUARD_TOGGLE_NR, GuardCmd { .list = id, .nr = nr }));
 }
 
 

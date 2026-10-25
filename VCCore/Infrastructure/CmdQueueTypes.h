@@ -60,33 +60,19 @@ enum class Cmd : long
     CPU_BRK,                ///< Let the CPU execute a BRK instruction
     CPU_NMI,                ///< Emulate an external expansion port NMI
 
-    // CPU (Breakpoints)
-    BP_SET_AT,              ///< Set a breakpoint
-    BP_MOVE_TO,             ///< Change the address of breakpoint
-    BP_REMOVE_NR,           ///< Remove the n-th breakpoint
-    BP_REMOVE_AT,           ///< Remove the breakpoint at an address
-    BP_REMOVE_ALL,          ///< Remove all brekpoints
-    BP_ENABLE_NR,           ///< Enable the n-th breakpoint
-    BP_ENABLE_AT,           ///< Enable the breakpoint at an address
-    BP_ENABLE_ALL,          ///< Enable all brekpoints
-    BP_DISABLE_NR,          ///< Disable the n-th breakpoint
-    BP_DISABLE_AT,          ///< Disable the breakpoint at an address
-    BP_DISABLE_ALL,         ///< Disable all brekpoints
-    BP_TOGGLE_NR,           ///< Toggle the n-th breakpoint
-
-    // CPU (Watchpoints)
-    WP_SET_AT,              ///< Set a watchpoint
-    WP_MOVE_TO,             ///< Change the address of watchpoint
-    WP_REMOVE_NR,           ///< Remove the n-th watchpoint
-    WP_REMOVE_AT,           ///< Remove the watchpoint at an address
-    WP_REMOVE_ALL,          ///< Remove all watchpoints
-    WP_ENABLE_NR,           ///< Enable the n-th watchpoint
-    WP_ENABLE_AT,           ///< Enable the watchpoint at an address
-    WP_ENABLE_ALL,          ///< Enable all watchpoints
-    WP_DISABLE_NR,          ///< Disable the n-th watchpoint
-    WP_DISABLE_AT,          ///< Disable the watchpoint at an address
-    WP_DISABLE_ALL,         ///< Disable all watchpoints
-    WP_TOGGLE_NR,           ///< Toggle the n-th watchpoint
+    // CPU (Breakpoints, Watchpoints)
+    GUARD_SET_AT,           ///< Set a guard
+    GUARD_REMOVE_NR,        ///< Remove the n-th guard
+    GUARD_MOVE_NR,          ///< Change the address of a guard
+    GUARD_REMOVE_AT,        ///< Remove the guard at an address
+    GUARD_REMOVE_ALL,       ///< Remove all guards
+    GUARD_ENABLE_NR,        ///< Enable the n-th guard
+    GUARD_ENABLE_AT,        ///< Enable the guard at an address
+    GUARD_ENABLE_ALL,       ///< Enable all guards
+    GUARD_DISABLE_NR,       ///< Disable the n-th guard
+    GUARD_DISABLE_AT,       ///< Disable the guard at an address
+    GUARD_DISABLE_ALL,      ///< Disable all guards
+    GUARD_TOGGLE_NR,        ///< Toggle the n-th guard
 
     // Keyboard
     KEY_PRESS,              ///< Press a key on the C64 keyboard
@@ -167,31 +153,18 @@ struct CmdEnum : Reflectable<CmdEnum, Cmd> {
             case Cmd::CPU_BRK:               return "CPU_BRK";
             case Cmd::CPU_NMI:               return "CPU_NMI";
 
-            case Cmd::BP_SET_AT:             return "BP_SET_AT";
-            case Cmd::BP_MOVE_TO:            return "BP_MOVE_TO";
-            case Cmd::BP_REMOVE_NR:          return "BP_REMOVE_NR";
-            case Cmd::BP_REMOVE_AT:          return "BP_REMOVE_AT";
-            case Cmd::BP_REMOVE_ALL:         return "BP_REMOVE_ALL";
-            case Cmd::BP_ENABLE_NR:          return "BP_ENABLE_NR";
-            case Cmd::BP_ENABLE_AT:          return "BP_ENABLE_AT";
-            case Cmd::BP_ENABLE_ALL:         return "BP_ENABLE_ALL";
-            case Cmd::BP_DISABLE_NR:         return "BP_DISABLE_NR";
-            case Cmd::BP_DISABLE_AT:         return "BP_DISABLE_AT";
-            case Cmd::BP_DISABLE_ALL:        return "BP_DISABLE_ALL";
-            case Cmd::BP_TOGGLE_NR:          return "BP_TOGGLE_NR";
-
-            case Cmd::WP_SET_AT:             return "WP_SET_AT";
-            case Cmd::WP_MOVE_TO:            return "WP_MOVE_TO";
-            case Cmd::WP_REMOVE_NR:          return "WP_REMOVE_NR";
-            case Cmd::WP_REMOVE_AT:          return "WP_REMOVE_AT";
-            case Cmd::WP_REMOVE_ALL:         return "WP_REMOVE_ALL";
-            case Cmd::WP_ENABLE_NR:          return "WP_ENABLE_NR";
-            case Cmd::WP_ENABLE_AT:          return "WP_ENABLE_AT";
-            case Cmd::WP_ENABLE_ALL:         return "WP_ENABLE_ALL";
-            case Cmd::WP_DISABLE_NR:         return "WP_DISABLE_NR";
-            case Cmd::WP_DISABLE_AT:         return "WP_DISABLE_AT";
-            case Cmd::WP_DISABLE_ALL:        return "WP_DISABLE_ALL";
-            case Cmd::WP_TOGGLE_NR:          return "WP_TOGGLE_NR";
+            case Cmd::GUARD_SET_AT:          return "GUARD_SET_AT";
+            case Cmd::GUARD_MOVE_NR:         return "GUARD_MOVE_NR";
+            case Cmd::GUARD_REMOVE_NR:       return "GUARD_REMOVE_NR";
+            case Cmd::GUARD_REMOVE_AT:       return "GUARD_REMOVE_AT";
+            case Cmd::GUARD_REMOVE_ALL:      return "GUARD_REMOVE_ALL";
+            case Cmd::GUARD_ENABLE_NR:       return "GUARD_ENABLE_NR";
+            case Cmd::GUARD_ENABLE_AT:       return "GUARD_ENABLE_AT";
+            case Cmd::GUARD_ENABLE_ALL:      return "GUARD_ENABLE_ALL";
+            case Cmd::GUARD_DISABLE_NR:      return "GUARD_DISABLE_NR";
+            case Cmd::GUARD_DISABLE_AT:      return "GUARD_DISABLE_AT";
+            case Cmd::GUARD_DISABLE_ALL:     return "GUARD_DISABLE_ALL";
+            case Cmd::GUARD_TOGGLE_NR:       return "GUARD_TOGGLE_NR";
 
             case Cmd::KEY_PRESS:             return "KEY_PRESS";
             case Cmd::KEY_RELEASE:           return "KEY_RELEASE";
@@ -280,6 +253,22 @@ typedef struct
 }
 AlarmCmd;
 
+// Identifies a guard list (breakpoints, watchpoints)
+enum class GuardId : u8
+{
+    CPU_BREAKPOINTS,
+    CPU_WATCHPOINTS
+};
+
+typedef struct
+{
+    GuardId list;       // The guard list to modify
+    isize nr;           // Number of a guard in the list
+    u32 addr;           // Target of a guard
+    isize ignores;      // Ignore count
+}
+GuardCmd;
+
 struct Command
 {
     // Header
@@ -296,6 +285,7 @@ struct Command
         ConfigCmd config;
         CoordCmd coord;
         GamePadCmd action;
+        GuardCmd guard;
         KeyCmd key;
         TapeCmd tape;
     };
@@ -313,6 +303,7 @@ struct Command
     Command(Cmd type, const ConfigCmd &cmd) : type(type), config(cmd) { }
     Command(Cmd type, const CoordCmd &cmd) : type(type), coord(cmd) { }
     Command(Cmd type, const GamePadCmd &cmd) : type(type), action(cmd) { }
+    Command(Cmd type, const GuardCmd &cmd) : type(type), guard(cmd) { }
     Command(Cmd type, const KeyCmd &cmd) : type(type), key(cmd) { }
     Command(Cmd type, const TapeCmd &cmd) : type(type), tape(cmd) { }
 };

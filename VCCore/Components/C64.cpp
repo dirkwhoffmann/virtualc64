@@ -728,30 +728,18 @@ C64::update(CmdQueue &queue)
 
                 case Cmd::CPU_BRK:
                 case Cmd::CPU_NMI:
-                case Cmd::BP_SET_AT:
-                case Cmd::BP_MOVE_TO:
-                case Cmd::BP_REMOVE_NR:
-                case Cmd::BP_REMOVE_AT:
-                case Cmd::BP_REMOVE_ALL:
-                case Cmd::BP_ENABLE_NR:
-                case Cmd::BP_ENABLE_AT:
-                case Cmd::BP_ENABLE_ALL:
-                case Cmd::BP_DISABLE_NR:
-                case Cmd::BP_DISABLE_AT:
-                case Cmd::BP_DISABLE_ALL:
-                case Cmd::BP_TOGGLE_NR:
-                case Cmd::WP_SET_AT:
-                case Cmd::WP_MOVE_TO:
-                case Cmd::WP_REMOVE_NR:
-                case Cmd::WP_REMOVE_AT:
-                case Cmd::WP_REMOVE_ALL:
-                case Cmd::WP_ENABLE_NR:
-                case Cmd::WP_ENABLE_AT:
-                case Cmd::WP_ENABLE_ALL:
-                case Cmd::WP_DISABLE_NR:
-                case Cmd::WP_DISABLE_AT:
-                case Cmd::WP_DISABLE_ALL:
-                case Cmd::WP_TOGGLE_NR:
+                case Cmd::GUARD_SET_AT:
+                case Cmd::GUARD_MOVE_NR:
+                case Cmd::GUARD_REMOVE_NR:
+                case Cmd::GUARD_REMOVE_AT:
+                case Cmd::GUARD_REMOVE_ALL:
+                case Cmd::GUARD_ENABLE_NR:
+                case Cmd::GUARD_ENABLE_AT:
+                case Cmd::GUARD_ENABLE_ALL:
+                case Cmd::GUARD_DISABLE_NR:
+                case Cmd::GUARD_DISABLE_AT:
+                case Cmd::GUARD_DISABLE_ALL:
+                case Cmd::GUARD_TOGGLE_NR:
 
                     cpu.processCommand(cmd);
                     break;

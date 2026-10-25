@@ -150,7 +150,7 @@ class BreakTableView: GuardTableView {
                 if col == 0 {
 
                     // Toggle enable flag
-                    emu?.putAsync(bp.enabled ? .BP_DISABLE_NR : .BP_ENABLE_NR, value: row)
+                    cpu.toggleBreakpoint(withNr: row)
                     inspector.fullRefresh()
                 }
 
@@ -164,7 +164,7 @@ class BreakTableView: GuardTableView {
                 if col == 2 {
 
                     // Delete
-                    emu?.putAsync(.BP_REMOVE_NR, value: row)
+                    cpu.removeBreakpoint(withNr: row)
                     inspector.fullRefresh()
                 }
             }
@@ -181,9 +181,9 @@ class BreakTableView: GuardTableView {
             emu?.suspend()
 
             if row < numRows {
-                emu?.putAsync(.BP_MOVE_TO, value: row, value2: addr)
+                cpu.moveBreakpoint(withNr: row, toAddr: addr)
             } else {
-                emu?.putAsync(.BP_SET_AT, value: addr)
+                cpu.addBreakpoint(atAddr: addr)
             }
 
             inspector.cpuInstrView.jumpTo(addr: addr)
@@ -222,14 +222,14 @@ class WatchTableView: GuardTableView {
 
                 if col == 0 {
 
-                    emu?.putAsync(wp.enabled ? .WP_DISABLE_NR : .WP_ENABLE_NR, value: row)
+                    cpu.toggleWatchpoint(withNr: row)
                     inspector.fullRefresh()
                 }
 
                 if col == 2 {
 
                     // Delete
-                    emu?.putAsync(.WP_REMOVE_NR, value: row)
+                    cpu.removeWatchpoint(withNr: row)
                     inspector.fullRefresh()
                 }
             }
@@ -241,14 +241,14 @@ class WatchTableView: GuardTableView {
         if let cpu = cpu {
 
             // Abort if a watchpoint is already set
-            if cpu.hasBreakpoint(atAddr: addr) { NSSound.beep(); return }
+            if cpu.hasWatchpoint(atAddr: addr) { NSSound.beep(); return }
 
             emu?.suspend()
 
             if row < numRows {
-                emu?.putAsync(.WP_MOVE_TO, value: row)
+                cpu.moveWatchpoint(withNr: row, toAddr: addr)
             } else {
-                emu?.putAsync(.WP_SET_AT, value: addr)
+                cpu.addWatchpoint(atAddr: addr)
             }
 
             emu?.resume()

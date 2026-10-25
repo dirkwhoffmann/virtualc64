@@ -262,6 +262,13 @@ public:
     // Processes a command from the command queue
     void processCommand(const Command &cmd);
 
+private:
+
+    // Carries out a command of type GUARD_xxx
+    void processGuardCommand(const Command &cmd);
+
+public:
+
 
     //
     // Debugging (Breakpoints)

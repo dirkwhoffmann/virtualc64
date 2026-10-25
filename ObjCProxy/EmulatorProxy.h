@@ -358,6 +358,19 @@ NSString *EventSlotName(EventSlot slot);
 - (BOOL) hasWatchpointAtAddr:(NSInteger)addr;
 - (GuardInfo) watchpointAtAddr:(NSInteger)addr;
 
+- (void) addBreakpointAtAddr:(NSInteger)addr;
+- (void) moveBreakpointWithNr:(NSInteger)nr toAddr:(NSInteger)addr;
+- (void) removeBreakpointWithNr:(NSInteger)nr;
+- (void) removeBreakpointAtAddr:(NSInteger)addr;
+- (void) toggleBreakpointWithNr:(NSInteger)nr;
+- (void) enableBreakpointAtAddr:(NSInteger)addr;
+- (void) disableBreakpointAtAddr:(NSInteger)addr;
+
+- (void) addWatchpointAtAddr:(NSInteger)addr;
+- (void) moveWatchpointWithNr:(NSInteger)nr toAddr:(NSInteger)addr;
+- (void) removeWatchpointWithNr:(NSInteger)nr;
+- (void) toggleWatchpointWithNr:(NSInteger)nr;
+
 @end
 
 

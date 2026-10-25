@@ -140,11 +140,11 @@ class InstrTableView: NSTableView {
             if let addr = addrInRow[row] {
 
                 if !cpu.hasBreakpoint(atAddr: addr) {
-                    emu?.putAsync(.BP_SET_AT, value: addr)
+                    cpu.addBreakpoint(atAddr: addr)
                 } else if cpu.breakpoint(atAddr: addr).enabled {
-                    emu?.putAsync(.BP_DISABLE_AT, value: addr)
+                    cpu.disableBreakpoint(atAddr: addr)
                 } else {
-                    emu?.putAsync(.BP_ENABLE_AT, value: addr)
+                    cpu.enableBreakpoint(atAddr: addr)
                 }
 
                 inspector.fullRefresh()
@@ -167,9 +167,9 @@ class InstrTableView: NSTableView {
             if let addr = addrInRow[row] {
 
                 if cpu.hasBreakpoint(atAddr: addr) {
-                    emu?.putAsync(.BP_REMOVE_AT, value: addr)
+                    cpu.removeBreakpoint(atAddr: addr)
                 } else {
-                    emu?.putAsync(.BP_SET_AT, value: addr)
+                    cpu.addBreakpoint(atAddr: addr)
                 }
 
                 inspector.fullRefresh()
