@@ -153,7 +153,7 @@ void
 CPU::processGuardCommand(const Command &cmd)
 {
     auto &g = cmd.guard;
-    bool wp = g.list == GuardId::CPU_WATCHPOINTS;
+    bool wp = g.list == GuardType::WATCHPOINT;
 
     switch (cmd.type) {
 

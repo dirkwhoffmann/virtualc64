@@ -167,7 +167,7 @@ public:
     class CPU *cpu = nullptr;
 
     // The guard list this API operates on
-    GuardId id = GuardId::CPU_BREAKPOINTS;
+    GuardType type = GuardType::BREAKPOINT;
 
     /** @brief  Returns the number of guards in the guard list.
      */

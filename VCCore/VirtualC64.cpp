@@ -100,8 +100,8 @@ VirtualC64::VirtualC64() {
     cpu.breakpoints.cpu = &emu->main.cpu;
     cpu.watchpoints.emu = emu;
     cpu.watchpoints.cpu = &emu->main.cpu;
-    cpu.breakpoints.id = GuardId::CPU_BREAKPOINTS;
-    cpu.watchpoints.id = GuardId::CPU_WATCHPOINTS;
+    cpu.breakpoints.type = GuardType::BREAKPOINT;
+    cpu.watchpoints.type = GuardType::WATCHPOINT;
 
     cia1.emu = emu;
     cia1.cia = &emu->main.cia1;
@@ -1006,9 +1006,9 @@ guardInfo(const Guard *g)
 
 // Returns the guard list selected by the API
 static const peddle::Guards &
-guardList(const CPU *cpu, GuardId id)
+guardList(const CPU *cpu, GuardType type)
 {
-    if (id == GuardId::CPU_WATCHPOINTS) return cpu->debugger.watchpoints;
+    if (type == GuardType::WATCHPOINT) return cpu->debugger.watchpoints;
     return cpu->debugger.breakpoints;
 }
 
@@ -1016,105 +1016,105 @@ isize
 GuardsAPI::elements() const
 {
     VC64_PUBLIC
-    return guardList(cpu, id).elements();
+    return guardList(cpu, type).elements();
 }
 
 std::optional<GuardInfo>
 GuardsAPI::guardNr(isize nr) const
 {
     VC64_PUBLIC
-    return guardInfo(guardList(cpu, id).guardNr(nr));
+    return guardInfo(guardList(cpu, type).guardNr(nr));
 }
 
 std::optional<GuardInfo>
 GuardsAPI::guardAt(u32 addr) const
 {
     VC64_PUBLIC
-    return guardInfo(guardList(cpu, id).guardAt(addr));
+    return guardInfo(guardList(cpu, type).guardAt(addr));
 }
 
 void
 GuardsAPI::setAt(u32 addr, isize ignores)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_SET_AT, GuardCmd { .list = id, .addr = addr, .ignores = ignores }));
+    emu->put(Command(Cmd::GUARD_SET_AT, GuardCmd { .list = type, .addr = addr, .ignores = ignores }));
 }
 
 void
 GuardsAPI::moveTo(isize nr, u32 addr)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_MOVE_NR, GuardCmd { .list = id, .nr = nr, .addr = addr }));
+    emu->put(Command(Cmd::GUARD_MOVE_NR, GuardCmd { .list = type, .nr = nr, .addr = addr }));
 }
 
 void
 GuardsAPI::remove(isize nr)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_REMOVE_NR, GuardCmd { .list = id, .nr = nr }));
+    emu->put(Command(Cmd::GUARD_REMOVE_NR, GuardCmd { .list = type, .nr = nr }));
 }
 
 void
 GuardsAPI::removeAt(u32 addr)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_REMOVE_AT, GuardCmd { .list = id, .addr = addr }));
+    emu->put(Command(Cmd::GUARD_REMOVE_AT, GuardCmd { .list = type, .addr = addr }));
 }
 
 void
 GuardsAPI::removeAll()
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_REMOVE_ALL, GuardCmd { .list = id }));
+    emu->put(Command(Cmd::GUARD_REMOVE_ALL, GuardCmd { .list = type }));
 }
 
 void
 GuardsAPI::enable(isize nr)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_ENABLE_NR, GuardCmd { .list = id, .nr = nr }));
+    emu->put(Command(Cmd::GUARD_ENABLE_NR, GuardCmd { .list = type, .nr = nr }));
 }
 
 void
 GuardsAPI::enableAt(u32 addr)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_ENABLE_AT, GuardCmd { .list = id, .addr = addr }));
+    emu->put(Command(Cmd::GUARD_ENABLE_AT, GuardCmd { .list = type, .addr = addr }));
 }
 
 void
 GuardsAPI::enableAll()
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_ENABLE_ALL, GuardCmd { .list = id }));
+    emu->put(Command(Cmd::GUARD_ENABLE_ALL, GuardCmd { .list = type }));
 }
 
 void
 GuardsAPI::disable(isize nr)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_DISABLE_NR, GuardCmd { .list = id, .nr = nr }));
+    emu->put(Command(Cmd::GUARD_DISABLE_NR, GuardCmd { .list = type, .nr = nr }));
 }
 
 void
 GuardsAPI::disableAt(u32 addr)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_DISABLE_AT, GuardCmd { .list = id, .addr = addr }));
+    emu->put(Command(Cmd::GUARD_DISABLE_AT, GuardCmd { .list = type, .addr = addr }));
 }
 
 void
 GuardsAPI::disableAll()
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_DISABLE_ALL, GuardCmd { .list = id }));
+    emu->put(Command(Cmd::GUARD_DISABLE_ALL, GuardCmd { .list = type }));
 }
 
 void
 GuardsAPI::toggle(isize nr)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::GUARD_TOGGLE_NR, GuardCmd { .list = id, .nr = nr }));
+    emu->put(Command(Cmd::GUARD_TOGGLE_NR, GuardCmd { .list = type, .nr = nr }));
 }
 
 

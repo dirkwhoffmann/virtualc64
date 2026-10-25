@@ -14,6 +14,7 @@
 #pragma once
 
 #include "Peripherals/Joystick/JoystickTypes.h"
+#include "Components/CPU/CPUTypes.h"
 #include "Infrastructure/Option.h"
 
 namespace vc64 {
@@ -253,16 +254,10 @@ typedef struct
 }
 AlarmCmd;
 
-// Identifies a guard list (breakpoints, watchpoints)
-enum class GuardId : u8
-{
-    CPU_BREAKPOINTS,
-    CPU_WATCHPOINTS
-};
-
+// The guard list to modify is identified by a GuardType
 typedef struct
 {
-    GuardId list;       // The guard list to modify
+    GuardType list;       // The guard list to modify
     isize nr;           // Number of a guard in the list
     u32 addr;           // Target of a guard
     isize ignores;      // Ignore count
