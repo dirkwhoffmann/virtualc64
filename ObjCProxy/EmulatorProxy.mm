@@ -460,14 +460,19 @@ NSString *EventSlotName(EventSlot slot)
     return [self mem]->getCachedInfo();
 }
 
-- (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemType)src
+- (NSString *)hexDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
 {
-    return @([self mem]->memdump((u16)addr, num, hex, hex ? 2 : 1, src).c_str());
+    return @([self mem]->hexDump((u16)addr, bytes, 2, src).c_str());
 }
 
-- (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemType)src
+- (NSString *)decDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
 {
-    return @([self mem]->txtdump((u16)addr, num, src).c_str());
+    return @([self mem]->decDump((u16)addr, bytes, 1, src).c_str());
+}
+
+- (NSString *)ascDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
+{
+    return @([self mem]->ascDump((u16)addr, bytes, src).c_str());
 }
 
 - (void)drawHeatmap:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h

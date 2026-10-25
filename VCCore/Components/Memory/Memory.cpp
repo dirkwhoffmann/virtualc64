@@ -646,8 +646,8 @@ provider(const Memory &mem, u16 addr, isize num, MemType src)
 
 }
 
-string
-Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const
+static string
+numberDump(const Memory &mem, u16 addr, isize num, bool hex, isize pads, MemType src)
 {
     assert(num <= 16);
 
@@ -664,59 +664,39 @@ Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const
     for (isize i = 0; i < num; i++) fmt += unit + "%b";
 
     std::stringstream ss;
-    utl::Dumpable::dump(ss, { .base = hex ? 16 : 10, .uppercase = true, .pad = '0' }, fmt, provider(*this, addr, num, src));
+    utl::Dumpable::dump(ss, { .base = hex ? 16 : 10, .uppercase = true, .pad = '0' }, fmt, provider(mem, addr, num, src));
     return ss.str();
 }
 
 string
-Memory::hexdump(u16 addr, isize num, isize pads, MemType src) const
+Memory::hexDump(u16 addr, isize bytes, isize pads, MemType src) const
 {
-    return memdump(addr, num, true, pads, src);
+    return numberDump(*this, addr, bytes, true, pads, src);
 }
 
 string
-Memory::decdump(u16 addr, isize num, isize pads, MemType src) const
+Memory::decDump(u16 addr, isize bytes, isize pads, MemType src) const
 {
-    return memdump(addr, num, false, pads, src);
+    return numberDump(*this, addr, bytes, false, pads, src);
 }
 
 string
-Memory::txtdump(u16 addr, isize num, MemType src) const
+Memory::ascDump(u16 addr, isize bytes, MemType src) const
 {
-    assert(num <= 16);
+    assert(bytes <= 16);
 
     // Unmapped memory has no text representation
     if (src == MemType::NONE) return "";
 
     string fmt;
-    for (isize i = 0; i < num; i++) fmt += "%c";
+    for (isize i = 0; i < bytes; i++) fmt += "%c";
 
     // Only a part of the character set is shown as it is
     auto printable = [](int c) { return (c >= 32 && c <= 57) || (c >= 65 && c <= 90); };
 
     std::stringstream ss;
-    utl::Dumpable::dump(ss, { .base = 16, .printable = printable }, fmt, provider(*this, addr, num, src));
+    utl::Dumpable::dump(ss, { .base = 16, .printable = printable }, fmt, provider(*this, addr, bytes, src));
     return ss.str();
-}
-
-void
-Memory::memDump(std::ostream &os, u16 addr, isize numLines, bool hex)
-{
-    addr &= ~0xF;
-
-    os << std::setfill('0') << std::hex << std::uppercase << std::right;
-
-    for (isize i = 0, count = 16; i < numLines; i++) {
-
-        os << std::setw(4) << isize(addr);
-        os << ": ";
-        os << memdump(addr, count, hex);
-        os << "  ";
-        os << txtdump(addr, count);
-        os << std::endl;
-
-        U16_INC(addr, count);
-    }
 }
 
 void

@@ -1005,17 +1005,24 @@ MemoryAPI::getCachedInfo() const
 }
 
 string
-MemoryAPI::memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const
+MemoryAPI::hexDump(u16 addr, isize bytes, isize pads, MemType src) const
 {
     VC64_PUBLIC
-    return mem->memdump(addr, num, hex, pads, src);
+    return mem->hexDump(addr, bytes, pads, src);
 }
 
 string
-MemoryAPI::txtdump(u16 addr, isize num, MemType src) const
+MemoryAPI::decDump(u16 addr, isize bytes, isize pads, MemType src) const
 {
     VC64_PUBLIC
-    return mem->txtdump(addr, num, src);
+    return mem->decDump(addr, bytes, pads, src);
+}
+
+string
+MemoryAPI::ascDump(u16 addr, isize bytes, MemType src) const
+{
+    VC64_PUBLIC
+    return mem->ascDump(addr, bytes, src);
 }
 
 void

@@ -245,19 +245,14 @@ public:
     u16 resetVector();
 
     // Returns a string representations for a portion of memory
-    string memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const;
-    string hexdump(u16 addr, isize num, isize pads, MemType src) const;
-    string decdump(u16 addr, isize num, isize pads, MemType src) const;
-    string txtdump(u16 addr, isize num, MemType src) const;
+    string hexDump(u16 addr, isize bytes, isize pads, MemType src) const;
+    string decDump(u16 addr, isize bytes, isize pads, MemType src) const;
+    string ascDump(u16 addr, isize bytes, MemType src) const;
 
     // Convenience wrappers
-    string memdump(u16 addr, isize num, bool hex) { return memdump(addr, num, hex, 1, peekSrc[addr >> 12]); }
-    string hexdump(u16 addr, isize num) { return hexdump(addr, num, 1, peekSrc[addr >> 12]); }
-    string decdump(u16 addr, isize num) { return decdump(addr, num, 1, peekSrc[addr >> 12]); }
-    string txtdump(u16 addr, isize num) { return txtdump(addr, num, peekSrc[addr >> 12]); }
-
-    // Dumps a portion of memory to a stream
-    void memDump(std::ostream &os, u16 addr, isize numLines = 16, bool hex = true);
+    string hexDump(u16 addr, isize bytes) const { return hexDump(addr, bytes, 1, peekSrc[addr >> 12]); }
+    string decDump(u16 addr, isize bytes) const { return decDump(addr, bytes, 1, peekSrc[addr >> 12]); }
+    string ascDump(u16 addr, isize bytes) const { return ascDump(addr, bytes, peekSrc[addr >> 12]); }
 
     
     //

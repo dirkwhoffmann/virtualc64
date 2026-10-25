@@ -61,10 +61,11 @@ extension MemTableView: NSTableViewDataSource {
             return addr
             
         case "ascii":
-            return mem?.txtdump(Int(addr), num: 16, src: bankType) ?? ""
+            return mem?.ascDump(Int(addr), bytes: 16, src: bankType) ?? ""
 
         case "hex0":
-            return mem?.memdump(Int(addr), num: 16, hex: inspector.hex, src: bankType) ?? ""
+            return (inspector.hex ? mem?.hexDump(Int(addr), bytes: 16, src: bankType)
+                                  : mem?.decDump(Int(addr), bytes: 16, src: bankType)) ?? ""
 
         default:
             return "???"

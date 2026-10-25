@@ -102,10 +102,21 @@ public:
     const MemInfo &getInfo() const;
     const MemInfo &getCachedInfo() const;
 
-    /** @brief  Returns a string representations for a portion of memory.
+    /** @brief  Returns a string representation for a portion of memory.
+     *
+     *  hexDump() and decDump() show the bytes as two-digit hexadecimal or
+     *  three-digit decimal numbers, each preceded by 'pads' spaces. ascDump()
+     *  shows them as characters. Unmapped memory (MemType::NONE) is shown as
+     *  '--' by hexDump() and decDump(), and as nothing by ascDump().
+     *
+     *  @param  addr    First address to dump.
+     *  @param  bytes   Number of bytes to dump (at most 16).
+     *  @param  pads    Number of spaces in front of each number.
+     *  @param  src     The memory type the bytes are read from.
      */
-    string memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const;
-    string txtdump(u16 addr, isize num, MemType src) const;
+    string hexDump(u16 addr, isize bytes, isize pads, MemType src) const;
+    string decDump(u16 addr, isize bytes, isize pads, MemType src) const;
+    string ascDump(u16 addr, isize bytes, MemType src) const;
 
     /** @brief Experimental
      */
