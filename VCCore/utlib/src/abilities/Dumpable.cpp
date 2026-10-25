@@ -75,15 +75,18 @@ Dumpable::dataProvider(std::span<const u8> span)
 void
 Dumpable::dump(std::ostream &os, const DumpOpt &opt, const DumpFmt &fmt, DataProvider reader)
 {
-    dump(os, opt, fmt.fmt(), reader);
+    dump(os, opt, fmt.fmt(), reader, fmt.nr.value_or(0), fmt.offset.value_or(0));
 }
 
 void
-Dumpable::dump(std::ostream &os, const DumpOpt &opt, const string &fmt, DataProvider reader)
+Dumpable::dump(std::ostream &os, const DumpOpt &opt, const string &fmt, DataProvider reader,
+               isize nrStart, isize offsetStart)
 {
     bool ctrl = false;
     int ccnt = 0, bcnt = 0, lcnt = 0, wcnt = 0;
     char c;
+
+    auto isPrint = [&](int ch) { return opt.printable ? opt.printable(ch) : isprint(ch) != 0; };
 
     auto out = [&](optional<isize> value, isize size, isize base = 0) {
 
@@ -101,11 +104,15 @@ Dumpable::dump(std::ostream &os, const DumpOpt &opt, const string &fmt, DataProv
 
             if (base == 8)  os << std::setw(w) << std::setfill(' ') << std::oct << *value;
             if (base == 10) os << std::setw(w) << std::setfill(' ') << std::dec << *value;
-            if (base == 16) os << std::setw(w) << std::setfill('0') << std::hex << *value << std::setfill(' ');
+            if (base == 16) {
+                os << std::setw(w) << std::setfill('0') << std::hex;
+                os << (opt.uppercase ? std::uppercase : std::nouppercase) << *value;
+                os << std::nouppercase << std::setfill(' ');
+            }
 
         } else {
 
-            os << std::setw(w) << " ";
+            os << string(w, opt.missing);
         }
     };
 
@@ -146,18 +153,18 @@ Dumpable::dump(std::ostream &os, const DumpOpt &opt, const string &fmt, DataProv
 
                 case 'n': // Line number
 
-                    os << std::setw(wcnt) << std::setfill(' ') << std::dec << lcnt;
+                    os << std::setw(wcnt) << std::setfill(' ') << std::dec << (nrStart + lcnt);
                     break;
 
                 case 'p': // Buffer offset
 
-                    out(std::max(bcnt, ccnt), 4, 16);
+                    out(offsetStart + std::max(bcnt, ccnt), 4, 16);
                     break;
 
                 case 'a': // Character
 
                     if (auto val = reader(ccnt, 1); val.has_value()) {
-                        os << (val == '\n' || isprint(int(*val)) ? char(*val) : ' ');
+                        os << (val == '\n' || isPrint(int(*val)) ? char(*val) : ' ');
                         ccnt += 1;
                     } else {
                         os << ' ';
@@ -167,7 +174,7 @@ Dumpable::dump(std::ostream &os, const DumpOpt &opt, const string &fmt, DataProv
                 case 'c': // Character
 
                     if (auto val = reader(ccnt, 1); val.has_value()) {
-                        os << (isprint(int(*val)) ? char(*val) : '.');
+                        os << (isPrint(int(*val)) ? char(*val) : '.');
                         ccnt += 1;
                     } else {
                         os << ' ';
