@@ -69,9 +69,9 @@ using peddle::RecordedInstruction;
  * the emulator thread, in the order in which they arrive:
  *
  *   plain name : The function waits until the emulator thread has carried
- *                out the request and passes on failures as exceptions. If the
- *                emulator thread has not been launched, the request is
- *                carried out on the calling thread.
+ *                out the request and passes on failures as exceptions. It
+ *                throws a CoreError if the emulator thread has not been
+ *                launched (see launch()).
  *   "Async"    : The function queues the request and returns at once.
  *   input      : Keyboard, mouse, joystick and RetroShell input is queued.
  *

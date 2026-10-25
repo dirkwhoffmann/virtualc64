@@ -205,11 +205,22 @@ public:
      * function is executed in update(), i.e., in the order of the commands
      * that were queued before, and never while a frame is computed or while
      * another thread has suspended the emulator. An exception thrown by the
-     * function is passed on to the caller. If the emulator thread is not
-     * running, there is nobody to hand the function to, and it is executed
-     * right away.
+     * function is passed on to the caller. Throws a CoreError (NOT_LAUNCHED)
+     * if the emulator thread is not running, because the function must not
+     * run on any other thread.
      */
     void call(const std::function<void()> &fn);
+
+    /* Queues a function for the emulator thread and returns at once. The
+     * function is executed under the same conditions as in call(), but the
+     * caller does not wait for it. A failure of the function cannot be passed
+     * on to the caller. If 'done' is given, it is called on the emulator
+     * thread when the function has been carried out, with the exception it
+     * threw (or null). It is also called, on the calling thread, if the
+     * command queue is full and the request is dropped. Nothing is executed
+     * as long as the emulator thread has not been launched.
+     */
+    void callAsync(std::function<void()> fn, CmdQueue::Completion done = nullptr);
 
     /* Sends a command and returns a future that becomes ready once the
      * emulator thread has carried it out. A command that fails makes get()

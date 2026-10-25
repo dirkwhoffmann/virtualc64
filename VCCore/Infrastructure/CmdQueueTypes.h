@@ -123,7 +123,7 @@ enum class Cmd : long
     RSH_PRESS_TEXT,         ///< Type a string into RetroShell (text attached)
 
     // Calls
-    CALL,                   ///< Run a function on the emulator thread (value2 = pointer to a std::function<void()>)
+    CALL,                   ///< Run a function on the emulator thread (value2 = pointer to a std::function<void()> that stays alive until the command has been carried out)
 
     // Host machine
     FOCUS                   ///< The emulator windows got or lost focus
