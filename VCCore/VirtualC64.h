@@ -203,28 +203,28 @@ public:
     std::optional<GuardInfo> guardNr(isize nr) const;
 
     /** @brief  Returns information about a guard.
-     *  @param  addr    The address of the guard to query
-     *  @return A copy of the guard's state, or nothing if the address is not guarded.
+     *  @param  target  The target of the guard to query
+     *  @return A copy of the guard's state, or nothing if the target is not guarded.
      */
-    std::optional<GuardInfo> guardAt(u32 addr) const;
+    std::optional<GuardInfo> guardAt(u32 target) const;
 
     /** @brief  Sets a guard.
-     *  @param  addr    The observed memory address.
+     *  @param  target  The observed memory address (the target of the guard).
      *  @param  ignores If a value greater zero is given, the guard has to be hit the specified number of times until program execution is paused.
      */
-    void setAt(u32 addr, isize ignores = 0);
+    void setAt(u32 target, isize ignores = 0);
 
     /// Asynchronous version of setAt(): queues the request and returns at once.
-    void setAtAsync(u32 addr, isize ignores = 0);
+    void setAtAsync(u32 target, isize ignores = 0);
 
     /** @brief  Relocates a guard.
      *  @param  nr      Number of the guard in the guard list
-     *  @param  addr    New address
+     *  @param  target  New target
      */
-    void moveTo(isize nr, u32 addr);
+    void moveTo(isize nr, u32 target);
 
     /// Asynchronous version of moveTo(): queues the request and returns at once.
-    void moveToAsync(isize nr, u32 addr);
+    void moveToAsync(isize nr, u32 target);
 
     /** @brief  Deletes a guard.
      *  @param  nr      Number of the guard in the guard list
@@ -235,12 +235,12 @@ public:
     void removeAsync(isize nr);
 
     /** @brief  Deletes a guard.
-     *  @param  addr    The address of the guard to be deleted.
+     *  @param  target  The target of the guard to be deleted.
      */
-    void removeAt(u32 addr);
+    void removeAt(u32 target);
 
     /// Asynchronous version of removeAt(): queues the request and returns at once.
-    void removeAtAsync(u32 addr);
+    void removeAtAsync(u32 target);
 
     /** @brief  Deletes all guards.
      */
@@ -258,12 +258,12 @@ public:
     void enableAsync(isize nr);
 
     /** @brief  Enables a guard.
-     *  @param  addr    The address of the guard to be enabled
+     *  @param  target  The target of the guard to be enabled
      */
-    void enableAt(u32 addr);
+    void enableAt(u32 target);
 
     /// Asynchronous version of enableAt(): queues the request and returns at once.
-    void enableAtAsync(u32 addr);
+    void enableAtAsync(u32 target);
 
     /** @brief  Enables all guards.
      */
@@ -281,12 +281,12 @@ public:
     void disableAsync(isize nr);
 
     /** @brief  Disables a guard.
-     *  @param  addr    The address of the guard to be disabled
+     *  @param  target  The target of the guard to be disabled
      */
-    void disableAt(u32 addr);
+    void disableAt(u32 target);
 
     /// Asynchronous version of disableAt(): queues the request and returns at once.
-    void disableAtAsync(u32 addr);
+    void disableAtAsync(u32 target);
 
     /** @brief  Disables all guards.
      */
