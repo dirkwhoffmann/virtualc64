@@ -380,7 +380,17 @@ Drive::toggleProtection()
 void
 Drive::insertDisk(const fs::path &path, bool wp)
 {
-    insertDisk(std::make_unique<FloppyDisk>(path, wp));
+    try {
+
+        insertDisk(std::make_unique<FloppyDisk>(path, wp));
+
+    } catch (...) {
+
+        // Inform the GUI (the exception is also passed on to the caller)
+        msgQueue.put(Message { .type = Msg::DISK_INSERT, .drive = DriveMsg { i16(objid), 0, 0, 0 } },
+                     "", std::current_exception());
+        throw;
+    }
 }
 
 void

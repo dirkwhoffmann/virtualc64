@@ -272,7 +272,7 @@ void
 VirtualC64::checkReady() const
 {
     VC64_PUBLIC
-    return emu->checkReady();
+    emu->checkReady();
 }
 
 void
@@ -892,6 +892,13 @@ C64API::flash(const fs::path &path, isize item)
     emu->markAsDirty();
 }
 
+void
+C64API::flashAsync(const fs::path &path, isize item)
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::FLASH, i64(item)), path.string());
+}
+
 
 //
 // CPU
@@ -933,7 +940,7 @@ void
 CPUDebuggerAPI::clearLog()
 {
     VC64_PUBLIC_SUSPEND
-    return cpu->debugger.clearLog();
+    cpu->debugger.clearLog();
 }
 
 RecordedInstruction
@@ -947,7 +954,7 @@ void
 CPUDebuggerAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
 {
     VC64_PUBLIC_SUSPEND
-    return cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
+    cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
 // Throws an exception if a disassembler format string is invalid
@@ -1260,7 +1267,7 @@ MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 {
     VC64_PUBLIC
     if (width != 256 || height != 256) throw CoreError(CoreError::OPT_INV_ARG, "256 x 256");
-    return mem->heatmap.draw(buffer, width, height);
+    mem->heatmap.draw(buffer, width, height);
 }
 
 
@@ -1797,6 +1804,13 @@ DatasetteAPI::insertTape(const fs::path &path)
 }
 
 void
+DatasetteAPI::insertTapeAsync(const fs::path &path)
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::TAPE_INSERT), path.string());
+}
+
+void
 DatasetteAPI::ejectTape()
 {
     VC64_PUBLIC_SUSPEND
@@ -2057,6 +2071,13 @@ ExpansionPortAPI::attachCartridge(const std::filesystem::path &path, bool reset)
 }
 
 void
+ExpansionPortAPI::attachCartridgeAsync(const std::filesystem::path &path, bool reset)
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::CRT_ATTACH, i64(reset)), path.string());
+}
+
+void
 ExpansionPortAPI::attachReu(isize capacity)
 {
     VC64_PUBLIC_SUSPEND
@@ -2147,6 +2168,13 @@ DriveAPI::insert(const fs::path &path, bool wp)
     VC64_PUBLIC_SUSPEND
     drive->insertDisk(path, wp);
     emu->markAsDirty();
+}
+
+void
+DriveAPI::insertAsync(const fs::path &path, bool wp)
+{
+    VC64_PUBLIC
+    emu->put(Command(Cmd::DSK_INSERT, i64(drive->objid), i64(wp)), path.string());
 }
 
 void

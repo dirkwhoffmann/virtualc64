@@ -762,6 +762,26 @@ C64::update(CmdQueue &queue)
                     drive().processCommand(cmd);
                     break;
 
+                case Cmd::DSK_INSERT:
+
+                    drive().insertDisk(cmd.str, cmd.value2);
+                    break;
+
+                case Cmd::TAPE_INSERT:
+
+                    datasette.insertTape(cmd.str);
+                    break;
+
+                case Cmd::CRT_ATTACH:
+
+                    expansionport.attachCartridge(cmd.str, cmd.value);
+                    break;
+
+                case Cmd::FLASH:
+
+                    flash(cmd.str, cmd.value);
+                    break;
+
                 case Cmd::MOUSE_MOVE_ABS:
                 case Cmd::MOUSE_MOVE_REL:
 
@@ -2314,28 +2334,38 @@ C64::installOpenRom(RomType type)
 void
 C64::flash(const fs::path &path, isize item)
 {
-    if (const auto *file = (AnyFile *)AnyFile::make(path)) {
-        
-        switch (file->type()) {
-                
-            case FileType::BASIC_ROM:
-            case FileType::CHAR_ROM:
-            case FileType::KERNAL_ROM:
-            case FileType::VC1541_ROM:
-            case FileType::SNAPSHOT:
+    try {
 
-                flashNew(*file);
-                
-            case FileType::T64:
-            case FileType::P00:
-            case FileType::PRG:
-                
-                flashNew(*file, item);
-                break;
-                
-            default:
-                fatalError;
+        if (const auto *file = (AnyFile *)AnyFile::make(path)) {
+
+            switch (file->type()) {
+
+                case FileType::BASIC_ROM:
+                case FileType::CHAR_ROM:
+                case FileType::KERNAL_ROM:
+                case FileType::VC1541_ROM:
+                case FileType::SNAPSHOT:
+
+                    flashNew(*file);
+                    break;
+
+                case FileType::T64:
+                case FileType::P00:
+                case FileType::PRG:
+
+                    flashNew(*file, item);
+                    break;
+
+                default:
+                    fatalError;
+            }
         }
+
+    } catch (...) {
+
+        // Inform the GUI (the exception is also passed on to the caller)
+        msgQueue.put(Msg::FILE_FLASHED, std::current_exception());
+        throw;
     }
 }
 

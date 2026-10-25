@@ -971,6 +971,13 @@ public:
      *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void insertTape(const std::filesystem::path &path);
+    /** @brief  Asynchronous version of insertTape(): queues the request and returns at once.
+     *
+     *  The file is read on the emulator thread. Success and failure are both
+     *  reported by the usual message (e.g., CRT_ATTACHED). If the request
+     *  failed, the message carries the exception.
+     */
+    void insertTapeAsync(const std::filesystem::path &path);
 
     /** @brief  Ejects a tape.
      *  This function has no effect if no tape is inserted.
@@ -1105,6 +1112,13 @@ public:
      *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void attachCartridge(const std::filesystem::path &path, bool reset = true);
+    /** @brief  Asynchronous version of attachCartridge(): queues the request and returns at once.
+     *
+     *  The file is read on the emulator thread. Success and failure are both
+     *  reported by the usual message (e.g., CRT_ATTACHED). If the request
+     *  failed, the message carries the exception.
+     */
+    void attachCartridgeAsync(const std::filesystem::path &path, bool reset = true);
 
     /** @brief  Attaches a RAM Expansion Unit to the expansion port.
      */
@@ -1206,6 +1220,13 @@ public:
      *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void insert(const std::filesystem::path& path, bool wp);
+    /** @brief  Asynchronous version of insert(): queues the request and returns at once.
+     *
+     *  The file is read on the emulator thread. Success and failure are both
+     *  reported by the usual message (e.g., CRT_ATTACHED). If the request
+     *  failed, the message carries the exception.
+     */
+    void insertAsync(const std::filesystem::path& path, bool wp);
 
     /** @brief  Ejects the current disk.
      */
@@ -1838,6 +1859,13 @@ public:
     /** @brief  Flashes a file into memory
      */
     void flash(const std::filesystem::path &path, isize item = 0);
+    /** @brief  Asynchronous version of flash(): queues the request and returns at once.
+     *
+     *  The file is read on the emulator thread. Success and failure are both
+     *  reported by the usual message (e.g., CRT_ATTACHED). If the request
+     *  failed, the message carries the exception.
+     */
+    void flashAsync(const std::filesystem::path &path, isize item = 0);
     void flashNew(const AnyFile &file);
     
     /** @brief  Flashes a file from a collection into memory

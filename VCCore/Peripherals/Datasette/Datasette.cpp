@@ -37,8 +37,17 @@ Datasette::tapeDuration(isize pos)
 void
 Datasette::insertTape(const fs::path &path)
 {
-    auto tap = TAPFile(path);
-    insertTape(tap);
+    try {
+
+        auto tap = TAPFile(path);
+        insertTape(tap);
+
+    } catch (...) {
+
+        // Inform the GUI (the exception is also passed on to the caller)
+        msgQueue.put(Msg::VC1530_TAPE, std::current_exception());
+        throw;
+    }
 }
 
 void

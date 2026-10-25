@@ -56,6 +56,7 @@ enum class Cmd : long
     SAVE_WORKSPACE,         ///< Save the workspace to a folder (path attached)
     SAVE_SNAPSHOT,          ///< Save a snapshot to a file (path attached, value = compressor)
     HIBERNATE,              ///< Hibernate into an SVM (path attached, value = bit 0: snapshot, bit 1: workspace)
+    FLASH,                  ///< Flash a file into memory (path attached, value = item)
     
     // CPU
     CPU_BRK,                ///< Let the CPU execute a BRK instruction
@@ -97,13 +98,16 @@ enum class Cmd : long
     DSK_TOGGLE_WP,          ///< Toggle write-protection
     DSK_MODIFIED,           ///< Signal that the disk has been saved
     DSK_UNMODIFIED,         ///< Signan that the disk needs saving
+    DSK_INSERT,             ///< Insert a disk (path attached, value = drive, value2 = write protection)
 
     // Datasette
     DATASETTE_PLAY,         ///< Press the datasette play key
     DATASETTE_STOP,         ///< Press the datasette stop key
     DATASETTE_REWIND,       ///< Rewind the tape
+    TAPE_INSERT,            ///< Insert a tape (path attached)
 
     // Cartridge
+    CRT_ATTACH,             ///< Attach a cartridge (path attached, value = reset)
     CRT_BUTTON_PRESS,       ///< Press a cartridge button
     CRT_BUTTON_RELEASE,     ///< Release a cartridge button
     CRT_SWITCH_LEFT,        ///< Pull the cartridge switch left
@@ -189,6 +193,10 @@ struct CmdEnum : Reflectable<CmdEnum, Cmd> {
             case Cmd::DSK_TOGGLE_WP:         return "DSK_TOGGLE_WP";
             case Cmd::DSK_MODIFIED:          return "DSK_MODIFIED";
             case Cmd::DSK_UNMODIFIED:        return "DSK_UNMODIFIED";
+            case Cmd::DSK_INSERT:            return "DSK_INSERT";
+            case Cmd::TAPE_INSERT:           return "TAPE_INSERT";
+            case Cmd::CRT_ATTACH:            return "CRT_ATTACH";
+            case Cmd::FLASH:                 return "FLASH";
 
             case Cmd::DATASETTE_PLAY:        return "DATASETTE_PLAY";
             case Cmd::DATASETTE_STOP:        return "DATASETTE_STOP";
