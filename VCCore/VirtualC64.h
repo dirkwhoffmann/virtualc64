@@ -16,6 +16,7 @@
 #include "VirtualC64Types.h"
 #include "CoreError.h"
 #include "Snapshot.h"
+#include <array>
 #include "FileSystems/CBM/FSTypes.h"
 
 using retro::vault::cbm::FSFormat;
@@ -787,22 +788,28 @@ public:
      *
      *  When a key is marked as locked, it won't be released when release()
      *  or releaseAll() is called.
+     *
+     *  @param  delay   An optional delay in seconds.
      */
-    void lock(C64Key key);
+    void lock(C64Key key, double delay = 0.0);
 
     /** @brief  Unlocks a key
      *
      *  @param key      The key to unlock.
      *
      *  Removes the lock, putting the key back into it's normal state.
+     *
+     *  @param  delay   An optional delay in seconds.
      */
-    void unlock(C64Key key);
+    void unlock(C64Key key, double delay = 0.0);
 
     /** @brief  Unlocks all keys
     *
     *  Removes the lock for all keys, putting them back into their normal state.
+    *
+    *  @param  delay   An optional delay in seconds.
     */
-    void unlockAll();
+    void unlockAll(double delay = 0.0);
 
     /** @brief  Uses the auto-typing daemon to type a string.
      *  @param  text    The text to type.
@@ -898,9 +905,17 @@ public:
      */
     void trigger(GamePadAction event);
 
-    /** @brief  Updates the complete joystick state
+    /** @brief  Sets the complete joystick state.
+     *
+     *  The states are ordered up, down, left, right, fire. The directions are
+     *  applied as given, which is harmless to repeat. The fire button is only
+     *  forwarded if it differs in 'previous', because pressing it again would
+     *  toggle autofire. Pass the state that was reported by the previous call.
+     *
+     *  @param  state       The new states of up, down, left, right, and fire.
+     *  @param  previous    The previous states.
      */
-    void trigger(bool state[5]);
+    void trigger(const std::array<bool, 5> &state, const std::array<bool, 5> &previous);
 };
 
 

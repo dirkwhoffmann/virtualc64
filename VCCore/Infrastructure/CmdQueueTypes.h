@@ -80,6 +80,9 @@ enum class Cmd : long
     KEY_RELEASE,            ///< Release a key on the C64 keyboard
     KEY_RELEASE_ALL,        ///< Clear the keyboard matrix
     KEY_TOGGLE,             ///< Press or release a key on the C64 keyboard
+    KEY_LOCK,               ///< Lock a key on the C64 keyboard
+    KEY_UNLOCK,             ///< Unlock a key on the C64 keyboard
+    KEY_UNLOCK_ALL,         ///< Unlock all keys on the C64 keyboard
 
     // Mouse
     MOUSE_MOVE_ABS,         ///< Signal a mouse movement (absolute)
@@ -88,6 +91,7 @@ enum class Cmd : long
 
     // Joystick
     JOY_EVENT,              ///< Signal a joystick button event
+    JOY_STATE,              ///< Set the complete joystick state (directions and fire button)
 
     // Floppy disk
     DSK_TOGGLE_WP,          ///< Toggle write-protection
@@ -171,12 +175,16 @@ struct CmdEnum : Reflectable<CmdEnum, Cmd> {
             case Cmd::KEY_RELEASE:           return "KEY_RELEASE";
             case Cmd::KEY_RELEASE_ALL:       return "KEY_RELEASE_ALL";
             case Cmd::KEY_TOGGLE:            return "KEY_TOGGLE";
+            case Cmd::KEY_LOCK:              return "KEY_LOCK";
+            case Cmd::KEY_UNLOCK:            return "KEY_UNLOCK";
+            case Cmd::KEY_UNLOCK_ALL:        return "KEY_UNLOCK_ALL";
 
             case Cmd::MOUSE_MOVE_ABS:        return "MOUSE_MOVE_ABS";
             case Cmd::MOUSE_MOVE_REL:        return "MOUSE_MOVE_REL";
             case Cmd::MOUSE_BUTTON:          return "MOUSE_BUTTON";
 
             case Cmd::JOY_EVENT:             return "JOY_EVENT";
+            case Cmd::JOY_STATE:             return "JOY_STATE";
 
             case Cmd::DSK_TOGGLE_WP:         return "DSK_TOGGLE_WP";
             case Cmd::DSK_MODIFIED:          return "DSK_MODIFIED";
@@ -243,6 +251,13 @@ GamePadCmd;
 
 typedef struct
 {
+    isize port;
+    u32 state;      // Bits 0-4: current state, bits 8-12: previous state (up, down, left, right, fire)
+}
+JoyStateCmd;
+
+typedef struct
+{
     void *tape;
 }
 TapeCmd;
@@ -281,6 +296,7 @@ struct Command
         CoordCmd coord;
         GamePadCmd action;
         GuardCmd guard;
+        JoyStateCmd joyState;
         KeyCmd key;
         TapeCmd tape;
     };
@@ -299,6 +315,7 @@ struct Command
     Command(Cmd type, const CoordCmd &cmd) : type(type), coord(cmd) { }
     Command(Cmd type, const GamePadCmd &cmd) : type(type), action(cmd) { }
     Command(Cmd type, const GuardCmd &cmd) : type(type), guard(cmd) { }
+    Command(Cmd type, const JoyStateCmd &cmd) : type(type), joyState(cmd) { }
     Command(Cmd type, const KeyCmd &cmd) : type(type), key(cmd) { }
     Command(Cmd type, const TapeCmd &cmd) : type(type), tape(cmd) { }
 };

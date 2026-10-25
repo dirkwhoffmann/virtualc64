@@ -94,11 +94,16 @@ Joystick::trigger(GamePadAction event)
 }
 
 void
-Joystick::trigger(bool state[5])
+Joystick::trigger(const std::array<bool, 5> &state, const std::array<bool, 5> &previous)
 {
     trigger(state[0] ? GamePadAction::PULL_UP : state[1] ? GamePadAction::PULL_DOWN : GamePadAction::RELEASE_Y);
     trigger(state[2] ? GamePadAction::PULL_LEFT : state[3] ? GamePadAction::PULL_RIGHT : GamePadAction::RELEASE_X);
-    trigger(state[4] ? GamePadAction::PRESS_FIRE : GamePadAction::RELEASE_FIRE);
+
+    // Forward the fire button only if it has changed (a repeated press would toggle autofire)
+    if (state[4] != previous[4]) {
+
+        trigger(state[4] ? GamePadAction::PRESS_FIRE : GamePadAction::RELEASE_FIRE);
+    }
 }
 
 void

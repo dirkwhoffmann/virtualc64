@@ -105,6 +105,16 @@ ControlPort::processCommand(const Command &cmd)
         case Cmd::MOUSE_MOVE_REL:    mouse.setDxDy(cmd.coord.x, cmd.coord.y); break;
         case Cmd::MOUSE_BUTTON:       mouse.trigger(cmd.action.action); break;
         case Cmd::JOY_EVENT:         joystick.trigger(cmd.action.action); break;
+        case Cmd::JOY_STATE:
+        {
+            auto unpack = [&](u32 shift) {
+
+                auto bit = [&](u32 i) { return bool((cmd.joyState.state >> (shift + i)) & 1); };
+                return std::array<bool, 5> { bit(0), bit(1), bit(2), bit(3), bit(4) };
+            };
+            joystick.trigger(unpack(0), unpack(8));
+            break;
+        }
 
         default:
             fatalError;

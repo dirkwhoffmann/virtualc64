@@ -748,6 +748,9 @@ C64::update(CmdQueue &queue)
                 case Cmd::KEY_RELEASE:
                 case Cmd::KEY_RELEASE_ALL:
                 case Cmd::KEY_TOGGLE:
+                case Cmd::KEY_LOCK:
+                case Cmd::KEY_UNLOCK:
+                case Cmd::KEY_UNLOCK_ALL:
 
                     keyboard.processCommand(cmd);
                     break;
@@ -779,6 +782,21 @@ C64::update(CmdQueue &queue)
                 case Cmd::JOY_EVENT:
 
                     switch (cmd.action.port) {
+
+                        case PORT_1:
+                            port1.processCommand(cmd);
+                            break;
+                        case PORT_2:
+                            port2.processCommand(cmd);
+                            break;
+                        default:
+                        fatalError;
+                    }
+                    break;
+
+                case Cmd::JOY_STATE:
+
+                    switch (cmd.joyState.port) {
 
                         case PORT_1:
                             port1.processCommand(cmd);

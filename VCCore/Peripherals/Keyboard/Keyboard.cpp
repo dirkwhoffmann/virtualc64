@@ -333,6 +333,9 @@ Keyboard::processCommand(const Command &cmd)
         case Cmd::KEY_RELEASE:       release(C64Key(cmd.key.keycode)); break;
         case Cmd::KEY_RELEASE_ALL:   releaseAll(); break;
         case Cmd::KEY_TOGGLE:        toggle(C64Key(cmd.key.keycode)); break;
+        case Cmd::KEY_LOCK:          lock(C64Key(cmd.key.keycode)); break;
+        case Cmd::KEY_UNLOCK:        unlock(C64Key(cmd.key.keycode)); break;
+        case Cmd::KEY_UNLOCK_ALL:    unlockAll(); break;
 
         default:
             fatalError;
