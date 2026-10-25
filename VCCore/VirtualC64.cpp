@@ -1849,11 +1849,11 @@ RetroShellAPI::getCachedInfo() const
     return retroShell->info.backed();
 }
 
-const char *
-RetroShellAPI::text()
+string
+RetroShellAPI::text() const
 {
     VC64_PUBLIC_SUSPEND
-    return retroShell->text();
+    return string(retroShell->text());
 }
 
 void

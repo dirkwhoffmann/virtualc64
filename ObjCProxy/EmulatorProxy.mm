@@ -1354,8 +1354,7 @@ static NSString *padded(const string &dump, NSInteger pads)
 
 -(NSString *)getText
 {
-	const char *str = [self shell]->text();
-	return str ? @(str) : nullptr;
+	return @([self shell]->text().c_str());
 }
 
 - (void)pressKey:(char)c

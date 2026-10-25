@@ -1171,12 +1171,12 @@ public:
     const RetroShellInfo &getInfo() const;
     const RetroShellInfo &getCachedInfo() const;
 
-    /** @brief  Returns a pointer to the text buffer.
+    /** @brief  Returns a copy of the text buffer.
      *  The text buffer contains the complete contents of the console. It
      *  will be expanded when new output is generated. When the buffer
      *  grows too large, old contents is cropped.
      */
-    const char *text();
+    string text() const;
 
     /** @brief  Returns the relative cursor position.
      *  The returned value is relative to the end of the input line. A value
