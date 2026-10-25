@@ -2561,10 +2561,15 @@ public:
      *  The current configuration is exported in form of a RetroShell script.
      *  Reading in the script at a later point will restore the configuration.
      *
+     *  @param diff When set to true, the script will only contains settings
+     *              for items that differ from the default configuration.
+     *              This feature is useful for debugging to compare two virtual
+     *              machine configurations.
+     *
      *  @throw Error if the file cannot be written.
      */
-    void exportConfig(const std::filesystem::path &path) const;
-    void exportConfig(std::ostream &stream) const;
+    void exportConfig(const std::filesystem::path &path, bool diff = false) const;
+    void exportConfig(std::ostream &stream, bool diff = false) const;
 
 
     /// @}

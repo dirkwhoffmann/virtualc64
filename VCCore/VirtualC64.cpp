@@ -601,17 +601,17 @@ VirtualC64::sync()
 }
 
 void
-VirtualC64::exportConfig(const fs::path &path) const
+VirtualC64::exportConfig(const fs::path &path, bool diff) const
 {
     VC64_PUBLIC_SUSPEND
-    emu->main.exportConfig(path);
+    emu->main.exportConfig(path, diff);
 }
 
 void
-VirtualC64::exportConfig(std::ostream &stream) const
+VirtualC64::exportConfig(std::ostream &stream, bool diff) const
 {
     VC64_PUBLIC_SUSPEND
-    emu->main.exportConfig(stream);
+    emu->main.exportConfig(stream, diff);
 }
 
 void
