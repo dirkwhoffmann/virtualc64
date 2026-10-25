@@ -1693,6 +1693,9 @@ public:
      */
     void setAutoInspectionMask(u64 mask);
 
+    /// Asynchronous version of setAutoInspectionMask(): queues the request and returns at once.
+    void setAutoInspectionMaskAsync(u64 mask);
+
 
     /// @}
     /// @name Working with workspaces and snapshots

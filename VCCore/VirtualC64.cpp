@@ -532,7 +532,7 @@ VirtualC64::get(Opt opt, isize id) const
 void
 VirtualC64::setAsync(ConfigScheme model)
 {
-    VC64_PUBLIC_SUSPEND
+    VC64_PUBLIC
     putAsync(Cmd::CONFIG_SCHEME, (i64)model);
     emu->markAsDirty();
 }
@@ -645,6 +645,13 @@ C64API::setAutoInspectionMask(u64 mask)
 {
     VC64_PUBLIC_SUSPEND
     c64->setAutoInspectionMask(mask);
+}
+
+void
+C64API::setAutoInspectionMaskAsync(u64 mask)
+{
+    VC64_PUBLIC
+    emu->put(Cmd::INSPECTION_TARGET, i64(mask));
 }
 
 const C64Config &
@@ -1696,17 +1703,15 @@ KeyboardAPI::unlockAll(double delay)
 void
 KeyboardAPI::autoType(const string &text)
 {
-    VC64_PUBLIC_SUSPEND
-    keyboard->autoType(text);
-    emu->markAsDirty();
+    VC64_PUBLIC
+    emu->put(Cmd::KEY_AUTOTYPE, text);
 }
 
 void
 KeyboardAPI::abortTyping()
 {
-    VC64_PUBLIC_SUSPEND
-    keyboard->abortTyping();
-    emu->markAsDirty();
+    VC64_PUBLIC
+    emu->put(Cmd::KEY_ABORT_TYPING);
 }
 
 
@@ -1976,49 +1981,49 @@ RetroShellAPI::text() const
 void
 RetroShellAPI::press(RSKey key, bool shift)
 {
-    VC64_PUBLIC_SUSPEND
-    retroShell->press(key, shift);
+    VC64_PUBLIC
+    emu->put(Command(Cmd::RSH_PRESS_KEY, i64(key), i64(shift)));
 }
 
 void
 RetroShellAPI::press(char c)
 {
-    VC64_PUBLIC_SUSPEND
-    retroShell->press(c);
+    VC64_PUBLIC
+    emu->put(Cmd::RSH_PRESS_CHAR, i64(c));
 }
 
 void
 RetroShellAPI::press(const string &s)
 {
-    VC64_PUBLIC_SUSPEND
-    retroShell->press(s);
+    VC64_PUBLIC
+    emu->put(Cmd::RSH_PRESS_TEXT, s);
 }
 
 void
 RetroShellAPI::execScriptAsync(const fs::path &path)
 {
-    VC64_PUBLIC_SUSPEND
+    VC64_PUBLIC
     retroShell->asyncExecScript(path);
 }
 
 void
 RetroShellAPI::execScriptAsync(std::stringstream &ss)
 {
-    VC64_PUBLIC_SUSPEND
+    VC64_PUBLIC
     retroShell->asyncExecScript(ss);
 }
 
 void
 RetroShellAPI::execScriptAsync(const std::ifstream &fs)
 {
-    VC64_PUBLIC_SUSPEND
+    VC64_PUBLIC
     retroShell->asyncExecScript(fs);
 }
 
 void
 RetroShellAPI::execScriptAsync(const string &contents)
 {
-    VC64_PUBLIC_SUSPEND
+    VC64_PUBLIC
     retroShell->asyncExecScript(contents);
 }
 
