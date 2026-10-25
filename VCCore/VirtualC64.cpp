@@ -376,6 +376,9 @@ VirtualC64::halt()
     // Nothing to do without a running emulator thread
     if (!emu->isLaunched()) return;
 
+    // A suspended thread cannot process the halt command, so waiting for it would never end
+    if (emu->isSuspended()) throw CoreError(CoreError::NOT_LAUNCHED, "The emulator thread is suspended.");
+
     // Signal the emulator to halt
     emu->put(Cmd::HALT);
     

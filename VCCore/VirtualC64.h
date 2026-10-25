@@ -77,11 +77,16 @@ public:
 
     /** @brief  Suspends the emulator thread
      *
-     *  Blocks until the emulator thread has stopped at a safe point. The call
-     *  can be nested: the thread continues once resume() has been called as
-     *  often as suspend(). Use it to read or modify the state of a component
-     *  that is not protected by the API itself. Do not call it from the
-     *  emulator thread.
+     *  Blocks until the emulator thread has stopped at a safe point, i.e.,
+     *  it is neither computing a frame nor processing its command queue. The
+     *  call can be nested: the thread continues once resume() has been called
+     *  as often as suspend(). Use it to read or modify the state of a
+     *  component that is not protected by the API itself.
+     *
+     *  Do not call it from the emulator thread. While the thread is
+     *  suspended, the blocking API functions (those that wait for the
+     *  emulator thread) refuse to work, and halt() cannot finish. Queued
+     *  requests wait in the queue until the thread continues.
      */
     void suspend() const;
 

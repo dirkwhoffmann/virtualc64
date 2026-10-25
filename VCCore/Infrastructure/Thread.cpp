@@ -137,8 +137,15 @@ Thread::runLoop()
 
     while (state != ExecState::HALTED) {
 
-        // Prepare for the next frame
-        update();
+        /* Prepare for the next frame. Processing the command queue changes
+         * the emulator state, so it is protected like the computation of a
+         * frame: a thread that has suspended the emulator never overlaps
+         * with it. The lock is not held while the thread sleeps.
+         */
+        {   std::lock_guard<utl::ReentrantMutex> guard(lock);
+
+            update();
+        }
 
         // Compute missing frames
         execute();
