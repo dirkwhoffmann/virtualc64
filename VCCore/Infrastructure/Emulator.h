@@ -19,6 +19,7 @@
 #include "Thread.h"
 #include "CmdQueue.h"
 #include <future>
+#include <functional>
 
 namespace vc64 {
 
@@ -199,6 +200,16 @@ public:
     // Feeds a command into the command queue
     void put(const Command &cmd, const string &str = "");
     void put(const Command &cmd, const string &str, CmdQueue::Completion completion);
+
+    /* Runs a function on the emulator thread and waits until it is done. The
+     * function is executed in update(), i.e., in the order of the commands
+     * that were queued before, and never while a frame is computed or while
+     * another thread has suspended the emulator. An exception thrown by the
+     * function is passed on to the caller. If the emulator thread is not
+     * running, there is nobody to hand the function to, and it is executed
+     * right away.
+     */
+    void call(const std::function<void()> &fn);
 
     /* Sends a command and returns a future that becomes ready once the
      * emulator thread has carried it out. A command that fails makes get()

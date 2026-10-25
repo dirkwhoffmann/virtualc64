@@ -62,6 +62,25 @@ using peddle::RecordedInstruction;
  * the result matters.
  */
 
+/* Threading
+ *
+ * Functions of this API are called from threads other than the emulator
+ * thread. Requests that change the state of the emulator are carried out on
+ * the emulator thread, in the order in which they arrive:
+ *
+ *   plain name : The function waits until the emulator thread has carried
+ *                out the request and passes on failures as exceptions. If the
+ *                emulator thread has not been launched, the request is
+ *                carried out on the calling thread.
+ *   "Async"    : The function queues the request and returns at once.
+ *   input      : Keyboard, mouse, joystick and RetroShell input is queued.
+ *
+ * Functions that only read the state of the emulator or export it to a file
+ * (e.g., dump, disassemble, saveSnapshot) suspend the emulator thread for the
+ * duration of the call instead. A thread can also suspend the emulator
+ * itself with suspend() and resume().
+ */
+
 //
 // Base class for all APIs
 //

@@ -646,8 +646,10 @@ C64API::getAutoInspectionMask() const
 void
 C64API::setAutoInspectionMask(u64 mask)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->setAutoInspectionMask(mask);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->setAutoInspectionMask(mask);
+    });
 }
 
 void
@@ -702,8 +704,10 @@ C64API::getRomTraits(RomType type) const
 void
 C64API::loadWorkspace(const fs::path &path)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->loadWorkspace(path);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->loadWorkspace(path);
+    });
 }
 
 void
@@ -723,8 +727,10 @@ C64API::saveWorkspaceAsync(const fs::path &path) const
 void
 C64API::loadWorkspace(retro::vault::SVMFile &svm)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->loadWorkspace(svm);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->loadWorkspace(svm);
+    });
 }
 
 void
@@ -744,41 +750,46 @@ C64API::saveWorkspaceAsync(retro::vault::SVMFile &svm) const
 std::unique_ptr<Snapshot>
 C64API::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 {
-    VC64_PUBLIC_SUSPEND
-    return c64->takeSnapshotNew(compressor, delay, repeat);
+    VC64_PUBLIC
+
+    std::unique_ptr<Snapshot> result;
+    emu->call([&]{ result = c64->takeSnapshotNew(compressor, delay, repeat); });
+    return result;
 }
 
 
 void
 C64API::loadSnapshot(const Snapshot &snapshot)
 {
-    VC64_PUBLIC_SUSPEND
-
+    VC64_PUBLIC
     emu->markAsDirty();
+    emu->call([&]{
+        try {
 
-    try {
+            // Restore the saved state
+            c64->loadSnapshot(snapshot);
 
-        // Restore the saved state
-        c64->loadSnapshot(snapshot);
+        } catch (std::exception &) {
 
-    } catch (std::exception &) {
-
-        /* If we reach this point, the emulator has been put into an
-         * inconsistent state due to corrupted snapshot data. We cannot
-         * continue emulation, because it would likely crash the
-         * application. Because we cannot revert to the old state either,
-         * we perform a hard reset to eliminate the inconsistency.
-         */
-        emu->put(Cmd::HARD_RESET);
-        throw;
-    }
+            /* If we reach this point, the emulator has been put into an
+             * inconsistent state due to corrupted snapshot data. We cannot
+             * continue emulation, because it would likely crash the
+             * application. Because we cannot revert to the old state either,
+             * we perform a hard reset to eliminate the inconsistency.
+             */
+            emu->put(Cmd::HARD_RESET);
+            throw;
+        }
+    });
 }
 
 void
 C64API::loadSnapshot(const fs::path &path)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->loadSnapshot(path);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->loadSnapshot(path);
+    });
 }
 
 void
@@ -841,32 +852,40 @@ C64API::hibernateAsync(retro::vault::SVMFile &svm, bool snapshot, bool workspace
 void
 C64API::loadRom(const fs::path &path)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->loadRom(path);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->loadRom(path);
+    });
     emu->markAsDirty();
 }
 
 void
 C64API::loadRom(const std::filesystem::path &path, RomType rom)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->loadRom(path, rom);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->loadRom(path, rom);
+    });
     emu->markAsDirty();
 }
 
 void 
 C64API::deleteRom(RomType type)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->deleteRom(type);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->deleteRom(type);
+    });
     emu->markAsDirty();
 }
 
 void 
 C64API::deleteRoms()
 {
-    VC64_PUBLIC_SUSPEND
-    c64->deleteRoms();
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->deleteRoms();
+    });
     emu->markAsDirty();
 }
 
@@ -881,24 +900,30 @@ C64API::saveRom(const std::filesystem::path &path, RomType rom)
 void
 C64API::installOpenRom(RomType type)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->installOpenRom(type);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->installOpenRom(type);
+    });
     emu->markAsDirty();
 }
 
 void
 C64API::installOpenRoms()
 {
-    VC64_PUBLIC_SUSPEND
-    c64->installOpenRoms();
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->installOpenRoms();
+    });
     emu->markAsDirty();
 }
 
 void
 C64API::flash(const fs::path &path, isize item)
 {
-    VC64_PUBLIC_SUSPEND
-    c64->flash(path, item);
+    VC64_PUBLIC
+    emu->call([&]{
+        c64->flash(path, item);
+    });
     emu->markAsDirty();
 }
 
@@ -949,8 +974,10 @@ CPUDebuggerAPI::loggedInstructions() const
 void
 CPUDebuggerAPI::clearLog()
 {
-    VC64_PUBLIC_SUSPEND
-    cpu->debugger.clearLog();
+    VC64_PUBLIC
+    emu->call([&]{
+        cpu->debugger.clearLog();
+    });
 }
 
 RecordedInstruction
@@ -963,8 +990,10 @@ CPUDebuggerAPI::logEntry(isize nr) const
 void
 CPUDebuggerAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
 {
-    VC64_PUBLIC_SUSPEND
-    cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
+    VC64_PUBLIC
+    emu->call([&]{
+        cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
+    });
 }
 
 // Throws an exception if a disassembler format string is invalid
@@ -1806,8 +1835,10 @@ DatasetteAPI::getCachedInfo() const
 void
 DatasetteAPI::insertTape(const fs::path &path)
 {
-    VC64_PUBLIC_SUSPEND
-    datasette->insertTape(path);
+    VC64_PUBLIC
+    emu->call([&]{
+        datasette->insertTape(path);
+    });
     emu->markAsDirty();
 }
 
@@ -1821,8 +1852,10 @@ DatasetteAPI::insertTapeAsync(const fs::path &path)
 void
 DatasetteAPI::ejectTape()
 {
-    VC64_PUBLIC_SUSPEND
-    datasette->ejectTape();
+    VC64_PUBLIC
+    emu->call([&]{
+        datasette->ejectTape();
+    });
     emu->markAsDirty();
 }
 
@@ -2033,8 +2066,10 @@ RetroShellAPI::execScriptAsync(const string &contents)
 void
 RetroShellAPI::setStream(std::ostream &os)
 {
-    VC64_PUBLIC_SUSPEND
-    retroShell->setStream(os);
+    VC64_PUBLIC
+    emu->call([&]{
+        retroShell->setStream(os);
+    });
 }
 
 
@@ -2073,8 +2108,10 @@ ExpansionPortAPI::getRomInfo(isize nr) const
 void
 ExpansionPortAPI::attachCartridge(const std::filesystem::path &path, bool reset)
 {
-    VC64_PUBLIC_SUSPEND
-    expansionPort->attachCartridge(path, reset);
+    VC64_PUBLIC
+    emu->call([&]{
+        expansionPort->attachCartridge(path, reset);
+    });
     emu->markAsDirty();
 }
 
@@ -2088,32 +2125,40 @@ ExpansionPortAPI::attachCartridgeAsync(const std::filesystem::path &path, bool r
 void
 ExpansionPortAPI::attachReu(isize capacity)
 {
-    VC64_PUBLIC_SUSPEND
-    expansionPort->attachReu(capacity);
+    VC64_PUBLIC
+    emu->call([&]{
+        expansionPort->attachReu(capacity);
+    });
     emu->markAsDirty();
 }
 
 void
 ExpansionPortAPI::attachGeoRam(isize capacity)
 {
-    VC64_PUBLIC_SUSPEND
-    expansionPort->attachGeoRam(capacity);
+    VC64_PUBLIC
+    emu->call([&]{
+        expansionPort->attachGeoRam(capacity);
+    });
     emu->markAsDirty();
 }
 
 void
 ExpansionPortAPI::attachIsepicCartridge()
 {
-    VC64_PUBLIC_SUSPEND
-    expansionPort->attachIsepicCartridge();
+    VC64_PUBLIC
+    emu->call([&]{
+        expansionPort->attachIsepicCartridge();
+    });
     emu->markAsDirty();
 }
 
 void
 ExpansionPortAPI::detachCartridge()
 {
-    VC64_PUBLIC_SUSPEND
-    expansionPort->detachCartridge();
+    VC64_PUBLIC
+    emu->call([&]{
+        expansionPort->detachCartridge();
+    });
     emu->markAsDirty();
 }
 
@@ -2165,16 +2210,20 @@ DriveAPI::getCachedInfo() const
 void
 DriveAPI::insertBlankDisk(FSFormat fstype, string name)
 {
-    VC64_PUBLIC_SUSPEND
-    drive->insertNewDisk(fstype, name);
+    VC64_PUBLIC
+    emu->call([&]{
+        drive->insertNewDisk(fstype, name);
+    });
     emu->markAsDirty();
 }
 
 void
 DriveAPI::insert(const fs::path &path, bool wp)
 {
-    VC64_PUBLIC_SUSPEND
-    drive->insertDisk(path, wp);
+    VC64_PUBLIC
+    emu->call([&]{
+        drive->insertDisk(path, wp);
+    });
     emu->markAsDirty();
 }
 
@@ -2188,8 +2237,10 @@ DriveAPI::insertAsync(const fs::path &path, bool wp)
 void
 DriveAPI::ejectDisk()
 {
-    VC64_PUBLIC_SUSPEND
-    drive->ejectDisk();
+    VC64_PUBLIC
+    emu->call([&]{
+        drive->ejectDisk();
+    });
     emu->markAsDirty();
 }
 

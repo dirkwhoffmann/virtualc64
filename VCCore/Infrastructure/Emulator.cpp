@@ -488,6 +488,15 @@ Emulator::send(const Command &cmd, const string &str)
 }
 
 void
+Emulator::call(const std::function<void()> &fn)
+{
+    // Without an emulator thread, nobody could carry out the request
+    if (!isLaunched() || isHalted()) { fn(); return; }
+
+    sendAndWait(Command(Cmd::CALL, i64(0), i64(&fn)));
+}
+
+void
 Emulator::sendAndWait(const Command &cmd, const string &str)
 {
     // Refuse to wait if the command would never be carried out
