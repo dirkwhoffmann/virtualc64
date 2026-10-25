@@ -222,7 +222,7 @@ CPU::setBreakpoint(u32 addr, isize ignores)
     if (debugger.breakpoints.isSetAt(addr)) throw CoreError(CoreError::BP_ALREADY_SET, addr);
 
     debugger.breakpoints.setAt(addr, ignores);
-    msgQueue.put(Msg::BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::BREAKPOINT));
 }
 
 void 
@@ -231,7 +231,7 @@ CPU::moveBreakpoint(isize nr, u32 newAddr)
     if (!debugger.breakpoints.guardNr(nr)) throw CoreError(CoreError::BP_NOT_FOUND, nr);
 
     debugger.breakpoints.moveTo(nr, newAddr);
-    msgQueue.put(Msg::BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::BREAKPOINT));
 }
 
 void
@@ -240,7 +240,7 @@ CPU::deleteBreakpoint(isize nr)
     if (!debugger.breakpoints.guardNr(nr)) throw CoreError(CoreError::BP_NOT_FOUND, nr);
 
     debugger.breakpoints.remove(nr);
-    msgQueue.put(Msg::BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::BREAKPOINT));
 }
 
 void
@@ -249,14 +249,14 @@ CPU::deleteBreakpointAt(u32 addr)
     if (!debugger.breakpoints.guardAt(addr)) throw CoreError(CoreError::BP_NOT_FOUND, addr);
 
     debugger.breakpoints.removeAt(addr);
-    msgQueue.put(Msg::BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::BREAKPOINT));
 }
 
 void
 CPU::deleteAllBreakpoints()
 {
     debugger.breakpoints.removeAll();
-    msgQueue.put(Msg::BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::BREAKPOINT));
 }
 
 void
@@ -271,7 +271,7 @@ CPU::setEnableBreakpoint(isize nr, bool value)
     if (!debugger.breakpoints.guardNr(nr)) throw CoreError(CoreError::BP_NOT_FOUND, nr);
 
     debugger.breakpoints.setEnable(nr, value);
-    msgQueue.put(Msg::BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::BREAKPOINT));
 }
 
 void 
@@ -280,14 +280,14 @@ CPU::setEnableBreakpointAt(u32 addr, bool value)
     if (!debugger.breakpoints.guardAt(addr)) throw CoreError(CoreError::BP_NOT_FOUND, addr);
 
     debugger.breakpoints.setEnableAt(addr, value);
-    msgQueue.put(Msg::BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::BREAKPOINT));
 }
 
 void
 CPU::setEnableAllBreakpoints(bool value)
 {
     debugger.breakpoints.setEnableAll(value);
-    msgQueue.put(Msg::BREAKPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::BREAKPOINT));
 }
 
 void
@@ -296,7 +296,7 @@ CPU::setWatchpoint(u32 addr, isize ignores)
     if (debugger.watchpoints.isSetAt(addr)) throw CoreError(CoreError::WP_ALREADY_SET, addr);
 
     debugger.watchpoints.setAt(addr, ignores);
-    msgQueue.put(Msg::WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::WATCHPOINT));
 }
 
 void
@@ -305,7 +305,7 @@ CPU::moveWatchpoint(isize nr, u32 newAddr)
     if (!debugger.watchpoints.guardNr(nr)) throw CoreError(CoreError::WP_NOT_FOUND, nr);
 
     debugger.watchpoints.moveTo(nr, newAddr);
-    msgQueue.put(Msg::WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::WATCHPOINT));
 }
 
 void
@@ -314,7 +314,7 @@ CPU::deleteWatchpoint(isize nr)
     if (!debugger.watchpoints.guardNr(nr)) throw CoreError(CoreError::WP_NOT_FOUND, nr);
 
     debugger.watchpoints.remove(nr);
-    msgQueue.put(Msg::WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::WATCHPOINT));
 }
 
 void
@@ -323,14 +323,14 @@ CPU::deleteWatchpointAt(u32 addr)
     if (!debugger.watchpoints.guardAt(addr)) throw CoreError(CoreError::WP_NOT_FOUND, addr);
 
     debugger.watchpoints.removeAt(addr);
-    msgQueue.put(Msg::WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::WATCHPOINT));
 }
 
 void
 CPU::deleteAllWatchpoints()
 {
     debugger.watchpoints.removeAll();
-    msgQueue.put(Msg::WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::WATCHPOINT));
 }
 
 void
@@ -345,7 +345,7 @@ CPU::setEnableWatchpoint(isize nr, bool value)
     if (!debugger.watchpoints.guardNr(nr)) throw CoreError(CoreError::WP_NOT_FOUND, nr);
 
     debugger.watchpoints.setEnable(nr, value);
-    msgQueue.put(Msg::WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::WATCHPOINT));
 }
 
 void
@@ -354,14 +354,14 @@ CPU::setEnableWatchpointAt(u32 addr, bool value)
     if (!debugger.watchpoints.guardAt(addr)) throw CoreError(CoreError::WP_NOT_FOUND, addr);
 
     debugger.watchpoints.setEnableAt(addr, value);
-    msgQueue.put(Msg::WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::WATCHPOINT));
 }
 
 void
 CPU::setEnableAllWatchpoints(bool value)
 {
     debugger.watchpoints.setEnableAll(value);
-    msgQueue.put(Msg::WATCHPOINT_UPDATED);
+    msgQueue.put(Msg::GUARD_UPDATED, i64(GuardType::WATCHPOINT));
 }
 
 

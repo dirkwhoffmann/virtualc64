@@ -415,7 +415,7 @@ extension MyController {
         case .RSH_DONE:
             break
             
-        case .BREAKPOINT_UPDATED, .WATCHPOINT_UPDATED:
+        case .GUARD_UPDATED:
             break
             
         case .BREAKPOINT_REACHED:

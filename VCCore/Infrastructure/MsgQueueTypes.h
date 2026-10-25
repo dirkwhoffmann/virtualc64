@@ -53,9 +53,8 @@ enum class Msg : long
     RSH_DONE,           ///< All pending commands have been executed
 
     // CPU
-    BREAKPOINT_UPDATED, ///< The breakpoint list has beed modified
+    GUARD_UPDATED,      ///< A guard list has been modified (value = GuardType)
     BREAKPOINT_REACHED, ///< A breakpoint has been reached
-    WATCHPOINT_UPDATED, ///< The watchpoint list has beed modified
     WATCHPOINT_REACHED, ///< A watchpoint has been reached
     CPU_JUMPED,         ///< The program counter has been modified manually
     CPU_JAMMED,         ///< The CPU has halted due to an illegal instruction
@@ -166,9 +165,8 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::RSH_ERROR:             return "RSH_ERROR";
             case Msg::RSH_DONE:              return "RSH_DONE";
                 
-            case Msg::BREAKPOINT_UPDATED:    return "BREAKPOINT_UPDATED";
+            case Msg::GUARD_UPDATED:         return "GUARD_UPDATED";
             case Msg::BREAKPOINT_REACHED:    return "BREAKPOINT_REACHED";
-            case Msg::WATCHPOINT_UPDATED:    return "WATCHPOINT_UPDATED";
             case Msg::WATCHPOINT_REACHED:    return "WATCHPOINT_REACHED";
             case Msg::CPU_JUMPED:            return "CPU_JUMPED";
             case Msg::CPU_JAMMED:            return "CPU_JAMMED";
