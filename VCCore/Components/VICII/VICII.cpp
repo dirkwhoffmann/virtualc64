@@ -186,7 +186,7 @@ VICII::setRevision(VICIIRev revision)
     vic.updateVicFunctionTable();
     c64.updateClockFrequency();
     
-    msgQueue.put(isPAL ? Msg::PAL : Msg::NTSC);
+    msgQueue.put(Msg::VIDEO_FORMAT, isPAL ? 0 : 1);
 }
 
 void

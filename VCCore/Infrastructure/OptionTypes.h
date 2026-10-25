@@ -26,7 +26,7 @@ enum class Opt : long
 {
     // Host
     HOST_REFRESH_RATE,      ///< Video refresh rate of the host display
-    HOST_SAMPLE_RATE,       ///< Audio sample rate of the host display
+    HOST_SAMPLE_RATE,       ///< Host audio sample rate
     HOST_TEX_FORMAT,        ///< Texture format
     HOST_FRAMEBUF_WIDTH,    ///< Current width of the emulator window
     HOST_FRAMEBUF_HEIGHT,   ///< Current height of the emulator window
@@ -91,7 +91,7 @@ enum class Opt : long
     MON_HCENTER,            ///< Horizontal centering
     MON_VCENTER,            ///< Vertical centering
     MON_HZOOM,              ///< Horizontal zoom
-    MON_VZOOM,              ///< Vertical centering
+    MON_VZOOM,              ///< Vertical zoom
     MON_UPSCALER,           ///< Pixel upscaler
     MON_BLUR,               ///< Blur enable
     MON_BLUR_RADIUS,        ///< Blur radius
@@ -188,16 +188,16 @@ enum class Opt : long
     RS232_BAUD,             ///< Transmission rate
 
     // Remote servers
-    SRV_ENABLE,
-    SRV_PORT,
-    SRV_TRANSPORT,
-    SRV_VERBOSE,
+    SRV_ENABLE,             ///< Server enable status
+    SRV_PORT,               ///< Server port
+    SRV_TRANSPORT,          ///< Server transport protocol
+    SRV_VERBOSE,            ///< Verbose mode
 
     // Regression tester
     DBG_DEBUGCART,          ///< Emulate the VICE debug cartridge
     DBG_WATCHDOG,           ///< Watchdog delay in frames
 
-    COUNT
+    COUNT                   ///< Sentinel: the number of options (not an option)
 };
 
 struct OptEnum : Reflectable<OptEnum, Opt> {

@@ -59,8 +59,7 @@ enum class Msg : long
     CPU_JAMMED,         ///< The CPU has halted due to an illegal instruction
 
     // VIC
-    PAL,                ///< The emulator runs in PAL mode now
-    NTSC,               ///< The emulator runs in NTSC mode now
+    VIDEO_FORMAT,       ///< The video format has changed (value = 0 for PAL, 1 for NTSC)
 
     // Serial Port (IEC Bus)
     SER_BUSY,           ///< The IEC bus is transferring data
@@ -170,8 +169,7 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::CPU_JUMPED:            return "CPU_JUMPED";
             case Msg::CPU_JAMMED:            return "CPU_JAMMED";
 
-            case Msg::PAL:                   return "PAL";
-            case Msg::NTSC:                  return "NTSC";
+            case Msg::VIDEO_FORMAT:          return "VIDEO_FORMAT";
 
             case Msg::SER_BUSY:              return "SER_BUSY";
             case Msg::SER_IDLE:              return "SER_IDLE";

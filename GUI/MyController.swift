@@ -431,7 +431,7 @@ extension MyController {
         case .CPU_JUMPED:
             break
             
-        case .PAL, .NTSC:
+        case .VIDEO_FORMAT:
             renderer.canvas.updateTextureRect()
             
         case .DRIVE_STEP:

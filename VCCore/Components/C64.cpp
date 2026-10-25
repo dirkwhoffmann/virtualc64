@@ -1902,7 +1902,7 @@ C64::loadSnapshot(const Snapshot &snapshot)
     load(snap.getSnapshotData());
 
     // Inform the GUI
-    msgQueue.put(vic.pal() ? Msg::PAL : Msg::NTSC);
+    msgQueue.put(Msg::VIDEO_FORMAT, vic.pal() ? 0 : 1);
     msgQueue.put(Msg::SNAPSHOT_RESTORED);
 }
 
