@@ -124,4 +124,13 @@ typedef struct
 }
 CPUInfo;
 
+typedef struct
+{
+    u32 addr;
+    bool enabled;
+    isize hits;
+    isize ignore;
+}
+GuardInfo;
+
 }

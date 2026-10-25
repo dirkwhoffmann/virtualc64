@@ -380,55 +380,43 @@ NSString *EventSlotName(EventSlot slot)
     return @(result);
 }
 
-- (GuardInfo) guardInfo:(Guard *)guard
-{
-    GuardInfo result;
-
-    result.addr = guard ? guard->addr : 0;
-    result.enabled = guard ? guard->enabled : 0;
-    result.hits = guard ? guard->hits : 0;
-    result.ignore = guard ? guard->ignore : 0;
-
-    return result;
-}
-
 - (BOOL) hasBreakpointWithNr:(NSInteger)nr
 {
-    return [self cpu]->breakpointNr(nr) != nullptr;
+    return [self cpu]->breakpointNr(nr).has_value();
 }
 
 - (GuardInfo) breakpointWithNr:(NSInteger)nr
 {
-    return [self guardInfo:[self cpu]->breakpointNr(nr)];
+    return [self cpu]->breakpointNr(nr).value_or(GuardInfo { });
 }
 
 - (BOOL) hasBreakpointAtAddr:(NSInteger)addr
 {
-    return [self cpu]->breakpointAt(u32(addr)) != nullptr;
+    return [self cpu]->breakpointAt(u32(addr)).has_value();
 }
 
 - (GuardInfo) breakpointAtAddr:(NSInteger)addr
 {
-    return [self guardInfo:[self cpu]->breakpointAt(u32(addr))];
+    return [self cpu]->breakpointAt(u32(addr)).value_or(GuardInfo { });
 }
 
 - (BOOL) hasWatchpointWithNr:(NSInteger)nr
 {
-    return [self cpu]->watchpointNr(nr) != nullptr;
+    return [self cpu]->watchpointNr(nr).has_value();
 }
 
 - (GuardInfo) watchpointWithNr:(NSInteger)nr
 {
-    return [self guardInfo:[self cpu]->watchpointNr(nr)];
+    return [self cpu]->watchpointNr(nr).value_or(GuardInfo { });
 }
 
 - (BOOL) hasWatchpointAtAddr:(NSInteger)addr
 {
-    return [self cpu]->watchpointAt(u32(addr)) != nullptr;
+    return [self cpu]->watchpointAt(u32(addr)).has_value();
 }
 - (GuardInfo) watchpointAtAddr:(NSInteger)addr
 {
-    return [self guardInfo:[self cpu]->watchpointAt(u32(addr))];
+    return [self cpu]->watchpointAt(u32(addr)).value_or(GuardInfo { });
 }
 
 @end

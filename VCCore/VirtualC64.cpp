@@ -952,32 +952,40 @@ CPUAPI::logEntry(isize nr) const
     return cpu->debugger.logEntryAbs(nr);
 }
 
-Guard *
-CPUAPI::breakpointNr(long nr) const
+// Returns a copy of a guard, so that no pointer into the emulator leaves the API
+static std::optional<GuardInfo>
+guardInfo(const Guard *g)
 {
-    VC64_PUBLIC
-    return cpu->debugger.breakpoints.guardNr(nr);
+    if (!g) return { };
+    return GuardInfo { .addr = g->addr, .enabled = g->enabled, .hits = g->hits, .ignore = g->ignore };
 }
 
-Guard *
+std::optional<GuardInfo>
+CPUAPI::breakpointNr(isize nr) const
+{
+    VC64_PUBLIC
+    return guardInfo(cpu->debugger.breakpoints.guardNr(nr));
+}
+
+std::optional<GuardInfo>
 CPUAPI::breakpointAt(u32 addr) const
 {
     VC64_PUBLIC
-    return cpu->debugger.breakpoints.guardAt(addr);
+    return guardInfo(cpu->debugger.breakpoints.guardAt(addr));
 }
 
-Guard *
-CPUAPI::watchpointNr(long nr) const
+std::optional<GuardInfo>
+CPUAPI::watchpointNr(isize nr) const
 {
     VC64_PUBLIC
-    return cpu->debugger.watchpoints.guardNr(nr);
+    return guardInfo(cpu->debugger.watchpoints.guardNr(nr));
 }
 
-Guard *
+std::optional<GuardInfo>
 CPUAPI::watchpointAt(u32 addr) const
 {
     VC64_PUBLIC
-    return cpu->debugger.watchpoints.guardAt(addr);
+    return guardInfo(cpu->debugger.watchpoints.guardAt(addr));
 }
 
 

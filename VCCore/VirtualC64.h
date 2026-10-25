@@ -89,20 +89,28 @@ public:
     /// @name Debugging memory
     /// @{
 
-    /** @brief  Returns a string representation for a portion of memory.
+    /** @brief  Returns a string of characters for a portion of memory.
      *
-     *  ascDump() shows the bytes as characters, hexDump() as hexadecimal
-     *  numbers, decDump() as decimal numbers, and memDump() as hexadecimal
-     *  numbers followed by characters. Each group of 'sz' bytes forms one
-     *  number and is followed by a space. Unmapped memory (MemType::NONE) is
-     *  shown as '--' by the number dumps and as nothing by ascDump().
+     *  Unmapped memory (MemType::NONE) is shown as nothing.
+     *
+     *  @param  src     The memory type the bytes are read from.
+     *  @param  addr    First address to dump.
+     *  @param  bytes   Number of bytes to dump.
+     */
+    string ascDump(MemType src, u16 addr, isize bytes) const;
+
+    /** @brief  Returns a string of numbers for a portion of memory.
+     *
+     *  hexDump() shows the bytes as hexadecimal numbers, decDump() as decimal
+     *  numbers, and memDump() as hexadecimal numbers followed by characters.
+     *  Each group of 'sz' bytes forms one number and is followed by a space.
+     *  Unmapped memory (MemType::NONE) is shown as '--'.
      *
      *  @param  src     The memory type the bytes are read from.
      *  @param  addr    First address to dump.
      *  @param  bytes   Number of bytes to dump.
      *  @param  sz      Group size in bytes (1, 2, or 4).
      */
-    string ascDump(MemType src, u16 addr, isize bytes) const;
     string hexDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
     string decDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
     string memDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
@@ -214,27 +222,27 @@ public:
 
     /** @brief  Returns a breakpoint from the breakpoint list.
      *  @param  nr      Number of the breakpoint.
-     *  @return A pointer to the breakpoint or nullptr if it does not exist.
+     *  @return A copy of the breakpoint's state, or nothing if it does not exist.
      */
-    Guard *breakpointNr(long nr) const;
+    std::optional<GuardInfo> breakpointNr(isize nr) const;
 
     /** @brief  Returns the breakpoint set on a specific address.
      *  @param  addr    Memory address.
-     *  @return A pointer to the breakpoint or nullptr if it is not guarded.
+     *  @return A copy of the breakpoint's state, or nothing if it is not guarded.
      */
-    Guard *breakpointAt(u32 addr) const;
+    std::optional<GuardInfo> breakpointAt(u32 addr) const;
 
-    /** @brief  Returns a breakpoint from the breakpoint list.
-     *  @param  nr      Number of the breakpoint.
-     *  @return A pointer to the breakpoint or nullptr if it does not exist.
+    /** @brief  Returns a watchpoint from the watchpoint list.
+     *  @param  nr      Number of the watchpoint.
+     *  @return A copy of the watchpoint's state, or nothing if it does not exist.
      */
-    Guard *watchpointNr(long nr) const;
+    std::optional<GuardInfo> watchpointNr(isize nr) const;
 
-    /** @brief  Returns the breakpoint set on a specific address.
+    /** @brief  Returns the watchpoint set on a specific address.
      *  @param  addr    Memory address.
-     *  @return A pointer to the breakpoint or nullptr if it is not guarded.
+     *  @return A copy of the watchpoint's state, or nothing if it is not guarded.
      */
-    Guard *watchpointAt(u32 addr) const;
+    std::optional<GuardInfo> watchpointAt(u32 addr) const;
 };
 
 
@@ -798,14 +806,14 @@ public:
 
     /** @brief  Read a printable byte from the incoming logbuffer.
      *  Calling this function empties the logbuffer. When the logbuffer is
-     *  empty and a new data packet is received, a MSG_RS232_IN message is
+     *  empty and a new data packet is received, a Msg::RS232_IN message is
      *  sent to the GUI.
      */
     std::u16string readIncoming();
 
     /** @brief  Read the logbuffer that records outgoing data.
      *  Calling this function empties the logbuffer. When the logbuffer is
-     *  empty and a new data packet is sent, a MSG_RS232_OUT message is
+     *  empty and a new data packet is sent, a Msg::RS232_OUT message is
      *  sent to the GUI.
      */
     std::u16string readOutgoing();
@@ -1431,8 +1439,14 @@ public:
 
     /** @brief  Sets the current auto-inspection mask
      *
+     *  Each bit selects one component class (the bit position is the numeric
+     *  value of the Class entry). A component's getCachedInfo() and
+     *  getCachedMetrics() only return up-to-date snapshots while its class is
+     *  selected.
+     *
      *  @example The following call enables auto-inspections for the CIA chips
-     *  and the CPU: setAutoInspectionMask(1 << CIAClass | 1 << CPUClass);
+     *  and the CPU:
+     *  setAutoInspectionMask(1LL << long(Class::CIA) | 1LL << long(Class::CPU));
      *
      *  @param  mask A bit mask indicating the components under inspection
      */
@@ -2306,10 +2320,18 @@ public:
      *
      *  @param opt      The option to set
      *  @param value    The option's value
-     *  @param id       The component to configure (only for options that
-     *                  require an additional parameter to determine it)
      */
     void setAsync(Opt opt, i64 value);
+
+    /** @brief  Configures a component without waiting for the result.
+     *
+     *  Same as above, for options that require an additional parameter to
+     *  determine the component.
+     *
+     *  @param opt      The option to set
+     *  @param value    The option's value
+     *  @param id       The component to configure
+     */
     void setAsync(Opt opt, i64 value, long id);
     void setAsync(ConfigScheme model);
 

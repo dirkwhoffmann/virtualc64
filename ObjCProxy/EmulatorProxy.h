@@ -334,14 +334,6 @@ NSString *EventSlotName(EventSlot slot);
 // CPU
 //
 
-struct GuardInfo {
-
-    u32 addr;
-    bool enabled;
-    long hits;
-    long ignore;
-};
-
 @interface CPUProxy : SubComponentProxy { }
 
 @property (readonly) CPUInfo info;
