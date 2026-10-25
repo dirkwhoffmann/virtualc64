@@ -1124,7 +1124,7 @@ VICIIAPI::getColor(isize nr, Palette palette) const
 // SID
 //
 
-SIDInfo
+const SIDInfo &
 SIDAPI::getInfo(isize nr) const
 {
     VC64_PUBLIC
@@ -1133,7 +1133,7 @@ SIDAPI::getInfo(isize nr) const
     return sidBridge->sid[nr].info.current();
 }
 
-SIDInfo
+const SIDInfo &
 SIDAPI::getCachedInfo(isize nr) const
 {
     VC64_PUBLIC

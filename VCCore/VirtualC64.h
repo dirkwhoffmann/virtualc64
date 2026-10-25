@@ -303,12 +303,14 @@ public:
      *  getInfo() reads the live state on the calling thread and is only
      *  consistent if the emulator is paused or suspended. getCachedInfo()
      *  returns the snapshot the emulator thread has recorded most recently,
-     *  which is the one to use while the emulator runs.
+     *  which is the one to use while the emulator runs. Both return references
+     *  that can be overwritten by a later call or by the emulator thread, so
+     *  copy the data if you need to keep it.
      *
      *  @throw  CoreError (#CoreError::OPT_INV_ARG) if the SID number is out of range.
      */
-    SIDInfo getInfo(isize nr) const;
-    SIDInfo getCachedInfo(isize nr) const;
+    const SIDInfo &getInfo(isize nr) const;
+    const SIDInfo &getCachedInfo(isize nr) const;
 
     /// @}
     /// @name Visualizing waveforms
