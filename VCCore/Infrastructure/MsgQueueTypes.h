@@ -33,16 +33,15 @@ enum class Msg : long
     RUN,                ///< The emulator has entered ExecState::RUNNING
     PAUSE,              ///< The emulator has entered ExecState::PAUSED
     STEP,               ///< The emulator has stepped a single instruction
-    EOL_TRAP,           ///< The emulator has been paused at the end of the current line
-    EOF_TRAP,           ///< The emulator has been paused at the end of the current frame
+    EOL_REACHED,        ///< The emulator has been paused at the end of the current line
+    EOF_REACHED,        ///< The emulator has been paused at the end of the current frame
     RESET,              ///< The emulator has been reset
     SHUTDOWN,           ///< The emulator has been shut down
     ABORT,              ///< The emulator requests the GUI to quit the app
     WARP,               ///< The emulator has entered or exited warp mode
     TRACK,              ///< The emulator has entered or exited track mode
     MUTE,               ///< The emulator has been muted or unmuted
-    EASTER_EGG,
-
+    EASTER_EGG,         ///< The easter egg was triggered
     // Retro shell
     RSH_CLOSE,          ///< RetroShell has been closed
     RSH_UPDATE,         ///< RetroShell has generated new output
@@ -147,8 +146,8 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::RUN:                   return "RUN";
             case Msg::PAUSE:                 return "PAUSE";
             case Msg::STEP:                  return "STEP";
-            case Msg::EOL_TRAP:              return "EOL_TRAP";
-            case Msg::EOF_TRAP:              return "EOF_TRAP";
+            case Msg::EOL_REACHED:              return "EOL_REACHED";
+            case Msg::EOF_REACHED:              return "EOF_REACHED";
             case Msg::RESET:                 return "RESET";
             case Msg::SHUTDOWN:              return "SHUTDOWN";
             case Msg::ABORT:                 return "ABORT";

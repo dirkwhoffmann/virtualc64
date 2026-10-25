@@ -1025,7 +1025,7 @@ C64::processFlags()
         if (rasterCycle == vic.getCyclesPerLine()) {
 
             clearFlag(RL::FINISH_LINE);
-            msgQueue.put(Msg::EOL_TRAP);
+            msgQueue.put(Msg::EOL_REACHED);
             interrupt = true;
         }
     }
@@ -1035,7 +1035,7 @@ C64::processFlags()
         if (scanline + 1 == vic.getLinesPerFrame() && rasterCycle == vic.getCyclesPerLine()) {
             
             clearFlag(RL::FINISH_FRAME);
-            msgQueue.put(Msg::EOF_TRAP);
+            msgQueue.put(Msg::EOF_REACHED);
             interrupt = true;
         }
     }

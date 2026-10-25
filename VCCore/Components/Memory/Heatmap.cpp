@@ -102,6 +102,8 @@ Heatmap::draw(u32 *buffer, isize width, isize height) const
 
     for (isize i = 0; i < 65536; i++) buffer[i] = 0;
 
+    // Avoid a division by zero if nothing has been accessed
+    if (max <= 0) max = 255.0f;
     max /= 255.0f;
     for (usize y = 0; y < 32; y++) {
         for (usize x = 0; x < 64; x++) {

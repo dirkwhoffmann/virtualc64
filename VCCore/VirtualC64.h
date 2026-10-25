@@ -146,7 +146,20 @@ public:
     const MemInfo &getCachedInfo() const;
 
 
-    /** @brief Experimental
+    /** @brief  Draws a heatmap of the recent memory accesses.
+     *
+     *  The 64 KB address space is shown as a grid of 256 x 256 cells. Neighboring
+     *  addresses are mapped to neighboring cells by interleaving the address
+     *  bits, so that address ranges form compact blocks. A cell lights up when
+     *  its address is accessed and fades out over time. The map is updated at
+     *  the end of each frame, and only while the option Opt::MEM_HEATMAP is
+     *  enabled.
+     *
+     *  @param  buffer  Texture buffer for 256 x 256 pixels (RGBA)
+     *  @param  width   Width of the texture, must be 256
+     *  @param  height  Height of the texture, must be 256
+     *
+     *  @throw  CoreError (#CoreError::OPT_INV_ARG) if the size is not 256 x 256.
      */
     void drawHeatmap(u32 *buffer, isize width, isize height) const;
 
@@ -676,7 +689,21 @@ public:
     void saveXrayTexture(const std::filesystem::path &path,
                          isize x1, isize x2, isize y1, isize y2) const;
 
-    /** @brief Analyzes the current texture and determines coordinates for border cropping
+    /** @brief  Determines the area of the texture that contains picture data.
+     *
+     *  The result is meant to be used to crop the border of the picture. The
+     *  VirtualC64 core does not analyze the texture yet: the functions always
+     *  return the complete texture. The emulator thread is suspended during
+     *  the call.
+     *
+     *  findInnerArea() returns the coordinates in texture pixels,
+     *  findInnerAreaNormalized() returns them relative to the size of the
+     *  texture (0.0 ... 1.0).
+     *
+     *  @param  x1      Left edge of the picture area
+     *  @param  x2      Right edge of the picture area
+     *  @param  y1      Top edge of the picture area
+     *  @param  y2      Bottom edge of the picture area
      */
     void findInnerArea(isize &x1, isize &x2, isize &y1, isize &y2) const;
     void findInnerAreaNormalized(double &x1, double &x2, double &y1, double &y2) const;

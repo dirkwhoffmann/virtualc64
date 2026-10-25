@@ -373,7 +373,7 @@ extension MyController {
             clearInfo()
             needsSaving = true
             
-        case .EOL_TRAP, .EOF_TRAP:
+        case .EOL_REACHED, .EOF_REACHED:
             break
             
         case .RESET:

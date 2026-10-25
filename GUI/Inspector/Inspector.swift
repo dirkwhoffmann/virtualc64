@@ -523,7 +523,7 @@ class Inspector: DialogController {
             fullRefresh()
             scrollToPC()
             
-        case .EOF_TRAP, .EOL_TRAP, .RSH_UPDATE:
+        case .EOF_REACHED, .EOL_REACHED, .RSH_UPDATE:
             
             fullRefresh()
             

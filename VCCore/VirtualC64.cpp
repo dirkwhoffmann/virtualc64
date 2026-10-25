@@ -1259,6 +1259,7 @@ void
 MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
 {
     VC64_PUBLIC
+    if (width != 256 || height != 256) throw CoreError(CoreError::OPT_INV_ARG, "256 x 256");
     return mem->heatmap.draw(buffer, width, height);
 }
 
