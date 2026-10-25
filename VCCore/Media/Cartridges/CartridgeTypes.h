@@ -260,43 +260,43 @@ struct FlashStateEnum : Reflectable<FlashStateEnum, FlashState> {
 
 typedef struct
 {
-    CartridgeType type;
-    const char *title;
+    CartridgeType type;                     ///< Cartridge type
+    const char *title;                      ///< Title of the cartridge
 
-    isize memory;
-    bool  battery;
+    isize memory;                           ///< Memory size (in KB)
+    bool  battery;                          ///< The cartridge has battery-buffered memory
 
-    isize buttons;
-    const char *button1;
-    const char *button2;
+    isize buttons;                          ///< Number of buttons
+    const char *button1;                    ///< Label of button 1
+    const char *button2;                    ///< Label of button 2
 
-    isize switches;
-    const char *switchLeft;
-    const char *switchNeutral;
-    const char *switchRight;
+    isize switches;                         ///< Number of switches
+    const char *switchLeft;                 ///< Label of the left switch position
+    const char *switchNeutral;              ///< Label of the neutral switch position
+    const char *switchRight;                ///< Label of the right switch position
 
-    isize leds;
+    isize leds;                             ///< Number of LEDs
 
-    bool needsExecution;
+    bool needsExecution;                    ///< The cartridge needs to be executed every cycle
 }
 CartridgeTraits;
 
 typedef struct
 {
     CartridgeType type; // DEPRECATED
-    bool supported;
-    bool gameLineInCrtFile;
-    bool exromLineInCrtFile;
-    isize numPackets;
-    isize switchPos;
-    bool led;
+    bool supported;                         ///< The cartridge type is supported
+    bool gameLineInCrtFile;                 ///< Value of the GAME line stored in the CRT file
+    bool exromLineInCrtFile;                ///< Value of the EXROM line stored in the CRT file
+    isize numPackets;                       ///< Number of chip packets
+    isize switchPos;                        ///< Position of the switch
+    bool led;                               ///< The LED is on
 }
 CartridgeInfo;
 
 typedef struct
 {
-    u16 size;
-    u16 loadAddress;
+    u16 size;                               ///< Size of the ROM chip (in bytes)
+    u16 loadAddress;                        ///< Address the ROM chip is mapped to
 }
 CartridgeRomInfo;
 

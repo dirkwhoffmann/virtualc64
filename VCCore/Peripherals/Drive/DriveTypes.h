@@ -183,25 +183,25 @@ typedef struct
 
     // Hardware
     DriveType type;
-    DriveRam ram;
-    ParCableType parCable;
-    bool powerSave;
+    DriveRam ram;                           ///< Drive RAM
+    ParCableType parCable;                  ///< Parallel cable
+    bool powerSave;                         ///< Take fast paths
 
     // State
     bool connected;
-    bool switchedOn;
+    bool switchedOn;                        ///< Power switch
 
     // Disk handling delays
     isize ejectDelay;
-    isize swapDelay;
-    isize insertDelay;
+    isize swapDelay;                        ///< Disk swap delay
+    isize insertDelay;                      ///< Disk insertion delay
 
     // Drive sounds
     i16 pan;
-    u8 powerVolume;
-    u8 stepVolume;
-    u8 insertVolume;
-    u8 ejectVolume;
+    u8 powerVolume;                         ///< Power switch volume
+    u8 stepVolume;                          ///< Head step volume
+    u8 insertVolume;                        ///< Disk insertion volume
+    u8 ejectVolume;                         ///< Disk ejection volume
 
     // Save Roms
     bool saveRoms;
@@ -210,24 +210,24 @@ DriveConfig;
 
 typedef struct
 {
-    isize id;
+    isize id;                               ///< Number of the drive
 
-    bool hasRom;
+    bool hasRom;                            ///< A ROM is installed
 
-    bool hasDisk;
-    bool hasUnprotectedDisk;
-    bool hasProtectedDisk;
-    bool hasUnmodifiedDisk;
-    bool hasModifiedDisk;
+    bool hasDisk;                           ///< A disk is inserted
+    bool hasUnprotectedDisk;                ///< The inserted disk is not write-protected
+    bool hasProtectedDisk;                  ///< The inserted disk is write-protected
+    bool hasUnmodifiedDisk;                 ///< The inserted disk has no unsaved changes
+    bool hasModifiedDisk;                   ///< The inserted disk has unsaved changes
 
-    bool redLED;
-    bool greenLED;
+    bool redLED;                            ///< The red LED is on
+    bool greenLED;                          ///< The green LED is on
 
-    bool spinning;
-    bool writing;
+    bool spinning;                          ///< The disk is spinning
+    bool writing;                           ///< The drive is writing
 
-    Halftrack halftrack;
-    HeadPos offset;
+    Halftrack halftrack;                    ///< Current head position (halftrack)
+    HeadPos offset;                         ///< Head offset within the track
 }
 DriveInfo;
 

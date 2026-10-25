@@ -77,18 +77,18 @@ struct GamePadActionEnum : Reflectable<GamePadActionEnum, GamePadAction> {
 
 typedef struct
 {
-    bool autofire;
-    bool autofireBursts;
-    isize autofireBullets;
-    isize autofireDelay;
+    bool autofire;                          ///< Autofire
+    bool autofireBursts;                    ///< Burst mode
+    isize autofireBullets;                  ///< Number of bullets per burst
+    isize autofireDelay;                    ///< Autofire delay (in frames)
 }
 JoystickConfig;
 
 typedef struct
 {
-    bool button;
-    int axisX;
-    int axisY;
+    bool button;                            ///< The fire button is pressed
+    int axisX;                              ///< Horizontal axis (-1 left, 0 neutral, 1 right)
+    int axisY;                              ///< Vertical axis (-1 up, 0 neutral, 1 down)
 }
 JoystickInfo;
 

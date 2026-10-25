@@ -34,9 +34,9 @@ TimeOfDay;
 
 typedef struct
 {
-    TimeOfDay time;
-    TimeOfDay latch;
-    TimeOfDay alarm;
+    TimeOfDay time;                         ///< Current time
+    TimeOfDay latch;                        ///< Latched time
+    TimeOfDay alarm;                        ///< Alarm time
 }
 TODInfo;
 

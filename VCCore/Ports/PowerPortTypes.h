@@ -59,7 +59,7 @@ struct PowerGridEnum : Reflectable<PowerGridEnum, PowerGrid> {
 
 typedef struct
 {
-    PowerGrid powerGrid;
+    PowerGrid powerGrid;                    ///< Power grid stability
 }
 PowerPortConfig;
 

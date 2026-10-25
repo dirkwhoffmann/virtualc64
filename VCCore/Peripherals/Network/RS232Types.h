@@ -59,8 +59,8 @@ struct CommunicationDeviceEnum : Reflectable<CommunicationDeviceEnum, Communicat
 
 typedef struct
 {
-    CommunicationDevice device;
-    isize baud;
+    CommunicationDevice device;             ///< Connected RS232 device
+    isize baud;                             ///< Transmission rate (baud)
 }
 RS232Config;
 

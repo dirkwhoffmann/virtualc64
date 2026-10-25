@@ -59,7 +59,7 @@ struct PaddleOrientationEnum : Reflectable<PaddleOrientationEnum, PaddleOrientat
 
 typedef struct
 {
-    PaddleOrientation orientation;
+    PaddleOrientation orientation;          ///< Paddle value mapping scheme
 }
 PaddleConfig;
 

@@ -314,46 +314,46 @@ C64Config;
 
 typedef struct
 {
-    u32 crc32;
-    u64 fnv64;
+    u32 crc32;                              ///< CRC32 checksum
+    u64 fnv64;                              ///< FNV-64 checksum
 
-    const char *title;
-    const char *subtitle;
-    const char *revision;
+    const char *title;                      ///< Title of the ROM
+    const char *subtitle;                   ///< Subtitle of the ROM
+    const char *revision;                   ///< Revision of the ROM
 
-    bool isCommodoreRom;
-    bool isPatchedRom;
-    bool isMega65Rom;
+    bool isCommodoreRom;                    ///< The ROM is an original Commodore ROM
+    bool isPatchedRom;                      ///< The ROM is a patched variant
+    bool isMega65Rom;                       ///< The ROM is an OpenROM of the MEGA65 project
 }
 RomInfo;
 
 typedef struct
 {
-    EventSlot slot;
-    EventID eventId;
-    const char *eventName;
+    EventSlot slot;                         ///< The event slot
+    EventID eventId;                        ///< Identifier of the scheduled event (0 if the slot is empty)
+    const char *eventName;                  ///< Name of the scheduled event
 
     // Trigger cycle of the event
     Cycle trigger;
-    Cycle triggerRel;
+    Cycle triggerRel;                       ///< Time until the event triggers (in cycles)
 
     // Trigger frame relative to the current frame
     long frameRel;
 
     // The trigger cycle translated to a beam position.
     long vpos;
-    long hpos;
+    long hpos;                              ///< Raster cycle at which the event triggers
 }
 EventSlotInfo;
 
 typedef struct
 {
-    Cycle cpuProgress;
-    Cycle cia1Progress;
-    Cycle cia2Progress;
-    i64 frame;
-    long vpos;
-    long hpos;
+    Cycle cpuProgress;                      ///< CPU clock (in cycles)
+    Cycle cia1Progress;                     ///< Clock of CIA 1 (in cycles)
+    Cycle cia2Progress;                     ///< Clock of CIA 2 (in cycles)
+    i64 frame;                              ///< Frame number
+    long vpos;                              ///< Vertical beam position (raster line)
+    long hpos;                              ///< Horizontal beam position (raster cycle)
 
     // Events
     EventSlotInfo slotInfo[SLOT_COUNT];

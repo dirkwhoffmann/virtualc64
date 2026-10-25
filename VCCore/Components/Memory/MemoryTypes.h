@@ -117,30 +117,30 @@ struct RamPatternEnum : Reflectable<RamPatternEnum, RamPattern> {
 
 typedef struct
 {
-    RamPattern ramPattern;
-    bool saveRoms;
-    bool heatmap; 
+    RamPattern ramPattern;                  ///< RAM start-up pattern
+    bool saveRoms;                          ///< Include ROMs in snapshots
+    bool heatmap;                           ///< Count memory accesses for the heatmap
 }
 MemConfig;
 
 typedef struct
 {
-    bool exrom;
-    bool game;
-    bool loram;
-    bool hiram;
-    bool charen;
-    u8   bankMap;
+    bool exrom;                             ///< State of the EXROM line
+    bool game;                              ///< State of the GAME line
+    bool loram;                             ///< LORAM bit of the processor port
+    bool hiram;                             ///< HIRAM bit of the processor port
+    bool charen;                            ///< CHAREN bit of the processor port
+    u8   bankMap;                           ///< Current memory bank configuration
 
-    MemType peekSrc[16];
-    MemType vicPeekSrc[16];
+    MemType peekSrc[16];                    ///< Memory type read by the CPU from each 4 KB bank
+    MemType vicPeekSrc[16];                 ///< Memory type read by the VICII from each 4 KB bank
 }
 MemInfo;
 
 typedef struct
 {
-    isize reads[65536];
-    isize writes[65536];
+    isize reads[65536];                     ///< Number of read accesses per address
+    isize writes[65536];                    ///< Number of write accesses per address
 }
 MemMetrics;
 

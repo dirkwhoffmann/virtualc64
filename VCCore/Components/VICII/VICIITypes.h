@@ -309,18 +309,18 @@ typedef struct
 {
     // Video standard
     bool pal;
-    isize frequency;
-    double fps;
+    isize frequency;                        ///< Clock frequency (in Hz)
+    double fps;                             ///< Frames per second
 
     // Picture layout
     isize linesPerFrame;
-    isize cyclesPerLine;
-    isize cyclesPerFrame;
-    isize visibleLines;
+    isize cyclesPerLine;                    ///< Number of cycles per raster line
+    isize cyclesPerFrame;                   ///< Number of cycles per frame
+    isize visibleLines;                     ///< Number of visible raster lines
 
     // Chip properties
     bool grayCodeBug;
-    bool delayedLpIrqs;
+    bool delayedLpIrqs;                     ///< Light pen interrupts are delayed
 }
 VICIITraits;
 
@@ -328,17 +328,17 @@ typedef struct
 {
     // Silicon
     VICIIRev revision;
-    VICIIRev awaiting;
-    bool powerSave;
-    bool grayDotBug;
-    GlueLogic glueLogic;
+    VICIIRev awaiting;                      ///< Chip revision that takes effect on the next reset
+    bool powerSave;                         ///< Take fast paths
+    bool grayDotBug;                        ///< Emulate the gray-dot bug
+    GlueLogic glueLogic;                    ///< Glue logic type
 
     // Sprites
     bool hideSprites;
     
     // Cheating
     bool checkSSCollisions;
-    bool checkSBCollisions;
+    bool checkSBCollisions;                 ///< Detect sprite-background collisions
 }
 VICIIConfig;
 
@@ -346,18 +346,18 @@ typedef struct
 {
     // Graphics synthesizer (speed optimizations)
     isize canvasFastPath;
-    isize canvasSlowPath;
-    isize spriteFastPath;
-    isize spriteSlowPath;
-    isize quickExitHit;
-    isize quickExitMiss;
+    isize canvasSlowPath;                   ///< Number of canvas drawings that took the slow path
+    isize spriteFastPath;                   ///< Number of sprite drawings that took the fast path
+    isize spriteSlowPath;                   ///< Number of sprite drawings that took the slow path
+    isize quickExitHit;                     ///< Number of successful quick-exit checks
+    isize quickExitMiss;                    ///< Number of failed quick-exit checks
 }
 VICIIMetrics;
 
 typedef struct
 {
-    bool vertical;
-    bool main;
+    bool vertical;                          ///< Vertical frame flip-flop
+    bool main;                              ///< Main frame flip-flop
 }
 FrameFlipflops;
 
@@ -365,66 +365,66 @@ typedef struct
 {
     // Counters
     u16 scanline;
-    u8 rasterCycle;
-    u32 yCounter;
-    u16 xCounter;
-    u16 vc;
-    u16 vcBase;
-    u8 rc;
-    u8 vmli;
+    u8 rasterCycle;                         ///< Current raster cycle
+    u32 yCounter;                           ///< Raster line counter
+    u16 xCounter;                           ///< Horizontal position counter
+    u16 vc;                                 ///< Video counter (VC)
+    u16 vcBase;                             ///< Video counter base (VCBASE)
+    u8 rc;                                  ///< Row counter (RC)
+    u8 vmli;                                ///< Video matrix line index (VMLI)
 
     // Display
     u8 ctrl1;
-    u8 ctrl2;
-    u8 dy;
-    u8 dx;
-    bool denBit;
-    bool badLine;
-    bool displayState;
-    bool vblank;
-    ScreenGeometry screenGeometry;
-    FrameFlipflops frameFF;
-    DisplayMode displayMode;
-    u8 borderColor;
-    u8 bgColor0;
-    u8 bgColor1;
-    u8 bgColor2;
-    u8 bgColor3;
+    u8 ctrl2;                               ///< Control register 2
+    u8 dy;                                  ///< Vertical scroll value
+    u8 dx;                                  ///< Horizontal scroll value
+    bool denBit;                            ///< Display enable bit
+    bool badLine;                           ///< The current line is a bad line
+    bool displayState;                      ///< Display state (display or idle)
+    bool vblank;                            ///< Vertical blanking is active
+    ScreenGeometry screenGeometry;          ///< Screen geometry
+    FrameFlipflops frameFF;                 ///< Frame flip-flops
+    DisplayMode displayMode;                ///< Display mode
+    u8 borderColor;                         ///< Border color
+    u8 bgColor0;                            ///< Background color 0
+    u8 bgColor1;                            ///< Background color 1
+    u8 bgColor2;                            ///< Background color 2
+    u8 bgColor3;                            ///< Background color 3
     
     // Memory
     u8 memSelect;
-    bool ultimax;
-    u16 memoryBankAddr;
-    u16 screenMemoryAddr;
-    u16 charMemoryAddr;
+    bool ultimax;                           ///< Ultimax memory mode is active
+    u16 memoryBankAddr;                     ///< Start address of the VIC bank
+    u16 screenMemoryAddr;                   ///< Address of the screen memory
+    u16 charMemoryAddr;                     ///< Address of the character memory
 
     // Interrupts
     u16 irqLine;
-    u8 irr;
-    u8 imr;
+    u8 irr;                                 ///< Interrupt request register
+    u8 imr;                                 ///< Interrupt mask register
 
     // Lightpen
     u8 latchedLPX;
-    u8 latchedLPY;
-    bool lpLine;
-    bool lpIrqHasOccurred;
+    u8 latchedLPY;                          ///< Latched light pen Y coordinate
+    bool lpLine;                            ///< State of the light pen line
+    bool lpIrqHasOccurred;                  ///< A light pen interrupt has occurred in this frame
 }
 VICIIInfo;
 
 typedef struct
 {
-    u16 x;
-    u8 y;
-    bool enabled;
-    bool expandX;
-    bool expandY;
-    bool priority;
-    bool multicolor;
-    bool ssCollision;
-    bool sbCollision;
-    u8 color;
-    u8 extraColor1;
-    u8 extraColor2;
+    u16 x;                                  ///< Horizontal position
+    u8 y;                                   ///< Vertical position
+    bool enabled;                           ///< The sprite is enabled
+    bool expandX;                           ///< Horizontal expansion
+    bool expandY;                           ///< Vertical expansion
+    bool priority;                          ///< The sprite is drawn behind the background
+    bool multicolor;                        ///< Multicolor mode
+    bool ssCollision;                       ///< A sprite-sprite collision was detected
+    bool sbCollision;                       ///< A sprite-background collision was detected
+    u8 color;                               ///< Sprite color
+    u8 extraColor1;                         ///< Extra color 1 (multicolor mode)
+    u8 extraColor2;                         ///< Extra color 2 (multicolor mode)
 }
 SpriteInfo;
 

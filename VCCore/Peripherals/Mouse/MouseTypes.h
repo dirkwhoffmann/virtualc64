@@ -63,9 +63,9 @@ struct MouseModelEnum : Reflectable<MouseModelEnum, MouseModel> {
 
 typedef struct
 {
-    MouseModel model;
-    bool shakeDetection;
-    isize velocity;
+    MouseModel model;                       ///< Mouse model
+    bool shakeDetection;                    ///< Detect a shaken mouse
+    isize velocity;                         ///< Mouse velocity
 }
 MouseConfig;
 

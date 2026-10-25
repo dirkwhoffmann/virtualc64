@@ -59,7 +59,7 @@ struct CRTModeEnum : Reflectable<CRTModeEnum, CRTMode> {
 
 typedef struct
 {
-    isize reuSpeed;
+    isize reuSpeed;                         ///< Speed of the REU
 }
 ExpansionPortConfig;
 

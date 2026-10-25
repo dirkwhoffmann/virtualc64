@@ -24,8 +24,8 @@ namespace vc64 {
 
 typedef struct
 {
-    bool debugcart;
-    i64 watchdog;
+    bool debugcart;                         ///< Enable the debug cartridge
+    i64 watchdog;                           ///< Watchdog timeout
 }
 RegressionTesterConfig;
 

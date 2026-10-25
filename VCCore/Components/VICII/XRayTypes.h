@@ -135,15 +135,15 @@ typedef struct
 {
     // X-Ray mode (off, DMA debugger, layer inspector)
     XRayMode mode;
-    bool dmaOverlay;
-    XRayCompositor compositor;
-    bool dmaChannel[6];
+    bool dmaOverlay;                        ///< Enable the DMA overlay
+    XRayCompositor compositor;              ///< Compositor used to merge the overlay with the picture
+    bool dmaChannel[6];                     ///< Visualize the DMA channel (one flag per channel)
     // Colors of the DMA channels (0 - 5) and of the cut-out layers (0 - 10).
     // The layers use sprite n : color n, border : 8, foreground : 9,
     // background : 10. Hence, the colors of the first channels are shared.
     u32 dmaColor[XRAY_COLOR_COUNT];
-    DmaDisplayMode dmaDisplayMode;
-    u8 dmaOpacity;
+    DmaDisplayMode dmaDisplayMode;          ///< DMA display mode
+    u8 dmaOpacity;                          ///< Opacity of the DMA overlay
     
     // Layers cut out in XRayMode::XRAY_LAYERS
     // Bits 0 - 7: sprites, 9: background, 10: foreground, 11: border

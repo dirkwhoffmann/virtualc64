@@ -142,11 +142,11 @@ typedef struct
 
     // Hardware settings
     SIDRevision revision;
-    bool filter;
+    bool filter;                            ///< Use filter
 
     // Emlation engine settings
     SIDEngine engine;
-    SamplingMethod sampling;
+    SamplingMethod sampling;                ///< Sampling method
 
     // Performance
     bool powerSave;
@@ -156,34 +156,34 @@ SIDConfig;
 
 typedef struct
 {
-    u8 reg[7];
-    u16 frequency;
-    u16 pulseWidth;
-    u8 waveform;
-    bool ringMod;
-    bool hardSync;
-    bool gateBit;
-    bool testBit;
-    u8 attackRate;
-    u8 decayRate;
-    u8 sustainRate;
-    u8 releaseRate;
-    bool filterEnableBit;
+    u8 reg[7];                              ///< Raw voice registers
+    u16 frequency;                          ///< Frequency value
+    u16 pulseWidth;                         ///< Pulse width value
+    u8 waveform;                            ///< Waveform selection bits
+    bool ringMod;                           ///< Ring modulation is on
+    bool hardSync;                          ///< Hard sync is on
+    bool gateBit;                           ///< Gate bit
+    bool testBit;                           ///< Test bit
+    u8 attackRate;                          ///< Envelope attack rate
+    u8 decayRate;                           ///< Envelope decay rate
+    u8 sustainRate;                         ///< Envelope sustain level
+    u8 releaseRate;                         ///< Envelope release rate
+    bool filterEnableBit;                   ///< The voice passes through the filter
 }
 VoiceInfo;
 
 typedef struct
 {
-    u8 volume;
-    u16 filterCutoff;
-    u8 filterResonance;
-    u8 filterModeBits;
-    u8 filterType;
-    u8 filterEnableBits;
-    u8 potX;
-    u8 potY;
+    u8 volume;                              ///< Master volume
+    u16 filterCutoff;                       ///< Filter cutoff frequency
+    u8 filterResonance;                     ///< Filter resonance
+    u8 filterModeBits;                      ///< Filter mode bits
+    u8 filterType;                          ///< Filter type
+    u8 filterEnableBits;                    ///< Voices routed through the filter
+    u8 potX;                                ///< Paddle value X (POTX)
+    u8 potY;                                ///< Paddle value Y (POTY)
 
-    VoiceInfo voice[3];
+    VoiceInfo voice[3];                     ///< State of the three voices
 }
 SIDInfo;
 

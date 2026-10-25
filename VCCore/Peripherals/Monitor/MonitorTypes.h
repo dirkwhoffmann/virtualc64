@@ -167,37 +167,37 @@ typedef struct
 {
     // Colors
     Palette palette;
-    isize brightness;
-    isize contrast;
-    isize saturation;
+    isize brightness;                       ///< Monitor brightness
+    isize contrast;                         ///< Monitor contrast
+    isize saturation;                       ///< Monitor saturation
 
     // Geometry
     isize hCenter;
-    isize vCenter;
-    isize hZoom;
-    isize vZoom;
+    isize vCenter;                          ///< Vertical center
+    isize hZoom;                            ///< Horizontal zoom
+    isize vZoom;                            ///< Vertical zoom
 
     // Effects
     Upscaler upscaler;
 
-    bool blur;
-    isize blurRadius;
+    bool blur;                              ///< Blur
+    isize blurRadius;                       ///< Blur radius
 
-    bool bloom;
-    isize bloomRadius;
-    isize bloomBrightness;
-    isize bloomWeight;
+    bool bloom;                             ///< Bloom
+    isize bloomRadius;                      ///< Bloom radius
+    isize bloomBrightness;                  ///< Bloom brightness
+    isize bloomWeight;                      ///< Bloom weight
 
-    Dotmask dotmask;
-    isize dotMaskBrightness;
+    Dotmask dotmask;                        ///< Dotmask
+    isize dotMaskBrightness;                ///< Dotmask brightness
 
-    Scanlines scanlines;
-    isize scanlineBrightness;
-    isize scanlineWeight;
+    Scanlines scanlines;                    ///< Scanlines
+    isize scanlineBrightness;               ///< Scanline brightness
+    isize scanlineWeight;                   ///< Scanline weight
 
-    bool disalignment;
-    isize disalignmentH;
-    isize disalignmentV;
+    bool disalignment;                      ///< Cathode ray disalignment
+    isize disalignmentH;                    ///< Horizontal cathode ray shift
+    isize disalignmentV;                    ///< Vertical cathode ray shift
 }
 MonitorConfig;
 

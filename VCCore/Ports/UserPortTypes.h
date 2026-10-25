@@ -58,7 +58,7 @@ struct UserPortDeviceEnum : Reflectable<UserPortDeviceEnum, UserPortDevice>
 
 typedef struct
 {
-    UserPortDevice device;
+    UserPortDevice device;                  ///< User port device
 }
 UserPortConfig;
 

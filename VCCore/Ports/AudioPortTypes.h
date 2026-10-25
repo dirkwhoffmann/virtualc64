@@ -31,7 +31,7 @@ typedef struct
 
     // Master volume (left and right channel)
     i64 volL;
-    i64 volR;
+    i64 volR;                               ///< Master volume (right)
 
     // Sample buffer capacity
     isize bufferSize;

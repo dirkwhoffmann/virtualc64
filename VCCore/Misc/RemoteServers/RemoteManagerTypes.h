@@ -96,10 +96,10 @@ struct TrafficDirectionEnum : Reflectable<TrafficDirectionEnum, TrafficDirection
 
 typedef struct
 {
-    RemoteServerInfo rshInfo;
-    RemoteServerInfo rpcInfo;
-    RemoteServerInfo dapInfo;
-    RemoteServerInfo promInfo;
+    RemoteServerInfo rshInfo;               ///< State of the RetroShell server
+    RemoteServerInfo rpcInfo;               ///< State of the RPC server
+    RemoteServerInfo dapInfo;               ///< State of the DAP server
+    RemoteServerInfo promInfo;              ///< State of the Prometheus server
 }
 RemoteManagerInfo;
 

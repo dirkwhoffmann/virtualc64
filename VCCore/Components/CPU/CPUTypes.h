@@ -127,40 +127,40 @@ struct GuardTypeEnum : Reflectable<GuardTypeEnum, GuardType>
 
 typedef struct
 {
-    DasmNumbers dasmNumbers;    
+    DasmNumbers dasmNumbers;                ///< Disassembler number format
 }
 CPUConfig;
 
 typedef struct
 {
-    i64 cycle;
+    i64 cycle;                              ///< Cycle counter
 
-    u16 pc0;
-    u16 pc;
-    u8 sp;
-    u8 a;
-    u8 x;
-    u8 y;
-    u8 sr;
+    u16 pc0;                                ///< Address of the current instruction
+    u16 pc;                                 ///< Program counter
+    u8 sp;                                  ///< Stack pointer
+    u8 a;                                   ///< Accumulator
+    u8 x;                                   ///< X register
+    u8 y;                                   ///< Y register
+    u8 sr;                                  ///< Status register
 
-    u8 irq;
-    u8 nmi;
-    bool rdy;
-    bool jammed;
+    u8 irq;                                 ///< State of the IRQ lines
+    u8 nmi;                                 ///< State of the NMI lines
+    bool rdy;                               ///< State of the RDY line
+    bool jammed;                            ///< The CPU is jammed
 
-    long next;
+    long next;                              ///< Next micro instruction to be executed
 
-    u8 processorPort;
-    u8 processorPortDir;
+    u8 processorPort;                       ///< Processor port register
+    u8 processorPortDir;                    ///< Processor port data direction register
 }
 CPUInfo;
 
 typedef struct
 {
-    u32 addr;
-    bool enabled;
-    isize hits;
-    isize ignore;
+    u32 addr;                               ///< Observed address
+    bool enabled;                           ///< The guard is enabled
+    isize hits;                             ///< Number of times the guard was hit
+    isize ignore;                           ///< Number of hits that are ignored before the guard triggers
 }
 GuardInfo;
 
