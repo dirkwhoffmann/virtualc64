@@ -1128,7 +1128,7 @@ SIDInfo
 SIDAPI::getInfo(isize nr) const
 {
     VC64_PUBLIC
-    assert(nr <= 3);
+    if (nr < 0 || nr > 3) throw CoreError(CoreError::OPT_INV_ARG, "0...3");
 
     return sidBridge->sid[nr].info.current();
 }
@@ -1137,7 +1137,7 @@ SIDInfo
 SIDAPI::getCachedInfo(isize nr) const
 {
     VC64_PUBLIC
-    assert(nr <= 3);
+    if (nr < 0 || nr > 3) throw CoreError(CoreError::OPT_INV_ARG, "0...3");
 
     return sidBridge->sid[nr].info.backed();
 }
