@@ -21,6 +21,7 @@ struct DumpOpt
 
     bool uppercase = false;     // Use A-F instead of a-f for hexadecimal digits
     char missing = ' ';         // Fill character for values the reader can't provide
+    char pad = ' ';             // Fill character for octal and decimal numbers
 
     // Tells which characters are shown as they are (default: isprint)
     std::function<bool(int)> printable;

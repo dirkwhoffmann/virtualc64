@@ -13,6 +13,7 @@
 #include "vcconfig.h"
 #include "Memory.h"
 #include "Emulator.h"
+#include "utl/abilities/Dumpable.h"
 
 #include <random>
 
@@ -624,40 +625,47 @@ Memory::resetVector() {
     }
 }
 
+namespace {
+
+// Reads a range of memory without side effects
+utl::Dumpable::DataProvider
+provider(const Memory &mem, u16 addr, isize num, MemType src)
+{
+    return [&mem, addr, num, src](isize offset, isize n) -> optional<isize> {
+
+        isize value = 0;
+
+        while (n-- > 0) {
+
+            if (offset >= num) return {};
+            value = value << 8 | mem.spypeek(u16(addr + offset++), src);
+        }
+        return value;
+    };
+}
+
+}
+
 string
 Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemType src) const
 {
-    char result[128];
-    char *p = result;
-    
     assert(num <= 16);
-    
+
+    string unit = string(pads, ' ');
+    string fmt;
+
+    // Unmapped memory is shown as '--', no matter which number system is used
     if (src == MemType::NONE) {
-        
-        for (isize i = 0; i < num; i++) {
 
-            for (isize j = 0; j < pads; j++) *p++ = ' ';
-            *p++ = '-'; *p++ = '-';
-        }
-        *p = 0;
-        
-    } else {
-        
-        for (isize i = 0; i < num; i++) {
-
-            for (isize j = 0; j < pads; j++) *p++ = ' ';
-
-            if (hex) {
-                sprint8x(p, spypeek(addr++, src));
-                p += 2;
-            } else {
-                sprint8d(p, spypeek(addr++, src));
-                p += 3;
-            }
-        }
+        for (isize i = 0; i < num; i++) fmt += unit + "--";
+        return fmt;
     }
-    
-    return string(result);
+
+    for (isize i = 0; i < num; i++) fmt += unit + "%b";
+
+    std::stringstream ss;
+    utl::Dumpable::dump(ss, { .base = hex ? 16 : 10, .uppercase = true, .pad = '0' }, fmt, provider(*this, addr, num, src));
+    return ss.str();
 }
 
 string
@@ -675,25 +683,20 @@ Memory::decdump(u16 addr, isize num, isize pads, MemType src) const
 string
 Memory::txtdump(u16 addr, isize num, MemType src) const
 {
-    char result[17];
-    char *p = result;
-    
     assert(num <= 16);
-    
-    if (src != MemType::NONE) {
-        
-        for (isize i = 0; i < num; i++) {
-            
-            u8 byte = spypeek(addr++, src);
-            
-            if (byte >= 65 && byte <= 90) { *p++ = byte; continue; }
-            if (byte >= 32 && byte <= 57) { *p++ = byte; continue; }
-            *p++ = '.';
-        }
-    }
-    *p = 0;
-    
-    return string(result);
+
+    // Unmapped memory has no text representation
+    if (src == MemType::NONE) return "";
+
+    string fmt;
+    for (isize i = 0; i < num; i++) fmt += "%c";
+
+    // Only a part of the character set is shown as it is
+    auto printable = [](int c) { return (c >= 32 && c <= 57) || (c >= 65 && c <= 90); };
+
+    std::stringstream ss;
+    utl::Dumpable::dump(ss, { .base = 16, .printable = printable }, fmt, provider(*this, addr, num, src));
+    return ss.str();
 }
 
 void

@@ -83,10 +83,6 @@ public:
 
 public:
 
-    // Returns a memory dump in ASCII, hex, or both
-    isize dump(char *dst, u16 addr, const char *fmt) const;
-    isize dump(std::ostream &os, u16 addr, const char *fmt) const;
-
     // Writes a memory dump into a stream
     isize ascDump(std::ostream &os, u16 addr, isize lines);
     isize hexDump(std::ostream &os, u16 addr, isize lines);

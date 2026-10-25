@@ -102,8 +102,8 @@ Dumpable::dump(std::ostream &os, const DumpOpt &opt, const string &fmt, DataProv
 
         if (value.has_value()) {
 
-            if (base == 8)  os << std::setw(w) << std::setfill(' ') << std::oct << *value;
-            if (base == 10) os << std::setw(w) << std::setfill(' ') << std::dec << *value;
+            if (base == 8)  os << std::setw(w) << std::setfill(opt.pad) << std::oct << *value;
+            if (base == 10) os << std::setw(w) << std::setfill(opt.pad) << std::dec << *value;
             if (base == 16) {
                 os << std::setw(w) << std::setfill('0') << std::hex;
                 os << (opt.uppercase ? std::uppercase : std::nouppercase) << *value;
