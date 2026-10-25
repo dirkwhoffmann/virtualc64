@@ -949,28 +949,46 @@ CPUDebuggerAPI::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat d
     return cpu->disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
+// Throws an exception if a disassembler format string is invalid
+static void
+checkDisassemblyFormat(const string &fmt)
+{
+    for (usize i = 0; i < fmt.size(); i++) {
+
+        if (fmt[i] != '%') continue;
+
+        while (++i < fmt.size() && isdigit(fmt[i])) { }
+
+        if (i >= fmt.size()) throw CoreError(CoreError::OPT_INV_ARG, "A directive after %");
+        if (!strchr("lpaxysbif", fmt[i])) throw CoreError(CoreError::OPT_INV_ARG, "l, p, a, x, y, s, b, i, or f after %");
+    }
+}
+
 string
 CPUDebuggerAPI::disassemble(u16 addr, const string &fmt, isize *len) const
 {
     VC64_PUBLIC
+    checkDisassemblyFormat(fmt);
 
-    char buffer[256];
-    auto result = cpu->disassembler.disass(buffer, fmt.c_str(), addr);
+    // Each directive produces at most a few dozen characters
+    std::vector<char> buffer(32 * fmt.size() + 64);
+    auto result = cpu->disassembler.disass(buffer.data(), fmt.c_str(), addr);
     if (len) *len = result;
 
-    return string(buffer);
+    return string(buffer.data());
 }
 
 string
 CPUDebuggerAPI::disassembleRecorded(isize nr, const string &fmt, isize *len) const
 {
     VC64_PUBLIC
+    checkDisassemblyFormat(fmt);
 
-    char buffer[256];
-    auto result = cpu->debugger.disassRecorded(buffer, fmt.c_str(), nr);
+    std::vector<char> buffer(32 * fmt.size() + 64);
+    auto result = cpu->debugger.disassRecorded(buffer.data(), fmt.c_str(), nr);
     if (len) *len = result;
 
-    return string(buffer);
+    return string(buffer.data());
 }
 
 //
