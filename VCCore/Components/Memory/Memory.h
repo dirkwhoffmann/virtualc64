@@ -244,12 +244,6 @@ public:
     u16 irqVector() const;
     u16 resetVector();
 
-    // Returns a string representations for a portion of memory
-    string ascDump(MemType src, u16 addr, isize bytes) const;
-    string hexDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
-    string decDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
-    string memDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
-
     
     //
     // Pretty printing (DEPRECATED)

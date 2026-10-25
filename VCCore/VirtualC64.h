@@ -78,6 +78,38 @@ public:
     void resume() const;
 };
 
+/** Memory Debugger API
+ */
+class MemoryDebuggerAPI : public API {
+
+public:
+
+    class Memory *mem = nullptr;
+
+    /// @name Debugging memory
+    /// @{
+
+    /** @brief  Returns a string representation for a portion of memory.
+     *
+     *  ascDump() shows the bytes as characters, hexDump() as hexadecimal
+     *  numbers, decDump() as decimal numbers, and memDump() as hexadecimal
+     *  numbers followed by characters. Each group of 'sz' bytes forms one
+     *  number and is followed by a space. Unmapped memory (MemType::NONE) is
+     *  shown as '--' by the number dumps and as nothing by ascDump().
+     *
+     *  @param  src     The memory type the bytes are read from.
+     *  @param  addr    First address to dump.
+     *  @param  bytes   Number of bytes to dump.
+     *  @param  sz      Group size in bytes (1, 2, or 4).
+     */
+    string ascDump(MemType src, u16 addr, isize bytes) const;
+    string hexDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+    string decDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+    string memDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+
+    /// @}
+};
+
 /** Memory API
  */
 class MemoryAPI : public API {
@@ -85,6 +117,9 @@ class MemoryAPI : public API {
 public:
 
     class Memory *mem = nullptr;
+
+    // Memory debugger
+    MemoryDebuggerAPI debugger;
 
     /** @brief  Returns the component's current configuration.
      */
@@ -102,23 +137,6 @@ public:
     const MemInfo &getInfo() const;
     const MemInfo &getCachedInfo() const;
 
-    /** @brief  Returns a string representation for a portion of memory.
-     *
-     *  ascDump() shows the bytes as characters, hexDump() as hexadecimal
-     *  numbers, and memDump() as hexadecimal numbers followed by characters. decDump() uses
-     *  decimal numbers instead. Unmapped memory (MemType::NONE) is shown as
-     *  '--' by the number dumps and as nothing by ascDump().
-     *  Each group of 'sz' bytes forms one number and is followed by a space.
-     *
-     *  @param  src     The memory type the bytes are read from.
-     *  @param  addr    First address to dump.
-     *  @param  bytes   Number of bytes to dump.
-     *  @param  sz      Group size in bytes (1, 2, or 4).
-     */
-    string ascDump(MemType src, u16 addr, isize bytes) const;
-    string hexDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
-    string decDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
-    string memDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
 
     /** @brief Experimental
      */

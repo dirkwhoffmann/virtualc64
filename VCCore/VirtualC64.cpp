@@ -89,6 +89,8 @@ VirtualC64::VirtualC64() {
 
     mem.emu = emu;
     mem.mem = &emu->main.mem;
+    mem.debugger.emu = emu;
+    mem.debugger.mem = &emu->main.mem;
 
     cpu.emu = emu;
     cpu.cpu = &emu->main.cpu;
@@ -1005,31 +1007,31 @@ MemoryAPI::getCachedInfo() const
 }
 
 string
-MemoryAPI::ascDump(MemType src, u16 addr, isize bytes) const
+MemoryDebuggerAPI::ascDump(MemType src, u16 addr, isize bytes) const
 {
     VC64_PUBLIC
-    return mem->ascDump(src, addr, bytes);
+    return mem->debugger.ascDump(src, addr, bytes);
 }
 
 string
-MemoryAPI::hexDump(MemType src, u16 addr, isize bytes, isize sz) const
+MemoryDebuggerAPI::hexDump(MemType src, u16 addr, isize bytes, isize sz) const
 {
     VC64_PUBLIC
-    return mem->hexDump(src, addr, bytes, sz);
+    return mem->debugger.hexDump(src, addr, bytes, sz);
 }
 
 string
-MemoryAPI::decDump(MemType src, u16 addr, isize bytes, isize sz) const
+MemoryDebuggerAPI::decDump(MemType src, u16 addr, isize bytes, isize sz) const
 {
     VC64_PUBLIC
-    return mem->decDump(src, addr, bytes, sz);
+    return mem->debugger.decDump(src, addr, bytes, sz);
 }
 
 string
-MemoryAPI::memDump(MemType src, u16 addr, isize bytes, isize sz) const
+MemoryDebuggerAPI::memDump(MemType src, u16 addr, isize bytes, isize sz) const
 {
     VC64_PUBLIC
-    return mem->memDump(src, addr, bytes, sz);
+    return mem->debugger.memDump(src, addr, bytes, sz);
 }
 
 void

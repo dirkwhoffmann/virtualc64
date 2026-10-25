@@ -19,24 +19,59 @@ namespace vc64 {
 
 namespace {
 
-// Dumps a single line of memory. Returns the number of consumed bytes.
-isize
-dumpLine(const Memory &mem, std::ostream &os, u16 addr, const string &fmt, isize bytes)
+// Reads a range of memory without side effects. If no memory type is given,
+// the bytes are read from where the CPU would find them.
+utl::Dumpable::DataProvider
+provider(const Memory &mem, u16 addr, isize bytes, optional<MemType> src = { })
 {
-    auto reader = [&mem, addr, bytes](isize offset, isize n) -> optional<isize> {
+    return [&mem, addr, bytes, src](isize offset, isize n) -> optional<isize> {
 
         isize value = 0;
 
         while (n-- > 0) {
 
             if (offset >= bytes) return {};
-            value = value << 8 | mem.spypeek(u16(addr + offset++));
+            u16 a = u16(addr + offset++);
+            value = value << 8 | (src ? mem.spypeek(a, *src) : mem.spypeek(a));
         }
         return value;
     };
+}
 
-    utl::Dumpable::dump(os, { .base = 16, .uppercase = true }, fmt, reader, 0, addr);
+// Dumps a single line of memory. Returns the number of consumed bytes.
+isize
+dumpLine(const Memory &mem, std::ostream &os, u16 addr, const string &fmt, isize bytes)
+{
+    utl::Dumpable::dump(os, { .base = 16, .uppercase = true }, fmt, provider(mem, addr, bytes), 0, addr);
     return bytes;
+}
+
+// Returns a format string with one directive for each group of 'sz' bytes
+string
+numberFormat(isize bytes, isize sz, bool unmapped)
+{
+    isize group = (sz == 2 || sz == 4) ? sz : 1;
+    string unit = group == 4 ? "%l " : group == 2 ? "%w " : "%b ";
+
+    // Unmapped memory is shown as '--', no matter which number system is used
+    if (unmapped) unit = string(2 * group, '-') + " ";
+
+    string result;
+    for (isize i = 0; i < bytes / group; i++) result += unit;
+    return result;
+}
+
+string
+numberDump(const Memory &mem, MemType src, u16 addr, isize bytes, isize sz, isize base)
+{
+    assert(sz == 1 || bytes % sz == 0);
+
+    auto fmt = numberFormat(bytes, sz, src == MemType::NONE);
+    if (src == MemType::NONE) return fmt;
+
+    std::stringstream ss;
+    utl::Dumpable::dump(ss, { .base = base, .uppercase = true, .pad = '0' }, fmt, provider(mem, addr, bytes, src));
+    return ss.str();
 }
 
 string
@@ -47,6 +82,41 @@ repeat(const string &unit, isize count, const string &delim = "")
     return result;
 }
 
+}
+
+string
+MemoryDebugger::ascDump(MemType src, u16 addr, isize bytes) const
+{
+    // Unmapped memory has no text representation
+    if (src == MemType::NONE) return "";
+
+    string fmt;
+    for (isize i = 0; i < bytes; i++) fmt += "%c";
+
+    // Only a part of the character set is shown as it is
+    auto printable = [](int c) { return (c >= 32 && c <= 57) || (c >= 65 && c <= 90); };
+
+    std::stringstream ss;
+    utl::Dumpable::dump(ss, { .base = 16, .printable = printable }, fmt, provider(mem, addr, bytes, src));
+    return ss.str();
+}
+
+string
+MemoryDebugger::hexDump(MemType src, u16 addr, isize bytes, isize sz) const
+{
+    return numberDump(mem, src, addr, bytes, sz, 16);
+}
+
+string
+MemoryDebugger::decDump(MemType src, u16 addr, isize bytes, isize sz) const
+{
+    return numberDump(mem, src, addr, bytes, sz, 10);
+}
+
+string
+MemoryDebugger::memDump(MemType src, u16 addr, isize bytes, isize sz) const
+{
+    return hexDump(src, addr, bytes, sz) + "  " + ascDump(src, addr, bytes);
 }
 
 isize

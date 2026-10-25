@@ -471,17 +471,17 @@ static NSString *padded(const string &dump, NSInteger pads)
 
 - (NSString *)hexDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
 {
-    return padded([self mem]->hexDump(src, (u16)addr, bytes), 2);
+    return padded([self mem]->debugger.hexDump(src, (u16)addr, bytes), 2);
 }
 
 - (NSString *)decDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
 {
-    return padded([self mem]->decDump(src, (u16)addr, bytes), 1);
+    return padded([self mem]->debugger.decDump(src, (u16)addr, bytes), 1);
 }
 
 - (NSString *)ascDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
 {
-    return @([self mem]->ascDump(src, (u16)addr, bytes).c_str());
+    return @([self mem]->debugger.ascDump(src, (u16)addr, bytes).c_str());
 }
 
 - (void)drawHeatmap:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h
