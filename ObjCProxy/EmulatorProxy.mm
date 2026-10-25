@@ -760,17 +760,17 @@ static NSString *padded(const string &dump, NSInteger pads)
 
 - (void)texture:(const u32 **)ptr nr:(NSInteger *)nr
 {
-    isize frame, width, height;
+    isize frame;
 
-    *ptr = [self port]->getTexture(&frame, &width, &height);
+    *ptr = [self port]->getTexture(&frame);
     *nr = frame;
 }
 
 - (void)dmaTexture:(const u32 **)ptr nr:(NSInteger *)nr
 {
-    isize frame, width, height;
+    isize frame;
 
-    *ptr = [self port]->getXrayTexture(&frame, &width, &height);
+    *ptr = [self port]->getXrayTexture(&frame);
     *nr = frame;
 }
 

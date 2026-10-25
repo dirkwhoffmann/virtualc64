@@ -1512,14 +1512,12 @@ VideoPortAPI::getTexture() const
 }
 
 const u32 *
-VideoPortAPI::getTexture(isize *nr, isize *width, isize *height) const
+VideoPortAPI::getTexture(isize *nr) const
 {
     VC64_PUBLIC
     auto &texture = emu->getTexture();
 
     *nr = isize(texture.nr);
-    *width = isize(Texture::width);
-    *height = isize(Texture::height);
 
     return (u32 *)texture.pixels.ptr;
 }
@@ -1532,14 +1530,12 @@ VideoPortAPI::getXrayTexture() const
 }
 
 const u32 *
-VideoPortAPI::getXrayTexture(isize *nr, isize *width, isize *height) const
+VideoPortAPI::getXrayTexture(isize *nr) const
 {
     VC64_PUBLIC
     auto &texture = emu->getXrayTexture();
 
     *nr = isize(texture.nr);
-    *width = isize(Texture::width);
-    *height = isize(Texture::height);
 
     return (u32 *)texture.pixels.ptr;
 }

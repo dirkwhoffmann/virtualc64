@@ -661,15 +661,19 @@ public:
 
     /** @brief  Returns a pointer to the most recent stable texture
      *
-     * The texture dimensions are given by constants vc64::Texture::width
-     * and vc64::Texture::height texels. Each texel is represented by a
+     * The texture dimensions are given by constants vc64::Tex::width
+     * and vc64::Tex::height texels. Each texel is represented by a
      * 32 bit color value.
      */
     const u32 *getTexture() const;
-    const u32 *getTexture(isize *nr, isize *width, isize *height) const;
+    const u32 *getTexture(isize *nr) const;
 
+    /** @brief  Returns a pointer to the most recent stable X-Ray texture
+     *
+     * The texture has the same dimensions as the regular texture.
+     */
     const u32 *getXrayTexture() const;
-    const u32 *getXrayTexture(isize *nr, isize *width, isize *height) const;
+    const u32 *getXrayTexture(isize *nr) const;
 
     /** @brief  Saves the most recent stable texture as a PNG file
      *
