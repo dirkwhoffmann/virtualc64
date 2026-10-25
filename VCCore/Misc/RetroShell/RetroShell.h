@@ -42,16 +42,19 @@ class RetroShell final : public SubComponent {
 
     Descriptions descriptions = {
         {
+            .type           = Class::RetroShell,
             .name           = "RetroShell",
             .description    = "Retro Shell",
             .shell          = ""
         },
         {
+            .type           = Class::RetroShell,
             .name           = "RshShell",
             .description    = "RetroShell Server Shell",
             .shell          = ""
         },
         {
+            .type           = Class::RetroShell,
             .name           = "RpcShell",
             .description    = "RPC Server Shell",
             .shell          = ""

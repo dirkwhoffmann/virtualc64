@@ -33,6 +33,7 @@
 
 // Ports
 #include "Ports/AudioPortTypes.h"
+#include "Ports/VideoPortTypes.h"
 #include "Ports/ControlPortTypes.h"
 #include "Ports/ExpansionPortTypes.h"
 #include "Ports/PowerPortTypes.h"

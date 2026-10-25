@@ -369,6 +369,18 @@ public:
      */
     const AudioPortConfig &getConfig() const;
 
+    /** @brief  Returns the component's current state.
+     *
+     *  getInfo() reads the live state on the calling thread. The result is only
+     *  consistent if the emulator is paused or suspended. getCachedInfo()
+     *  returns the snapshot the emulator thread has recorded most recently,
+     *  which is the one to use while the emulator runs. Both return references
+     *  that can be overwritten by a later call or by the emulator thread, so
+     *  copy the data if you need to keep it.
+     */
+    const AudioPortInfo &getInfo() const;
+    const AudioPortInfo &getCachedInfo() const;
+
     /** @brief  Returns statistical information about the components.
      *
      *  getMetrics() reads the live state on the calling thread. The result is only
@@ -436,6 +448,22 @@ class VideoPortAPI : public API {
 public:
 
     class VideoPort *videoPort = nullptr;
+
+    /** @brief  Returns the component's current configuration.
+     */
+    const VideoPortConfig &getConfig() const;
+
+    /** @brief  Returns the component's current state.
+     *
+     *  getInfo() reads the live state on the calling thread. The result is only
+     *  consistent if the emulator is paused or suspended. getCachedInfo()
+     *  returns the snapshot the emulator thread has recorded most recently,
+     *  which is the one to use while the emulator runs. Both return references
+     *  that can be overwritten by a later call or by the emulator thread, so
+     *  copy the data if you need to keep it.
+     */
+    const VideoPortInfo &getInfo() const;
+    const VideoPortInfo &getCachedInfo() const;
 
     /// @}
     /// @name Retrieving video data
@@ -594,7 +622,7 @@ public:
 
     /** @brief  Aborts any active auto-typing activity.
      */
-    void abortAutoTyping();
+    void abortTyping();
 };
 
 
@@ -660,6 +688,10 @@ class JoystickAPI : public API {
 public:
 
     class Joystick *joystick = nullptr;
+
+    /** @brief  Returns the component's current configuration.
+     */
+    const JoystickConfig &getConfig() const;
 
     /** @brief  Returns the component's current state.
      *

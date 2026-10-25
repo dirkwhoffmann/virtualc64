@@ -303,11 +303,11 @@ Keyboard::autoType(const string &text)
 }
 
 void
-Keyboard::abortAutoTyping()
+Keyboard::abortTyping()
 {
     SYNCHRONIZED
 
-    logmsg(LOG_KBD, "abortAutoTyping()\n");
+    logmsg(LOG_KBD, "abortTyping()\n");
 
     if (!pending.isEmpty()) {
 

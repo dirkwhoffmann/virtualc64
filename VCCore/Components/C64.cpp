@@ -362,6 +362,7 @@ C64::operator << (SerResetter &worker)
 {
     // Remember some events
     auto insEventId = eventid[SLOT_INS];
+    auto insMask = data[SLOT_INS];
 
     if (isSoftResetter(worker)) return;
 
@@ -382,7 +383,7 @@ C64::operator << (SerResetter &worker)
     scheduleNextSNPEvent();
 
     // Restore persistent events
-    if (insEventId) scheduleRel<SLOT_INS>(0, insEventId);
+    if (insEventId) { data[SLOT_INS] = insMask; scheduleRel<SLOT_INS>(0, insEventId); }
 
     flags = 0;
     rasterCycle = 1;
@@ -1536,11 +1537,15 @@ C64::processINSEvent()
         for (isize i = 0; i < 4; i++) sidBridge.sid[i].info.record();
     }
     if (mask & 1LL << long(Class::AudioPort))       { audioPort.info.record(); audioPort.metrics.record(); }
+    if (mask & 1LL << long(Class::VideoPort))       { videoPort.info.record(); }
     if (mask & 1LL << long(Class::Drive))           { drive8.info.record(); drive9.info.record(); }
     if (mask & 1LL << long(Class::Datasette))       { datasette.info.record(); }
     if (mask & 1LL << long(Class::Joystick))        { port1.joystick.info.record(); port2.joystick.info.record(); }
     if (mask & 1LL << long(Class::Paddle))          { port1.paddle.info.record(); port2.paddle.info.record(); }
     if (mask & 1LL << long(Class::ExpansionPort))   { expansionport.recordInfo(); }
+    if (mask & 1LL << long(Class::Emulator))        { emulator.info.record(); emulator.metrics.record(); }
+    if (mask & 1LL << long(Class::RemoteManager))   { remoteManager.info.record(); }
+    if (mask & 1LL << long(Class::RetroShell))      { retroShell.info.record(); rshShell.info.record(); rpcShell.info.record(); }
 
     // Reschedule the event
     scheduleRel<SLOT_INS>(Cycle(inspectionInterval * PAL::CYCLES_PER_SECOND), INS_INSPECT, mask);

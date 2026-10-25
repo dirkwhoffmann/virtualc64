@@ -495,7 +495,7 @@ struct GuardInfo {
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
 
 - (void)autoType:(NSString *)text;
-- (void)abortAutoTyping;
+- (void)abortTyping;
 
 @end
 

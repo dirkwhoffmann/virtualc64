@@ -1192,6 +1192,20 @@ AudioPortAPI::getConfig() const
     return audioPort->getConfig();
 }
 
+const AudioPortInfo &
+AudioPortAPI::getInfo() const
+{
+    VC64_PUBLIC
+    return audioPort->info.current();
+}
+
+const AudioPortInfo &
+AudioPortAPI::getCachedInfo() const
+{
+    VC64_PUBLIC
+    return audioPort->info.backed();
+}
+
 
 isize
 AudioPortAPI::copyMono(float *buffer, isize n)
@@ -1218,6 +1232,27 @@ AudioPortAPI::copyInterleaved(float *buffer, isize n)
 //
 // Video port
 //
+
+const VideoPortConfig &
+VideoPortAPI::getConfig() const
+{
+    VC64_PUBLIC
+    return videoPort->getConfig();
+}
+
+const VideoPortInfo &
+VideoPortAPI::getInfo() const
+{
+    VC64_PUBLIC
+    return videoPort->info.current();
+}
+
+const VideoPortInfo &
+VideoPortAPI::getCachedInfo() const
+{
+    VC64_PUBLIC
+    return videoPort->info.backed();
+}
 
 void
 VideoPortAPI::lockTexture()
@@ -1428,10 +1463,10 @@ KeyboardAPI::autoType(const string &text)
 }
 
 void
-KeyboardAPI::abortAutoTyping()
+KeyboardAPI::abortTyping()
 {
     VC64_PUBLIC_SUSPEND
-    keyboard->abortAutoTyping();
+    keyboard->abortTyping();
     emu->markAsDirty();
 }
 
@@ -1439,6 +1474,13 @@ KeyboardAPI::abortAutoTyping()
 //
 // Joystick
 //
+
+const JoystickConfig &
+JoystickAPI::getConfig() const
+{
+    VC64_PUBLIC
+    return joystick->getConfig();
+}
 
 const JoystickInfo &
 JoystickAPI::getInfo() const

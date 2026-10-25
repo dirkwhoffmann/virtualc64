@@ -156,7 +156,7 @@ public:
     void autoType(const string &text);
 
     // Discards all pending key events and clears the keyboard matrix
-    void abortAutoTyping();
+    void abortTyping();
 
 
     //

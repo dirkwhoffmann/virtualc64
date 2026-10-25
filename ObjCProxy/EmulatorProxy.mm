@@ -831,9 +831,9 @@ static NSString *padded(const string &dump, NSInteger pads)
     [self kb]->autoType(string([text UTF8String]));
 }
 
-- (void)abortAutoTyping
+- (void)abortTyping
 {
-    [self kb]->abortAutoTyping();
+    [self kb]->abortTyping();
 }
 
 @end

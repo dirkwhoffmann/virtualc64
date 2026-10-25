@@ -55,6 +55,7 @@ class RemoteManager final : public SubComponent {
 
     Descriptions descriptions = {{
 
+        .type           = Class::RemoteManager,
         .name           = "RemoteManager",
         .description    = "Remote Manager",
         .shell          = "server"
