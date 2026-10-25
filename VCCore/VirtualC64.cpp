@@ -516,17 +516,17 @@ VirtualC64::isLaunched() const
 }
 
 i64
-VirtualC64::get(Opt option) const
+VirtualC64::get(Opt opt) const
 {
     VC64_PUBLIC
-    return emu->get(option);
+    return emu->get(opt);
 }
 
 i64
-VirtualC64::get(Opt option, long id) const
+VirtualC64::get(Opt opt, isize id) const
 {
     VC64_PUBLIC
-    return emu->get(option, id);
+    return emu->get(opt, id);
 }
 
 void
@@ -562,7 +562,7 @@ VirtualC64::set(Opt opt, i64 value)
 }
 
 void
-VirtualC64::set(Opt opt, i64 value, long id)
+VirtualC64::set(Opt opt, i64 value, isize id)
 {
     VC64_PUBLIC
     emu->sendAndWait(Command(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id }));
@@ -577,14 +577,14 @@ VirtualC64::check(Opt opt, i64 value)
 }
 
 void
-VirtualC64::check(Opt opt, i64 value, long id)
+VirtualC64::check(Opt opt, i64 value, isize id)
 {
     VC64_PUBLIC
     emu->check(opt, value, { id });
 }
 
 void
-VirtualC64::setAsync(Opt opt, i64 value, long id)
+VirtualC64::setAsync(Opt opt, i64 value, isize id)
 {
     VC64_PUBLIC
     putAsync(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
@@ -1428,6 +1428,20 @@ AudioPortAPI::getCachedInfo() const
 }
 
 
+float
+AudioPortAPI::drawL(u32 *buffer, isize width, isize height, float maxAmp, u32 color) const
+{
+    VC64_PUBLIC
+    return audioPort->stream.drawL(buffer, width, height, maxAmp, color);
+}
+
+float
+AudioPortAPI::drawR(u32 *buffer, isize width, isize height, float maxAmp, u32 color) const
+{
+    VC64_PUBLIC
+    return audioPort->stream.drawR(buffer, width, height, maxAmp, color);
+}
+
 isize
 AudioPortAPI::copyMono(float *buffer, isize n)
 {
@@ -2214,10 +2228,10 @@ DefaultsAPI::get(const string &key) const
 }
 
 i64
-DefaultsAPI::get(Opt option, isize nr) const
+DefaultsAPI::get(Opt opt, isize nr) const
 {
     VC64_PUBLIC
-    return defaults->get(option, nr);
+    return defaults->get(opt, nr);
 }
 
 string
@@ -2235,10 +2249,10 @@ DefaultsAPI::getFallback(const string &key) const
 }
 
 i64
-DefaultsAPI::getFallback(Opt option, isize nr) const
+DefaultsAPI::getFallback(Opt opt, isize nr) const
 {
     VC64_PUBLIC
-    return defaults->getFallback(option, nr);
+    return defaults->getFallback(opt, nr);
 }
 
 void
@@ -2326,17 +2340,17 @@ DefaultsAPI::remove(const string &key)
 }
 
 void
-DefaultsAPI::remove(Opt option)
+DefaultsAPI::remove(Opt opt)
 {
     VC64_PUBLIC
-    defaults->remove(option);
+    defaults->remove(opt);
 }
 
 void
-DefaultsAPI::remove(Opt option, std::vector <isize> objids)
+DefaultsAPI::remove(Opt opt, std::vector <isize> objids)
 {
     VC64_PUBLIC
-    defaults->remove(option, objids);
+    defaults->remove(opt, objids);
 }
 
 }

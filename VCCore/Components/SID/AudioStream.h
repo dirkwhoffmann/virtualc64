@@ -81,18 +81,15 @@ public:
     // Visualizing the waveform
     //
 
-    /* Plots a graphical representation of the waveform. Returns the highest
-     * amplitute that was found in the ringbuffer. To implement auto-scaling,
-     * pass the returned value as parameter highestAmplitude in the next call
-     * to this function.
+    /* Plots a graphical representation of the waveform of the left or right
+     * channel. Returns the highest amplitude that was found in the ringbuffer.
+     * To implement auto-scaling, pass the returned value as parameter
+     * 'highest' in the next call to this function.
      */
-    void drawL(u32 *buffer, isize width, isize height, u32 color) const;
-    void drawR(u32 *buffer, isize width, isize height, u32 color) const;
-
-private:
-
     float drawL(u32 *buffer, isize width, isize height, float highest, u32 color) const;
     float drawR(u32 *buffer, isize width, isize height, float highest, u32 color) const;
+
+private:
 
     float draw(u32 *buffer, isize width, isize height, float scale,
                std::function<float(float x)>data, u32 color) const;

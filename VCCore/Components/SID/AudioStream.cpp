@@ -165,20 +165,6 @@ AudioStream::copyInterleaved(float *buffer, isize n)
     }
 }
 
-void
-AudioStream::drawL(u32 *buffer, isize width, isize height, u32 color) const
-{
-    static float highest = 0.01f;
-    highest = drawL(buffer, width, height, highest, color);
-}
-
-void
-AudioStream::drawR(u32 *buffer, isize width, isize height, u32 color) const
-{
-    static float highest = 0.01f;
-    highest = drawR(buffer, width, height, highest, color);
-}
-
 float
 AudioStream::drawL(u32 *buffer, isize width, isize height, float highest, u32 color) const
 {
@@ -200,6 +186,7 @@ AudioStream::draw(u32 *buffer, isize width, isize height, float highest,
     SYNCHRONIZED
 
     float newHighestAmplitude = 0.001f;
+    highest = std::max(highest, 0.001f);
 
     // Clear buffer
     for (isize i = 0; i < width * height; i++) {
