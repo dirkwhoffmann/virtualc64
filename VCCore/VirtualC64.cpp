@@ -1037,11 +1037,25 @@ void
 GuardsAPI::setAt(u32 addr, isize ignores)
 {
     VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_SET_AT, GuardCmd { .list = type, .addr = addr, .ignores = ignores }));
+}
+
+void
+GuardsAPI::setAtAsync(u32 addr, isize ignores)
+{
+    VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_SET_AT, GuardCmd { .list = type, .addr = addr, .ignores = ignores }));
 }
 
 void
 GuardsAPI::moveTo(isize nr, u32 addr)
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_MOVE_NR, GuardCmd { .list = type, .nr = nr, .addr = addr }));
+}
+
+void
+GuardsAPI::moveToAsync(isize nr, u32 addr)
 {
     VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_MOVE_NR, GuardCmd { .list = type, .nr = nr, .addr = addr }));
@@ -1051,11 +1065,25 @@ void
 GuardsAPI::remove(isize nr)
 {
     VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_REMOVE_NR, GuardCmd { .list = type, .nr = nr }));
+}
+
+void
+GuardsAPI::removeAsync(isize nr)
+{
+    VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_REMOVE_NR, GuardCmd { .list = type, .nr = nr }));
 }
 
 void
 GuardsAPI::removeAt(u32 addr)
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_REMOVE_AT, GuardCmd { .list = type, .addr = addr }));
+}
+
+void
+GuardsAPI::removeAtAsync(u32 addr)
 {
     VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_REMOVE_AT, GuardCmd { .list = type, .addr = addr }));
@@ -1065,11 +1093,25 @@ void
 GuardsAPI::removeAll()
 {
     VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_REMOVE_ALL, GuardCmd { .list = type }));
+}
+
+void
+GuardsAPI::removeAllAsync()
+{
+    VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_REMOVE_ALL, GuardCmd { .list = type }));
 }
 
 void
 GuardsAPI::enable(isize nr)
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_ENABLE_NR, GuardCmd { .list = type, .nr = nr }));
+}
+
+void
+GuardsAPI::enableAsync(isize nr)
 {
     VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_ENABLE_NR, GuardCmd { .list = type, .nr = nr }));
@@ -1079,11 +1121,25 @@ void
 GuardsAPI::enableAt(u32 addr)
 {
     VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_ENABLE_AT, GuardCmd { .list = type, .addr = addr }));
+}
+
+void
+GuardsAPI::enableAtAsync(u32 addr)
+{
+    VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_ENABLE_AT, GuardCmd { .list = type, .addr = addr }));
 }
 
 void
 GuardsAPI::enableAll()
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_ENABLE_ALL, GuardCmd { .list = type }));
+}
+
+void
+GuardsAPI::enableAllAsync()
 {
     VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_ENABLE_ALL, GuardCmd { .list = type }));
@@ -1093,11 +1149,25 @@ void
 GuardsAPI::disable(isize nr)
 {
     VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_DISABLE_NR, GuardCmd { .list = type, .nr = nr }));
+}
+
+void
+GuardsAPI::disableAsync(isize nr)
+{
+    VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_DISABLE_NR, GuardCmd { .list = type, .nr = nr }));
 }
 
 void
 GuardsAPI::disableAt(u32 addr)
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_DISABLE_AT, GuardCmd { .list = type, .addr = addr }));
+}
+
+void
+GuardsAPI::disableAtAsync(u32 addr)
 {
     VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_DISABLE_AT, GuardCmd { .list = type, .addr = addr }));
@@ -1107,11 +1177,25 @@ void
 GuardsAPI::disableAll()
 {
     VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_DISABLE_ALL, GuardCmd { .list = type }));
+}
+
+void
+GuardsAPI::disableAllAsync()
+{
+    VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_DISABLE_ALL, GuardCmd { .list = type }));
 }
 
 void
 GuardsAPI::toggle(isize nr)
+{
+    VC64_PUBLIC
+    emu->sendAndWait(Command(Cmd::GUARD_TOGGLE_NR, GuardCmd { .list = type, .nr = nr }));
+}
+
+void
+GuardsAPI::toggleAsync(isize nr)
 {
     VC64_PUBLIC
     emu->put(Command(Cmd::GUARD_TOGGLE_NR, GuardCmd { .list = type, .nr = nr }));

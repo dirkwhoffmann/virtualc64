@@ -421,57 +421,57 @@ NSString *EventSlotName(EventSlot slot)
 
 - (void) addBreakpointAtAddr:(NSInteger)addr
 {
-    [self cpu]->breakpoints.setAt(u32(addr));
+    [self cpu]->breakpoints.setAtAsync(u32(addr));
 }
 
 - (void) moveBreakpointWithNr:(NSInteger)nr toAddr:(NSInteger)addr
 {
-    [self cpu]->breakpoints.moveTo(nr, u32(addr));
+    [self cpu]->breakpoints.moveToAsync(nr, u32(addr));
 }
 
 - (void) removeBreakpointWithNr:(NSInteger)nr
 {
-    [self cpu]->breakpoints.remove(nr);
+    [self cpu]->breakpoints.removeAsync(nr);
 }
 
 - (void) removeBreakpointAtAddr:(NSInteger)addr
 {
-    [self cpu]->breakpoints.removeAt(u32(addr));
+    [self cpu]->breakpoints.removeAtAsync(u32(addr));
 }
 
 - (void) toggleBreakpointWithNr:(NSInteger)nr
 {
-    [self cpu]->breakpoints.toggle(nr);
+    [self cpu]->breakpoints.toggleAsync(nr);
 }
 
 - (void) enableBreakpointAtAddr:(NSInteger)addr
 {
-    [self cpu]->breakpoints.enableAt(u32(addr));
+    [self cpu]->breakpoints.enableAtAsync(u32(addr));
 }
 
 - (void) disableBreakpointAtAddr:(NSInteger)addr
 {
-    [self cpu]->breakpoints.disableAt(u32(addr));
+    [self cpu]->breakpoints.disableAtAsync(u32(addr));
 }
 
 - (void) addWatchpointAtAddr:(NSInteger)addr
 {
-    [self cpu]->watchpoints.setAt(u32(addr));
+    [self cpu]->watchpoints.setAtAsync(u32(addr));
 }
 
 - (void) moveWatchpointWithNr:(NSInteger)nr toAddr:(NSInteger)addr
 {
-    [self cpu]->watchpoints.moveTo(nr, u32(addr));
+    [self cpu]->watchpoints.moveToAsync(nr, u32(addr));
 }
 
 - (void) removeWatchpointWithNr:(NSInteger)nr
 {
-    [self cpu]->watchpoints.remove(nr);
+    [self cpu]->watchpoints.removeAsync(nr);
 }
 
 - (void) toggleWatchpointWithNr:(NSInteger)nr
 {
-    [self cpu]->watchpoints.toggle(nr);
+    [self cpu]->watchpoints.toggleAsync(nr);
 }
 
 @end

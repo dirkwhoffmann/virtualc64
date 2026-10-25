@@ -155,10 +155,19 @@ public:
 
 /** Guards API
  *
- *  Gives access to the breakpoints or the watchpoints of the CPU. The
- *  functions that modify the list hand a request to the emulator thread and
- *  return at once, so a change shows up in the query functions only after the
- *  emulator thread has carried it out (see VirtualC64::sync()).
+ *  Gives access to one list of guards (the breakpoints or the watchpoints of the CPU). The functions that modify the
+ *  list come in two flavors, following the usual scheme of the API:
+ *
+ *  - The plain functions (e.g., setAt()) return when the emulator thread has
+ *    carried out the request. A failure throws the corresponding exception
+ *    (e.g., if a guard to remove does not exist). They throw
+ *    CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot carry
+ *    out the request, because it has not been launched yet, is halted or
+ *    suspended, or if they are called from the emulator thread itself.
+ *  - The functions with the Async suffix (e.g., setAtAsync()) queue the
+ *    request and return at once. A failure is not reported to the caller.
+ *    The change shows up in the query functions only after the emulator
+ *    thread has carried it out (see sync()).
  */
 class GuardsAPI : public API {
 
@@ -187,11 +196,12 @@ public:
 
     /** @brief  Sets a guard.
      *  @param  addr    The observed memory address.
-     *  @param  ignores If a value greater zero is given, the guard has to
-     *                  be hit the specified number of times until program
-     *                  execution is paused.
+     *  @param  ignores If a value greater zero is given, the guard has to be hit the specified number of times until program execution is paused.
      */
     void setAt(u32 addr, isize ignores = 0);
+
+    /// Asynchronous version of setAt(): queues the request and returns at once.
+    void setAtAsync(u32 addr, isize ignores = 0);
 
     /** @brief  Relocates a guard.
      *  @param  nr      Number of the guard in the guard list
@@ -199,52 +209,86 @@ public:
      */
     void moveTo(isize nr, u32 addr);
 
+    /// Asynchronous version of moveTo(): queues the request and returns at once.
+    void moveToAsync(isize nr, u32 addr);
+
     /** @brief  Deletes a guard.
      *  @param  nr      Number of the guard in the guard list
      */
     void remove(isize nr);
+
+    /// Asynchronous version of remove(): queues the request and returns at once.
+    void removeAsync(isize nr);
 
     /** @brief  Deletes a guard.
      *  @param  addr    The address of the guard to be deleted.
      */
     void removeAt(u32 addr);
 
+    /// Asynchronous version of removeAt(): queues the request and returns at once.
+    void removeAtAsync(u32 addr);
+
     /** @brief  Deletes all guards.
      */
     void removeAll();
+
+    /// Asynchronous version of removeAll(): queues the request and returns at once.
+    void removeAllAsync();
 
     /** @brief  Enables a guard.
      *  @param  nr      Number of the guard in the guard list
      */
     void enable(isize nr);
 
+    /// Asynchronous version of enable(): queues the request and returns at once.
+    void enableAsync(isize nr);
+
     /** @brief  Enables a guard.
      *  @param  addr    The address of the guard to be enabled
      */
     void enableAt(u32 addr);
 
+    /// Asynchronous version of enableAt(): queues the request and returns at once.
+    void enableAtAsync(u32 addr);
+
     /** @brief  Enables all guards.
      */
     void enableAll();
+
+    /// Asynchronous version of enableAll(): queues the request and returns at once.
+    void enableAllAsync();
 
     /** @brief  Disables a guard.
      *  @param  nr      Number of the guard in the guard list
      */
     void disable(isize nr);
 
+    /// Asynchronous version of disable(): queues the request and returns at once.
+    void disableAsync(isize nr);
+
     /** @brief  Disables a guard.
      *  @param  addr    The address of the guard to be disabled
      */
     void disableAt(u32 addr);
 
+    /// Asynchronous version of disableAt(): queues the request and returns at once.
+    void disableAtAsync(u32 addr);
+
     /** @brief  Disables all guards.
      */
     void disableAll();
+
+    /// Asynchronous version of disableAll(): queues the request and returns at once.
+    void disableAllAsync();
 
     /** @brief  Enables a disabled guard and disables an enabled one.
      *  @param  nr      Number of the guard in the guard list
      */
     void toggle(isize nr);
+
+    /// Asynchronous version of toggle(): queues the request and returns at once.
+    void toggleAsync(isize nr);
+
 };
 
 /** CPU Debugger API
