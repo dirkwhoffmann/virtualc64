@@ -629,15 +629,15 @@ namespace {
 
 // Reads a range of memory without side effects
 utl::Dumpable::DataProvider
-provider(const Memory &mem, u16 addr, isize num, MemType src)
+provider(const Memory &mem, u16 addr, isize bytes, MemType src)
 {
-    return [&mem, addr, num, src](isize offset, isize n) -> optional<isize> {
+    return [&mem, addr, bytes, src](isize offset, isize n) -> optional<isize> {
 
         isize value = 0;
 
         while (n-- > 0) {
 
-            if (offset >= num) return {};
+            if (offset >= bytes) return {};
             value = value << 8 | mem.spypeek(u16(addr + offset++), src);
         }
         return value;
@@ -646,45 +646,49 @@ provider(const Memory &mem, u16 addr, isize num, MemType src)
 
 }
 
+// Returns a format string with one directive for each group of 'sz' bytes
 static string
-numberDump(const Memory &mem, u16 addr, isize num, bool hex, isize pads, MemType src)
+numberFormat(isize bytes, isize sz, bool unmapped)
 {
-    assert(num <= 16);
-
-    string unit = string(pads, ' ');
-    string fmt;
+    isize group = (sz == 2 || sz == 4) ? sz : 1;
+    string unit = group == 4 ? "%l " : group == 2 ? "%w " : "%b ";
 
     // Unmapped memory is shown as '--', no matter which number system is used
-    if (src == MemType::NONE) {
+    if (unmapped) unit = string(2 * group, '-') + " ";
 
-        for (isize i = 0; i < num; i++) fmt += unit + "--";
-        return fmt;
-    }
+    string result;
+    for (isize i = 0; i < bytes / group; i++) result += unit;
+    return result;
+}
 
-    for (isize i = 0; i < num; i++) fmt += unit + "%b";
+static string
+numberDump(const Memory &mem, MemType src, u16 addr, isize bytes, isize sz, isize base)
+{
+    assert(sz == 1 || bytes % sz == 0);
+
+    auto fmt = numberFormat(bytes, sz, src == MemType::NONE);
+    if (src == MemType::NONE) return fmt;
 
     std::stringstream ss;
-    utl::Dumpable::dump(ss, { .base = hex ? 16 : 10, .uppercase = true, .pad = '0' }, fmt, provider(mem, addr, num, src));
+    utl::Dumpable::dump(ss, { .base = base, .uppercase = true, .pad = '0' }, fmt, provider(mem, addr, bytes, src));
     return ss.str();
 }
 
 string
-Memory::hexDump(u16 addr, isize bytes, isize pads, MemType src) const
+Memory::hexDump(MemType src, u16 addr, isize bytes, isize sz) const
 {
-    return numberDump(*this, addr, bytes, true, pads, src);
+    return numberDump(*this, src, addr, bytes, sz, 16);
 }
 
 string
-Memory::decDump(u16 addr, isize bytes, isize pads, MemType src) const
+Memory::decDump(MemType src, u16 addr, isize bytes, isize sz) const
 {
-    return numberDump(*this, addr, bytes, false, pads, src);
+    return numberDump(*this, src, addr, bytes, sz, 10);
 }
 
 string
-Memory::ascDump(u16 addr, isize bytes, MemType src) const
+Memory::ascDump(MemType src, u16 addr, isize bytes) const
 {
-    assert(bytes <= 16);
-
     // Unmapped memory has no text representation
     if (src == MemType::NONE) return "";
 
@@ -697,6 +701,12 @@ Memory::ascDump(u16 addr, isize bytes, MemType src) const
     std::stringstream ss;
     utl::Dumpable::dump(ss, { .base = 16, .printable = printable }, fmt, provider(*this, addr, bytes, src));
     return ss.str();
+}
+
+string
+Memory::memDump(MemType src, u16 addr, isize bytes, isize sz) const
+{
+    return hexDump(src, addr, bytes, sz) + "  " + ascDump(src, addr, bytes);
 }
 
 void

@@ -104,19 +104,21 @@ public:
 
     /** @brief  Returns a string representation for a portion of memory.
      *
-     *  hexDump() and decDump() show the bytes as two-digit hexadecimal or
-     *  three-digit decimal numbers, each preceded by 'pads' spaces. ascDump()
-     *  shows them as characters. Unmapped memory (MemType::NONE) is shown as
-     *  '--' by hexDump() and decDump(), and as nothing by ascDump().
+     *  ascDump() shows the bytes as characters, hexDump() as hexadecimal
+     *  numbers, and memDump() as hexadecimal numbers followed by characters. decDump() uses
+     *  decimal numbers instead. Unmapped memory (MemType::NONE) is shown as
+     *  '--' by the number dumps and as nothing by ascDump().
+     *  Each group of 'sz' bytes forms one number and is followed by a space.
      *
-     *  @param  addr    First address to dump.
-     *  @param  bytes   Number of bytes to dump (at most 16).
-     *  @param  pads    Number of spaces in front of each number.
      *  @param  src     The memory type the bytes are read from.
+     *  @param  addr    First address to dump.
+     *  @param  bytes   Number of bytes to dump.
+     *  @param  sz      Group size in bytes (1, 2, or 4).
      */
-    string hexDump(u16 addr, isize bytes, isize pads, MemType src) const;
-    string decDump(u16 addr, isize bytes, isize pads, MemType src) const;
-    string ascDump(u16 addr, isize bytes, MemType src) const;
+    string ascDump(MemType src, u16 addr, isize bytes) const;
+    string hexDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+    string decDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+    string memDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
 
     /** @brief Experimental
      */

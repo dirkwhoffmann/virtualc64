@@ -460,19 +460,28 @@ NSString *EventSlotName(EventSlot slot)
     return [self mem]->getCachedInfo();
 }
 
+// Joins the numbers of a dump with 'pads' spaces in front of each number
+static NSString *padded(const string &dump, NSInteger pads)
+{
+    NSString *space = [@"" stringByPaddingToLength:pads withString:@" " startingAtIndex:0];
+    NSString *trimmed = [@(dump.c_str()) stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
+    NSArray *numbers = [trimmed componentsSeparatedByString:@" "];
+    return [space stringByAppendingString:[numbers componentsJoinedByString:space]];
+}
+
 - (NSString *)hexDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
 {
-    return @([self mem]->hexDump((u16)addr, bytes, 2, src).c_str());
+    return padded([self mem]->hexDump(src, (u16)addr, bytes), 2);
 }
 
 - (NSString *)decDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
 {
-    return @([self mem]->decDump((u16)addr, bytes, 1, src).c_str());
+    return padded([self mem]->decDump(src, (u16)addr, bytes), 1);
 }
 
 - (NSString *)ascDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src
 {
-    return @([self mem]->ascDump((u16)addr, bytes, src).c_str());
+    return @([self mem]->ascDump(src, (u16)addr, bytes).c_str());
 }
 
 - (void)drawHeatmap:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h

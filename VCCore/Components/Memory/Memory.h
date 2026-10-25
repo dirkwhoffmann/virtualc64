@@ -245,14 +245,10 @@ public:
     u16 resetVector();
 
     // Returns a string representations for a portion of memory
-    string hexDump(u16 addr, isize bytes, isize pads, MemType src) const;
-    string decDump(u16 addr, isize bytes, isize pads, MemType src) const;
-    string ascDump(u16 addr, isize bytes, MemType src) const;
-
-    // Convenience wrappers
-    string hexDump(u16 addr, isize bytes) const { return hexDump(addr, bytes, 1, peekSrc[addr >> 12]); }
-    string decDump(u16 addr, isize bytes) const { return decDump(addr, bytes, 1, peekSrc[addr >> 12]); }
-    string ascDump(u16 addr, isize bytes) const { return ascDump(addr, bytes, peekSrc[addr >> 12]); }
+    string ascDump(MemType src, u16 addr, isize bytes) const;
+    string hexDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+    string decDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+    string memDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
 
     
     //
