@@ -104,7 +104,7 @@ enum class Cmd : long
     DATASETTE_PLAY,         ///< Press the datasette play key
     DATASETTE_STOP,         ///< Press the datasette stop key
     DATASETTE_REWIND,       ///< Rewind the tape
-    TAPE_INSERT,            ///< Insert a tape (path attached)
+    DATASETTE_INSERT,       ///< Insert a tape (path attached)
 
     // Cartridge
     CRT_ATTACH,             ///< Attach a cartridge (path attached, value = reset)
@@ -194,7 +194,7 @@ struct CmdEnum : Reflectable<CmdEnum, Cmd> {
             case Cmd::DSK_MODIFIED:          return "DSK_MODIFIED";
             case Cmd::DSK_UNMODIFIED:        return "DSK_UNMODIFIED";
             case Cmd::DSK_INSERT:            return "DSK_INSERT";
-            case Cmd::TAPE_INSERT:           return "TAPE_INSERT";
+            case Cmd::DATASETTE_INSERT:      return "DATASETTE_INSERT";
             case Cmd::CRT_ATTACH:            return "CRT_ATTACH";
             case Cmd::FLASH:                 return "FLASH";
 

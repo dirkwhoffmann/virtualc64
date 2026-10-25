@@ -767,7 +767,7 @@ C64::update(CmdQueue &queue)
                     drive().insertDisk(cmd.str, cmd.value2);
                     break;
 
-                case Cmd::TAPE_INSERT:
+                case Cmd::DATASETTE_INSERT:
 
                     datasette.insertTape(cmd.str);
                     break;

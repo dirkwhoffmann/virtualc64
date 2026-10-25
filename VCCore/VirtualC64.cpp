@@ -1807,7 +1807,7 @@ void
 DatasetteAPI::insertTapeAsync(const fs::path &path)
 {
     VC64_PUBLIC
-    emu->put(Command(Cmd::TAPE_INSERT), path.string());
+    emu->put(Command(Cmd::DATASETTE_INSERT), path.string());
 }
 
 void
