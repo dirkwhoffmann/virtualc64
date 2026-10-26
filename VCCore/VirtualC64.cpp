@@ -537,7 +537,6 @@ VirtualC64::setAsync(ConfigScheme model)
 {
     VC64_PUBLIC
     putAsync(Cmd::CONFIG_SCHEME, (i64)model);
-    emu->markAsDirty();
 }
 
 void
@@ -545,7 +544,6 @@ VirtualC64::setAsync(Opt opt, i64 value)
 {
     VC64_PUBLIC
     putAsync(Cmd::CONFIG_ALL, ConfigCmd { .option = opt, .value = value });
-    emu->markAsDirty();
 }
 
 void
@@ -553,7 +551,6 @@ VirtualC64::set(ConfigScheme model)
 {
     VC64_PUBLIC
     emu->sendAndWait(Command(Cmd::CONFIG_SCHEME, (i64)model));
-    emu->markAsDirty();
 }
 
 void
@@ -561,7 +558,6 @@ VirtualC64::set(Opt opt, i64 value)
 {
     VC64_PUBLIC
     emu->sendAndWait(Command(Cmd::CONFIG_ALL, ConfigCmd { .option = opt, .value = value }));
-    emu->markAsDirty();
 }
 
 void
@@ -569,7 +565,6 @@ VirtualC64::set(Opt opt, i64 value, isize id)
 {
     VC64_PUBLIC
     emu->sendAndWait(Command(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id }));
-    emu->markAsDirty();
 }
 
 void
@@ -591,7 +586,6 @@ VirtualC64::setAsync(Opt opt, i64 value, isize id)
 {
     VC64_PUBLIC
     putAsync(Cmd::CONFIG, ConfigCmd { .option = opt, .value = value, .id = id });
-    emu->markAsDirty();
 }
 
 void
@@ -762,7 +756,6 @@ void
 C64API::loadSnapshot(const Snapshot &snapshot)
 {
     VC64_PUBLIC
-    emu->markAsDirty();
     emu->call([&]{
         try {
 
@@ -856,7 +849,6 @@ C64API::loadRom(const fs::path &path)
     emu->call([&]{
         c64->loadRom(path);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -866,7 +858,6 @@ C64API::loadRom(const std::filesystem::path &path, RomType rom)
     emu->call([&]{
         c64->loadRom(path, rom);
     });
-    emu->markAsDirty();
 }
 
 void 
@@ -876,7 +867,6 @@ C64API::deleteRom(RomType type)
     emu->call([&]{
         c64->deleteRom(type);
     });
-    emu->markAsDirty();
 }
 
 void 
@@ -886,7 +876,6 @@ C64API::deleteRoms()
     emu->call([&]{
         c64->deleteRoms();
     });
-    emu->markAsDirty();
 }
 
 void
@@ -894,7 +883,6 @@ C64API::saveRom(const std::filesystem::path &path, RomType rom)
 {
     VC64_PUBLIC_SUSPEND
     c64->saveRom(rom, path);
-    emu->markAsDirty();
 }
 
 void
@@ -904,7 +892,6 @@ C64API::installOpenRom(RomType type)
     emu->call([&]{
         c64->installOpenRom(type);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -914,7 +901,6 @@ C64API::installOpenRoms()
     emu->call([&]{
         c64->installOpenRoms();
     });
-    emu->markAsDirty();
 }
 
 void
@@ -924,7 +910,6 @@ C64API::flash(const fs::path &path, isize item)
     emu->call([&]{
         c64->flash(path, item);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -1839,7 +1824,6 @@ DatasetteAPI::insertTape(const fs::path &path)
     emu->call([&]{
         datasette->insertTape(path);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -1856,7 +1840,6 @@ DatasetteAPI::ejectTape()
     emu->call([&]{
         datasette->ejectTape();
     });
-    emu->markAsDirty();
 }
 
 
@@ -2112,7 +2095,6 @@ ExpansionPortAPI::attachCartridge(const std::filesystem::path &path, bool reset)
     emu->call([&]{
         expansionPort->attachCartridge(path, reset);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -2129,7 +2111,6 @@ ExpansionPortAPI::attachReu(isize capacity)
     emu->call([&]{
         expansionPort->attachReu(capacity);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -2139,7 +2120,6 @@ ExpansionPortAPI::attachGeoRam(isize capacity)
     emu->call([&]{
         expansionPort->attachGeoRam(capacity);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -2149,7 +2129,6 @@ ExpansionPortAPI::attachIsepicCartridge()
     emu->call([&]{
         expansionPort->attachIsepicCartridge();
     });
-    emu->markAsDirty();
 }
 
 void
@@ -2159,7 +2138,6 @@ ExpansionPortAPI::detachCartridge()
     emu->call([&]{
         expansionPort->detachCartridge();
     });
-    emu->markAsDirty();
 }
 
 void
@@ -2214,7 +2192,6 @@ DriveAPI::insertBlankDisk(FSFormat fstype, string name)
     emu->call([&]{
         drive->insertNewDisk(fstype, name);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -2224,7 +2201,6 @@ DriveAPI::insert(const fs::path &path, bool wp)
     emu->call([&]{
         drive->insertDisk(path, wp);
     });
-    emu->markAsDirty();
 }
 
 void
@@ -2241,7 +2217,6 @@ DriveAPI::ejectDisk()
     emu->call([&]{
         drive->ejectDisk();
     });
-    emu->markAsDirty();
 }
 
 void

@@ -674,6 +674,9 @@ C64::update(CmdQueue &queue)
 
         std::exception_ptr error;
 
+        // Every command may change the state, so the run-ahead instance is outdated
+        emulator.markAsDirty();
+
         logmsg(LOG_CMD, "Command: %s\n", CmdEnum::key(cmd.type));
 
         try {

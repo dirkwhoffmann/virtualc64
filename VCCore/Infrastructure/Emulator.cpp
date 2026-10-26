@@ -229,9 +229,6 @@ Emulator::update()
     // Source 7 lies outside the public range (0...6), so clients cannot interfere
     shouldWarp() ? warpOn(7) : warpOff(7);
 
-    // Mark the run-ahead instance dirty when the command queue has entries
-    isDirty |= !cmdQueue.empty;
-
     // Process all commands
     main.update(cmdQueue);
 }

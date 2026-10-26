@@ -1913,19 +1913,6 @@ public:
      *  failed, the message carries the exception.
      */
     void flashAsync(const std::filesystem::path &path, isize item = 0);
-
-    /** @brief  Flashes an already loaded file into memory
-     *  @param  file    A ROM, snapshot, or program file.
-     *
-     *  @throw Error if the file type is not supported.
-     */
-    void flashNew(const AnyFile &file);
-
-    /** @brief  Flashes a file from a collection into memory
-     *  @param  file    A T64, P00, or PRG file.
-     *  @param  item    Index of the item in the collection.
-     */
-    void flashNew(const AnyFile &file, isize item);
 };
 
 

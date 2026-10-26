@@ -41,7 +41,7 @@ private:
     // The run-ahead instance (only created if RUN_AHEAD_FRAMES > 0)
     std::unique_ptr<C64> ahead;
 
-    // Indicates if the run-ahead instance needs to be updated
+    // Indicates if the run-ahead instance needs to be updated (only accessed by the emulator thread)
     bool isDirty = true;
 
     // Incoming external events
@@ -66,7 +66,7 @@ public:
     // Initializes all components
     void initialize() override;
 
-    // Forces to recreate the run-ahead instance in the next frame
+    // Forces to recreate the run-ahead instance in the next frame (emulator thread only: queued commands mark it themselves)
     void markAsDirty() { isDirty = true; }
 
 
