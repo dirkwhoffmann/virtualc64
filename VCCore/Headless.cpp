@@ -150,6 +150,9 @@ Headless::runScript(const fs::path &path)
     // Create an emulator instance
     VirtualC64 c64;
 
+    // Launch the emulator thread
+    c64.launch(this, vc64::process);
+
     // Plug in the three MEGA65 OpenROMs
     c64.c64.installOpenRoms();
     c64.c64.deleteRom(RomType::C64_VC1541);
@@ -158,9 +161,6 @@ Headless::runScript(const fs::path &path)
 
     // Redirect shell output to the console in verbose mode
     if (keys.find("verbose") != keys.end()) c64.retroShell.setStream(std::cout);
-
-    // Launch the emulator thread
-    c64.launch(this, vc64::process);
 
     // Execute script
     const auto timeout = utl::Time::seconds(500.0);

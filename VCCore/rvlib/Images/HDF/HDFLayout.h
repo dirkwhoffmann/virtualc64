@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Devices/DeviceDescriptors.h"
+#include "rvbase.h"
 #include "utl/common.h"
 #include <array>
 #include <functional>

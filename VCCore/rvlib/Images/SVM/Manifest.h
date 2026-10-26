@@ -10,6 +10,7 @@
 #pragma once
 
 #include "SnapshotPool.h"
+#include "rvbase.h"
 #include "utl/types/UUID.h"
 
 namespace retro::vault {

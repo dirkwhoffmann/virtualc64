@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
+#include "rvbase.h"
 #include "Manifest.h"
 #include "utl/io.h"
 #include "json.h"

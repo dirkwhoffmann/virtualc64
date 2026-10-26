@@ -11,7 +11,6 @@
 
 #include "utl/abilities/Dumpable.h"
 #include "utl/abilities/Hashable.h"
-#include "utl/support/Bits.h"
 #include "utl/io.h"
 #include <cstdint>
 #include <cassert>

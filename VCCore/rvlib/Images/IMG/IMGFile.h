@@ -10,6 +10,7 @@
 #pragma once
 
 #include "FloppyDiskImage.h"
+#include "rvbase.h"
 
 namespace retro::vault {
 

@@ -13,6 +13,7 @@
 #pragma once
 
 #include "SubComponent.h"
+#include "utl/support/Bits.h"
 
 namespace vc64 {
 

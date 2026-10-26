@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "utl/abilities/Dumpable.h"
+#include "utl/hints.h"
 #include "utl/support/Strings.h"
 
 namespace utl {

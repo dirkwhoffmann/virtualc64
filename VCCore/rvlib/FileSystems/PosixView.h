@@ -10,6 +10,7 @@
 #pragma once
 
 #include "FileSystems/PosixViewTypes.h"
+#include "rvbase.h"
 
 namespace retro::vault {
 

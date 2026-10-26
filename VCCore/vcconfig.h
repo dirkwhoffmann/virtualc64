@@ -13,6 +13,9 @@
 #pragma once
 
 #include "vcdebug.h"
+#include "utl/support/Bits.h"
+#include "utl/hints.h"
+#include "utl/abilities/LogMacros.h"
 
 //
 // Release settings

@@ -10,6 +10,7 @@
 #pragma once
 
 #include "LinearDevice.h"
+#include "rvbase.h"
 
 namespace retro::vault {
 

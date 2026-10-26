@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Images/Encoders/DiskEncoder.h"
+#include "rvbase.h"
 
 namespace retro::vault {
 

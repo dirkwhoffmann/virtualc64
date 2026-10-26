@@ -7,6 +7,12 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+// Interrupt sources (vc64::INTSRC_*). C++ constants are not visible to Swift.
+private let INTSRC_CIA = 0b00000001
+private let INTSRC_VIC = 0b00000010
+private let INTSRC_EXP = 0b00010000
+private let INTSRC_KBD = 0b00100000
+
 extension Inspector {
     
     private func cacheCPU() {

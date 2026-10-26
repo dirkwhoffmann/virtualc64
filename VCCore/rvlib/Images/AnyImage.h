@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Images/ImageTypes.h"
+#include "rvbase.h"
 #include "utl/abilities.h"
 #include "utl/storage.h"
 #include "utl/primitives/Range.h"

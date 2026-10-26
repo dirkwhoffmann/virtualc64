@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "Roms/RomManager.h"
+#include "rvbase.h"
 #include "utl/storage/Buffer.h"
 #include <algorithm>
 

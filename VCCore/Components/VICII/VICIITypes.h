@@ -23,14 +23,14 @@ namespace vc64 {
 //
 
 // Sprite bit masks
-#define SPR0 0x01
-#define SPR1 0x02
-#define SPR2 0x04
-#define SPR3 0x08
-#define SPR4 0x10
-#define SPR5 0x20
-#define SPR6 0x40
-#define SPR7 0x80
+inline constexpr int SPR0 = 0x01;
+inline constexpr int SPR1 = 0x02;
+inline constexpr int SPR2 = 0x04;
+inline constexpr int SPR3 = 0x08;
+inline constexpr int SPR4 = 0x10;
+inline constexpr int SPR5 = 0x20;
+inline constexpr int SPR6 = 0x40;
+inline constexpr int SPR7 = 0x80;
 
 // Cycle flags
 static const u16 PAL_CYCLE      = 0b0001;
@@ -52,31 +52,31 @@ static const u16 HEADLESS_CYCLE = 0b0100;
  *       010 0 0000 : Sprite 0 (without sb-collision)
  *       010 1 0101 : Sprite 6 (with sb-collision)
  */
-#define DEPTH_BORDER        0b00100000 // In front of everything
-#define DEPTH_SPRITE_FG     0b01000000 // Behind border
-#define DEPTH_FG            0b01110000 // Behind sprite 1 layer
-#define DEPTH_SPRITE_BG     0b10000000 // Behind foreground
-#define DEPTH_BG            0b10100000 // Behind sprite 2 layer
+inline constexpr int DEPTH_BORDER = 0b00100000; // In front of everything
+inline constexpr int DEPTH_SPRITE_FG = 0b01000000; // Behind border
+inline constexpr int DEPTH_FG = 0b01110000; // Behind sprite 1 layer
+inline constexpr int DEPTH_SPRITE_BG = 0b10000000; // Behind foreground
+inline constexpr int DEPTH_BG = 0b10100000; // Behind sprite 2 layer
 
 // Event flags
-#define VICUpdateIrqLine    (1ULL << 0) // Sets or releases the IRQ line
-#define VICLpTransition     (1ULL << 1) // Triggers a lightpen event
-#define VICUpdateFlipflops  (1ULL << 2) // Updates the flipflop value pipeline
-#define VICUpdateRegisters  (1ULL << 3) // Updates the register value pipeline
-#define VICUpdateBankAddr   (1ULL << 4) // Updates the bank address
-#define VICSetDisplayState  (1ULL << 5) // Flagged when control reg 1 changes
-#define VICClrSprSprCollReg (1ULL << 6) // Resets the sprite-sprite coll reg
-#define VICClrSprBgCollReg  (1ULL << 7) // Resets the sprite-background coll reg
+inline constexpr u64 VICUpdateIrqLine = (1ULL << 0); // Sets or releases the IRQ line
+inline constexpr u64 VICLpTransition = (1ULL << 1); // Triggers a lightpen event
+inline constexpr u64 VICUpdateFlipflops = (1ULL << 2); // Updates the flipflop value pipeline
+inline constexpr u64 VICUpdateRegisters = (1ULL << 3); // Updates the register value pipeline
+inline constexpr u64 VICUpdateBankAddr = (1ULL << 4); // Updates the bank address
+inline constexpr u64 VICSetDisplayState = (1ULL << 5); // Flagged when control reg 1 changes
+inline constexpr u64 VICClrSprSprCollReg = (1ULL << 6); // Resets the sprite-sprite coll reg
+inline constexpr u64 VICClrSprBgCollReg = (1ULL << 7); // Resets the sprite-background coll reg
 
-#define VICClearanceMask \
-~((1ULL << 8) | \
-VICUpdateIrqLine | \
-VICLpTransition | \
-VICUpdateFlipflops | \
-VICUpdateRegisters | \
-VICUpdateBankAddr | \
-VICSetDisplayState | \
-VICClrSprSprCollReg | \
+inline constexpr u64 VICClearanceMask =
+~((1ULL << 8) |
+VICUpdateIrqLine |
+VICLpTransition |
+VICUpdateFlipflops |
+VICUpdateRegisters |
+VICUpdateBankAddr |
+VICSetDisplayState |
+VICClrSprSprCollReg |
 VICClrSprBgCollReg);
 
 

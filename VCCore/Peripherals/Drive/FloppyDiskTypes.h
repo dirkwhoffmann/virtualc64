@@ -12,7 +12,6 @@
 
 #pragma once
 
-#include "Serializable.h"
 #include "DriveTypes.h"
 
 namespace vc64 {
@@ -170,89 +169,6 @@ struct CBMFileTypeEnum : Reflectable<CBMFileTypeEnum, CBMFileType> {
 //
 // Structures
 //
-
-/* Disk data
- *
- *    - The first valid track and halftrack number is 1
- *    - data.halftack[i] points to the first byte of halftrack i
- *    - data.track[i] points to the first byte of track i
- */
-struct DiskData : public Serializable
-{
-    union {
-
-        struct
-        {
-            u8 _pad[maxBytesOnTrack];
-            u8 halftrack[85][maxBytesOnTrack];
-        };
-
-        u8 track[43][2 * maxBytesOnTrack];
-    };
-
-    template <class W>
-    W& operator<<(W& worker)
-    {
-        worker
-
-        << track;
-
-        return worker;
-    }
-    
-    /*
-    template <class W>
-    void serialize(W& worker)
-    {
-        worker
-
-        << track;
-
-    } SERIALIZERS(serialize);
-    */
-};
-
-/* Length of each halftrack in bits
- *
- *     - length.halftack[i] is the length of halftrack i
- *     - length.track[i][0] is the length of track i
- *     - length.track[i][1] is the length of halftrack above track i
- */
-
-struct DiskLength : public Serializable
-{
-    union {
-
-        struct
-        {
-            isize _pad;
-            isize halftrack[85];
-        };
-
-        isize track[43][2];
-    };
-
-    template <class W>
-    W& operator<<(W& worker)
-    {
-        worker
-
-        << track;
-
-        return worker;
-    }
-    
-    /*
-    template <class W>
-    void serialize(W& worker)
-    {
-        worker
-
-        << track;
-
-    } SERIALIZERS(serialize);
-    */
-};
 
 // Disk parameters of a standard floppy disk
 typedef struct

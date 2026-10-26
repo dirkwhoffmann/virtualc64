@@ -9,27 +9,30 @@
 
 #include "types/Integers.h"
 #include "types/Exception.h"
-#include "hints.h"
 
 #include <filesystem>
+#include <functional>
+#include <memory>
+#include <optional>
+#include <span>
+#include <string>
+#include <vector>
+
+/* Frequently used standard types are made available inside namespace utl,
+ * not in the global namespace. Code that uses them unqualified needs a
+ * 'using namespace utl' in its own namespace.
+ */
+namespace utl {
+
 namespace fs = std::filesystem;
 
-#include <functional>
 using std::function;
-
-#include<memory>
 using std::unique_ptr;
 using std::make_unique;
-
-#include <optional>
 using std::optional;
-
-#include <span>
 using std::span;
-
-#include <string>
 using std::string;
 using std::string_view;
-
-#include <vector>
 using std::vector;
+
+}

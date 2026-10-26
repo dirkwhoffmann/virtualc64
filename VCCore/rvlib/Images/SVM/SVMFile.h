@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Images/AnyImage.h"
+#include "rvbase.h"
 #include "Manifest.h"
 #include <utl/io.h>
 

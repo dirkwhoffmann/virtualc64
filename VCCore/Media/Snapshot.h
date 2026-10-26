@@ -14,7 +14,7 @@
 
 #include "AnyFile.h"
 #include "Constants.h"
-#include "Texture.h"
+
 
 namespace vc64 {
 
@@ -26,7 +26,7 @@ struct Thumbnail {
     i32 width, height;
     
     // Raw texture data
-    u32 screen[Texture::height * Texture::width];
+    u32 screen[Tex::height * Tex::width];
     
     // Creation date and time
     time_t timestamp;

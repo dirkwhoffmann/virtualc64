@@ -10,6 +10,7 @@
 #pragma once
 
 #include "FileSystems/CBM/FSTypes.h"
+#include <cassert>
 #include <cstring>
 #include <ostream>
 #include <regex>

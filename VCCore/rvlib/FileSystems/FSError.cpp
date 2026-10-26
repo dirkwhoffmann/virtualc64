@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "FileSystems/FSError.h"
+#include "rvbase.h"
 
 namespace retro::vault {
 

@@ -6,6 +6,8 @@
 // -----------------------------------------------------------------------------
 
 // Loads a register and sets the Z and V flag
+#include "utl/support/Bits.h"
+#include "utl/hints.h"
 #define loadA(v) { u8 u = (v); reg.a = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }
 #define loadX(v) { u8 u = (v); reg.x = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }
 #define loadY(v) { u8 u = (v); reg.y = u; reg.sr.n = u & 0x80; reg.sr.z = u == 0; }

@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Images/BinaryImage.h"
+#include "rvbase.h"
 #include "Devices/TrackDevice.h"
 
 namespace retro::vault {

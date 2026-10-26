@@ -12,6 +12,7 @@
 
 #include "vcconfig.h"
 #include "Option.h"
+#include <sstream>
 #include "VirtualC64Types.h"
 #include "CoreError.h"
 

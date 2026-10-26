@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
+#include "rvbase.h"
 #include "Images/ImageTypes.h"
 #include "Images/ImageError.h"
 #include <format>

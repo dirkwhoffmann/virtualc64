@@ -15,8 +15,6 @@
 #include <fstream>
 #include <random>
 
-namespace fs = std::filesystem;
-
 namespace utl {
 
 /* A file in the system's temporary directory that deletes itself.

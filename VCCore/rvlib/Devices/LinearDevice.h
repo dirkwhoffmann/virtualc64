@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Devices/DeviceTypes.h"
+#include "rvbase.h"
 #include "utl/common.h"
 #include "utl/primitives/Range.h"
 

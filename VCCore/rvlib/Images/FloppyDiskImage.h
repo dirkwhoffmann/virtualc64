@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Images/DiskImage.h"
+#include "rvbase.h"
 #include "Devices/DeviceTypes.h"
 
 namespace retro::vault {

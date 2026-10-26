@@ -8,6 +8,8 @@
 // -----------------------------------------------------------------------------
 
 #include "Devices/BlockDevice.h"
+#include "rvbase.h"
+#include <cassert>
 
 namespace retro::vault {
 

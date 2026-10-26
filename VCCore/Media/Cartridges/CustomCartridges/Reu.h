@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Cartridge.h"
+#include "utl/support/Bits.h"
 
 namespace vc64 {
 

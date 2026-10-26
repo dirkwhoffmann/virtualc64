@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
+#include "rvbase.h"
 #include "Images/Encoders/AmigaDecoder.h"
 #include "Images/Encoders/MFM.h"
 #include "Devices/DeviceError.h"

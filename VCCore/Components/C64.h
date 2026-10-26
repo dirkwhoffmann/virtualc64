@@ -13,6 +13,7 @@
 #pragma once
 
 #include "C64Types.h"
+#include "utl/hints.h"
 #include "MsgQueue.h"
 #include "Thread.h"
 

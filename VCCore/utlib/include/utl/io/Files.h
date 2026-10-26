@@ -15,8 +15,6 @@
 #include <algorithm>
 #include <filesystem>
 
-namespace fs = std::filesystem;
-
 namespace utl {
 
 //

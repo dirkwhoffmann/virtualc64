@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
+#include "rvbase.h"
 #include "Images/HDF/HDFLayout.h"
 #include "Devices/DeviceError.h"
 #include "Devices/LinearDevice.h"

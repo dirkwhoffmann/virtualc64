@@ -13,6 +13,8 @@
 #pragma once
 
 #include "vcconfig.h"
+#include "utl/hints.h"
+#include "utl/support/Bits.h"
 #include "VICIITypes.h"
 #include "SubComponent.h"
 #include "utl/gfx/Colors.h"

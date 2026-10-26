@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Roms/RomTypes.h"
+#include "rvbase.h"
 #include <functional>
 #include <optional>
 #include <unordered_map>

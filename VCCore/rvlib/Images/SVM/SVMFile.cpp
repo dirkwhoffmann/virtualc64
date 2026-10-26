@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "rvconfig.h"
+#include "rvbase.h"
 #include "SVMFile.h"
 #include "Manifest.h"
 #include "Images/ImageTypes.h"

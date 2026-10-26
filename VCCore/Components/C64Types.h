@@ -14,6 +14,7 @@
 #pragma once
 
 #include "Infrastructure/BasicTypes.h"
+#include "utl/abilities/Compressible.h"
 
 namespace vc64 {
 

@@ -8,6 +8,8 @@
 #pragma once
 
 #include <cassert>
+#include "utl/hints.h"
+#include "utl/support/Bits.h"
 
 #define LO_BYTE(x) (u8)((x) & 0xFF)
 #define HI_BYTE(x) (u8)((x) >> 8)

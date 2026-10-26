@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "utl/support/Strings.h"
+#include "utl/hints.h"
 #include <sstream>
 
 namespace utl {

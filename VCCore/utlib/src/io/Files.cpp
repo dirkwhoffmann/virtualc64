@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "utl/common.h"
+#include "utl/hints.h"
 #include "utl/io.h"
 #include <fstream>
 #include <cassert>

@@ -21,15 +21,12 @@ namespace vc64 {
 // Bit fields
 //
 
-#define INTSRC_CIA  0b00000001
-#define INTSRC_VIC  0b00000010
-#define INTSRC_VIA1 0b00000100
-#define INTSRC_VIA2 0b00001000
-#define INTSRC_EXP  0b00010000
-#define INTSRC_KBD  0b00100000
-
-
-//
+inline constexpr int INTSRC_CIA = 0b00000001;
+inline constexpr int INTSRC_VIC = 0b00000010;
+inline constexpr int INTSRC_VIA1 = 0b00000100;
+inline constexpr int INTSRC_VIA2 = 0b00001000;
+inline constexpr int INTSRC_EXP = 0b00010000;
+inline constexpr int INTSRC_KBD = 0b00100000; //
 // Enumerations
 //
 

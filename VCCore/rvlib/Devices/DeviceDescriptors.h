@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Devices/DeviceTypes.h"
+#include "rvbase.h"
 #include "utl/abilities/Streamable.h"
 #include "utl/primitives.h"
 

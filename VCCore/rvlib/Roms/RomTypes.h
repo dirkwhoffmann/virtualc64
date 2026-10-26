@@ -10,6 +10,7 @@
 #pragma once
 
 #include "utl/abilities/Reflectable.h"
+#include "rvbase.h"
 
 namespace retro::vault {
 

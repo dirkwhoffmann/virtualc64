@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Serializable.h"
+#include "utl/hints.h"
 #include <algorithm>
 
 namespace vc64 {
