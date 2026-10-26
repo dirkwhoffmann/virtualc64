@@ -115,6 +115,9 @@ enum class Msg : long
     // Hibernation
     HIBERNATED,         ///< The machine has been hibernated (carries the exception if it failed)
 
+    // Command queue
+    QUEUE_FULL,         ///< The command queue is full and commands are dropped
+
     // Debugging
     XRAY,          ///< The X-Ray debugger has been started or stopped
 
@@ -214,6 +217,7 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
             case Msg::WORKSPACE_LOADED:      return "WORKSPACE_LOADED";
             case Msg::WORKSPACE_SAVED:       return "WORKSPACE_SAVED";
             case Msg::HIBERNATED:            return "HIBERNATED";
+            case Msg::QUEUE_FULL:            return "QUEUE_FULL";
                 
             case Msg::XRAY:             return "XRAY";
 

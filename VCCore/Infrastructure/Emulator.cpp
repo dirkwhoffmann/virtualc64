@@ -33,7 +33,7 @@ Emulator::Emulator()
 {
     if constexpr (RUN_AHEAD_FRAMES > 0) ahead = std::make_unique<C64>(*this, 1);
 
-
+    cmdQueue.onFull = [this] { main.msgQueue.put(Msg::QUEUE_FULL); };
 }
 
 Emulator::~Emulator()

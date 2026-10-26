@@ -20,22 +20,22 @@ void
 CmdQueue::put(const Command &cmd, const string &str, Completion completion)
 {
     bool lost = false;
+    bool announce = false;
 
     {   SYNCHRONIZED
 
         logmsg(LOG_CMD, "%s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
 
-        if (!queue.isFull()) {
+        if (isize(entries.size()) < CAPACITY) {
 
-            auto w = queue.end();
-            queue.write(cmd);
-            attachments[w] = str;
-            queue.elements[w].str = attachments[w].c_str();
-            completions[w] = std::move(completion);
+            entries.push_back(Entry { cmd, str, std::move(completion) });
 
         } else {
+
             logmsg(LOG_WARN, "Command lost: %s [%llx]\n", CmdEnum::key(cmd.type), cmd.value);
             lost = true;
+            announce = !overflowing;
+            overflowing = true;
         }
 
         empty = false;
@@ -45,6 +45,9 @@ CmdQueue::put(const Command &cmd, const string &str, Completion completion)
     if (lost && completion) {
         completion(std::make_exception_ptr(std::runtime_error("Command queue is full")));
     }
+
+    // Tell the application once per overflow
+    if (announce && onFull) onFull();
 }
 
 bool
@@ -54,12 +57,19 @@ CmdQueue::poll(Command &cmd, Completion &completion)
 
     {   SYNCHRONIZED
 
-        auto r = queue.begin();
+        if (entries.empty()) { empty = true; return false; }
 
-        cmd = queue.read();
-        completion = std::move(completions[r]);
-        completions[r] = nullptr;
-        empty = queue.isEmpty();
+        auto &entry = entries.front();
+
+        // Keep the attached string alive until the next call
+        current = std::move(entry.str);
+        cmd = entry.cmd;
+        cmd.str = current.c_str();
+        completion = std::move(entry.completion);
+
+        entries.pop_front();
+        if (isize(entries.size()) < CAPACITY) overflowing = false;
+        empty = entries.empty();
 
         return true;
     }

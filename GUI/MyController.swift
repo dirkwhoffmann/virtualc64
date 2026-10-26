@@ -564,9 +564,12 @@ extension MyController {
             // Results of requests that this app does not send
             break
             
+        case .QUEUE_FULL:
+            warn("The command queue is full. Commands are dropped.")
+            
         default:
+            // A message that this app does not know must not bring it down
             warn("Unknown message: \(msg)")
-            fatalError()
         }
         
         // Pass message to all open auxiliary windows

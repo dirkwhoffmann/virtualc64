@@ -18,23 +18,23 @@
 #include "utl/abilities/Synchronizable.h"
 #include "utl/storage/RingBuffer.h"
 #include <atomic>
+#include <deque>
 #include <exception>
 #include <functional>
 
 namespace vc64 {
 
 /// Command queue
-class CmdQueue final : CoreObject, utl::Synchronizable {
-
-    static constexpr isize CAPACITY = 512;
-
-    /// Ring buffer storing all pending commands
-    utl::RingBuffer <Command, CAPACITY> queue;
-
-    /// Attached string objects
-    string attachments[CAPACITY];
+class CmdQueue final : public CoreObject, Synchronizable {
 
 public:
+
+    /* Maximum number of pending commands. A queue only fills up when nobody
+     * carries out commands for a long time (e.g., because a thread forgot to
+     * resume a suspended emulator) or when no emulator thread has been
+     * launched yet. A command that arrives at a full queue is dropped.
+     */
+    static constexpr isize CAPACITY = 65536;
 
     /* Completion handler of a command.
      *
@@ -51,13 +51,32 @@ public:
 
 private:
 
-    /// Completion handlers (parallel to the ring buffer)
-    Completion completions[CAPACITY];
+    /// A pending command together with its attachments
+    struct Entry {
+
+        Command cmd;
+        string str;
+        Completion completion;
+    };
+
+    /// All pending commands
+    std::deque<Entry> entries;
+
+    /// The attached string of the command that has been polled last
+    string current;
+
+    /// Indicates that a command has been dropped since the queue was last below its capacity
+    bool overflowing = false;
 
 public:
 
     /// Indicates if the queue is empty
     std::atomic<bool> empty = true;
+
+    /* Called (on the sender's thread, outside the queue's lock) when a command
+     * is dropped. It is called once per overflow, not once per dropped command.
+     */
+    std::function<void()> onFull;
 
     //
     // Methods
@@ -77,7 +96,9 @@ public:
     // Sends a command
     void put(const Command &cmd, const string &str = "", Completion completion = nullptr);
 
-    // Polls a command together with its completion handler (may be empty)
+    /* Polls a command together with its completion handler (may be empty).
+     * The attached string stays valid until the next call.
+     */
     bool poll(Command &cmd, Completion &completion);
 };
 
