@@ -30,7 +30,7 @@ enum class PowerGrid : long
     UNSTABLE_60HZ  ///< 60Hz with jitter
 };
 
-struct PowerGridEnum : Reflectable<PowerGridEnum, PowerGrid> {
+struct PowerGridEnum : utl::Reflectable<PowerGridEnum, PowerGrid> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(PowerGrid::UNSTABLE_60HZ);

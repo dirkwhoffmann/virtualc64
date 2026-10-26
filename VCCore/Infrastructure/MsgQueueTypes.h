@@ -133,7 +133,7 @@ enum class Msg : long
     SRV_SEND            ///< A remote server has sent a packet (value = ServerType, value2 = sequence number)
 };
 
-struct MsgEnum : Reflectable<MsgEnum, Msg> {
+struct MsgEnum : utl::Reflectable<MsgEnum, Msg> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Msg::SRV_SEND);

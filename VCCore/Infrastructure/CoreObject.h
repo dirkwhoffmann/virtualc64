@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class CoreObject : public Loggable, Reportable {
+class CoreObject : public utl::Loggable, utl::Reportable {
     
 protected:
     
@@ -52,7 +52,7 @@ public:
 
 protected:
 
-    const Report makeReport(isize category) const override { return {{ "Name", objectName() }}; }
+    const utl::Report makeReport(isize category) const override { return {{ "Name", objectName() }}; }
     
     
     //

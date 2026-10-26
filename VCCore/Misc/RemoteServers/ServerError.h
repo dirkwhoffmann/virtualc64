@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-struct ServerError : public Error {
+struct ServerError : public utl::Error {
 
     // Sockets
     static constexpr long SOCK_CANT_CREATE           = 1;

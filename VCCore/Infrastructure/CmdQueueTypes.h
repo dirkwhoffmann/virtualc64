@@ -129,7 +129,7 @@ enum class Cmd : long
     FOCUS                   ///< The emulator windows got or lost focus
 };
 
-struct CmdEnum : Reflectable<CmdEnum, Cmd> {
+struct CmdEnum : utl::Reflectable<CmdEnum, Cmd> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Cmd::FOCUS);

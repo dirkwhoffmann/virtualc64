@@ -95,7 +95,7 @@ enum class VICIIRev : long
     NTSC_8562                     ///< C64 II NTSC models
 };
 
-struct VICIIRevEnum : Reflectable<VICIIRevEnum, VICIIRev> {
+struct VICIIRevEnum : utl::Reflectable<VICIIRevEnum, VICIIRev> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = long(VICIIRev::NTSC_8562);
@@ -127,7 +127,7 @@ enum class GlueLogic : long
     IC                       ///< Integrated Circuit (PLA)
 };
 
-struct GlueLogicEnum : Reflectable<GlueLogicEnum, GlueLogic> {
+struct GlueLogicEnum : utl::Reflectable<GlueLogicEnum, GlueLogic> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = long(GlueLogic::IC);
@@ -157,7 +157,7 @@ enum class ScreenGeometry : long
     GEOMETRY_24_38               ///< 24 rows x 38 columns
 };
 
-struct ScreenGeometryEnum : Reflectable<ScreenGeometryEnum, ScreenGeometry> {
+struct ScreenGeometryEnum : utl::Reflectable<ScreenGeometryEnum, ScreenGeometry> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = long(ScreenGeometry::GEOMETRY_24_38);
@@ -193,7 +193,7 @@ enum class DisplayMode : long
     INV_MULTICOL_BITMAP    ///< Extended Background Color Multicolor Bitmap Mode
 };
 
-struct DisplayModeEnum : Reflectable<DisplayModeEnum, DisplayMode> {
+struct DisplayModeEnum : utl::Reflectable<DisplayModeEnum, DisplayMode> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DisplayMode::INV_MULTICOL_BITMAP);
@@ -233,7 +233,7 @@ enum class ColorSource : long
     ZERO      // Invalid display modes
 };
 
-struct ColorSourceEnum : Reflectable<ColorSourceEnum, ColorSource> {
+struct ColorSourceEnum : utl::Reflectable<ColorSourceEnum, ColorSource> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = long(ColorSource::ZERO);

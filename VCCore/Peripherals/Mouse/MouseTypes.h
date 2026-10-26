@@ -32,7 +32,7 @@ enum class MouseModel : long
     PADDLE_XY ///< Paddle (POTX + POTX)
 };
 
-struct MouseModelEnum : Reflectable<MouseModelEnum, MouseModel> {
+struct MouseModelEnum : utl::Reflectable<MouseModelEnum, MouseModel> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(MouseModel::PADDLE_XY);

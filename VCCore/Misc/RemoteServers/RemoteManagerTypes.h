@@ -28,7 +28,7 @@ enum class ServerType : long
     PROM
 };
 
-struct ServerTypeEnum : Reflectable<ServerTypeEnum, ServerType>
+struct ServerTypeEnum : utl::Reflectable<ServerTypeEnum, ServerType>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ServerType::PROM);
@@ -64,7 +64,7 @@ enum class TrafficDirection : long
     SENT            // The packet was sent to a client
 };
 
-struct TrafficDirectionEnum : Reflectable<TrafficDirectionEnum, TrafficDirection>
+struct TrafficDirectionEnum : utl::Reflectable<TrafficDirectionEnum, TrafficDirection>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(TrafficDirection::SENT);

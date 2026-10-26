@@ -20,11 +20,11 @@
 #include <functional>
 #include "FileSystems/CBM/FSTypes.h"
 
-using retro::vault::cbm::FSFormat;
-
 namespace retro::vault { class SVMFile; }
 
 namespace vc64 {
+
+using retro::vault::cbm::FSFormat;
 
 using peddle::Guard;
 using peddle::DasmStyle;
@@ -1781,7 +1781,7 @@ public:
      *  @note   The function transfers the ownership to the caller. It is
      *          his responsibility of the caller to free the object.
      */
-    std::unique_ptr<Snapshot> takeSnapshot(Compressor compressor, isize delay = 0, bool repeat = false);
+    std::unique_ptr<Snapshot> takeSnapshot(utl::Compressor compressor, isize delay = 0, bool repeat = false);
 
     /** @brief  Loads a snapshot
      *
@@ -1809,7 +1809,7 @@ public:
      *
      *  @throw Error if the file cannot be written.
      */
-    void saveSnapshot(const std::filesystem::path &path, Compressor compressor) const;
+    void saveSnapshot(const std::filesystem::path &path, utl::Compressor compressor) const;
 
     /** @brief  Saves a snapshot to disk asynchronously.
      *
@@ -1820,7 +1820,7 @@ public:
      *
      *  @param  path    Destination path
      */
-    void saveSnapshotAsync(const std::filesystem::path &path, Compressor compressor) const;
+    void saveSnapshotAsync(const std::filesystem::path &path, utl::Compressor compressor) const;
 
     /** @brief  Saves a snapshot, including a screenshot, into an SVM
      *
@@ -1833,8 +1833,8 @@ public:
      *  @throw Error if the SVM file cannot be read or written, or if its content
      *  is invalid (synchronous versions).
      */
-    void saveSnapshot(retro::vault::SVMFile &svm, Compressor compressor) const;
-    void saveSnapshotAsync(retro::vault::SVMFile &svm, Compressor compressor) const;
+    void saveSnapshot(retro::vault::SVMFile &svm, utl::Compressor compressor) const;
+    void saveSnapshotAsync(retro::vault::SVMFile &svm, utl::Compressor compressor) const;
 
     /** @brief  Hibernates the machine into a virtual machine bundle
      *

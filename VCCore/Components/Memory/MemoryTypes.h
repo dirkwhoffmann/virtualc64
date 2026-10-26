@@ -48,7 +48,7 @@ enum class MemType : long
     PP,           ///< Processor port
 };
 
-struct MemoryTypeEnum : Reflectable<MemoryTypeEnum, MemType> {
+struct MemoryTypeEnum : utl::Reflectable<MemoryTypeEnum, MemType> {
 
     static constexpr long minVal = 1;
     static constexpr long maxVal = long(MemType::NONE);
@@ -86,7 +86,7 @@ enum class RamPattern : long
     RANDOM      ///< Initialize with pseudo-random values
 };
 
-struct RamPatternEnum : Reflectable<RamPatternEnum, RamPattern> {
+struct RamPatternEnum : utl::Reflectable<RamPatternEnum, RamPattern> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(RamPattern::RANDOM);

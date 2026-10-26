@@ -32,7 +32,7 @@ enum class TexFormat : long
     RGBA                        ///< RRGGBBAA
 };
 
-struct TexFormatEnum : Reflectable<TexFormatEnum, TexFormat> {
+struct TexFormatEnum : utl::Reflectable<TexFormatEnum, TexFormat> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(TexFormat::RGBA);

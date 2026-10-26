@@ -39,7 +39,7 @@ enum class FileType : long
     VC1541_ROM
 };
 
-struct FileTypeEnum : Reflectable<FileTypeEnum, FileType> {
+struct FileTypeEnum : utl::Reflectable<FileTypeEnum, FileType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FileType::VC1541_ROM);
@@ -78,7 +78,7 @@ enum class TAPVersion : long
     ADVANCED
 };
 
-struct TAPVersionEnum : Reflectable<TAPVersionEnum, TAPVersion> {
+struct TAPVersionEnum : utl::Reflectable<TAPVersionEnum, TAPVersion> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(TAPVersion::ADVANCED);

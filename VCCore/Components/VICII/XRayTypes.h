@@ -32,7 +32,7 @@ enum class XRayMode : long
     XRAY_LAYERS
 };
 
-struct XRayModeEnum : Reflectable<XRayModeEnum, XRayMode> {
+struct XRayModeEnum : utl::Reflectable<XRayModeEnum, XRayMode> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(XRayMode::XRAY_LAYERS);
@@ -66,7 +66,7 @@ enum class XRayCompositor : long
     GPU     // The host does it (e.g., in its merge shader)
 };
 
-struct XRayCompositorEnum : Reflectable<XRayCompositorEnum, XRayCompositor> {
+struct XRayCompositorEnum : utl::Reflectable<XRayCompositorEnum, XRayCompositor> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(XRayCompositor::GPU);
@@ -99,7 +99,7 @@ enum class DmaDisplayMode : long
     ODD_EVEN_LAYERS
 };
 
-struct DmaDisplayModeEnum : Reflectable<DmaDisplayModeEnum, DmaDisplayMode> {
+struct DmaDisplayModeEnum : utl::Reflectable<DmaDisplayModeEnum, DmaDisplayMode> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DmaDisplayMode::ODD_EVEN_LAYERS);

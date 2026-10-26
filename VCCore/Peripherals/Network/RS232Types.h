@@ -29,7 +29,7 @@ enum class CommunicationDevice : long
     COMMANDER
 };
 
-struct CommunicationDeviceEnum : Reflectable<CommunicationDeviceEnum, CommunicationDevice>
+struct CommunicationDeviceEnum : utl::Reflectable<CommunicationDeviceEnum, CommunicationDevice>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CommunicationDevice::COMMANDER);

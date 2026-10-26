@@ -40,7 +40,7 @@ enum class ConfigScheme : long
     NTSC_OLD  ///< Early C64 (NTSC)
 };
 
-struct ConfigSchemeEnum : Reflectable<ConfigSchemeEnum, ConfigScheme> {
+struct ConfigSchemeEnum : utl::Reflectable<ConfigSchemeEnum, ConfigScheme> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ConfigScheme::NTSC_OLD);
@@ -72,7 +72,7 @@ enum class Warp : long
     ALWAYS
 };
 
-struct WarpEnum : Reflectable<WarpEnum, Warp>
+struct WarpEnum : utl::Reflectable<WarpEnum, Warp>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Warp::ALWAYS);
@@ -126,7 +126,7 @@ enum EventSlot : long
 };
 // typedef SLOT EventSlot;
 
-struct EventSlotEnum : Reflectable<EventSlotEnum, EventSlot>
+struct EventSlotEnum : utl::Reflectable<EventSlotEnum, EventSlot>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = SLOT_COUNT - 1;

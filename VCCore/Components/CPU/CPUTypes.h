@@ -32,7 +32,7 @@ inline constexpr int INTSRC_KBD = 0b00100000; //
 
 using vc64::peddle::CPURevision;
 
-struct CPURevisionEnum : Reflectable<CPURevisionEnum, CPURevision> {
+struct CPURevisionEnum : utl::Reflectable<CPURevisionEnum, CPURevision> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CPURevision::MOS_8502);
@@ -63,7 +63,7 @@ enum class DasmNumbers : long
     DEC0,
 };
 
-struct DasmNumbersEnum : Reflectable<DasmNumbersEnum, DasmNumbers>
+struct DasmNumbersEnum : utl::Reflectable<DasmNumbersEnum, DasmNumbers>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DasmNumbers::DEC0);
@@ -97,7 +97,7 @@ enum class GuardType : long
     WATCHPOINT
 };
 
-struct GuardTypeEnum : Reflectable<GuardTypeEnum, GuardType>
+struct GuardTypeEnum : utl::Reflectable<GuardTypeEnum, GuardType>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(GuardType::WATCHPOINT);

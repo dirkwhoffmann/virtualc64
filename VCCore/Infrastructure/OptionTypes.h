@@ -200,7 +200,7 @@ enum class Opt : long
     COUNT                   ///< Sentinel: the number of options (not an option)
 };
 
-struct OptEnum : Reflectable<OptEnum, Opt> {
+struct OptEnum : utl::Reflectable<OptEnum, Opt> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(Opt::DBG_WATCHDOG);

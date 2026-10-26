@@ -13,6 +13,7 @@
 #pragma once
 
 #include "utl/abilities/Reflectable.h"
+#include "utl/abilities/Compressible.h"
 #include <sys/types.h>
 #include <stdint.h>
 
@@ -22,7 +23,20 @@
 
 namespace vc64 {
 
-using namespace utl;
+using utl::i8;
+using utl::i16;
+using utl::i32;
+using utl::i64;
+using utl::isize;
+using utl::u8;
+using utl::u16;
+using utl::u32;
+using utl::u64;
+using utl::usize;
+
+// Types that appear in the signatures of the API
+using utl::Error;
+using utl::Compressor;
 
 }
 

@@ -30,7 +30,7 @@ enum class ExecState : long
     HALTED        ///< Shut down
 };
 
-struct ExecStateEnum : Reflectable<ExecStateEnum, ExecState>
+struct ExecStateEnum : utl::Reflectable<ExecStateEnum, ExecState>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(ExecState::HALTED);

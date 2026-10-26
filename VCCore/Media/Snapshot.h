@@ -81,7 +81,7 @@ public:
     Snapshot(const u8 *buf, isize len) { init(buf, len); }
     Snapshot(isize capacity);
     Snapshot(C64 &c64);
-    Snapshot(C64 &c64, Compressor compressor);
+    Snapshot(C64 &c64, utl::Compressor compressor);
 
 
     //
@@ -133,13 +133,13 @@ public:
     //
 
     // Returns the compression method
-    Compressor compressor() const { return Compressor(getHeader()->compressor); }
+    utl::Compressor compressor() const { return utl::Compressor(getHeader()->compressor); }
 
     // Convenience wrapper
-    bool isCompressed() const { return compressor() != Compressor::NONE; }
+    bool isCompressed() const { return compressor() != utl::Compressor::NONE; }
     
     // Compresses or uncompresses the snapshot
-    void compress(Compressor method);
+    void compress(utl::Compressor method);
     void uncompress();
 };
 

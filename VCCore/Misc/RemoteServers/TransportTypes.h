@@ -33,7 +33,7 @@ enum class SrvState : long
     INVALID         // The server is in an error state
 };
 
-struct SrvStateEnum : Reflectable<SrvStateEnum, SrvState>
+struct SrvStateEnum : utl::Reflectable<SrvStateEnum, SrvState>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(SrvState::INVALID);
@@ -65,7 +65,7 @@ enum class TransportProtocol
     HTTP
 };
 
-struct TransportProtocolEnum : Reflectable<TransportProtocolEnum, TransportProtocol>
+struct TransportProtocolEnum : utl::Reflectable<TransportProtocolEnum, TransportProtocol>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(TransportProtocol::HTTP);

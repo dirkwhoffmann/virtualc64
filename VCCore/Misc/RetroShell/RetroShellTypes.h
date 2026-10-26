@@ -30,7 +30,7 @@ enum class CommandSet
     Debugger        // Commands for debugging the emulator
 };
 
-struct CommandSetEnum : Reflectable<CommandSetEnum, CommandSet>
+struct CommandSetEnum : utl::Reflectable<CommandSetEnum, CommandSet>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CommandSet::Debugger);
@@ -69,7 +69,7 @@ enum class RSKey
     CR
 };
 
-struct RSKeyEnum : Reflectable<RSKeyEnum, RSKey>
+struct RSKeyEnum : utl::Reflectable<RSKeyEnum, RSKey>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(RSKey::CR);

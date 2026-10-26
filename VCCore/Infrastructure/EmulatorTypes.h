@@ -113,7 +113,7 @@ enum class DebugFlag
     FORCE_CRT_UNSUPPORTED,
 };
 
-struct DebugFlagEnum : Reflectable<DebugFlagEnum, DebugFlag>
+struct DebugFlagEnum : utl::Reflectable<DebugFlagEnum, DebugFlag>
 {
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DebugFlag::FORCE_CRT_UNSUPPORTED);

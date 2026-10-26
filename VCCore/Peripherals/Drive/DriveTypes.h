@@ -50,7 +50,7 @@ enum class DriveType : long
     VC1541II,
 };
 
-struct DriveTypeEnum : Reflectable<DriveTypeEnum, DriveType> {
+struct DriveTypeEnum : utl::Reflectable<DriveTypeEnum, DriveType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DriveType::VC1541II);
@@ -80,7 +80,7 @@ enum class DriveRam : long
     RANGE_4000_7FFF     // 16K
 };
 
-struct DriveRamEnum : Reflectable<DriveRamEnum, DriveRam> {
+struct DriveRamEnum : utl::Reflectable<DriveRamEnum, DriveRam> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DriveRam::RANGE_4000_7FFF);
@@ -114,7 +114,7 @@ enum class DrvMemType : long
     PIA        // Peripheral Interface Adapter (Dolphin3)
 };
 
-struct DrvMemTypeEnum : Reflectable<DrvMemTypeEnum, DrvMemType> {
+struct DrvMemTypeEnum : utl::Reflectable<DrvMemTypeEnum, DrvMemType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(DrvMemType::PIA);
@@ -148,7 +148,7 @@ enum class InsertionStatus : long
     PARTIALLY_EJECTED
 };
 
-struct InsertionStatusEnum : Reflectable<InsertionStatusEnum, InsertionStatus> {
+struct InsertionStatusEnum : utl::Reflectable<InsertionStatusEnum, InsertionStatus> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(InsertionStatus::PARTIALLY_EJECTED);

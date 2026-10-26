@@ -28,7 +28,7 @@ enum class MemAccess : long
     COUNT
 };
 
-struct MemAccessEnum : Reflectable<MemAccessEnum, MemAccess> {
+struct MemAccessEnum : utl::Reflectable<MemAccessEnum, MemAccess> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(MemAccess::S);

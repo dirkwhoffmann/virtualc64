@@ -107,7 +107,7 @@ enum class CartridgeType : long
     NONE
 };
 
-struct CartridgeTypeEnum : Reflectable<CartridgeTypeEnum, CartridgeType> {
+struct CartridgeTypeEnum : utl::Reflectable<CartridgeTypeEnum, CartridgeType> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(CartridgeType::NONE);
@@ -222,7 +222,7 @@ enum class FlashState : long
     SECTOR_ERASE_SUSPEND
 };
 
-struct FlashStateEnum : Reflectable<FlashStateEnum, FlashState> {
+struct FlashStateEnum : utl::Reflectable<FlashStateEnum, FlashState> {
 
     static constexpr long minVal = 0;
     static constexpr long maxVal = long(FlashState::SECTOR_ERASE_SUSPEND);
