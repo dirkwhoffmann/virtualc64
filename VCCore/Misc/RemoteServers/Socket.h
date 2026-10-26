@@ -13,6 +13,8 @@
 #pragma once
 
 #include "CoreObject.h"
+#include <atomic>
+#include <mutex>
 #include "ServerError.h"
 
 #ifdef _WIN32
@@ -38,7 +40,13 @@ namespace vc64 {
 
 class Socket : public CoreObject {
 
-    SOCKET socket;
+    /* The socket descriptor. It is read by the thread that sends data while
+     * another thread may close the socket (see close()), hence atomic.
+     */
+    std::atomic<SOCKET> socket;
+
+    // Keeps the packets of concurrent senders apart, and send() away from close()
+    std::mutex sendMutex;
 
 public:
     

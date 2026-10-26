@@ -50,6 +50,9 @@ class StdioTransport : public Transport {
 
     Stdio stdio;
 
+    // Keeps the packets of concurrent senders apart
+    std::mutex sendMutex;
+
     using Transport::Transport;
 
     StdioTransport& operator=(const StdioTransport &other) {

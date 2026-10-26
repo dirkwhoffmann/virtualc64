@@ -21,26 +21,33 @@ Socket::Socket() : socket(INVALID_SOCKET)
     logmsg(LOG_SCK, "Socket constructor\n");
 }
 
+// Keeps a write to a closed connection from raising SIGPIPE, which would end the process
+static void
+suppressSigPipe(SOCKET s)
+{
+#ifdef SO_NOSIGPIPE
+    int on = 1;
+    setsockopt(s, SOL_SOCKET, SO_NOSIGPIPE, (const char *)&on, sizeof(on));
+#endif
+}
+
 Socket::Socket(SOCKET id) : socket(id)
 {
     logmsg(LOG_SCK, "Wrapping socket %lld\n", (i64)id);
+    if (id != INVALID_SOCKET) suppressSigPipe(id);
 }
 
 Socket::Socket(Socket&& other)
 {
-    socket = other.socket;
-    other.socket = INVALID_SOCKET;
+    socket = other.socket.exchange(INVALID_SOCKET);
 }
 
 Socket& Socket::operator=(Socket&& other)
 {
-    assert(socket != other.socket);
-    
-    if (socket != other.socket) {
+    if (this != &other) {
 
         close();
-        socket = other.socket;
-        other.socket = INVALID_SOCKET;
+        socket = other.socket.exchange(INVALID_SOCKET);
     }
     return *this;
 }
@@ -89,6 +96,8 @@ void Socket::create()
         if (success < 0)
             throw ServerError(ServerError::SOCK_CANT_CREATE);
         
+        suppressSigPipe(socket);
+
         logmsg(LOG_SCK, "Created new socket %lld\n", (i64)socket);
     }
 }
@@ -182,30 +191,68 @@ Socket::recv()
 void
 Socket::send(u8 value)
 {
-    if (::send(socket, (const char *)&value, 1, 0) < 1)
-        throw ServerError(ServerError::SOCK_CANT_SEND);
+    send(string(1, char(value)));
 }
 
 void
 Socket::send(const string &s)
 {
-    if (::send(socket, s.c_str(), (int)s.length(), 0) < 0)
-        throw ServerError(ServerError::SOCK_CANT_SEND);
+#ifdef MSG_NOSIGNAL
+    const int flags = MSG_NOSIGNAL;
+#else
+    const int flags = 0;
+#endif
+
+    /* Writing and closing exclude each other, so a descriptor that has been
+     * closed (and possibly handed out again) is never written to. A packet is
+     * written as a whole before the next sender gets a turn.
+     */
+    std::lock_guard<std::mutex> guard(sendMutex);
+
+    auto fd = socket.load();
+    if (fd == INVALID_SOCKET) throw ServerError(ServerError::SOCK_CANT_SEND);
+
+    // A write may be partial
+    const char *ptr = s.c_str();
+    auto left = isize(s.length());
+
+    while (left > 0) {
+
+        auto n = ::send(fd, ptr, (int)left, flags);
+        if (n <= 0) throw ServerError(ServerError::SOCK_CANT_SEND);
+
+        ptr += n;
+        left -= isize(n);
+    }
 }
 
 void
 Socket::close()
-{    
-    if (socket != INVALID_SOCKET) {
+{
+    auto fd = socket.load();
+    if (fd == INVALID_SOCKET) return;
 
-        logmsg(LOG_SCK, "Closing socket %lld\n", (i64)socket);
+    /* Wake up threads that are blocked in recv() or send(). The latter would
+     * otherwise keep us from getting the send mutex below.
+     */
 #ifdef _WIN32
-        closesocket(socket);
+    ::shutdown(fd, SD_BOTH);
 #else
-        ::close(socket);
+    ::shutdown(fd, SHUT_RDWR);
 #endif
-        socket = INVALID_SOCKET;
-    }
+
+    std::lock_guard<std::mutex> guard(sendMutex);
+
+    // Whoever gets the descriptor out of the atomic closes it, and only once
+    fd = socket.exchange(INVALID_SOCKET);
+    if (fd == INVALID_SOCKET) return;
+
+    logmsg(LOG_SCK, "Closing socket %lld\n", (i64)fd);
+#ifdef _WIN32
+    closesocket(fd);
+#else
+    ::close(fd);
+#endif
 }
 
 }

@@ -94,7 +94,10 @@ StdioTransport::send(const string &payload)
 {
     if (isConnected()) {
 
-        stdio << payload;
+        {   std::lock_guard<std::mutex> guard(sendMutex);
+
+            stdio << payload;
+        }
         record(TrafficDirection::SENT, payload);
     }
 }

@@ -12,6 +12,7 @@
 
 #include "vcconfig.h"
 #include "TcpTransport.h"
+#include "ServerError.h"
 
 namespace vc64 {
 
@@ -143,8 +144,18 @@ TcpTransport::send(const string &payload)
 {
     if (isConnected()) {
 
-        connection.send(payload);
-        record(TrafficDirection::SENT, payload);
+        try {
+
+            connection.send(payload);
+            record(TrafficDirection::SENT, payload);
+
+        } catch (ServerError &) {
+
+            /* The peer has gone away or the connection is being closed. The
+             * session loop notices and winds down, there is nobody to tell.
+             */
+            logmsg(LOG_SRV, "Failed to send a packet\n");
+        }
     }
 }
 

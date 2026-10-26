@@ -99,7 +99,7 @@ Transport::stop()
 void
 Transport::switchState(SrvState newState)
 {
-    auto oldState = state;
+    SrvState oldState = state;
 
     if (oldState != newState) {
 
