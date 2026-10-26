@@ -7,6 +7,10 @@ with @name ... @{ ... @} end up in a "user-defined" section, which it skips.
 This script copies the XML directory and moves the members of every
 user-defined section into the matching standard section.
 
+Members without a doc comment in the header (constructors, wiring pointers,
+internal helpers) are dropped, so that the reference only shows what the
+headers document.
+
 It also tidies the compound list: unnamed nested structs and unions are
 dropped, and the groups are listed in the order of GROUP_ORDER (the order in
 which the sidebar shows them).
@@ -34,10 +38,30 @@ def section_kind(member):
     static = "static-" if member.get("static") == "yes" and kind in ("func", "attrib") else ""
     return f"{prot}-{static}{kind}"
 
+def documented(member):
+    for tag in ("briefdescription", "detaileddescription"):
+        node = member.find(tag)
+        if node is not None and "".join(node.itertext()).strip():
+            return True
+    return False
+
+def drop_undocumented(compound):
+    removed = False
+    for section in compound.findall("sectiondef"):
+        for member in section.findall("memberdef"):
+            if member.get("kind") in ("function", "variable", "typedef", "friend") \
+                    and not documented(member):
+                section.remove(member)
+                removed = True
+        if not section.findall("memberdef"):
+            compound.remove(section)
+    return removed
+
 def flatten(path):
     tree = ET.parse(path)
     changed = False
     for compound in tree.getroot().iter("compounddef"):
+        changed |= drop_undocumented(compound)
         sections = list(compound.findall("sectiondef"))
         loose = [s for s in sections if s.get("kind") == "user-defined"]
         if not loose:
