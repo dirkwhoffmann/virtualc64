@@ -23,14 +23,24 @@ MsgQueue::setListener(const void *listener, Callback *callback)
         this->listener = listener;
         this->callback = callback;
 
-        // Send all pending messages
+        /* Send all pending messages.
+         *
+         * Only when there is somewhere to send them: passing no callback is
+         * how a client detaches, and draining into it would call through a
+         * null pointer. The backlog is left in the queue for whoever
+         * attaches next.
+         */
         if (callback) {
 
-            while (!queue.isEmpty()) {
+            while (!entries.empty()) {
 
-                Entry &entry = queue.read();
-                callback(listener, entry.message, entry.exception);
-                entry.exception = nullptr;
+                Entry &entry = entries.front();
+
+                Message m = entry.message;
+                m.str = entry.str.c_str();
+                callback(listener, m, entry.exception);
+
+                entries.pop_front();
             }
         }
     }
@@ -43,12 +53,17 @@ MsgQueue::get(Message &msg, std::exception_ptr &exception)
 
     {   SYNCHRONIZED
 
-        if (queue.isEmpty()) return false;
+        if (entries.empty()) return false;
 
-        Entry &entry = queue.read();
+        Entry &entry = entries.front();
+
+        // Keep the attached string alive until the next call
+        current = std::move(entry.str);
         msg = entry.message;
+        msg.str = current.c_str();
         exception = entry.exception;
-        entry.exception = nullptr;
+
+        entries.pop_front();
         return true;
     }
 }
@@ -62,29 +77,20 @@ MsgQueue::put(const Message &msg, const string &str, std::exception_ptr exceptio
 
         logmsg(LOG_MSG, "%s [%llx]\n", MsgEnum::key(msg.type), msg.value);
 
-        // Delete the oldest element if the queue is full
-        if (queue.isFull()) {
-
-            if (!listener) {
-
-                auto &lost = queue.read();
-                logmsg(LOG_WARN, "Message lost: %s [%llx]\n", MsgEnum::key(lost.message.type), lost.message.value);
-                lost.exception = nullptr;
-            }
-        }
-
-        // Add message to the ringbuffer
-        auto w = queue.w;
-        queue.write(Entry { msg, exception });
-        attachments[w] = str;
-        queue.elements[w].message.str = attachments[w].c_str();
-
-        // Send the message immediately if a lister has been registered
         if (listener) {
 
-            callback(listener, queue.elements[w].message, queue.elements[w].exception);
-            (void) queue.read();
-            queue.elements[w].exception = nullptr;
+            // Send the message immediately if a listener has been registered
+            Message m = msg;
+            m.str = str.c_str();
+            callback(listener, m, exception);
+
+        } else if (isize(entries.size()) < CAPACITY) {
+
+            entries.push_back(Entry { msg, str, exception });
+
+        } else {
+
+            logmsg(LOG_WARN, "Message lost: %s [%llx]\n", MsgEnum::key(msg.type), msg.value);
         }
     }
 }

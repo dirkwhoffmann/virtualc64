@@ -15,26 +15,31 @@
 #include "MsgQueueTypes.h"
 #include "CoreObject.h"
 #include "utl/abilities/Synchronizable.h"
-#include "utl/storage/RingBuffer.h"
+#include <deque>
 
 namespace vc64 {
 
 class MsgQueue final : CoreObject, utl::Synchronizable {
 
-    static constexpr isize CAPACITY = 512;
+    /* Maximum number of pending messages. Messages only pile up while no
+     * listener is registered (before a client attaches, or if the client
+     * polls with get()). A message that arrives at a full queue is dropped.
+     */
+    static constexpr isize CAPACITY = 65536;
 
-    // A pending message, together with the exception it reports (if any)
+    // A pending message, together with its attached string and the exception it reports (if any)
     struct Entry {
 
         Message message;
+        string str;
         std::exception_ptr exception;
     };
 
-    // Ring buffer storing all pending messages
-    utl::RingBuffer <Entry, CAPACITY> queue;
+    // All pending messages
+    std::deque<Entry> entries;
 
-    // Attached string objects
-    string attachments[CAPACITY];
+    // The attached string of the message that has been read last
+    string current;
 
     // The registered listener
     const void *listener = nullptr;
