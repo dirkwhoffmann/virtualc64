@@ -11,14 +11,25 @@ Requests that change the state of the emulator are always carried out on the emu
 | Flavor | Example | Behavior |
 |:-------|:--------|:---------|
 | plain name | \ref vc64::VirtualC64::powerOn "powerOn()" | Waits until the emulator thread has carried out the request. Failures are reported as exceptions. |
-| `Async` suffix | \ref vc64::VirtualC64::powerOnAsync "powerOnAsync()" | Queues the request and returns at once. Failures cannot be reported to the caller. |
+| `Async` suffix | \ref vc64::VirtualC64::powerOnAsync "powerOnAsync()" | Queues the request and returns at once. A failure cannot be thrown to the caller. Most functions report the outcome with a message instead (see below). |
 | input events | \ref vc64::KeyboardAPI::press "keyboard.press()" | Keyboard, mouse, joystick and RetroShell input is queued without a suffix. |
 
 Because the queue is processed in order, a blocking call also guarantees that all requests queued before it have been carried out. To wait for asynchronous requests without issuing another blocking call, use \ref vc64::VirtualC64::sync "sync()".
 
 A blocking function throws a \ref vc64::CoreError "CoreError" with code \ref vc64::CoreError::NOT_LAUNCHED "NOT_LAUNCHED" if the emulator thread cannot carry out the request. This is the case if the thread has not been launched, if it has been halted, if another thread has suspended it, or if the calling thread has suspended it itself. The asynchronous flavor can be used in all of these situations. If it is called before the emulator thread has been launched, the request is carried out right after the launch.
 
-A few asynchronous functions report the outcome via a message. For example, \ref vc64::C64API::saveSnapshotAsync "saveSnapshotAsync()" sends `SNAPSHOT_SAVED` when the file has been written. If the operation failed, the message carries the exception.
+### Failures of asynchronous requests
+
+An asynchronous request is carried out later, so an exception cannot be thrown to the caller. For most functions, the emulator reports the outcome with the message that is sent on success anyway, e.g., `SNAPSHOT_SAVED` after \ref vc64::C64API::saveSnapshotAsync "saveSnapshotAsync()", or `ROM_LOADED` after \ref vc64::C64API::loadRomAsync "loadRomAsync()". If the operation failed, the message carries the exception. The callback receives it as its third argument:
+
+```cpp
+void process(const void *listener, Message msg, std::exception_ptr error)
+{
+    if (error) { /* the operation that triggered 'msg' has failed */ }
+}
+```
+
+Input events and a few simple requests have no such message. A failure of these is not reported. If the result matters, use the blocking counterpart.
 
 ## Reading the emulator state
 
@@ -51,13 +62,13 @@ The holder itself must not call a blocking API function while it holds the suspe
 
 ## Error handling
 
-API functions report failures by throwing exceptions that are derived from `utl::Error`:
+API functions report failures by throwing exceptions that are derived from \ref utl::Error "utl::Error":
 
 | Exception | Meaning |
 |:----------|:--------|
 | \ref vc64::CoreError "CoreError" | The request does not match the state of the emulator, e.g., an invalid option value, a missing ROM, or an emulator thread that cannot carry out the request. |
-| `IOError` | A file could not be accessed. |
-| `MediaError` | A ROM, snapshot, disk image or similar file is invalid or not supported. |
+| \ref utl::IOError "IOError" | A file or folder could not be accessed. |
+| \ref vc64::MediaError "MediaError" | A ROM, snapshot, disk image or similar file is invalid or not supported. |
 
 Each function documents the exceptions it can throw with `@throw`. The error code of a CoreError is one of the constants declared in the class.
 
@@ -77,6 +88,6 @@ The section *Danger zone* of \ref vc64::VirtualC64 contains functions that bypas
 
 | Previous                  |                       Next |
 |:--------------------------|---------------------------:|
-| [Home](home.md)           | [State Model](state.md)    |
+| [API Overview](api.md)    | [State Model](state.md)    |
 
 </div>

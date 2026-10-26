@@ -43,6 +43,7 @@ WARN_FORMAT            = "$file:$line: $text"
 
 # Input
 INPUT                  = pages/home.md \
+                         pages/api.md \
                          pages/threading.md \
                          pages/state.md \
                          pages/communication.md \
@@ -63,6 +64,8 @@ INPUT                  = pages/home.md \
                          ../../VCCore/Infrastructure/Constants.h \
                          ../../VCCore/Infrastructure/CoreComponentTypes.h \
                          ../../VCCore/Infrastructure/CoreError.h \
+                         ../../VCCore/utlib/include/utl/io/IOError.h \
+                         ../../VCCore/utlib/include/utl/types/Exception.h \
                          ../../VCCore/Infrastructure/EmulatorTypes.h \
                          ../../VCCore/Infrastructure/HostTypes.h \
                          ../../VCCore/Infrastructure/MsgQueueTypes.h \
@@ -71,6 +74,7 @@ INPUT                  = pages/home.md \
                          ../../VCCore/Media/AnyFile.h \
                          ../../VCCore/Media/Cartridges/CartridgeTypes.h \
                          ../../VCCore/Media/MediaFileTypes.h \
+                         ../../VCCore/Media/MediaError.h \
                          ../../VCCore/Media/Snapshot.h \
                          ../../VCCore/Misc/RemoteServers/RemoteManagerTypes.h \
                          ../../VCCore/Misc/RemoteServers/RemoteServerTypes.h \

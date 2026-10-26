@@ -56,6 +56,7 @@ int main()
 
 ## Where to go from here
 
+- [API Overview](api.md) shows how the API is organized and links to all API classes. Start here to look up a function.
 - [Threading and Errors](threading.md) explains which thread may call what, how failures are reported, and how the blocking and asynchronous flavors of the API functions differ.
 - [State Model](state.md) describes the life cycle of the emulator thread.
 - [Communication Model](communication.md) gives an overview of the command queue, the message queue, and the way data is read back from the emulator.
@@ -64,8 +65,8 @@ int main()
 
 <div class="section_buttons">
 
-|                              Next |
-|----------------------------------:|
-| [Threading and Errors](threading.md) |
+|                      Next |
+|--------------------------:|
+| [API Overview](api.md) |
 
 </div>

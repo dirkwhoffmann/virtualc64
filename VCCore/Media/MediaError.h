@@ -16,6 +16,11 @@
 
 namespace vc64 {
 
+/** @brief  Exception thrown if a media file is invalid or not supported
+ *
+ *  Media files are ROMs, snapshots, cartridges, disk images, and similar
+ *  files. The error code (see fault()) is one of the constants below.
+ */
 struct MediaError : public utl::Error {
 
     static constexpr long OK                    =  0;  ///< No error
@@ -35,6 +40,7 @@ struct MediaError : public utl::Error {
     static constexpr long CRT_CORRUPTED_PACKET  = 24;  ///< CRT file contains a corrupted Rom package
 
     
+    /// Returns the name of the error code
     const char *errstr() const noexcept override {
 
         switch (payload) {
@@ -56,10 +62,15 @@ struct MediaError : public utl::Error {
         return "???";
     }
 
+    /// Creates an error with an error code and a descriptive string
     explicit MediaError(long fault, const string &s);
+    /// Creates an error with an error code and a descriptive string
     explicit MediaError(long fault, const char *s) : MediaError(fault, string(s)) { };
+    /// Creates an error with an error code and a file path
     explicit MediaError(long fault, const fs::path &p) : MediaError(fault, p.string()) { };
+    /// Creates an error with an error code and a number
     explicit MediaError(long fault, std::integral auto v) : MediaError(fault, std::to_string(v)) { };
+    /// Creates an error with an error code
     explicit MediaError(long fault) : MediaError(fault, "") { }
 };
 

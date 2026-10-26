@@ -13,30 +13,36 @@
 
 namespace utl {
 
+/** @brief  Exception thrown if a file or folder cannot be accessed
+ *
+ *  The error code (see fault()) is one of the constants below. The message
+ *  returned by what() names the affected file or folder.
+ */
 struct IOError : public Error {
 
-    static constexpr long DIR_NOT_FOUND         = 0;
-    static constexpr long DIR_ACCESS_DENIED     = 1;
-    static constexpr long DIR_CANT_CREATE       = 2;
-    static constexpr long DIR_CANT_DELETE       = 3;
-    static constexpr long DIR_NOT_EMPTY         = 4;
+    static constexpr long DIR_NOT_FOUND         = 0; ///< The folder does not exist
+    static constexpr long DIR_ACCESS_DENIED     = 1; ///< Access to the folder was denied
+    static constexpr long DIR_CANT_CREATE       = 2; ///< The folder could not be created
+    static constexpr long DIR_CANT_DELETE       = 3; ///< The folder could not be deleted
+    static constexpr long DIR_NOT_EMPTY         = 4; ///< The folder is not empty
 
-    static constexpr long FILE_NOT_FOUND        = 10;
-    static constexpr long FILE_EXISTS           = 11;
-    static constexpr long FILE_IS_DIRECTORY     = 12;
-    static constexpr long FILE_ACCESS_DENIED    = 13;
-    static constexpr long FILE_TYPE_MISMATCH    = 14;
-    static constexpr long FILE_TYPE_UNSUPPORTED = 15;
-    static constexpr long FILE_CANT_READ        = 16;
-    static constexpr long FILE_CANT_WRITE       = 17;
-    static constexpr long FILE_CANT_CREATE      = 18;
-    static constexpr long FILE_CANT_DELETE      = 19;
-    static constexpr long FILE_INVALID_DATA     = 20;
-    static constexpr long FILE_IN_USE           = 21;
+    static constexpr long FILE_NOT_FOUND        = 10; ///< The file does not exist
+    static constexpr long FILE_EXISTS           = 11; ///< The file exists already
+    static constexpr long FILE_IS_DIRECTORY     = 12; ///< The path refers to a folder, not a file
+    static constexpr long FILE_ACCESS_DENIED    = 13; ///< Access to the file was denied
+    static constexpr long FILE_TYPE_MISMATCH    = 14; ///< The file has the wrong type
+    static constexpr long FILE_TYPE_UNSUPPORTED = 15; ///< The file type is not supported
+    static constexpr long FILE_CANT_READ        = 16; ///< The file could not be read
+    static constexpr long FILE_CANT_WRITE       = 17; ///< The file could not be written
+    static constexpr long FILE_CANT_CREATE      = 18; ///< The file could not be created
+    static constexpr long FILE_CANT_DELETE      = 19; ///< The file could not be deleted
+    static constexpr long FILE_INVALID_DATA     = 20; ///< The file contains invalid data
+    static constexpr long FILE_IN_USE           = 21; ///< The file is in use
 
-    static constexpr long JSON_ERROR            = 30;
-    static constexpr long ZLIB_ERROR            = 31;
+    static constexpr long JSON_ERROR            = 30; ///< A JSON document could not be processed
+    static constexpr long ZLIB_ERROR            = 31; ///< Compression or decompression failed
 
+    /// Returns the name of the error code
     const char *errstr() const noexcept override {
 
         switch (payload) {
@@ -68,6 +74,7 @@ struct IOError : public Error {
         }
     }
 
+    /// Creates an error with an error code and the name of the affected file or folder
     explicit IOError(long fault, const std::string &msg = "") : Error(fault) {
 
         switch (fault) {

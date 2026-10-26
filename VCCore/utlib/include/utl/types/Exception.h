@@ -16,19 +16,22 @@
 
 namespace utl {
 
+/// Base class of all exceptions thrown by the libraries
 struct Exception : public std::exception {
 
 };
 
+/// An exception that carries a payload and a message
 template<typename T>
 struct GenericException : public Exception {
 
-    T payload;
-    std::string msg;
+    T payload;                                  ///< Exception-specific payload
+    std::string msg;                            ///< Message returned by what()
 
     explicit GenericException(T payload = {}, std::string msg = "")
     : payload(std::move(payload)), msg(std::move(msg)) { }
 
+    /// Returns the message
     const char *what() const noexcept override {
         return msg.c_str();
     }
@@ -38,13 +41,21 @@ struct GenericException : public Exception {
     void set_payload(T value) { payload = std::move(value); }
 };
 
+/** @brief  Base class of the errors thrown by the API
+ *
+ *  The payload is an error code. Derived classes (CoreError, IOError,
+ *  MediaError) define the codes and a human-readable message.
+ */
 class Error : public GenericException<i64> {
 
 public:
 
+    /// Creates an error with an error code and a message
     Error(i64 d = 0, const std::string &s = "") : GenericException<i64>(d, s) { }
 
+    /// Returns the error code
     virtual i64 fault() const { return payload; }
+    /// Returns the name of the error code
     virtual const char *errstr() const noexcept { return "GENERIC"; }
 };
 

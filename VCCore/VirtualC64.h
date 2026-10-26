@@ -59,9 +59,11 @@ using peddle::RecordedInstruction;
  *                not supported.
  *
  * Functions that hand a request to the emulator thread asynchronously (the
- * ones with the suffix "Async" and the input events) cannot report failures
- * that occur later on the emulator thread. Use the blocking counterpart if
- * the result matters.
+ * ones with the suffix "Async" and the input events) cannot throw failures
+ * that occur later on the emulator thread. Most of them report the outcome
+ * with the message that is sent on success anyway (e.g., SNAPSHOT_SAVED), which
+ * then carries the exception. Where no such message exists, the failure is not
+ * reported. Use the blocking counterpart if the result matters.
  */
 
 /* Threading
@@ -1118,14 +1120,17 @@ public:
 
     /** @brief  Custom API of the joystick connected to this port
      */
+    /// Joystick connected to this port
     JoystickAPI joystick;
 
     /** @brief  Custom API of the mouse connected to this port
      */
+    /// Mouse connected to this port
     MouseAPI mouse;
 
     /** @brief  Custom API of the paddle connected to this port
      */
+    /// Paddle connected to this port
     PaddleAPI paddle;
 };
 
@@ -1140,6 +1145,7 @@ public:
 
     /** @brief  Custom API of the RS232 adapter
      */
+    /// RS232 adapter
     RS232API rs232;
 };
 
