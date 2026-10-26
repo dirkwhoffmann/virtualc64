@@ -3,7 +3,8 @@
 #   make          Doxygen HTML reference (build/html) and XML (build/xml)
 #   make sourcey  Sourcey site (build/sourcey): guides + API reference
 #   make dev      Sourcey live preview (http://localhost:4400)
-#   make serve    Serve build/sourcey at http://localhost:8000
+#   make serve    Serve build/sourcey at http://localhost:8000/VirtualC64/docs/
+#                 (the site is built for the public path /VirtualC64/docs)
 
 all:
 	doxygen Doxyfile
@@ -19,8 +20,10 @@ dev: all
 	sourcey dev
 
 serve:
-	@echo "Open http://localhost:8000"
-	python3 -m http.server 8000 --directory build/sourcey
+	mkdir -p build/serve/VirtualC64
+	ln -sfn ../../sourcey build/serve/VirtualC64/docs
+	@echo "Open http://localhost:8000/VirtualC64/docs/index.html"
+	python3 -m http.server 8000 --directory build/serve
 
 clean:
 	rm -rf build

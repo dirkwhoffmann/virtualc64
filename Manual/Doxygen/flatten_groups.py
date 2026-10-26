@@ -96,9 +96,8 @@ def tidy_index(dst):
     def rank(c):
         name = c.findtext("name")
         return GROUP_ORDER.index(name) if name in GROUP_ORDER else len(GROUP_ORDER)
-    first = len(list(root))
     for c in sorted(groups, key=rank):
-        root.insert(0, c) if False else root.append(c)
+        root.append(c)
     tree.write(path, encoding="utf-8", xml_declaration=True)
 
 def main(src, dst):

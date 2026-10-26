@@ -43,6 +43,7 @@ typedef struct
 
 AudioPortConfig;
 
+/// State of the audio port (currently carries no data)
 typedef struct
 {
 

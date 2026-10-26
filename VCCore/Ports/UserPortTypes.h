@@ -63,6 +63,7 @@ typedef struct
 }
 UserPortConfig;
 
+/// State of the user port (currently carries no data)
 typedef struct
 {
 

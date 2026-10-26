@@ -64,6 +64,7 @@ typedef struct
 }
 PaddleConfig;
 
+/// State of a paddle (currently carries no data)
 typedef struct
 {
 
