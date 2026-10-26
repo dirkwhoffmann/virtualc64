@@ -87,7 +87,7 @@ AudioPort::updateSampleRateCorrection()
         sampleRateCorrection = (sampleRateCorrection * 0.75) + (correction * 0.25);
 
         logmsg(LOG_AUDBUF, "ASR correction: %.0f Hz (fill: %.2f)\n",
-              sampleRateCorrection, stream.fillLevel());
+              double(sampleRateCorrection), stream.fillLevel());
 
     } else {
 
@@ -248,7 +248,7 @@ AudioPort::handleBufferUnderflow()
 
         // Adjust the sample rate
         setSampleRate(double(host.getConfig().sampleRate));
-        logmsg(LOG_AUDBUF, "New sample rate = %.2f\n", sampleRate);
+        logmsg(LOG_AUDBUF, "New sample rate = %.2f\n", double(sampleRate));
     }
 }
 
@@ -283,7 +283,7 @@ AudioPort::handleBufferOverflow(isize &numSamples)
 
         // Adjust the sample rate
         setSampleRate(double(host.getConfig().sampleRate));
-        logmsg(LOG_AUDBUF, "New sample rate = %.2f\n", sampleRate);
+        logmsg(LOG_AUDBUF, "New sample rate = %.2f\n", double(sampleRate));
     }
 }
 
@@ -298,6 +298,11 @@ AudioPort::eliminateCracks()
 isize
 AudioPort::copyMono(float *buffer, isize n)
 {
+    /* This function runs on the audio thread. The emulator thread mixes
+     * samples under the same lock.
+     */
+    utl::AutoMutex _audioLock(stream.mutex);
+
     // Copy sound samples
     auto cnt = stream.copyMono(buffer, n);
     stats.consumedSamples += cnt;
@@ -311,6 +316,11 @@ AudioPort::copyMono(float *buffer, isize n)
 isize
 AudioPort::copyStereo(float *left, float *right, isize n)
 {
+    /* This function runs on the audio thread. The emulator thread mixes
+     * samples under the same lock.
+     */
+    utl::AutoMutex _audioLock(stream.mutex);
+
     // Inform the sample rate detector about the number of requested samples
     detector.feed(n);
 
@@ -327,6 +337,11 @@ AudioPort::copyStereo(float *left, float *right, isize n)
 isize
 AudioPort::copyInterleaved(float *buffer, isize n)
 {
+    /* This function runs on the audio thread. The emulator thread mixes
+     * samples under the same lock.
+     */
+    utl::AutoMutex _audioLock(stream.mutex);
+
     // Copy sound samples
     auto cnt = stream.copyInterleaved(buffer, n);
     stats.consumedSamples += cnt;

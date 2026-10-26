@@ -12,6 +12,8 @@
 
 #pragma once
 
+#include <atomic>
+
 #include "AudioPortTypes.h"
 #include "SIDTypes.h"
 #include "SubComponent.h"
@@ -55,11 +57,11 @@ class AudioPort final : public SubComponent {
     AudioPortConfig config = { };
 
     // Current sample rate
-    double sampleRate = 44100.0;
+    std::atomic<double> sampleRate { 44100.0 };
 
     // Variables needed to implement ASR (Adaptive Sample Rate)
     double sampleRateError = 0.0;
-    double sampleRateCorrection = 0.0;
+    std::atomic<double> sampleRateCorrection { 0.0 };
 
     // Time stamp of the last write pointer alignment
     utl::Time lastAlignment = utl::Time::now();

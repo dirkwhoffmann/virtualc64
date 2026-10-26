@@ -59,7 +59,7 @@ AudioPort::_dump(Category category, std::ostream &os) const
         os << tab("Channel 3 pan");
         os << flt(pan[3]) << std::endl;
         os << tab("Sample rate correction");
-        os << flt(sampleRateCorrection) << " Hz" << std::endl;
+        os << flt(double(sampleRateCorrection)) << " Hz" << std::endl;
     }
 }
 
@@ -72,6 +72,9 @@ AudioPort::cacheInfo() const
 AudioPortMetrics
 AudioPort::cacheMetrics() const
 {
+    // The statistics are also updated by the audio thread
+    utl::AutoMutex _audioLock(stream.mutex);
+
     AudioPortMetrics result = stats;
 
     {   SYNCHRONIZED
@@ -98,7 +101,10 @@ AudioPort::_didLoad()
 void
 AudioPort::_didReset(bool hard)
 {
-    stats = { };
+    {   utl::AutoMutex _audioLock(stream.mutex);
+
+        stats = { };
+    }
     clear();
 }
 
@@ -272,12 +278,12 @@ AudioPort::setSampleRate(double hz)
     if (hz != 0.0) {
 
         sampleRate = hz;
-        logmsg(LOG_AUD, "setSampleRate(%.2f)\n", sampleRate);
+        logmsg(LOG_AUD, "setSampleRate(%.2f)\n", double(sampleRate));
 
     } else {
 
         sampleRate = detector.sampleRate();
-        logmsg(LOG_AUD, "setSampleRate(%.2f) (predicted)\n", sampleRate);
+        logmsg(LOG_AUD, "setSampleRate(%.2f) (predicted)\n", double(sampleRate));
     }
 }
 
