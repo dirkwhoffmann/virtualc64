@@ -19,7 +19,7 @@ Three naming patterns recur throughout the API:
 
 | Pattern | Meaning |
 |:--------|:--------|
-| `getConfig()`, `get(Opt)` / `set(Opt, ...)` | Read and change the configuration. Options are identified by the enumeration [vc64::Opt](/api-reference/grp_config.html#opt). |
+| `getConfig()`, `get(Opt)` / `set(Opt, ...)` | Read and change the configuration. Options are identified by the enumeration [vc64::Opt](/api-reference/grp_emulator.html#opt). |
 | `getInfo()`, `getCachedInfo()`, `getMetrics()`, ... | Read the state of a component (see [Threading and Errors](threading.md)). |
 | `foo()` / `fooAsync()` | Blocking and asynchronous flavor of a state-changing function. |
 
@@ -75,10 +75,10 @@ To be notified about events, register a message callback with [launch()](/api-re
 
 Functions exchange data through plain structures and enumerations. The most important ones are:
 
-- Configuration options: [vc64::Opt](/api-reference/grp_config.html#opt)
+- Configuration options: [vc64::Opt](/api-reference/grp_emulator.html#opt)
 - Messages from the emulator: [vc64::Message](/api-reference/vc64-Message.html) and [vc64::Msg](/api-reference/grp_messages.html#msg)
 - State records: for example [vc64::CPUInfo](/api-reference/vc64-CPUInfo.html), [vc64::VICIIInfo](/api-reference/vc64-VICIIInfo.html), [vc64::CIAInfo](/api-reference/vc64-CIAInfo.html), [vc64::DriveInfo](/api-reference/vc64-DriveInfo.html)
-- Execution state: [vc64::ExecState](/api-reference/grp_states.html#execstate)
+- Execution state: [vc64::ExecState](/api-reference/grp_emulator.html#execstate)
 - Snapshots and media files: [vc64::Snapshot](/api-reference/vc64-Snapshot.html), [vc64::AnyFile](/api-reference/vc64-AnyFile.html)
 
 ## Errors

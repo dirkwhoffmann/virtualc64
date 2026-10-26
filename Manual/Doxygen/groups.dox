@@ -1,420 +1,692 @@
-// Groups of the API reference. Each entry below puts a declaration into one of the
-// groups that structure the sidebar of the generated documentation.
-// Declarations that are not listed here show up in "Other types".
+// Modules of the API reference: one module for each component of the emulator,
+// plus a few modules for types that cut across the components. Each entry below
+// puts a declaration into a module.
 //
-// The order of the sidebar follows the length of the group names (see
-// flatten_groups.py), so keep them non-decreasing in length.
+// The sidebar lists the modules in the order of GROUP_ORDER in flatten_groups.py,
+// which has to be extended when a module is added.
 
-/** @defgroup grp_api API classes
- *  The classes that make up the public API. Start with VirtualC64; the other classes are reached through its members (for example `cpu` or `drive8`).
+/** @defgroup grp_emulator Emulator
+ *  The emulator as a whole: VirtualC64 and C64API, the configuration options, the execution state, the user defaults, and the types shared by all components.
  */
 
-/** @defgroup grp_config Configuration
- *  Options and the structures that report the configuration of a component.
+/** @defgroup grp_cpu CPU
+ *  The CPU, its debugger, and the breakpoints and watchpoints.
  */
 
-/** @defgroup grp_states State and metrics
- *  Structures that describe the state of a component, as returned by getInfo(), getCachedInfo(), getMetrics() and similar functions.
+/** @defgroup grp_memory Memory
+ *  The memory and the memory debugger.
+ */
+
+/** @defgroup grp_vicii VICII
+ *  The VICII graphics chip and the X-Ray visualizer.
+ */
+
+/** @defgroup grp_sid SID
+ *  The SID sound chip.
+ */
+
+/** @defgroup grp_cia CIA
+ *  The two CIA chips and their time-of-day clocks.
+ */
+
+/** @defgroup grp_audiovideo Audio and video
+ *  The audio port, the video port, and the monitor emulation.
+ */
+
+/** @defgroup grp_controlports Control ports
+ *  The control ports and the joysticks, mice, and paddles connected to them.
+ */
+
+/** @defgroup grp_expansionport Expansion port
+ *  The expansion port, cartridges, REU, and GeoRAM.
+ */
+
+/** @defgroup grp_userserial User and serial ports
+ *  The user port with the RS232 adapter, the serial (IEC) port, and the power port.
+ */
+
+/** @defgroup grp_datasette Datasette
+ *  The tape recorder.
+ */
+
+/** @defgroup grp_drives Drives
+ *  The floppy drives and the disks in them.
+ */
+
+/** @defgroup grp_keyboard Keyboard
+ *  The keyboard and the keys of the C64.
+ */
+
+/** @defgroup grp_retroshell RetroShell
+ *  The command console.
+ */
+
+/** @defgroup grp_remoteservers Remote servers
+ *  The remote servers and their traffic log.
  */
 
 /** @defgroup grp_messages Messages
  *  The messages the emulator sends to the front-end, and the callback that receives them.
  */
 
-/** @defgroup grp_exceptions Errors
- *  Exceptions thrown by API functions.
- */
-
-/** @defgroup grp_mediafiles Media files
- *  Snapshots, media files and their types.
- */
-
-/** @defgroup grp_enumerations Enumerations
- *  Enumerations used in the signatures of the API.
- */
-
-/** @defgroup grp_commandqueue Commands
+/** @defgroup grp_commands Commands
  *  The raw command interface (advanced, see the danger zone of VirtualC64).
  */
 
-/** @defgroup grp_miscellaneous Other types
- *  Miscellaneous types.
+/** @defgroup grp_errors Errors
+ *  Exceptions thrown by API functions.
+ */
+
+/** @defgroup grp_media Media files
+ *  Snapshots, media files, and their types.
  */
 
 /** @class vc64::API
- *  @ingroup grp_api
- */
-
-/** @class vc64::AudioPortAPI
- *  @ingroup grp_api
+ *  @ingroup grp_emulator
  */
 
 /** @class vc64::C64API
- *  @ingroup grp_api
- */
-
-/** @class vc64::CIAAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::CPUAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::CPUDebuggerAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::ControlPortAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::DatasetteAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::DefaultsAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::DiskAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::DriveAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::ExpansionPortAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::GuardsAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::JoystickAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::KeyboardAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::MemoryAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::MemoryDebuggerAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::MouseAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::PaddleAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::RS232API
- *  @ingroup grp_api
- */
-
-/** @class vc64::RemoteManagerAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::RetroShellAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::SIDAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::SerialPortAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::UserPortAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::VICIIAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::VideoPortAPI
- *  @ingroup grp_api
- */
-
-/** @class vc64::VirtualC64
- *  @ingroup grp_api
- */
-
-/** @class vc64::XRayAPI
- *  @ingroup grp_api
- */
-
-/** @struct vc64::AudioPortConfig
- *  @ingroup grp_config
+ *  @ingroup grp_emulator
  */
 
 /** @struct vc64::C64Config
- *  @ingroup grp_config
- */
-
-/** @struct vc64::CIAConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::CPUConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::DatasetteConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::DriveConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::ExpansionPortConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::HostConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::JoystickConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::MemConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::MonitorConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::MouseConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::PaddleConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::PowerPortConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::RS232Config
- *  @ingroup grp_config
- */
-
-/** @struct vc64::SIDConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::ServerConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::UserPortConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::VICIIConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::VideoPortConfig
- *  @ingroup grp_config
- */
-
-/** @struct vc64::XRayConfig
- *  @ingroup grp_config
- */
-
-/** @enum vc64::ConfigScheme
- *  @ingroup grp_config
- */
-
-/** @enum vc64::Opt
- *  @ingroup grp_config
- */
-
-/** @struct vc64::AudioPortInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::AudioPortMetrics
- *  @ingroup grp_states
+ *  @ingroup grp_emulator
  */
 
 /** @struct vc64::C64Info
- *  @ingroup grp_states
+ *  @ingroup grp_emulator
  */
 
-/** @struct vc64::CIAInfo
- *  @ingroup grp_states
+/** @enum vc64::Class
+ *  @ingroup grp_emulator
  */
 
-/** @struct vc64::CIAMetrics
- *  @ingroup grp_states
+/** @enum vc64::ConfigScheme
+ *  @ingroup grp_emulator
  */
 
-/** @struct vc64::CIAPortInfo
- *  @ingroup grp_states
+/** @enum vc64::DebugFlag
+ *  @ingroup grp_emulator
  */
 
-/** @struct vc64::CIATimerInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::CPUInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::CartridgeInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::CartridgeRomInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::DatasetteInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::DiskLayout
- *  @ingroup grp_states
- */
-
-/** @struct vc64::DriveInfo
- *  @ingroup grp_states
+/** @class vc64::DefaultsAPI
+ *  @ingroup grp_emulator
  */
 
 /** @struct vc64::EmulatorInfo
- *  @ingroup grp_states
+ *  @ingroup grp_emulator
  */
 
 /** @struct vc64::EmulatorMetrics
- *  @ingroup grp_states
+ *  @ingroup grp_emulator
+ */
+
+/** @enum vc64::EventID
+ *  @ingroup grp_emulator
+ */
+
+/** @enum vc64::EventSlot
+ *  @ingroup grp_emulator
  */
 
 /** @struct vc64::EventSlotInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::FrameFlipflops
- *  @ingroup grp_states
- */
-
-/** @struct vc64::GuardInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::JoystickInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::MemInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::MemMetrics
- *  @ingroup grp_states
- */
-
-/** @struct vc64::PaddleInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::RemoteManagerInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::RemoteServerInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::RetroShellInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::RomInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::SIDInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::SectorLayout
- *  @ingroup grp_states
- */
-
-/** @struct vc64::SpriteInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::TODInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::TrackDefaults
- *  @ingroup grp_states
- */
-
-/** @struct vc64::TrackLayout
- *  @ingroup grp_states
- */
-
-/** @struct vc64::TrafficEntry
- *  @ingroup grp_states
- */
-
-/** @struct vc64::UserPortInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::VICIIInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::VICIIMetrics
- *  @ingroup grp_states
- */
-
-/** @struct vc64::VICIITraits
- *  @ingroup grp_states
- */
-
-/** @struct vc64::VideoPortInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::VideoPortStats
- *  @ingroup grp_states
- */
-
-/** @struct vc64::VoiceInfo
- *  @ingroup grp_states
- */
-
-/** @struct vc64::peddle::Guard
- *  @ingroup grp_states
+ *  @ingroup grp_emulator
  */
 
 /** @enum vc64::ExecState
- *  @ingroup grp_states
+ *  @ingroup grp_emulator
+ */
+
+/** @struct vc64::HostConfig
+ *  @ingroup grp_emulator
+ */
+
+/** @enum vc64::Opt
+ *  @ingroup grp_emulator
+ */
+
+/** @struct vc64::RomInfo
+ *  @ingroup grp_emulator
+ */
+
+/** @class vc64::VirtualC64
+ *  @ingroup grp_emulator
+ */
+
+/** @enum vc64::Warp
+ *  @ingroup grp_emulator
+ */
+
+/** @class vc64::CPUAPI
+ *  @ingroup grp_cpu
+ */
+
+/** @struct vc64::CPUConfig
+ *  @ingroup grp_cpu
+ */
+
+/** @class vc64::CPUDebuggerAPI
+ *  @ingroup grp_cpu
+ */
+
+/** @struct vc64::CPUInfo
+ *  @ingroup grp_cpu
+ */
+
+/** @enum vc64::DasmNumbers
+ *  @ingroup grp_cpu
+ */
+
+/** @struct vc64::GuardCmd
+ *  @ingroup grp_cpu
+ */
+
+/** @struct vc64::GuardInfo
+ *  @ingroup grp_cpu
+ */
+
+/** @enum vc64::GuardType
+ *  @ingroup grp_cpu
+ */
+
+/** @class vc64::GuardsAPI
+ *  @ingroup grp_cpu
+ */
+
+/** @struct vc64::peddle::Guard
+ *  @ingroup grp_cpu
+ */
+
+/** @enum vc64::MemAccess
+ *  @ingroup grp_memory
+ */
+
+/** @struct vc64::MemConfig
+ *  @ingroup grp_memory
+ */
+
+/** @struct vc64::MemInfo
+ *  @ingroup grp_memory
+ */
+
+/** @struct vc64::MemMetrics
+ *  @ingroup grp_memory
+ */
+
+/** @enum vc64::MemType
+ *  @ingroup grp_memory
+ */
+
+/** @class vc64::MemoryAPI
+ *  @ingroup grp_memory
+ */
+
+/** @class vc64::MemoryDebuggerAPI
+ *  @ingroup grp_memory
+ */
+
+/** @enum vc64::RamPattern
+ *  @ingroup grp_memory
+ */
+
+/** @enum vc64::ColorSource
+ *  @ingroup grp_vicii
+ */
+
+/** @enum vc64::DisplayMode
+ *  @ingroup grp_vicii
+ */
+
+/** @enum vc64::DmaDisplayMode
+ *  @ingroup grp_vicii
+ */
+
+/** @struct vc64::FrameFlipflops
+ *  @ingroup grp_vicii
+ */
+
+/** @enum vc64::GlueLogic
+ *  @ingroup grp_vicii
+ */
+
+/** @enum vc64::ScreenGeometry
+ *  @ingroup grp_vicii
+ */
+
+/** @struct vc64::SpriteInfo
+ *  @ingroup grp_vicii
+ */
+
+/** @class vc64::VICIIAPI
+ *  @ingroup grp_vicii
+ */
+
+/** @enum vc64::VICIIColor
+ *  @ingroup grp_vicii
+ */
+
+/** @struct vc64::VICIIConfig
+ *  @ingroup grp_vicii
+ */
+
+/** @struct vc64::VICIIInfo
+ *  @ingroup grp_vicii
+ */
+
+/** @struct vc64::VICIIMetrics
+ *  @ingroup grp_vicii
+ */
+
+/** @enum vc64::VICIIRev
+ *  @ingroup grp_vicii
+ */
+
+/** @struct vc64::VICIITraits
+ *  @ingroup grp_vicii
+ */
+
+/** @class vc64::XRayAPI
+ *  @ingroup grp_vicii
+ */
+
+/** @enum vc64::XRayCompositor
+ *  @ingroup grp_vicii
+ */
+
+/** @struct vc64::XRayConfig
+ *  @ingroup grp_vicii
+ */
+
+/** @enum vc64::XRayMode
+ *  @ingroup grp_vicii
+ */
+
+/** @class vc64::SIDAPI
+ *  @ingroup grp_sid
+ */
+
+/** @struct vc64::SIDConfig
+ *  @ingroup grp_sid
+ */
+
+/** @enum vc64::SIDEngine
+ *  @ingroup grp_sid
+ */
+
+/** @struct vc64::SIDInfo
+ *  @ingroup grp_sid
+ */
+
+/** @enum vc64::SIDRevision
+ *  @ingroup grp_sid
+ */
+
+/** @enum vc64::SamplingMethod
+ *  @ingroup grp_sid
+ */
+
+/** @struct vc64::VoiceInfo
+ *  @ingroup grp_sid
+ */
+
+/** @class vc64::CIAAPI
+ *  @ingroup grp_cia
+ */
+
+/** @struct vc64::CIAConfig
+ *  @ingroup grp_cia
+ */
+
+/** @struct vc64::CIAInfo
+ *  @ingroup grp_cia
+ */
+
+/** @struct vc64::CIAMetrics
+ *  @ingroup grp_cia
+ */
+
+/** @struct vc64::CIAPortInfo
+ *  @ingroup grp_cia
+ */
+
+/** @enum vc64::CIAReg
+ *  @ingroup grp_cia
+ */
+
+/** @enum vc64::CIARev
+ *  @ingroup grp_cia
+ */
+
+/** @struct vc64::CIATimerInfo
+ *  @ingroup grp_cia
+ */
+
+/** @struct vc64::TODInfo
+ *  @ingroup grp_cia
+ */
+
+/** @union vc64::TimeOfDay
+ *  @ingroup grp_cia
+ */
+
+/** @class vc64::AudioPortAPI
+ *  @ingroup grp_audiovideo
+ */
+
+/** @struct vc64::AudioPortConfig
+ *  @ingroup grp_audiovideo
+ */
+
+/** @struct vc64::AudioPortInfo
+ *  @ingroup grp_audiovideo
+ */
+
+/** @struct vc64::AudioPortMetrics
+ *  @ingroup grp_audiovideo
+ */
+
+/** @enum vc64::Dotmask
+ *  @ingroup grp_audiovideo
+ */
+
+/** @struct vc64::MonitorConfig
+ *  @ingroup grp_audiovideo
+ */
+
+/** @enum vc64::Palette
+ *  @ingroup grp_audiovideo
+ */
+
+/** @enum vc64::Scanlines
+ *  @ingroup grp_audiovideo
+ */
+
+/** @enum vc64::TexFormat
+ *  @ingroup grp_audiovideo
+ */
+
+/** @enum vc64::Upscaler
+ *  @ingroup grp_audiovideo
+ */
+
+/** @class vc64::VideoPortAPI
+ *  @ingroup grp_audiovideo
+ */
+
+/** @struct vc64::VideoPortConfig
+ *  @ingroup grp_audiovideo
+ */
+
+/** @struct vc64::VideoPortInfo
+ *  @ingroup grp_audiovideo
+ */
+
+/** @struct vc64::VideoPortStats
+ *  @ingroup grp_audiovideo
+ */
+
+/** @class vc64::ControlPortAPI
+ *  @ingroup grp_controlports
+ */
+
+/** @enum vc64::ControlPortDevice
+ *  @ingroup grp_controlports
+ */
+
+/** @enum vc64::GamePadAction
+ *  @ingroup grp_controlports
+ */
+
+/** @struct vc64::GamePadCmd
+ *  @ingroup grp_controlports
+ */
+
+/** @class vc64::JoystickAPI
+ *  @ingroup grp_controlports
+ */
+
+/** @struct vc64::JoystickConfig
+ *  @ingroup grp_controlports
+ */
+
+/** @struct vc64::JoystickInfo
+ *  @ingroup grp_controlports
+ */
+
+/** @class vc64::MouseAPI
+ *  @ingroup grp_controlports
+ */
+
+/** @struct vc64::MouseConfig
+ *  @ingroup grp_controlports
+ */
+
+/** @enum vc64::MouseModel
+ *  @ingroup grp_controlports
+ */
+
+/** @class vc64::PaddleAPI
+ *  @ingroup grp_controlports
+ */
+
+/** @struct vc64::PaddleConfig
+ *  @ingroup grp_controlports
+ */
+
+/** @struct vc64::PaddleInfo
+ *  @ingroup grp_controlports
+ */
+
+/** @enum vc64::PaddleOrientation
+ *  @ingroup grp_controlports
+ */
+
+/** @enum vc64::CRTMode
+ *  @ingroup grp_expansionport
+ */
+
+/** @struct vc64::CartridgeInfo
+ *  @ingroup grp_expansionport
+ */
+
+/** @struct vc64::CartridgeRomInfo
+ *  @ingroup grp_expansionport
+ */
+
+/** @struct vc64::CartridgeTraits
+ *  @ingroup grp_expansionport
+ */
+
+/** @enum vc64::CartridgeType
+ *  @ingroup grp_expansionport
+ */
+
+/** @class vc64::ExpansionPortAPI
+ *  @ingroup grp_expansionport
+ */
+
+/** @struct vc64::ExpansionPortConfig
+ *  @ingroup grp_expansionport
+ */
+
+/** @enum vc64::FlashState
+ *  @ingroup grp_expansionport
+ */
+
+/** @enum vc64::CommunicationDevice
+ *  @ingroup grp_userserial
+ */
+
+/** @enum vc64::PowerGrid
+ *  @ingroup grp_userserial
+ */
+
+/** @struct vc64::PowerPortConfig
+ *  @ingroup grp_userserial
+ */
+
+/** @class vc64::RS232API
+ *  @ingroup grp_userserial
+ */
+
+/** @struct vc64::RS232Config
+ *  @ingroup grp_userserial
+ */
+
+/** @class vc64::SerialPortAPI
+ *  @ingroup grp_userserial
+ */
+
+/** @class vc64::UserPortAPI
+ *  @ingroup grp_userserial
+ */
+
+/** @struct vc64::UserPortConfig
+ *  @ingroup grp_userserial
+ */
+
+/** @enum vc64::UserPortDevice
+ *  @ingroup grp_userserial
+ */
+
+/** @struct vc64::UserPortInfo
+ *  @ingroup grp_userserial
+ */
+
+/** @class vc64::DatasetteAPI
+ *  @ingroup grp_datasette
+ */
+
+/** @struct vc64::DatasetteConfig
+ *  @ingroup grp_datasette
+ */
+
+/** @struct vc64::DatasetteInfo
+ *  @ingroup grp_datasette
+ */
+
+/** @enum vc64::DatasetteModel
+ *  @ingroup grp_datasette
+ */
+
+/** @class vc64::DiskAPI
+ *  @ingroup grp_drives
+ */
+
+/** @struct vc64::DiskLayout
+ *  @ingroup grp_drives
+ */
+
+/** @enum vc64::DiskType
+ *  @ingroup grp_drives
+ */
+
+/** @class vc64::DriveAPI
+ *  @ingroup grp_drives
+ */
+
+/** @struct vc64::DriveConfig
+ *  @ingroup grp_drives
+ */
+
+/** @struct vc64::DriveInfo
+ *  @ingroup grp_drives
+ */
+
+/** @struct vc64::DriveMsg
+ *  @ingroup grp_drives
+ */
+
+/** @enum vc64::DriveRam
+ *  @ingroup grp_drives
+ */
+
+/** @enum vc64::DriveType
+ *  @ingroup grp_drives
+ */
+
+/** @enum vc64::DrvMemType
+ *  @ingroup grp_drives
+ */
+
+/** @enum vc64::InsertionStatus
+ *  @ingroup grp_drives
+ */
+
+/** @enum vc64::ParCableType
+ *  @ingroup grp_drives
+ */
+
+/** @struct vc64::SectorLayout
+ *  @ingroup grp_drives
+ */
+
+/** @struct vc64::TrackDefaults
+ *  @ingroup grp_drives
+ */
+
+/** @struct vc64::TrackLayout
+ *  @ingroup grp_drives
+ */
+
+/** @struct vc64::C64Key
+ *  @ingroup grp_keyboard
+ */
+
+/** @class vc64::KeyboardAPI
+ *  @ingroup grp_keyboard
+ */
+
+/** @enum vc64::CommandSet
+ *  @ingroup grp_retroshell
+ */
+
+/** @struct vc64::InputLine
+ *  @ingroup grp_retroshell
+ */
+
+/** @enum vc64::RSKey
+ *  @ingroup grp_retroshell
+ */
+
+/** @class vc64::RetroShellAPI
+ *  @ingroup grp_retroshell
+ */
+
+/** @struct vc64::RetroShellInfo
+ *  @ingroup grp_retroshell
+ */
+
+/** @struct vc64::vspace
+ *  @ingroup grp_retroshell
+ */
+
+/** @class vc64::RemoteManagerAPI
+ *  @ingroup grp_remoteservers
+ */
+
+/** @struct vc64::RemoteManagerInfo
+ *  @ingroup grp_remoteservers
+ */
+
+/** @struct vc64::RemoteServerInfo
+ *  @ingroup grp_remoteservers
+ */
+
+/** @struct vc64::ServerConfig
+ *  @ingroup grp_remoteservers
+ */
+
+/** @enum vc64::ServerType
+ *  @ingroup grp_remoteservers
+ */
+
+/** @enum vc64::TrafficDirection
+ *  @ingroup grp_remoteservers
+ */
+
+/** @struct vc64::TrafficEntry
+ *  @ingroup grp_remoteservers
  */
 
 /** @struct vc64::ConfigMsg
@@ -425,11 +697,11 @@
  *  @ingroup grp_messages
  */
 
-/** @struct vc64::DriveMsg
+/** @struct vc64::Message
  *  @ingroup grp_messages
  */
 
-/** @struct vc64::Message
+/** @enum vc64::Msg
  *  @ingroup grp_messages
  */
 
@@ -441,321 +713,90 @@
  *  @ingroup grp_messages
  */
 
-/** @enum vc64::Msg
- *  @ingroup grp_messages
- */
-
-/** @class utl::Error
- *  @ingroup grp_exceptions
- */
-
-/** @struct utl::Exception
- *  @ingroup grp_exceptions
- */
-
-/** @struct utl::GenericException
- *  @ingroup grp_exceptions
- */
-
-/** @struct utl::IOError
- *  @ingroup grp_exceptions
- */
-
-/** @struct vc64::CoreError
- *  @ingroup grp_exceptions
- */
-
-/** @struct vc64::MediaError
- *  @ingroup grp_exceptions
- */
-
-/** @class vc64::AnyFile
- *  @ingroup grp_mediafiles
- */
-
-/** @struct vc64::CartridgeTraits
- *  @ingroup grp_mediafiles
- */
-
-/** @class vc64::Snapshot
- *  @ingroup grp_mediafiles
- */
-
-/** @struct vc64::SnapshotHeader
- *  @ingroup grp_mediafiles
- */
-
-/** @struct vc64::Thumbnail
- *  @ingroup grp_mediafiles
- */
-
-/** @enum vc64::CBMFileType
- *  @ingroup grp_mediafiles
- */
-
-/** @enum vc64::CartridgeType
- *  @ingroup grp_mediafiles
- */
-
-/** @enum vc64::DiskType
- *  @ingroup grp_mediafiles
- */
-
-/** @enum vc64::FileError
- *  @ingroup grp_mediafiles
- */
-
-/** @enum vc64::FileType
- *  @ingroup grp_mediafiles
- */
-
-/** @enum vc64::FlashState
- *  @ingroup grp_mediafiles
- */
-
-/** @enum vc64::TAPVersion
- *  @ingroup grp_mediafiles
- */
-
-/** @enum vc64::CIAReg
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::CIARev
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::CRTMode
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::Class
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::ColorSource
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::CommandSet
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::CommunicationDevice
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::ControlPortDevice
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::DasmNumbers
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::DatasetteModel
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::DebugFlag
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::DisplayMode
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::DmaDisplayMode
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::Dotmask
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::DriveRam
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::DriveType
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::DrvMemType
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::EventID
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::EventSlot
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::GamePadAction
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::GlueLogic
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::GuardType
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::InsertionStatus
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::MemAccess
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::MemType
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::MouseModel
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::PaddleOrientation
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::Palette
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::ParCableType
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::PowerGrid
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::RSKey
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::RamPattern
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::SIDEngine
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::SIDRevision
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::SamplingMethod
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::Scanlines
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::ScreenGeometry
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::ServerType
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::TexFormat
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::TrafficDirection
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::Upscaler
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::UserPortDevice
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::VICIIColor
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::VICIIRev
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::Warp
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::XRayCompositor
- *  @ingroup grp_enumerations
- */
-
-/** @enum vc64::XRayMode
- *  @ingroup grp_enumerations
- */
-
 /** @struct vc64::AlarmCmd
- *  @ingroup grp_commandqueue
- */
-
-/** @struct vc64::Command
- *  @ingroup grp_commandqueue
- */
-
-/** @struct vc64::ConfigCmd
- *  @ingroup grp_commandqueue
- */
-
-/** @struct vc64::CoordCmd
- *  @ingroup grp_commandqueue
- */
-
-/** @struct vc64::GamePadCmd
- *  @ingroup grp_commandqueue
- */
-
-/** @struct vc64::GuardCmd
- *  @ingroup grp_commandqueue
- */
-
-/** @struct vc64::JoyStateCmd
- *  @ingroup grp_commandqueue
- */
-
-/** @struct vc64::KeyCmd
- *  @ingroup grp_commandqueue
- */
-
-/** @struct vc64::TapeCmd
- *  @ingroup grp_commandqueue
+ *  @ingroup grp_commands
  */
 
 /** @enum vc64::Cmd
- *  @ingroup grp_commandqueue
+ *  @ingroup grp_commands
  */
 
-/** @struct vc64::C64Key
- *  @ingroup grp_miscellaneous
+/** @struct vc64::Command
+ *  @ingroup grp_commands
  */
 
-/** @struct vc64::InputLine
- *  @ingroup grp_miscellaneous
+/** @struct vc64::ConfigCmd
+ *  @ingroup grp_commands
  */
 
-/** @struct vc64::vspace
- *  @ingroup grp_miscellaneous
+/** @struct vc64::CoordCmd
+ *  @ingroup grp_commands
  */
-/** @union vc64::TimeOfDay
- *  @ingroup grp_states
+
+/** @struct vc64::JoyStateCmd
+ *  @ingroup grp_commands
+ */
+
+/** @struct vc64::KeyCmd
+ *  @ingroup grp_commands
+ */
+
+/** @struct vc64::TapeCmd
+ *  @ingroup grp_commands
+ */
+
+/** @class utl::Error
+ *  @ingroup grp_errors
+ */
+
+/** @struct utl::Exception
+ *  @ingroup grp_errors
+ */
+
+/** @struct utl::GenericException
+ *  @ingroup grp_errors
+ */
+
+/** @struct utl::IOError
+ *  @ingroup grp_errors
+ */
+
+/** @struct vc64::CoreError
+ *  @ingroup grp_errors
+ */
+
+/** @struct vc64::MediaError
+ *  @ingroup grp_errors
+ */
+
+/** @class vc64::AnyFile
+ *  @ingroup grp_media
+ */
+
+/** @enum vc64::CBMFileType
+ *  @ingroup grp_media
+ */
+
+/** @enum vc64::FileError
+ *  @ingroup grp_media
+ */
+
+/** @enum vc64::FileType
+ *  @ingroup grp_media
+ */
+
+/** @class vc64::Snapshot
+ *  @ingroup grp_media
+ */
+
+/** @struct vc64::SnapshotHeader
+ *  @ingroup grp_media
+ */
+
+/** @enum vc64::TAPVersion
+ *  @ingroup grp_media
+ */
+
+/** @struct vc64::Thumbnail
+ *  @ingroup grp_media
  */

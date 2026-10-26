@@ -13,6 +13,7 @@ all:
 sourcey: all
 	python3 flatten_groups.py build/xml build/xml-sourcey
 	sourcey build -o build/sourcey
+	python3 strip_summaries.py build/sourcey
 	@echo "Open build/sourcey/index.html"
 
 dev: all

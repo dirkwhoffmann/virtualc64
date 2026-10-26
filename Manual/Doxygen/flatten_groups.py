@@ -15,21 +15,25 @@ Members without a doc comment in the header (constructors, wiring pointers,
 internal helpers) are dropped, so that the reference only shows what the
 headers document.
 
+Base class and derived class references are dropped. Sourcey would otherwise
+add a "List of all members" table and "Inherited from" tables to every class,
+which repeats the members of the page (and suspend()/resume() of the base class
+API on every API page).
+
 It also tidies the compound list: unnamed nested structs and unions are
 dropped, and the groups are listed in the order of GROUP_ORDER (the order in
 which the sidebar shows them).
 
 Usage: flatten_groups.py <input-xml-dir> <output-xml-dir>
 """
-import shutil, sys
+import re, shutil, sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-# Sourcey sorts the pages by the length of the Doxygen id (group__<name>) and
-# keeps the order of index.xml for equal lengths. The group names in groups.dox
-# are therefore chosen so that their length does not decrease along this list.
-GROUP_ORDER = ["grp_api", "grp_config", "grp_states", "grp_messages", "grp_exceptions",
-               "grp_mediafiles", "grp_enumerations", "grp_commandqueue", "grp_miscellaneous"]
+# The groups in the order of the sidebar (see groups.dox). Sourcey sorts the
+# pages by the length of the Doxygen id, so lengthen_group_ids() pads the ids
+# of the groups until their length grows along this list.
+GROUP_ORDER = ["grp_emulator", "grp_cpu", "grp_memory", "grp_vicii", "grp_sid", "grp_cia", "grp_audiovideo", "grp_controlports", "grp_expansionport", "grp_userserial", "grp_datasette", "grp_drives", "grp_keyboard", "grp_retroshell", "grp_remoteservers", "grp_messages", "grp_commands", "grp_errors", "grp_media"]
 
 SUFFIX = {"function": "func", "variable": "attrib", "typedef": "type",
           "enum": "type", "friend": "friend"}
@@ -83,6 +87,12 @@ def flatten(path):
     tree = ET.parse(path)
     changed = False
     for compound in tree.getroot().iter("compounddef"):
+        # Without base classes, sourcey adds neither "List of all members" nor
+        # the "Inherited from" tables to the class pages
+        for tag in ("basecompoundref", "derivedcompoundref"):
+            for ref in compound.findall(tag):
+                compound.remove(ref)
+                changed = True
         changed |= drop_undocumented(compound)
         sections = list(compound.findall("sectiondef"))
         loose = [s for s in sections if s.get("kind") == "user-defined"]
@@ -122,6 +132,29 @@ def tidy_index(dst):
         root.append(c)
     tree.write(path, encoding="utf-8", xml_declaration=True)
 
+def lengthen_group_ids(dst):
+    """Pads the ids of the groups so that their length grows along GROUP_ORDER."""
+    root = ET.parse(Path(dst) / "index.xml").getroot()
+    ids = {c.findtext("name"): c.get("refid") for c in root.findall("compound")
+           if c.get("kind") == "group"}
+    base = max((len(i) for i in ids.values()), default=0)
+    renames = {}
+    for rank, name in enumerate(GROUP_ORDER):
+        if name in ids:
+            renames[ids[name]] = ids[name].ljust(base + rank + 1, "z")
+    if not renames:
+        return
+    pattern = re.compile("|".join(re.escape(k) + "(?![A-Za-z0-9])"
+                                  for k in sorted(renames, key=len, reverse=True)))
+    for path in Path(dst).glob("*.xml"):
+        text = path.read_text()
+        new = pattern.sub(lambda m: renames[m.group(0)], text)
+        if new != text:
+            path.write_text(new)
+    for old, new in renames.items():
+        if (Path(dst) / f"{old}.xml").exists():
+            (Path(dst) / f"{old}.xml").rename(Path(dst) / f"{new}.xml")
+
 def main(src, dst):
     shutil.rmtree(dst, ignore_errors=True)
     shutil.copytree(src, dst)
@@ -131,6 +164,7 @@ def main(src, dst):
         if path.name != "index.xml":
             retitle_callouts(path)
     tidy_index(dst)
+    lengthen_group_ids(dst)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

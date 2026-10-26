@@ -14,7 +14,7 @@ After launching, the emulator runs as a single thread alongside the front-end. T
 - **Running:** The emulator is powered on and computes frames.
 - **Halted:** The emulator thread has been terminated. This is the last step of the shutdown procedure.
 
-The states Off, Paused, Running, and Halted are the values of the enumeration [vc64::ExecState](/api-reference/grp_states.html#execstate). A state change is requested with the functions shown in the diagram. Like all state-changing functions, they come in a blocking and an asynchronous flavor (for example [run()](/api-reference/vc64-VirtualC64.html#run) and [runAsync()](/api-reference/vc64-VirtualC64.html#runasync), see [Threading and Errors](threading.md)).
+The states Off, Paused, Running, and Halted are the values of the enumeration [vc64::ExecState](/api-reference/grp_emulator.html#execstate). A state change is requested with the functions shown in the diagram. Like all state-changing functions, they come in a blocking and an asynchronous flavor (for example [run()](/api-reference/vc64-VirtualC64.html#run) and [runAsync()](/api-reference/vc64-VirtualC64.html#runasync), see [Threading and Errors](threading.md)).
 
 ![](images/state.svg)
 
@@ -30,7 +30,7 @@ The emulator thread does not run freely. To compute the proper number of frames 
 
 ## Warp mode
 
-To speed up emulation (e.g., during disk accesses), the emulator can be put into *warp mode*. In this mode, timing synchronization is disabled and the emulator runs as fast as possible. Several clients can request warp mode independently by using different sources (see [warpOn()](/api-reference/vc64-VirtualC64.html#warpon)). The mode stays on as long as at least one source has requested it. The option [C64_WARP_MODE](/api-reference/grp_config.html#opt) selects when warp mode is entered automatically.
+To speed up emulation (e.g., during disk accesses), the emulator can be put into *warp mode*. In this mode, timing synchronization is disabled and the emulator runs as fast as possible. Several clients can request warp mode independently by using different sources (see [warpOn()](/api-reference/vc64-VirtualC64.html#warpon)). The mode stays on as long as at least one source has requested it. The option [C64_WARP_MODE](/api-reference/grp_emulator.html#opt) selects when warp mode is entered automatically.
 
 ## Track mode
 
