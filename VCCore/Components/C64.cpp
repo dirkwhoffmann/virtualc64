@@ -1958,7 +1958,16 @@ C64::takeSnapshot(Compressor compressor, isize delay, bool repeat)
 void
 C64::loadSnapshot(const fs::path &path)
 {
-    loadSnapshot(Snapshot(path));
+    try {
+
+        loadSnapshot(Snapshot(path));
+
+    } catch (...) {
+
+        // Inform the GUI (the exception is also passed on to the caller)
+        msgQueue.put(Msg::SNAPSHOT_RESTORED, std::current_exception());
+        throw;
+    }
 }
 
 void
@@ -1970,8 +1979,22 @@ C64::loadSnapshot(const Snapshot &snapshot)
     // Uncompress the snapshot
     snap.uncompress();
 
-    // Restore the saved state
-    load(snap.getSnapshotData());
+    try {
+
+        // Restore the saved state
+        load(snap.getSnapshotData());
+
+    } catch (...) {
+
+        /* If we reach this point, the emulator has been put into an
+         * inconsistent state due to corrupted snapshot data. We cannot
+         * continue emulation, because it would likely crash the
+         * application. Because we cannot revert to the old state either,
+         * we perform a hard reset to eliminate the inconsistency.
+         */
+        emulator.put(Command(Cmd::HARD_RESET));
+        throw;
+    }
 
     // Inform the GUI
     msgQueue.put(Msg::VIDEO_FORMAT, vic.pal() ? 0 : 1);
@@ -2187,34 +2210,55 @@ C64::romType(const fs::path &path)
 void
 C64::loadRom(const fs::path &path)
 {
-    RomFile file(path);
-    loadRom(file);
+    try {
+
+        RomFile file(path);
+        loadRom(file);
+
+    } catch (...) {
+
+        // Inform the GUI (the exception is also passed on to the caller)
+        msgQueue.put(Message { .type = Msg::ROM_LOADED, .value = -1 }, "", std::current_exception());
+        throw;
+    }
 }
 
 void
 C64::loadRom(const fs::path &path, RomType type)
 {
-    RomFile file(path);
+    try {
 
-    if ((file.type() == FileType::BASIC_ROM  && type == RomType::C64_BASIC)  ||
-        (file.type() == FileType::CHAR_ROM   && type == RomType::C64_CHAR)   ||
-        (file.type() == FileType::KERNAL_ROM && type == RomType::C64_KERNAL) ||
-        (file.type() == FileType::VC1541_ROM && type == RomType::C64_VC1541)) {
-        
-        loadRom(file);
-        return;
+        RomFile file(path);
+
+        if ((file.type() == FileType::BASIC_ROM  && type == RomType::C64_BASIC)  ||
+            (file.type() == FileType::CHAR_ROM   && type == RomType::C64_CHAR)   ||
+            (file.type() == FileType::KERNAL_ROM && type == RomType::C64_KERNAL) ||
+            (file.type() == FileType::VC1541_ROM && type == RomType::C64_VC1541)) {
+
+            loadRom(file);
+            return;
+        }
+
+        throw IOError(IOError::FILE_TYPE_MISMATCH, path);
+
+    } catch (...) {
+
+        // Inform the GUI (the exception is also passed on to the caller)
+        msgQueue.put(Message { .type = Msg::ROM_LOADED, .value = i64(type) }, "", std::current_exception());
+        throw;
     }
-        
-    throw IOError(IOError::FILE_TYPE_MISMATCH, path);
 }
 
 void
 C64::loadRom(const RomFile &file)
 {
+    RomType type;
+
     switch (file.type()) {
             
         case FileType::BASIC_ROM:
             
+            type = RomType::C64_BASIC;
             file.flash(mem.rom, 0xA000);
             logmsg(LOG_MEM, "Basic Rom flashed\n");
             logmsg(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::C64_BASIC));
@@ -2223,12 +2267,14 @@ C64::loadRom(const RomFile &file)
             
         case FileType::CHAR_ROM:
             
+            type = RomType::C64_CHAR;
             file.flash(mem.rom, 0xD000);
             logmsg(LOG_MEM, "Character Rom flashed\n");
             break;
             
         case FileType::KERNAL_ROM:
             
+            type = RomType::C64_KERNAL;
             file.flash(mem.rom, 0xE000);
             logmsg(LOG_MEM, "Kernal Rom flashed\n");
             logmsg(LOG_MEM, "hasMega65Rom() = %d\n", hasMega65Rom(RomType::C64_KERNAL));
@@ -2237,6 +2283,7 @@ C64::loadRom(const RomFile &file)
             
         case FileType::VC1541_ROM:
             
+            type = RomType::C64_VC1541;
             drive8.mem.loadRom(file.getData(), file.getSize());
             drive9.mem.loadRom(file.getData(), file.getSize());
             logmsg(LOG_MEM, "VC1541 Rom flashed\n");
@@ -2246,6 +2293,9 @@ C64::loadRom(const RomFile &file)
             
             throw IOError(IOError::FILE_TYPE_MISMATCH);
     }
+
+    // Inform the GUI
+    msgQueue.put(Msg::ROM_LOADED, i64(type));
 }
 
 void
@@ -2363,6 +2413,9 @@ C64::installOpenRom(RomType type)
         default:
             fatalError;
     }
+
+    // Inform the GUI
+    msgQueue.put(Msg::ROM_LOADED, i64(type));
 }
 
 void

@@ -180,6 +180,10 @@ VirtualC64::VirtualC64() {
 VirtualC64::~VirtualC64()
 {
     VC64_PUBLIC
+
+    // A suspended emulator thread cannot be halted, so give up forgotten suspensions
+    while (emu->isSuspendedByCurrentThread()) emu->resume();
+
     halt();
     delete emu;
 }
@@ -756,24 +760,14 @@ void
 C64API::loadSnapshot(const Snapshot &snapshot)
 {
     VC64_PUBLIC
-    emu->call([&]{
-        try {
+    emu->call([&]{ c64->loadSnapshot(snapshot); });
+}
 
-            // Restore the saved state
-            c64->loadSnapshot(snapshot);
-
-        } catch (std::exception &) {
-
-            /* If we reach this point, the emulator has been put into an
-             * inconsistent state due to corrupted snapshot data. We cannot
-             * continue emulation, because it would likely crash the
-             * application. Because we cannot revert to the old state either,
-             * we perform a hard reset to eliminate the inconsistency.
-             */
-            emu->put(Cmd::HARD_RESET);
-            throw;
-        }
-    });
+void
+C64API::loadSnapshotAsync(const fs::path &path)
+{
+    VC64_PUBLIC
+    emu->callAsync([this, path]{ c64->loadSnapshot(path); });
 }
 
 void
@@ -840,6 +834,20 @@ C64API::hibernateAsync(retro::vault::SVMFile &svm, bool snapshot, bool workspace
 {
     VC64_PUBLIC
     emu->put(Command(Cmd::HIBERNATE, i64(snapshot) | i64(workspace) << 1, i64(&svm)));
+}
+
+void
+C64API::loadRomAsync(const fs::path &path)
+{
+    VC64_PUBLIC
+    emu->callAsync([this, path]{ c64->loadRom(path); });
+}
+
+void
+C64API::loadRomAsync(const fs::path &path, RomType rom)
+{
+    VC64_PUBLIC
+    emu->callAsync([this, path, rom]{ c64->loadRom(path, rom); });
 }
 
 void

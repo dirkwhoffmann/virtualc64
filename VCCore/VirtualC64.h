@@ -1795,6 +1795,12 @@ public:
      *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void loadSnapshot(const std::filesystem::path &path);
+    /** @brief  Asynchronous version of loadSnapshot(): queues the request and returns at once.
+     *
+     *  Success and failure are both reported by the usual message
+     *  (SNAPSHOT_RESTORED). If the request failed, the message carries the exception.
+     */
+    void loadSnapshotAsync(const std::filesystem::path &path);
 
     /** @brief  Saves a snapshot to disk
      *
@@ -1875,6 +1881,13 @@ public:
      */
     void loadRom(const std::filesystem::path &path);
     void loadRom(const std::filesystem::path &path, RomType rom);
+    /** @brief  Asynchronous version of loadRom(): queues the request and returns at once.
+     *
+     *  Success and failure are both reported by a ROM_LOADED message. If the
+     *  request failed, the message carries the exception.
+     */
+    void loadRomAsync(const std::filesystem::path &path);
+    void loadRomAsync(const std::filesystem::path &path, RomType rom);
 
     /** @brief  Removes an installed ROM
      *          The ROM contents is overwritten with zeroes.
@@ -1985,6 +1998,11 @@ public:
     //
 
     VirtualC64();
+    /** @brief  Halts the emulator thread and destroys the emulator
+     *
+     *  A suspension that the calling thread still holds is released first,
+     *  because a suspended emulator thread cannot be halted.
+     */
     ~VirtualC64();
 
 
@@ -2224,8 +2242,8 @@ public:
      *  @note The function blocks until the emulator thread has terminated. It
      *  does nothing if there is no running emulator thread (e.g., if the
      *  thread has already been halted), so it is safe to call it more than
-     *  once. It must not be called while the emulator thread is suspended,
-     *  because a suspended thread cannot terminate.
+     *  once. It throws a CoreError if the calling thread has suspended the
+     *  emulator thread, because a suspended thread cannot terminate.
      */
     void halt();
 

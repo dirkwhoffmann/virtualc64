@@ -556,6 +556,14 @@ extension MyController {
         case .SRV_RECEIVE, .SRV_SEND:
             break
                         
+        case .ROM_LOADED:
+            // A failure is reported to the caller of the load function
+            refreshStatusBar()
+            
+        case .HIBERNATED, .DRIVE_READ, .DRIVE_WRITE, .RS232:
+            // Results of requests that this app does not send
+            break
+            
         default:
             warn("Unknown message: \(msg)")
             fatalError()

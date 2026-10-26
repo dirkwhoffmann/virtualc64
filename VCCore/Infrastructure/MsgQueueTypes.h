@@ -77,21 +77,21 @@ enum class Msg : long
     DRIVE_LED,          ///< The green drive LED has switched on or off
     DRIVE_MOTOR,        ///< The disk has started or stopped spinning
     DRIVE_STEP,         ///< The drive head has stepped
-    DISK_INSERT,        ///< A disk has been inserted
+    DISK_INSERT,        ///< A disk has been inserted (carries the exception if it failed)
     DISK_EJECT,         ///< A disk has been ejected
     DISK_PROTECTED,     ///< The write protection status has changed
     DISK_MODIFIED,      ///< The disk needs saving
-    FILE_FLASHED,       ///< A file has been flashed into memory
+    FILE_FLASHED,       ///< A file has been flashed into memory (carries the exception if it failed)
 
     // Datasette
     VC1530_CONNECT,     ///< A datasette has been connected or disconnected
-    VC1530_TAPE,        ///< A tape has been inserted or ejected
+    VC1530_TAPE,        ///< A tape has been inserted or ejected (carries the exception if inserting failed)
     VC1530_PLAY,        ///< The play key has been pressed
     VC1530_MOTOR,       ///< The drive motor has started or stopped
     VC1530_COUNTER,     ///< The tape counter has stepped
 
     // Expansion port
-    CRT_ATTACHED,       ///< A cartridge has been plugged into the expansion port
+    CRT_ATTACHED,       ///< A cartridge has been plugged into the expansion port (carries the exception if it failed)
 
     // Keyboard
     KB_PRESS,           ///< A key has been pressed
@@ -103,8 +103,9 @@ enum class Msg : long
     SHAKING,            ///< A shaking mouse has been detected
 
     // Snapshots
+    ROM_LOADED,         ///< A ROM has been loaded (value = RomType, or -1 if unknown; carries the exception if it failed)
     SNAPSHOT_TAKEN,     ///< A snapshot has been taken
-    SNAPSHOT_RESTORED,  ///< A snapshot has been restored
+    SNAPSHOT_RESTORED,  ///< A snapshot has been restored (carries the exception if it failed)
     SNAPSHOT_SAVED,     ///< A snapshot has been saved (carries the exception if it failed)
 
     // Workspaces
@@ -205,6 +206,7 @@ struct MsgEnum : Reflectable<MsgEnum, Msg> {
 
             case Msg::SHAKING:               return "SHAKING";
 
+            case Msg::ROM_LOADED:            return "ROM_LOADED";
             case Msg::SNAPSHOT_TAKEN:        return "SNAPSHOT_TAKEN";
             case Msg::SNAPSHOT_RESTORED:     return "SNAPSHOT_RESTORED";
             case Msg::SNAPSHOT_SAVED:        return "SNAPSHOT_SAVED";
