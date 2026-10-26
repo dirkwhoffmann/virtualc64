@@ -616,6 +616,20 @@ VirtualC64::exportConfig(std::ostream &stream, bool diff) const
 }
 
 void
+VirtualC64::call(const std::function<void()> &fn)
+{
+    VC64_PUBLIC
+    emu->call(fn);
+}
+
+void
+VirtualC64::callAsync(std::function<void()> fn, std::function<void(std::exception_ptr)> done)
+{
+    VC64_PUBLIC
+    emu->callAsync(std::move(fn), std::move(done));
+}
+
+void
 VirtualC64::put(const Command &cmd, const std::string &str)
 {
     VC64_PUBLIC
