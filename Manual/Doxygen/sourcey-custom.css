@@ -82,3 +82,48 @@ html.dark {
 html.dark #sidebar {
   background: #21222c;
 }
+
+/* ---------------------------------------------------------------------------
+ * Monospace font size
+ *
+ * Libertinus Mono looks larger than the default monospace font at the same
+ * nominal size, so inline code, code blocks and declarations are scaled down
+ * (sourcey's defaults are .875em, .875rem and .9375rem).
+ * ------------------------------------------------------------------------- */
+#sourcey .prose :where(:not(pre)>code):not(:where([class~=not-prose],[class~=not-prose] *)),
+#sourcey .not-prose :not(pre)>code:not(.param-name) {
+  font-size: .8em;
+}
+
+#sourcey .prose-code-content pre {
+  font-size: .8rem;
+}
+
+#sourcey .code-header,
+#sourcey .rust-signature {
+  font-size: .85rem;
+}
+
+/* ---------------------------------------------------------------------------
+ * Banner on the start page: one image per color scheme. The guide includes
+ * both images; the one that does not fit the current mode is hidden.
+ * ------------------------------------------------------------------------- */
+#sourcey .prose img[alt$="(light mode)"],
+#sourcey .prose img[alt$="(dark mode)"] {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+html:not(.dark) #sourcey .prose img[alt$="(dark mode)"],
+html.dark #sourcey .prose img[alt$="(light mode)"] {
+  display: none;
+}
+
+/* Badges below the banner on the start page (GitHub statistics and build status) */
+#sourcey .prose p:has(> img[src*="shields.io"]),
+#sourcey .prose p:has(> img[src$="badge.svg"]) {
+  text-align: center;
+}

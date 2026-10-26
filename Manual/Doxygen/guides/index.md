@@ -3,17 +3,20 @@ title: VirtualC64 API Documentation
 description: Public API of the VirtualC64 emulation core
 ---
 
-Welcome to the VirtualC64 API reference. This manual describes the public API of the VirtualC64 emulation core, i.e., everything a front-end needs to embed the emulator into an application. For general information about VirtualC64, visit the [official website](https://dirkwhoffmann.github.io/virtualc64/).
+This manual describes the public API of the VirtualC64 emulation core, i.e., everything a front-end needs to embed the emulator into an application. For general information about VirtualC64, visit the [official website](https://dirkwhoffmann.github.io/virtualc64/).
 
-![](images/ad-vc.png)
+![VirtualC64 (light mode)](images/vc-light.png)
+![VirtualC64 (dark mode)](images/vc-dark.png)
 
 ![Watchers](https://img.shields.io/github/watchers/dirkwhoffmann/virtualC64?style=social)
 ![Stars](https://img.shields.io/github/stars/dirkwhoffmann/virtualC64?style=social)
 ![Forks](https://img.shields.io/github/forks/dirkwhoffmann/virtualC64?style=social)
 
-![Build](https://github.com/dirkwhoffmann/virtualC64/workflows/CMake/badge.svg)
-![Build](https://github.com/dirkwhoffmann/virtualC64/workflows/CMake-MinGW/badge.svg)
-![MSVC](https://github.com/dirkwhoffmann/virtualC64/workflows/CMake-MSVC/badge.svg)
+![Code Size](https://img.shields.io/github/languages/code-size/dirkwhoffmann/virtualc64)
+![Repo Size](https://img.shields.io/github/repo-size/dirkwhoffmann/virtualc64)
+
+![Build](https://github.com/dirkwhoffmann/virtualc64/actions/workflows/cmake-multi-platform.yml/badge.svg)
+![Build](https://github.com/dirkwhoffmann/virtualc64/actions/workflows/cmake-mingw.yml/badge.svg)
 
 ## Overview
 
