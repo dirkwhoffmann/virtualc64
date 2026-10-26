@@ -1,3 +1,8 @@
+/* Fonts: Libertinus Sans and Libertinus Mono (the family names are set in
+ * sourcey.config.ts; they are loaded here because sourcey's own Google Fonts
+ * request asks for weights these families do not have). */
+@import url("https://fonts.googleapis.com/css2?family=Libertinus+Sans:ital,wght@0,400;0,700;1,400&family=Libertinus+Mono&display=swap");
+
 /* Color schemes: a neutral light theme (light mode) and Dracula (dark mode).
  *
  * Sourcey stores colors as space-separated RGB triplets. Light mode uses the

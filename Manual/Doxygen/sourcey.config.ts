@@ -14,6 +14,9 @@ export default {
   theme: {
     name: "api-first",
     colors: { primary: "#393796" },
+    // Libertinus has too few weights for the request sourcey sends to Google
+    // Fonts, so the fonts are loaded in sourcey-custom.css instead.
+    fonts: { sans: "Libertinus Sans", mono: "Libertinus Mono", google: false },
     layout: { content: "48rem" },
     css: ["./sourcey-custom.css"],
   },
