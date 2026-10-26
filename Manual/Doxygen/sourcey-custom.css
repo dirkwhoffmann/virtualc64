@@ -1,0 +1,80 @@
+/* Color schemes: Solarized Light (light mode) and Dracula (dark mode).
+ *
+ * Sourcey stores colors as space-separated RGB triplets. Light mode uses the
+ * values in :root, dark mode (class "dark" on <html>) overrides them.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Solarized Light
+ *
+ *   base3 #fdf6e3  page            base00 #657b83  body text
+ *   base2 #eee8d5  sidebar, code   base01 #586e75  emphasized text
+ *   base1 #93a1a1  muted text      base02 #073642  headings
+ *   blue  #268bd2  accent          green  #859900  success
+ * ------------------------------------------------------------------------- */
+:root {
+  --color-primary: 38 139 210;
+  --color-primary-dark: 38 139 210;
+  --color-primary-ink: 38 139 210;
+
+  --color-background-light: 253 246 227;
+  --color-code-block-light: 238 232 213;
+
+  --color-gray-50: 253 246 227;
+  --color-gray-100: 238 232 213;
+  --color-gray-200: 224 217 192;
+  --color-gray-300: 211 203 176;
+  --color-gray-400: 147 161 161;
+  --color-gray-500: 131 148 150;
+  --color-gray-600: 101 123 131;
+  --color-gray-700: 88 110 117;
+  --color-gray-800: 64 90 99;
+  --color-gray-900: 7 54 66;
+  --color-gray-950: 0 43 54;
+
+  --color-success: 133 153 0;
+  --method-get: #859900;
+  --method-delete: #dc322f;
+}
+
+html:not(.dark) #sidebar {
+  background: #eee8d5;
+}
+
+/* ---------------------------------------------------------------------------
+ * Dracula
+ *
+ *   background #282a36   current line #44475a   foreground #f8f8f2
+ *   darker     #21222c   comment      #6272a4   purple     #bd93f9
+ * ------------------------------------------------------------------------- */
+html.dark {
+  --color-primary: 189 147 249;
+  --color-primary-light: 189 147 249;
+
+  --color-background-dark: 40 42 54;
+  --color-code-block-dark: 33 34 44;
+
+  --color-gray-50: 248 248 242;
+  --color-gray-100: 248 248 242;
+  --color-gray-200: 236 236 230;
+  --color-gray-300: 226 226 220;
+  --color-gray-400: 150 160 200;
+  --color-gray-500: 98 114 164;
+  --color-gray-600: 86 90 120;
+  --color-gray-700: 68 71 90;
+  --color-gray-800: 56 58 76;
+  --color-gray-900: 33 34 44;
+  --color-gray-950: 25 26 33;
+
+  --color-stone-50: 248 248 242;
+  --color-stone-400: 150 160 200;
+  --color-stone-700: 68 71 90;
+
+  --color-success: 80 250 123;
+  --method-get: #50fa7b;
+  --method-delete: #ff5555;
+}
+
+html.dark #sidebar {
+  background: #21222c;
+}

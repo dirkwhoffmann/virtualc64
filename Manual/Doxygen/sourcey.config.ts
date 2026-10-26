@@ -16,6 +16,7 @@ export default {
     colors: { primary: "#393796" },
     fonts: { sans: "Inter", mono: "system" },
     layout: { content: "48rem" },
+    css: ["./sourcey-custom.css"],
   },
   navigation: {
     tabs: [
