@@ -42,13 +42,7 @@ WARN_AS_ERROR          = FAIL_ON_WARNINGS
 WARN_FORMAT            = "$file:$line: $text"
 
 # Input
-INPUT                  = pages/home.md \
-                         pages/api.md \
-                         pages/threading.md \
-                         pages/state.md \
-                         pages/communication.md \
-                         pages/headless.md \
-                         ../../VCCore/VirtualC64.h \
+INPUT                  = ../../VCCore/VirtualC64.h \
                          ../../VCCore/VirtualC64Types.h \
                          ../../VCCore/Components/C64Types.h \
                          ../../VCCore/Components/CIA/CIATypes.h \
@@ -97,11 +91,10 @@ INPUT                  = pages/home.md \
                          ../../VCCore/Ports/PowerPortTypes.h \
                          ../../VCCore/Ports/UserPortTypes.h \
                          ../../VCCore/Ports/VideoPortTypes.h
-FILE_PATTERNS          = *.h *.md
+FILE_PATTERNS          = *.h
 RECURSIVE              = NO
 EXAMPLE_PATH           = ../../VCCore
 IMAGE_PATH             = images
-USE_MDFILE_AS_MAINPAGE = pages/home.md
 
 # The headers use C++20; the macros below only matter for a few attributes
 ENABLE_PREPROCESSING   = YES
@@ -130,6 +123,13 @@ DISABLE_INDEX          = NO
 
 # Other output formats
 GENERATE_LATEX         = NO
+
+# XML output (input for sourcey)
+GENERATE_XML           = YES
+XML_OUTPUT             = xml
+XML_PROGRAMLISTING     = NO
+STRIP_FROM_PATH        = ../../VCCore
+STRIP_FROM_INC_PATH    = ../../VCCore
 
 # Diagrams
 HAVE_DOT               = NO

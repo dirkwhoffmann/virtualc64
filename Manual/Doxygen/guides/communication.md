@@ -1,10 +1,14 @@
-# Communication Model {#communication}
+---
+title: Communication Model
+description: Command queue, message queue and direct access
+---
+
 
 ## Overview
 
 The following diagram summarizes how the front-end and the emulator core exchange information.
 
-@image html communication.svg
+![](images/communication.svg)
 
 Three mechanisms are involved:
 
@@ -22,14 +26,6 @@ Three mechanisms are involved:
 
 - **Direct access**
 
-  Everything that is not a state change is read directly from the emulator, on the calling thread. This comprises queries such as \ref vc64::VirtualC64::isRunning "isRunning()", the state of the components (`getInfo()` and `getCachedInfo()`), and large data such as textures and audio samples. The `getCachedInfo()` flavor returns a snapshot that the emulator thread records periodically and is the right choice while the emulator runs.
+  Everything that is not a state change is read directly from the emulator, on the calling thread. This comprises queries such as [isRunning()](/api-reference/vc64-VirtualC64.html#isrunning), the state of the components (`getInfo()` and `getCachedInfo()`), and large data such as textures and audio samples. The `getCachedInfo()` flavor returns a snapshot that the emulator thread records periodically and is the right choice while the emulator runs.
 
-Which mechanism a function uses is part of its documentation. In general, plain-name and `Async` functions use the command queue, while getters use direct access. The sub-APIs (\ref vc64::CPUAPI, \ref vc64::VICIIAPI, \ref vc64::SIDAPI, and so on) follow the same rules as the main class \ref vc64::VirtualC64.
-
-<div class="section_buttons">
-
-| Previous                  |                       Next |
-|:--------------------------|---------------------------:|
-| [State Model](state.md)   | [Headless App](headless.md) |
-
-</div>
+Which mechanism a function uses is part of its documentation. In general, plain-name and `Async` functions use the command queue, while getters use direct access. The sub-APIs ([vc64::CPUAPI](/api-reference/vc64-CPUAPI.html), [vc64::VICIIAPI](/api-reference/vc64-VICIIAPI.html), [vc64::SIDAPI](/api-reference/vc64-SIDAPI.html), and so on) follow the same rules as the main class [vc64::VirtualC64](/api-reference/vc64-VirtualC64.html).

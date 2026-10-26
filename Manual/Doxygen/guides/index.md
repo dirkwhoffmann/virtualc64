@@ -1,6 +1,11 @@
+---
+title: VirtualC64 API Documentation
+description: Public API of the VirtualC64 emulation core
+---
+
 Welcome to the VirtualC64 API reference. This manual describes the public API of the VirtualC64 emulation core, i.e., everything a front-end needs to embed the emulator into an application. For general information about VirtualC64, visit the [official website](https://dirkwhoffmann.github.io/virtualc64/).
 
-\image html ad-vc.png width=400px
+![](images/ad-vc.png)
 
 ![Watchers](https://img.shields.io/github/watchers/dirkwhoffmann/virtualC64?style=social)
 ![Stars](https://img.shields.io/github/stars/dirkwhoffmann/virtualC64?style=social)
@@ -12,7 +17,7 @@ Welcome to the VirtualC64 API reference. This manual describes the public API of
 
 ## Overview
 
-The emulator core is written in C++20 and designed to be portable. All of its functionality is reached through a single class, \ref vc64::VirtualC64. The class contains one sub-API per hardware component, for example `cpu`, `vicii`, `sid`, `keyboard`, or `drive8`. All sub-APIs share the same conventions for threading and error handling, which are described in the chapters of this manual.
+The emulator core is written in C++20 and designed to be portable. All of its functionality is reached through a single class, [vc64::VirtualC64](/api-reference/vc64-VirtualC64.html). The class contains one sub-API per hardware component, for example `cpu`, `vicii`, `sid`, `keyboard`, or `drive8`. All sub-APIs share the same conventions for threading and error handling, which are described in the chapters of this manual.
 
 ## Example
 
@@ -56,17 +61,9 @@ int main()
 
 ## Where to go from here
 
-- [API Overview](api.md) shows how the API is organized and links to all API classes. Start here to look up a function.
+- [API Overview](api-overview.md) shows how the API is organized and links to all API classes. Start here to look up a function.
 - [Threading and Errors](threading.md) explains which thread may call what, how failures are reported, and how the blocking and asynchronous flavors of the API functions differ.
 - [State Model](state.md) describes the life cycle of the emulator thread.
 - [Communication Model](communication.md) gives an overview of the command queue, the message queue, and the way data is read back from the emulator.
 - [Headless App](headless.md) walks through a small command-line application that uses the API.
-- Class \ref vc64::VirtualC64 is the entry point of the API reference.
-
-<div class="section_buttons">
-
-|                      Next |
-|--------------------------:|
-| [API Overview](api.md) |
-
-</div>
+- Class [vc64::VirtualC64](/api-reference/vc64-VirtualC64.html) is the entry point of the API reference.
