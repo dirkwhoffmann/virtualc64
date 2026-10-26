@@ -25,6 +25,7 @@ namespace vc64 {
  * static_cast moves a value from this Reflectable-paired, UI/option-facing
  * enum to the one GpuColor<F> is templated on, and back.
  */
+/// Byte layout of a 32-bit host pixel
 enum class TexFormat : long
 {
     ABGR,                       ///< AABBGGRR

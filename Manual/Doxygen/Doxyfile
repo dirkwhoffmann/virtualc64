@@ -42,7 +42,8 @@ WARN_AS_ERROR          = FAIL_ON_WARNINGS
 WARN_FORMAT            = "$file:$line: $text"
 
 # Input
-INPUT                  = ../../VCCore/VirtualC64.h \
+INPUT                  = groups.dox \
+                         ../../VCCore/VirtualC64.h \
                          ../../VCCore/VirtualC64Types.h \
                          ../../VCCore/Components/C64Types.h \
                          ../../VCCore/Components/CIA/CIATypes.h \
@@ -91,7 +92,7 @@ INPUT                  = ../../VCCore/VirtualC64.h \
                          ../../VCCore/Ports/PowerPortTypes.h \
                          ../../VCCore/Ports/UserPortTypes.h \
                          ../../VCCore/Ports/VideoPortTypes.h
-FILE_PATTERNS          = *.h
+FILE_PATTERNS          = *.h *.dox
 RECURSIVE              = NO
 EXAMPLE_PATH           = ../../VCCore
 IMAGE_PATH             = images

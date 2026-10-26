@@ -58,6 +58,7 @@ struct ServerTypeEnum : utl::Reflectable<ServerTypeEnum, ServerType>
 };
 
 
+/// Direction of a packet in the traffic log
 enum class TrafficDirection : long
 {
     RECEIVED,                            ///< The packet was received from a client

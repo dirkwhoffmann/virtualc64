@@ -18,7 +18,7 @@ export default {
           { group: "Examples", pages: ["guides/headless"] },
         ],
       },
-      { tab: "API Reference", doxygen: { xml: "./build/xml-sourcey", groups: false } },
+      { tab: "API Reference", doxygen: { xml: "./build/xml-sourcey", groups: true } },
     ],
   },
 };

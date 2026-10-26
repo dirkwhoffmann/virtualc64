@@ -7,11 +7,21 @@ with @name ... @{ ... @} end up in a "user-defined" section, which it skips.
 This script copies the XML directory and moves the members of every
 user-defined section into the matching standard section.
 
+It also tidies the compound list: unnamed nested structs and unions are
+dropped, and the groups are listed in the order of GROUP_ORDER (the order in
+which the sidebar shows them).
+
 Usage: flatten_groups.py <input-xml-dir> <output-xml-dir>
 """
 import shutil, sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
+
+# Sourcey sorts the pages by the length of the Doxygen id (group__<name>) and
+# keeps the order of index.xml for equal lengths. The group names in groups.dox
+# are therefore chosen so that their length does not decrease along this list.
+GROUP_ORDER = ["grp_api", "grp_config", "grp_states", "grp_messages", "grp_exceptions",
+               "grp_mediafiles", "grp_enumerations", "grp_commandqueue", "grp_miscellaneous"]
 
 SUFFIX = {"function": "func", "variable": "attrib", "typedef": "type",
           "enum": "type", "friend": "friend"}
@@ -47,12 +57,33 @@ def flatten(path):
     if changed:
         tree.write(path, encoding="utf-8", xml_declaration=True)
 
+def tidy_index(dst):
+    path = Path(dst) / "index.xml"
+    tree = ET.parse(path)
+    root = tree.getroot()
+    compounds = root.findall("compound")
+    for c in compounds:
+        name = c.findtext("name") or ""
+        if "[" in name or (c.get("kind") == "namespace" and name == "vc64"):
+            root.remove(c)
+    groups = [c for c in root.findall("compound") if c.get("kind") == "group"]
+    for c in groups:
+        root.remove(c)
+    def rank(c):
+        name = c.findtext("name")
+        return GROUP_ORDER.index(name) if name in GROUP_ORDER else len(GROUP_ORDER)
+    first = len(list(root))
+    for c in sorted(groups, key=rank):
+        root.insert(0, c) if False else root.append(c)
+    tree.write(path, encoding="utf-8", xml_declaration=True)
+
 def main(src, dst):
     shutil.rmtree(dst, ignore_errors=True)
     shutil.copytree(src, dst)
     for path in Path(dst).glob("*.xml"):
         if path.name.startswith(("class", "struct", "union")):
             flatten(path)
+    tidy_index(dst)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
