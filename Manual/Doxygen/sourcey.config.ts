@@ -9,7 +9,8 @@ export default {
   // The site is published at https://dirkwhoffmann.github.io/VirtualC64/docs/
   siteUrl: "https://dirkwhoffmann.github.io",
   baseUrl: "/VirtualC64/docs",
-  logo: "./guides/images/icon.png",
+  // "mark" tells sourcey that the image is only an icon, so the site name is shown beside it
+  logo: { light: "./guides/images/icon.png", mark: true },
   theme: {
     name: "api-first",
     colors: { primary: "#393796" },
