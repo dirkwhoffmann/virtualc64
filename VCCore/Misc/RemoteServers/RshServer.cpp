@@ -12,6 +12,7 @@
 
 #include "vcconfig.h"
 #include "RshServer.h"
+#include <future>
 #include "C64.h"
 #include "RetroShell.h"
 #include "httplib.h"

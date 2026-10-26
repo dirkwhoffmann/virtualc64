@@ -14,7 +14,7 @@
 #pragma once
 
 #include "BasicTypes.h"
-#include "Roms/RomManager.h"
+#include "Roms/RomTypes.h"
 
 namespace vc64 {
 
@@ -29,7 +29,6 @@ using retro::vault::RomPlatform;
 using retro::vault::RomPlatformEnum;
 namespace RomFlags = retro::vault::RomFlags;
 using retro::vault::RomTraits;
-using retro::vault::RomManager;
 
 //
 // Enumerations

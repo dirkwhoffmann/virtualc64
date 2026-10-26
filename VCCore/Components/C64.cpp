@@ -11,6 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "vcconfig.h"
+#include "Roms/RomManager.h"
 #include "C64.h"
 #include "Emulator.h"
 #include "Option.h"
@@ -2041,7 +2042,7 @@ RomTraits
 C64::getRomTraits(u64 fnv)
 {
     // Crawl through the Rom database
-    if (auto traits = RomManager::shared().resolveFNV64(fnv)) return *traits;
+    if (auto traits = retro::vault::RomManager::shared().resolveFNV64(fnv)) return *traits;
 
     return RomTraits {
         .title = "Unknown ROM",

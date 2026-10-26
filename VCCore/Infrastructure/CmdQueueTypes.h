@@ -15,7 +15,7 @@
 
 #include "Peripherals/Joystick/JoystickTypes.h"
 #include "Components/CPU/CPUTypes.h"
-#include "Infrastructure/Option.h"
+#include "Infrastructure/OptionTypes.h"
 
 namespace vc64 {
 

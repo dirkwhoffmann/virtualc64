@@ -17,7 +17,6 @@
 #include <functional>
 
 #include "BasicTypes.h"
-#include <future>
 
 namespace vc64 {
 
