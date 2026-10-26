@@ -91,9 +91,14 @@ using peddle::RecordedInstruction;
  */
 class API {
 
-public:
+    friend class VirtualC64;
+    friend struct SuspendResume;
+
+protected:
 
     class Emulator *emu = nullptr;
+
+public:
 
     API() { }
     API(Emulator *emu) : emu(emu) { }
@@ -124,9 +129,11 @@ public:
  */
 class MemoryDebuggerAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Memory *mem = nullptr;
+
+public:
 
     /// @name Debugging memory
     /// @{
@@ -166,9 +173,11 @@ public:
  */
 class MemoryAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Memory *mem = nullptr;
+
+public:
 
     // Memory debugger
     /// Memory debugger
@@ -230,13 +239,14 @@ public:
  */
 class GuardsAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class CPU *cpu = nullptr;
 
-    // The guard list this API operates on
-    /// The kind of guard (breakpoint or watchpoint) this API manages
+    // The guard list this API operates on (breakpoints or watchpoints)
     GuardType type = GuardType::BREAKPOINT;
+
+public:
 
     /** @brief  Returns the number of guards in the guard list.
      */
@@ -355,9 +365,11 @@ public:
  */
 class CPUDebuggerAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class CPU *cpu = nullptr;
+
+public:
 
     /** @brief  Returns the number of instructions in the record buffer.
      *  @note   The record buffer is only filled in track mode. To save
@@ -409,9 +421,11 @@ public:
  */
 class CPUAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class CPU *cpu = nullptr;
+
+public:
 
     /// CPU debugger
     CPUDebuggerAPI debugger;
@@ -443,9 +457,11 @@ public:
  */
 class CIAAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class CIA *cia = nullptr;
+
+public:
 
     /** @brief  Returns the component's current configuration.
      */
@@ -483,9 +499,11 @@ public:
  */
 class VICIIAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class VICII *vicii = nullptr;
+
+public:
 
     /** @brief  Provides details about the currently selected VICII revision.
      */
@@ -528,9 +546,11 @@ public:
  */
 class SIDAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class SIDBridge *sidBridge = nullptr;
+
+public:
 
     /** @brief  Returns the current state of a specific SID.
      *  @param  nr      SID number (0 - 3). 0 is the primary SID.
@@ -578,9 +598,11 @@ public:
  */
 class AudioPortAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class AudioPort *audioPort = nullptr;
+
+public:
 
     /** @brief  Returns the component's current configuration.
      */
@@ -675,9 +697,11 @@ public:
  */
 class VideoPortAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class VideoPort *videoPort = nullptr;
+
+public:
 
     /** @brief  Returns the component's current configuration.
      */
@@ -785,9 +809,11 @@ public:
  */
 class XRayAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class XRay *xray = nullptr;
+
+public:
 
     /** @brief  Returns the component's current configuration
      */
@@ -800,9 +826,11 @@ public:
  */
 class KeyboardAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Keyboard *keyboard = nullptr;
+
+public:
 
     /** @brief  Checks if a key is currently pressed.
      *  @param  key     The key to check.
@@ -901,9 +929,11 @@ public:
  */
 class MouseAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Mouse *mouse = nullptr;
+
+public:
 
     /** @brief  Returns the component's current configuration.
      */
@@ -956,9 +986,11 @@ public:
  */
 class JoystickAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Joystick *joystick = nullptr;
+
+public:
 
     /** @brief  Returns the component's current configuration.
      */
@@ -999,9 +1031,11 @@ public:
  */
 class PaddleAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Paddle *paddle = nullptr;
+
+public:
 
     /** @brief  Returns the component's current state.
      *
@@ -1022,9 +1056,11 @@ public:
  */
 class DatasetteAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Datasette *datasette = nullptr;
+
+public:
 
     /** @brief  Returns the component's current state.
      *
@@ -1069,9 +1105,11 @@ public:
  */
 class RS232API : public API {
 
-public:
+    friend class VirtualC64;
 
     class RS232 *rs232 = nullptr;
+
+public:
 
     /** @brief  Returns the component's current state.
      */
@@ -1114,9 +1152,11 @@ public:
  */
 class ControlPortAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class ControlPort *controlPort = nullptr;
+
+public:
 
     /** @brief  Custom API of the joystick connected to this port
      */
@@ -1139,9 +1179,11 @@ public:
  */
 class UserPortAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class UserPort *userPort = nullptr;
+
+public:
 
     /** @brief  Custom API of the RS232 adapter
      */
@@ -1154,9 +1196,11 @@ public:
  */
 class ExpansionPortAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class ExpansionPort *expansionPort = nullptr;
+
+public:
 
     /// @{
     /// @name Analyzing cartridges.
@@ -1233,9 +1277,11 @@ public:
  */
 class SerialPortAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class SerialPort *serialPort = nullptr;
+
+public:
 
 };
 
@@ -1248,9 +1294,11 @@ public:
  */
 class DiskAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Drive *drive = nullptr;
+
+public:
 
     /** @brief  Getter for the raw disk object
      *  @return A pointer to the disk object or nullptr if no disk is present.
@@ -1267,9 +1315,11 @@ public:
  */
 class DriveAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Drive *drive = nullptr;
+
+public:
 
     /// The disk in the drive
     DiskAPI disk;
@@ -1332,9 +1382,11 @@ public:
  */
 class RemoteManagerAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class RemoteManager *remoteManager = nullptr;
+
+public:
 
     /// @name Analyzing the emulator
     /// @{
@@ -1373,9 +1425,11 @@ public:
  */
 class RetroShellAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class RetroShell *retroShell = nullptr;
+
+public:
 
     /// @name Querying the console
     /// @{
@@ -1491,9 +1545,11 @@ public:
  */
 class DefaultsAPI : public API {
 
-public:
+    friend class VirtualC64;
 
     class Defaults *defaults = nullptr;
+
+public:
 
     DefaultsAPI(Defaults *defaults) : defaults(defaults) { }
     
@@ -1682,9 +1738,11 @@ public:
  */
 class C64API : public API {
 
-public:
+    friend class VirtualC64;
 
     class C64 *c64 = nullptr;
+
+public:
 
     /// @name Analyzing the emulator
     /// @{
@@ -2765,7 +2823,7 @@ public:
 
     /** @brief  Runs a function on the emulator thread and waits until it is done.
      *
-     *  @warning This is an advanced interface, see above.
+     *  @warning This is an advanced interface. It bypasses the dedicated API functions, and what it touches is not covered by any compatibility promise.
      *
      *  The function is carried out in the order of the commands that have been
      *  queued before, and never while a frame is computed or while another
@@ -2779,7 +2837,7 @@ public:
 
     /** @brief  Queues a function for the emulator thread without waiting for it.
      *
-     *  @warning This is an advanced interface, see above.
+     *  @warning This is an advanced interface. It bypasses the dedicated API functions, and what it touches is not covered by any compatibility promise.
      *
      *  This is the asynchronous counterpart of call(). The function is carried
      *  out by the emulator thread at some later time, so everything it refers
@@ -2795,7 +2853,7 @@ public:
 
     /** @brief  Feeds a command into the command queue and waits for the result.
      *
-     *  @warning This is an advanced interface, see above.
+     *  @warning This is an advanced interface. It bypasses the dedicated API functions, and what it touches is not covered by any compatibility promise.
      *
      *  The function returns when the emulator thread has carried out the
      *  command. A command that fails throws the corresponding exception.
@@ -2856,6 +2914,66 @@ public:
     void putAsync(Cmd type, TapeCmd payload) { putAsync(Command(type, payload)); }
     /// Shorthand for putAsync(Command(type, payload)).
     void putAsync(Cmd type, AlarmCmd payload) { putAsync(Command(type, payload)); }
+
+    /** @brief  Gives access to the internal components
+     *
+     *  @warning These are advanced interfaces. They return the internal objects
+     *  the APIs operate on, bypassing all synchronization the dedicated API
+     *  functions provide. Use them only while the emulator is suspended or from
+     *  within a function passed to call(). To make use of the objects, include
+     *  the corresponding internal headers. What they offer is not covered by
+     *  any compatibility promise.
+     *
+     *  The getters that take a number throw a CoreError
+     *  (CoreError::OPT_INV_ARG) if the number is out of range.
+     */
+    class Emulator &getEmulator();
+    /// Returns the C64.
+    class C64 &getC64();
+    /// Returns the memory.
+    class Memory &getMemory();
+    /// Returns the CPU.
+    class CPU &getCPU();
+    /// Returns a CIA chip (nr = 0 or 1).
+    class CIA &getCIA(isize nr);
+    /// Returns the VICII chip.
+    class VICII &getVICII();
+    /// Returns the SID bridge, which hosts all SID chips.
+    class SIDBridge &getSID();
+    /// Returns the audio port.
+    class AudioPort &getAudioPort();
+    /// Returns the video port.
+    class VideoPort &getVideoPort();
+    /// Returns the X-Ray visualizer.
+    class XRay &getXRay();
+    /// Returns the keyboard.
+    class Keyboard &getKeyboard();
+    /// Returns the datasette.
+    class Datasette &getDatasette();
+    /// Returns a control port (nr = 0 or 1).
+    class ControlPort &getControlPort(isize nr);
+    /// Returns the mouse of a control port (port = 0 or 1).
+    class Mouse &getMouse(isize port);
+    /// Returns the joystick of a control port (port = 0 or 1).
+    class Joystick &getJoystick(isize port);
+    /// Returns the paddle of a control port (port = 0 or 1).
+    class Paddle &getPaddle(isize port);
+    /// Returns the user port.
+    class UserPort &getUserPort();
+    /// Returns the RS232 adapter.
+    class RS232 &getRS232();
+    /// Returns the expansion port.
+    class ExpansionPort &getExpansionPort();
+    /// Returns the serial port.
+    class SerialPort &getSerialPort();
+    /// Returns a floppy drive (nr = 0 for drive 8, 1 for drive 9).
+    class Drive &getDrive(isize nr);
+    /// Returns the remote server manager.
+    class RemoteManager &getRemoteManager();
+    /// Returns RetroShell.
+    class RetroShell &getRetroShell();
+    /// Returns the user defaults storage.
+    class Defaults &getDefaults();
     /// @}
 };
 

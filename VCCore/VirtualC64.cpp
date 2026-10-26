@@ -2442,4 +2442,165 @@ DefaultsAPI::remove(Opt opt, std::vector <isize> objids)
     defaults->remove(opt, objids);
 }
 
+
+//
+// Danger zone: raw access to the components
+//
+
+Emulator &
+VirtualC64::getEmulator()
+{
+    return *emu;
+}
+
+C64 &
+VirtualC64::getC64()
+{
+    return *c64.c64;
+}
+
+Memory &
+VirtualC64::getMemory()
+{
+    return *mem.mem;
+}
+
+CPU &
+VirtualC64::getCPU()
+{
+    return *cpu.cpu;
+}
+
+VICII &
+VirtualC64::getVICII()
+{
+    return *vicii.vicii;
+}
+
+SIDBridge &
+VirtualC64::getSID()
+{
+    return *sid.sidBridge;
+}
+
+AudioPort &
+VirtualC64::getAudioPort()
+{
+    return *audioPort.audioPort;
+}
+
+VideoPort &
+VirtualC64::getVideoPort()
+{
+    return *videoPort.videoPort;
+}
+
+XRay &
+VirtualC64::getXRay()
+{
+    return *xray.xray;
+}
+
+Keyboard &
+VirtualC64::getKeyboard()
+{
+    return *keyboard.keyboard;
+}
+
+Datasette &
+VirtualC64::getDatasette()
+{
+    return *datasette.datasette;
+}
+
+UserPort &
+VirtualC64::getUserPort()
+{
+    return *userPort.userPort;
+}
+
+RS232 &
+VirtualC64::getRS232()
+{
+    return *userPort.rs232.rs232;
+}
+
+ExpansionPort &
+VirtualC64::getExpansionPort()
+{
+    return *expansionPort.expansionPort;
+}
+
+SerialPort &
+VirtualC64::getSerialPort()
+{
+    return *serialPort.serialPort;
+}
+
+RemoteManager &
+VirtualC64::getRemoteManager()
+{
+    return *remoteManager.remoteManager;
+}
+
+RetroShell &
+VirtualC64::getRetroShell()
+{
+    return *retroShell.retroShell;
+}
+
+Defaults &
+VirtualC64::getDefaults()
+{
+    return *defaults.defaults;
+}
+
+CIA &
+VirtualC64::getCIA(isize nr)
+{
+    if (nr < 0 || nr > 1) throw CoreError(CoreError::OPT_INV_ARG, "0...1");
+
+    return nr == 0 ? *cia1.cia : *cia2.cia;
+}
+
+ControlPort &
+VirtualC64::getControlPort(isize nr)
+{
+    if (nr < 0 || nr > 1) throw CoreError(CoreError::OPT_INV_ARG, "0...1");
+
+    return nr == 0 ? *controlPort1.controlPort : *controlPort2.controlPort;
+}
+
+Mouse &
+VirtualC64::getMouse(isize port)
+{
+    if (port < 0 || port > 1) throw CoreError(CoreError::OPT_INV_ARG, "0...1");
+
+    return port == 0 ? *controlPort1.mouse.mouse : *controlPort2.mouse.mouse;
+}
+
+Joystick &
+VirtualC64::getJoystick(isize port)
+{
+    if (port < 0 || port > 1) throw CoreError(CoreError::OPT_INV_ARG, "0...1");
+
+    return port == 0 ? *controlPort1.joystick.joystick : *controlPort2.joystick.joystick;
+}
+
+Paddle &
+VirtualC64::getPaddle(isize port)
+{
+    if (port < 0 || port > 1) throw CoreError(CoreError::OPT_INV_ARG, "0...1");
+
+    return port == 0 ? *controlPort1.paddle.paddle : *controlPort2.paddle.paddle;
+}
+
+Drive &
+VirtualC64::getDrive(isize nr)
+{
+    if (nr < 0 || nr > 1) throw CoreError(CoreError::OPT_INV_ARG, "0...1");
+
+    return nr == 0 ? *drive8.drive : *drive9.drive;
+}
+
 }

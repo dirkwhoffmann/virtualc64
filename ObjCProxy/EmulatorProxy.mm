@@ -1028,8 +1028,7 @@ static NSString *padded(const string &dump, NSInteger pads)
     NSLog(@"DiskAnalyzerProxy::initWithDrive");
 
     if (!(self = [super init])) return self;
-    auto drv = (DriveAPI *)drive->obj;
-    obj = new DiskAnalyzer(*drv->drive);
+    obj = new DiskAnalyzer(((VirtualC64 *)drive->emu)->getDrive([drive info].id));
 
     return self;
 }

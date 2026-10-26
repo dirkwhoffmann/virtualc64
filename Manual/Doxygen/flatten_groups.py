@@ -7,6 +7,10 @@ with @name ... @{ ... @} end up in a "user-defined" section, which it skips.
 This script copies the XML directory and moves the members of every
 user-defined section into the matching standard section.
 
+Notes and warnings (@note, @warning) are turned into titled paragraphs.
+Moxygen would render them as ":::warning" containers, which sourcey only
+understands in hand-written Markdown, so they would show up as literal text.
+
 Members without a doc comment in the header (constructors, wiring pointers,
 internal helpers) are dropped, so that the reference only shows what the
 headers document.
@@ -37,6 +41,24 @@ def section_kind(member):
         return "friend"
     static = "static-" if member.get("static") == "yes" and kind in ("func", "attrib") else ""
     return f"{prot}-{static}{kind}"
+
+CALLOUTS = {"note": "Note", "warning": "Warning", "attention": "Attention",
+            "remark": "Remark", "deprecated": "Deprecated"}
+
+def retitle_callouts(path):
+    """Turns callout sections into titled paragraphs ("#### Warning")."""
+    tree = ET.parse(path)
+    changed = False
+    for section in tree.getroot().iter("simplesect"):
+        title = CALLOUTS.get(section.get("kind"))
+        if title:
+            heading = ET.Element("title")
+            heading.text = title
+            section.insert(0, heading)
+            section.set("kind", "par")
+            changed = True
+    if changed:
+        tree.write(path, encoding="utf-8", xml_declaration=True)
 
 def documented(member):
     for tag in ("briefdescription", "detaileddescription"):
@@ -106,6 +128,8 @@ def main(src, dst):
     for path in Path(dst).glob("*.xml"):
         if path.name.startswith(("class", "struct", "union")):
             flatten(path)
+        if path.name != "index.xml":
+            retitle_callouts(path)
     tidy_index(dst)
 
 if __name__ == "__main__":
