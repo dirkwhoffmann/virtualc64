@@ -102,10 +102,12 @@ public:
      *  as often as suspend(). Use it to read or modify the state of a
      *  component that is not protected by the API itself.
      *
-     *  Do not call it from the emulator thread. While the thread is
-     *  suspended, the blocking API functions (those that wait for the
-     *  emulator thread) refuse to work, and halt() cannot finish. Queued
-     *  requests wait in the queue until the thread continues.
+     *  Only one thread can hold a suspension at a time. Another thread that
+     *  calls suspend(), or a blocking API function that waits for the
+     *  emulator thread, waits until the holder has resumed the emulator.
+     *  The holder itself must not call such a function, because it would wait
+     *  for itself: they throw a CoreError, and so does halt(). Do not call
+     *  suspend() from the emulator thread.
      */
     void suspend() const;
 

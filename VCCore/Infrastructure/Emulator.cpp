@@ -521,8 +521,9 @@ Emulator::sendAndWait(const Command &cmd, const string &str)
     if (isHalted()) {
         throw CoreError(CoreError::NOT_LAUNCHED, "The emulator thread has been halted.");
     }
-    if (isSuspended()) {
-        throw CoreError(CoreError::NOT_LAUNCHED, "The emulator thread is suspended.");
+    // The command would never be carried out while this thread keeps the emulator suspended
+    if (isSuspendedByCurrentThread()) {
+        throw CoreError(CoreError::NOT_LAUNCHED, "The emulator thread is suspended by the calling thread.");
     }
 
     auto future = send(cmd, str);
