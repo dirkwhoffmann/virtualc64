@@ -21,6 +21,7 @@ namespace vc64 {
 // Enumerations
 //
 
+/// Supported cartridge types
 enum class CartridgeType : long
 {
     // Cartridges with a defined CRT ID (values must match)
@@ -205,6 +206,7 @@ struct CartridgeTypeEnum : utl::Reflectable<CartridgeTypeEnum, CartridgeType> {
     }
 };
 
+/// State of a flash ROM chip
 enum class FlashState : long
 {
     READ,
@@ -258,6 +260,7 @@ struct FlashStateEnum : utl::Reflectable<FlashStateEnum, FlashState> {
 // Structures
 //
 
+/// Properties of a cartridge type
 typedef struct
 {
     CartridgeType type;                     ///< Cartridge type
@@ -281,9 +284,10 @@ typedef struct
 }
 CartridgeTraits;
 
+/// State of an attached cartridge
 typedef struct
 {
-    CartridgeType type; // DEPRECATED
+    CartridgeType type;                  ///< DEPRECATED
     bool supported;                         ///< The cartridge type is supported
     bool gameLineInCrtFile;                 ///< Value of the GAME line stored in the CRT file
     bool exromLineInCrtFile;                ///< Value of the EXROM line stored in the CRT file
@@ -293,6 +297,7 @@ typedef struct
 }
 CartridgeInfo;
 
+/// Description of a cartridge ROM chip
 typedef struct
 {
     u16 size;                               ///< Size of the ROM chip (in bytes)

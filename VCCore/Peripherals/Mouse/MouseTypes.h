@@ -61,6 +61,7 @@ struct MouseModelEnum : utl::Reflectable<MouseModelEnum, MouseModel> {
 // Structures
 //
 
+/// Configuration of a mouse
 typedef struct
 {
     MouseModel model;                       ///< Mouse model

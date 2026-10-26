@@ -21,7 +21,9 @@ namespace vc64 {
 // Constants
 //
 
+/// Control port 1
 static constexpr auto PORT_1 = 0;
+/// Control port 2
 static constexpr auto PORT_2 = 1;
 
 

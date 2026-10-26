@@ -103,7 +103,7 @@ public:
     virtual void didDisconnect() { };
     virtual void didSwitch(SrvState from, SrvState to) { };
 
-    // Error notifications
+    /// Error notifications
     virtual void didTerminate(const string &error) { };
 
     // Reception callbacks

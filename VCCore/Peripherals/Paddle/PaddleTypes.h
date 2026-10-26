@@ -57,6 +57,7 @@ struct PaddleOrientationEnum : utl::Reflectable<PaddleOrientationEnum, PaddleOri
 // Structures
 //
 
+/// Configuration of a paddle
 typedef struct
 {
     PaddleOrientation orientation;          ///< Paddle value mapping scheme

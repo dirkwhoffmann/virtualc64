@@ -141,6 +141,7 @@ Headless::runScript(const char **script)
     runScript(path);
 }
 
+//! [runScript]
 void
 Headless::runScript(const fs::path &path)
 {
@@ -168,6 +169,9 @@ Headless::runScript(const fs::path &path)
     waitForWakeUp(timeout);
 }
 
+//! [runScript]
+
+//! [process]
 void
 process(const void *listener, Message msg, std::exception_ptr)
 {
@@ -209,6 +213,7 @@ Headless::process(Message msg)
             break;
     }
 }
+//! [process]
 
 void
 Headless::reportSize()

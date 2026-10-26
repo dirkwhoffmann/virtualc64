@@ -33,7 +33,7 @@ public:
     // Static methods
     //
 
-    // Determines the type of an arbitrary file on disk
+    /// Determines the type of an arbitrary file on disk
     static FileType type(const fs::path &path);
 
     // Factory methods
@@ -50,16 +50,16 @@ public:
     // Returns the media type of this file
     virtual FileType type() const { return FileType::UNKNOWN; }
 
-    // Returns the size of this file
+    /// Returns the size of this file
     virtual isize getSize() const = 0;
 
-    // Returns a textual representation of the file size
+    /// Returns a textual representation of the file size
     virtual string getSizeAsString() const;
 
-    // Returns a pointer to the file data
+    /// Returns a pointer to the file data
     virtual u8 *getData() const = 0;
 
-    // Returns the logical name of this file
+    /// Returns the logical name of this file
     virtual string name() const = 0;
 
     // Returns a fingerprint (hash value) for this file

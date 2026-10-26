@@ -47,6 +47,7 @@ struct CIARevisionEnum : utl::Reflectable<CIARevisionEnum, CIARev> {
     }
 };
 
+/// Registers of a CIA chip
 enum class CIAReg : long
 {
     PRA,
@@ -107,6 +108,7 @@ struct CIARegEnum : utl::Reflectable<CIARegEnum, CIAReg> {
 // Structures
 //
 
+/// Configuration of a CIA chip
 typedef struct
 {
     CIARev revision;                        ///< Chip revision
@@ -115,6 +117,7 @@ typedef struct
 }
 CIAConfig;
 
+/// State of a CIA port
 typedef struct
 {
     u8 port;                                ///< State of the port pins
@@ -123,6 +126,7 @@ typedef struct
 }
 CIAPortInfo;
 
+/// State of a CIA timer
 typedef struct
 {
     u16 count;                              ///< Current counter value
@@ -134,6 +138,7 @@ typedef struct
 }
 CIATimerInfo;
 
+/// State of a CIA chip
 typedef struct
 {
     CIAPortInfo portA;                      ///< Port A
@@ -153,6 +158,7 @@ typedef struct
 }
 CIAInfo;
 
+/// Usage statistics of a CIA chip
 typedef struct
 {
     Cycle totalCycles;                      ///< Total number of executed cycles

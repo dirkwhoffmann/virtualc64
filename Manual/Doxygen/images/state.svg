@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" width="1000" height="470" font-family="Helvetica, Arial, sans-serif" font-size="17">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker></defs>
+<rect x="1" y="1" width="998" height="468" rx="12" fill="#dde1ff" stroke="#c9ceee"/>
+<text x="30" y="38" text-anchor="start" font-weight="bold">State Model — VirtualC64 5.0</text>
+<rect x="20" y="170" width="130" height="80" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="85.0" y="216.0" text-anchor="middle">Uninit</text>
+<rect x="250" y="170" width="130" height="80" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="315.0" y="216.0" text-anchor="middle">Off</text>
+<rect x="480" y="170" width="130" height="80" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="545.0" y="216.0" text-anchor="middle">Paused</text>
+<rect x="710" y="170" width="130" height="80" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="775.0" y="216.0" text-anchor="middle">Running</text>
+<rect x="860" y="40" width="120" height="80" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="920.0" y="86.0" text-anchor="middle">Halted</text>
+<path d="M150,210 L250,210" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="200" y="200" text-anchor="middle">launch()</text>
+<path d="M380,195 L480,195" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="430" y="186" text-anchor="middle">powerOn()</text>
+<path d="M480,225 L380,225" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="430" y="246" text-anchor="middle">powerOff()</text>
+<path d="M610,195 L710,195" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="660" y="186" text-anchor="middle">run()</text>
+<path d="M710,225 L610,225" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="660" y="246" text-anchor="middle">pause()</text>
+<path d="M315,170 L315,125 L775,125 L775,170" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="545.0" y="115" text-anchor="middle">run()</text>
+<path d="M775,250 L775,295 L315,295 L315,250" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="545.0" y="318" text-anchor="middle">powerOff()</text>
+<text x="780" y="92" text-anchor="middle" font-size="24">…</text>
+<path d="M800,85 L858,85" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
+<text x="829" y="76" text-anchor="middle">halt()</text>
+<path d="M254,362 L376,362" fill="none" stroke="#000" stroke-width="2.4"/>
+<path d="M254,354 L254,370" fill="none" stroke="#000" stroke-width="2.4"/>
+<path d="M376,354 L376,370" fill="none" stroke="#000" stroke-width="2.4"/>
+<text x="315.0" y="350" text-anchor="middle">isPoweredOff()</text>
+<path d="M484,362 L606,362" fill="none" stroke="#000" stroke-width="2.4"/>
+<path d="M484,354 L484,370" fill="none" stroke="#000" stroke-width="2.4"/>
+<path d="M606,354 L606,370" fill="none" stroke="#000" stroke-width="2.4"/>
+<text x="545.0" y="350" text-anchor="middle">isPaused()</text>
+<path d="M714,362 L836,362" fill="none" stroke="#000" stroke-width="2.4"/>
+<path d="M714,354 L714,370" fill="none" stroke="#000" stroke-width="2.4"/>
+<path d="M836,354 L836,370" fill="none" stroke="#000" stroke-width="2.4"/>
+<text x="775.0" y="350" text-anchor="middle">isRunning()</text>
+<path d="M484,404 L836,404" fill="none" stroke="#000" stroke-width="2.4"/>
+<path d="M484,396 L484,412" fill="none" stroke="#000" stroke-width="2.4"/>
+<path d="M836,396 L836,412" fill="none" stroke="#000" stroke-width="2.4"/>
+<text x="660.0" y="392" text-anchor="middle">isPoweredOn()</text>
+<rect x="20" y="332" width="210" height="100" rx="14" fill="none" stroke="#000" stroke-width="1.4" stroke-dasharray="6 5"/>
+<text x="125" y="356" text-anchor="middle" font-size="16" font-weight="bold">suspend() / resume()</text>
+<text x="125" y="378" text-anchor="middle" font-size="13">Thread stops at a safe point.</text>
+<text x="125" y="396" text-anchor="middle" font-size="13">State is unchanged.</text>
+<text x="125" y="414" text-anchor="middle" font-size="13">See isSuspended().</text>
+</svg>

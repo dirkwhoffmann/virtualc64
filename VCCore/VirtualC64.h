@@ -24,6 +24,7 @@ namespace retro::vault { class SVMFile; }
 
 namespace vc64 {
 
+/// File system format of a disk (see retro::vault::cbm::FSFormat)
 using retro::vault::cbm::FSFormat;
 
 using peddle::Guard;
@@ -52,7 +53,7 @@ using peddle::RecordedInstruction;
  *
  *   CoreError  : The request does not match the state of the emulator, e.g.,
  *                an invalid option value, a missing ROM, or an emulator thread
- *                that cannot carry out the request (see #CoreError).
+ *                that cannot carry out the request (see CoreError).
  *   IOError    : A file could not be accessed.
  *   MediaError : A ROM, snapshot, disk image or similar file is invalid or
  *                not supported.
@@ -82,10 +83,10 @@ using peddle::RecordedInstruction;
  * itself with suspend() and resume().
  */
 
-//
-// Base class for all APIs
-//
-
+/** Base class of all APIs
+ *
+ *  Provides the suspend / resume mechanism that every API class inherits.
+ */
 class API {
 
 public:
@@ -151,7 +152,9 @@ public:
      *  @param  sz      Group size in bytes (1, 2, or 4).
      */
     string hexDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+    /// Variant of hexDump() that uses a different output format.
     string decDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
+    /// Variant of hexDump() that uses a different output format.
     string memDump(MemType src, u16 addr, isize bytes, isize sz = 1) const;
 
     /// @}
@@ -166,6 +169,7 @@ public:
     class Memory *mem = nullptr;
 
     // Memory debugger
+    /// Memory debugger
     MemoryDebuggerAPI debugger;
 
     /** @brief  Returns the component's current configuration.
@@ -182,6 +186,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const MemInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const MemInfo &getCachedInfo() const;
 
 
@@ -198,7 +203,7 @@ public:
      *  @param  width   Width of the texture, must be 256
      *  @param  height  Height of the texture, must be 256
      *
-     *  @throw  CoreError (#CoreError::OPT_INV_ARG) if the size is not 256 x 256.
+     *  @throw  CoreError (CoreError::OPT_INV_ARG) if the size is not 256 x 256.
      */
     void drawHeatmap(u32 *buffer, isize width, isize height) const;
 
@@ -213,7 +218,7 @@ public:
  *  - The plain functions (e.g., setAt()) return when the emulator thread has
  *    carried out the request. A failure throws the corresponding exception
  *    (e.g., if a guard to remove does not exist). They throw
- *    CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot carry
+ *    CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot carry
  *    out the request, because it has not been launched yet, is halted or
  *    suspended, or if they are called from the emulator thread itself.
  *  - The functions with the Async suffix (e.g., setAtAsync()) queue the
@@ -228,6 +233,7 @@ public:
     class CPU *cpu = nullptr;
 
     // The guard list this API operates on
+    /// The kind of guard (breakpoint or watchpoint) this API manages
     GuardType type = GuardType::BREAKPOINT;
 
     /** @brief  Returns the number of guards in the guard list.
@@ -405,8 +411,11 @@ public:
 
     class CPU *cpu = nullptr;
 
+    /// CPU debugger
     CPUDebuggerAPI debugger;
+    /// Breakpoints
     GuardsAPI breakpoints;
+    /// Watchpoints
     GuardsAPI watchpoints;
 
     /** @brief  Returns the component's current configuration.
@@ -423,6 +432,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const CPUInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const CPUInfo &getCachedInfo() const;
 };
 
@@ -449,6 +459,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const CIAInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const CIAInfo &getCachedInfo() const;
 
     /** @brief  Returns statistical information about the components.
@@ -461,6 +472,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const CIAMetrics &getMetrics() const;
+    /// Returns the most recent metrics snapshot recorded by the emulator thread (see getMetrics()).
     const CIAMetrics &getCachedMetrics() const;
 };
 
@@ -491,6 +503,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const VICIIInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const VICIIInfo &getCachedInfo() const;
 
     /** @brief  Returns information about a sprite.
@@ -527,12 +540,12 @@ public:
      *  that can be overwritten by a later call or by the emulator thread, so
      *  copy the data if you need to keep it.
      *
-     *  @throw  CoreError (#CoreError::OPT_INV_ARG) if the SID number is out of range.
+     *  @throw  CoreError (CoreError::OPT_INV_ARG) if the SID number is out of range.
      */
     const SIDInfo &getInfo(isize nr) const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const SIDInfo &getCachedInfo(isize nr) const;
 
-    /// @}
     /// @name Visualizing waveforms
     /// @{
 
@@ -581,6 +594,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const AudioPortInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const AudioPortInfo &getCachedInfo() const;
 
     /** @brief  Returns statistical information about the components.
@@ -593,10 +607,10 @@ public:
      *  copy the data if you need to keep it.
      */
     const AudioPortMetrics &getMetrics() const;
+    /// Returns the most recent metrics snapshot recorded by the emulator thread (see getMetrics()).
     const AudioPortMetrics &getCachedMetrics() const;
 
 
-    /// @}
     /// @name Retrieving audio data
     /// @{
 
@@ -629,7 +643,6 @@ public:
      */
     isize copyInterleaved(float *buffer, isize n);
 
-    /// @}
     /// @name Visualizing waveforms
     /// @{
 
@@ -649,6 +662,7 @@ public:
      *  @return The highest amplitude that was found.
      */
     float drawL(u32 *buffer, isize width, isize height, float maxAmp, u32 color) const;
+    /// Draws the waveform of the right audio channel (see drawL()).
     float drawR(u32 *buffer, isize width, isize height, float maxAmp, u32 color) const;
     /// @}
 
@@ -677,9 +691,9 @@ public:
      *  copy the data if you need to keep it.
      */
     const VideoPortInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const VideoPortInfo &getCachedInfo() const;
 
-    /// @}
     /// @name Retrieving video data
     /// @{
 
@@ -730,6 +744,7 @@ public:
      *  @throw Error if the file cannot be written.
      */
     void saveTexture(const std::filesystem::path &path) const;
+    /// Saves a cutout of the most recent stable texture as a PNG file (see above).
     void saveTexture(const std::filesystem::path &path,
                      isize x1, isize x2, isize y1, isize y2) const;
 
@@ -738,6 +753,7 @@ public:
      *  @throw Error if the file cannot be written.
      */
     void saveXrayTexture(const std::filesystem::path &path) const;
+    /// Saves a cutout of the most recent stable X-Ray texture as a PNG file.
     void saveXrayTexture(const std::filesystem::path &path,
                          isize x1, isize x2, isize y1, isize y2) const;
 
@@ -758,6 +774,7 @@ public:
      *  @param  y2      Bottom edge of the picture area
      */
     void findInnerArea(isize &x1, isize &x2, isize &y1, isize &y2) const;
+    /// Same as findInnerArea(), but returns normalized coordinates.
     void findInnerAreaNormalized(double &x1, double &x2, double &y1, double &y2) const;
 };
 
@@ -793,6 +810,9 @@ public:
     /** @brief  Presses a key
      *  @param  key     The key to press.
      *  @param  delay   An optional delay in seconds.
+     *  @param  duration An optional time in seconds after which the key is
+     *                  released again. If 0, the key stays pressed until it
+     *                  is released explicitly.
      *
      *  If no delay is specified, the function will immediately modify the
      *  C64's keyboard matrix. Otherwise, it will ask the event scheduler
@@ -807,6 +827,8 @@ public:
     /** @brief  Toggles a key
      *  @param  key     The key to press or release.
      *  @param  delay   An optional delay in seconds.
+     *  @param  duration An optional time in seconds after which the key is
+     *                  toggled back. If 0, the key is toggled only once.
      *
      *  If no delay is specified, the function will immediately modify the
      *  C64's keyboard matrix. Otherwise, it will ask the event scheduler
@@ -950,6 +972,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const JoystickInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const JoystickInfo &getCachedInfo() const;
 
     /** @brief  Triggers a joystick action.
@@ -988,6 +1011,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const PaddleInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const PaddleInfo &getCachedInfo() const;
 };
 
@@ -1010,6 +1034,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const DatasetteInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const DatasetteInfo &getCachedInfo() const;
 
     /** @brief  Inserts a tape.
@@ -1056,6 +1081,7 @@ public:
      *  external device.
      */
     void operator<<(char c);
+    /// Feeds a string into the RS232 adapter.
     void operator<<(const string &s);
 
     /** @brief  Read a printable byte from the incoming logbuffer.
@@ -1143,6 +1169,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const CartridgeInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const CartridgeInfo &getCachedInfo() const;
 
     /** @brief  Returns the state of one of the cartridge ROM packets.
@@ -1196,6 +1223,8 @@ public:
 // Serial port (IEC bus)
 //
 
+/** Serial Port API
+ */
 class SerialPortAPI : public API {
 
 public:
@@ -1236,6 +1265,7 @@ public:
 
     class Drive *drive = nullptr;
 
+    /// The disk in the drive
     DiskAPI disk;
 
     /** @brief  Returns the component's current configuration.
@@ -1252,6 +1282,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const DriveInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const DriveInfo &getCachedInfo() const;
 
     /** @brief  Inserts a new disk.
@@ -1312,6 +1343,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const RemoteManagerInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const RemoteManagerInfo &getCachedInfo() const;
 
 
@@ -1352,6 +1384,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const RetroShellInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const RetroShellInfo &getCachedInfo() const;
 
     /** @brief  Returns a copy of the text buffer.
@@ -1415,8 +1448,11 @@ public:
      *  @throw Error if the file cannot be opened.
      */
     void execScriptAsync(const std::filesystem::path &path);
+    /// Executes a script that is read from a string stream.
     void execScriptAsync(std::stringstream &ss);
+    /// Executes a script that is read from a file stream.
     void execScriptAsync(const std::ifstream &fs);
+    /// Executes a script that is given as a string.
     void execScriptAsync(const string &contents);
 
     /// @}
@@ -1661,6 +1697,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const C64Info &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const C64Info &getCachedInfo() const;
 
     /** @brief  Prints debug information about the component
@@ -1712,7 +1749,7 @@ public:
      *  getCachedMetrics() only return up-to-date snapshots while its class is
      *  selected.
      *
-     *  @example The following call enables auto-inspections for the CIA chips
+     *  Example: The following call enables auto-inspections for the CIA chips
      *  and the CPU:
      *  setAutoInspectionMask(1LL << long(Class::CIA) | 1LL << long(Class::CPU));
      *
@@ -1767,7 +1804,9 @@ public:
      *  is invalid (synchronous versions).
      */
     void loadWorkspace(retro::vault::SVMFile &svm);
+    /// Saves the workspace into an SVM that is already open (see loadWorkspace()).
     void saveWorkspace(retro::vault::SVMFile &svm) const;
+    /// Asynchronous version of saveWorkspace(): queues the request and returns at once.
     void saveWorkspaceAsync(retro::vault::SVMFile &svm) const;
 
     /** @brief  Takes a snapshot
@@ -1805,7 +1844,8 @@ public:
 
     /** @brief  Saves a snapshot to disk
      *
-     *  @param  path    Destination path
+     *  @param  path        Destination path
+     *  @param  compressor  The compression method applied to the snapshot data.
      *
      *  @throw Error if the file cannot be written.
      */
@@ -1818,7 +1858,8 @@ public:
      *  The GUI is informed by a SNAPSHOT_SAVED message, which carries an
      *  exception if the operation failed.
      *
-     *  @param  path    Destination path
+     *  @param  path        Destination path
+     *  @param  compressor  The compression method applied to the snapshot data.
      */
     void saveSnapshotAsync(const std::filesystem::path &path, utl::Compressor compressor) const;
 
@@ -1834,6 +1875,7 @@ public:
      *  is invalid (synchronous versions).
      */
     void saveSnapshot(retro::vault::SVMFile &svm, utl::Compressor compressor) const;
+    /// Asynchronous version of saveSnapshot(): queues the request and returns at once.
     void saveSnapshotAsync(retro::vault::SVMFile &svm, utl::Compressor compressor) const;
 
     /** @brief  Hibernates the machine into a virtual machine bundle
@@ -1868,6 +1910,7 @@ public:
      *  is invalid (synchronous versions).
      */
     void hibernate(retro::vault::SVMFile &svm, bool snapshot, bool workspace) const;
+    /// Asynchronous version of hibernate(): queues the request and returns at once.
     void hibernateAsync(retro::vault::SVMFile &svm, bool snapshot, bool workspace) const;
 
 
@@ -1881,6 +1924,7 @@ public:
      *  @throw Error if the file cannot be read or does not contain valid data.
      */
     void loadRom(const std::filesystem::path &path);
+    /// Loads a ROM from a file and installs it as the given ROM type.
     void loadRom(const std::filesystem::path &path, RomType rom);
     /** @brief  Asynchronous version of loadRom(): queues the request and returns at once.
      *
@@ -1888,6 +1932,7 @@ public:
      *  request failed, the message carries the exception.
      */
     void loadRomAsync(const std::filesystem::path &path);
+    /// Asynchronous version of loadRom(path, rom).
     void loadRomAsync(const std::filesystem::path &path, RomType rom);
 
     /** @brief  Removes an installed ROM
@@ -1945,35 +1990,55 @@ class VirtualC64 : public API {
 
 public:
 
+    /// User defaults storage
     static DefaultsAPI defaults;
 
     // Components
+    /// C64 (state, snapshots, media)
     C64API c64;
+    /// Memory
     MemoryAPI mem;
+    /// CPU
     CPUAPI cpu;
+    /// The two CIA chips
     CIAAPI cia1, cia2;
+    /// SID chip(s)
     SIDAPI sid;
+    /// VICII graphics chip
     VICIIAPI vicii;
 
     // Ports
+    /// Audio port
     AudioPortAPI audioPort;
+    /// The two control ports
     ControlPortAPI controlPort1, controlPort2;
+    /// Expansion port (cartridges)
     ExpansionPortAPI expansionPort;
+    /// Serial port (IEC bus)
     SerialPortAPI serialPort;
+    /// User port
     UserPortAPI userPort;
+    /// Video port (textures)
     VideoPortAPI videoPort;
 
     // Peripherals
+    /// Datasette
     DatasetteAPI datasette;
+    /// Floppy drives 8 and 9
     DriveAPI drive8, drive9;
+    /// Keyboard
     KeyboardAPI keyboard;
 
     // Misc
+    /// X-Ray visualizer
     XRayAPI xray;
+    /// Remote servers
     RemoteManagerAPI remoteManager;
+    /// RetroShell
     RetroShellAPI retroShell;
 
     // Shortcuts
+    /// Drives by number
     DriveAPI *drive[4] = { &drive8, &drive9 };
 
 
@@ -2021,6 +2086,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const EmulatorInfo &getInfo() const;
+    /// Returns the most recent state snapshot recorded by the emulator thread (see getInfo()).
     const EmulatorInfo &getCachedInfo() const;
 
     /** @brief  Returns statistical information about the components.
@@ -2033,6 +2099,7 @@ public:
      *  copy the data if you need to keep it.
      */
     const EmulatorMetrics &getMetrics() const;
+    /// Returns the most recent metrics snapshot recorded by the emulator thread (see getMetrics()).
     const EmulatorMetrics &getCachedMetrics() const;
 
     /// @}
@@ -2092,14 +2159,14 @@ public:
 
     /** @brief  Switches the emulator on
      *
-     *  Powering on the emulator changes the internal state to #STATE\_PAUSED,
+     *  Powering on the emulator changes the internal state to ExecState::PAUSED,
      *  the same state that is entered when the user hits the pause button.
      *  Calling this function on an already powered-on emulator has no effect.
      *
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use powerOnAsync() in these situations.
@@ -2115,13 +2182,13 @@ public:
 
     /** @brief  Switches the emulator off
      *
-     *  Powering off the emulator changes the internal state to #STATE\_OFF.
+     *  Powering off the emulator changes the internal state to ExecState::OFF.
      *  Calling this function on an already powered-off emulator has no effect.
      *
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use powerOffAsync() in these situations.
@@ -2137,7 +2204,7 @@ public:
 
     /** @brief  Starts emulation
      *
-     *  Running the emulator changes the internal state to #STATE\_RUNNING,
+     *  Running the emulator changes the internal state to ExecState::RUNNING,
      *  which is the normal operation state. Frames are computed at normal
      *  pace, if warp mode is switched off, or as fast as possible, if warp
      *  mode is switched on. If this function is called for a powered-off
@@ -2147,7 +2214,7 @@ public:
      *
      *  The function returns when the emulator has been started.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use runAsync() in these situations.
@@ -2165,14 +2232,14 @@ public:
 
     /** @brief   Pauses emulation
      *
-     * Pausing the emulator changes the internal state from #STATE\_RUNNING
-     * to #STATE\_PAUSED after completing the current frame. The emulator
+     * Pausing the emulator changes the internal state from ExecState::RUNNING
+     * to ExecState::PAUSED after completing the current frame. The emulator
      * enters a frozen state where no more frames are computed.
      *
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use pauseAsync() in these situations.
@@ -2198,7 +2265,7 @@ public:
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use hardResetAsync() in these situations.
@@ -2220,7 +2287,7 @@ public:
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use softResetAsync() in these situations.
@@ -2236,7 +2303,7 @@ public:
     
     /** @brief   Terminates the emulator thread
      *
-     *  Halting the emulator changes the internal state to #STATE\_HALTED.
+     *  Halting the emulator changes the internal state to ExecState::HALTED.
      *  This state is part of the shutdown procedure and never entered during
      *  normal operation.
      *
@@ -2255,12 +2322,12 @@ public:
      *  requested it. Valid sources are 0 to 6.
      *
      *  @param  source      The client requesting the change.
-     *  @throw CoreError (#CoreError::OPT_INV_ARG) if the source is out of range.
+     *  @throw CoreError (CoreError::OPT_INV_ARG) if the source is out of range.
      *
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use warpOnAsync() in these situations.
@@ -2272,7 +2339,7 @@ public:
      *  This is the asynchronous counterpart of warpOn(). The request is queued and
      *  carried out by the emulator thread at some later time (see sync()).
      *
-     *  @throw CoreError (#CoreError::OPT_INV_ARG) if the source is out of range.
+     *  @throw CoreError (CoreError::OPT_INV_ARG) if the source is out of range.
      */
     void warpOnAsync(isize source);
 
@@ -2283,12 +2350,12 @@ public:
      *  on to implement the warp mode option). Valid sources are 0 to 6.
      *
      *  @param  source      The client requesting the change.
-     *  @throw CoreError (#CoreError::OPT_INV_ARG) if the source is out of range.
+     *  @throw CoreError (CoreError::OPT_INV_ARG) if the source is out of range.
      *
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use warpOffAsync() in these situations.
@@ -2300,7 +2367,7 @@ public:
      *  This is the asynchronous counterpart of warpOff(). The request is queued and
      *  carried out by the emulator thread at some later time (see sync()).
      *
-     *  @throw CoreError (#CoreError::OPT_INV_ARG) if the source is out of range.
+     *  @throw CoreError (CoreError::OPT_INV_ARG) if the source is out of range.
      */
     void warpOffAsync(isize source);
 
@@ -2311,12 +2378,12 @@ public:
      *  requested it. Valid sources are 0 to 6.
      *
      *  @param  source      The client requesting the change.
-     *  @throw CoreError (#CoreError::OPT_INV_ARG) if the source is out of range.
+     *  @throw CoreError (CoreError::OPT_INV_ARG) if the source is out of range.
      *
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use trackOnAsync() in these situations.
@@ -2328,7 +2395,7 @@ public:
      *  This is the asynchronous counterpart of trackOn(). The request is queued and
      *  carried out by the emulator thread at some later time (see sync()).
      *
-     *  @throw CoreError (#CoreError::OPT_INV_ARG) if the source is out of range.
+     *  @throw CoreError (CoreError::OPT_INV_ARG) if the source is out of range.
      */
     void trackOnAsync(isize source);
 
@@ -2338,12 +2405,12 @@ public:
      *  when no other source requests it. Valid sources are 0 to 6.
      *
      *  @param  source      The client requesting the change.
-     *  @throw CoreError (#CoreError::OPT_INV_ARG) if the source is out of range.
+     *  @throw CoreError (CoreError::OPT_INV_ARG) if the source is out of range.
      *
      *  The function returns when the emulator thread has carried out the
      *  request. A failure throws the corresponding exception.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use trackOffAsync() in these situations.
@@ -2355,7 +2422,7 @@ public:
      *  This is the asynchronous counterpart of trackOff(). The request is queued and
      *  carried out by the emulator thread at some later time (see sync()).
      *
-     *  @throw CoreError (#CoreError::OPT_INV_ARG) if the source is out of range.
+     *  @throw CoreError (CoreError::OPT_INV_ARG) if the source is out of range.
      */
     void trackOffAsync(isize source);
 
@@ -2373,9 +2440,9 @@ public:
      *  The function returns when the emulator has been started for the step. It
      *  is paused again when the step is done.
      *
-     *  @throw CoreError (#CoreError::RUNNING) if the emulator is already running.
+     *  @throw CoreError (CoreError::RUNNING) if the emulator is already running.
      *  @throw CoreError if the emulator is not ready to run (see checkReady()).
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
     void stepInto();
@@ -2400,9 +2467,9 @@ public:
      *  The function returns when the emulator has been started for the step. It
      *  is paused again when the step is done.
      *
-     *  @throw CoreError (#CoreError::RUNNING) if the emulator is already running.
+     *  @throw CoreError (CoreError::RUNNING) if the emulator is already running.
      *  @throw CoreError if the emulator is not ready to run (see checkReady()).
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
     void stepOver();
@@ -2414,9 +2481,9 @@ public:
      *  The function returns when the emulator has been started for the step. It
      *  is paused again when the step is done.
      *
-     *  @throw CoreError (#CoreError::RUNNING) if the emulator is already running.
+     *  @throw CoreError (CoreError::RUNNING) if the emulator is already running.
      *  @throw CoreError if the emulator is not ready to run (see checkReady()).
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
     void stepCycle();
@@ -2428,9 +2495,9 @@ public:
      *  The function returns when the emulator has been started for the step. It
      *  is paused again when the step is done.
      *
-     *  @throw CoreError (#CoreError::RUNNING) if the emulator is already running.
+     *  @throw CoreError (CoreError::RUNNING) if the emulator is already running.
      *  @throw CoreError if the emulator is not ready to run (see checkReady()).
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
     void finishLine();
@@ -2442,9 +2509,9 @@ public:
      *  The function returns when the emulator has been started for the step. It
      *  is paused again when the step is done.
      *
-     *  @throw CoreError (#CoreError::RUNNING) if the emulator is already running.
+     *  @throw CoreError (CoreError::RUNNING) if the emulator is already running.
      *  @throw CoreError if the emulator is not ready to run (see checkReady()).
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
     void finishFrame();
@@ -2471,7 +2538,7 @@ public:
      *  the configuration, can still see the old state. Calling this
      *  afterwards closes that gap.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out commands, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread.
@@ -2502,9 +2569,9 @@ public:
      *  registered here is invoked on the emulator thread and must not call into
      *  the API. Forward the message to a user thread instead.
      *
-     *  @throw CoreError (#CoreError::ALREADY_LAUNCHED) if the emulator thread has
+     *  @throw CoreError (CoreError::ALREADY_LAUNCHED) if the emulator thread has
      *  already been launched.
-     *  @throw CoreError (#CoreError::LAUNCH_FAILED) if the emulator thread could not
+     *  @throw CoreError (CoreError::LAUNCH_FAILED) if the emulator thread could not
      *  be launched.
      */
     void launch(const void *listener = nullptr, Callback *func = nullptr);
@@ -2568,7 +2635,7 @@ public:
      *
      *  @note If this function is called for an options that applies to multiple
      *  components, all components are configured with the specified value.
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use setAsync() in these situations (it can also be called before
@@ -2624,6 +2691,7 @@ public:
      *  @param id       The component to configure
      */
     void setAsync(Opt opt, i64 value, isize id);
+    /// Asynchronous version of set(ConfigScheme): applies a predefined configuration scheme.
     void setAsync(ConfigScheme model);
 
     /** @brief  Checks if a configuration option would be accepted.
@@ -2652,6 +2720,8 @@ public:
      *  The current configuration is exported in form of a RetroShell script.
      *  Reading in the script at a later point will restore the configuration.
      *
+     *  @param path The file the script is written to (or use the overload
+     *              taking an output stream).
      *  @param diff When set to true, the script will only contains settings
      *              for items that differ from the default configuration.
      *              This feature is useful for debugging to compare two virtual
@@ -2660,6 +2730,7 @@ public:
      *  @throw Error if the file cannot be written.
      */
     void exportConfig(const std::filesystem::path &path, bool diff = false) const;
+    /// Exports the configuration to an output stream (see above).
     void exportConfig(std::ostream &stream, bool diff = false) const;
 
 
@@ -2695,7 +2766,7 @@ public:
      *  thread has suspended the emulator. An exception thrown by the function
      *  is passed on to the caller.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the request (see put()).
      */
     void call(const std::function<void()> &fn);
@@ -2728,7 +2799,7 @@ public:
      *  Commands that carry a pointer to an object of the caller can rely on
      *  that object being alive for the whole duration of the command.
      *
-     *  @throw CoreError (#CoreError::NOT_LAUNCHED) if the emulator thread cannot
+     *  @throw CoreError (CoreError::NOT_LAUNCHED) if the emulator thread cannot
      *  carry out the command, because it has not been launched yet, is halted or
      *  suspended. The same applies if the function is called from the emulator
      *  thread. Use putAsync() in these situations (it can also be called before
@@ -2737,13 +2808,21 @@ public:
      *  or mouse movements).
      */
     void put(const Command &cmd, const std::string &str = "");
+    /// Shorthand for put(Command(type, payload)).
     void put(Cmd type, const std::string &str) { put(Command(type), str); }
+    /// Shorthand for put(Command(type, payload, payload2)).
     void put(Cmd type, i64 payload = 0, i64 payload2 = 0) { put(Command(type, payload, payload2)); }
+    /// Shorthand for put(Command(type, payload)).
     void put(Cmd type, ConfigCmd payload) { put(Command(type, payload)); }
+    /// Shorthand for put(Command(type, payload)).
     void put(Cmd type, KeyCmd payload) { put(Command(type, payload)); }
+    /// Shorthand for put(Command(type, payload)).
     void put(Cmd type, CoordCmd payload) { put(Command(type, payload)); }
+    /// Shorthand for put(Command(type, payload)).
     void put(Cmd type, GamePadCmd payload) { put(Command(type, payload)); }
+    /// Shorthand for put(Command(type, payload)).
     void put(Cmd type, TapeCmd payload) { put(Command(type, payload)); }
+    /// Shorthand for put(Command(type, payload)).
     void put(Cmd type, AlarmCmd payload) { put(Command(type, payload)); }
 
     /** @brief  Feeds a command into the command queue without waiting for the result.
@@ -2755,13 +2834,21 @@ public:
      *  referenced by the command alive until it has been carried out (see sync()).
      */
     void putAsync(const Command &cmd, const std::string &str = "");
+    /// Shorthand for putAsync(Command(type, payload)).
     void putAsync(Cmd type, const std::string &str) { putAsync(Command(type), str); }
+    /// Shorthand for putAsync(Command(type, payload, payload2)).
     void putAsync(Cmd type, i64 payload = 0, i64 payload2 = 0) { putAsync(Command(type, payload, payload2)); }
+    /// Shorthand for putAsync(Command(type, payload)).
     void putAsync(Cmd type, ConfigCmd payload) { putAsync(Command(type, payload)); }
+    /// Shorthand for putAsync(Command(type, payload)).
     void putAsync(Cmd type, KeyCmd payload) { putAsync(Command(type, payload)); }
+    /// Shorthand for putAsync(Command(type, payload)).
     void putAsync(Cmd type, CoordCmd payload) { putAsync(Command(type, payload)); }
+    /// Shorthand for putAsync(Command(type, payload)).
     void putAsync(Cmd type, GamePadCmd payload) { putAsync(Command(type, payload)); }
+    /// Shorthand for putAsync(Command(type, payload)).
     void putAsync(Cmd type, TapeCmd payload) { putAsync(Command(type, payload)); }
+    /// Shorthand for putAsync(Command(type, payload)).
     void putAsync(Cmd type, AlarmCmd payload) { putAsync(Command(type, payload)); }
     /// @}
 };

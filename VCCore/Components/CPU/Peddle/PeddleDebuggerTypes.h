@@ -11,27 +11,27 @@
 
 namespace vc64::peddle {
 
-// Base structure for a single breakpoint or watchpoint
+/// Base structure for a single breakpoint or watchpoint
 struct Guard {
 
-    // The observed address
+    /// The observed address
     u32 addr;
 
-    // Disabled guards never trigger
+    /// Disabled guards never trigger
     bool enabled;
 
-    // Counts the number of hits
+    /// Counts the number of hits
     isize hits;
 
-    // Ignore counter
+    /// Ignore counter
     isize ignore;
 
 public:
 
-    // Returns true if the guard hits
+    /// Returns true if the guard hits
     bool eval(u32 addr);
 
-    // Replaces the address by another
+    /// Replaces the address by another
     void moveTo(u32 newAddr);
 };
 

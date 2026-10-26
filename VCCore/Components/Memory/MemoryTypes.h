@@ -19,12 +19,16 @@
 namespace vc64 {
 
 // The Rom vocabulary is shared by all cores and lives in rvlib
+/// ROM types (see retro::vault::RomType)
 using retro::vault::RomType;
 using retro::vault::RomTypeEnum;
+/// ROM vendors (see retro::vault::RomVendor)
 using retro::vault::RomVendor;
 using retro::vault::RomVendorEnum;
 using retro::vault::RomDate;
+/// Converts a ROM date into a string
 using retro::vault::RomDateToString;
+/// ROM platforms (see retro::vault::RomPlatform)
 using retro::vault::RomPlatform;
 using retro::vault::RomPlatformEnum;
 namespace RomFlags = retro::vault::RomFlags;
@@ -114,6 +118,7 @@ struct RamPatternEnum : utl::Reflectable<RamPatternEnum, RamPattern> {
 // Structures
 //
 
+/// Configuration of the memory
 typedef struct
 {
     RamPattern ramPattern;                  ///< RAM start-up pattern
@@ -122,6 +127,7 @@ typedef struct
 }
 MemConfig;
 
+/// State of the memory
 typedef struct
 {
     bool exrom;                             ///< State of the EXROM line
@@ -136,6 +142,7 @@ typedef struct
 }
 MemInfo;
 
+/// Memory access statistics
 typedef struct
 {
     isize reads[65536];                     ///< Number of read accesses per address

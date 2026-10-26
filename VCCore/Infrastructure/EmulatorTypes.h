@@ -22,6 +22,7 @@ namespace vc64 {
 // Enumerations
 //
 
+/// Flags for enabling debug output
 enum class DebugFlag
 {
     // General

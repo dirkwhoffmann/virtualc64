@@ -99,7 +99,7 @@ enum class Cmd : long
     // Floppy disk
     DSK_TOGGLE_WP,          ///< Toggle write-protection
     DSK_MODIFIED,           ///< Signal that the disk has been saved
-    DSK_UNMODIFIED,         ///< Signan that the disk needs saving
+    DSK_UNMODIFIED,         ///< Signal that the disk needs saving
     DSK_INSERT,             ///< Insert a disk (path attached, value = drive, value2 = write protection)
 
     // Datasette
@@ -241,104 +241,124 @@ struct CmdEnum : utl::Reflectable<CmdEnum, Cmd> {
 // Structures
 //
 
+/// Payload of configuration commands
 typedef struct
 {
-    Opt option;
-    i64 value;
-    isize id;
+    Opt option;                          ///< The option to change
+    i64 value;                           ///< The new value
+    isize id;                            ///< The component the option belongs to
 }
 ConfigCmd;
 
+/// Payload of keyboard commands
 typedef struct
 {
-    u8 keycode;
-    double delay;
+    u8 keycode;                          ///< Number of the key
+    double delay;                        ///< Delay in seconds
 }
 KeyCmd;
 
+/// Payload of mouse commands
 typedef struct
 {
-    isize port;
-    double x;
-    double y;
+    isize port;                          ///< Control port number
+    double x;                            ///< X coordinate
+    double y;                            ///< Y coordinate
 }
 CoordCmd;
 
+/// Payload of joystick commands
 typedef struct
 {
-    isize port;
-    GamePadAction action;
+    isize port;                          ///< Control port number
+    GamePadAction action;                ///< The joystick action
 }
 GamePadCmd;
 
+/// Payload of joystick state commands
 typedef struct
 {
-    isize port;
-    u32 state;      // Bits 0-4: current state, bits 8-12: previous state (up, down, left, right, fire)
+    isize port;                          ///< Control port number
+    u32 state;                           ///< Bits 0-4: current state, bits 8-12: previous state (up, down, left, right, fire)
 }
 JoyStateCmd;
 
+/// Payload of tape commands
 typedef struct
 {
-    void *tape;
+    void *tape;                          ///< Pointer to the tape file
 }
 TapeCmd;
 
+/// Payload of alarm commands
 typedef struct
 {
-    i64 cycle;
-    i64 value;
+    i64 cycle;                           ///< Cycle at which the alarm fires
+    i64 value;                           ///< Value reported by the alarm
 }
 AlarmCmd;
 
 // The guard list to modify is identified by a GuardType
+/// Payload of breakpoint and watchpoint commands
 typedef struct
 {
-    GuardType list;       // The guard list to modify
-    isize nr;           // Number of a guard in the list
-    u32 addr;           // Target of a guard
-    isize ignores;      // Ignore count
+    GuardType list;                      ///< The guard list to modify
+    isize nr;                            ///< Number of a guard in the list
+    u32 addr;                            ///< Target of a guard
+    isize ignores;                       ///< Ignore count
 }
 GuardCmd;
 
+/// A command that is fed into the command queue
 struct Command
 {
-    // Header
+    /// Type of the command
     Cmd type;
 
-    // Sender
+    /// Sender of the command (optional)
     void *sender;
     
-    // Payload
+    /// Command payload
     union {
 
-        struct { i64 value; i64 value2; };
-        AlarmCmd alarm;
-        ConfigCmd config;
-        CoordCmd coord;
-        GamePadCmd action;
-        GuardCmd guard;
-        JoyStateCmd joyState;
-        KeyCmd key;
-        TapeCmd tape;
+        struct { i64 value; i64 value2; };///< Generic payload
+        AlarmCmd alarm;                  ///< Payload of alarm commands
+        ConfigCmd config;                ///< Payload of configuration commands
+        CoordCmd coord;                  ///< Payload of mouse commands
+        GamePadCmd action;               ///< Payload of joystick commands
+        GuardCmd guard;                  ///< Payload of breakpoint and watchpoint commands
+        JoyStateCmd joyState;            ///< Payload of joystick state commands
+        KeyCmd key;                      ///< Payload of keyboard commands
+        TapeCmd tape;                    ///< Payload of tape commands
     };
 
     /* Attached string (may be null). Set by the command queue when a string
      * is attached to the command. The string is owned by the queue and stays
      * valid until the queue has recycled the slot it lives in.
      */
-    const char *str = nullptr;
+    const char *str = nullptr;           ///< Attached string (may be null)
 
+    /// Creates an empty command
     Command() { }
+    /// Creates a command with two integer values
     Command(Cmd type, i64 v1 = 0, i64 v2 = 0) : type(type), value(v1), value2(v2) { }
+    /// Creates a command with a sender
     Command(Cmd type, void *s, i64 v1 = 0, i64 v2 = 0) : type(type), sender(s), value(v1), value2(v2) { }
+    /// Creates a command with an alarm payload
     Command(Cmd type, const AlarmCmd &cmd) : type(type), alarm(cmd) { }
+    /// Creates a command with a configuration payload
     Command(Cmd type, const ConfigCmd &cmd) : type(type), config(cmd) { }
+    /// Creates a command with a coordinate payload
     Command(Cmd type, const CoordCmd &cmd) : type(type), coord(cmd) { }
+    /// Creates a command with a joystick payload
     Command(Cmd type, const GamePadCmd &cmd) : type(type), action(cmd) { }
+    /// Creates a command with a guard payload
     Command(Cmd type, const GuardCmd &cmd) : type(type), guard(cmd) { }
+    /// Creates a command with a joystick state payload
     Command(Cmd type, const JoyStateCmd &cmd) : type(type), joyState(cmd) { }
+    /// Creates a command with a keyboard payload
     Command(Cmd type, const KeyCmd &cmd) : type(type), key(cmd) { }
+    /// Creates a command with a tape payload
     Command(Cmd type, const TapeCmd &cmd) : type(type), tape(cmd) { }
 };
 

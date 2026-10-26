@@ -57,6 +57,7 @@ struct PowerGridEnum : utl::Reflectable<PowerGridEnum, PowerGrid> {
 // Structures
 //
 
+/// Configuration of the power port
 typedef struct
 {
     PowerGrid powerGrid;                    ///< Power grid stability

@@ -122,12 +122,14 @@ struct GuardTypeEnum : utl::Reflectable<GuardTypeEnum, GuardType>
     }
 };
 
+/// Configuration of the CPU
 typedef struct
 {
     DasmNumbers dasmNumbers;                ///< Disassembler number format
 }
 CPUConfig;
 
+/// State of the CPU
 typedef struct
 {
     i64 cycle;                              ///< Cycle counter
@@ -152,6 +154,7 @@ typedef struct
 }
 CPUInfo;
 
+/// Description of a breakpoint or watchpoint
 typedef struct
 {
     u32 addr;                               ///< Observed address

@@ -21,22 +21,23 @@ namespace vc64 {
 // Structures
 //
 
+/// Configuration of the audio port
 typedef struct
 {
-    // Channel volumes
+    /// Channel volumes
     i64 vol[4];
 
-    // Channel pan factors
+    /// Channel pan factors
     i64 pan[4];
 
     // Master volume (left and right channel)
-    i64 volL;
+    i64 volL;                            ///< Master volume (left)
     i64 volR;                               ///< Master volume (right)
 
-    // Sample buffer capacity
+    /// Sample buffer capacity
     isize bufferSize;
 
-    // Adaptive Sample Rate enable switch
+    /// Adaptive Sample Rate enable switch
     bool asr;
 }
 
@@ -48,24 +49,25 @@ typedef struct
 }
 AudioPortInfo;
 
+/// Audio statistics
 typedef struct
 {
-    // Current ring buffer fill level
+    /// Current ring buffer fill level
     double fillLevel;
 
-    // Number of buffer underflows since power up
+    /// Number of buffer underflows since power up
     u64 bufferUnderflows;
 
-    // Number of buffer overflows since power up
+    /// Number of buffer overflows since power up
     u64 bufferOverflows;
 
-    // Total number of generated sampleds
+    /// Total number of generated sampleds
     i64 producedSamples;
 
-    // Total number of samples produced without executing SID
+    /// Total number of samples produced without executing SID
     i64 idleSamples;
 
-    // Total number of sampels grabbed by the audio backend
+    /// Total number of sampels grabbed by the audio backend
     i64 consumedSamples;
 }
 AudioPortMetrics;

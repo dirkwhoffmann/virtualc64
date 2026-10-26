@@ -21,6 +21,7 @@ namespace vc64 {
 // Enumerations
 //
 
+/// Devices that can be connected to the RS232 adapter
 enum class CommunicationDevice : long
 {
     NONE,
@@ -57,6 +58,7 @@ struct CommunicationDeviceEnum : utl::Reflectable<CommunicationDeviceEnum, Commu
 // Structures
 //
 
+/// Configuration of the RS232 adapter
 typedef struct
 {
     CommunicationDevice device;             ///< Connected RS232 device

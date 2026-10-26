@@ -17,14 +17,15 @@
 
 namespace vc64 {
 
+/// Types of VICII memory accesses
 enum class MemAccess : long
 {
-    R,     // Memory Refresh
-    I,     // Idle read
-    C,     // Character access
-    G,     // Graphics access
-    P,     // Sprite pointer access
-    S,     // Sprite data access
+    R,                                   ///< Memory Refresh
+    I,                                   ///< Idle read
+    C,                                   ///< Character access
+    G,                                   ///< Graphics access
+    P,                                   ///< Sprite pointer access
+    S,                                   ///< Sprite data access
     COUNT
 };
 

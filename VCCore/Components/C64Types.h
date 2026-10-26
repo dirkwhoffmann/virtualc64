@@ -22,6 +22,7 @@ namespace vc64 {
 // Type aliases
 //
 
+/// Emulator time in master clock cycles
 typedef i64 Cycle;
 
 
@@ -65,6 +66,7 @@ struct ConfigSchemeEnum : utl::Reflectable<ConfigSchemeEnum, ConfigScheme> {
     }
 };
 
+/// Warp mode selection
 enum class Warp : long
 {
     AUTO,
@@ -94,33 +96,34 @@ struct WarpEnum : utl::Reflectable<WarpEnum, Warp>
     }
 };
 
+/// Slots of the event scheduler
 enum EventSlot : long
 {
     // Primary slots
-    SLOT_CIA1,                      // CIA 1 execution
-    SLOT_CIA2,                      // CIA 2 execution
-    SLOT_SEC,                       // Enables secondary slots
+    SLOT_CIA1,                           ///< CIA 1 execution
+    SLOT_CIA2,                           ///< CIA 2 execution
+    SLOT_SEC,                            ///< Enables secondary slots
 
     // Secondary slots
-    SLOT_SER,                       // Serial port (IEC bus)
-    SLOT_DAT,                       // Datasette execution
-    SLOT_TER,                       // Enables tertiary slots
+    SLOT_SER,                            ///< Serial port (IEC bus)
+    SLOT_DAT,                            ///< Datasette execution
+    SLOT_TER,                            ///< Enables tertiary slots
 
     // Tertiary slots
-    SLOT_EXP,                       // Expansion port
-    SLOT_TXD,                       // Serial data out (RS232)
-    SLOT_RXD,                       // Serial data in (RS232)
-    SLOT_MOT,                       // Datasette motor
-    SLOT_DC8,                       // Disk change (Drive 8)
-    SLOT_DC9,                       // Disk change (Drive 9)
-    SLOT_SNP,                       // Snapshots
-    SLOT_RSH0,                      // Retro Shell (GUI)
-    SLOT_RSH1,                      // Retro Shell (RSH server)
-    SLOT_RSH2,                      // Retro Shell (RPC server)
-    SLOT_KEY,                       // Auto-typing
-    SLOT_DBG,                       // Debugging (Regression tester)
-    SLOT_ALA,                       // Alarms (set by the GUI)
-    SLOT_INS,                       // Handles periodic calls to inspect()
+    SLOT_EXP,                            ///< Expansion port
+    SLOT_TXD,                            ///< Serial data out (RS232)
+    SLOT_RXD,                            ///< Serial data in (RS232)
+    SLOT_MOT,                            ///< Datasette motor
+    SLOT_DC8,                            ///< Disk change (Drive 8)
+    SLOT_DC9,                            ///< Disk change (Drive 9)
+    SLOT_SNP,                            ///< Snapshots
+    SLOT_RSH0,                           ///< Retro Shell (GUI)
+    SLOT_RSH1,                           ///< Retro Shell (RSH server)
+    SLOT_RSH2,                           ///< Retro Shell (RPC server)
+    SLOT_KEY,                            ///< Auto-typing
+    SLOT_DBG,                            ///< Debugging (Regression tester)
+    SLOT_ALA,                            ///< Alarms (set by the GUI)
+    SLOT_INS,                            ///< Handles periodic calls to inspect()
 
     SLOT_COUNT
 };
@@ -198,6 +201,7 @@ struct EventSlotEnum : utl::Reflectable<EventSlotEnum, EventSlot>
     }
 };
 
+/// Events that can be scheduled in the event slots
 enum EventID : u8 // _i8(EventID)
 {
     EVENT_NONE          = 0,
@@ -294,25 +298,27 @@ enum EventID : u8 // _i8(EventID)
 // Structures
 //
 
+/// Configuration of the C64 component
 typedef struct
 {
-    //! After a reset, the emulator runs in warp mode for this amout of seconds
+    /// After a reset, the emulator runs in warp mode for this amout of seconds
     isize warpBoot;
     
-    //! Warp mode
+    /// Warp mode
     Warp warpMode;
     
-    //! Emulator speed in percent (100 is native speed)
+    /// Emulator speed in percent (100 is native speed)
     isize speedBoost;
     
-    //! Vertical Synchronization
+    /// Vertical Synchronization
     bool vsync;
     
-    //! Number of run-ahead frames (0 = run-ahead is disabled)
+    /// Number of run-ahead frames (0 = run-ahead is disabled)
     isize runAhead;
 }
 C64Config;
 
+/// Description of an installed ROM
 typedef struct
 {
     u32 crc32;                              ///< CRC32 checksum
@@ -328,6 +334,7 @@ typedef struct
 }
 RomInfo;
 
+/// State of a single event slot
 typedef struct
 {
     EventSlot slot;                         ///< The event slot
@@ -335,18 +342,19 @@ typedef struct
     const char *eventName;                  ///< Name of the scheduled event
 
     // Trigger cycle of the event
-    Cycle trigger;
+    Cycle trigger;                       ///< Trigger cycle of the event
     Cycle triggerRel;                       ///< Time until the event triggers (in cycles)
 
-    // Trigger frame relative to the current frame
+    /// Trigger frame relative to the current frame
     long frameRel;
 
     // The trigger cycle translated to a beam position.
-    long vpos;
+    long vpos;                           ///< Raster line at which the event triggers
     long hpos;                              ///< Raster cycle at which the event triggers
 }
 EventSlotInfo;
 
+/// State of the C64 component
 typedef struct
 {
     Cycle cpuProgress;                      ///< CPU clock (in cycles)
@@ -356,24 +364,35 @@ typedef struct
     long vpos;                              ///< Vertical beam position (raster line)
     long hpos;                              ///< Horizontal beam position (raster cycle)
 
-    // Events
+    /// Events
     EventSlotInfo slotInfo[SLOT_COUNT];
 }
 C64Info;
 
+/// Flags that are set to request actions of the run loop
 typedef u32 RunLoopFlags;
 
 namespace RL {
 
+/// Stop the run loop
 constexpr u32 STOP          = (1 << 0);
+/// Switch on warp mode
 constexpr u32 WARP_ON       = (1 << 1);
+/// Switch off warp mode
 constexpr u32 WARP_OFF      = (1 << 2);
+/// A breakpoint was reached
 constexpr u32 BREAKPOINT    = (1 << 3);
+/// A watchpoint was reached
 constexpr u32 WATCHPOINT    = (1 << 4);
+/// The CPU jammed
 constexpr u32 CPU_JAM       = (1 << 5);
+/// Execute a single instruction
 constexpr u32 SINGLE_STEP   = (1 << 6);
+/// Execute a single cycle
 constexpr u32 SINGLE_CYCLE  = (1 << 7);
+/// Run until the end of the raster line
 constexpr u32 FINISH_LINE   = (1 << 8);
+/// Run until the end of the frame
 constexpr u32 FINISH_FRAME  = (1 << 9);
 }
 

@@ -20,18 +20,20 @@ namespace vc64 {
 // Structures
 //
 
+/// Time-of-day value in BCD format
 typedef union
 {
     struct {
-        u8 tenth;
-        u8 sec;
-        u8 min;
-        u8 hour;
+        u8 tenth;                        ///< Tenths of a second
+        u8 sec;                          ///< Seconds
+        u8 min;                          ///< Minutes
+        u8 hour;                         ///< Hours
     };
-    u32 value;
+    u32 value;                           ///< The time as a single 32-bit value
 }
 TimeOfDay;
 
+/// State of the time-of-day clock
 typedef struct
 {
     TimeOfDay time;                         ///< Current time

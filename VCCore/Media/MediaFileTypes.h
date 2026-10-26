@@ -21,6 +21,7 @@ namespace vc64 {
 // Enumerations
 //
 
+/// Supported media file types
 enum class FileType : long
 {
     UNKNOWN,
@@ -72,6 +73,7 @@ struct FileTypeEnum : utl::Reflectable<FileTypeEnum, FileType> {
     }
 };
 
+/// Version of the TAP file format
 enum class TAPVersion : long
 {
     ORIGINAL,
@@ -99,6 +101,7 @@ struct TAPVersionEnum : utl::Reflectable<TAPVersionEnum, TAPVersion> {
     }
 };
 
+/// Error codes for file operations
 enum class FileError : long
 {
     FILE_OK,

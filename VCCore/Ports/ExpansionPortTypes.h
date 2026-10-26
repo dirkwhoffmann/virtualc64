@@ -57,6 +57,7 @@ struct CRTModeEnum : utl::Reflectable<CRTModeEnum, CRTMode> {
 // Structures
 //
 
+/// Configuration of the expansion port
 typedef struct
 {
     isize reuSpeed;                         ///< Speed of the REU

@@ -25,6 +25,7 @@ namespace vc64 {
 /// Number of persisted Opt::XRAY_COLORn slots
 constexpr isize XRAY_COLOR_COUNT = 11;
 
+/// X-Ray mode
 enum class XRayMode : long
 {
     XRAY_NONE,
@@ -62,8 +63,8 @@ struct XRayModeEnum : utl::Reflectable<XRayModeEnum, XRayMode> {
 /// Who merges the X-Ray texture into the emulator texture
 enum class XRayCompositor : long
 {
-    CPU,    // The emulator does it
-    GPU     // The host does it (e.g., in its merge shader)
+    CPU,                                 ///< The emulator does it
+    GPU                                  ///< The host does it (e.g., in its merge shader)
 };
 
 struct XRayCompositorEnum : utl::Reflectable<XRayCompositorEnum, XRayCompositor> {
@@ -131,22 +132,23 @@ struct DmaDisplayModeEnum : utl::Reflectable<DmaDisplayModeEnum, DmaDisplayMode>
 // Structures
 //
 
+/// Configuration of the X-Ray visualizer
 typedef struct
 {
     // X-Ray mode (off, DMA debugger, layer inspector)
-    XRayMode mode;
+    XRayMode mode;                       ///< X-Ray mode (off, DMA debugger, layer inspector)
     bool dmaOverlay;                        ///< Enable the DMA overlay
     XRayCompositor compositor;              ///< Compositor used to merge the overlay with the picture
     bool dmaChannel[6];                     ///< Visualize the DMA channel (one flag per channel)
-    // Colors of the DMA channels (0 - 5) and of the cut-out layers (0 - 10).
-    // The layers use sprite n : color n, border : 8, foreground : 9,
-    // background : 10. Hence, the colors of the first channels are shared.
+    /// Colors of the DMA channels (0 - 5) and of the cut-out layers (0 - 10).
+    /// The layers use sprite n : color n, border : 8, foreground : 9,
+    /// background : 10. Hence, the colors of the first channels are shared.
     u32 dmaColor[XRAY_COLOR_COUNT];
     DmaDisplayMode dmaDisplayMode;          ///< DMA display mode
     u8 dmaOpacity;                          ///< Opacity of the DMA overlay
     
-    // Layers cut out in XRayMode::XRAY_LAYERS
-    // Bits 0 - 7: sprites, 9: background, 10: foreground, 11: border
+    /// Layers cut out in XRayMode::XRAY_LAYERS
+    /// Bits 0 - 7: sprites, 9: background, 10: foreground, 11: border
     u16 cutLayers;
 }
 XRayConfig;

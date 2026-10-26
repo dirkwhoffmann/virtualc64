@@ -243,34 +243,40 @@ struct MsgEnum : utl::Reflectable<MsgEnum, Msg> {
 // Structures
 //
 
+/// Payload of CPU messages (the program counter)
 typedef struct { u16 pc; } CpuMsg;
 /* Reports a configuration request. The option is -1 if the request has changed
  * several options (e.g., a configuration scheme, in which case 'value' is the
  * scheme) or if it is not known which ones. The component id is -1 if the
  * request was not targeted at a single component.
  */
+/// Payload of configuration messages
 typedef struct { i32 option; i32 id; i64 value; } ConfigMsg;
+/// Payload of drive messages
 typedef struct { i16 nr; i16 value; i16 volume; i16 pan; } DriveMsg;
+/// Payload of script messages
 typedef struct { isize line; i16 delay; } ScriptMsg;
+/// Payload of snapshot messages
 typedef struct { void *snapshot; } SnapshotMsg;
 
+/// A message sent from the emulator to the GUI
 typedef struct
 {
-    // Header
+    /// Type of the message
     Msg type;
 
-    // Payload
+    /// Message payload
     union {
 
-        struct { i64 value; i64 value2; };
-        CpuMsg cpu;
-        ConfigMsg config;
-        DriveMsg drive;
-        ScriptMsg script;
-        SnapshotMsg snapshot;
+        struct { i64 value; i64 value2; };///< Generic payload
+        CpuMsg cpu;                      ///< CPU payload
+        ConfigMsg config;                ///< Configuration payload
+        DriveMsg drive;                  ///< Drive payload
+        ScriptMsg script;                ///< Script payload
+        SnapshotMsg snapshot;            ///< Snapshot payload
     };
 
-    const char *str;
+    const char *str;                     ///< Optional text (may be null)
 }
 Message;
 
@@ -284,6 +290,7 @@ Message;
  * for the duration of the call as far as pointers inside the message go; the
  * exception is a shared handle and can be kept.
  */
+/// Signature of the function that receives messages
 typedef void Callback(const void *, Message, std::exception_ptr);
 
 }

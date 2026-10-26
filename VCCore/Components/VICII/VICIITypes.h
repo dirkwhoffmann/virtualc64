@@ -22,6 +22,7 @@ namespace vc64 {
 // Constants
 //
 
+/// @cond INTERNAL
 // Sprite bit masks
 inline constexpr int SPR0 = 0x01;
 inline constexpr int SPR1 = 0x02;
@@ -78,6 +79,7 @@ VICUpdateBankAddr |
 VICSetDisplayState |
 VICClrSprSprCollReg |
 VICClrSprBgCollReg);
+/// @endcond
 
 
 //
@@ -220,17 +222,18 @@ struct DisplayModeEnum : utl::Reflectable<DisplayModeEnum, DisplayMode> {
     }
 };
 
+/// Source of a pixel color in the graphics synthesizer
 enum class ColorSource : long
 {
-    D021,     // Color comes from background color register
-    D022,     // Color comes from first extended color register
-    D023,     // Color comes from second extended color register
-    CHAR_LO,  // Color comes from the low byte of the fetched character
-    CHAR_HI,  // Color comes from the high byte of the fetched character
-    COLRAM3,  // Color comes from the color RAM (lower three 3 bits)
-    COLRAM4,  // Color comes from the color RAM (all 4 bits)
-    INDEXED,  // Color comes from a color register
-    ZERO      // Invalid display modes
+    D021,                                ///< Color comes from background color register
+    D022,                                ///< Color comes from first extended color register
+    D023,                                ///< Color comes from second extended color register
+    CHAR_LO,                             ///< Color comes from the low byte of the fetched character
+    CHAR_HI,                             ///< Color comes from the high byte of the fetched character
+    COLRAM3,                             ///< Color comes from the color RAM (lower three 3 bits)
+    COLRAM4,                             ///< Color comes from the color RAM (all 4 bits)
+    INDEXED,                             ///< Color comes from a color register
+    ZERO                                 ///< Invalid display modes
 };
 
 struct ColorSourceEnum : utl::Reflectable<ColorSourceEnum, ColorSource> {
@@ -261,6 +264,7 @@ struct ColorSourceEnum : utl::Reflectable<ColorSourceEnum, ColorSource> {
     }
 };
 
+/// The 16 colors of the VICII chip
 enum class VICIIColor : long
 {
     BLACK       = 0x0,
@@ -281,23 +285,24 @@ enum class VICIIColor : long
     LIGHT_GREY  = 0xF
 };
 
+/// Indices of the VICII color registers
 namespace VICIIColorReg
 {
-const isize BORDER     = 0x0;
-const isize BG_0       = 0x1;
-const isize BG_1       = 0x2;
-const isize BG_2       = 0x3;
-const isize BG_3       = 0x4;
-const isize SPR_EX1    = 0x5;
-const isize SPR_EX2    = 0x6;
-const isize SPR_0      = 0x7;
-const isize SPR_1      = 0x8;
-const isize SPR_2      = 0x9;
-const isize SPR_3      = 0xA;
-const isize SPR_4      = 0xB;
-const isize SPR_5      = 0xC;
-const isize SPR_6      = 0xD;
-const isize SPR_7      = 0xE;
+const isize BORDER     = 0x0;            ///< Border color
+const isize BG_0       = 0x1;            ///< Background color 0
+const isize BG_1       = 0x2;            ///< Background color 1
+const isize BG_2       = 0x3;            ///< Background color 2
+const isize BG_3       = 0x4;            ///< Background color 3
+const isize SPR_EX1    = 0x5;            ///< Sprite extra color 1
+const isize SPR_EX2    = 0x6;            ///< Sprite extra color 2
+const isize SPR_0      = 0x7;            ///< Color of sprite 0
+const isize SPR_1      = 0x8;            ///< Color of sprite 1
+const isize SPR_2      = 0x9;            ///< Color of sprite 2
+const isize SPR_3      = 0xA;            ///< Color of sprite 3
+const isize SPR_4      = 0xB;            ///< Color of sprite 4
+const isize SPR_5      = 0xC;            ///< Color of sprite 5
+const isize SPR_6      = 0xD;            ///< Color of sprite 6
+const isize SPR_7      = 0xE;            ///< Color of sprite 7
 }
 
 
@@ -305,47 +310,50 @@ const isize SPR_7      = 0xE;
 // Structures
 //
 
+/// Properties of a VICII chip revision
 typedef struct
 {
     // Video standard
-    bool pal;
+    bool pal;                            ///< The chip is a PAL chip
     isize frequency;                        ///< Clock frequency (in Hz)
     double fps;                             ///< Frames per second
 
     // Picture layout
-    isize linesPerFrame;
+    isize linesPerFrame;                 ///< Number of raster lines per frame
     isize cyclesPerLine;                    ///< Number of cycles per raster line
     isize cyclesPerFrame;                   ///< Number of cycles per frame
     isize visibleLines;                     ///< Number of visible raster lines
 
     // Chip properties
-    bool grayCodeBug;
+    bool grayCodeBug;                    ///< The chip has the gray-code bug
     bool delayedLpIrqs;                     ///< Light pen interrupts are delayed
 }
 VICIITraits;
 
+/// Configuration of the VICII chip
 typedef struct
 {
     // Silicon
-    VICIIRev revision;
+    VICIIRev revision;                   ///< Chip revision
     VICIIRev awaiting;                      ///< Chip revision that takes effect on the next reset
     bool powerSave;                         ///< Take fast paths
     bool grayDotBug;                        ///< Emulate the gray-dot bug
     GlueLogic glueLogic;                    ///< Glue logic type
 
-    // Sprites
+    /// Sprites
     bool hideSprites;
     
     // Cheating
-    bool checkSSCollisions;
+    bool checkSSCollisions;              ///< Detect sprite-sprite collisions
     bool checkSBCollisions;                 ///< Detect sprite-background collisions
 }
 VICIIConfig;
 
+/// Performance statistics of the graphics synthesizer
 typedef struct
 {
     // Graphics synthesizer (speed optimizations)
-    isize canvasFastPath;
+    isize canvasFastPath;                ///< Number of canvas drawings that took the fast path
     isize canvasSlowPath;                   ///< Number of canvas drawings that took the slow path
     isize spriteFastPath;                   ///< Number of sprite drawings that took the fast path
     isize spriteSlowPath;                   ///< Number of sprite drawings that took the slow path
@@ -354,6 +362,7 @@ typedef struct
 }
 VICIIMetrics;
 
+/// State of the frame flip-flops
 typedef struct
 {
     bool vertical;                          ///< Vertical frame flip-flop
@@ -361,10 +370,11 @@ typedef struct
 }
 FrameFlipflops;
 
+/// State of the VICII chip
 typedef struct
 {
     // Counters
-    u16 scanline;
+    u16 scanline;                        ///< Current raster line
     u8 rasterCycle;                         ///< Current raster cycle
     u32 yCounter;                           ///< Raster line counter
     u16 xCounter;                           ///< Horizontal position counter
@@ -374,7 +384,7 @@ typedef struct
     u8 vmli;                                ///< Video matrix line index (VMLI)
 
     // Display
-    u8 ctrl1;
+    u8 ctrl1;                            ///< Control register 1
     u8 ctrl2;                               ///< Control register 2
     u8 dy;                                  ///< Vertical scroll value
     u8 dx;                                  ///< Horizontal scroll value
@@ -392,25 +402,26 @@ typedef struct
     u8 bgColor3;                            ///< Background color 3
     
     // Memory
-    u8 memSelect;
+    u8 memSelect;                        ///< Memory control register
     bool ultimax;                           ///< Ultimax memory mode is active
     u16 memoryBankAddr;                     ///< Start address of the VIC bank
     u16 screenMemoryAddr;                   ///< Address of the screen memory
     u16 charMemoryAddr;                     ///< Address of the character memory
 
     // Interrupts
-    u16 irqLine;
+    u16 irqLine;                         ///< Raster line that triggers a raster interrupt
     u8 irr;                                 ///< Interrupt request register
     u8 imr;                                 ///< Interrupt mask register
 
     // Lightpen
-    u8 latchedLPX;
+    u8 latchedLPX;                       ///< Latched light pen X coordinate
     u8 latchedLPY;                          ///< Latched light pen Y coordinate
     bool lpLine;                            ///< State of the light pen line
     bool lpIrqHasOccurred;                  ///< A light pen interrupt has occurred in this frame
 }
 VICIIInfo;
 
+/// State of a sprite
 typedef struct
 {
     u16 x;                                  ///< Horizontal position

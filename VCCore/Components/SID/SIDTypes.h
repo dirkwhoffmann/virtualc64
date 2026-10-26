@@ -22,6 +22,7 @@ namespace vc64 {
 // Aliases
 //
 
+/// Buffer for audio samples
 typedef utl::RingBuffer<short, 2048> SampleStream;
 
 
@@ -83,6 +84,7 @@ struct SIDEngineEnum : utl::Reflectable<SIDEngineEnum, SIDEngine> {
     }
 };
 
+/// Sampling method of the reSID engine
 enum class SamplingMethod
 {
     // Elements must appear in the same order as in resid::sampling_method
@@ -123,37 +125,39 @@ struct SamplingMethodEnum : utl::Reflectable<SamplingMethodEnum, SamplingMethod>
 /*
 typedef struct {
 
-    // Audio sample of the left stereo channel
+    /// Audio sample of the left stereo channel
     float l;
 
-    // Audio sample of the right stereo channel
+    /// Audio sample of the right stereo channel
     float r;
 }
 SamplePair;
 */
 
+/// Configuration of a SID chip
 typedef struct
 {
-    // Indicates if this SID is plugged in
+    /// Indicates if this SID is plugged in
     bool enabled;
 
-    // Location of the SID registers in memory
+    /// Location of the SID registers in memory
     u16 address;
 
     // Hardware settings
-    SIDRevision revision;
+    SIDRevision revision;                ///< Chip revision (MOS 6581 or MOS 8580)
     bool filter;                            ///< Use filter
 
     // Emlation engine settings
-    SIDEngine engine;
+    SIDEngine engine;                    ///< Emulation engine
     SamplingMethod sampling;                ///< Sampling method
 
-    // Performance
+    /// Performance
     bool powerSave;
 
 }
 SIDConfig;
 
+/// State of a SID voice
 typedef struct
 {
     u8 reg[7];                              ///< Raw voice registers
@@ -172,6 +176,7 @@ typedef struct
 }
 VoiceInfo;
 
+/// State of a SID chip
 typedef struct
 {
     u8 volume;                              ///< Master volume

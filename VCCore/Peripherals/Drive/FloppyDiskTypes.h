@@ -44,7 +44,7 @@ namespace vc64 {
 static const isize highestTrack = 42;
 static const isize highestHalftrack = 84;
 
-// Highest sector number (numbering starts with 0)
+/// Highest sector number (numbering starts with 0)
 static const isize highestSector = 20;
 
 static inline bool isTrackNumber(isize nr) { return 1 <= nr && nr <= highestTrack; }
@@ -171,14 +171,15 @@ struct CBMFileTypeEnum : utl::Reflectable<CBMFileTypeEnum, CBMFileType> {
 //
 
 // Disk parameters of a standard floppy disk
+/// Default properties of a track
 typedef struct
 {
-    u8  sectors;          // Typical number of sectors in this track
-    u8  speedZone;        // Default speed zone for this track
-    u16 lengthInBytes;    // Typical track size in bits
-    u16 lengthInBits;     // Typical track size in bits
-    Sector firstSectorNr; // Logical number of first sector in track
-    double stagger;       // Relative position of first bit (from Hoxs64)
+    u8  sectors;                         ///< Typical number of sectors in this track
+    u8  speedZone;                       ///< Default speed zone for this track
+    u16 lengthInBytes;                   ///< Typical track size in bits
+    u16 lengthInBits;                    ///< Typical track size in bits
+    Sector firstSectorNr;                ///< Logical number of first sector in track
+    double stagger;                      ///< Relative position of first bit (from Hoxs64)
 }
 TrackDefaults;
 

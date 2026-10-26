@@ -21,12 +21,19 @@ namespace vc64 {
 // Type aliases
 //
 
+/// Cylinder number
 typedef isize Cylinder;
+/// Head number
 typedef isize Head;
+/// Track number
 typedef isize Track;
+/// Halftrack number
 typedef isize Halftrack;
+/// Sector number
 typedef isize Sector;
+/// Block number
 typedef isize Block;
+/// Position of the drive head within a halftrack (in bits)
 typedef isize HeadPos;
 
 
@@ -34,7 +41,9 @@ typedef isize HeadPos;
 // Constants
 //
 
+/// Number of drive 8
 static const isize DRIVE8 = 0;
+/// Number of drive 9
 static const isize DRIVE9 = 1;
 
 
@@ -72,12 +81,13 @@ struct DriveTypeEnum : utl::Reflectable<DriveTypeEnum, DriveType> {
     }
 };
 
+/// Memory expansion of a drive
 enum class DriveRam : long
 {
     NONE,
-    RANGE_8000_9FFF,    //  8K
-    RANGE_6000_7FFF,    //  8K
-    RANGE_4000_7FFF     // 16K
+    RANGE_8000_9FFF,                     ///< 8K
+    RANGE_6000_7FFF,                     ///< 8K
+    RANGE_4000_7FFF                      ///< 16K
 };
 
 struct DriveRamEnum : utl::Reflectable<DriveRamEnum, DriveRam> {
@@ -103,15 +113,16 @@ struct DriveRamEnum : utl::Reflectable<DriveRamEnum, DriveRam> {
     }
 };
 
+/// Memory types of a drive
 enum class DrvMemType : long
 {
-    NONE,      // Unmapped
+    NONE,                                ///< Unmapped
     RAM,
-    EXP,       // Expansion RAM
+    EXP,                                 ///< Expansion RAM
     ROM,
     VIA1,
     VIA2,
-    PIA        // Peripheral Interface Adapter (Dolphin3)
+    PIA                                  ///< Peripheral Interface Adapter (Dolphin3)
 };
 
 struct DrvMemTypeEnum : utl::Reflectable<DrvMemTypeEnum, DrvMemType> {
@@ -140,6 +151,7 @@ struct DrvMemTypeEnum : utl::Reflectable<DrvMemTypeEnum, DrvMemType> {
     }
 };
 
+/// Insertion state of a disk
 enum class InsertionStatus : long
 {
     FULLY_EJECTED,
@@ -176,38 +188,40 @@ struct InsertionStatusEnum : utl::Reflectable<InsertionStatusEnum, InsertionStat
 // Structures
 //
 
+/// Configuration of a drive
 typedef struct
 {
-    // General
+    /// General
     bool autoConfig;
 
     // Hardware
-    DriveType type;
+    DriveType type;                      ///< Drive model
     DriveRam ram;                           ///< Drive RAM
     ParCableType parCable;                  ///< Parallel cable
     bool powerSave;                         ///< Take fast paths
 
     // State
-    bool connected;
+    bool connected;                      ///< The drive is connected to the serial port
     bool switchedOn;                        ///< Power switch
 
     // Disk handling delays
-    isize ejectDelay;
+    isize ejectDelay;                    ///< Disk ejection delay
     isize swapDelay;                        ///< Disk swap delay
     isize insertDelay;                      ///< Disk insertion delay
 
     // Drive sounds
-    i16 pan;
+    i16 pan;                             ///< Stereo pan of the drive sounds
     u8 powerVolume;                         ///< Power switch volume
     u8 stepVolume;                          ///< Head step volume
     u8 insertVolume;                        ///< Disk insertion volume
     u8 ejectVolume;                         ///< Disk ejection volume
 
-    // Save Roms
+    /// Save Roms
     bool saveRoms;
 }
 DriveConfig;
 
+/// State of a drive
 typedef struct
 {
     isize id;                               ///< Number of the drive

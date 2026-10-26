@@ -1,50 +1,41 @@
-# State model
+# State Model {#state}
 
 ## Overview
 
-After lauching, the emulator runs as a single thread alongside the GUI. The thread exists during the lifetime of the application, but may not compute new frames all the time. The exact behavior is controlled by the internal state. 
- 
- The following states are distinguishedd:
- 
- - **Uninit:** The emulator has just been created
- - **Off:** The emulator is turned off
- - **Paused:** The emulator is turned on but not running
- - **Running:** The emulator is turned on and running
- - **Suspended:** The emulator is paused for a short period of time
- - **Halted:** The emulator is shutting down
- 
- @image html state.png
- 
- The thread executes an infinite loop which periodically calls function vc64::Thread::execute. After each iteration, the thread is put to sleep to synchronize timing.
- 
- ## Suspend / Resume
- 
- The Thread class provides a suspend-resume mechanism for pausing the thread temporarily. This functionality is utilized frequently by the GUI to carry out atomic operations that cannot be performed while the emulator is running. To pause the emulator temporarily, the critical code section can be embedded in a suspend/resume block like this:
+After launching, the emulator runs as a single thread alongside the front-end. The thread lives as long as the emulator object, but it does not compute frames all the time. What it does is controlled by the execution state:
 
- ```{.cpp}
- 	suspend();
+- **Uninit:** The emulator object exists, but the thread has not been launched yet (see \ref vc64::VirtualC64::launch "launch()" and \ref vc64::VirtualC64::isLaunched "isLaunched()").
+- **Off:** The emulator is powered off.
+- **Paused:** The emulator is powered on, but no frames are computed.
+- **Running:** The emulator is powered on and computes frames.
+- **Halted:** The emulator thread has been terminated. This is the last step of the shutdown procedure.
 
-    // Modify the internal state
+The states Off, Paused, Running, and Halted are the values of the enumeration \ref vc64::ExecState. A state change is requested with the functions shown in the diagram. Like all state-changing functions, they come in a blocking and an asynchronous flavor (for example \ref vc64::VirtualC64::run "run()" and \ref vc64::VirtualC64::runAsync "runAsync()", see [Threading and Errors](threading.md)).
 
-    resume();
- ```
+@image html state.svg
 
- It it safe to nest multiple suspend/resume blocks, but it is essential that each call to [suspend](@ref vc64::Thread::suspend) is followed by a call to Thread class [resume](@ref vc64::Thread::resume). As a result, the critical code section must not be exited in the middle, e.g., by throwing an exception.
+The functions \ref vc64::VirtualC64::isPoweredOff "isPoweredOff()", \ref vc64::VirtualC64::isPaused "isPaused()", \ref vc64::VirtualC64::isRunning "isRunning()", and \ref vc64::VirtualC64::isPoweredOn "isPoweredOn()" query the state. Running an emulator that is powered off switches it on first. If a required ROM is missing, \ref vc64::VirtualC64::run "run()" throws a \ref vc64::CoreError "CoreError". \ref vc64::VirtualC64::checkReady "checkReady()" performs the same check without running the emulator.
 
- ## Synchronization
- 
- The Thread class is responsible for timing synchronization. I.e., it has to ensure that the proper amount of frames are executed per second. To synchronize timing, the thread waits for an external wake-up signal. When the wake-up signal comes in (by calling [wakeUp](@ref vc64::Thread::wakeUp), the thread computes the computes computes all missing frames. If the number of missing frames exceeds a threshold, the thread resynchronizes itself by calling [resync](@ref vc64::Thread::resync).
- 
- ## Warp mode
- 
- To speed up emulation (e.g., during disk accesses), the emulator may be put into warp mode. In this mode, timing synchronization is disabled causing the emulator to run as fast as possible.
- 
- Similar to warp mode, the emulator may be put into track mode. This mode is enabled when the GUI debugger is opend and disabled when the debugger is closed. In track mode, several time-consuming tasks are performed that are usually left out. E.g., the CPU tracks all executed instructions and stores the recorded information in a trace buffer.
- 
+## Suspension
+
+Independent of the execution state, the emulator thread can be *suspended* for a short period of time with \ref vc64::API::suspend "suspend()". A suspended thread stops at a safe point (it is neither computing a frame nor carrying out commands) and continues once \ref vc64::API::resume "resume()" has been called. The execution state does not change. \ref vc64::VirtualC64::isSuspended "isSuspended()" reports whether a suspension is active. See [Threading and Errors](threading.md) for the rules that apply to suspensions.
+
+## Synchronization
+
+The emulator thread does not run freely. To compute the proper number of frames per second, it waits for an external wake-up signal and then computes all frames that are missing. The front-end sends the signal by calling \ref vc64::VirtualC64::wakeUp "wakeUp()". The best moment is right after the current texture has been handed over to the GPU, which usually coincides with a VSYNC pulse. If the thread falls too far behind, it resynchronizes itself instead of trying to catch up.
+
+## Warp mode
+
+To speed up emulation (e.g., during disk accesses), the emulator can be put into *warp mode*. In this mode, timing synchronization is disabled and the emulator runs as fast as possible. Several clients can request warp mode independently by using different sources (see \ref vc64::VirtualC64::warpOn "warpOn()"). The mode stays on as long as at least one source has requested it. The option \ref vc64::Opt::C64_WARP_MODE "C64_WARP_MODE" selects when warp mode is entered automatically.
+
+## Track mode
+
+Similar to warp mode, the emulator can be put into *track mode* (see \ref vc64::VirtualC64::trackOn "trackOn()"). A GUI enables it while its debugger is open. In track mode, several time-consuming tasks are performed that are usually left out. For example, the CPU records all executed instructions in a trace buffer.
+
 <div class="section_buttons">
 
-| Previous                      |                                    Next |
-|:------------------------------|----------------------------------------:|
-| [Headless App](headless.md)   | [Communication Model](communication.md) |
- 
+| Previous                              |                                    Next |
+|:--------------------------------------|----------------------------------------:|
+| [Threading and Errors](threading.md)  | [Communication Model](communication.md) |
+
 </div>

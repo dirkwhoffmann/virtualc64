@@ -75,6 +75,7 @@ struct GamePadActionEnum : utl::Reflectable<GamePadActionEnum, GamePadAction> {
 // Structures
 //
 
+/// Configuration of a joystick
 typedef struct
 {
     bool autofire;                          ///< Autofire
@@ -84,6 +85,7 @@ typedef struct
 }
 JoystickConfig;
 
+/// State of a joystick
 typedef struct
 {
     bool button;                            ///< The fire button is pressed

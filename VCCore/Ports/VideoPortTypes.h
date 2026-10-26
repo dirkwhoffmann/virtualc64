@@ -20,6 +20,7 @@ namespace vc64 {
 // Structures
 //
 
+/// Configuration of the video port
 typedef struct
 {
     bool whiteNoise;                        ///< Show white noise while the machine is off
@@ -27,12 +28,14 @@ typedef struct
 
 VideoPortConfig;
 
+/// State of the video port
 typedef struct
 {
     i64 latestGrabbedFrame;                 ///< Number of the most recent frame that was grabbed by the host
 }
 VideoPortInfo;
 
+/// Statistics of the video port
 typedef struct
 {
     isize droppedFrames;                    ///< Number of frames that were not grabbed in time

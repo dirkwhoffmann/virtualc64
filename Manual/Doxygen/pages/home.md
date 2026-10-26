@@ -1,4 +1,4 @@
-Welcome to the official VirtualC64 documentation. Here you will find a detailed view of VirtualC64's public API. It summarizes the necesarry information for developers to incoorporate the emulation core in own projects. For more information about VirtualC64 plase visit the [official website](https://dirkwhoffmann.github.io/virtualc64/).
+Welcome to the VirtualC64 API reference. This manual describes the public API of the VirtualC64 emulation core, i.e., everything a front-end needs to embed the emulator into an application. For general information about VirtualC64, visit the [official website](https://dirkwhoffmann.github.io/virtualc64/).
 
 \image html ad-vc.png width=400px
 
@@ -10,42 +10,62 @@ Welcome to the official VirtualC64 documentation. Here you will find a detailed 
 ![Build](https://github.com/dirkwhoffmann/virtualC64/workflows/CMake-MinGW/badge.svg)
 ![MSVC](https://github.com/dirkwhoffmann/virtualC64/workflows/CMake-MSVC/badge.svg)
 
+## Overview
+
+The emulator core is written in C++20 and designed to be portable. All of its functionality is reached through a single class, \ref vc64::VirtualC64. The class contains one sub-API per hardware component, for example `cpu`, `vicii`, `sid`, `keyboard`, or `drive8`. All sub-APIs share the same conventions for threading and error handling, which are described in the chapters of this manual.
+
 ## Example
 
-VirtualC64 is implemented in C++20 with high portability in mind. The following code snippet demonstrates the general usage model of the emulator core.
+The following program creates an emulator instance, configures it, and runs it. The emulator computes frames in a thread of its own, so the main thread is free to do other work.
 
 ```cpp
 #include "VirtualC64.h"
 
-int main(int argc, char *argv[]) 
+using namespace vc64;
+
+// Receives all messages sent by the emulator. Note that the function is
+// called on the emulator thread.
+static void process(const void *listener, Message msg, std::exception_ptr error)
 {
+    // Forward the message to the user thread (not shown)
+}
 
-	// Create an emulator instance
-	VirtualC64 c64;
+int main()
+{
+    // Create an emulator instance
+    VirtualC64 c64;
 
-	// Launch the emulator thread (with messageReceiver defined elsewhere)
-	c64.launch(this, messageReceiver);
+    // Launch the emulator thread
+    c64.launch(nullptr, process);
 
-	// Configure the emulator
-	c64.set(Opt::VICII_REVISION, VICII_PAL_6569_R3);
+    // Install the ROMs. Here, we use the MEGA65 OpenROMs.
+    c64.c64.installOpenRoms();
 
-	// Start the emulator
-	c64.run() 
+    // Configure the emulator
+    c64.set(Opt::VICII_REVISION, long(VICIIRev::PAL_6569_R3));
 
-	//
-	// Interact with the emulator
-	// 
+    // Start the emulator
+    c64.run();
+
+    // Interact with the emulator, e.g., by typing a string
+    c64.keyboard.autoType("LOAD \"*\",8,1\n");
+
+    // ...
 }
 ```
 
-## See also
+## Where to go from here
 
-- Class [VirtualC64](#vc64::VirtualC64) which provides the public API.
+- [Threading and Errors](threading.md) explains which thread may call what, how failures are reported, and how the blocking and asynchronous flavors of the API functions differ.
+- [State Model](state.md) describes the life cycle of the emulator thread.
+- [Communication Model](communication.md) gives an overview of the command queue, the message queue, and the way data is read back from the emulator.
+- [Headless App](headless.md) walks through a small command-line application that uses the API.
+- Class \ref vc64::VirtualC64 is the entry point of the API reference.
 
 <div class="section_buttons">
 
-|                        Next |
-|----------------------------:|
-| [Headless App](headless.md) |
- 
+|                              Next |
+|----------------------------------:|
+| [Threading and Errors](threading.md) |
+
 </div>
