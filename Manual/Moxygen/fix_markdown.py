@@ -10,7 +10,8 @@
     its enumerations in "On this page".
   - Moxygen documents all enumerations on the namespace page. Each one is moved
     to a page of its own (enum-<Name>.md), and all links to it are redirected.
-  - The mainpage becomes index.md, and the images of the guides are copied
+  - The guide's start page becomes introduction.md; index.md is the landing
+    page (home.md). The images of the guides are copied
     next to the pages.
 
 Usage: fix_markdown.py <docs-dir> <guide-images-dir>
@@ -71,7 +72,8 @@ def main(docs, images):
     namespace.write_text(namespace.read_text().replace('title: "vc64"', 'title: "Types and Enumerations"\noutline: [2, 3]', 1)
                          .replace("\n# vc64\n", "\n# Types and Enumerations\n", 1))
     redirect(docs, split_enums(docs))
-    (docs / "page-index.md").replace(docs / "index.md")
+    (docs / "page-index.md").replace(docs / "introduction.md")
+    shutil.copy(Path(__file__).parent / "home.md", docs / "index.md")
     (docs / "api.md").unlink(missing_ok=True)
     for image in Path(images).iterdir():
         if image.suffix in (".svg", ".png") and image.name != "icon.png":

@@ -41,6 +41,7 @@ const structKinds: [string, RegExp][] = [
   ['Metrics', /(Metrics|Stats)$/],
   ['Commands', /(Cmd|^Command)$/],
   ['Messages', /(Msg|^Message)$/],
+  ['Traits', /Traits$/],
   ['Other', /./],
 ]
 
@@ -88,7 +89,7 @@ export default defineConfig({
     logo: '/icon.png',
     search: { provider: 'local' },
     sidebar: [
-      { text: 'Guides', collapsed: false, items: [{ text: 'Introduction', link: '/' }, ...items('page-', guides)] },
+      { text: 'Guides', collapsed: false, items: [{ text: 'Introduction', link: '/introduction' }, ...items('page-', guides)] },
       { text: 'API', collapsed: false, items: apiItems() },
       { text: 'Structs', collapsed: true, items: structGroups() },
       { text: 'Reference', collapsed: false, items: [
