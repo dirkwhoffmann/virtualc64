@@ -39,14 +39,14 @@ The disk in the drive.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| const [`DriveConfig`](vc64-DriveConfig.md#driveconfig) & | [`getConfig`](#getconfig-5) `const` | Returns the component's current configuration. |
+| const [`DriveConfig`](vc64-DriveConfig.md#driveconfig) & | [`getConfig`](#getconfig-4) `const` | Returns the component's current configuration. |
 | const [`DriveInfo`](vc64-DriveInfo.md#driveinfo) & | [`getInfo`](#getinfo-5) `const` | Returns the component's current state. |
 | const [`DriveInfo`](vc64-DriveInfo.md#driveinfo) & | [`getCachedInfo`](#getcachedinfo-5) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-5)). |
 | `void` | [`insertBlankDisk`](#insertblankdisk)  | Inserts a new disk. |
 | `void` | [`insert`](#insert)  | Inserts a disk created from an image file. |
 | `void` | [`insertAsync`](#insertasync)  | Asynchronous version of [insert()](#insert): queues the request and returns at once. |
 | `void` | [`ejectDisk`](#ejectdisk)  | Ejects the current disk. |
-| `void` | [`save`](#save)  | Saves the current disk as an image file. |
+| `void` | [`save`](#save-3)  | Saves the current disk as an image file. |
 | `void` | [`saveFiles`](#savefiles)  | Exports the current disk to a file. |
 
 ---

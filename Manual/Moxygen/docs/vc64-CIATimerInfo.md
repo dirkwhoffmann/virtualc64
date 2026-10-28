@@ -22,7 +22,7 @@ State of a CIA timer.
 | `u16` | [`count`](#count)  | Current counter value. |
 | `u16` | [`latch`](#latch)  | Latch value the counter is reloaded from. |
 | `bool` | [`running`](#running)  | The timer is running. |
-| `bool` | [`toggle`](#toggle-1)  | Toggle mode is on. |
+| `bool` | [`toggle`](#toggle)  | Toggle mode is on. |
 | `bool` | [`pbout`](#pbout)  | The timer output appears on port B. |
 | `bool` | [`oneShot`](#oneshot)  | One-shot mode is on. |
 

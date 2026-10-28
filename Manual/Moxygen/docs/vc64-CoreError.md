@@ -134,8 +134,8 @@ Creates an error with an error code.
 | `long` | [`OPT_LOCKED`](#opt_locked) `static` `constexpr` | The option is temporarily locked. |
 | `long` | [`INVALID_KEY`](#invalid_key) `static` `constexpr` | Invalid property key. |
 | `long` | [`SYNTAX`](#syntax) `static` `constexpr` | Syntax error. |
-| `long` | [`GUARD_NOT_FOUND`](#guard_not_found) `static` `constexpr` | [Guard](vc64-Guard.md#guard-1) is not set. |
-| `long` | [`GUARD_ALREADY_SET`](#guard_already_set) `static` `constexpr` | [Guard](vc64-Guard.md#guard-1) is already set. |
+| `long` | [`GUARD_NOT_FOUND`](#guard_not_found) `static` `constexpr` | [Guard](vc64-Guard.md#guard) is not set. |
+| `long` | [`GUARD_ALREADY_SET`](#guard_already_set) `static` `constexpr` | [Guard](vc64-Guard.md#guard) is already set. |
 | `long` | [`BP_NOT_FOUND`](#bp_not_found) `static` `constexpr` | Breakpoint is not set (DEPRECATED). |
 | `long` | [`BP_ALREADY_SET`](#bp_already_set) `static` `constexpr` | Breakpoint is already set (DEPRECATED). |
 | `long` | [`WP_NOT_FOUND`](#wp_not_found) `static` `constexpr` | Watchpoint is not set (DEPRECATED). |
@@ -357,7 +357,7 @@ long GUARD_NOT_FOUND = 401
 
 Defined in Infrastructure/CoreError.h:50
 
-[Guard](vc64-Guard.md#guard-1) is not set.
+[Guard](vc64-Guard.md#guard) is not set.
 
 ---
 
@@ -371,7 +371,7 @@ long GUARD_ALREADY_SET = 402
 
 Defined in Infrastructure/CoreError.h:51
 
-[Guard](vc64-Guard.md#guard-1) is already set.
+[Guard](vc64-Guard.md#guard) is already set.
 
 ---
 

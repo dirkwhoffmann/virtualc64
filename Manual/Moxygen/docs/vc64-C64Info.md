@@ -19,9 +19,9 @@ State of the C64 component.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `Cycle` | [`cpuProgress`](#cpuprogress)  | CPU clock (in cycles). |
-| `Cycle` | [`cia1Progress`](#cia1progress)  | Clock of CIA 1 (in cycles). |
-| `Cycle` | [`cia2Progress`](#cia2progress)  | Clock of CIA 2 (in cycles). |
+| [`Cycle`](vc64.md#cycle) | [`cpuProgress`](#cpuprogress)  | CPU clock (in cycles). |
+| [`Cycle`](vc64.md#cycle) | [`cia1Progress`](#cia1progress)  | Clock of CIA 1 (in cycles). |
+| [`Cycle`](vc64.md#cycle) | [`cia2Progress`](#cia2progress)  | Clock of CIA 2 (in cycles). |
 | `i64` | [`frame`](#frame)  | Frame number. |
 | `long` | [`vpos`](#vpos)  | Vertical beam position (raster line). |
 | `long` | [`hpos`](#hpos)  | Horizontal beam position (raster cycle). |
@@ -35,7 +35,7 @@ State of the C64 component.
 Cycle cpuProgress
 ```
 
-Type: `Cycle`
+Type: [`Cycle`](vc64.md#cycle)
 
 Defined in Components/C64Types.h:360
 
@@ -49,7 +49,7 @@ CPU clock (in cycles).
 Cycle cia1Progress
 ```
 
-Type: `Cycle`
+Type: [`Cycle`](vc64.md#cycle)
 
 Defined in Components/C64Types.h:361
 
@@ -63,7 +63,7 @@ Clock of CIA 1 (in cycles).
 Cycle cia2Progress
 ```
 
-Type: `Cycle`
+Type: [`Cycle`](vc64.md#cycle)
 
 Defined in Components/C64Types.h:362
 

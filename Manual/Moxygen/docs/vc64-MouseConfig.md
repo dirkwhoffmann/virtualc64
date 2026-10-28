@@ -19,7 +19,7 @@ Configuration of a mouse.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`MouseModel`](grp_controlports.md#mousemodel) | [`model`](#model-1)  | Mouse model. |
+| [`MouseModel`](vc64.md#mousemodel) | [`model`](#model-1)  | Mouse model. |
 | `bool` | [`shakeDetection`](#shakedetection)  | Detect a shaken mouse. |
 | `isize` | [`velocity`](#velocity)  | Mouse velocity. |
 
@@ -31,7 +31,7 @@ Configuration of a mouse.
 MouseModel model
 ```
 
-Type: [`MouseModel`](grp_controlports.md#mousemodel)
+Type: [`MouseModel`](vc64.md#mousemodel)
 
 Defined in Peripherals/Mouse/MouseTypes.h:67
 

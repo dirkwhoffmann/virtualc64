@@ -19,7 +19,7 @@ DMA Debugger Public [API](vc64-API.md#api)
 
 | Return | Name | Description |
 |--------|------|-------------|
-| const [`XRayConfig`](vc64-XRayConfig.md#xrayconfig) & | [`getConfig`](#getconfig-3) `const` | Returns the component's current configuration. |
+| const [`XRayConfig`](vc64-XRayConfig.md#xrayconfig) & | [`getConfig`](#getconfig-10) `const` | Returns the component's current configuration. |
 
 ---
 

@@ -19,7 +19,7 @@ Configuration of the power port.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`PowerGrid`](grp_userserial.md#powergrid) | [`powerGrid`](#powergrid-1)  | Power grid stability. |
+| [`PowerGrid`](vc64.md#powergrid) | [`powerGrid`](#powergrid-1)  | Power grid stability. |
 
 ---
 
@@ -29,7 +29,7 @@ Configuration of the power port.
 PowerGrid powerGrid
 ```
 
-Type: [`PowerGrid`](grp_userserial.md#powergrid)
+Type: [`PowerGrid`](vc64.md#powergrid)
 
 Defined in Ports/PowerPortTypes.h:63
 

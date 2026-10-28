@@ -21,7 +21,7 @@ Properties of the host machine.
 |--------|------|-------------|
 | `isize` | [`refreshRate`](#refreshrate)  | Refresh rate of the host display. |
 | `isize` | [`sampleRate`](#samplerate)  | Audio sample rate of the host computer. |
-| [`TexFormat`](grp_audiovideo.md#texformat-1) | [`texFormat`](#texformat)  | Texture format. |
+| `TexFormat` | [`texFormat`](#texformat-1)  | Texture format. |
 | `isize` | [`frameBufferWidth`](#framebufferwidth)  | Width of the host frame buffer (in pixels). |
 | `isize` | [`frameBufferHeight`](#framebufferheight)  | Height of the host frame buffer (in pixels). |
 
@@ -56,8 +56,6 @@ Audio sample rate of the host computer.
 ```cpp
 TexFormat texFormat
 ```
-
-Type: [`TexFormat`](grp_audiovideo.md#texformat-1)
 
 Defined in Infrastructure/HostTypes.h:78
 

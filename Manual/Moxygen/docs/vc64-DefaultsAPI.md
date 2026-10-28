@@ -34,12 +34,12 @@ The fallback value is used for registered keys with no custom value set.
 | `void` | [`load`](#load)  | Loads a storage file from disk. |
 | `void` | [`load`](#load-1)  | Loads a storage file from a stream. |
 | `void` | [`load`](#load-2)  | Loads a storage file from a string stream. |
-| `void` | [`save`](#save-1)  | Saves a storage file to disk. |
-| `void` | [`save`](#save-2)  | Saves a storage file to stream. |
-| `void` | [`save`](#save-3)  | Saves a storage file to a string stream. |
+| `void` | [`save`](#save)  | Saves a storage file to disk. |
+| `void` | [`save`](#save-1)  | Saves a storage file to stream. |
+| `void` | [`save`](#save-2)  | Saves a storage file to a string stream. |
 | `string` | [`getRaw`](#getraw) `const` | Queries a key-value pair. |
+| `i64` | [`get`](#get) `const` | Queries a key-value pair. |
 | `i64` | [`get`](#get-1) `const` | Queries a key-value pair. |
-| `i64` | [`get`](#get-2) `const` | Queries a key-value pair. |
 | `string` | [`getFallbackRaw`](#getfallbackraw) `const` | Queries a fallback key-value pair. |
 | `i64` | [`getFallback`](#getfallback) `const` | Queries a fallback key-value pair. |
 | `i64` | [`getFallback`](#getfallback-1) `const` | Queries a fallback key-value pair. |
@@ -53,10 +53,10 @@ The fallback value is used for registered keys with no custom value set.
 | `void` | [`setFallback`](#setfallback-2)  | Writes multiple key-value pairs into the fallback storage. |
 | `void` | [`setFallback`](#setfallback-3)  | Writes a key-value pair into the fallback storage. |
 | `void` | [`setFallback`](#setfallback-4)  | Writes multiple key-value pairs into the fallback storage. |
-| `void` | [`remove`](#remove-1)  | Deletes all key-value pairs. |
+| `void` | [`remove`](#remove)  | Deletes all key-value pairs. |
+| `void` | [`remove`](#remove-1)  | Deletes a key-value pair. |
 | `void` | [`remove`](#remove-2)  | Deletes a key-value pair. |
-| `void` | [`remove`](#remove-3)  | Deletes a key-value pair. |
-| `void` | [`remove`](#remove-4)  | Deletes multiple key-value pairs. |
+| `void` | [`remove`](#remove-3)  | Deletes multiple key-value pairs. |
 
 ---
 
@@ -233,7 +233,7 @@ The value as an integer.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | A config option whose name is used as the prefix of the key. |
+| `opt` | [`Opt`](vc64.md#opt) | A config option whose name is used as the prefix of the key. |
 | `nr` | `isize` | Optional number that is appened to the key as suffix. |
 
 ---
@@ -303,7 +303,7 @@ The value as an integer.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | A config option whose name is used as the key. |
+| `opt` | [`Opt`](vc64.md#opt) | A config option whose name is used as the key. |
 | `nr` | `isize` | Optional number that is appened to the key as suffix. |
 
 ---
@@ -341,7 +341,7 @@ Writes a key-value pair into the user storage.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `value` | `const string &` | The value, given as a string. |
 
 ---
@@ -360,7 +360,7 @@ Writes multiple key-value pairs into the user storage.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `value` | `const string &` | The value for all pairs, given as a string. |
 | `objids` | `std::vector< isize >` | The keys are parameterized by adding the vector values as suffixes. |
 
@@ -380,7 +380,7 @@ Writes a key-value pair into the user storage.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `value` | `i64` | The value, given as an integer. |
 
 ---
@@ -399,7 +399,7 @@ Writes multiple key-value pairs into the user storage.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `value` | `i64` | The value for all pairs, given as an integer. |
 | `objids` | `std::vector< isize >` | The keys are parameterized by adding the vector values as suffixes. |
 
@@ -438,7 +438,7 @@ Writes a key-value pair into the fallback storage.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `value` | `const string &` | The value, given as an integer. |
 
 ---
@@ -457,7 +457,7 @@ Writes multiple key-value pairs into the fallback storage.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `value` | `const string &` | The shared value for all pairs, given as a string. |
 | `objids` | `std::vector< isize >` | The keys are parameterized by adding the vector values as suffixes. |
 
@@ -477,7 +477,7 @@ Writes a key-value pair into the fallback storage.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `value` | `i64` | The value, given as an integer. |
 
 ---
@@ -496,7 +496,7 @@ Writes multiple key-value pairs into the fallback storage.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `value` | `i64` | The shared value for all pairs, given as an integer. |
 | `objids` | `std::vector< isize >` | The keys are parameterized by adding the vector values as suffixes. |
 
@@ -546,7 +546,7 @@ Deletes a key-value pair.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the key. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the key. |
 
 ---
 
@@ -564,6 +564,6 @@ Deletes multiple key-value pairs.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option's name forms the prefix of the keys. |
+| `opt` | [`Opt`](vc64.md#opt) | The option's name forms the prefix of the keys. |
 | `objids` | `std::vector< isize >` | The keys are parameterized by adding the vector values as suffixes. |
 

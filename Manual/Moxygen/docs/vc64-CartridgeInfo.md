@@ -19,7 +19,7 @@ State of an attached cartridge.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`CartridgeType`](grp_expansionport.md#cartridgetype) | [`type`](#type-8)  | DEPRECATED. |
+| [`CartridgeType`](vc64.md#cartridgetype) | [`type`](#type-2)  | DEPRECATED. |
 | `bool` | [`supported`](#supported)  | The cartridge type is supported. |
 | `bool` | [`gameLineInCrtFile`](#gamelineincrtfile)  | Value of the GAME line stored in the CRT file. |
 | `bool` | [`exromLineInCrtFile`](#exromlineincrtfile)  | Value of the EXROM line stored in the CRT file. |
@@ -35,7 +35,7 @@ State of an attached cartridge.
 CartridgeType type
 ```
 
-Type: [`CartridgeType`](grp_expansionport.md#cartridgetype)
+Type: [`CartridgeType`](vc64.md#cartridgetype)
 
 Defined in Media/Cartridges/CartridgeTypes.h:290
 

@@ -19,9 +19,9 @@ Properties of a cartridge type.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`CartridgeType`](grp_expansionport.md#cartridgetype) | [`type`](#type-9)  | Cartridge type. |
-| `const char *` | [`title`](#title-1)  | Title of the cartridge. |
-| `isize` | [`memory`](#memory-1)  | Memory size (in KB). |
+| [`CartridgeType`](vc64.md#cartridgetype) | [`type`](#type-3)  | Cartridge type. |
+| `const char *` | [`title`](#title)  | Title of the cartridge. |
+| `isize` | [`memory`](#memory)  | Memory size (in KB). |
 | `bool` | [`battery`](#battery)  | The cartridge has battery-buffered memory. |
 | `isize` | [`buttons`](#buttons)  | Number of buttons. |
 | `const char *` | [`button1`](#button1)  | Label of button 1. |
@@ -41,7 +41,7 @@ Properties of a cartridge type.
 CartridgeType type
 ```
 
-Type: [`CartridgeType`](grp_expansionport.md#cartridgetype)
+Type: [`CartridgeType`](vc64.md#cartridgetype)
 
 Defined in Media/Cartridges/CartridgeTypes.h:266
 

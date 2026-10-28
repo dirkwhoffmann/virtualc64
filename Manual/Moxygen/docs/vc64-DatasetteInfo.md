@@ -20,7 +20,7 @@ Datasette current state.
 | Return | Name | Description |
 |--------|------|-------------|
 | `bool` | [`hasTape`](#hastape)  | Is a tape inserted? |
-| `u8` | [`type`](#type-6)  | TAP file format. |
+| `u8` | [`type`](#type-5)  | TAP file format. |
 | `bool` | [`motor`](#motor)  | Is the motor on? |
 | `bool` | [`playKey`](#playkey)  | Is the play key pressed? |
 | `isize` | [`counter`](#counter)  | Progress counter. |

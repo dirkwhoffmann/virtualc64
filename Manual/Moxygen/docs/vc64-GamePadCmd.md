@@ -19,8 +19,8 @@ Payload of joystick commands.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `isize` | [`port`](#port-3)  | Control port number. |
-| [`GamePadAction`](grp_controlports.md#gamepadaction) | [`action`](#action)  | The joystick action. |
+| `isize` | [`port`](#port-2)  | Control port number. |
+| [`GamePadAction`](vc64.md#gamepadaction) | [`action`](#action)  | The joystick action. |
 
 ---
 
@@ -42,7 +42,7 @@ Control port number.
 GamePadAction action
 ```
 
-Type: [`GamePadAction`](grp_controlports.md#gamepadaction)
+Type: [`GamePadAction`](vc64.md#gamepadaction)
 
 Defined in Infrastructure/CmdQueueTypes.h:274
 

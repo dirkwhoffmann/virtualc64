@@ -69,9 +69,9 @@ Watchpoints.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| const [`CPUConfig`](vc64-CPUConfig.md#cpuconfig) & | [`getConfig`](#getconfig) `const` | Returns the component's current configuration. |
-| const [`CPUInfo`](vc64-CPUInfo.md#cpuinfo) & | [`getInfo`](#getinfo) `const` | Returns the component's current state. |
-| const [`CPUInfo`](vc64-CPUInfo.md#cpuinfo) & | [`getCachedInfo`](#getcachedinfo) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo)). |
+| const [`CPUConfig`](vc64-CPUConfig.md#cpuconfig) & | [`getConfig`](#getconfig-3) `const` | Returns the component's current configuration. |
+| const [`CPUInfo`](vc64-CPUInfo.md#cpuinfo) & | [`getInfo`](#getinfo-3) `const` | Returns the component's current state. |
+| const [`CPUInfo`](vc64-CPUInfo.md#cpuinfo) & | [`getCachedInfo`](#getcachedinfo-3) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-3)). |
 
 ---
 
@@ -101,7 +101,7 @@ Defined in VirtualC64.h:450
 
 Returns the component's current state.
 
-[getInfo()](#getinfo) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo-3) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-3) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -115,5 +115,5 @@ const CPUInfo & getCachedInfo() const
 
 Defined in VirtualC64.h:452
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-3)).
 

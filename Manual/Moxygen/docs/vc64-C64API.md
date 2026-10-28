@@ -19,9 +19,9 @@ C64 [API](vc64-API.md#api)
 
 | Return | Name | Description |
 |--------|------|-------------|
-| const [`C64Config`](vc64-C64Config.md#c64config) & | [`getConfig`](#getconfig-6) `const` | Returns the component's current configuration. |
-| const [`C64Info`](vc64-C64Info.md#c64info) & | [`getInfo`](#getinfo-6) `const` | Returns the component's current state. |
-| const [`C64Info`](vc64-C64Info.md#c64info) & | [`getCachedInfo`](#getcachedinfo-6) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-6)). |
+| const [`C64Config`](vc64-C64Config.md#c64config) & | [`getConfig`](#getconfig-1) `const` | Returns the component's current configuration. |
+| const [`C64Info`](vc64-C64Info.md#c64info) & | [`getInfo`](#getinfo-1) `const` | Returns the component's current state. |
+| const [`C64Info`](vc64-C64Info.md#c64info) & | [`getCachedInfo`](#getcachedinfo-1) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-1)). |
 | `void` | [`dump`](#dump) `const` | Prints debug information about the component. |
 | `RomTraits` | [`getRomTraits`](#getromtraits) `const` | Returns information about one of the installed Roms. |
 | `bool` | [`getMsg`](#getmsg)  | Reads a message from the message queue. |
@@ -86,7 +86,7 @@ Defined in VirtualC64.h:1763
 
 Returns the component's current state.
 
-[getInfo()](#getinfo-6) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-6) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo-1) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-1) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -100,7 +100,7 @@ const C64Info & getCachedInfo() const
 
 Defined in VirtualC64.h:1765
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-6)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-1)).
 
 ---
 
@@ -194,7 +194,7 @@ Defined in VirtualC64.h:1822
 
 Sets the current auto-inspection mask.
 
-Each bit selects one component class (the bit position is the numeric value of the Class entry). A component's [getCachedInfo()](#getcachedinfo-6) and getCachedMetrics() only return up-to-date snapshots while its class is selected.
+Each bit selects one component class (the bit position is the numeric value of the Class entry). A component's [getCachedInfo()](#getcachedinfo-1) and getCachedMetrics() only return up-to-date snapshots while its class is selected.
 
 Example: The following call enables auto-inspections for the CIA chips and the CPU: setAutoInspectionMask(1LL << long(Class::CIA) | 1LL << long(Class::CPU));
 

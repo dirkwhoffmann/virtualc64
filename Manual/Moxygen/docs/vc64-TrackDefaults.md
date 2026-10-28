@@ -23,7 +23,7 @@ Default properties of a track.
 | `u8` | [`speedZone`](#speedzone)  | Default speed zone for this track. |
 | `u16` | [`lengthInBytes`](#lengthinbytes)  | Typical track size in bits. |
 | `u16` | [`lengthInBits`](#lengthinbits)  | Typical track size in bits. |
-| `Sector` | [`firstSectorNr`](#firstsectornr)  | Logical number of first sector in track. |
+| [`Sector`](vc64.md#sector) | [`firstSectorNr`](#firstsectornr)  | Logical number of first sector in track. |
 | `double` | [`stagger`](#stagger)  | Relative position of first bit (from Hoxs64). |
 
 ---
@@ -82,7 +82,7 @@ Typical track size in bits.
 Sector firstSectorNr
 ```
 
-Type: `Sector`
+Type: [`Sector`](vc64.md#sector)
 
 Defined in Peripherals/Drive/FloppyDiskTypes.h:181
 

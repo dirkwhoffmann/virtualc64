@@ -24,11 +24,11 @@ Audio Port Public [API](vc64-API.md#api)
 | `isize` | [`copyInterleaved`](#copyinterleaved)  | Extracts a number of stereo samples from the audio buffer. This function has to be used if a stereo stream is managed in a single destination buffer. The samples of both channels will be interleaved, that is, a sample for the left channel will be followed by a sample of the right channel and vice versa. |
 | `float` | [`drawL`](#drawl) `const` | Draws the waveform of the left or the right audio channel. |
 | `float` | [`drawR`](#drawr) `const` | Draws the waveform of the right audio channel (see [drawL()](#drawl)). |
-| const [`AudioPortConfig`](vc64-AudioPortConfig.md#audioportconfig) & | [`getConfig`](#getconfig-7) `const` | Returns the component's current configuration. |
-| const [`AudioPortInfo`](vc64-AudioPortInfo.md#audioportinfo) & | [`getInfo`](#getinfo-9) `const` | Returns the component's current state. |
-| const [`AudioPortInfo`](vc64-AudioPortInfo.md#audioportinfo) & | [`getCachedInfo`](#getcachedinfo-9) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-9)). |
-| const [`AudioPortMetrics`](vc64-AudioPortMetrics.md#audioportmetrics) & | [`getMetrics`](#getmetrics-2) `const` | Returns statistical information about the components. |
-| const [`AudioPortMetrics`](vc64-AudioPortMetrics.md#audioportmetrics) & | [`getCachedMetrics`](#getcachedmetrics-2) `const` | Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics-2)). |
+| const [`AudioPortConfig`](vc64-AudioPortConfig.md#audioportconfig) & | [`getConfig`](#getconfig) `const` | Returns the component's current configuration. |
+| const [`AudioPortInfo`](vc64-AudioPortInfo.md#audioportinfo) & | [`getInfo`](#getinfo) `const` | Returns the component's current state. |
+| const [`AudioPortInfo`](vc64-AudioPortInfo.md#audioportinfo) & | [`getCachedInfo`](#getcachedinfo) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo)). |
+| const [`AudioPortMetrics`](vc64-AudioPortMetrics.md#audioportmetrics) & | [`getMetrics`](#getmetrics) `const` | Returns statistical information about the components. |
+| const [`AudioPortMetrics`](vc64-AudioPortMetrics.md#audioportmetrics) & | [`getCachedMetrics`](#getcachedmetrics) `const` | Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics)). |
 
 ---
 
@@ -168,7 +168,7 @@ Defined in VirtualC64.h:620
 
 Returns the component's current state.
 
-[getInfo()](#getinfo-9) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-9) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -182,7 +182,7 @@ const AudioPortInfo & getCachedInfo() const
 
 Defined in VirtualC64.h:622
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-9)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo)).
 
 ---
 
@@ -198,7 +198,7 @@ Defined in VirtualC64.h:633
 
 Returns statistical information about the components.
 
-[getMetrics()](#getmetrics-2) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedMetrics()](#getcachedmetrics-2) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getMetrics()](#getmetrics) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedMetrics()](#getcachedmetrics) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -212,5 +212,5 @@ const AudioPortMetrics & getCachedMetrics() const
 
 Defined in VirtualC64.h:635
 
-Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics-2)).
+Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics)).
 

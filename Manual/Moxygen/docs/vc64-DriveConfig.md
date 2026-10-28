@@ -20,21 +20,21 @@ Configuration of a drive.
 | Return | Name | Description |
 |--------|------|-------------|
 | `bool` | [`autoConfig`](#autoconfig)  | General. |
-| [`DriveType`](grp_drives.md#drivetype) | [`type`](#type-3)  | Drive model. |
-| [`DriveRam`](grp_drives.md#driveram) | [`ram`](#ram)  | Drive RAM. |
-| [`ParCableType`](grp_drives.md#parcabletype) | [`parCable`](#parcable)  | Parallel cable. |
-| `bool` | [`powerSave`](#powersave-2)  | Take fast paths. |
-| `bool` | [`connected`](#connected)  | The drive is connected to the serial port. |
+| [`DriveType`](vc64.md#drivetype) | [`type`](#type-6)  | Drive model. |
+| [`DriveRam`](vc64.md#driveram) | [`ram`](#ram)  | Drive RAM. |
+| [`ParCableType`](vc64.md#parcabletype) | [`parCable`](#parcable)  | Parallel cable. |
+| `bool` | [`powerSave`](#powersave)  | Take fast paths. |
+| `bool` | [`connected`](#connected-1)  | The drive is connected to the serial port. |
 | `bool` | [`switchedOn`](#switchedon)  | Power switch. |
 | `isize` | [`ejectDelay`](#ejectdelay)  | Disk ejection delay. |
 | `isize` | [`swapDelay`](#swapdelay)  | Disk swap delay. |
 | `isize` | [`insertDelay`](#insertdelay)  | Disk insertion delay. |
-| `i16` | [`pan`](#pan)  | Stereo pan of the drive sounds. |
+| `i16` | [`pan`](#pan-1)  | Stereo pan of the drive sounds. |
 | `u8` | [`powerVolume`](#powervolume)  | Power switch volume. |
-| `u8` | [`stepVolume`](#stepvolume)  | Head step volume. |
+| `u8` | [`stepVolume`](#stepvolume)  | [Head](vc64.md#head) step volume. |
 | `u8` | [`insertVolume`](#insertvolume)  | Disk insertion volume. |
 | `u8` | [`ejectVolume`](#ejectvolume)  | Disk ejection volume. |
-| `bool` | [`saveRoms`](#saveroms-1)  | Save Roms. |
+| `bool` | [`saveRoms`](#saveroms)  | Save Roms. |
 
 ---
 
@@ -56,7 +56,7 @@ General.
 DriveType type
 ```
 
-Type: [`DriveType`](grp_drives.md#drivetype)
+Type: [`DriveType`](vc64.md#drivetype)
 
 Defined in Peripherals/Drive/DriveTypes.h:198
 
@@ -70,7 +70,7 @@ Drive model.
 DriveRam ram
 ```
 
-Type: [`DriveRam`](grp_drives.md#driveram)
+Type: [`DriveRam`](vc64.md#driveram)
 
 Defined in Peripherals/Drive/DriveTypes.h:199
 
@@ -84,7 +84,7 @@ Drive RAM.
 ParCableType parCable
 ```
 
-Type: [`ParCableType`](grp_drives.md#parcabletype)
+Type: [`ParCableType`](vc64.md#parcabletype)
 
 Defined in Peripherals/Drive/DriveTypes.h:200
 
@@ -196,7 +196,7 @@ u8 stepVolume
 
 Defined in Peripherals/Drive/DriveTypes.h:215
 
-Head step volume.
+[Head](vc64.md#head) step volume.
 
 ---
 

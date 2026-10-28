@@ -19,9 +19,9 @@ A command that is fed into the command queue.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`Cmd`](grp_commands.md#cmd) | [`type`](#type-5)  | Type of the command. |
+| [`Cmd`](vc64.md#cmd) | [`type`](#type-4)  | Type of the command. |
 | `void *` | [`sender`](#sender)  | Sender of the command (optional). |
-| `const char *` | [`str`](#str-1)  | Attached string (may be null). |
+| `const char *` | [`str`](#str)  | Attached string (may be null). |
 
 ---
 
@@ -31,7 +31,7 @@ A command that is fed into the command queue.
 Cmd type
 ```
 
-Type: [`Cmd`](grp_commands.md#cmd)
+Type: [`Cmd`](vc64.md#cmd)
 
 Defined in Infrastructure/CmdQueueTypes.h:316
 

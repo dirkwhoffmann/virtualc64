@@ -25,8 +25,8 @@ State of the memory.
 | `bool` | [`hiram`](#hiram)  | HIRAM bit of the processor port. |
 | `bool` | [`charen`](#charen)  | CHAREN bit of the processor port. |
 | `u8` | [`bankMap`](#bankmap)  | Current memory bank configuration. |
-| [`MemType`](grp_memory.md#memtype) | [`peekSrc`](#peeksrc)  | Memory type read by the CPU from each 4 KB bank. |
-| [`MemType`](grp_memory.md#memtype) | [`vicPeekSrc`](#vicpeeksrc)  | Memory type read by the VICII from each 4 KB bank. |
+| [`MemType`](vc64.md#memtype) | [`peekSrc`](#peeksrc)  | Memory type read by the CPU from each 4 KB bank. |
+| [`MemType`](vc64.md#memtype) | [`vicPeekSrc`](#vicpeeksrc)  | Memory type read by the VICII from each 4 KB bank. |
 
 ---
 

@@ -21,7 +21,7 @@ An entry of the traffic log.
 |--------|------|-------------|
 | `isize` | [`nr`](#nr-2)  | Sequence number (unique, monotonically increasing). |
 | `ServerType` | [`server`](#server)  | The server that received or sent the packet. |
-| [`TrafficDirection`](grp_remoteservers.md#trafficdirection) | [`direction`](#direction)  | Tells whether the packet was received or sent. |
+| `TrafficDirection` | [`direction`](#direction)  | Tells whether the packet was received or sent. |
 | `i64` | [`time`](#time-1)  | Host time stamp (milliseconds since epoch). |
 | `string` | [`payload`](#payload-1)  | Packet contents. |
 
@@ -56,8 +56,6 @@ The server that received or sent the packet.
 ```cpp
 TrafficDirection direction
 ```
-
-Type: [`TrafficDirection`](grp_remoteservers.md#trafficdirection)
 
 Defined in Misc/RemoteServers/RemoteManagerTypes.h:123
 

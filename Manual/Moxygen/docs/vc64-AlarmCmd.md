@@ -19,8 +19,8 @@ Payload of alarm commands.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `i64` | [`cycle`](#cycle-1)  | Cycle at which the alarm fires. |
-| `i64` | [`value`](#value-1)  | Value reported by the alarm. |
+| `i64` | [`cycle`](#cycle-1)  | [Cycle](vc64.md#cycle) at which the alarm fires. |
+| `i64` | [`value`](#value)  | Value reported by the alarm. |
 
 ---
 
@@ -32,7 +32,7 @@ i64 cycle
 
 Defined in Infrastructure/CmdQueueTypes.h:296
 
-Cycle at which the alarm fires.
+[Cycle](vc64.md#cycle) at which the alarm fires.
 
 ---
 

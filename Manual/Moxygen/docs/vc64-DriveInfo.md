@@ -19,7 +19,7 @@ State of a drive.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `isize` | [`id`](#id)  | Number of the drive. |
+| `isize` | [`id`](#id-1)  | Number of the drive. |
 | `bool` | [`hasRom`](#hasrom)  | A ROM is installed. |
 | `bool` | [`hasDisk`](#hasdisk)  | A disk is inserted. |
 | `bool` | [`hasUnprotectedDisk`](#hasunprotecteddisk)  | The inserted disk is not write-protected. |
@@ -30,8 +30,8 @@ State of a drive.
 | `bool` | [`greenLED`](#greenled)  | The green LED is on. |
 | `bool` | [`spinning`](#spinning)  | The disk is spinning. |
 | `bool` | [`writing`](#writing)  | The drive is writing. |
-| `Halftrack` | [`halftrack`](#halftrack)  | Current head position (halftrack). |
-| `HeadPos` | [`offset`](#offset)  | Head offset within the track. |
+| [`Halftrack`](vc64.md#halftrack) | [`halftrack`](#halftrack-1)  | Current head position (halftrack). |
+| [`HeadPos`](vc64.md#headpos) | [`offset`](#offset)  | [Head](vc64.md#head) offset within the track. |
 
 ---
 
@@ -173,7 +173,7 @@ The drive is writing.
 Halftrack halftrack
 ```
 
-Type: `Halftrack`
+Type: [`Halftrack`](vc64.md#halftrack)
 
 Defined in Peripherals/Drive/DriveTypes.h:243
 
@@ -187,9 +187,9 @@ Current head position (halftrack).
 HeadPos offset
 ```
 
-Type: `HeadPos`
+Type: [`HeadPos`](vc64.md#headpos)
 
 Defined in Peripherals/Drive/DriveTypes.h:244
 
-Head offset within the track.
+[Head](vc64.md#head) offset within the track.
 

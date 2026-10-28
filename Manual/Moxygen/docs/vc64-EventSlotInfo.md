@@ -19,11 +19,11 @@ State of a single event slot.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`EventSlot`](grp_emulator.md#eventslot) | [`slot`](#slot)  | The event slot. |
-| [`EventID`](grp_emulator.md#eventid) | [`eventId`](#eventid-1)  | Identifier of the scheduled event (0 if the slot is empty). |
+| [`EventSlot`](vc64.md#eventslot) | [`slot`](#slot)  | The event slot. |
+| [`EventID`](vc64.md#eventid) | [`eventId`](#eventid-1)  | Identifier of the scheduled event (0 if the slot is empty). |
 | `const char *` | [`eventName`](#eventname)  | Name of the scheduled event. |
-| `Cycle` | [`trigger`](#trigger)  | Trigger cycle of the event. |
-| `Cycle` | [`triggerRel`](#triggerrel)  | Time until the event triggers (in cycles). |
+| [`Cycle`](vc64.md#cycle) | [`trigger`](#trigger)  | Trigger cycle of the event. |
+| [`Cycle`](vc64.md#cycle) | [`triggerRel`](#triggerrel)  | Time until the event triggers (in cycles). |
 | `long` | [`frameRel`](#framerel)  | Trigger frame relative to the current frame. |
 | `long` | [`vpos`](#vpos-1)  | Raster line at which the event triggers. |
 | `long` | [`hpos`](#hpos-1)  | Raster cycle at which the event triggers. |
@@ -36,7 +36,7 @@ State of a single event slot.
 EventSlot slot
 ```
 
-Type: [`EventSlot`](grp_emulator.md#eventslot)
+Type: [`EventSlot`](vc64.md#eventslot)
 
 Defined in Components/C64Types.h:340
 
@@ -50,7 +50,7 @@ The event slot.
 EventID eventId
 ```
 
-Type: [`EventID`](grp_emulator.md#eventid)
+Type: [`EventID`](vc64.md#eventid)
 
 Defined in Components/C64Types.h:341
 
@@ -76,7 +76,7 @@ Name of the scheduled event.
 Cycle trigger
 ```
 
-Type: `Cycle`
+Type: [`Cycle`](vc64.md#cycle)
 
 Defined in Components/C64Types.h:345
 
@@ -90,7 +90,7 @@ Trigger cycle of the event.
 Cycle triggerRel
 ```
 
-Type: `Cycle`
+Type: [`Cycle`](vc64.md#cycle)
 
 Defined in Components/C64Types.h:346
 

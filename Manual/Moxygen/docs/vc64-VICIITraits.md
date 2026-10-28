@@ -20,8 +20,8 @@ Properties of a VICII chip revision.
 | Return | Name | Description |
 |--------|------|-------------|
 | `bool` | [`pal`](#pal)  | The chip is a [PAL](vc64-PAL.md#pal-1) chip. |
-| `isize` | [`frequency`](#frequency-1)  | Clock frequency (in Hz). |
-| `double` | [`fps`](#fps)  | Frames per second. |
+| `isize` | [`frequency`](#frequency)  | Clock frequency (in Hz). |
+| `double` | [`fps`](#fps-1)  | Frames per second. |
 | `isize` | [`linesPerFrame`](#linesperframe)  | Number of raster lines per frame. |
 | `isize` | [`cyclesPerLine`](#cyclesperline)  | Number of cycles per raster line. |
 | `isize` | [`cyclesPerFrame`](#cyclesperframe)  | Number of cycles per frame. |

@@ -19,7 +19,7 @@ Payload of joystick state commands.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `isize` | [`port`](#port-1)  | Control port number. |
+| `isize` | [`port`](#port-3)  | Control port number. |
 | `u32` | [`state`](#state-1)  | Bits 0-4: current state, bits 8-12: previous state (up, down, left, right, fire). |
 
 ---

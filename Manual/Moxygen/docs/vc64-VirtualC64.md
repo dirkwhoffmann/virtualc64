@@ -23,10 +23,10 @@ This class declares the emulator's public [API](vc64-API.md#api). It consists of
 |--------|------|-------------|
 | [`C64API`](vc64-C64API.md#c64api) | [`c64`](#c64)  | C64 (state, snapshots, media). |
 | [`MemoryAPI`](vc64-MemoryAPI.md#memoryapi) | [`mem`](#mem)  | Memory. |
-| [`CPUAPI`](vc64-CPUAPI.md#cpuapi) | [`cpu`](#cpu-1)  | CPU. |
+| [`CPUAPI`](vc64-CPUAPI.md#cpuapi) | [`cpu`](#cpu)  | CPU. |
 | [`CIAAPI`](vc64-CIAAPI.md#ciaapi) | [`cia1`](#cia1)  | The two CIA chips. |
-| [`SIDAPI`](vc64-SIDAPI.md#sidapi) | [`sid`](#sid-1)  | SID chip(s). |
-| [`VICIIAPI`](vc64-VICIIAPI.md#viciiapi) | [`vicii`](#vicii-1)  | VICII graphics chip. |
+| [`SIDAPI`](vc64-SIDAPI.md#sidapi) | [`sid`](#sid)  | SID chip(s). |
+| [`VICIIAPI`](vc64-VICIIAPI.md#viciiapi) | [`vicii`](#vicii)  | VICII graphics chip. |
 | [`AudioPortAPI`](vc64-AudioPortAPI.md#audioportapi) | [`audioPort`](#audioport)  | Audio port. |
 | [`ControlPortAPI`](vc64-ControlPortAPI.md#controlportapi) | [`controlPort1`](#controlport1)  | The two control ports. |
 | [`ExpansionPortAPI`](vc64-ExpansionPortAPI.md#expansionportapi) | [`expansionPort`](#expansionport)  | Expansion port (cartridges). |
@@ -34,7 +34,7 @@ This class declares the emulator's public [API](vc64-API.md#api). It consists of
 | [`UserPortAPI`](vc64-UserPortAPI.md#userportapi) | [`userPort`](#userport)  | User port. |
 | [`VideoPortAPI`](vc64-VideoPortAPI.md#videoportapi) | [`videoPort`](#videoport)  | Video port (textures). |
 | [`DatasetteAPI`](vc64-DatasetteAPI.md#datasetteapi) | [`datasette`](#datasette)  | Datasette. |
-| [`DriveAPI`](vc64-DriveAPI.md#driveapi) | [`drive8`](#drive8)  | Floppy drives 8 and 9. |
+| [`DriveAPI`](vc64-DriveAPI.md#driveapi) | [`drive8`](#drive8-1)  | Floppy drives 8 and 9. |
 | [`KeyboardAPI`](vc64-KeyboardAPI.md#keyboardapi) | [`keyboard`](#keyboard)  | Keyboard. |
 | [`XRayAPI`](vc64-XRayAPI.md#xrayapi) | [`xray`](#xray)  | X-Ray visualizer. |
 | [`RemoteManagerAPI`](vc64-RemoteManagerAPI.md#remotemanagerapi) | [`remoteManager`](#remotemanager)  | Remote servers. |
@@ -406,10 +406,10 @@ Drives by number.
 | `class RetroShell &` | [`getRetroShell`](#getretroshell)  | Returns RetroShell. |
 | `class Defaults &` | [`getDefaults`](#getdefaults)  | Returns the user defaults storage. |
 |  | [`~VirtualC64`](#virtualc64-1)  | Halts the emulator thread and destroys the emulator. |
-| const [`EmulatorInfo`](vc64-EmulatorInfo.md#emulatorinfo) & | [`getInfo`](#getinfo-7) `const` | Returns the component's current state. |
-| const [`EmulatorInfo`](vc64-EmulatorInfo.md#emulatorinfo) & | [`getCachedInfo`](#getcachedinfo-7) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-7)). |
-| const [`EmulatorMetrics`](vc64-EmulatorMetrics.md#emulatormetrics) & | [`getMetrics`](#getmetrics-1) `const` | Returns statistical information about the components. |
-| const [`EmulatorMetrics`](vc64-EmulatorMetrics.md#emulatormetrics) & | [`getCachedMetrics`](#getcachedmetrics-1) `const` | Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics-1)). |
+| const [`EmulatorInfo`](vc64-EmulatorInfo.md#emulatorinfo) & | [`getInfo`](#getinfo-15) `const` | Returns the component's current state. |
+| const [`EmulatorInfo`](vc64-EmulatorInfo.md#emulatorinfo) & | [`getCachedInfo`](#getcachedinfo-15) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-15)). |
+| const [`EmulatorMetrics`](vc64-EmulatorMetrics.md#emulatormetrics) & | [`getMetrics`](#getmetrics-2) `const` | Returns statistical information about the components. |
+| const [`EmulatorMetrics`](vc64-EmulatorMetrics.md#emulatormetrics) & | [`getCachedMetrics`](#getcachedmetrics-2) `const` | Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics-2)). |
 
 ---
 
@@ -555,7 +555,7 @@ Defined in VirtualC64.h:2238
 
 Switches the emulator on.
 
-Powering on the emulator changes the internal state to [ExecState::PAUSED](grp_emulator.md#execstate), the same state that is entered when the user hits the pause button. Calling this function on an already powered-on emulator has no effect.
+Powering on the emulator changes the internal state to [ExecState::PAUSED](vc64.md#execstate), the same state that is entered when the user hits the pause button. Calling this function on an already powered-on emulator has no effect.
 
 The function returns when the emulator thread has carried out the request. A failure throws the corresponding exception.
 
@@ -591,7 +591,7 @@ Defined in VirtualC64.h:2260
 
 Switches the emulator off.
 
-Powering off the emulator changes the internal state to [ExecState::OFF](grp_emulator.md#execstate). Calling this function on an already powered-off emulator has no effect.
+Powering off the emulator changes the internal state to [ExecState::OFF](vc64.md#execstate). Calling this function on an already powered-off emulator has no effect.
 
 The function returns when the emulator thread has carried out the request. A failure throws the corresponding exception.
 
@@ -627,7 +627,7 @@ Defined in VirtualC64.h:2286
 
 Starts emulation.
 
-Running the emulator changes the internal state to [ExecState::RUNNING](grp_emulator.md#execstate), which is the normal operation state. Frames are computed at normal pace, if warp mode is switched off, or as fast as possible, if warp mode is switched on. If this function is called for a powered-off emulator, an implicit call to [powerOn()](#poweron) will be performed.
+Running the emulator changes the internal state to [ExecState::RUNNING](vc64.md#execstate), which is the normal operation state. Frames are computed at normal pace, if warp mode is switched off, or as fast as possible, if warp mode is switched on. If this function is called for a powered-off emulator, an implicit call to [powerOn()](#poweron) will be performed.
 
 The function returns when the emulator has been started.
 
@@ -670,7 +670,7 @@ Defined in VirtualC64.h:2311
 
 Pauses emulation.
 
-Pausing the emulator changes the internal state from [ExecState::RUNNING](grp_emulator.md#execstate) to [ExecState::PAUSED](grp_emulator.md#execstate) after completing the current frame. The emulator enters a frozen state where no more frames are computed.
+Pausing the emulator changes the internal state from [ExecState::RUNNING](vc64.md#execstate) to [ExecState::PAUSED](vc64.md#execstate) after completing the current frame. The emulator enters a frozen state where no more frames are computed.
 
 The function returns when the emulator thread has carried out the request. A failure throws the corresponding exception.
 
@@ -778,7 +778,7 @@ Defined in VirtualC64.h:2380
 
 Terminates the emulator thread.
 
-Halting the emulator changes the internal state to [ExecState::HALTED](grp_emulator.md#execstate). This state is part of the shutdown procedure and never entered during normal operation.
+Halting the emulator changes the internal state to [ExecState::HALTED](vc64.md#execstate). This state is part of the shutdown procedure and never entered during normal operation.
 
 > [!NOTE]
 > The function blocks until the emulator thread has terminated. It does nothing if there is no running emulator thread (e.g., if the thread has already been halted), so it is safe to call it more than once. It throws a [CoreError](vc64-CoreError.md#coreerror) if the calling thread has suspended the emulator thread, because a suspended thread cannot terminate.
@@ -1160,7 +1160,7 @@ This function must be called in the initialization procedure of the emulator. It
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `listener` | `const void *` | An arbitrary pointer which will be passed to the registered callback function as first argument. You can use the argument to pass the address of an object into the callback function. Inside the callback you can utilize the pointer to invoke a message processing function on that object. |
-| `func` | `Callback` * | The callback function. |
+| `func` | [`Callback`](vc64.md#callback) * | The callback function. |
 
 #### Exceptions
 
@@ -1223,7 +1223,7 @@ This is the main function to query a configuration option.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option to query |
+| `opt` | [`Opt`](vc64.md#opt) | The option to query |
 
 ---
 
@@ -1251,7 +1251,7 @@ This is the main function to query a configuration option.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option to query |
+| `opt` | [`Opt`](vc64.md#opt) | The option to query |
 | `id` | `isize` | The component to query |
 
 ---
@@ -1275,7 +1275,7 @@ This is the main function to set a configuration option. It returns when the cha
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option to set |
+| `opt` | [`Opt`](vc64.md#opt) | The option to set |
 | `value` | `i64` | The option's value |
 
 #### Exceptions
@@ -1305,7 +1305,7 @@ Configures a component.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option to set |
+| `opt` | [`Opt`](vc64.md#opt) | The option to set |
 | `value` | `i64` | The option's value |
 | `id` | `isize` | The component to configure |
 
@@ -1327,7 +1327,7 @@ Configures the emulator to match a specific C64 model
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `model` | [`ConfigScheme`](grp_emulator.md#configscheme) | The C64 model to emulate |
+| `model` | [`ConfigScheme`](vc64.md#configscheme) | The C64 model to emulate |
 
 ---
 
@@ -1343,13 +1343,13 @@ Configures a component without waiting for the result.
 
 These functions hand the request to the emulator thread and return at once. They are the asynchronous counterparts of [set()](#set-5). Use them if waiting is impossible or undesirable, e.g., when many options are changed in a row (follow up with [sync()](#sync) if needed), before the emulator thread has been launched (the request is carried out at launch), or while the emulator thread is suspended (it is carried out when the thread resumes).
 
-The value is validated when the emulator thread carries out the command. A rejected value is reported by [Msg::CONFIG](grp_messages.md#msg-1), which then carries the exception.
+The value is validated when the emulator thread carries out the command. A rejected value is reported by [Msg::CONFIG](vc64.md#msg-1), which then carries the exception.
 
 #### Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option to set |
+| `opt` | [`Opt`](vc64.md#opt) | The option to set |
 | `value` | `i64` | The option's value |
 
 ---
@@ -1370,7 +1370,7 @@ Same as above, for options that require an additional parameter to determine the
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option to set |
+| `opt` | [`Opt`](vc64.md#opt) | The option to set |
 | `value` | `i64` | The option's value |
 | `id` | `isize` | The component to configure |
 
@@ -1404,7 +1404,7 @@ The check is performed in the calling thread and does not change the configurati
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option to check |
+| `opt` | [`Opt`](vc64.md#opt) | The option to check |
 | `value` | `i64` | The option's value |
 
 #### Exceptions
@@ -1429,7 +1429,7 @@ Checks if a configuration option would be accepted.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](grp_emulator.md#opt) | The option to check |
+| `opt` | [`Opt`](vc64.md#opt) | The option to check |
 | `value` | `i64` | The option's value |
 | `id` | `isize` | The component to configure |
 
@@ -2109,7 +2109,7 @@ Defined in VirtualC64.h:2152
 
 Returns the component's current state.
 
-[getInfo()](#getinfo-7) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-7) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo-15) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-15) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -2123,7 +2123,7 @@ const EmulatorInfo & getCachedInfo() const
 
 Defined in VirtualC64.h:2154
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-7)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-15)).
 
 ---
 
@@ -2139,7 +2139,7 @@ Defined in VirtualC64.h:2165
 
 Returns statistical information about the components.
 
-[getMetrics()](#getmetrics-1) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedMetrics()](#getcachedmetrics-1) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getMetrics()](#getmetrics-2) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedMetrics()](#getcachedmetrics-2) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -2153,7 +2153,7 @@ const EmulatorMetrics & getCachedMetrics() const
 
 Defined in VirtualC64.h:2167
 
-Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics-1)).
+Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics-2)).
 
 ## Public Static Attributes
 

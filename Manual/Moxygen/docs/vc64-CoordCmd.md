@@ -19,9 +19,9 @@ Payload of mouse commands.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `isize` | [`port`](#port-2)  | Control port number. |
-| `double` | [`x`](#x-3)  | X coordinate. |
-| `double` | [`y`](#y-3)  | Y coordinate. |
+| `isize` | [`port`](#port-1)  | Control port number. |
+| `double` | [`x`](#x-1)  | X coordinate. |
+| `double` | [`y`](#y-1)  | Y coordinate. |
 
 ---
 

@@ -20,7 +20,7 @@ Configuration of the audio port.
 | Return | Name | Description |
 |--------|------|-------------|
 | `i64` | [`vol`](#vol)  | Channel volumes. |
-| `i64` | [`pan`](#pan-1)  | Channel pan factors. |
+| `i64` | [`pan`](#pan)  | Channel pan factors. |
 | `i64` | [`volL`](#voll)  | Master volume (left). |
 | `i64` | [`volR`](#volr)  | Master volume (right). |
 | `isize` | [`bufferSize`](#buffersize)  | Sample buffer capacity. |

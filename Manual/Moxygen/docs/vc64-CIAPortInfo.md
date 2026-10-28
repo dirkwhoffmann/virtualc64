@@ -20,7 +20,7 @@ State of a CIA port.
 | Return | Name | Description |
 |--------|------|-------------|
 | `u8` | [`port`](#port)  | State of the port pins. |
-| `u8` | [`reg`](#reg-1)  | Port register (PRA or PRB). |
+| `u8` | [`reg`](#reg)  | Port register (PRA or PRB). |
 | `u8` | [`dir`](#dir)  | Data direction register (DDRA or DDRB). |
 
 ---

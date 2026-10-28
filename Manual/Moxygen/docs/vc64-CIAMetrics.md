@@ -19,9 +19,9 @@ Usage statistics of a CIA chip.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `Cycle` | [`totalCycles`](#totalcycles)  | Total number of executed cycles. |
-| `Cycle` | [`idleCycles`](#idlecycles)  | Number of cycles spent in the idle state. |
-| `Cycle` | [`idleSince`](#idlesince)  | Cycle at which the idle state started. |
+| [`Cycle`](vc64.md#cycle) | [`totalCycles`](#totalcycles)  | Total number of executed cycles. |
+| [`Cycle`](vc64.md#cycle) | [`idleCycles`](#idlecycles)  | Number of cycles spent in the idle state. |
+| [`Cycle`](vc64.md#cycle) | [`idleSince`](#idlesince)  | [Cycle](vc64.md#cycle) at which the idle state started. |
 | `double` | [`idlePercentage`](#idlepercentage)  | Share of idle cycles. |
 
 ---
@@ -32,7 +32,7 @@ Usage statistics of a CIA chip.
 Cycle totalCycles
 ```
 
-Type: `Cycle`
+Type: [`Cycle`](vc64.md#cycle)
 
 Defined in Components/CIA/CIATypes.h:164
 
@@ -46,7 +46,7 @@ Total number of executed cycles.
 Cycle idleCycles
 ```
 
-Type: `Cycle`
+Type: [`Cycle`](vc64.md#cycle)
 
 Defined in Components/CIA/CIATypes.h:165
 
@@ -60,11 +60,11 @@ Number of cycles spent in the idle state.
 Cycle idleSince
 ```
 
-Type: `Cycle`
+Type: [`Cycle`](vc64.md#cycle)
 
 Defined in Components/CIA/CIATypes.h:166
 
-Cycle at which the idle state started.
+[Cycle](vc64.md#cycle) at which the idle state started.
 
 ---
 

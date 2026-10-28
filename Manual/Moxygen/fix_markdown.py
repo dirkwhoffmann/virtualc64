@@ -5,6 +5,8 @@
     anchors from the headings.
   - The front matter is rewritten: the title is the page heading (moxygen uses
     the Doxygen id), and the machine-generated description is dropped.
+  - The namespace page vc64 (all types and enumerations) gets a proper title and lists
+    its enumerations in "On this page".
   - The mainpage becomes index.md, and the images of the guides are copied
     next to the pages.
 
@@ -24,6 +26,9 @@ def main(docs, images):
     docs = Path(docs)
     for page in docs.glob("*.md"):
         page.write_text(fix(page.read_text()))
+    namespace = docs / "vc64.md"
+    namespace.write_text(namespace.read_text().replace('title: "vc64"', 'title: "Types and Enumerations"\noutline: [2, 3]', 1)
+                         .replace("\n# vc64\n", "\n# Types and Enumerations\n", 1))
     (docs / "page-index.md").replace(docs / "index.md")
     (docs / "api.md").unlink(missing_ok=True)
     for image in Path(images).iterdir():

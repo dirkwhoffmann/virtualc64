@@ -19,7 +19,7 @@ Representation of a key on the C64 keyboard
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `isize` | [`nr`](#nr-1)  | Unique key identifier (0 .. 65). |
+| `isize` | [`nr`](#nr)  | Unique key identifier (0 .. 65). |
 | `isize` | [`row`](#row)  | Row index of this key in the keyboard matrix. |
 | `isize` | [`col`](#col)  | Column index of this key in the keyboard matrix. |
 
@@ -110,7 +110,7 @@ Creates a key from its position in the keyboard matrix.
 | const [`C64Key`](#c64key-1) | [`curUpDown`](#curupdown) `static` | Cursor up/down key. |
 | const [`C64Key`](#c64key-1) | [`digit3`](#digit3) `static` | 3 key |
 | const [`C64Key`](#c64key-1) | [`W`](#w) `static` | Key W. |
-| const [`C64Key`](#c64key-1) | [`A`](#a-1) `static` | Key A. |
+| const [`C64Key`](#c64key-1) | [`A`](#a) `static` | Key A. |
 | const [`C64Key`](#c64key-1) | [`digit4`](#digit4) `static` | 4 key |
 | const [`C64Key`](#c64key-1) | [`Z`](#z) `static` | Key Z. |
 | const [`C64Key`](#c64key-1) | [`S`](#s) `static` | Key S. |
@@ -123,9 +123,9 @@ Creates a key from its position in the keyboard matrix.
 | const [`C64Key`](#c64key-1) | [`C`](#c) `static` | Key C. |
 | const [`C64Key`](#c64key-1) | [`F`](#f) `static` | Key F. |
 | const [`C64Key`](#c64key-1) | [`T`](#t) `static` | Key T. |
-| const [`C64Key`](#c64key-1) | [`X`](#x-2) `static` | Key X. |
+| const [`C64Key`](#c64key-1) | [`X`](#x) `static` | Key X. |
 | const [`C64Key`](#c64key-1) | [`digit7`](#digit7) `static` | 7 key |
-| const [`C64Key`](#c64key-1) | [`Y`](#y-2) `static` | Key Y. |
+| const [`C64Key`](#c64key-1) | [`Y`](#y) `static` | Key Y. |
 | const [`C64Key`](#c64key-1) | [`G`](#g) `static` | Key G. |
 | const [`C64Key`](#c64key-1) | [`digit8`](#digit8) `static` | 8 key |
 | const [`C64Key`](#c64key-1) | [`B`](#b) `static` | Key B. |

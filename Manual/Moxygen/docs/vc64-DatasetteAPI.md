@@ -19,8 +19,8 @@ Datasette Public [API](vc64-API.md#api)
 
 | Return | Name | Description |
 |--------|------|-------------|
-| const [`DatasetteInfo`](vc64-DatasetteInfo.md#datasetteinfo) & | [`getInfo`](#getinfo-8) `const` | Returns the component's current state. |
-| const [`DatasetteInfo`](vc64-DatasetteInfo.md#datasetteinfo) & | [`getCachedInfo`](#getcachedinfo-8) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-8)). |
+| const [`DatasetteInfo`](vc64-DatasetteInfo.md#datasetteinfo) & | [`getInfo`](#getinfo-4) `const` | Returns the component's current state. |
+| const [`DatasetteInfo`](vc64-DatasetteInfo.md#datasetteinfo) & | [`getCachedInfo`](#getcachedinfo-4) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-4)). |
 | `void` | [`insertTape`](#inserttape)  | Inserts a tape. |
 | `void` | [`insertTapeAsync`](#inserttapeasync)  | Asynchronous version of [insertTape()](#inserttape): queues the request and returns at once. |
 | `void` | [`ejectTape`](#ejecttape)  | Ejects a tape. This function has no effect if no tape is inserted. |
@@ -40,7 +40,7 @@ Defined in VirtualC64.h:1074
 
 Returns the component's current state.
 
-[getInfo()](#getinfo-8) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-8) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo-4) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-4) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -54,7 +54,7 @@ const DatasetteInfo & getCachedInfo() const
 
 Defined in VirtualC64.h:1076
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-8)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-4)).
 
 ---
 

@@ -19,10 +19,10 @@ Base structure for a single breakpoint or watchpoint.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `u32` | [`addr`](#addr-3)  | The observed address. |
-| `bool` | [`enabled`](#enabled-4)  | Disabled guards never trigger. |
-| `isize` | [`hits`](#hits-2)  | Counts the number of hits. |
-| `isize` | [`ignore`](#ignore-2)  | Ignore counter. |
+| `u32` | [`addr`](#addr)  | The observed address. |
+| `bool` | [`enabled`](#enabled)  | Disabled guards never trigger. |
+| `isize` | [`hits`](#hits)  | Counts the number of hits. |
+| `isize` | [`ignore`](#ignore)  | Ignore counter. |
 
 ---
 
@@ -76,8 +76,8 @@ Ignore counter.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `bool` | [`eval`](#eval-1)  | Returns true if the guard hits. |
-| `void` | [`moveTo`](#moveto-2)  | Replaces the address by another. |
+| `bool` | [`eval`](#eval)  | Returns true if the guard hits. |
+| `void` | [`moveTo`](#moveto)  | Replaces the address by another. |
 
 ---
 

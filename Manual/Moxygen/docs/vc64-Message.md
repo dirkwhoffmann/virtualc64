@@ -19,8 +19,8 @@ A message sent from the emulator to the GUI.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`Msg`](grp_messages.md#msg-1) | [`type`](#type-4)  | Type of the message. |
-| `const char *` | [`str`](#str)  | Optional text (may be null). |
+| [`Msg`](vc64.md#msg-1) | [`type`](#type-8)  | Type of the message. |
+| `const char *` | [`str`](#str-1)  | Optional text (may be null). |
 
 ---
 
@@ -30,7 +30,7 @@ A message sent from the emulator to the GUI.
 Msg type
 ```
 
-Type: [`Msg`](grp_messages.md#msg-1)
+Type: [`Msg`](vc64.md#msg-1)
 
 Defined in Infrastructure/MsgQueueTypes.h:266
 

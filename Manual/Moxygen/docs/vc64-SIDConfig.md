@@ -21,11 +21,11 @@ Configuration of a SID chip.
 |--------|------|-------------|
 | `bool` | [`enabled`](#enabled-2)  | Indicates if this SID is plugged in. |
 | `u16` | [`address`](#address)  | Location of the SID registers in memory. |
-| [`SIDRevision`](grp_sid.md#sidrevision) | [`revision`](#revision)  | Chip revision (MOS 6581 or MOS 8580). |
+| [`SIDRevision`](vc64.md#sidrevision) | [`revision`](#revision-2)  | Chip revision (MOS 6581 or MOS 8580). |
 | `bool` | [`filter`](#filter)  | Use filter. |
-| [`SIDEngine`](grp_sid.md#sidengine) | [`engine`](#engine)  | Emulation engine. |
-| [`SamplingMethod`](grp_sid.md#samplingmethod) | [`sampling`](#sampling)  | Sampling method. |
-| `bool` | [`powerSave`](#powersave)  | Performance. |
+| [`SIDEngine`](vc64.md#sidengine) | [`engine`](#engine)  | Emulation engine. |
+| [`SamplingMethod`](vc64.md#samplingmethod) | [`sampling`](#sampling)  | Sampling method. |
+| `bool` | [`powerSave`](#powersave-1)  | Performance. |
 
 ---
 
@@ -59,7 +59,7 @@ Location of the SID registers in memory.
 SIDRevision revision
 ```
 
-Type: [`SIDRevision`](grp_sid.md#sidrevision)
+Type: [`SIDRevision`](vc64.md#sidrevision)
 
 Defined in Components/SID/SIDTypes.h:147
 
@@ -85,7 +85,7 @@ Use filter.
 SIDEngine engine
 ```
 
-Type: [`SIDEngine`](grp_sid.md#sidengine)
+Type: [`SIDEngine`](vc64.md#sidengine)
 
 Defined in Components/SID/SIDTypes.h:151
 
@@ -99,7 +99,7 @@ Emulation engine.
 SamplingMethod sampling
 ```
 
-Type: [`SamplingMethod`](grp_sid.md#samplingmethod)
+Type: [`SamplingMethod`](vc64.md#samplingmethod)
 
 Defined in Components/SID/SIDTypes.h:152
 

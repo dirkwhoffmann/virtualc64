@@ -19,7 +19,7 @@ Disk Public [API](vc64-API.md#api)
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `class FloppyDisk *` | [`get`](#get)  | Getter for the raw disk object. |
+| `class FloppyDisk *` | [`get`](#get-2)  | Getter for the raw disk object. |
 
 ---
 

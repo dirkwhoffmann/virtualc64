@@ -19,13 +19,13 @@ State of the CPU.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `i64` | [`cycle`](#cycle)  | Cycle counter. |
+| `i64` | [`cycle`](#cycle-2)  | [Cycle](vc64.md#cycle) counter. |
 | `u16` | [`pc0`](#pc0)  | Address of the current instruction. |
 | `u16` | [`pc`](#pc)  | Program counter. |
 | `u8` | [`sp`](#sp)  | Stack pointer. |
-| `u8` | [`a`](#a)  | Accumulator. |
-| `u8` | [`x`](#x)  | X register. |
-| `u8` | [`y`](#y)  | Y register. |
+| `u8` | [`a`](#a-1)  | Accumulator. |
+| `u8` | [`x`](#x-2)  | X register. |
+| `u8` | [`y`](#y-2)  | Y register. |
 | `u8` | [`sr`](#sr)  | Status register. |
 | `u8` | [`irq`](#irq)  | State of the IRQ lines. |
 | `u8` | [`nmi`](#nmi)  | State of the NMI lines. |
@@ -45,7 +45,7 @@ i64 cycle
 
 Defined in Components/CPU/CPUTypes.h:135
 
-Cycle counter.
+[Cycle](vc64.md#cycle) counter.
 
 ---
 

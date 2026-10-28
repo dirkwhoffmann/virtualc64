@@ -20,8 +20,8 @@ SID Public [API](vc64-API.md#api)
 | Return | Name | Description |
 |--------|------|-------------|
 | `float` | [`draw`](#draw) `const` | Draws the waveform of a SID chip or of the audio output. |
-| const [`SIDInfo`](vc64-SIDInfo.md#sidinfo) & | [`getInfo`](#getinfo-1) `const` | Returns the current state of a specific SID. |
-| const [`SIDInfo`](vc64-SIDInfo.md#sidinfo) & | [`getCachedInfo`](#getcachedinfo-1) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-1)). |
+| const [`SIDInfo`](vc64-SIDInfo.md#sidinfo) & | [`getInfo`](#getinfo-12) `const` | Returns the current state of a specific SID. |
+| const [`SIDInfo`](vc64-SIDInfo.md#sidinfo) & | [`getCachedInfo`](#getcachedinfo-12) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-12)). |
 
 ---
 
@@ -67,7 +67,7 @@ Defined in VirtualC64.h:567
 
 Returns the current state of a specific SID.
 
-[getInfo()](#getinfo-1) reads the live state on the calling thread and is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-1) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo-12) reads the live state on the calling thread and is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-12) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 #### Parameters
 
@@ -93,5 +93,5 @@ const SIDInfo & getCachedInfo(isize nr) const
 
 Defined in VirtualC64.h:569
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-1)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-12)).
 

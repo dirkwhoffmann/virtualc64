@@ -19,7 +19,7 @@ Time-of-day value in BCD format.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `u32` | [`value`](#value)  | The time as a single 32-bit value. |
+| `u32` | [`value`](#value-2)  | The time as a single 32-bit value. |
 
 ---
 

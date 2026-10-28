@@ -19,11 +19,11 @@ CIA [API](vc64-API.md#api)
 
 | Return | Name | Description |
 |--------|------|-------------|
-| const [`CIAConfig`](vc64-CIAConfig.md#ciaconfig) & | [`getConfig`](#getconfig-1) `const` | Returns the component's current configuration. |
+| const [`CIAConfig`](vc64-CIAConfig.md#ciaconfig) & | [`getConfig`](#getconfig-2) `const` | Returns the component's current configuration. |
 | const [`CIAInfo`](vc64-CIAInfo.md#ciainfo) & | [`getInfo`](#getinfo-2) `const` | Returns the component's current state. |
 | const [`CIAInfo`](vc64-CIAInfo.md#ciainfo) & | [`getCachedInfo`](#getcachedinfo-2) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-2)). |
-| const [`CIAMetrics`](vc64-CIAMetrics.md#ciametrics) & | [`getMetrics`](#getmetrics) `const` | Returns statistical information about the components. |
-| const [`CIAMetrics`](vc64-CIAMetrics.md#ciametrics) & | [`getCachedMetrics`](#getcachedmetrics) `const` | Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics)). |
+| const [`CIAMetrics`](vc64-CIAMetrics.md#ciametrics) & | [`getMetrics`](#getmetrics-1) `const` | Returns statistical information about the components. |
+| const [`CIAMetrics`](vc64-CIAMetrics.md#ciametrics) & | [`getCachedMetrics`](#getcachedmetrics-1) `const` | Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics-1)). |
 
 ---
 
@@ -83,7 +83,7 @@ Defined in VirtualC64.h:492
 
 Returns statistical information about the components.
 
-[getMetrics()](#getmetrics) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedMetrics()](#getcachedmetrics) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getMetrics()](#getmetrics-1) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedMetrics()](#getcachedmetrics-1) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -97,5 +97,5 @@ const CIAMetrics & getCachedMetrics() const
 
 Defined in VirtualC64.h:494
 
-Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics)).
+Returns the most recent metrics snapshot recorded by the emulator thread (see [getMetrics()](#getmetrics-1)).
 

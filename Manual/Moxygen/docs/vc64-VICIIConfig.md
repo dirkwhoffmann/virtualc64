@@ -19,11 +19,11 @@ Configuration of the VICII chip.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`VICIIRev`](grp_vicii.md#viciirev) | [`revision`](#revision-2)  | Chip revision. |
-| [`VICIIRev`](grp_vicii.md#viciirev) | [`awaiting`](#awaiting)  | Chip revision that takes effect on the next reset. |
-| `bool` | [`powerSave`](#powersave-1)  | Take fast paths. |
+| [`VICIIRev`](vc64.md#viciirev) | [`revision`](#revision-3)  | Chip revision. |
+| [`VICIIRev`](vc64.md#viciirev) | [`awaiting`](#awaiting)  | Chip revision that takes effect on the next reset. |
+| `bool` | [`powerSave`](#powersave-2)  | Take fast paths. |
 | `bool` | [`grayDotBug`](#graydotbug)  | Emulate the gray-dot bug. |
-| [`GlueLogic`](grp_vicii.md#gluelogic) | [`glueLogic`](#gluelogic-1)  | Glue logic type. |
+| [`GlueLogic`](vc64.md#gluelogic) | [`glueLogic`](#gluelogic-1)  | Glue logic type. |
 | `bool` | [`hideSprites`](#hidesprites)  | Sprites. |
 | `bool` | [`checkSSCollisions`](#checksscollisions)  | Detect sprite-sprite collisions. |
 | `bool` | [`checkSBCollisions`](#checksbcollisions)  | Detect sprite-background collisions. |
@@ -36,7 +36,7 @@ Configuration of the VICII chip.
 VICIIRev revision
 ```
 
-Type: [`VICIIRev`](grp_vicii.md#viciirev)
+Type: [`VICIIRev`](vc64.md#viciirev)
 
 Defined in Components/VICII/VICIITypes.h:337
 
@@ -50,7 +50,7 @@ Chip revision.
 VICIIRev awaiting
 ```
 
-Type: [`VICIIRev`](grp_vicii.md#viciirev)
+Type: [`VICIIRev`](vc64.md#viciirev)
 
 Defined in Components/VICII/VICIITypes.h:338
 
@@ -88,7 +88,7 @@ Emulate the gray-dot bug.
 GlueLogic glueLogic
 ```
 
-Type: [`GlueLogic`](grp_vicii.md#gluelogic)
+Type: [`GlueLogic`](vc64.md#gluelogic)
 
 Defined in Components/VICII/VICIITypes.h:341
 

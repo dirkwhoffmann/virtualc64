@@ -19,8 +19,8 @@ Datasette configuration.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`DatasetteModel`](grp_datasette.md#datasettemodel) | [`model`](#model)  | Datasette model. |
-| `bool` | [`connected`](#connected-1)  | Connection status. |
+| [`DatasetteModel`](vc64.md#datasettemodel) | [`model`](#model)  | Datasette model. |
+| `bool` | [`connected`](#connected)  | Connection status. |
 
 ---
 
@@ -30,7 +30,7 @@ Datasette configuration.
 DatasetteModel model
 ```
 
-Type: [`DatasetteModel`](grp_datasette.md#datasettemodel)
+Type: [`DatasetteModel`](vc64.md#datasettemodel)
 
 Defined in Peripherals/Datasette/DatasetteTypes.h:57
 

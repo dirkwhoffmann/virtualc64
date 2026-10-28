@@ -29,10 +29,10 @@ Gives access to one list of guards (the breakpoints or the watchpoints of the CP
 | std::optional< [`GuardInfo`](vc64-GuardInfo.md#guardinfo) > | [`guardAt`](#guardat) `const` | Returns information about a guard. |
 | `void` | [`setAt`](#setat)  | Sets a guard. |
 | `void` | [`setAtAsync`](#setatasync)  | Asynchronous version of [setAt()](#setat): queues the request and returns at once. |
-| `void` | [`moveTo`](#moveto)  | Relocates a guard. |
-| `void` | [`moveToAsync`](#movetoasync)  | Asynchronous version of [moveTo()](#moveto): queues the request and returns at once. |
-| `void` | [`remove`](#remove)  | Deletes a guard. |
-| `void` | [`removeAsync`](#removeasync)  | Asynchronous version of [remove()](#remove): queues the request and returns at once. |
+| `void` | [`moveTo`](#moveto-1)  | Relocates a guard. |
+| `void` | [`moveToAsync`](#movetoasync)  | Asynchronous version of [moveTo()](#moveto-1): queues the request and returns at once. |
+| `void` | [`remove`](#remove-4)  | Deletes a guard. |
+| `void` | [`removeAsync`](#removeasync)  | Asynchronous version of [remove()](#remove-4): queues the request and returns at once. |
 | `void` | [`removeAt`](#removeat)  | Deletes a guard. |
 | `void` | [`removeAtAsync`](#removeatasync)  | Asynchronous version of [removeAt()](#removeat): queues the request and returns at once. |
 | `void` | [`removeAll`](#removeall)  | Deletes all guards. |
@@ -49,8 +49,8 @@ Gives access to one list of guards (the breakpoints or the watchpoints of the CP
 | `void` | [`disableAtAsync`](#disableatasync)  | Asynchronous version of [disableAt()](#disableat): queues the request and returns at once. |
 | `void` | [`disableAll`](#disableall)  | Disables all guards. |
 | `void` | [`disableAllAsync`](#disableallasync)  | Asynchronous version of [disableAll()](#disableall): queues the request and returns at once. |
-| `void` | [`toggle`](#toggle)  | Enables a disabled guard and disables an enabled one. |
-| `void` | [`toggleAsync`](#toggleasync)  | Asynchronous version of [toggle()](#toggle): queues the request and returns at once. |
+| `void` | [`toggle`](#toggle-1)  | Enables a disabled guard and disables an enabled one. |
+| `void` | [`toggleAsync`](#toggleasync)  | Asynchronous version of [toggle()](#toggle-1): queues the request and returns at once. |
 
 ---
 
@@ -172,7 +172,7 @@ void moveToAsync(isize nr, u32 target)
 
 Defined in VirtualC64.h:283
 
-Asynchronous version of [moveTo()](#moveto): queues the request and returns at once.
+Asynchronous version of [moveTo()](#moveto-1): queues the request and returns at once.
 
 ---
 
@@ -202,7 +202,7 @@ void removeAsync(isize nr)
 
 Defined in VirtualC64.h:291
 
-Asynchronous version of [remove()](#remove): queues the request and returns at once.
+Asynchronous version of [remove()](#remove-4): queues the request and returns at once.
 
 ---
 
@@ -454,5 +454,5 @@ void toggleAsync(isize nr)
 
 Defined in VirtualC64.h:360
 
-Asynchronous version of [toggle()](#toggle): queues the request and returns at once.
+Asynchronous version of [toggle()](#toggle-1): queues the request and returns at once.
 

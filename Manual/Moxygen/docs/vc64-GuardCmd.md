@@ -20,8 +20,8 @@ Payload of breakpoint and watchpoint commands.
 | Return | Name | Description |
 |--------|------|-------------|
 | `GuardType` | [`list`](#list)  | The guard list to modify. |
-| `isize` | [`nr`](#nr)  | Number of a guard in the list. |
-| `u32` | [`addr`](#addr)  | Target of a guard. |
+| `isize` | [`nr`](#nr-1)  | Number of a guard in the list. |
+| `u32` | [`addr`](#addr-1)  | Target of a guard. |
 | `isize` | [`ignores`](#ignores)  | Ignore count. |
 
 ---

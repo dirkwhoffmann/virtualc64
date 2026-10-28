@@ -19,10 +19,10 @@ Description of a breakpoint or watchpoint.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `u32` | [`addr`](#addr-1)  | Observed address. |
-| `bool` | [`enabled`](#enabled)  | The guard is enabled. |
-| `isize` | [`hits`](#hits)  | Number of times the guard was hit. |
-| `isize` | [`ignore`](#ignore)  | Number of hits that are ignored before the guard triggers. |
+| `u32` | [`addr`](#addr-2)  | Observed address. |
+| `bool` | [`enabled`](#enabled-1)  | The guard is enabled. |
+| `isize` | [`hits`](#hits-1)  | Number of times the guard was hit. |
+| `isize` | [`ignore`](#ignore-1)  | Number of hits that are ignored before the guard triggers. |
 
 ---
 

@@ -52,7 +52,7 @@ The raw data of this file.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`FileType`](grp_media.md#filetype) | [`type`](#type) `virtual` `const` `inline` | Returns the media type of this file. |
+| [`FileType`](vc64.md#filetype) | [`type`](#type) `virtual` `const` `inline` | Returns the media type of this file. |
 |  | [`~AnyFile`](#anyfile-1) `virtual` `inline` | Destructor. |
 | `void` | [`init`](#init)  | Initializes the file with an empty buffer of the given capacity. |
 | `void` | [`init`](#init-1)  | Initializes the file with the contents of a buffer. |
@@ -94,7 +94,7 @@ Returns the media type of this file.
 
 #### Reimplemented by
 
-- [`Snapshot::type`](vc64-Snapshot.md#type-2)
+- [`Snapshot::type`](vc64-Snapshot.md#type-9)
 
 ---
 
@@ -408,7 +408,7 @@ Writes the file to a buffer.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`FileType`](grp_media.md#filetype) | [`type`](#type-1) `static` | Determines the type of an arbitrary file on disk. |
+| [`FileType`](vc64.md#filetype) | [`type`](#type-1) `static` | Determines the type of an arbitrary file on disk. |
 | [`AnyFile`](#anyfile) * | [`make`](#make) `static` | Creates a media file from a file on disk. The file type is determined automatically. |
 | [`AnyFile`](#anyfile) * | [`make`](#make-1) `static` | Creates a media file of a given type from a file on disk. |
 | [`AnyFile`](#anyfile) * | [`make`](#make-2) `static` | Creates a media file of a given type from a memory buffer. |

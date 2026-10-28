@@ -20,8 +20,8 @@ Expansion Port Public [API](vc64-API.md#api)
 | Return | Name | Description |
 |--------|------|-------------|
 | [`CartridgeTraits`](vc64-CartridgeTraits.md#cartridgetraits) | [`getCartridgeTraits`](#getcartridgetraits) `const` | Returns the traits of the current cartridge. |
-| const [`CartridgeInfo`](vc64-CartridgeInfo.md#cartridgeinfo) & | [`getInfo`](#getinfo-14) `const` | Returns the state of the current cartridge. |
-| const [`CartridgeInfo`](vc64-CartridgeInfo.md#cartridgeinfo) & | [`getCachedInfo`](#getcachedinfo-14) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-14)). |
+| const [`CartridgeInfo`](vc64-CartridgeInfo.md#cartridgeinfo) & | [`getInfo`](#getinfo-6) `const` | Returns the state of the current cartridge. |
+| const [`CartridgeInfo`](vc64-CartridgeInfo.md#cartridgeinfo) & | [`getCachedInfo`](#getcachedinfo-6) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-6)). |
 | [`CartridgeRomInfo`](vc64-CartridgeRomInfo.md#cartridgerominfo) | [`getRomInfo`](#getrominfo) `const` | Returns the state of one of the cartridge ROM packets. |
 | `void` | [`attachCartridge`](#attachcartridge)  | Attaches a cartridge to the expansion port. |
 | `void` | [`attachCartridgeAsync`](#attachcartridgeasync)  | Asynchronous version of [attachCartridge()](#attachcartridge): queues the request and returns at once. |
@@ -59,7 +59,7 @@ Defined in VirtualC64.h:1221
 
 Returns the state of the current cartridge.
 
-[getInfo()](#getinfo-14) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-14) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo-6) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-6) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -73,7 +73,7 @@ const CartridgeInfo & getCachedInfo() const
 
 Defined in VirtualC64.h:1223
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-14)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-6)).
 
 ---
 

@@ -20,7 +20,7 @@ Collected run-time data.
 | Return | Name | Description |
 |--------|------|-------------|
 | `double` | [`cpuLoad`](#cpuload)  | Measured CPU load. |
-| `double` | [`fps`](#fps-1)  | Measured frames per seconds. |
+| `double` | [`fps`](#fps)  | Measured frames per seconds. |
 | `isize` | [`resyncs`](#resyncs)  | Number of out-of-sync conditions. |
 | `isize` | [`clones`](#clones)  | Number of created run-ahead instances. |
 

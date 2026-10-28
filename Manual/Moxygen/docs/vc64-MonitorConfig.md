@@ -19,7 +19,7 @@ Configuration of the monitor emulation.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`Palette`](grp_audiovideo.md#palette) | [`palette`](#palette-1)  | Color palette. |
+| [`Palette`](vc64.md#palette) | [`palette`](#palette-1)  | Color palette. |
 | `isize` | [`brightness`](#brightness)  | Monitor brightness. |
 | `isize` | [`contrast`](#contrast)  | Monitor contrast. |
 | `isize` | [`saturation`](#saturation)  | Monitor saturation. |
@@ -27,16 +27,16 @@ Configuration of the monitor emulation.
 | `isize` | [`vCenter`](#vcenter)  | Vertical center. |
 | `isize` | [`hZoom`](#hzoom)  | Horizontal zoom. |
 | `isize` | [`vZoom`](#vzoom)  | Vertical zoom. |
-| [`Upscaler`](grp_audiovideo.md#upscaler) | [`upscaler`](#upscaler-1)  | Effects. |
+| [`Upscaler`](vc64.md#upscaler) | [`upscaler`](#upscaler-1)  | Effects. |
 | `bool` | [`blur`](#blur)  | Blur. |
 | `isize` | [`blurRadius`](#blurradius)  | Blur radius. |
 | `bool` | [`bloom`](#bloom)  | Bloom. |
 | `isize` | [`bloomRadius`](#bloomradius)  | Bloom radius. |
 | `isize` | [`bloomBrightness`](#bloombrightness)  | Bloom brightness. |
 | `isize` | [`bloomWeight`](#bloomweight)  | Bloom weight. |
-| [`Dotmask`](grp_audiovideo.md#dotmask) | [`dotmask`](#dotmask-1)  | [Dotmask](grp_audiovideo.md#dotmask). |
-| `isize` | [`dotMaskBrightness`](#dotmaskbrightness)  | [Dotmask](grp_audiovideo.md#dotmask) brightness. |
-| [`Scanlines`](grp_audiovideo.md#scanlines) | [`scanlines`](#scanlines-1)  | [Scanlines](grp_audiovideo.md#scanlines). |
+| [`Dotmask`](vc64.md#dotmask) | [`dotmask`](#dotmask-1)  | [Dotmask](vc64.md#dotmask). |
+| `isize` | [`dotMaskBrightness`](#dotmaskbrightness)  | [Dotmask](vc64.md#dotmask) brightness. |
+| [`Scanlines`](vc64.md#scanlines) | [`scanlines`](#scanlines-1)  | [Scanlines](vc64.md#scanlines). |
 | `isize` | [`scanlineBrightness`](#scanlinebrightness)  | Scanline brightness. |
 | `isize` | [`scanlineWeight`](#scanlineweight)  | Scanline weight. |
 | `bool` | [`disalignment`](#disalignment)  | Cathode ray disalignment. |
@@ -51,7 +51,7 @@ Configuration of the monitor emulation.
 Palette palette
 ```
 
-Type: [`Palette`](grp_audiovideo.md#palette)
+Type: [`Palette`](vc64.md#palette)
 
 Defined in Peripherals/Monitor/MonitorTypes.h:170
 
@@ -149,7 +149,7 @@ Vertical zoom.
 Upscaler upscaler
 ```
 
-Type: [`Upscaler`](grp_audiovideo.md#upscaler)
+Type: [`Upscaler`](vc64.md#upscaler)
 
 Defined in Peripherals/Monitor/MonitorTypes.h:182
 
@@ -235,11 +235,11 @@ Bloom weight.
 Dotmask dotmask
 ```
 
-Type: [`Dotmask`](grp_audiovideo.md#dotmask)
+Type: [`Dotmask`](vc64.md#dotmask)
 
 Defined in Peripherals/Monitor/MonitorTypes.h:192
 
-[Dotmask](grp_audiovideo.md#dotmask).
+[Dotmask](vc64.md#dotmask).
 
 ---
 
@@ -251,7 +251,7 @@ isize dotMaskBrightness
 
 Defined in Peripherals/Monitor/MonitorTypes.h:193
 
-[Dotmask](grp_audiovideo.md#dotmask) brightness.
+[Dotmask](vc64.md#dotmask) brightness.
 
 ---
 
@@ -261,11 +261,11 @@ Defined in Peripherals/Monitor/MonitorTypes.h:193
 Scanlines scanlines
 ```
 
-Type: [`Scanlines`](grp_audiovideo.md#scanlines)
+Type: [`Scanlines`](vc64.md#scanlines)
 
 Defined in Peripherals/Monitor/MonitorTypes.h:195
 
-[Scanlines](grp_audiovideo.md#scanlines).
+[Scanlines](vc64.md#scanlines).
 
 ---
 

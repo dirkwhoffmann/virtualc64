@@ -31,9 +31,9 @@ Video Port Public [API](vc64-API.md#api)
 | `void` | [`saveXrayTexture`](#savexraytexture-1) `const` | Saves a cutout of the most recent stable X-Ray texture as a PNG file. |
 | `void` | [`findInnerArea`](#findinnerarea) `const` | Determines the area of the texture that contains picture data. |
 | `void` | [`findInnerAreaNormalized`](#findinnerareanormalized) `const` | Same as [findInnerArea()](#findinnerarea), but returns normalized coordinates. |
-| const [`VideoPortConfig`](vc64-VideoPortConfig.md#videoportconfig) & | [`getConfig`](#getconfig-8) `const` | Returns the component's current configuration. |
-| const [`VideoPortInfo`](vc64-VideoPortInfo.md#videoportinfo) & | [`getInfo`](#getinfo-10) `const` | Returns the component's current state. |
-| const [`VideoPortInfo`](vc64-VideoPortInfo.md#videoportinfo) & | [`getCachedInfo`](#getcachedinfo-10) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-10)). |
+| const [`VideoPortConfig`](vc64-VideoPortConfig.md#videoportconfig) & | [`getConfig`](#getconfig-9) `const` | Returns the component's current configuration. |
+| const [`VideoPortInfo`](vc64-VideoPortInfo.md#videoportinfo) & | [`getInfo`](#getinfo-14) `const` | Returns the component's current state. |
+| const [`VideoPortInfo`](vc64-VideoPortInfo.md#videoportinfo) & | [`getCachedInfo`](#getcachedinfo-14) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-14)). |
 
 ---
 
@@ -274,7 +274,7 @@ Defined in VirtualC64.h:719
 
 Returns the component's current state.
 
-[getInfo()](#getinfo-10) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-10) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo-14) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-14) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -288,5 +288,5 @@ const VideoPortInfo & getCachedInfo() const
 
 Defined in VirtualC64.h:721
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-10)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-14)).
 

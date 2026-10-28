@@ -27,11 +27,12 @@ It also tidies the compound list: unnamed nested structs and unions are
 dropped, and the groups are listed in the order of GROUP_ORDER (the order in
 which the sidebar shows them).
 
-Usage: flatten_groups.py [--keep-ids] [--keep-callouts] <input-xml-dir> <output-xml-dir>
+Usage: flatten_groups.py [--keep-ids] [--keep-callouts] [--keep-namespace] <input-xml-dir> <output-xml-dir>
 
 With --keep-ids the group ids are left alone (sourcey needs them padded to
 sort its sidebar; other tools do not). With --keep-callouts the notes and
-warnings stay what they are (for tools that render them as containers).
+warnings stay what they are (for tools that render them as containers). With
+--keep-namespace the namespace vc64 stays in the index.
 """
 import re, shutil, sys
 import xml.etree.ElementTree as ET
@@ -135,7 +136,7 @@ def flatten(path):
     if changed:
         tree.write(path, encoding="utf-8", xml_declaration=True)
 
-def tidy_index(dst):
+def tidy_index(dst, keep_namespace=False):
     path = Path(dst) / "index.xml"
     tree = ET.parse(path)
     root = tree.getroot()
@@ -153,7 +154,7 @@ def tidy_index(dst):
         c.extend(members)
     for c in compounds:
         name = c.findtext("name") or ""
-        if "[" in name or (c.get("kind") == "namespace" and name == "vc64"):
+        if "[" in name or (c.get("kind") == "namespace" and name == "vc64" and not keep_namespace):
             root.remove(c)
     groups = [c for c in root.findall("compound") if c.get("kind") == "group"]
     for c in groups:
@@ -188,7 +189,7 @@ def lengthen_group_ids(dst):
         if (Path(dst) / f"{old}.xml").exists():
             (Path(dst) / f"{old}.xml").rename(Path(dst) / f"{new}.xml")
 
-def main(src, dst, pad_ids=True, callouts=True):
+def main(src, dst, pad_ids=True, callouts=True, keep_namespace=False):
     shutil.rmtree(dst, ignore_errors=True)
     shutil.copytree(src, dst)
     for path in Path(dst).glob("*.xml"):
@@ -196,7 +197,7 @@ def main(src, dst, pad_ids=True, callouts=True):
             flatten(path)
         if callouts and path.name != "index.xml":
             retitle_callouts(path)
-    tidy_index(dst)
+    tidy_index(dst, keep_namespace)
     if pad_ids:
         lengthen_group_ids(dst)
 
@@ -205,4 +206,5 @@ if __name__ == "__main__":
     if len(args) != 2:
         sys.exit(__doc__)
     main(args[0], args[1], pad_ids="--keep-ids" not in sys.argv,
-         callouts="--keep-callouts" not in sys.argv)
+         callouts="--keep-callouts" not in sys.argv,
+         keep_namespace="--keep-namespace" in sys.argv)

@@ -19,9 +19,9 @@ Payload of configuration commands.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`Opt`](grp_emulator.md#opt) | [`option`](#option)  | The option to change. |
-| `i64` | [`value`](#value-2)  | The new value. |
-| `isize` | [`id`](#id-1)  | The component the option belongs to. |
+| [`Opt`](vc64.md#opt) | [`option`](#option)  | The option to change. |
+| `i64` | [`value`](#value-1)  | The new value. |
+| `isize` | [`id`](#id)  | The component the option belongs to. |
 
 ---
 
@@ -31,7 +31,7 @@ Payload of configuration commands.
 Opt option
 ```
 
-Type: [`Opt`](grp_emulator.md#opt)
+Type: [`Opt`](vc64.md#opt)
 
 Defined in Infrastructure/CmdQueueTypes.h:247
 

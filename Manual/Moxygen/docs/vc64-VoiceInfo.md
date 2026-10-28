@@ -19,8 +19,8 @@ State of a SID voice.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `u8` | [`reg`](#reg)  | Raw voice registers. |
-| `u16` | [`frequency`](#frequency)  | Frequency value. |
+| `u8` | [`reg`](#reg-1)  | Raw voice registers. |
+| `u16` | [`frequency`](#frequency-1)  | Frequency value. |
 | `u16` | [`pulseWidth`](#pulsewidth)  | Pulse width value. |
 | `u8` | [`waveform`](#waveform)  | Waveform selection bits. |
 | `bool` | [`ringMod`](#ringmod)  | Ring modulation is on. |

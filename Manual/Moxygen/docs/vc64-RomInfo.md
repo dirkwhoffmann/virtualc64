@@ -21,9 +21,9 @@ Description of an installed ROM.
 |--------|------|-------------|
 | `u32` | [`crc32`](#crc32-1)  | CRC32 checksum. |
 | `u64` | [`fnv64`](#fnv64-1)  | FNV-64 checksum. |
-| `const char *` | [`title`](#title)  | Title of the ROM. |
+| `const char *` | [`title`](#title-1)  | Title of the ROM. |
 | `const char *` | [`subtitle`](#subtitle)  | Subtitle of the ROM. |
-| `const char *` | [`revision`](#revision-3)  | Revision of the ROM. |
+| `const char *` | [`revision`](#revision-1)  | Revision of the ROM. |
 | `bool` | [`isCommodoreRom`](#iscommodorerom)  | The ROM is an original Commodore ROM. |
 | `bool` | [`isPatchedRom`](#ispatchedrom)  | The ROM is a patched variant. |
 | `bool` | [`isMega65Rom`](#ismega65rom)  | The ROM is an OpenROM of the MEGA65 project. |

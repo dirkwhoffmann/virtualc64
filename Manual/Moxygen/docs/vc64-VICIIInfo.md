@@ -35,9 +35,9 @@ State of the VICII chip.
 | `bool` | [`badLine`](#badline)  | The current line is a bad line. |
 | `bool` | [`displayState`](#displaystate)  | Display state (display or idle). |
 | `bool` | [`vblank`](#vblank)  | Vertical blanking is active. |
-| [`ScreenGeometry`](grp_vicii.md#screengeometry) | [`screenGeometry`](#screengeometry-1)  | Screen geometry. |
+| [`ScreenGeometry`](vc64.md#screengeometry) | [`screenGeometry`](#screengeometry-1)  | Screen geometry. |
 | [`FrameFlipflops`](vc64-FrameFlipflops.md#frameflipflops) | [`frameFF`](#frameff)  | Frame flip-flops. |
-| [`DisplayMode`](grp_vicii.md#displaymode) | [`displayMode`](#displaymode-1)  | Display mode. |
+| [`DisplayMode`](vc64.md#displaymode) | [`displayMode`](#displaymode-1)  | Display mode. |
 | `u8` | [`borderColor`](#bordercolor)  | Border color. |
 | `u8` | [`bgColor0`](#bgcolor0)  | Background color 0. |
 | `u8` | [`bgColor1`](#bgcolor1)  | Background color 1. |
@@ -256,7 +256,7 @@ Vertical blanking is active.
 ScreenGeometry screenGeometry
 ```
 
-Type: [`ScreenGeometry`](grp_vicii.md#screengeometry)
+Type: [`ScreenGeometry`](vc64.md#screengeometry)
 
 Defined in Components/VICII/VICIITypes.h:395
 
@@ -284,7 +284,7 @@ Frame flip-flops.
 DisplayMode displayMode
 ```
 
-Type: [`DisplayMode`](grp_vicii.md#displaymode)
+Type: [`DisplayMode`](vc64.md#displaymode)
 
 Defined in Components/VICII/VICIITypes.h:397
 

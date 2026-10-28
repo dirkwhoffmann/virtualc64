@@ -19,7 +19,7 @@ Configuration of a paddle.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`PaddleOrientation`](grp_controlports.md#paddleorientation) | [`orientation`](#orientation)  | Paddle value mapping scheme. |
+| [`PaddleOrientation`](vc64.md#paddleorientation) | [`orientation`](#orientation)  | Paddle value mapping scheme. |
 
 ---
 
@@ -29,7 +29,7 @@ Configuration of a paddle.
 PaddleOrientation orientation
 ```
 
-Type: [`PaddleOrientation`](grp_controlports.md#paddleorientation)
+Type: [`PaddleOrientation`](vc64.md#paddleorientation)
 
 Defined in Peripherals/Paddle/PaddleTypes.h:63
 

@@ -19,8 +19,8 @@ State of a sprite.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| `u16` | [`x`](#x-1)  | Horizontal position. |
-| `u8` | [`y`](#y-1)  | Vertical position. |
+| `u16` | [`x`](#x-3)  | Horizontal position. |
+| `u8` | [`y`](#y-3)  | Vertical position. |
 | `bool` | [`enabled`](#enabled-3)  | The sprite is enabled. |
 | `bool` | [`expandX`](#expandx)  | Horizontal expansion. |
 | `bool` | [`expandY`](#expandy)  | Vertical expansion. |

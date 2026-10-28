@@ -19,7 +19,7 @@ Mouse Public [API](vc64-API.md#api)
 
 | Return | Name | Description |
 |--------|------|-------------|
-| const [`MouseConfig`](vc64-MouseConfig.md#mouseconfig) & | [`getConfig`](#getconfig-10) `const` | Returns the component's current configuration. |
+| const [`MouseConfig`](vc64-MouseConfig.md#mouseconfig) & | [`getConfig`](#getconfig-7) `const` | Returns the component's current configuration. |
 | `void` | [`setXY`](#setxy)  | Moves the mouse |
 | `void` | [`setDxDy`](#setdxdy)  | Moves the mouse |
 | `void` | [`trigger`](#trigger-3)  | Triggers a mouse button event |
@@ -94,7 +94,7 @@ Triggers a mouse button event
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `action` | [`GamePadAction`](grp_controlports.md#gamepadaction) | The triggered event |
+| `action` | [`GamePadAction`](vc64.md#gamepadaction) | The triggered event |
 
 ---
 

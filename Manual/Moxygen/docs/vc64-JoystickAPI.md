@@ -19,9 +19,9 @@ Joystick Public [API](vc64-API.md#api)
 
 | Return | Name | Description |
 |--------|------|-------------|
-| const [`JoystickConfig`](vc64-JoystickConfig.md#joystickconfig) & | [`getConfig`](#getconfig-9) `const` | Returns the component's current configuration. |
-| const [`JoystickInfo`](vc64-JoystickInfo.md#joystickinfo) & | [`getInfo`](#getinfo-12) `const` | Returns the component's current state. |
-| const [`JoystickInfo`](vc64-JoystickInfo.md#joystickinfo) & | [`getCachedInfo`](#getcachedinfo-12) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-12)). |
+| const [`JoystickConfig`](vc64-JoystickConfig.md#joystickconfig) & | [`getConfig`](#getconfig-5) `const` | Returns the component's current configuration. |
+| const [`JoystickInfo`](vc64-JoystickInfo.md#joystickinfo) & | [`getInfo`](#getinfo-7) `const` | Returns the component's current state. |
+| const [`JoystickInfo`](vc64-JoystickInfo.md#joystickinfo) & | [`getCachedInfo`](#getcachedinfo-7) `const` | Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-7)). |
 | `void` | [`trigger`](#trigger-1)  | Triggers a joystick action. |
 | `void` | [`trigger`](#trigger-2)  | Sets the complete joystick state. |
 
@@ -53,7 +53,7 @@ Defined in VirtualC64.h:1008
 
 Returns the component's current state.
 
-[getInfo()](#getinfo-12) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-12) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
+[getInfo()](#getinfo-7) reads the live state on the calling thread. The result is only consistent if the emulator is paused or suspended. [getCachedInfo()](#getcachedinfo-7) returns the snapshot the emulator thread has recorded most recently, which is the one to use while the emulator runs. Both return references that can be overwritten by a later call or by the emulator thread, so copy the data if you need to keep it.
 
 ---
 
@@ -67,7 +67,7 @@ const JoystickInfo & getCachedInfo() const
 
 Defined in VirtualC64.h:1010
 
-Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-12)).
+Returns the most recent state snapshot recorded by the emulator thread (see [getInfo()](#getinfo-7)).
 
 ---
 

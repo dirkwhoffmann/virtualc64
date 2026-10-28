@@ -17,11 +17,11 @@ Three naming patterns recur throughout the API:
 
 Pattern  |Meaning
 --------- | ---------
-`getConfig()`, `get(Opt)` / `set(Opt, ...)`|Read and change the configuration. Options are identified by the enumeration [vc64::Opt](grp_emulator.md#opt).
+`getConfig()`, `get(Opt)` / `set(Opt, ...)`|Read and change the configuration. Options are identified by the enumeration [vc64::Opt](vc64.md#opt).
 `getInfo()`, `getCachedInfo()`, `getMetrics()`, ...  |Read the state of a component (see [Threading and Errors](page-guide_threading.md#guide_threading_1md__2_users_2hoff_2_retro_2virtualc64_2_manual_2_doxygen_2build_2guides_2threading)).
 `foo()` / `fooAsync()`|Blocking and asynchronous flavor of a state-changing function.
 
-To be notified about events, register a message callback with [launch()](vc64-VirtualC64.md#launch). The messages are listed in the enumeration [vc64::Msg](grp_messages.md#msg-1).
+To be notified about events, register a message callback with [launch()](vc64-VirtualC64.md#launch). The messages are listed in the enumeration [vc64::Msg](vc64.md#msg-1).
 
 ## The main class
 
@@ -72,10 +72,10 @@ Member  |Class  |Purpose
 ## Data types
 Functions exchange data through plain structures and enumerations. The most important ones are:
 
-* Configuration options: [vc64::Opt](grp_emulator.md#opt)
-* Messages from the emulator: [vc64::Message](vc64-Message.md#message) and [vc64::Msg](grp_messages.md#msg-1)
+* Configuration options: [vc64::Opt](vc64.md#opt)
+* Messages from the emulator: [vc64::Message](vc64-Message.md#message) and [vc64::Msg](vc64.md#msg-1)
 * State records: for example [vc64::CPUInfo](vc64-CPUInfo.md#cpuinfo), [vc64::VICIIInfo](vc64-VICIIInfo.md#viciiinfo), [vc64::CIAInfo](vc64-CIAInfo.md#ciainfo), [vc64::DriveInfo](vc64-DriveInfo.md#driveinfo)
-* Execution state: [vc64::ExecState](grp_emulator.md#execstate)
+* Execution state: [vc64::ExecState](vc64.md#execstate)
 * Snapshots and media files: [vc64::Snapshot](vc64-Snapshot.md#snapshot), [vc64::AnyFile](vc64-AnyFile.md#anyfile)
 
 ## Errors
