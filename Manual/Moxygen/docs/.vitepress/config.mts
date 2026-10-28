@@ -33,16 +33,32 @@ const apis = ['VirtualC64', 'API', 'C64API', 'MemoryAPI', 'MemoryDebuggerAPI', '
               'DatasetteAPI', 'DriveAPI', 'DiskAPI', 'KeyboardAPI', 'RetroShellAPI',
               'RemoteManagerAPI', 'DefaultsAPI']
 
-// Structs and unions (configurations, infos, message payloads, ...), except the
-// errors, which are listed under Reference
-function structItems() {
+// Structs and unions, grouped by what they are for. The first matching rule
+// decides; the errors are listed under Reference instead.
+const structKinds: [string, RegExp][] = [
+  ['Configuration', /Config$/],
+  ['Info', /Info$/],
+  ['Metrics', /(Metrics|Stats)$/],
+  ['Commands', /(Cmd|^Command)$/],
+  ['Messages', /(Msg|^Message)$/],
+  ['Other', /./],
+]
+
+function structGroups() {
   const errors = ['CoreError', 'MediaError']
-  return readdirSync(docs).filter(f => /^vc64-.*\.md$/.test(f))
+  const structs = readdirSync(docs).filter(f => /^vc64-.*\.md$/.test(f))
     .filter(f => /^kind:\s*(struct|union)\s*$/m.test(readFileSync(join(docs, f), 'utf8')))
     .map(f => f.replace(/^vc64-|\.md$/g, ''))
     .filter(c => !errors.includes(c))
     .sort((a, b) => a.localeCompare(b))
-    .map(c => ({ text: c, link: `/vc64-${c}` }))
+  const groups = new Map(structKinds.map(([label]) => [label, [] as string[]]))
+  for (const c of structs) groups.get(structKinds.find(([, re]) => re.test(c))![0])!.push(c)
+  return [...groups].filter(([, list]) => list.length)
+    .map(([label, list]) => ({
+      text: label,
+      collapsed: true,
+      items: list.map(c => ({ text: c, link: `/vc64-${c}` })),
+    }))
 }
 
 function enumItems() {
@@ -74,7 +90,7 @@ export default defineConfig({
     sidebar: [
       { text: 'Guides', collapsed: false, items: [{ text: 'Introduction', link: '/' }, ...items('page-', guides)] },
       { text: 'API', collapsed: false, items: apiItems() },
-      { text: 'Structs', collapsed: true, items: structItems() },
+      { text: 'Structs', collapsed: true, items: structGroups() },
       { text: 'Reference', collapsed: false, items: [
         { text: 'Types and Enumerations', link: '/vc64' },
         { text: 'CoreError', link: '/vc64-CoreError' },
