@@ -19,3 +19,8 @@ xcuserdata/
 *.xcscmblueprint
 *xcworkspace
 .DS_Store
+
+## Documentation tooling (see Manual/Docs)
+node_modules/
+.vite/
+.vitepress/cache/

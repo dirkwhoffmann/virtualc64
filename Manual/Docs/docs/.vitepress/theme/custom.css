@@ -1,0 +1,33 @@
+/* Badges on the landing page */
+.vp-doc p:has(> img[src*="shields.io"]),
+.vp-doc p:has(> img[src$="badge.svg"]) {
+  text-align: center;
+}
+
+.vp-doc p:has(> img[src*="shields.io"]) > img,
+.vp-doc p:has(> img[src$="badge.svg"]) > img {
+  display: inline-block;
+  margin: 0 2px;
+}
+
+/* Landing page: smaller feature boxes */
+.VPFeatures .container {
+  max-width: 760px;
+}
+.VPFeature .box {
+  padding: 16px;
+}
+.VPFeature .icon {
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.VPFeature .title {
+  font-size: 15px;
+  line-height: 22px;
+}
+.VPFeature .details {
+  font-size: 13px;
+  line-height: 20px;
+}
