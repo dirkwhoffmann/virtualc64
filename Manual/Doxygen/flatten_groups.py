@@ -15,6 +15,9 @@ Members without a doc comment in the header (constructors, wiring pointers,
 internal helpers) are dropped, so that the reference only shows what the
 headers document.
 
+Overloads of a function are listed together, even if the header
+separates them.
+
 Base class and derived class references are dropped. Sourcey would otherwise
 add a "List of all members" table and "Inherited from" tables to every class,
 which repeats the members of the page (and suspend()/resume() of the base class
@@ -83,6 +86,18 @@ def drop_undocumented(compound):
             compound.remove(section)
     return removed
 
+def group_overloads(compound):
+    """Puts the overloads of a function next to each other, at the place of the first one."""
+    for section in compound.findall("sectiondef"):
+        members = section.findall("memberdef")
+        order = {}
+        for member in members:
+            order.setdefault(member.findtext("name"), len(order))
+        members.sort(key=lambda m: order[m.findtext("name")])  # stable
+        for member in section.findall("memberdef"):
+            section.remove(member)
+        section.extend(members)
+
 def flatten(path):
     tree = ET.parse(path)
     changed = False
@@ -94,6 +109,8 @@ def flatten(path):
                 compound.remove(ref)
                 changed = True
         changed |= drop_undocumented(compound)
+        group_overloads(compound)
+        changed = True
         sections = list(compound.findall("sectiondef"))
         loose = [s for s in sections if s.get("kind") == "user-defined"]
         if not loose:
@@ -110,6 +127,7 @@ def flatten(path):
                     targets[kind] = new
                 targets[kind].append(member)
             compound.remove(section)
+        group_overloads(compound)
     if changed:
         tree.write(path, encoding="utf-8", xml_declaration=True)
 
@@ -118,6 +136,17 @@ def tidy_index(dst):
     tree = ET.parse(path)
     root = tree.getroot()
     compounds = root.findall("compound")
+    # Moxygen takes the order of the members from the index, so the overloads
+    # are grouped there, too
+    for c in compounds:
+        members = c.findall("member")
+        order = {}
+        for m in members:
+            order.setdefault(m.findtext("name"), len(order))
+        members.sort(key=lambda m: order[m.findtext("name")])
+        for m in c.findall("member"):
+            c.remove(m)
+        c.extend(members)
     for c in compounds:
         name = c.findtext("name") or ""
         if "[" in name or (c.get("kind") == "namespace" and name == "vc64"):

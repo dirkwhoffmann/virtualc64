@@ -75,3 +75,21 @@ html.dark-mode {
         margin-right: 22px;
     }
 }
+
+/* Banner on the start page: one image per color scheme */
+img[src$="vc-light.png"], img[src$="vc-dark.png"] {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+html:not(.dark-mode) img[src$="vc-dark.png"],
+html.dark-mode img[src$="vc-light.png"] {
+    display: none;
+}
+
+/* Badges below the banner */
+p:has(> img[src*="shields.io"]), p:has(> img[src$="badge.svg"]),
+div.image:has(> img[src*="shields.io"]) {
+    text-align: center;
+}

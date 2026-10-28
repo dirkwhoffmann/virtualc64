@@ -43,6 +43,7 @@ WARN_FORMAT            = "$file:$line: $text"
 
 # Input
 INPUT                  = groups.dox \
+                         build/guides \
                          ../../VCCore/VirtualC64.h \
                          ../../VCCore/VirtualC64Types.h \
                          ../../VCCore/Components/C64Types.h \
@@ -92,10 +93,11 @@ INPUT                  = groups.dox \
                          ../../VCCore/Ports/PowerPortTypes.h \
                          ../../VCCore/Ports/UserPortTypes.h \
                          ../../VCCore/Ports/VideoPortTypes.h
-FILE_PATTERNS          = *.h *.dox
+FILE_PATTERNS          = *.h *.dox *.md
+USE_MDFILE_AS_MAINPAGE = build/guides/index.md
 RECURSIVE              = NO
 EXAMPLE_PATH           = ../../VCCore
-IMAGE_PATH             = images
+IMAGE_PATH             = guides/images
 
 # The headers use C++20; the macros below only matter for a few attributes
 ENABLE_PREPROCESSING   = YES
