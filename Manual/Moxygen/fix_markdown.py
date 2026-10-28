@@ -10,8 +10,10 @@
     its enumerations in "On this page".
   - Moxygen documents all enumerations on the namespace page. Each one is moved
     to a page of its own (enum-<Name>.md), and all links to it are redirected.
-  - The guide's start page becomes introduction.md; index.md is the landing
-    page (home.md). The images of the guides are copied
+  - The pages are sorted into guide/ (the guides, the start page is
+    guide/introduction.md) and reference/ (everything else), so that VitePress
+    can show a sidebar for each. All links between pages are made absolute.
+    index.md is the landing page (home.md). The images of the guides are copied
     next to the pages.
 
 Usage: fix_markdown.py <docs-dir> <guide-images-dir>
@@ -64,6 +66,31 @@ def redirect(docs, anchors):
         if new != text:
             page.write_text(new)
 
+def organize(docs):
+    """Moves the pages to guide/ and reference/ and repairs the links."""
+    target = {}
+    for page in docs.glob("*.md"):
+        name = page.name
+        if name == "page-index.md":
+            target[name] = "guide/introduction.md"
+        elif name.startswith("page-guide_"):
+            target[name] = "guide/" + name[len("page-guide_"):].replace("_", "-")
+        else:
+            target[name] = "reference/" + name
+    def link(match):
+        file, anchor = match.group(1), match.group(2) or ""
+        if file not in target:
+            return match.group(0)
+        if target[file].startswith("guide/"):
+            anchor = ""  # the anchors of Doxygen pages do not exist
+        return f"](/{target[file]}{anchor})"
+    for name, new in target.items():
+        text = re.sub(r"\]\(([\w.-]+\.md)(#[^)]*)?\)", link, (docs / name).read_text())
+        destination = docs / new
+        destination.parent.mkdir(exist_ok=True)
+        destination.write_text(text)
+        (docs / name).unlink()
+
 def main(docs, images):
     docs = Path(docs)
     for page in docs.glob("*.md"):
@@ -72,12 +99,12 @@ def main(docs, images):
     namespace.write_text(namespace.read_text().replace('title: "vc64"', 'title: "Types and Enumerations"\noutline: [2, 3]', 1)
                          .replace("\n# vc64\n", "\n# Types and Enumerations\n", 1))
     redirect(docs, split_enums(docs))
-    (docs / "page-index.md").replace(docs / "introduction.md")
-    shutil.copy(Path(__file__).parent / "home.md", docs / "index.md")
     (docs / "api.md").unlink(missing_ok=True)
+    organize(docs)
+    shutil.copy(Path(__file__).parent / "home.md", docs / "index.md")
     for image in Path(images).iterdir():
         if image.suffix in (".svg", ".png") and image.name != "icon.png":
-            shutil.copy(image, docs)
+            shutil.copy(image, docs / "guide")
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

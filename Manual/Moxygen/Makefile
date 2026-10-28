@@ -7,7 +7,7 @@
 # Doxygen runs with the settings of ../Doxygen/Doxyfile. moxygen and VitePress are
 # installed with "npm install".
 
-GENERATED = docs/*.md docs/*.svg docs/vc-*.png
+GENERATED = docs/*.md docs/guide docs/reference
 
 # The XML is generated without the modules of groups.dox (they exist for
 # sourcey): the API classes get their own pages and the sidebar lists them.
@@ -17,7 +17,7 @@ markdown:
 	cd ../Doxygen && (cat Doxyfile; echo "EXCLUDE = groups.dox"; \
 	    echo "OUTPUT_DIRECTORY = ../Moxygen/build/doxygen"; echo "GENERATE_HTML = NO") | doxygen -
 	python3 ../Doxygen/flatten_groups.py --keep-ids --keep-callouts --keep-namespace build/doxygen/xml build/xml
-	rm -f $(GENERATED)
+	rm -rf $(GENERATED)
 	npx moxygen -c -p -a -f -F github -o 'docs/%s.md' build/xml > /dev/null
 	python3 fix_markdown.py docs ../Doxygen/guides/images
 
