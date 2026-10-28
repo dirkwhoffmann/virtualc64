@@ -1,0 +1,76 @@
+/* Color scheme: Dracula (dark) and Alucard, its light variant.
+ * Selected with the SCHEME variable of the Makefile (see config.mts). */
+
+:root {
+  --vp-c-brand-1: #644ac9;
+  --vp-c-brand-2: #5a41b8;
+  --vp-c-brand-3: #644ac9;
+  --vp-c-brand-soft: rgba(100, 74, 201, 0.14);
+
+  --vp-c-bg: #fffbeb;
+  --vp-c-bg-alt: #f3eedb;
+  --vp-c-bg-elv: #e9e4cf;
+  --vp-c-bg-soft: #f3eedb;
+
+  --vp-c-border: #d9d4be;
+  --vp-c-divider: #d9d4be;
+  --vp-c-gutter: #cfcfde;
+
+  --vp-c-text-1: #1f1f1f;
+  --vp-c-text-2: #4a4a42;
+  --vp-c-text-3: #6c664b;
+
+  --vp-c-default-soft: rgba(108, 102, 75, 0.18);
+  --vp-c-tip-soft: rgba(20, 113, 10, 0.16);
+  --vp-c-warning-soft: rgba(132, 110, 21, 0.16);
+  --vp-c-danger-soft: rgba(203, 58, 42, 0.16);
+  --vp-c-caution-soft: rgba(203, 58, 42, 0.16);
+  --vp-c-important-soft: rgba(100, 74, 201, 0.16);
+
+  --vp-custom-block-info-bg: rgba(3, 106, 150, 0.16);
+  --vp-custom-block-note-bg: rgba(100, 74, 201, 0.16);
+  --vp-custom-block-details-bg: #e9e4cf;
+
+  --vp-code-line-highlight-color: rgba(108, 102, 75, 0.2);
+
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-active-text: #ffffff;
+}
+
+.dark {
+  --vp-c-brand-1: #bd93f9;
+  --vp-c-brand-2: #d0aefc;
+  --vp-c-brand-3: #bd93f9;
+  --vp-c-brand-soft: rgba(189, 147, 249, 0.14);
+
+  --vp-c-bg: #282a36;
+  --vp-c-bg-alt: #21222c;
+  --vp-c-bg-elv: #343746;
+  --vp-c-bg-soft: #21222c;
+
+  --vp-c-border: #44475a;
+  --vp-c-divider: #44475a;
+  --vp-c-gutter: #44475a;
+
+  --vp-c-text-1: #f8f8f2;
+  --vp-c-text-2: #d6d6e0;
+  --vp-c-text-3: #8d97c2;
+
+  --vp-c-default-soft: rgba(141, 151, 194, 0.18);
+  --vp-c-tip-soft: rgba(80, 250, 123, 0.16);
+  --vp-c-warning-soft: rgba(241, 250, 140, 0.16);
+  --vp-c-danger-soft: rgba(255, 85, 85, 0.16);
+  --vp-c-caution-soft: rgba(255, 85, 85, 0.16);
+  --vp-c-important-soft: rgba(189, 147, 249, 0.16);
+
+  --vp-custom-block-info-bg: rgba(139, 233, 253, 0.16);
+  --vp-custom-block-note-bg: rgba(189, 147, 249, 0.16);
+  --vp-custom-block-details-bg: #343746;
+
+  --vp-code-line-highlight-color: rgba(141, 151, 194, 0.2);
+
+  --vp-button-brand-text: #282a36;
+  --vp-button-brand-hover-text: #282a36;
+  --vp-button-brand-active-text: #282a36;
+}

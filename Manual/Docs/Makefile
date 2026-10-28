@@ -4,10 +4,16 @@
 #   make serve    Live preview (VitePress dev server, http://localhost:5173)
 #   make clean
 #
+# The color scheme is selected with SCHEME (catppuccin, dracula, nord or
+# tokyo-night), e.g. "make SCHEME=nord" or "make serve SCHEME=dracula".
+#
 # The headers are parsed by Doxygen (Doxyfile), the XML is prepared by
 # prepare_xml.py and turned into Markdown by moxygen (fix_markdown.py sorts
 # the pages into the guide, the setup chapters and the API). VitePress renders the site.
 # moxygen and VitePress are installed with "npm install".
+
+SCHEME ?= catppuccin
+export SCHEME
 
 GENERATED = docs/*.md docs/guide docs/setup docs/api
 

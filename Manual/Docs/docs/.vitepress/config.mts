@@ -9,6 +9,33 @@ import { join } from 'node:path'
 const docs = join(__dirname, '..')
 const apiDir = join(docs, 'api')
 
+// Color schemes. The scheme is selected at build time, e.g. "make SCHEME=nord".
+// index.ts imports its stylesheet through the alias "@scheme"; the code blocks
+// use the matching syntax highlighting themes.
+const schemes: Record<string, { css: string, code: { light: string, dark: string } }> = {
+  catppuccin: {
+    css: join(docs, '..', 'node_modules/@catppuccin/vitepress/theme/mocha/mauve.css'),
+    code: { light: 'catppuccin-latte', dark: 'catppuccin-mocha' },
+  },
+  dracula: {
+    css: join(__dirname, 'theme/schemes/dracula.css'),
+    code: { light: 'github-light', dark: 'dracula' },
+  },
+  nord: {
+    css: join(__dirname, 'theme/schemes/nord.css'),
+    code: { light: 'github-light', dark: 'nord' },
+  },
+  'tokyo-night': {
+    css: join(__dirname, 'theme/schemes/tokyo-night.css'),
+    code: { light: 'github-light', dark: 'tokyo-night' },
+  },
+}
+const schemeName = process.env.SCHEME || 'catppuccin'
+const scheme = schemes[schemeName]
+if (!scheme) {
+  throw new Error(`Unknown SCHEME '${schemeName}'. Choose one of: ${Object.keys(schemes).join(', ')}`)
+}
+
 const guides = ['introduction', 'api-overview', 'threading', 'state', 'communication']
 const setup = ['build', 'headless']
 
@@ -84,14 +111,15 @@ export default defineConfig({
   lang: 'en-US',
   cleanUrls: true,
   outDir: '../build/site',
-  markdown: { theme: { light: 'catppuccin-latte', dark: 'catppuccin-mocha' } },
+  markdown: { theme: scheme.code },
+  vite: { resolve: { alias: { '@scheme': scheme.css } } },
   themeConfig: {
     logo: '/icon.png',
     search: { provider: 'local' },
     nav: [
+      { text: 'Setup', link: '/setup/build', activeMatch: '^/setup/' },
       { text: 'Guide', link: '/guide/introduction', activeMatch: '^/guide/' },
       { text: 'API', link: '/api/vc64-VirtualC64', activeMatch: '^/api/' },
-      { text: 'Setup', link: '/setup/build', activeMatch: '^/setup/' },
     ],
     sidebar: {
       '/guide/': [
