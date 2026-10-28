@@ -30,7 +30,7 @@ const schemes: Record<string, { css: string, code: { light: string, dark: string
     code: { light: 'github-light', dark: 'tokyo-night' },
   },
 }
-const schemeName = process.env.SCHEME || 'catppuccin'
+const schemeName = process.env.SCHEME || 'tokyo-night'
 const scheme = schemes[schemeName]
 if (!scheme) {
   throw new Error(`Unknown SCHEME '${schemeName}'. Choose one of: ${Object.keys(schemes).join(', ')}`)
