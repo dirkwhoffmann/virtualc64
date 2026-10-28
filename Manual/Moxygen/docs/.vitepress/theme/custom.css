@@ -1,0 +1,24 @@
+/* Banner on the start page: one image per color scheme (VitePress renames the
+   image files, so they are recognized by their alt text) */
+img[alt$="(light mode)"], img[alt$="(dark mode)"] {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+html:not(.dark) img[alt$="(dark mode)"],
+html.dark img[alt$="(light mode)"] {
+  display: none;
+}
+
+/* Badges below the banner */
+.vp-doc p:has(> img[src*="shields.io"]),
+.vp-doc p:has(> img[src$="badge.svg"]) {
+  text-align: center;
+}
+
+.vp-doc p:has(> img[src*="shields.io"]) > img,
+.vp-doc p:has(> img[src$="badge.svg"]) > img {
+  display: inline-block;
+  margin: 0 2px;
+}

@@ -1,0 +1,236 @@
+---
+title: "DriveConfig"
+---
+# DriveConfig
+
+```cpp
+#include <Peripherals/Drive/DriveTypes.h>
+```
+
+```cpp
+struct DriveConfig
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:192
+
+Configuration of a drive.
+
+## Public Attributes
+
+| Return | Name | Description |
+|--------|------|-------------|
+| `bool` | [`autoConfig`](#autoconfig)  | General. |
+| [`DriveType`](grp_drives.md#drivetype) | [`type`](#type-3)  | Drive model. |
+| [`DriveRam`](grp_drives.md#driveram) | [`ram`](#ram)  | Drive RAM. |
+| [`ParCableType`](grp_drives.md#parcabletype) | [`parCable`](#parcable)  | Parallel cable. |
+| `bool` | [`powerSave`](#powersave-2)  | Take fast paths. |
+| `bool` | [`connected`](#connected)  | The drive is connected to the serial port. |
+| `bool` | [`switchedOn`](#switchedon)  | Power switch. |
+| `isize` | [`ejectDelay`](#ejectdelay)  | Disk ejection delay. |
+| `isize` | [`swapDelay`](#swapdelay)  | Disk swap delay. |
+| `isize` | [`insertDelay`](#insertdelay)  | Disk insertion delay. |
+| `i16` | [`pan`](#pan)  | Stereo pan of the drive sounds. |
+| `u8` | [`powerVolume`](#powervolume)  | Power switch volume. |
+| `u8` | [`stepVolume`](#stepvolume)  | Head step volume. |
+| `u8` | [`insertVolume`](#insertvolume)  | Disk insertion volume. |
+| `u8` | [`ejectVolume`](#ejectvolume)  | Disk ejection volume. |
+| `bool` | [`saveRoms`](#saveroms-1)  | Save Roms. |
+
+---
+
+### autoConfig
+
+```cpp
+bool autoConfig
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:195
+
+General.
+
+---
+
+### type
+
+```cpp
+DriveType type
+```
+
+Type: [`DriveType`](grp_drives.md#drivetype)
+
+Defined in Peripherals/Drive/DriveTypes.h:198
+
+Drive model.
+
+---
+
+### ram
+
+```cpp
+DriveRam ram
+```
+
+Type: [`DriveRam`](grp_drives.md#driveram)
+
+Defined in Peripherals/Drive/DriveTypes.h:199
+
+Drive RAM.
+
+---
+
+### parCable
+
+```cpp
+ParCableType parCable
+```
+
+Type: [`ParCableType`](grp_drives.md#parcabletype)
+
+Defined in Peripherals/Drive/DriveTypes.h:200
+
+Parallel cable.
+
+---
+
+### powerSave
+
+```cpp
+bool powerSave
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:201
+
+Take fast paths.
+
+---
+
+### connected
+
+```cpp
+bool connected
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:204
+
+The drive is connected to the serial port.
+
+---
+
+### switchedOn
+
+```cpp
+bool switchedOn
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:205
+
+Power switch.
+
+---
+
+### ejectDelay
+
+```cpp
+isize ejectDelay
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:208
+
+Disk ejection delay.
+
+---
+
+### swapDelay
+
+```cpp
+isize swapDelay
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:209
+
+Disk swap delay.
+
+---
+
+### insertDelay
+
+```cpp
+isize insertDelay
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:210
+
+Disk insertion delay.
+
+---
+
+### pan
+
+```cpp
+i16 pan
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:213
+
+Stereo pan of the drive sounds.
+
+---
+
+### powerVolume
+
+```cpp
+u8 powerVolume
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:214
+
+Power switch volume.
+
+---
+
+### stepVolume
+
+```cpp
+u8 stepVolume
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:215
+
+Head step volume.
+
+---
+
+### insertVolume
+
+```cpp
+u8 insertVolume
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:216
+
+Disk insertion volume.
+
+---
+
+### ejectVolume
+
+```cpp
+u8 ejectVolume
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:217
+
+Disk ejection volume.
+
+---
+
+### saveRoms
+
+```cpp
+bool saveRoms
+```
+
+Defined in Peripherals/Drive/DriveTypes.h:220
+
+Save Roms.
+

@@ -1,0 +1,231 @@
+/* https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css */
+/* https://catppuccin.com/palette */
+
+
+:root {
+  /* Fix badge background color */
+  --vp-badge-tip-bg:  hsla(347, 87%, 44%, 0.20);
+
+  /* Accent Color */
+  --vp-c-brand-1: #d20f39;
+  --vp-c-brand-2: rgb(187, 13, 51);
+  --vp-c-brand-3: #d20f39;
+
+  /* Solid Colors and Sponsor Color */
+  --vp-c-white: #eff1f5;
+  --vp-c-black: #4c4f69;
+  --vp-c-sponsor: #d20f39;
+
+  /* Background Colors */
+  --vp-c-bg: #eff1f5;
+  --vp-c-bg-alt: #e6e9ef;
+  --vp-c-bg-elv: #dce0e8;
+  --vp-c-bg-soft: #e6e9ef;
+
+  /* Border Colors */
+  --vp-c-border: #ccd0da;
+  --vp-c-divider: #ccd0da;
+  --vp-c-gutter: #bcc0cc;
+
+  /* Text Colors */
+  --vp-c-text-1: #4c4f69;
+  --vp-c-text-2: #5c5f77;
+  --vp-c-text-3: #6c6f85;
+
+  /* Callout Colors */
+  --vp-c-tip-soft: hsla(109, 58%, 40%, 0.20);
+  --vp-c-warning-soft: hsla(35, 77%, 49%, 0.20);
+  --vp-c-danger-soft: hsla(347, 87%, 44%, 0.20);
+  --vp-c-caution-soft: hsla(347, 87%, 44%, 0.20);
+  --vp-c-important-soft: hsla(266, 85%, 58%, 0.20);
+
+  --vp-custom-block-info-bg: hsla(197, 96%, 46%, 0.20);
+  --vp-custom-block-note-bg: hsla(220, 91%, 54%, 0.20);
+  --vp-custom-block-details-bg: #ccd0da;
+
+  /* Catppuccin Accents */
+  --ctp-latte-rosewater: #dc8a78;
+  --ctp-latte-flamingo: #dd7878;
+  --ctp-latte-pink: #ea76cb;
+  --ctp-latte-mauve: #8839ef;
+  --ctp-latte-red: #d20f39;
+  --ctp-latte-maroon: #e64553;
+  --ctp-latte-peach: #fe640b;
+  --ctp-latte-yellow: #df8e1d;
+  --ctp-latte-green: #40a02b;
+  --ctp-latte-teal: #179299;
+  --ctp-latte-sky: #04a5e5;
+  --ctp-latte-sapphire: #209fb5;
+  --ctp-latte-blue: #1e66f5;
+  --ctp-latte-lavender: #7287fd;
+  --ctp-latte-text: #4c4f69;
+  --ctp-latte-subtext1: #5c5f77;
+  --ctp-latte-subtext0: #6c6f85;
+  --ctp-latte-overlay2: #7c7f93;
+  --ctp-latte-overlay1: #8c8fa1;
+  --ctp-latte-overlay0: #9ca0b0;
+  --ctp-latte-surface2: #acb0be;
+  --ctp-latte-surface1: #bcc0cc;
+  --ctp-latte-surface0: #ccd0da;
+  --ctp-latte-base: #eff1f5;
+  --ctp-latte-mantle: #e6e9ef;
+  --ctp-latte-crust: #dce0e8;
+  
+  /* Color Palette */
+  --vp-c-gray-1: rgb(188, 192, 204);
+  --vp-c-gray-2: rgb(204, 208, 218);
+  --vp-c-gray-3: rgb(239, 241, 245);
+  --vp-c-gray-soft: hsla(220, 23%, 65%, 0.14);
+
+  --vp-c-default-soft: #ccd0da;
+
+  --vp-c-indigo-1: rgb(30, 102, 245);
+  --vp-c-indigo-2: rgb(21, 99, 255);
+  --vp-c-indigo-3: rgb(33, 70, 152);
+  --vp-c-indigo-soft: hsla(220, 91%, 34%, 0.14);
+
+  --vp-c-purple-1: rgb(136, 57, 239);
+  --vp-c-purple-2: rgb(134, 46, 250);
+  --vp-c-purple-3: rgb(86, 48, 149);
+  --vp-c-purple-soft: hsla(266, 85%, 38%, 0.14);
+
+  --vp-c-green-1: rgb(64, 160, 43);
+  --vp-c-green-2: rgb(58, 171, 33);
+  --vp-c-green-3: rgb(50, 99, 51);
+  --vp-c-green-soft: hsla(109, 58%, 20%, 0.14);
+
+  --vp-c-yellow-1: rgb(223, 142, 29);
+  --vp-c-yellow-2: rgb(236, 144, 16);
+  --vp-c-yellow-3: rgb(130, 90, 44);
+  --vp-c-yellow-soft: hsla(35, 77%, 29%, 0.14);
+
+  --vp-c-red-1: rgb(210, 15, 57);
+  --vp-c-red-2: rgb(222, 4, 51);
+  --vp-c-red-3: rgb(123, 27, 58);
+  --vp-c-red-soft: hsla(347, 87%, 24%, 0.14);
+
+  /* Icons */
+  
+  
+  --vp-icon-copy: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22%23a5adcb%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%228%22%20height%3D%224%22%20x%3D%228%22%20y%3D%222%22%20rx%3D%221%22%20ry%3D%221%22/%3E%3Cpath%20d%3D%22M16%204h2a2%202%200%200%201%202%202v14a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V6a2%202%200%200%201%202-2h2%22/%3E%3C/svg%3E');
+  --vp-icon-copied: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22%23a5adcb%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%228%22%20height%3D%224%22%20x%3D%228%22%20y%3D%222%22%20rx%3D%221%22%20ry%3D%221%22/%3E%3Cpath%20d%3D%22M16%204h2a2%202%200%200%201%202%202v14a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V6a2%202%200%200%201%202-2h2%22/%3E%3Cpath%20d%3D%22m9%2014%202%202%204-4%22/%3E%3C/svg%3E');
+
+  /* Code Highlighting */
+  --vp-code-line-highlight-color: hsla(232, 10%, 53%, 0.20);
+}
+.dark {
+  /* Fix button text color */
+  --vp-button-brand-text: var(--ctp-macchiato-crust) !important;
+  --vp-button-brand-hover-text: var(--ctp-macchiato-crust) !important;
+  --vp-button-brand-active-text: var(--ctp-mocha-crust) !important;
+
+  /* Fix badge background color */
+  --vp-badge-tip-bg:  hsla(351, 74%, 73%, 0.20);
+
+  /* Accent Color */
+  --vp-c-brand-1: #ed8796;
+  --vp-c-brand-2: rgb(233, 113, 131);
+  --vp-c-brand-3: #ed8796;
+
+  /* Solid Colors and Sponsor Color */
+  --vp-c-white: #cad3f5;
+  --vp-c-black: #24273a;
+  --vp-c-sponsor: #ed8796;
+
+  /* Background Colors */
+  --vp-c-bg: #24273a;
+  --vp-c-bg-alt: #1e2030;
+  --vp-c-bg-elv: #181926;
+  --vp-c-bg-soft: #1e2030;
+
+  /* Border Colors */
+  --vp-c-border: #363a4f;
+  --vp-c-divider: #363a4f;
+  --vp-c-gutter: #494d64;
+
+  /* Text Colors */
+  --vp-c-text-1: #cad3f5;
+  --vp-c-text-2: #b8c0e0;
+  --vp-c-text-3: #a5adcb;
+
+  /* Callout Colors */
+  --vp-c-tip-soft: hsla(105, 48%, 72%, 0.20);
+  --vp-c-warning-soft: hsla(40, 70%, 78%, 0.20);
+  --vp-c-danger-soft: hsla(351, 74%, 73%, 0.20);
+  --vp-c-caution-soft: hsla(351, 74%, 73%, 0.20);
+  --vp-c-important-soft: hsla(267, 83%, 80%, 0.20);
+
+  --vp-custom-block-info-bg: hsla(189, 60%, 73%, 0.20);
+  --vp-custom-block-note-bg: hsla(220, 83%, 75%, 0.20);
+  --vp-custom-block-details-bg: #363a4f;
+
+  /* Catppuccin Accents */
+  --ctp-macchiato-rosewater: #f4dbd6;
+  --ctp-macchiato-flamingo: #f0c6c6;
+  --ctp-macchiato-pink: #f5bde6;
+  --ctp-macchiato-mauve: #c6a0f6;
+  --ctp-macchiato-red: #ed8796;
+  --ctp-macchiato-maroon: #ee99a0;
+  --ctp-macchiato-peach: #f5a97f;
+  --ctp-macchiato-yellow: #eed49f;
+  --ctp-macchiato-green: #a6da95;
+  --ctp-macchiato-teal: #8bd5ca;
+  --ctp-macchiato-sky: #91d7e3;
+  --ctp-macchiato-sapphire: #7dc4e4;
+  --ctp-macchiato-blue: #8aadf4;
+  --ctp-macchiato-lavender: #b7bdf8;
+  --ctp-macchiato-text: #cad3f5;
+  --ctp-macchiato-subtext1: #b8c0e0;
+  --ctp-macchiato-subtext0: #a5adcb;
+  --ctp-macchiato-overlay2: #939ab7;
+  --ctp-macchiato-overlay1: #8087a2;
+  --ctp-macchiato-overlay0: #6e738d;
+  --ctp-macchiato-surface2: #5b6078;
+  --ctp-macchiato-surface1: #494d64;
+  --ctp-macchiato-surface0: #363a4f;
+  --ctp-macchiato-base: #24273a;
+  --ctp-macchiato-mantle: #1e2030;
+  --ctp-macchiato-crust: #181926;
+  
+  /* Color Palette */
+  --vp-c-gray-1: rgb(73, 77, 100);
+  --vp-c-gray-2: rgb(54, 58, 79);
+  --vp-c-gray-3: rgb(36, 39, 58);
+  --vp-c-gray-soft: hsla(232, 24%, 49%, 0.14);
+
+  --vp-c-default-soft: #363a4f;
+
+  --vp-c-indigo-1: rgb(138, 173, 244);
+  --vp-c-indigo-2: rgb(132, 171, 250);
+  --vp-c-indigo-3: rgb(87, 106, 151);
+  --vp-c-indigo-soft: hsla(220, 83%, 55%, 0.14);
+
+  --vp-c-purple-1: rgb(198, 160, 246);
+  --vp-c-purple-2: rgb(198, 155, 251);
+  --vp-c-purple-3: rgb(117, 99, 152);
+  --vp-c-purple-soft: hsla(267, 83%, 60%, 0.14);
+
+  --vp-c-green-1: rgb(166, 218, 149);
+  --vp-c-green-2: rgb(163, 225, 143);
+  --vp-c-green-3: rgb(101, 128, 104);
+  --vp-c-green-soft: hsla(105, 48%, 52%, 0.14);
+
+  --vp-c-yellow-1: rgb(238, 212, 159);
+  --vp-c-yellow-2: rgb(244, 214, 154);
+  --vp-c-yellow-3: rgb(137, 125, 109);
+  --vp-c-yellow-soft: hsla(40, 70%, 58%, 0.14);
+
+  --vp-c-red-1: rgb(237, 135, 150);
+  --vp-c-red-2: rgb(244, 128, 145);
+  --vp-c-red-3: rgb(137, 87, 104);
+  --vp-c-red-soft: hsla(351, 74%, 53%, 0.14);
+
+  /* Icons */
+  
+  
+  --vp-icon-copy: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22%23a5adcb%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%228%22%20height%3D%224%22%20x%3D%228%22%20y%3D%222%22%20rx%3D%221%22%20ry%3D%221%22/%3E%3Cpath%20d%3D%22M16%204h2a2%202%200%200%201%202%202v14a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V6a2%202%200%200%201%202-2h2%22/%3E%3C/svg%3E');
+  --vp-icon-copied: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20fill%3D%22none%22%20stroke%3D%22%23a5adcb%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%228%22%20height%3D%224%22%20x%3D%228%22%20y%3D%222%22%20rx%3D%221%22%20ry%3D%221%22/%3E%3Cpath%20d%3D%22M16%204h2a2%202%200%200%201%202%202v14a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V6a2%202%200%200%201%202-2h2%22/%3E%3Cpath%20d%3D%22m9%2014%202%202%204-4%22/%3E%3C/svg%3E');
+
+  /* Code Highlighting */
+  --vp-code-line-highlight-color: hsla(228, 20%, 65%, 0.20);
+}

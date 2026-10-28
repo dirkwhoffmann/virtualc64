@@ -27,7 +27,11 @@ It also tidies the compound list: unnamed nested structs and unions are
 dropped, and the groups are listed in the order of GROUP_ORDER (the order in
 which the sidebar shows them).
 
-Usage: flatten_groups.py <input-xml-dir> <output-xml-dir>
+Usage: flatten_groups.py [--keep-ids] [--keep-callouts] <input-xml-dir> <output-xml-dir>
+
+With --keep-ids the group ids are left alone (sourcey needs them padded to
+sort its sidebar; other tools do not). With --keep-callouts the notes and
+warnings stay what they are (for tools that render them as containers).
 """
 import re, shutil, sys
 import xml.etree.ElementTree as ET
@@ -184,18 +188,21 @@ def lengthen_group_ids(dst):
         if (Path(dst) / f"{old}.xml").exists():
             (Path(dst) / f"{old}.xml").rename(Path(dst) / f"{new}.xml")
 
-def main(src, dst):
+def main(src, dst, pad_ids=True, callouts=True):
     shutil.rmtree(dst, ignore_errors=True)
     shutil.copytree(src, dst)
     for path in Path(dst).glob("*.xml"):
         if path.name.startswith(("class", "struct", "union")):
             flatten(path)
-        if path.name != "index.xml":
+        if callouts and path.name != "index.xml":
             retitle_callouts(path)
     tidy_index(dst)
-    lengthen_group_ids(dst)
+    if pad_ids:
+        lengthen_group_ids(dst)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if len(args) != 2:
         sys.exit(__doc__)
-    main(sys.argv[1], sys.argv[2])
+    main(args[0], args[1], pad_ids="--keep-ids" not in sys.argv,
+         callouts="--keep-callouts" not in sys.argv)

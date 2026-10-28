@@ -1,0 +1,44 @@
+site_name: VirtualC64
+site_description: 
+theme:
+  name: material
+  custom_dir: docs/overrides
+  features:
+    - navigation.indexes
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - def_list
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+plugins:
+  - search
+extra_css:
+  - stylesheets/doxide.css
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js
+  - https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js
+  - https://cdn.jsdelivr.net/npm/tablesort@5.7.1/src/tablesort.min.js
+  - https://cdn.jsdelivr.net/npm/tablesort@5.7.1/src/sorts/tablesort.number.min.js
