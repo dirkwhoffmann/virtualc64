@@ -1,5 +1,6 @@
 ---
 title: "AudioPortInfo"
+kind: struct
 ---
 # AudioPortInfo
 

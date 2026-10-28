@@ -1,5 +1,6 @@
 ---
 title: "MediaError"
+kind: struct
 ---
 # MediaError
 

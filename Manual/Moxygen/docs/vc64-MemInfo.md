@@ -1,5 +1,6 @@
 ---
 title: "MemInfo"
+kind: struct
 ---
 # MemInfo
 

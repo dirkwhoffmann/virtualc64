@@ -1,5 +1,6 @@
 ---
 title: "VICIIMetrics"
+kind: struct
 ---
 # VICIIMetrics
 

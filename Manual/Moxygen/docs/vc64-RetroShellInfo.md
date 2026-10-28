@@ -1,5 +1,6 @@
 ---
 title: "RetroShellInfo"
+kind: struct
 ---
 # RetroShellInfo
 

@@ -1,5 +1,6 @@
 ---
 title: "CIAAPI"
+kind: class
 ---
 # CIAAPI
 

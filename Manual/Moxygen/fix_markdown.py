@@ -4,7 +4,8 @@
   - Doxygen's anchor lines ("{#id}") are removed; VitePress derives the same
     anchors from the headings.
   - The front matter is rewritten: the title is the page heading (moxygen uses
-    the Doxygen id), and the machine-generated description is dropped.
+    the Doxygen id), the kind (class, struct, ...) is kept, and the
+    machine-generated description is dropped.
   - The namespace page vc64 (all types and enumerations) gets a proper title and lists
     its enumerations in "On this page".
   - Moxygen documents all enumerations on the namespace page. Each one is moved
@@ -19,10 +20,12 @@ from pathlib import Path
 
 def fix(text):
     text = re.sub(r"(?m)^\{#[^}\n]*\}[ \t]*\n(?:[ \t]*\n)?", "", text)
+    front = re.match(r"---\n(.*?)\n---\n", text, re.S)
+    kind = re.search(r"(?m)^kind: .*$", front.group(1)) if front else None
     body = re.sub(r"\A---\n.*?\n---\n", "", text, count=1, flags=re.S)
     heading = re.search(r"(?m)^# (.+?)(?:\s*\{#[^}]*\})?\s*$", body)
     title = heading.group(1).replace('"', "'") if heading else "VirtualC64"
-    return f'---\ntitle: "{title}"\n---\n{body}'
+    return f'---\ntitle: "{title}"\n{kind.group(0) + chr(10) if kind else ""}---\n{body}'
 
 ENUM_ROW = re.compile(r"^\| \[`(\w+)`\]\(#([\w-]+)\)", re.M)
 

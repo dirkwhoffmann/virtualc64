@@ -1,5 +1,6 @@
 ---
 title: "ExpansionPortConfig"
+kind: struct
 ---
 # ExpansionPortConfig
 

@@ -1,5 +1,6 @@
 ---
 title: "RomInfo"
+kind: struct
 ---
 # RomInfo
 

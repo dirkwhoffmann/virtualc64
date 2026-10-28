@@ -1,5 +1,6 @@
 ---
 title: "CIAPortInfo"
+kind: struct
 ---
 # CIAPortInfo
 

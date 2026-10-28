@@ -1,5 +1,6 @@
 ---
 title: "MouseAPI"
+kind: class
 ---
 # MouseAPI
 

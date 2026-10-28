@@ -1,5 +1,6 @@
 ---
 title: "EventSlotInfo"
+kind: struct
 ---
 # EventSlotInfo
 

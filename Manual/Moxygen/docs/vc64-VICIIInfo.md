@@ -1,5 +1,6 @@
 ---
 title: "VICIIInfo"
+kind: struct
 ---
 # VICIIInfo
 

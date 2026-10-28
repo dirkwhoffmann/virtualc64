@@ -1,5 +1,6 @@
 ---
 title: "DiskLayout"
+kind: struct
 ---
 # DiskLayout
 

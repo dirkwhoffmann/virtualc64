@@ -1,5 +1,6 @@
 ---
 title: "CPUDebuggerAPI"
+kind: class
 ---
 # CPUDebuggerAPI
 

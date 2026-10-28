@@ -1,5 +1,6 @@
 ---
 title: "vspace"
+kind: struct
 ---
 # vspace
 

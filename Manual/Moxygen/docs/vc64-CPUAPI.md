@@ -1,5 +1,6 @@
 ---
 title: "CPUAPI"
+kind: class
 ---
 # CPUAPI
 

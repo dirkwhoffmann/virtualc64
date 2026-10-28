@@ -1,5 +1,6 @@
 ---
 title: "MemMetrics"
+kind: struct
 ---
 # MemMetrics
 

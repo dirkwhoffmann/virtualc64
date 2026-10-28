@@ -1,5 +1,6 @@
 ---
 title: "AudioPortMetrics"
+kind: struct
 ---
 # AudioPortMetrics
 

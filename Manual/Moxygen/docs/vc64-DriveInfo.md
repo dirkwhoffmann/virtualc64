@@ -1,5 +1,6 @@
 ---
 title: "DriveInfo"
+kind: struct
 ---
 # DriveInfo
 

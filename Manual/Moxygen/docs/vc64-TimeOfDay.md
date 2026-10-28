@@ -1,5 +1,6 @@
 ---
 title: "TimeOfDay"
+kind: union
 ---
 # TimeOfDay
 

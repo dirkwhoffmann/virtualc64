@@ -1,5 +1,6 @@
 ---
 title: "JoyStateCmd"
+kind: struct
 ---
 # JoyStateCmd
 

@@ -1,5 +1,6 @@
 ---
 title: "VideoPortStats"
+kind: struct
 ---
 # VideoPortStats
 

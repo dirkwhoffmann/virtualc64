@@ -1,5 +1,6 @@
 ---
 title: "VideoPortConfig"
+kind: struct
 ---
 # VideoPortConfig
 

@@ -1,5 +1,6 @@
 ---
 title: "Communication Model"
+kind: page
 ---
 # Communication Model {#communicationmodel}
 

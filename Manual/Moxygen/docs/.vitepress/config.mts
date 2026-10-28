@@ -33,6 +33,18 @@ const apis = ['VirtualC64', 'API', 'C64API', 'MemoryAPI', 'MemoryDebuggerAPI', '
               'DatasetteAPI', 'DriveAPI', 'DiskAPI', 'KeyboardAPI', 'RetroShellAPI',
               'RemoteManagerAPI', 'DefaultsAPI']
 
+// Structs and unions (configurations, infos, message payloads, ...), except the
+// errors, which are listed under Reference
+function structItems() {
+  const errors = ['CoreError', 'MediaError']
+  return readdirSync(docs).filter(f => /^vc64-.*\.md$/.test(f))
+    .filter(f => /^kind:\s*(struct|union)\s*$/m.test(readFileSync(join(docs, f), 'utf8')))
+    .map(f => f.replace(/^vc64-|\.md$/g, ''))
+    .filter(c => !errors.includes(c))
+    .sort((a, b) => a.localeCompare(b))
+    .map(c => ({ text: c, link: `/vc64-${c}` }))
+}
+
 function enumItems() {
   return readdirSync(docs).filter(f => f.startsWith('enum-') && f.endsWith('.md'))
     .map(f => f.replace(/^enum-|\.md$/g, ''))
@@ -60,13 +72,16 @@ export default defineConfig({
     logo: '/icon.png',
     search: { provider: 'local' },
     sidebar: [
-      { text: 'Guides', items: [{ text: 'Introduction', link: '/' }, ...items('page-', guides)] },
-      { text: 'API', items: apiItems() },
-      { text: 'Reference', items: [
+      { text: 'Guides', collapsed: false, items: [{ text: 'Introduction', link: '/' }, ...items('page-', guides)] },
+      { text: 'API', collapsed: false, items: apiItems() },
+      { text: 'Structs', collapsed: true, items: structItems() },
+      { text: 'Reference', collapsed: false, items: [
         { text: 'Types and Enumerations', link: '/vc64' },
         { text: 'CoreError', link: '/vc64-CoreError' },
         { text: 'MediaError', link: '/vc64-MediaError' },
         { text: 'IOError', link: '/utl-IOError' },
+        { text: 'AnyFile', link: '/vc64-AnyFile' },
+        { text: 'Snapshot', link: '/vc64-Snapshot' },
       ] },
       { text: 'Enumerations', collapsed: true, items: enumItems() },
     ],

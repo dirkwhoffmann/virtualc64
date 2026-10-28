@@ -1,5 +1,6 @@
 ---
 title: "DriveMsg"
+kind: struct
 ---
 # DriveMsg
 

@@ -1,5 +1,6 @@
 ---
 title: "CIATimerInfo"
+kind: struct
 ---
 # CIATimerInfo
 

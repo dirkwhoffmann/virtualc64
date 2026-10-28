@@ -1,5 +1,6 @@
 ---
 title: "AudioPortAPI"
+kind: class
 ---
 # AudioPortAPI
 

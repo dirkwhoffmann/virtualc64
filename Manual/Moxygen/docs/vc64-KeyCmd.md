@@ -1,5 +1,6 @@
 ---
 title: "KeyCmd"
+kind: struct
 ---
 # KeyCmd
 

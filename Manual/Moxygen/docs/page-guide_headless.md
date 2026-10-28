@@ -1,5 +1,6 @@
 ---
 title: "Headless App"
+kind: page
 ---
 # Headless App {#headlessapp}
 

@@ -1,5 +1,6 @@
 ---
 title: "JoystickAPI"
+kind: class
 ---
 # JoystickAPI
 

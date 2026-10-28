@@ -1,5 +1,6 @@
 ---
 title: "CoreError"
+kind: struct
 ---
 # CoreError
 

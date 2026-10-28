@@ -1,5 +1,6 @@
 ---
 title: "CpuMsg"
+kind: struct
 ---
 # CpuMsg
 

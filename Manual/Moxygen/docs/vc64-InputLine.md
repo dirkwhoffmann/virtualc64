@@ -1,5 +1,6 @@
 ---
 title: "InputLine"
+kind: struct
 ---
 # InputLine
 

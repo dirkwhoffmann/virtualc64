@@ -1,5 +1,6 @@
 ---
 title: "DriveConfig"
+kind: struct
 ---
 # DriveConfig
 

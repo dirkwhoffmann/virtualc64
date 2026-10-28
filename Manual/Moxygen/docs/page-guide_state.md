@@ -1,5 +1,6 @@
 ---
 title: "State Model"
+kind: page
 ---
 # State Model {#statemodel}
 

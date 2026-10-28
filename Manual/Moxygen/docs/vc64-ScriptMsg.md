@@ -1,5 +1,6 @@
 ---
 title: "ScriptMsg"
+kind: struct
 ---
 # ScriptMsg
 

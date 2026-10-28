@@ -1,5 +1,6 @@
 ---
 title: "PAL"
+kind: namespace
 ---
 # PAL
 

@@ -1,5 +1,6 @@
 ---
 title: "Threading and Errors"
+kind: page
 ---
 # Threading and Errors {#threadinganderrors}
 

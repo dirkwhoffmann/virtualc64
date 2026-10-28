@@ -1,5 +1,6 @@
 ---
 title: "VirtualC64"
+kind: class
 ---
 # VirtualC64
 

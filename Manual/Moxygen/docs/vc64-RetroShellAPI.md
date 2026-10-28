@@ -1,5 +1,6 @@
 ---
 title: "RetroShellAPI"
+kind: class
 ---
 # RetroShellAPI
 

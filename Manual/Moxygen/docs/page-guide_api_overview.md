@@ -1,5 +1,6 @@
 ---
 title: "API Overview"
+kind: page
 ---
 # API Overview {#apioverview}
 

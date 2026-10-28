@@ -1,5 +1,6 @@
 ---
 title: "CartridgeTraits"
+kind: struct
 ---
 # CartridgeTraits
 

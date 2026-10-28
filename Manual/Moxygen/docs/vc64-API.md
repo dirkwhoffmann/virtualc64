@@ -1,5 +1,6 @@
 ---
 title: "API"
+kind: class
 ---
 # API
 

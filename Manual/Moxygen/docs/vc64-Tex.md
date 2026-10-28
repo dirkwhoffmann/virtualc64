@@ -1,5 +1,6 @@
 ---
 title: "Tex"
+kind: namespace
 ---
 # Tex
 

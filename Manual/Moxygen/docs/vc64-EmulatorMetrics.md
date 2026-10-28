@@ -1,5 +1,6 @@
 ---
 title: "EmulatorMetrics"
+kind: struct
 ---
 # EmulatorMetrics
 

@@ -1,5 +1,6 @@
 ---
 title: "MonitorConfig"
+kind: struct
 ---
 # MonitorConfig
 

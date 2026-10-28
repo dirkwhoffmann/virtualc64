@@ -1,5 +1,6 @@
 ---
 title: "PowerPortConfig"
+kind: struct
 ---
 # PowerPortConfig
 

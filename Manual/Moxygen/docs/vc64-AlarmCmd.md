@@ -1,5 +1,6 @@
 ---
 title: "AlarmCmd"
+kind: struct
 ---
 # AlarmCmd
 

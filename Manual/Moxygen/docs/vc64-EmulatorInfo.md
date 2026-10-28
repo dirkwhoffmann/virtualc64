@@ -1,5 +1,6 @@
 ---
 title: "EmulatorInfo"
+kind: struct
 ---
 # EmulatorInfo
 

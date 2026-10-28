@@ -1,5 +1,6 @@
 ---
 title: "utl"
+kind: namespace
 ---
 # utl
 

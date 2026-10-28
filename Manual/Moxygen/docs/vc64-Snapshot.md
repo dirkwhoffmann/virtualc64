@@ -1,5 +1,6 @@
 ---
 title: "Snapshot"
+kind: class
 ---
 # Snapshot
 

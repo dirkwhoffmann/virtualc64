@@ -1,5 +1,6 @@
 ---
 title: "RS232Config"
+kind: struct
 ---
 # RS232Config
 

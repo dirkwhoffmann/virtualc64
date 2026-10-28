@@ -1,5 +1,6 @@
 ---
 title: "XRayAPI"
+kind: class
 ---
 # XRayAPI
 

@@ -1,5 +1,6 @@
 ---
 title: "VirtualC64 API Documentation"
+kind: page
 ---
 # VirtualC64 API Documentation {#virtualc64apidocumentation}
 

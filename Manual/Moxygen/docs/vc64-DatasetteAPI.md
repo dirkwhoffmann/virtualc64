@@ -1,5 +1,6 @@
 ---
 title: "DatasetteAPI"
+kind: class
 ---
 # DatasetteAPI
 

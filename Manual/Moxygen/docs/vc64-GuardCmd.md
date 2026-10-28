@@ -1,5 +1,6 @@
 ---
 title: "GuardCmd"
+kind: struct
 ---
 # GuardCmd
 

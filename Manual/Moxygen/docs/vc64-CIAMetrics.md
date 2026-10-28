@@ -1,5 +1,6 @@
 ---
 title: "CIAMetrics"
+kind: struct
 ---
 # CIAMetrics
 

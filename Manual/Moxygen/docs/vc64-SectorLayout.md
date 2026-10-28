@@ -1,5 +1,6 @@
 ---
 title: "SectorLayout"
+kind: struct
 ---
 # SectorLayout
 

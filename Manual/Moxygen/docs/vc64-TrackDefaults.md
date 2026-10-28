@@ -1,5 +1,6 @@
 ---
 title: "TrackDefaults"
+kind: struct
 ---
 # TrackDefaults
 

@@ -1,5 +1,6 @@
 ---
 title: "Guard"
+kind: struct
 ---
 # Guard
 

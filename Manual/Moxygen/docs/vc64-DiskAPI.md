@@ -1,5 +1,6 @@
 ---
 title: "DiskAPI"
+kind: class
 ---
 # DiskAPI
 

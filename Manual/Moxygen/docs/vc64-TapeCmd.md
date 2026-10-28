@@ -1,5 +1,6 @@
 ---
 title: "TapeCmd"
+kind: struct
 ---
 # TapeCmd
 

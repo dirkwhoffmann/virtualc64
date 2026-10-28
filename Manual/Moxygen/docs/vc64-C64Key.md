@@ -1,5 +1,6 @@
 ---
 title: "C64Key"
+kind: struct
 ---
 # C64Key
 

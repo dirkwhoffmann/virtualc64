@@ -1,5 +1,6 @@
 ---
 title: "Message"
+kind: struct
 ---
 # Message
 

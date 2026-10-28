@@ -1,5 +1,6 @@
 ---
 title: "SnapshotHeader"
+kind: struct
 ---
 # SnapshotHeader
 

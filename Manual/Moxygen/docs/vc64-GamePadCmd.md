@@ -1,5 +1,6 @@
 ---
 title: "GamePadCmd"
+kind: struct
 ---
 # GamePadCmd
 

@@ -1,5 +1,6 @@
 ---
 title: "TrafficEntry"
+kind: struct
 ---
 # TrafficEntry
 

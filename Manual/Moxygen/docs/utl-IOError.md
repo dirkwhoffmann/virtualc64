@@ -1,5 +1,6 @@
 ---
 title: "IOError"
+kind: struct
 ---
 # IOError
 

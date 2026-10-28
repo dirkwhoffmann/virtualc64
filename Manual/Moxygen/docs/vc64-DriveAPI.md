@@ -1,5 +1,6 @@
 ---
 title: "DriveAPI"
+kind: class
 ---
 # DriveAPI
 

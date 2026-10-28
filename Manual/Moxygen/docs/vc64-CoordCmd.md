@@ -1,5 +1,6 @@
 ---
 title: "CoordCmd"
+kind: struct
 ---
 # CoordCmd
 

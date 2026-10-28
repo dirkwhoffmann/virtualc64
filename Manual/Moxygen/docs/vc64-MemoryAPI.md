@@ -1,5 +1,6 @@
 ---
 title: "MemoryAPI"
+kind: class
 ---
 # MemoryAPI
 

@@ -1,5 +1,6 @@
 ---
 title: "RemoteManagerInfo"
+kind: struct
 ---
 # RemoteManagerInfo
 

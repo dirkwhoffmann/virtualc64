@@ -1,5 +1,6 @@
 ---
 title: "CPUConfig"
+kind: struct
 ---
 # CPUConfig
 

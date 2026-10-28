@@ -1,5 +1,6 @@
 ---
 title: "DatasetteConfig"
+kind: struct
 ---
 # DatasetteConfig
 

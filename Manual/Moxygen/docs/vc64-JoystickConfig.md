@@ -1,5 +1,6 @@
 ---
 title: "JoystickConfig"
+kind: struct
 ---
 # JoystickConfig
 

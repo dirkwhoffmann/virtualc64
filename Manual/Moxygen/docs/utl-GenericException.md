@@ -1,5 +1,6 @@
 ---
 title: "GenericException"
+kind: struct
 ---
 # GenericException
 

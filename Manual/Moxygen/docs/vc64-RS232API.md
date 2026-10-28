@@ -1,5 +1,6 @@
 ---
 title: "RS232API"
+kind: class
 ---
 # RS232API
 

@@ -1,5 +1,6 @@
 ---
 title: "MouseConfig"
+kind: struct
 ---
 # MouseConfig
 

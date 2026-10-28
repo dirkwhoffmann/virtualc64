@@ -1,5 +1,6 @@
 ---
 title: "DefaultsAPI"
+kind: class
 ---
 # DefaultsAPI
 

@@ -1,5 +1,6 @@
 ---
 title: "KeyboardAPI"
+kind: class
 ---
 # KeyboardAPI
 

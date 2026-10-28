@@ -1,5 +1,6 @@
 ---
 title: "XRayConfig"
+kind: struct
 ---
 # XRayConfig
 

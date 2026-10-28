@@ -1,5 +1,6 @@
 ---
 title: "PaddleConfig"
+kind: struct
 ---
 # PaddleConfig
 

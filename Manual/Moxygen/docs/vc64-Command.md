@@ -1,5 +1,6 @@
 ---
 title: "Command"
+kind: struct
 ---
 # Command
 

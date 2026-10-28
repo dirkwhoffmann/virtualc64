@@ -1,5 +1,6 @@
 ---
 title: "CPUInfo"
+kind: struct
 ---
 # CPUInfo
 

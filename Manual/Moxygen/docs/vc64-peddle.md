@@ -1,5 +1,6 @@
 ---
 title: "peddle"
+kind: namespace
 ---
 # peddle
 

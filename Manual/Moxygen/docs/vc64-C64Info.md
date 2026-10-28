@@ -1,5 +1,6 @@
 ---
 title: "C64Info"
+kind: struct
 ---
 # C64Info
 

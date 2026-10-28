@@ -1,5 +1,6 @@
 ---
 title: "MemConfig"
+kind: struct
 ---
 # MemConfig
 

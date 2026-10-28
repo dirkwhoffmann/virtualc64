@@ -1,5 +1,6 @@
 ---
 title: "AnyFile"
+kind: class
 ---
 # AnyFile
 

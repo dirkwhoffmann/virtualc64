@@ -1,5 +1,6 @@
 ---
 title: "ControlPortAPI"
+kind: class
 ---
 # ControlPortAPI
 

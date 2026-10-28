@@ -1,5 +1,6 @@
 ---
 title: "ServerConfig"
+kind: struct
 ---
 # ServerConfig
 

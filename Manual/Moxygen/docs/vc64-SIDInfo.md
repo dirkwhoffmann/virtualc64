@@ -1,5 +1,6 @@
 ---
 title: "SIDInfo"
+kind: struct
 ---
 # SIDInfo
 

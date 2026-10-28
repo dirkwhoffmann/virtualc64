@@ -1,5 +1,6 @@
 ---
 title: "ConfigCmd"
+kind: struct
 ---
 # ConfigCmd
 

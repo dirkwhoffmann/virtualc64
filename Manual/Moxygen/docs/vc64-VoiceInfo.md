@@ -1,5 +1,6 @@
 ---
 title: "VoiceInfo"
+kind: struct
 ---
 # VoiceInfo
 

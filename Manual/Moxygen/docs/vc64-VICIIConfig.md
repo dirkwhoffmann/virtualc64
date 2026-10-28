@@ -1,5 +1,6 @@
 ---
 title: "VICIIConfig"
+kind: struct
 ---
 # VICIIConfig
 

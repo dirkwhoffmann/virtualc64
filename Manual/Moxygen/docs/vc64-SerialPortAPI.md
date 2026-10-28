@@ -1,5 +1,6 @@
 ---
 title: "SerialPortAPI"
+kind: class
 ---
 # SerialPortAPI
 

@@ -1,5 +1,6 @@
 ---
 title: "NTSC"
+kind: namespace
 ---
 # NTSC
 

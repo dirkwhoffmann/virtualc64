@@ -1,5 +1,6 @@
 ---
 title: "VideoPortAPI"
+kind: class
 ---
 # VideoPortAPI
 

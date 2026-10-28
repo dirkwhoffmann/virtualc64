@@ -1,5 +1,6 @@
 ---
 title: "C64API"
+kind: class
 ---
 # C64API
 

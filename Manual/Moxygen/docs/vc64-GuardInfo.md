@@ -1,5 +1,6 @@
 ---
 title: "GuardInfo"
+kind: struct
 ---
 # GuardInfo
 

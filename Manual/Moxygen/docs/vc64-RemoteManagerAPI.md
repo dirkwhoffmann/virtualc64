@@ -1,5 +1,6 @@
 ---
 title: "RemoteManagerAPI"
+kind: class
 ---
 # RemoteManagerAPI
 

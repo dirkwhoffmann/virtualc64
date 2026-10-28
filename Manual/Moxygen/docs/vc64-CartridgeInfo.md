@@ -1,5 +1,6 @@
 ---
 title: "CartridgeInfo"
+kind: struct
 ---
 # CartridgeInfo
 

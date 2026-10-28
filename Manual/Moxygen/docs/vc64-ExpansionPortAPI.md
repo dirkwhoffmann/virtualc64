@@ -1,5 +1,6 @@
 ---
 title: "ExpansionPortAPI"
+kind: class
 ---
 # ExpansionPortAPI
 

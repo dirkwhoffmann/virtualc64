@@ -1,5 +1,6 @@
 ---
 title: "Exception"
+kind: struct
 ---
 # Exception
 

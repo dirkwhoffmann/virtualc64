@@ -1,5 +1,6 @@
 ---
 title: "SIDAPI"
+kind: class
 ---
 # SIDAPI
 

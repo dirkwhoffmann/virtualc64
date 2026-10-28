@@ -1,5 +1,6 @@
 ---
 title: "FrameFlipflops"
+kind: struct
 ---
 # FrameFlipflops
 

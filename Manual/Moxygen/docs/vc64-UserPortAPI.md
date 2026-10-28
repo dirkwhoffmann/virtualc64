@@ -1,5 +1,6 @@
 ---
 title: "UserPortAPI"
+kind: class
 ---
 # UserPortAPI
 

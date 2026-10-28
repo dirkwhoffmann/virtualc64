@@ -1,5 +1,6 @@
 ---
 title: "TODInfo"
+kind: struct
 ---
 # TODInfo
 

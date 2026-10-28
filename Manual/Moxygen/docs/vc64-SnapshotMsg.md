@@ -1,5 +1,6 @@
 ---
 title: "SnapshotMsg"
+kind: struct
 ---
 # SnapshotMsg
 

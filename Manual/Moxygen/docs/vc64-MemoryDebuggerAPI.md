@@ -1,5 +1,6 @@
 ---
 title: "MemoryDebuggerAPI"
+kind: class
 ---
 # MemoryDebuggerAPI
 

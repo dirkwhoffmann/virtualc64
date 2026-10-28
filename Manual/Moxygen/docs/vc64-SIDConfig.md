@@ -1,5 +1,6 @@
 ---
 title: "SIDConfig"
+kind: struct
 ---
 # SIDConfig
 

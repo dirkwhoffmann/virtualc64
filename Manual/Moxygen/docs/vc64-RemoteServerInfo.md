@@ -1,5 +1,6 @@
 ---
 title: "RemoteServerInfo"
+kind: struct
 ---
 # RemoteServerInfo
 

@@ -1,5 +1,6 @@
 ---
 title: "RL"
+kind: namespace
 ---
 # RL
 

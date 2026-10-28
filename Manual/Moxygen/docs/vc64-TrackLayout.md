@@ -1,5 +1,6 @@
 ---
 title: "TrackLayout"
+kind: struct
 ---
 # TrackLayout
 

@@ -1,5 +1,6 @@
 ---
 title: "Error"
+kind: class
 ---
 # Error
 

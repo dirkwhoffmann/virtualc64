@@ -1,5 +1,6 @@
 ---
 title: "VICIIAPI"
+kind: class
 ---
 # VICIIAPI
 

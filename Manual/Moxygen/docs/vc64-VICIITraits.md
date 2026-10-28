@@ -1,5 +1,6 @@
 ---
 title: "VICIITraits"
+kind: struct
 ---
 # VICIITraits
 

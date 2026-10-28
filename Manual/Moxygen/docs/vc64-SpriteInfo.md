@@ -1,5 +1,6 @@
 ---
 title: "SpriteInfo"
+kind: struct
 ---
 # SpriteInfo
 

@@ -1,5 +1,6 @@
 ---
 title: "UserPortInfo"
+kind: struct
 ---
 # UserPortInfo
 

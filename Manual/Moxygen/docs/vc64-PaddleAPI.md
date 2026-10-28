@@ -1,5 +1,6 @@
 ---
 title: "PaddleAPI"
+kind: class
 ---
 # PaddleAPI
 

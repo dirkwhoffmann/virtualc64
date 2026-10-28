@@ -1,5 +1,6 @@
 ---
 title: "DatasetteInfo"
+kind: struct
 ---
 # DatasetteInfo
 

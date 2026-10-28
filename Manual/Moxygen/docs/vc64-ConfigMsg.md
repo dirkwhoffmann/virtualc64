@@ -1,5 +1,6 @@
 ---
 title: "ConfigMsg"
+kind: struct
 ---
 # ConfigMsg
 
