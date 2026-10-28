@@ -28,6 +28,14 @@ def fix(text):
     body = re.sub(r"\A---\n.*?\n---\n", "", text, count=1, flags=re.S)
     heading = re.search(r"(?m)^# (.+?)(?:\s*\{#[^}]*\})?\s*$", body)
     title = heading.group(1).replace('"', "'") if heading else "VirtualC64"
+    # moxygen numbers the anchors of members ("#getinfo-7"); the headings that
+    # VitePress generates carry no such number.
+    slugs = {re.sub(r"[^\w-]", "", h.lower().replace(" ", "-"))
+             for h in re.findall(r"(?m)^#{1,4} (.+?)\s*$", body)}
+    def anchor(match):
+        name = match.group(1)
+        return f"](#{name})" if name in slugs else match.group(0)
+    body = re.sub(r"\]\(#([\w]+)-\d+\)", anchor, body)
     return f'---\ntitle: "{title}"\n{kind.group(0) + chr(10) if kind else ""}---\n{body}'
 
 ENUM_ROW = re.compile(r"^\| \[`(\w+)`\]\(#([\w-]+)\)", re.M)
