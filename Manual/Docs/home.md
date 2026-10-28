@@ -13,14 +13,18 @@ hero:
       text: Project Home
       link: https://dirkwhoffmann.github.io/VirtualC64/
 features:
-  - icon: 📖
-    title: The Guide
+  - icon: 🛠️
+    title: Setup
+    details: How to build the emulator core with CMake and how to use it in your own project.
+    link: /setup/build
+  - icon: 🧭
+    title: Guide
     details: How the API is organized, how threading and error handling work, and a small example application.
     link: /guide/introduction
   - icon: 📚
-    title: The Reference
+    title: API
     details: All API classes, structs and enumerations of the emulation core.
-    link: /reference/vc64-VirtualC64
+    link: /api/vc64-VirtualC64
 ---
 
 ![Code Size](https://img.shields.io/github/languages/code-size/dirkwhoffmann/virtualc64)

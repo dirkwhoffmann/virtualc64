@@ -11,8 +11,8 @@
   - Moxygen documents all enumerations on the namespace page. Each one is moved
     to a page of its own (enum-<Name>.md), and all links to it are redirected.
   - The pages are sorted into guide/ (the guides, the start page is
-    guide/introduction.md) and reference/ (everything else), so that VitePress
-    can show a sidebar for each. All links between pages are made absolute.
+    guide/introduction.md), setup/ (the build and setup chapters) and api/
+    (everything else), so that VitePress can show a sidebar for each. All links between pages are made absolute.
     index.md is the landing page (home.md). The images of the guides are copied
     next to the pages.
 
@@ -67,7 +67,7 @@ def redirect(docs, anchors):
             page.write_text(new)
 
 def organize(docs):
-    """Moves the pages to guide/ and reference/ and repairs the links."""
+    """Moves the pages to guide/, setup/ and api/ and repairs the links."""
     target = {}
     for page in docs.glob("*.md"):
         name = page.name
@@ -75,13 +75,15 @@ def organize(docs):
             target[name] = "guide/introduction.md"
         elif name.startswith("page-guide_"):
             target[name] = "guide/" + name[len("page-guide_"):].replace("_", "-")
+        elif name.startswith("page-setup_"):
+            target[name] = "setup/" + name[len("page-setup_"):].replace("_", "-")
         else:
-            target[name] = "reference/" + name
+            target[name] = "api/" + name
     def link(match):
         file, anchor = match.group(1), match.group(2) or ""
         if file not in target:
             return match.group(0)
-        if target[file].startswith("guide/"):
+        if target[file].startswith(("guide/", "setup/")):
             anchor = ""  # the anchors of Doxygen pages do not exist
         return f"](/{target[file]}{anchor})"
     for name, new in target.items():

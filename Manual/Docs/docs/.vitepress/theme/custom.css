@@ -11,9 +11,6 @@
 }
 
 /* Landing page: smaller feature boxes */
-.VPFeatures .container {
-  max-width: 760px;
-}
 .VPFeature .box {
   padding: 16px;
 }

@@ -6,10 +6,10 @@
 #
 # The headers are parsed by Doxygen (Doxyfile), the XML is prepared by
 # prepare_xml.py and turned into Markdown by moxygen (fix_markdown.py sorts
-# the pages into the guide and the reference). VitePress renders the site.
+# the pages into the guide, the setup chapters and the API). VitePress renders the site.
 # moxygen and VitePress are installed with "npm install".
 
-GENERATED = docs/*.md docs/guide docs/reference
+GENERATED = docs/*.md docs/guide docs/setup docs/api
 
 markdown:
 	mkdir -p build

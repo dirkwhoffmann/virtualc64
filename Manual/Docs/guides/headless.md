@@ -1,4 +1,4 @@
-# Headless App {#guide_headless}
+# Headless App {#setup_headless}
 
 
 The headless app is a small command-line program that performs smoke tests at the end of an automated build chain. It creates an emulator instance, launches the emulator thread, and runs RetroShell scripts through the scripting interface. The program is a good starting point to learn how to embed the emulator core into your project: it shows how to launch the emulator, how to configure it, how to hand it work, and how to process messages in a registered callback.

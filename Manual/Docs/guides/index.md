@@ -52,5 +52,6 @@ int main()
 - [Threading and Errors](threading.md) explains which thread may call what, how failures are reported, and how the blocking and asynchronous flavors of the API functions differ.
 - [State Model](state.md) describes the life cycle of the emulator thread.
 - [Communication Model](communication.md) gives an overview of the command queue, the message queue, and the way data is read back from the emulator.
+- [Building the Core](build.md) explains how to build the emulator core with CMake and how to use it in your own project.
 - [Headless App](headless.md) walks through a small command-line application that uses the API.
 - Class [vc64::VirtualC64](@ref vc64::VirtualC64) is the entry point of the API reference.
