@@ -19,7 +19,7 @@ A command that is fed into the command queue.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`Cmd`](vc64.md#cmd) | [`type`](#type-4)  | Type of the command. |
+| [`Cmd`](enum-Cmd.md) | [`type`](#type-4)  | Type of the command. |
 | `void *` | [`sender`](#sender)  | Sender of the command (optional). |
 | `const char *` | [`str`](#str)  | Attached string (may be null). |
 
@@ -31,7 +31,7 @@ A command that is fed into the command queue.
 Cmd type
 ```
 
-Type: [`Cmd`](vc64.md#cmd)
+Type: [`Cmd`](enum-Cmd.md)
 
 Defined in Infrastructure/CmdQueueTypes.h:316
 

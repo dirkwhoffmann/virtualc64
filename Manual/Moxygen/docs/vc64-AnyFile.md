@@ -52,7 +52,7 @@ The raw data of this file.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`FileType`](vc64.md#filetype) | [`type`](#type) `virtual` `const` `inline` | Returns the media type of this file. |
+| [`FileType`](enum-FileType.md) | [`type`](#type) `virtual` `const` `inline` | Returns the media type of this file. |
 |  | [`~AnyFile`](#anyfile-1) `virtual` `inline` | Destructor. |
 | `void` | [`init`](#init)  | Initializes the file with an empty buffer of the given capacity. |
 | `void` | [`init`](#init-1)  | Initializes the file with the contents of a buffer. |
@@ -408,7 +408,7 @@ Writes the file to a buffer.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`FileType`](vc64.md#filetype) | [`type`](#type-1) `static` | Determines the type of an arbitrary file on disk. |
+| [`FileType`](enum-FileType.md) | [`type`](#type-1) `static` | Determines the type of an arbitrary file on disk. |
 | [`AnyFile`](#anyfile) * | [`make`](#make) `static` | Creates a media file from a file on disk. The file type is determined automatically. |
 | [`AnyFile`](#anyfile) * | [`make`](#make-1) `static` | Creates a media file of a given type from a file on disk. |
 | [`AnyFile`](#anyfile) * | [`make`](#make-2) `static` | Creates a media file of a given type from a memory buffer. |

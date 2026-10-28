@@ -19,7 +19,7 @@ A message sent from the emulator to the GUI.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`Msg`](vc64.md#msg-1) | [`type`](#type-8)  | Type of the message. |
+| [`Msg`](enum-Msg.md) | [`type`](#type-8)  | Type of the message. |
 | `const char *` | [`str`](#str-1)  | Optional text (may be null). |
 
 ---
@@ -30,7 +30,7 @@ A message sent from the emulator to the GUI.
 Msg type
 ```
 
-Type: [`Msg`](vc64.md#msg-1)
+Type: [`Msg`](enum-Msg.md)
 
 Defined in Infrastructure/MsgQueueTypes.h:266
 

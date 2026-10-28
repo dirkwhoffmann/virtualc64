@@ -7,6 +7,8 @@
     the Doxygen id), and the machine-generated description is dropped.
   - The namespace page vc64 (all types and enumerations) gets a proper title and lists
     its enumerations in "On this page".
+  - Moxygen documents all enumerations on the namespace page. Each one is moved
+    to a page of its own (enum-<Name>.md), and all links to it are redirected.
   - The mainpage becomes index.md, and the images of the guides are copied
     next to the pages.
 
@@ -22,6 +24,42 @@ def fix(text):
     title = heading.group(1).replace('"', "'") if heading else "VirtualC64"
     return f'---\ntitle: "{title}"\n---\n{body}'
 
+ENUM_ROW = re.compile(r"^\| \[`(\w+)`\]\(#([\w-]+)\)", re.M)
+
+def split_enums(docs):
+    """Moves every enumeration of vc64.md to enum-<Name>.md."""
+    page = docs / "vc64.md"
+    text = page.read_text()
+    start = text.index("\n## Enumerations\n")
+    end = text.index("\n## ", start + 1)
+    section = text[start:end]
+    anchors = {anchor: name for name, anchor in ENUM_ROW.findall(section)}
+    table_end = section.index("\n### ")
+    table = section[:table_end]
+    for block in re.split(r"\n(?=### )", section[table_end:].strip("\n")):
+        name = re.match(r"### (\w+)", block).group(1)
+        body = re.sub(r"^### \w+\n", "", block)
+        body = re.sub(r"(\n---\s*)+$", "", body.rstrip()) + "\n"
+        (docs / f"enum-{name}.md").write_text(f'---\ntitle: "{name}"\n---\n# {name}\n{body}')
+    page.write_text(text[:start] + table.rstrip("\n") + "\n" + text[end:])
+    return anchors
+
+def redirect(docs, anchors):
+    """Points links to an enumeration at its page."""
+    for page in docs.glob("*.md"):
+        # Inside the namespace page and the enumeration pages, "#name" is a link
+        # to the namespace page. Elsewhere it is a link within the page.
+        local = page.name == "vc64.md" or page.name.startswith("enum-")
+        def link(match):
+            file, anchor = match.group(1), match.group(2)
+            if anchor in anchors and (file or local):
+                return f"](enum-{anchors[anchor]}.md)"
+            return match.group(0)
+        text = page.read_text()
+        new = re.sub(r"\]\((vc64\.md)?#([\w-]+)\)", link, text)
+        if new != text:
+            page.write_text(new)
+
 def main(docs, images):
     docs = Path(docs)
     for page in docs.glob("*.md"):
@@ -29,6 +67,7 @@ def main(docs, images):
     namespace = docs / "vc64.md"
     namespace.write_text(namespace.read_text().replace('title: "vc64"', 'title: "Types and Enumerations"\noutline: [2, 3]', 1)
                          .replace("\n# vc64\n", "\n# Types and Enumerations\n", 1))
+    redirect(docs, split_enums(docs))
     (docs / "page-index.md").replace(docs / "index.md")
     (docs / "api.md").unlink(missing_ok=True)
     for image in Path(images).iterdir():

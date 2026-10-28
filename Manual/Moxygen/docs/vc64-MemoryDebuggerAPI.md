@@ -38,13 +38,13 @@ Defined in VirtualC64.h:149
 
 Returns a string of characters for a portion of memory.
 
-Unmapped memory ([MemType::NONE](vc64.md#memtype)) is shown as nothing.
+Unmapped memory ([MemType::NONE](enum-MemType.md)) is shown as nothing.
 
 #### Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `src` | [`MemType`](vc64.md#memtype) | The memory type the bytes are read from. |
+| `src` | [`MemType`](enum-MemType.md) | The memory type the bytes are read from. |
 | `addr` | `u16` | First address to dump. |
 | `bytes` | `isize` | Number of bytes to dump. |
 
@@ -62,13 +62,13 @@ Defined in VirtualC64.h:163
 
 Returns a string of numbers for a portion of memory.
 
-[hexDump()](#hexdump) shows the bytes as hexadecimal numbers, [decDump()](#decdump) as decimal numbers, and [memDump()](#memdump) as hexadecimal numbers followed by characters. Each group of 'sz' bytes forms one number and is followed by a space. Unmapped memory ([MemType::NONE](vc64.md#memtype)) is shown as '&ndash;'.
+[hexDump()](#hexdump) shows the bytes as hexadecimal numbers, [decDump()](#decdump) as decimal numbers, and [memDump()](#memdump) as hexadecimal numbers followed by characters. Each group of 'sz' bytes forms one number and is followed by a space. Unmapped memory ([MemType::NONE](enum-MemType.md)) is shown as '&ndash;'.
 
 #### Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `src` | [`MemType`](vc64.md#memtype) | The memory type the bytes are read from. |
+| `src` | [`MemType`](enum-MemType.md) | The memory type the bytes are read from. |
 | `addr` | `u16` | First address to dump. |
 | `bytes` | `isize` | Number of bytes to dump. |
 | `sz` | `isize` | Group size in bytes (1, 2, or 4). |

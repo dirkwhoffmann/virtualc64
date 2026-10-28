@@ -19,7 +19,7 @@ Configuration of the RS232 adapter.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`CommunicationDevice`](vc64.md#communicationdevice) | [`device`](#device)  | Connected RS232 device. |
+| [`CommunicationDevice`](enum-CommunicationDevice.md) | [`device`](#device)  | Connected RS232 device. |
 | `isize` | [`baud`](#baud)  | Transmission rate (baud). |
 
 ---
@@ -30,7 +30,7 @@ Configuration of the RS232 adapter.
 CommunicationDevice device
 ```
 
-Type: [`CommunicationDevice`](vc64.md#communicationdevice)
+Type: [`CommunicationDevice`](enum-CommunicationDevice.md)
 
 Defined in Peripherals/Network/RS232Types.h:64
 

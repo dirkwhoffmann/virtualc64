@@ -94,7 +94,7 @@ Triggers a mouse button event
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `action` | [`GamePadAction`](vc64.md#gamepadaction) | The triggered event |
+| `action` | [`GamePadAction`](enum-GamePadAction.md) | The triggered event |
 
 ---
 

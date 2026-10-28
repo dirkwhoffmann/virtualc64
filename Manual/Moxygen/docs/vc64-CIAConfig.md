@@ -19,7 +19,7 @@ Configuration of a CIA chip.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`CIARev`](vc64.md#ciarev) | [`revision`](#revision)  | Chip revision. |
+| [`CIARev`](enum-CIARev.md) | [`revision`](#revision)  | Chip revision. |
 | `bool` | [`timerBBug`](#timerbbug)  | Emulate the Timer-B bug. |
 | `bool` | [`idleSleep`](#idlesleep)  | Enter the idle state while the chip is not in use. |
 
@@ -31,7 +31,7 @@ Configuration of a CIA chip.
 CIARev revision
 ```
 
-Type: [`CIARev`](vc64.md#ciarev)
+Type: [`CIARev`](enum-CIARev.md)
 
 Defined in Components/CIA/CIATypes.h:114
 

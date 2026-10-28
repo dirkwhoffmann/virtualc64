@@ -27,7 +27,7 @@ A snapshot contains the complete internal state of the emulator together with a 
 |  | [`Snapshot`](#snapshot-4)  | Creates an empty snapshot with the given capacity. |
 |  | [`Snapshot`](#snapshot-5)  | Takes a snapshot of the emulator state. |
 |  | [`Snapshot`](#snapshot-6)  | Takes a snapshot of the emulator state and compresses it. |
-| [`FileType`](vc64.md#filetype) | [`type`](#type-9) `virtual` `const` `inline` `override` | Returns the media type of this file. |
+| [`FileType`](enum-FileType.md) | [`type`](#type-9) `virtual` `const` `inline` `override` | Returns the media type of this file. |
 | `std::pair< isize, isize >` | [`previewImageSize`](#previewimagesize) `const` | Returns the size of the preview image (width, height). |
 | `const u32 *` | [`previewImageData`](#previewimagedata) `const` | Returns the pixel data of the preview image. |
 | `time_t` | [`timestamp`](#timestamp) `const` | Returns the time the snapshot was taken. |

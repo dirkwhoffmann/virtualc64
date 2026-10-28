@@ -19,12 +19,12 @@ Configuration of the X-Ray visualizer.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`XRayMode`](vc64.md#xraymode) | [`mode`](#mode)  | X-Ray mode (off, DMA debugger, layer inspector). |
+| [`XRayMode`](enum-XRayMode.md) | [`mode`](#mode)  | X-Ray mode (off, DMA debugger, layer inspector). |
 | `bool` | [`dmaOverlay`](#dmaoverlay)  | Enable the DMA overlay. |
-| [`XRayCompositor`](vc64.md#xraycompositor) | [`compositor`](#compositor)  | Compositor used to merge the overlay with the picture. |
+| [`XRayCompositor`](enum-XRayCompositor.md) | [`compositor`](#compositor)  | Compositor used to merge the overlay with the picture. |
 | `bool` | [`dmaChannel`](#dmachannel)  | Visualize the DMA channel (one flag per channel) |
 | `u32` | [`dmaColor`](#dmacolor)  | Colors of the DMA channels (0 - 5) and of the cut-out layers (0 - 10). The layers use sprite n : color n, border : 8, foreground : 9, background : 10. Hence, the colors of the first channels are shared. |
-| [`DmaDisplayMode`](vc64.md#dmadisplaymode) | [`dmaDisplayMode`](#dmadisplaymode-1)  | DMA display mode. |
+| [`DmaDisplayMode`](enum-DmaDisplayMode.md) | [`dmaDisplayMode`](#dmadisplaymode-1)  | DMA display mode. |
 | `u8` | [`dmaOpacity`](#dmaopacity)  | Opacity of the DMA overlay. |
 | `u16` | [`cutLayers`](#cutlayers)  | Layers cut out in XRayMode::XRAY_LAYERS Bits 0 - 7: sprites, 9: background, 10: foreground, 11: border |
 
@@ -36,7 +36,7 @@ Configuration of the X-Ray visualizer.
 XRayMode mode
 ```
 
-Type: [`XRayMode`](vc64.md#xraymode)
+Type: [`XRayMode`](enum-XRayMode.md)
 
 Defined in Components/VICII/XRayTypes.h:139
 
@@ -62,7 +62,7 @@ Enable the DMA overlay.
 XRayCompositor compositor
 ```
 
-Type: [`XRayCompositor`](vc64.md#xraycompositor)
+Type: [`XRayCompositor`](enum-XRayCompositor.md)
 
 Defined in Components/VICII/XRayTypes.h:141
 
@@ -100,7 +100,7 @@ Colors of the DMA channels (0 - 5) and of the cut-out layers (0 - 10). The layer
 DmaDisplayMode dmaDisplayMode
 ```
 
-Type: [`DmaDisplayMode`](vc64.md#dmadisplaymode)
+Type: [`DmaDisplayMode`](enum-DmaDisplayMode.md)
 
 Defined in Components/VICII/XRayTypes.h:147
 

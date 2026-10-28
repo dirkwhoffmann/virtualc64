@@ -555,7 +555,7 @@ Defined in VirtualC64.h:2238
 
 Switches the emulator on.
 
-Powering on the emulator changes the internal state to [ExecState::PAUSED](vc64.md#execstate), the same state that is entered when the user hits the pause button. Calling this function on an already powered-on emulator has no effect.
+Powering on the emulator changes the internal state to [ExecState::PAUSED](enum-ExecState.md), the same state that is entered when the user hits the pause button. Calling this function on an already powered-on emulator has no effect.
 
 The function returns when the emulator thread has carried out the request. A failure throws the corresponding exception.
 
@@ -591,7 +591,7 @@ Defined in VirtualC64.h:2260
 
 Switches the emulator off.
 
-Powering off the emulator changes the internal state to [ExecState::OFF](vc64.md#execstate). Calling this function on an already powered-off emulator has no effect.
+Powering off the emulator changes the internal state to [ExecState::OFF](enum-ExecState.md). Calling this function on an already powered-off emulator has no effect.
 
 The function returns when the emulator thread has carried out the request. A failure throws the corresponding exception.
 
@@ -627,7 +627,7 @@ Defined in VirtualC64.h:2286
 
 Starts emulation.
 
-Running the emulator changes the internal state to [ExecState::RUNNING](vc64.md#execstate), which is the normal operation state. Frames are computed at normal pace, if warp mode is switched off, or as fast as possible, if warp mode is switched on. If this function is called for a powered-off emulator, an implicit call to [powerOn()](#poweron) will be performed.
+Running the emulator changes the internal state to [ExecState::RUNNING](enum-ExecState.md), which is the normal operation state. Frames are computed at normal pace, if warp mode is switched off, or as fast as possible, if warp mode is switched on. If this function is called for a powered-off emulator, an implicit call to [powerOn()](#poweron) will be performed.
 
 The function returns when the emulator has been started.
 
@@ -670,7 +670,7 @@ Defined in VirtualC64.h:2311
 
 Pauses emulation.
 
-Pausing the emulator changes the internal state from [ExecState::RUNNING](vc64.md#execstate) to [ExecState::PAUSED](vc64.md#execstate) after completing the current frame. The emulator enters a frozen state where no more frames are computed.
+Pausing the emulator changes the internal state from [ExecState::RUNNING](enum-ExecState.md) to [ExecState::PAUSED](enum-ExecState.md) after completing the current frame. The emulator enters a frozen state where no more frames are computed.
 
 The function returns when the emulator thread has carried out the request. A failure throws the corresponding exception.
 
@@ -778,7 +778,7 @@ Defined in VirtualC64.h:2380
 
 Terminates the emulator thread.
 
-Halting the emulator changes the internal state to [ExecState::HALTED](vc64.md#execstate). This state is part of the shutdown procedure and never entered during normal operation.
+Halting the emulator changes the internal state to [ExecState::HALTED](enum-ExecState.md). This state is part of the shutdown procedure and never entered during normal operation.
 
 > [!NOTE]
 > The function blocks until the emulator thread has terminated. It does nothing if there is no running emulator thread (e.g., if the thread has already been halted), so it is safe to call it more than once. It throws a [CoreError](vc64-CoreError.md#coreerror) if the calling thread has suspended the emulator thread, because a suspended thread cannot terminate.
@@ -1223,7 +1223,7 @@ This is the main function to query a configuration option.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](vc64.md#opt) | The option to query |
+| `opt` | [`Opt`](enum-Opt.md) | The option to query |
 
 ---
 
@@ -1251,7 +1251,7 @@ This is the main function to query a configuration option.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](vc64.md#opt) | The option to query |
+| `opt` | [`Opt`](enum-Opt.md) | The option to query |
 | `id` | `isize` | The component to query |
 
 ---
@@ -1275,7 +1275,7 @@ This is the main function to set a configuration option. It returns when the cha
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](vc64.md#opt) | The option to set |
+| `opt` | [`Opt`](enum-Opt.md) | The option to set |
 | `value` | `i64` | The option's value |
 
 #### Exceptions
@@ -1305,7 +1305,7 @@ Configures a component.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](vc64.md#opt) | The option to set |
+| `opt` | [`Opt`](enum-Opt.md) | The option to set |
 | `value` | `i64` | The option's value |
 | `id` | `isize` | The component to configure |
 
@@ -1327,7 +1327,7 @@ Configures the emulator to match a specific C64 model
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `model` | [`ConfigScheme`](vc64.md#configscheme) | The C64 model to emulate |
+| `model` | [`ConfigScheme`](enum-ConfigScheme.md) | The C64 model to emulate |
 
 ---
 
@@ -1343,13 +1343,13 @@ Configures a component without waiting for the result.
 
 These functions hand the request to the emulator thread and return at once. They are the asynchronous counterparts of [set()](#set-5). Use them if waiting is impossible or undesirable, e.g., when many options are changed in a row (follow up with [sync()](#sync) if needed), before the emulator thread has been launched (the request is carried out at launch), or while the emulator thread is suspended (it is carried out when the thread resumes).
 
-The value is validated when the emulator thread carries out the command. A rejected value is reported by [Msg::CONFIG](vc64.md#msg-1), which then carries the exception.
+The value is validated when the emulator thread carries out the command. A rejected value is reported by [Msg::CONFIG](enum-Msg.md), which then carries the exception.
 
 #### Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](vc64.md#opt) | The option to set |
+| `opt` | [`Opt`](enum-Opt.md) | The option to set |
 | `value` | `i64` | The option's value |
 
 ---
@@ -1370,7 +1370,7 @@ Same as above, for options that require an additional parameter to determine the
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](vc64.md#opt) | The option to set |
+| `opt` | [`Opt`](enum-Opt.md) | The option to set |
 | `value` | `i64` | The option's value |
 | `id` | `isize` | The component to configure |
 
@@ -1404,7 +1404,7 @@ The check is performed in the calling thread and does not change the configurati
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](vc64.md#opt) | The option to check |
+| `opt` | [`Opt`](enum-Opt.md) | The option to check |
 | `value` | `i64` | The option's value |
 
 #### Exceptions
@@ -1429,7 +1429,7 @@ Checks if a configuration option would be accepted.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `opt` | [`Opt`](vc64.md#opt) | The option to check |
+| `opt` | [`Opt`](enum-Opt.md) | The option to check |
 | `value` | `i64` | The option's value |
 | `id` | `isize` | The component to configure |
 

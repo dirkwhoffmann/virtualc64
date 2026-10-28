@@ -19,7 +19,7 @@ Datasette configuration.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`DatasetteModel`](vc64.md#datasettemodel) | [`model`](#model)  | Datasette model. |
+| [`DatasetteModel`](enum-DatasetteModel.md) | [`model`](#model)  | Datasette model. |
 | `bool` | [`connected`](#connected)  | Connection status. |
 
 ---
@@ -30,7 +30,7 @@ Datasette configuration.
 DatasetteModel model
 ```
 
-Type: [`DatasetteModel`](vc64.md#datasettemodel)
+Type: [`DatasetteModel`](enum-DatasetteModel.md)
 
 Defined in Peripherals/Datasette/DatasetteTypes.h:57
 

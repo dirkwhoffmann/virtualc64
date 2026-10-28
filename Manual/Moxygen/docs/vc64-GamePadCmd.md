@@ -20,7 +20,7 @@ Payload of joystick commands.
 | Return | Name | Description |
 |--------|------|-------------|
 | `isize` | [`port`](#port-2)  | Control port number. |
-| [`GamePadAction`](vc64.md#gamepadaction) | [`action`](#action)  | The joystick action. |
+| [`GamePadAction`](enum-GamePadAction.md) | [`action`](#action)  | The joystick action. |
 
 ---
 
@@ -42,7 +42,7 @@ Control port number.
 GamePadAction action
 ```
 
-Type: [`GamePadAction`](vc64.md#gamepadaction)
+Type: [`GamePadAction`](enum-GamePadAction.md)
 
 Defined in Infrastructure/CmdQueueTypes.h:274
 

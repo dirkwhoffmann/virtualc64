@@ -19,7 +19,7 @@ Properties of a cartridge type.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`CartridgeType`](vc64.md#cartridgetype) | [`type`](#type-3)  | Cartridge type. |
+| [`CartridgeType`](enum-CartridgeType.md) | [`type`](#type-3)  | Cartridge type. |
 | `const char *` | [`title`](#title)  | Title of the cartridge. |
 | `isize` | [`memory`](#memory)  | Memory size (in KB). |
 | `bool` | [`battery`](#battery)  | The cartridge has battery-buffered memory. |
@@ -41,7 +41,7 @@ Properties of a cartridge type.
 CartridgeType type
 ```
 
-Type: [`CartridgeType`](vc64.md#cartridgetype)
+Type: [`CartridgeType`](enum-CartridgeType.md)
 
 Defined in Media/Cartridges/CartridgeTypes.h:266
 

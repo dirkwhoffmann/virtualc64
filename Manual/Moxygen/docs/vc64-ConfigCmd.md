@@ -19,7 +19,7 @@ Payload of configuration commands.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`Opt`](vc64.md#opt) | [`option`](#option)  | The option to change. |
+| [`Opt`](enum-Opt.md) | [`option`](#option)  | The option to change. |
 | `i64` | [`value`](#value-1)  | The new value. |
 | `isize` | [`id`](#id)  | The component the option belongs to. |
 
@@ -31,7 +31,7 @@ Payload of configuration commands.
 Opt option
 ```
 
-Type: [`Opt`](vc64.md#opt)
+Type: [`Opt`](enum-Opt.md)
 
 Defined in Infrastructure/CmdQueueTypes.h:247
 

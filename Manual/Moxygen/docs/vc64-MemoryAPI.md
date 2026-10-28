@@ -102,7 +102,7 @@ Defined in VirtualC64.h:219
 
 Draws a heatmap of the recent memory accesses.
 
-The 64 KB address space is shown as a grid of 256 x 256 cells. Neighboring addresses are mapped to neighboring cells by interleaving the address bits, so that address ranges form compact blocks. A cell lights up when its address is accessed and fades out over time. The map is updated at the end of each frame, and only while the option [Opt::MEM_HEATMAP](vc64.md#opt) is enabled.
+The 64 KB address space is shown as a grid of 256 x 256 cells. Neighboring addresses are mapped to neighboring cells by interleaving the address bits, so that address ranges form compact blocks. A cell lights up when its address is accessed and fades out over time. The map is updated at the end of each frame, and only while the option [Opt::MEM_HEATMAP](enum-Opt.md) is enabled.
 
 #### Parameters
 

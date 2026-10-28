@@ -19,7 +19,7 @@ Configuration of the memory.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`RamPattern`](vc64.md#rampattern) | [`ramPattern`](#rampattern-1)  | RAM start-up pattern. |
+| [`RamPattern`](enum-RamPattern.md) | [`ramPattern`](#rampattern-1)  | RAM start-up pattern. |
 | `bool` | [`saveRoms`](#saveroms-1)  | Include ROMs in snapshots. |
 | `bool` | [`heatmap`](#heatmap)  | Count memory accesses for the heatmap. |
 
@@ -31,7 +31,7 @@ Configuration of the memory.
 RamPattern ramPattern
 ```
 
-Type: [`RamPattern`](vc64.md#rampattern)
+Type: [`RamPattern`](enum-RamPattern.md)
 
 Defined in Components/Memory/MemoryTypes.h:124
 

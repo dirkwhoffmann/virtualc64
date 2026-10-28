@@ -20,9 +20,9 @@ Configuration of a drive.
 | Return | Name | Description |
 |--------|------|-------------|
 | `bool` | [`autoConfig`](#autoconfig)  | General. |
-| [`DriveType`](vc64.md#drivetype) | [`type`](#type-6)  | Drive model. |
-| [`DriveRam`](vc64.md#driveram) | [`ram`](#ram)  | Drive RAM. |
-| [`ParCableType`](vc64.md#parcabletype) | [`parCable`](#parcable)  | Parallel cable. |
+| [`DriveType`](enum-DriveType.md) | [`type`](#type-6)  | Drive model. |
+| [`DriveRam`](enum-DriveRam.md) | [`ram`](#ram)  | Drive RAM. |
+| [`ParCableType`](enum-ParCableType.md) | [`parCable`](#parcable)  | Parallel cable. |
 | `bool` | [`powerSave`](#powersave)  | Take fast paths. |
 | `bool` | [`connected`](#connected-1)  | The drive is connected to the serial port. |
 | `bool` | [`switchedOn`](#switchedon)  | Power switch. |
@@ -56,7 +56,7 @@ General.
 DriveType type
 ```
 
-Type: [`DriveType`](vc64.md#drivetype)
+Type: [`DriveType`](enum-DriveType.md)
 
 Defined in Peripherals/Drive/DriveTypes.h:198
 
@@ -70,7 +70,7 @@ Drive model.
 DriveRam ram
 ```
 
-Type: [`DriveRam`](vc64.md#driveram)
+Type: [`DriveRam`](enum-DriveRam.md)
 
 Defined in Peripherals/Drive/DriveTypes.h:199
 
@@ -84,7 +84,7 @@ Drive RAM.
 ParCableType parCable
 ```
 
-Type: [`ParCableType`](vc64.md#parcabletype)
+Type: [`ParCableType`](enum-ParCableType.md)
 
 Defined in Peripherals/Drive/DriveTypes.h:200
 

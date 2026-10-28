@@ -19,7 +19,7 @@ The current emulator state.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`ExecState`](vc64.md#execstate) | [`state`](#state)  | The current emulator state. |
+| [`ExecState`](enum-ExecState.md) | [`state`](#state)  | The current emulator state. |
 | `bool` | [`powered`](#powered)  | Indicates if the emulator is powered on. |
 | `bool` | [`paused`](#paused)  | Indicates if emulation is paused. |
 | `bool` | [`running`](#running-2)  | Indicates if the emulator is running. |
@@ -35,7 +35,7 @@ The current emulator state.
 ExecState state
 ```
 
-Type: [`ExecState`](vc64.md#execstate)
+Type: [`ExecState`](enum-ExecState.md)
 
 Defined in Infrastructure/EmulatorTypes.h:320
 

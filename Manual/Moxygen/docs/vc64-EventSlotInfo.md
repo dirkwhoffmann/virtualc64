@@ -19,8 +19,8 @@ State of a single event slot.
 
 | Return | Name | Description |
 |--------|------|-------------|
-| [`EventSlot`](vc64.md#eventslot) | [`slot`](#slot)  | The event slot. |
-| [`EventID`](vc64.md#eventid) | [`eventId`](#eventid-1)  | Identifier of the scheduled event (0 if the slot is empty). |
+| [`EventSlot`](enum-EventSlot.md) | [`slot`](#slot)  | The event slot. |
+| [`EventID`](enum-EventID.md) | [`eventId`](#eventid-1)  | Identifier of the scheduled event (0 if the slot is empty). |
 | `const char *` | [`eventName`](#eventname)  | Name of the scheduled event. |
 | [`Cycle`](vc64.md#cycle) | [`trigger`](#trigger)  | Trigger cycle of the event. |
 | [`Cycle`](vc64.md#cycle) | [`triggerRel`](#triggerrel)  | Time until the event triggers (in cycles). |
@@ -36,7 +36,7 @@ State of a single event slot.
 EventSlot slot
 ```
 
-Type: [`EventSlot`](vc64.md#eventslot)
+Type: [`EventSlot`](enum-EventSlot.md)
 
 Defined in Components/C64Types.h:340
 
@@ -50,7 +50,7 @@ The event slot.
 EventID eventId
 ```
 
-Type: [`EventID`](vc64.md#eventid)
+Type: [`EventID`](enum-EventID.md)
 
 Defined in Components/C64Types.h:341
 

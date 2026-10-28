@@ -33,6 +33,13 @@ const apis = ['VirtualC64', 'API', 'C64API', 'MemoryAPI', 'MemoryDebuggerAPI', '
               'DatasetteAPI', 'DriveAPI', 'DiskAPI', 'KeyboardAPI', 'RetroShellAPI',
               'RemoteManagerAPI', 'DefaultsAPI']
 
+function enumItems() {
+  return readdirSync(docs).filter(f => f.startsWith('enum-') && f.endsWith('.md'))
+    .map(f => f.replace(/^enum-|\.md$/g, ''))
+    .sort((a, b) => a.localeCompare(b))
+    .map(e => ({ text: e, link: `/enum-${e}` }))
+}
+
 function apiItems() {
   const classes = readdirSync(docs).filter(f => /^vc64-.*\.md$/.test(f))
     .map(f => f.replace(/^vc64-|\.md$/g, ''))
@@ -61,6 +68,7 @@ export default defineConfig({
         { text: 'MediaError', link: '/vc64-MediaError' },
         { text: 'IOError', link: '/utl-IOError' },
       ] },
+      { text: 'Enumerations', collapsed: true, items: enumItems() },
     ],
   },
 })

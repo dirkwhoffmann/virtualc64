@@ -21,10 +21,10 @@ Configuration of a SID chip.
 |--------|------|-------------|
 | `bool` | [`enabled`](#enabled-2)  | Indicates if this SID is plugged in. |
 | `u16` | [`address`](#address)  | Location of the SID registers in memory. |
-| [`SIDRevision`](vc64.md#sidrevision) | [`revision`](#revision-2)  | Chip revision (MOS 6581 or MOS 8580). |
+| [`SIDRevision`](enum-SIDRevision.md) | [`revision`](#revision-2)  | Chip revision (MOS 6581 or MOS 8580). |
 | `bool` | [`filter`](#filter)  | Use filter. |
-| [`SIDEngine`](vc64.md#sidengine) | [`engine`](#engine)  | Emulation engine. |
-| [`SamplingMethod`](vc64.md#samplingmethod) | [`sampling`](#sampling)  | Sampling method. |
+| [`SIDEngine`](enum-SIDEngine.md) | [`engine`](#engine)  | Emulation engine. |
+| [`SamplingMethod`](enum-SamplingMethod.md) | [`sampling`](#sampling)  | Sampling method. |
 | `bool` | [`powerSave`](#powersave-1)  | Performance. |
 
 ---
@@ -59,7 +59,7 @@ Location of the SID registers in memory.
 SIDRevision revision
 ```
 
-Type: [`SIDRevision`](vc64.md#sidrevision)
+Type: [`SIDRevision`](enum-SIDRevision.md)
 
 Defined in Components/SID/SIDTypes.h:147
 
@@ -85,7 +85,7 @@ Use filter.
 SIDEngine engine
 ```
 
-Type: [`SIDEngine`](vc64.md#sidengine)
+Type: [`SIDEngine`](enum-SIDEngine.md)
 
 Defined in Components/SID/SIDTypes.h:151
 
@@ -99,7 +99,7 @@ Emulation engine.
 SamplingMethod sampling
 ```
 
-Type: [`SamplingMethod`](vc64.md#samplingmethod)
+Type: [`SamplingMethod`](enum-SamplingMethod.md)
 
 Defined in Components/SID/SIDTypes.h:152
 

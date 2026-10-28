@@ -20,7 +20,7 @@ Configuration of the C64 component.
 | Return | Name | Description |
 |--------|------|-------------|
 | `isize` | [`warpBoot`](#warpboot)  | After a reset, the emulator runs in warp mode for this amout of seconds. |
-| [`Warp`](vc64.md#warp) | [`warpMode`](#warpmode)  | [Warp](vc64.md#warp) mode. |
+| [`Warp`](enum-Warp.md) | [`warpMode`](#warpmode)  | [Warp](enum-Warp.md) mode. |
 | `isize` | [`speedBoost`](#speedboost)  | Emulator speed in percent (100 is native speed). |
 | `bool` | [`vsync`](#vsync)  | Vertical Synchronization. |
 | `isize` | [`runAhead`](#runahead)  | Number of run-ahead frames (0 = run-ahead is disabled). |
@@ -45,11 +45,11 @@ After a reset, the emulator runs in warp mode for this amout of seconds.
 Warp warpMode
 ```
 
-Type: [`Warp`](vc64.md#warp)
+Type: [`Warp`](enum-Warp.md)
 
 Defined in Components/C64Types.h:308
 
-[Warp](vc64.md#warp) mode.
+[Warp](enum-Warp.md) mode.
 
 ---
 

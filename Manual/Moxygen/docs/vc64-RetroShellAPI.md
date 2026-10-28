@@ -26,7 +26,7 @@ RetroShell Public [API](vc64-API.md#api)
 | `void` | [`press`](#press-2)  | Informs RetroShell that a key has been typed. |
 | `void` | [`press`](#press-3)  | Informs RetroShell that multiple keys have been typed. |
 | `void` | [`setStream`](#setstream)  | Assign an additional output stream. In addition to writing the RetroShell output into the text buffer, RetroShell will write the output into the provides stream. |
-| `void` | [`execScriptAsync`](#execscriptasync)  | Executes a script. The script is executed asynchronously. However, RetroShell will send messages back to the GUI thread to inform about the execution state. After the last pending command has been executed, [Msg::RSH_DONE](vc64.md#msg-1) is sent. If a command fails, the remaining commands are dropped and [Msg::RSH_ERROR](vc64.md#msg-1) is sent instead. A 'wait' command postpones the rest of the script and sends [Msg::RSH_WAIT](vc64.md#msg-1). |
+| `void` | [`execScriptAsync`](#execscriptasync)  | Executes a script. The script is executed asynchronously. However, RetroShell will send messages back to the GUI thread to inform about the execution state. After the last pending command has been executed, [Msg::RSH_DONE](enum-Msg.md) is sent. If a command fails, the remaining commands are dropped and [Msg::RSH_ERROR](enum-Msg.md) is sent instead. A 'wait' command postpones the rest of the script and sends [Msg::RSH_WAIT](enum-Msg.md). |
 | `void` | [`execScriptAsync`](#execscriptasync-1)  | Executes a script that is read from a string stream. |
 | `void` | [`execScriptAsync`](#execscriptasync-2)  | Executes a script that is read from a file stream. |
 | `void` | [`execScriptAsync`](#execscriptasync-3)  | Executes a script that is given as a string. |
@@ -91,7 +91,7 @@ Informs RetroShell that a key has been typed.
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `key` | [`RSKey`](vc64.md#rskey) | The pressed key |
+| `key` | [`RSKey`](enum-RSKey.md) | The pressed key |
 | `shift` | `bool` | Status of the shift key |
 
 ---
@@ -152,7 +152,7 @@ void execScriptAsync(const std::filesystem::path & path)
 
 Defined in VirtualC64.h:1510
 
-Executes a script. The script is executed asynchronously. However, RetroShell will send messages back to the GUI thread to inform about the execution state. After the last pending command has been executed, [Msg::RSH_DONE](vc64.md#msg-1) is sent. If a command fails, the remaining commands are dropped and [Msg::RSH_ERROR](vc64.md#msg-1) is sent instead. A 'wait' command postpones the rest of the script and sends [Msg::RSH_WAIT](vc64.md#msg-1).
+Executes a script. The script is executed asynchronously. However, RetroShell will send messages back to the GUI thread to inform about the execution state. After the last pending command has been executed, [Msg::RSH_DONE](enum-Msg.md) is sent. If a command fails, the remaining commands are dropped and [Msg::RSH_ERROR](enum-Msg.md) is sent instead. A 'wait' command postpones the rest of the script and sends [Msg::RSH_WAIT](enum-Msg.md).
 
 #### Exceptions
 
