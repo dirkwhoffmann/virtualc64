@@ -36,7 +36,7 @@ if (!scheme) {
   throw new Error(`Unknown SCHEME '${schemeName}'. Choose one of: ${Object.keys(schemes).join(', ')}`)
 }
 
-const guides = ['introduction', 'api-overview', 'threading', 'state', 'communication']
+const guides = ['threading', 'state', 'communication']
 const setup = ['build', 'headless']
 
 function title(section: string, file: string): string {
@@ -118,7 +118,7 @@ export default defineConfig({
     search: { provider: 'local' },
     nav: [
       { text: 'Setup', link: '/setup/build', activeMatch: '^/setup/' },
-      { text: 'Guide', link: '/guide/introduction', activeMatch: '^/guide/' },
+      { text: 'Guide', link: '/guide/threading', activeMatch: '^/guide/' },
       { text: 'API', link: '/api/vc64-VirtualC64', activeMatch: '^/api/' },
     ],
     sidebar: {
@@ -129,7 +129,7 @@ export default defineConfig({
         { text: 'Setup', collapsed: false, items: sectionItems('setup', setup) },
       ],
       '/api/': [
-        { text: 'API', collapsed: false, items: apiItems() },
+        { text: 'API', collapsed: false, items: [{ text: 'Overview', link: '/api/overview' }, ...apiItems()] },
         { text: 'Structs', collapsed: true, items: structGroups() },
         { text: 'Enumerations', collapsed: true, items: enumItems() },
         { text: 'More', collapsed: false, items: [

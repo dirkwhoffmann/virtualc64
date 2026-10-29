@@ -81,7 +81,45 @@ Linking `VCCore` brings in the other libraries and adds the `VCCore` directory t
 #include "VirtualC64.h"
 ```
 
-The class [vc64::VirtualC64](@ref vc64::VirtualC64) is the entry point of the API. The chapter @ref setup_headless "Headless App" shows a complete program that uses it.
+The class [vc64::VirtualC64](@ref vc64::VirtualC64) is the entry point of the API. The following program creates an emulator instance, configures it, and runs it. The emulator computes frames in a thread of its own, so the main thread is free to do other work.
+
+```cpp
+#include "VirtualC64.h"
+
+using namespace vc64;
+
+// Receives all messages sent by the emulator. Note that the function is
+// called on the emulator thread.
+static void process(const void *listener, Message msg, std::exception_ptr error)
+{
+    // Forward the message to the user thread (not shown)
+}
+
+int main()
+{
+    // Create an emulator instance
+    VirtualC64 c64;
+
+    // Launch the emulator thread
+    c64.launch(nullptr, process);
+
+    // Install the ROMs. Here, we use the MEGA65 OpenROMs.
+    c64.c64.installOpenRoms();
+
+    // Configure the emulator
+    c64.set(Opt::VICII_REVISION, long(VICIIRev::PAL_6569_R3));
+
+    // Start the emulator
+    c64.run();
+
+    // Interact with the emulator, e.g., by typing a string
+    c64.keyboard.autoType("LOAD \"*\",8,1\n");
+
+    // ...
+}
+```
+
+The chapter @ref setup_headless "Headless App" shows a complete program that is used for smoke tests. The [API overview](@ref api_overview) lists all sub-APIs, and the [Threading Model](threading.md) explains which thread may call what.
 
 ## Building the macOS application
 

@@ -2,6 +2,8 @@
 #
 #   make          Build the site into build/site
 #   make serve    Live preview (VitePress dev server, http://localhost:5173)
+#   make dev      Like serve, but also rebuilds the pages whenever a header or
+#                 guide changes (reload happens automatically)
 #   make clean
 #
 # The color scheme is selected with SCHEME (catppuccin, dracula, nord or
@@ -32,7 +34,19 @@ all: markdown
 serve: markdown
 	npx vitepress dev docs
 
+# Polls the sources once a second and regenerates the Markdown on a change.
+# New or removed pages show up in the sidebar after restarting the server.
+dev: markdown
+	@touch build/.stamp
+	@( while sleep 1; do \
+	     if [ -n "$$(find guides ../../VCCore Doxyfile prepare_xml.py fix_markdown.py \( -name '*.h' -o -name '*.md' -o -name Doxyfile -o -name '*.py' \) -newer build/.stamp 2>/dev/null | head -1)" ]; then \
+	       touch build/.stamp; echo "Sources changed, regenerating..."; \
+	       $(MAKE) --no-print-directory markdown 2>&1 | tail -3; \
+	     fi; \
+	   done ) & WATCHER=$$!; trap "kill $$WATCHER" EXIT INT TERM; \
+	npx vitepress dev docs
+
 clean:
 	rm -rf build $(GENERATED) moxygen.log docs/.vitepress/cache
 
-.PHONY: all markdown serve clean
+.PHONY: all markdown serve dev clean

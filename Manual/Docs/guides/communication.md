@@ -13,7 +13,7 @@ Three mechanisms are involved:
 
   Requests that change the state of the emulator travel through the command queue. The API function creates a command and appends it to the queue. The emulator thread carries out all pending commands at the beginning of each update cycle, one after the other, in the order in which they arrived. As a consequence, a state change never happens in the middle of a frame.
 
-  The plain-name functions wait until their command has been carried out and pass on the outcome (see [Threading and Errors](threading.md)). The `Async` functions and the input events do not wait. The queue is bounded (65536 entries) to protect the emulator against a client that forgets to resume a suspended emulator thread. If the queue is full, new commands are dropped and the message `QUEUE_FULL` is sent once. Asynchronous requests may be queued before the emulator thread has been launched; they are carried out at launch, while the blocking flavors throw a CoreError.
+  The plain-name functions wait until their command has been carried out and pass on the outcome (see [Threading Model](threading.md)). The `Async` functions and the input events do not wait. The queue is bounded (65536 entries) to protect the emulator against a client that forgets to resume a suspended emulator thread. If the queue is full, new commands are dropped and the message `QUEUE_FULL` is sent once. Asynchronous requests may be queued before the emulator thread has been launched; they are carried out at launch, while the blocking flavors throw a CoreError.
 
 - **Message queue**
 

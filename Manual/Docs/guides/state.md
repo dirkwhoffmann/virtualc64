@@ -11,7 +11,7 @@ After launching, the emulator runs as a single thread alongside the front-end. T
 - **Running:** The emulator is powered on and computes frames.
 - **Halted:** The emulator thread has been terminated. This is the last step of the shutdown procedure.
 
-The states Off, Paused, Running, and Halted are the values of the enumeration [vc64::ExecState](@ref vc64::ExecState). A state change is requested with the functions shown in the diagram. Like all state-changing functions, they come in a blocking and an asynchronous flavor (for example [run()](@ref vc64::VirtualC64::run) and [runAsync()](@ref vc64::VirtualC64::runAsync), see [Threading and Errors](threading.md)).
+The states Off, Paused, Running, and Halted are the values of the enumeration [vc64::ExecState](@ref vc64::ExecState). A state change is requested with the functions shown in the diagram. Like all state-changing functions, they come in a blocking and an asynchronous flavor (for example [run()](@ref vc64::VirtualC64::run) and [runAsync()](@ref vc64::VirtualC64::runAsync), see [Threading Model](threading.md)).
 
 @image html state.svg ""
 
@@ -19,7 +19,7 @@ The functions [isPoweredOff()](@ref vc64::VirtualC64::isPoweredOff), [isPaused()
 
 ## Suspension
 
-Independent of the execution state, the emulator thread can be *suspended* for a short period of time with [suspend()](@ref vc64::API::suspend). A suspended thread stops at a safe point (it is neither computing a frame nor carrying out commands) and continues once [resume()](@ref vc64::API::resume) has been called. The execution state does not change. [isSuspended()](@ref vc64::VirtualC64::isSuspended) reports whether a suspension is active. See [Threading and Errors](threading.md) for the rules that apply to suspensions.
+Independent of the execution state, the emulator thread can be *suspended* for a short period of time with [suspend()](@ref vc64::API::suspend). A suspended thread stops at a safe point (it is neither computing a frame nor carrying out commands) and continues once [resume()](@ref vc64::API::resume) has been called. The execution state does not change. [isSuspended()](@ref vc64::VirtualC64::isSuspended) reports whether a suspension is active. See [Threading Model](threading.md) for the rules that apply to suspensions.
 
 ## Synchronization
 

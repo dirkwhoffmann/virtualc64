@@ -92,7 +92,6 @@ INPUT                  = guides \
                          ../../VCCore/Ports/UserPortTypes.h \
                          ../../VCCore/Ports/VideoPortTypes.h
 FILE_PATTERNS          = *.h *.md
-USE_MDFILE_AS_MAINPAGE = guides/index.md
 RECURSIVE              = NO
 EXAMPLE_PATH           = ../../VCCore
 IMAGE_PATH             = guides/images

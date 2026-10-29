@@ -19,12 +19,12 @@ features:
     link: /setup/build
   - icon: 🧭
     title: Guide
-    details: How the API is organized, how threading and error handling work, and a small example application.
-    link: /guide/introduction
+    details: The threading model, the life cycle of the emulator thread, and how to communicate with the emulator.
+    link: /guide/threading
   - icon: 📚
     title: API
-    details: All API classes, structs and enumerations of the emulation core.
-    link: /api/vc64-VirtualC64
+    details: An overview of the API and all classes, structs and enumerations of the emulation core.
+    link: /api/overview
 ---
 
 ![Code Size](https://img.shields.io/github/languages/code-size/dirkwhoffmann/virtualc64)

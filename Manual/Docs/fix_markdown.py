@@ -10,9 +10,8 @@
     its enumerations in "On this page".
   - Moxygen documents all enumerations on the namespace page. Each one is moved
     to a page of its own (enum-<Name>.md), and all links to it are redirected.
-  - The pages are sorted into guide/ (the guides, the start page is
-    guide/introduction.md), setup/ (the build and setup chapters) and api/
-    (everything else), so that VitePress can show a sidebar for each. All links between pages are made absolute.
+  - The pages are sorted into guide/ (the guides), setup/ (the build and setup
+    chapters) and api/ (the overview page and everything else), so that VitePress can show a sidebar for each. All links between pages are made absolute.
     index.md is the landing page (home.md). The images of the guides are copied
     next to the pages.
 
@@ -79,8 +78,8 @@ def organize(docs):
     target = {}
     for page in docs.glob("*.md"):
         name = page.name
-        if name == "page-index.md":
-            target[name] = "guide/introduction.md"
+        if name.startswith("page-api_"):
+            target[name] = "api/" + name[len("page-api_"):].replace("_", "-")
         elif name.startswith("page-guide_"):
             target[name] = "guide/" + name[len("page-guide_"):].replace("_", "-")
         elif name.startswith("page-setup_"):
