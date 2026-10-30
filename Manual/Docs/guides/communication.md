@@ -19,17 +19,33 @@ The thread structure behind this picture is described in the [Architecture](arch
 
   The emulator informs the front-end about important events by sending messages, for example when a snapshot has been taken, when a ROM has been loaded, or when RetroShell has finished a script. At launch, the front-end registers a callback function that receives all messages. The callback runs on the emulator thread and must not call into the API, but forward the message to a user thread. Messages that report a failed operation carry the exception that caused it.
 
-  Note that messages are not merged, and the queue size is bounded. Thus, a message that arrives at a full queue is dropped.
+  @note Messages are not merged, and the queue size is bounded. Thus, a message that arrives at a full queue is dropped.
 
 ### **Direct access**
 
   Everything that is not a state change is read directly from the emulator, on the calling thread. This comprises queries such as [isRunning()](@ref vc64::VirtualC64::isRunning), the state of the components (`getInfo()` and `getCachedInfo()`), and large data such as textures and audio samples. 
 
-Which mechanism a function uses is part of its documentation. In general, plain-name and `Async` functions use the command queue, while getters use direct access. The sub-APIs ([vc64::CPUAPI](@ref vc64::CPUAPI), [vc64::VICIIAPI](@ref vc64::VICIIAPI), [vc64::SIDAPI](@ref vc64::SIDAPI), and so on) follow the same rules as the main class [vc64::VirtualC64](@ref vc64::VirtualC64).
+Which mechanism a function uses is part of its documentation. In general, plain-name and `Async` functions use the command queue, while getters use direct access. 
 
 ## Blocking and asynchronous functions
 
-Because the queue is processed in order, a blocking call also guarantees that all earlier requests have been carried out. [sync()](@ref vc64::VirtualC64::sync) waits for them without issuing another request.
+Because the queue is processed in order, a blocking call also guarantees that all earlier requests have been carried out.
+
+### Synchronizing with the emulator thread
+
+An asynchronous function returns before the emulator thread has carried out the request, so reading back what has just been changed may still return the old value. [sync()](@ref vc64::VirtualC64::sync) closes this gap. It blocks the calling thread until the emulator thread has carried out every command that was queued before the call, and it changes nothing itself. Use it when asynchronous calls have to be complete before the next step:
+
+```cpp
+c64.setAsync(Opt::VICII_REVISION, long(VICIIRev::PAL_6569_R3));
+
+// Wait until the change has been applied
+c64.sync();
+
+// Returns the new revision
+auto revision = c64.get(Opt::VICII_REVISION);
+```
+
+Like the other blocking functions, `sync()` throws a [CoreError](@ref vc64::CoreError) with code [NOT_LAUNCHED](@ref vc64::CoreError::NOT_LAUNCHED) if the emulator thread cannot carry out commands, and it must not be called from the emulator thread.
 
 A blocking function throws a [CoreError](@ref vc64::CoreError) with code [NOT_LAUNCHED](@ref vc64::CoreError::NOT_LAUNCHED) if the emulator thread cannot carry out the request, i.e., if it has not been launched, has been halted, or has been suspended. Asynchronous requests can be issued in all these situations.
 

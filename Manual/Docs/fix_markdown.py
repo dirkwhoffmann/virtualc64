@@ -65,6 +65,8 @@ def redirect(docs, anchors):
         local = page.name == "vc64.md" or page.name.startswith("enum-")
         def link(match):
             file, anchor = match.group(1), match.group(2)
+            # Links from other pages may still carry moxygen's anchor number
+            anchor = anchor if anchor in anchors else re.sub(r"-\d+$", "", anchor)
             if anchor in anchors and (file or local):
                 return f"](enum-{anchors[anchor]}.md)"
             return match.group(0)

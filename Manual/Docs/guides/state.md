@@ -3,14 +3,14 @@
 
 ## Overview
 
-After launching (see [launch()](@ref vc64::VirtualC64::launch) and [isLaunched()](@ref vc64::VirtualC64::isLaunched)), the emulator runs as a single thread alongside the front-end. The thread lives as long as the emulator object, but it does not compute frames all the time. What it does is controlled by the execution state. 
+After calling [launch()](@ref vc64::VirtualC64::launch), the emulator runs as a single thread alongside the front-end. The thread lives as long as the emulator object, but it does not compute frames all the time. What it does is controlled by its execution state ([vc64::ExecState](@ref vc64::ExecState)). 
 
 - **Off:** The emulator is powered off.
 - **Paused:** The emulator is powered on, but no frames are computed.
 - **Running:** The emulator is powered on and computes frames.
-- **Halted:** The emulator thread has been terminated. This state is only entered inside the shutdown procedure.
+- **Halted:** The emulator is in the middle of shutting down.
 
-The states Off, Paused, Running, and Halted are the values of the enumeration [vc64::ExecState](@ref vc64::ExecState). A state change is requested with the functions shown in the diagram. Like all state-changing functions, they come in a blocking and an asynchronous flavor (for example [run()](@ref vc64::VirtualC64::run) and [runAsync()](@ref vc64::VirtualC64::runAsync), see [Communication Model](communication.md)).
+A state change is requested with the functions shown in the diagram. Like all state-changing functions, they come in a blocking and an asynchronous flavor (for example [run()](@ref vc64::VirtualC64::run) and [runAsync()](@ref vc64::VirtualC64::runAsync)).
 
 @image html state.svg ""
 
@@ -28,7 +28,7 @@ c64.suspend();
 c64.resume();
 ```
 
-Suspensions can be nested. Each [suspend()](@ref vc64::API::suspend) must be followed by exactly one [resume()](@ref vc64::API::resume), so the code in between must not be left by an exception. Only one thread can hold a suspension at a time; others wait until it is released. The holder must not call a blocking API function, because the emulator thread cannot carry out the request. Such a call throws a CoreError instead of deadlocking. Use the asynchronous flavors instead.
+Suspensions can be nested. Each [suspend()](@ref vc64::API::suspend) must be followed by exactly one [resume()](@ref vc64::API::resume), so the code in between must not be left by an exception. Only one thread can hold a suspension at a time; others wait until it is released. The holder must not call a blocking API function, because the emulator thread cannot carry out the request. Such a call throws a [CoreError](@ref vc64::CoreError) instead of deadlocking. Use the asynchronous flavors instead.
 
 ## Synchronization
 
