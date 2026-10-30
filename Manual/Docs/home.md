@@ -19,8 +19,8 @@ features:
     link: /setup/build
   - icon: 🧭
     title: Guide
-    details: The threading model, the life cycle of the emulator thread, and how to communicate with the emulator.
-    link: /guide/threading
+    details: The architecture of the core, how to communicate with the emulator, and the life cycle of the emulator thread.
+    link: /guide/architecture
   - icon: 📚
     title: API
     details: An overview of the API and all classes, structs and enumerations of the emulation core.

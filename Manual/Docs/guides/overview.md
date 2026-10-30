@@ -37,7 +37,7 @@ All API classes are derived from [vc64::API](@ref vc64::API), which provides [su
 | `getInfo()`, `getCachedInfo()`, `getMetrics()`, ... | Read the state of a component. |
 | `foo()` / `fooAsync()` | Blocking and asynchronous flavor of a state-changing function. |
 
-To be notified about events, register a message callback with [launch()](@ref vc64::VirtualC64::launch). The messages are listed in the enumeration [vc64::Msg](@ref vc64::Msg). The [Threading Model](threading.md) explains which thread may call what.
+To be notified about events, register a message callback with [launch()](@ref vc64::VirtualC64::launch). The messages are listed in the enumeration [vc64::Msg](@ref vc64::Msg). The [Architecture](architecture.md) explains which thread may call what.
 
 ## Errors
 

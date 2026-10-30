@@ -1,10 +1,10 @@
 # Building the Core {#setup_build}
 
-The emulator core lives in the `VCCore` directory of the repository. It is a plain C++20 library with a CMake build, so it can be built without Xcode and embedded into any project. The macOS application uses the same sources through the Xcode project.
+The emulator core lives in the `VCCore` directory of the repository. It is a plain C++20 library with a CMake build. The macOS application uses the same sources through the Xcode project.
 
 ## Requirements
 
-- A C++20 compiler: GCC, Clang (including Apple Clang), or Visual Studio (MSVC).
+- A C++20 compiler: GCC, Clang, or Visual Studio (MSVC).
 - CMake 3.20 or newer.
 - A threading library (POSIX threads on Linux and macOS, found automatically by CMake).
 - Optionally zlib. If CMake finds it, the core is built with support for compressed files (gzip). Without zlib, the build still succeeds and the compressed formats are unavailable.
@@ -119,8 +119,5 @@ int main()
 }
 ```
 
-The chapter @ref setup_headless "Headless App" shows a complete program that is used for smoke tests. The [API overview](@ref api_overview) lists all sub-APIs, and the [Threading Model](threading.md) explains which thread may call what.
+The chapter @ref setup_headless "Headless App" shows a complete program that is used for smoke tests. The [API overview](@ref api_overview) lists all sub-APIs, and the [Architecture](architecture.md) explains which thread may call what.
 
-## Building the macOS application
-
-The macOS application is built with Xcode. Open `VirtualC64.xcodeproj` and build the `VirtualC64` scheme. The project compiles the sources in `VCCore` directly and does not use CMake. The `Headless` scheme builds the command-line app.
