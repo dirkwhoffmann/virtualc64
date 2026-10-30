@@ -75,6 +75,12 @@ def redirect(docs, anchors):
         if new != text:
             page.write_text(new)
 
+def slugs(page):
+    """The anchors VitePress generates for the headings of a page."""
+    text = re.sub(r"\A---\n.*?\n---\n", "", page.read_text(), count=1, flags=re.S)
+    return {re.sub(r"[^\w-]", "", re.sub(r"\s*\{#[^}]*\}$", "", h).lower().replace(" ", "-"))
+            for h in re.findall(r"(?m)^#{1,6} (.+?)\s*$", text)}
+
 def organize(docs):
     """Moves the pages to guide/ and api/ and repairs the links."""
     target = {}
@@ -86,12 +92,20 @@ def organize(docs):
             target[name] = "guide/" + name[len("page-guide_"):].replace("_", "-")
         else:
             target[name] = "api/" + name
+    known_slugs = {name: slugs(docs / name) for name in target}
     def link(match):
         file, anchor = match.group(1), match.group(2) or ""
         if file not in target:
             return match.group(0)
         if target[file].startswith("guide/"):
             anchor = ""  # the anchors of Doxygen pages do not exist
+        elif anchor:
+            # moxygen numbers anchors; VitePress headings carry no number
+            known = known_slugs[file]
+            name = anchor[1:]
+            if name not in known:
+                base = re.sub(r"-\d+$", "", name)
+                anchor = f"#{base}" if base in known else ""
         return f"](/{target[file]}{anchor})"
     for name, new in target.items():
         text = re.sub(r"\]\(([\w.-]+\.md)(#[^)]*)?\)", link, (docs / name).read_text())

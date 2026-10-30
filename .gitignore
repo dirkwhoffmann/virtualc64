@@ -20,7 +20,7 @@ xcuserdata/
 *xcworkspace
 .DS_Store
 
-## Documentation tooling (see Manual/Docs)
+## Documentation tooling (see Manual)
 node_modules/
 .vite/
 .vitepress/cache/
