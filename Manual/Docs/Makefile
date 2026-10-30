@@ -24,7 +24,10 @@ markdown:
 	doxygen Doxyfile
 	python3 prepare_xml.py build/doxygen/xml build/xml
 	rm -rf $(GENERATED)
-	npx moxygen -c -p -a -f -F github -o 'docs/%s.md' build/xml > /dev/null
+	@# moxygen warns "namespace mismatch" for every class: it reads the namespace of a
+	@# class before it has been set. The result is correct, so the warning is filtered.
+	npx moxygen -c -p -a -f -F github -o 'docs/%s.md' build/xml > /dev/null 2> build/moxygen.err || { cat build/moxygen.err; exit 1; }
+	@grep -v 'namespace mismatch' build/moxygen.err || true
 	python3 fix_markdown.py docs guides/images
 
 all: markdown

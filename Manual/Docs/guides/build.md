@@ -1,15 +1,13 @@
 # Building the Core {#guide_build}
 
-The emulator core lives in the `VCCore` directory of the repository. It is a plain C++20 library with a CMake build. The macOS application uses the same sources through the Xcode project.
+The emulator core is located in the `VCCore` directory of the repository. It is a plain C++20 library with a CMake build. The macOS application uses the same sources through the Xcode project.
 
 ## Requirements
 
-- A C++20 compiler: GCC, Clang, or Visual Studio (MSVC).
-- CMake 3.20 or newer.
-- A threading library (POSIX threads on Linux and macOS, found automatically by CMake).
-- Optionally zlib. If CMake finds it, the core is built with support for compressed files (gzip). Without zlib, the build still succeeds and the compressed formats are unavailable.
+- A C++20 compiler: GCC, Clang, or Visual Studio (MSVC)
+- CMake
 
-The compiler options are strict: the sources are compiled with `-Wall -Werror` (GCC and Clang) or `/W4 /WX` (MSVC), so a warning fails the build.
+If CMake finds zlib, the core is built with support for compressed files (gzip). Without zlib, the build still succeeds and the compressed formats are unavailable.
 
 ## Targets
 
@@ -17,10 +15,10 @@ The compiler options are strict: the sources are compiled with `-Wall -Werror` (
 
 | Target | Description |
 |--------|-------------|
-| `VCCore` | The emulator core as a library. It links the utility library `utlib`, the retro library `rvlib` (disk images, file systems, ROMs), the SID emulation `resid`, and the threading library. |
-| `VC64Headless` | A small command-line app that is used for smoke tests (see @ref guide_headless "Headless App"). |
+| `VCCore` | The emulator core as a library. It links the utility library `utlib`, the retro vault library `rvlib`, and the SID emulation `resid`. |
+| `VC64Headless` | A small command-line app performing smoke tests (see @ref guide_headless "Headless App"). |
 
-If you do not set a build type, CMake builds the Release configuration.
+With no build type set, CMake builds the Release configuration.
 
 ## Building on Linux and macOS
 
@@ -119,5 +117,5 @@ int main()
 }
 ```
 
-The chapter @ref guide_headless "Headless App" shows a complete program that is used for smoke tests. The [API overview](@ref api_overview) lists all sub-APIs, and the [Architecture](architecture.md) explains which thread may call what.
+The chapter @ref guide_headless "Headless App" shows a complete program that is used for smoke tests.
 

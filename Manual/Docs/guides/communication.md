@@ -19,7 +19,7 @@ The thread structure behind this picture is described in the [Architecture](arch
 
   The emulator informs the front-end about important events by sending messages, for example when a snapshot has been taken, when a ROM has been loaded, or when RetroShell has finished a script. At launch, the front-end registers a callback function that receives all messages. The callback runs on the emulator thread and must not call into the API, but forward the message to a user thread. Messages that report a failed operation carry the exception that caused it.
 
-  Messages are not merged. The queue is bounded, that is, a message that arrives at a full queue is dropped.
+  Note that messages are not merged, and the queue size is bounded. Thus, a message that arrives at a full queue is dropped.
 
 ### **Direct access**
 
