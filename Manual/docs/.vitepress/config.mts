@@ -107,6 +107,8 @@ export default defineConfig({
   title: 'VirtualC64',
   description: 'Public API of the VirtualC64 emulation core',
   lang: 'en-US',
+  // The published site lives in a subfolder (see "make publish")
+  base: process.env.BASE || '/',
   cleanUrls: true,
   outDir: '../build/site',
   markdown: { theme: scheme.code },

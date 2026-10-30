@@ -7,16 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50AD0420305C000000A1B2C3 /* HDFLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0401305C000000A1B2C3 /* HDFLayout.cpp */; };
-		50AD0421305C000000A1B2C3 /* RomManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0403305C000000A1B2C3 /* RomManager.cpp */; };
-		50AD0422305C000000A1B2C3 /* RomsAmiga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */; };
-		50AD0423305C000000A1B2C3 /* RomsC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0406305C000000A1B2C3 /* RomsC64.cpp */; };
-		50AD0440305C000000A1B2C3 /* HDFLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0401305C000000A1B2C3 /* HDFLayout.cpp */; };
-		50AD0441305C000000A1B2C3 /* RomManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0403305C000000A1B2C3 /* RomManager.cpp */; };
-		50AD0442305C000000A1B2C3 /* RomsAmiga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */; };
-		50AD0443305C000000A1B2C3 /* RomsC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0406305C000000A1B2C3 /* RomsC64.cpp */; };
-		50AD0022305C000000A1B2C3 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */; };
-		50AD0023305C000000A1B2C3 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */; };
 		025229EF0AF27E740024DAB3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025229EE0AF27E740024DAB3 /* CoreAudio.framework */; };
 		5003382B266F7F3C00D5456E /* VICIITable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICIITable.cpp */; };
 		500375062C23F26000979A1B /* C64Base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500375052C23F26000979A1B /* C64Base.cpp */; };
@@ -608,6 +598,16 @@
 		50AD0008305C000000A1B2C3 /* Images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0006305C000000A1B2C3 /* Images.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		50AD0009305C000000A1B2C3 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0005305C000000A1B2C3 /* Colors.cpp */; };
 		50AD0010305C000000A1B2C3 /* Images.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0006305C000000A1B2C3 /* Images.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
+		50AD0022305C000000A1B2C3 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */; };
+		50AD0023305C000000A1B2C3 /* BackedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */; };
+		50AD0420305C000000A1B2C3 /* HDFLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0401305C000000A1B2C3 /* HDFLayout.cpp */; };
+		50AD0421305C000000A1B2C3 /* RomManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0403305C000000A1B2C3 /* RomManager.cpp */; };
+		50AD0422305C000000A1B2C3 /* RomsAmiga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */; };
+		50AD0423305C000000A1B2C3 /* RomsC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0406305C000000A1B2C3 /* RomsC64.cpp */; };
+		50AD0440305C000000A1B2C3 /* HDFLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0401305C000000A1B2C3 /* HDFLayout.cpp */; };
+		50AD0441305C000000A1B2C3 /* RomManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0403305C000000A1B2C3 /* RomManager.cpp */; };
+		50AD0442305C000000A1B2C3 /* RomsAmiga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */; };
+		50AD0443305C000000A1B2C3 /* RomsC64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD0406305C000000A1B2C3 /* RomsC64.cpp */; };
 		50AE19392632B787005A5898 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE19372632B787005A5898 /* Script.cpp */; };
 		50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
 		50AEEE7326305625001DED20 /* C64Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AEEE7126305625001DED20 /* C64Key.cpp */; };
@@ -751,16 +751,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		50AD0400305C000000A1B2C3 /* HDFLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDFLayout.h; sourceTree = "<group>"; };
-		50AD0401305C000000A1B2C3 /* HDFLayout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HDFLayout.cpp; sourceTree = "<group>"; };
-		50AD0402305C000000A1B2C3 /* RomManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RomManager.h; sourceTree = "<group>"; };
-		50AD0403305C000000A1B2C3 /* RomManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomManager.cpp; sourceTree = "<group>"; };
-		50AD0404305C000000A1B2C3 /* RomTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RomTypes.h; sourceTree = "<group>"; };
-		50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomsAmiga.cpp; sourceTree = "<group>"; };
-		50AD0406305C000000A1B2C3 /* RomsC64.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomsC64.cpp; sourceTree = "<group>"; };
-		50AD0031305C000000A1B2C3 /* TempFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempFile.h; sourceTree = "<group>"; };
-		50AD0020305C000000A1B2C3 /* BackedBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackedBuffer.h; sourceTree = "<group>"; };
-		50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackedBuffer.cpp; sourceTree = "<group>"; };
 		025229EE0AF27E740024DAB3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -1462,6 +1452,16 @@
 		50AD0004305C000000A1B2C3 /* Images.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Images.h; sourceTree = "<group>"; };
 		50AD0005305C000000A1B2C3 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
 		50AD0006305C000000A1B2C3 /* Images.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Images.cpp; sourceTree = "<group>"; };
+		50AD0020305C000000A1B2C3 /* BackedBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackedBuffer.h; sourceTree = "<group>"; };
+		50AD0021305C000000A1B2C3 /* BackedBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackedBuffer.cpp; sourceTree = "<group>"; };
+		50AD0031305C000000A1B2C3 /* TempFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempFile.h; sourceTree = "<group>"; };
+		50AD0400305C000000A1B2C3 /* HDFLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HDFLayout.h; sourceTree = "<group>"; };
+		50AD0401305C000000A1B2C3 /* HDFLayout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HDFLayout.cpp; sourceTree = "<group>"; };
+		50AD0402305C000000A1B2C3 /* RomManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RomManager.h; sourceTree = "<group>"; };
+		50AD0403305C000000A1B2C3 /* RomManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomManager.cpp; sourceTree = "<group>"; };
+		50AD0404305C000000A1B2C3 /* RomTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RomTypes.h; sourceTree = "<group>"; };
+		50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomsAmiga.cpp; sourceTree = "<group>"; };
+		50AD0406305C000000A1B2C3 /* RomsC64.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RomsC64.cpp; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
 		50AE19382632B787005A5898 /* Script.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Script.h; sourceTree = "<group>"; };
 		50AE193A2633E9B0005A5898 /* RegressionTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RegressionTester.cpp; sourceTree = "<group>"; };
@@ -1651,18 +1651,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		50AD0460305C000000A1B2C3 /* Roms */ = {
-			isa = PBXGroup;
-			children = (
-				50AD0402305C000000A1B2C3 /* RomManager.h */,
-				50AD0403305C000000A1B2C3 /* RomManager.cpp */,
-				50AD0404305C000000A1B2C3 /* RomTypes.h */,
-				50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */,
-				50AD0406305C000000A1B2C3 /* RomsC64.cpp */,
-			);
-			path = Roms;
-			sourceTree = "<group>";
-		};
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3163,6 +3151,18 @@
 			path = gfx;
 			sourceTree = "<group>";
 		};
+		50AD0460305C000000A1B2C3 /* Roms */ = {
+			isa = PBXGroup;
+			children = (
+				50AD0402305C000000A1B2C3 /* RomManager.h */,
+				50AD0403305C000000A1B2C3 /* RomManager.cpp */,
+				50AD0404305C000000A1B2C3 /* RomTypes.h */,
+				50AD0405305C000000A1B2C3 /* RomsAmiga.cpp */,
+				50AD0406305C000000A1B2C3 /* RomsC64.cpp */,
+			);
+			path = Roms;
+			sourceTree = "<group>";
+		};
 		50B114B72E8FB0EE00EC854D /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -4130,7 +4130,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 260901;
+				CURRENT_PROJECT_VERSION = 261030;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -4163,7 +4163,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2b1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
 				OTHER_CFLAGS = "$(inherited)";
@@ -4191,7 +4191,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 260901;
+				CURRENT_PROJECT_VERSION = 261030;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -4222,7 +4222,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
-				MARKETING_VERSION = 6.1;
+				MARKETING_VERSION = 6.2b1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 c++20";
 				OTHER_CFLAGS = "$(inherited)";

@@ -4,6 +4,7 @@
 #   make serve    Live preview (VitePress dev server, http://localhost:5173)
 #   make dev      Like serve, but also rebuilds the pages whenever a header or
 #                 guide changes (reload happens automatically)
+#   make publish  Build for the web site and copy it over the old documentation
 #   make clean
 #
 # The color scheme is selected with SCHEME (catppuccin, dracula, nord or
@@ -49,7 +50,17 @@ dev: markdown
 	   done ) & WATCHER=$$!; trap "kill $$WATCHER" EXIT INT TERM; \
 	npx vitepress dev docs
 
+# The web site is a clone of dirkwhoffmann.github.io next to the Retro folder
+PUBLISH_DIR ?= ../../dirkwhoffmann.github.io/VirtualC64/docs
+
+publish: markdown
+	BASE=/VirtualC64/docs/ npx vitepress build docs
+	rm -rf $(PUBLISH_DIR)
+	cp -R build/site $(PUBLISH_DIR)
+	rm -rf build/site
+	@echo "Copied the site to $(PUBLISH_DIR). Commit it there."
+
 clean:
 	rm -rf build $(GENERATED) moxygen.log docs/.vitepress/cache
 
-.PHONY: all markdown serve dev clean
+.PHONY: all markdown serve dev publish clean
