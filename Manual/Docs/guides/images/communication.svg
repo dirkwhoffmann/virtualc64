@@ -1,40 +1,247 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" height="680" font-family="Helvetica, Arial, sans-serif" font-size="17">
-<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker></defs>
-<rect x="1" y="1" width="998" height="678" rx="12" fill="#dde1ff" stroke="#c9ceee"/>
-<text x="30" y="38" text-anchor="start" font-weight="bold">Communication Model — VirtualC64 5.0</text>
-<rect x="40" y="60" width="920" height="90" rx="14" fill="none" stroke="#000" stroke-width="1.4" stroke-dasharray="6 5"/>
-<text x="60" y="82" text-anchor="start" font-size="14">User thread(s)</text>
-<rect x="380" y="90" width="240" height="46" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="500.0" y="119.0" text-anchor="middle">Front-end (GUI)</text>
-<rect x="40" y="200" width="920" height="100" rx="14" fill="none" stroke="#000" stroke-width="1.4" stroke-dasharray="6 5"/>
-<text x="60" y="222" text-anchor="start" font-size="14">VirtualC64 API</text>
-<rect x="80" y="238" width="250" height="50" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="205.0" y="269.0" text-anchor="middle">…Async() / input events</text>
-<rect x="375" y="238" width="250" height="50" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="500.0" y="269.0" text-anchor="middle">Blocking functions</text>
-<rect x="670" y="238" width="250" height="50" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="795.0" y="269.0" text-anchor="middle">getInfo() / queries</text>
-<rect x="40" y="350" width="920" height="310" rx="14" fill="none" stroke="#000" stroke-width="1.4" stroke-dasharray="6 5"/>
-<text x="60" y="372" text-anchor="start" font-size="14">Emulator thread</text>
-<rect x="80" y="395" width="220" height="100" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="190.0" y="442.0" text-anchor="middle" font-weight="bold">CmdQueue</text><text x="190.0" y="463.0" text-anchor="middle" font-size="14">drained in update()</text>
-<rect x="380" y="395" width="240" height="100" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="500.0" y="442.0" text-anchor="middle" font-weight="bold">C64 components</text><text x="500.0" y="463.0" text-anchor="middle" font-size="14">CPU, VICII, SID, CIA, …</text>
-<rect x="700" y="395" width="220" height="100" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="810.0" y="442.0" text-anchor="middle" font-weight="bold">Info cache</text><text x="810.0" y="463.0" text-anchor="middle" font-size="14">recorded periodically</text>
-<rect x="380" y="575" width="240" height="60" rx="14" fill="#fdf5e1" stroke="#000" stroke-width="2.4"/><text x="500.0" y="611.0" text-anchor="middle">MsgQueue</text>
-<path d="M420,136 L420,175 L205,175 L205,238" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<path d="M500,136 L500,238" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<path d="M580,136 L580,175 L795,175 L795,238" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<path d="M530,238 L530,136" fill="none" stroke="#000" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#a)"/>
-<path d="M205,288 L205,395" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<path d="M430,288 L430,318 L255,318 L255,395" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<text x="345" y="310" text-anchor="middle" font-size="14">queue</text>
-<path d="M290,395 L290,335 L470,335 L470,288" fill="none" stroke="#000" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#a)"/>
-<text x="380" y="352" text-anchor="middle" font-size="14">wait for result</text>
-<path d="M300,445 L380,445" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<text x="340" y="437" text-anchor="middle" font-size="14">run</text>
-<path d="M620,445 L700,445" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<text x="660" y="437" text-anchor="middle" font-size="14">save</text>
-<path d="M500,495 L500,575" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<text x="512" y="540" text-anchor="start" font-size="14">events</text>
-<path d="M790,395 L790,288" fill="none" stroke="#000" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#a)"/>
-<text x="798" y="335" text-anchor="start" font-size="14">getCachedInfo()</text>
-<path d="M600,395 L600,365 L900,365 L900,288" fill="none" stroke="#000" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#a)"/>
-<text x="612" y="386" text-anchor="start" font-size="14">getInfo() (live)</text>
-<path d="M380,605 L62,605 L62,113 L380,113" fill="none" stroke="#000" stroke-width="2.2" marker-end="url(#a)"/>
-<text x="72" y="595" text-anchor="start" font-size="14">message callback (called on the emulator thread)</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="-904.5 -696.5 881 761" width="881" height="761">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -3 7 6" markerWidth="7" markerHeight="6" color="black">
+      <g>
+        <path d="M 4.8 0 L 0 -1.8 L 0 1.8 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-6 -3 7 6" markerWidth="7" markerHeight="6" color="black">
+      <g>
+        <path d="M -4.8 0 L 0 1.8 L 0 -1.8 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Communication_model" fill="none" stroke-dasharray="none" fill-opacity="1" stroke="none" stroke-opacity="1">
+    <title>Communication model</title>
+    <g id="Communication_model_Ebene_1">
+      <title>Ebene 1</title>
+      <g id="Graphic_45">
+        <path d="M -898 -696 L -30 -696 C -26.68629 -696 -24 -693.3137 -24 -690 L -24 58 C -24 61.31371 -26.68629 64 -30 64 L -898 64 C -901.3137 64 -904 61.31371 -904 58 L -904 -690 C -904 -693.3137 -901.3137 -696 -898 -696 Z" fill="#d7d8df"/>
+        <path d="M -898 -696 L -30 -696 C -26.68629 -696 -24 -693.3137 -24 -690 L -24 58 C -24 61.31371 -26.68629 64 -30 64 L -898 64 C -901.3137 64 -904 61.31371 -904 58 L -904 -690 C -904 -693.3137 -901.3137 -696 -898 -696 Z" stroke="#dedede" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_26">
+        <path d="M -824 -304 L -128 -304 C -119.16344 -304 -112 -296.83656 -112 -288 L -112 0 C -112 8.836556 -119.16344 16 -128 16 L -824 16 C -832.8366 16 -840 8.836556 -840 19594349e-22 L -840 -288 C -840 -296.83656 -832.8366 -304 -824 -304 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_25">
+        <path d="M -648 -280 L -144 -280 C -135.16344 -280 -128 -272.83656 -128 -264 L -128 -112 C -128 -103.16344 -135.16344 -96 -144 -96 L -648 -96 C -656.83656 -96 -664 -103.16344 -664 -112 L -664 -264 C -664 -272.83656 -656.83656 -280 -648 -280 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_27">
+        <path d="M -856 -464 L -80 -464 C -71.16344 -464 -64 -456.83656 -64 -448 L -64 24 C -64 32.836556 -71.16344 40 -80 40 L -856 40 C -864.8366 40 -872 32.836556 -872 24 L -872 -448 C -872 -456.83656 -864.8366 -464 -856 -464 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_38">
+        <path d="M -776 -432 L -128 -432 C -119.16344 -432 -112 -424.83656 -112 -416 L -112 -352 C -112 -343.16344 -119.16344 -336 -128 -336 L -776 -336 C -784.8366 -336 -792 -343.16344 -792 -352 L -792 -416 C -792 -424.83656 -784.8366 -432 -776 -432 Z" fill="#fef6e3"/>
+        <path d="M -776 -432 L -128 -432 C -119.16344 -432 -112 -424.83656 -112 -416 L -112 -352 C -112 -343.16344 -119.16344 -336 -128 -336 L -776 -336 C -784.8366 -336 -792 -343.16344 -792 -352 L -792 -416 C -792 -424.83656 -784.8366 -432 -776 -432 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_34">
+        <path d="M -776 -608 L -128 -608 C -119.16344 -608 -112 -600.83656 -112 -592 L -112 -560 C -112 -551.16344 -119.16344 -544 -128 -544 L -776 -544 C -784.8366 -544 -792 -551.16344 -792 -560 L -792 -592 C -792 -600.83656 -784.8366 -608 -776 -608 Z" fill="#fef6e3"/>
+        <path d="M -776 -608 L -128 -608 C -119.16344 -608 -112 -600.83656 -112 -592 L -112 -560 C -112 -551.16344 -119.16344 -544 -128 -544 L -776 -544 C -784.8366 -544 -792 -551.16344 -792 -560 L -792 -592 C -792 -600.83656 -784.8366 -608 -776 -608 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-787 -585.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="321.08" y="15" xml:space="preserve">GUI</tspan>
+        </text>
+      </g>
+      <g id="Line_33">
+        <path d="M -792 -384 L -816 -384 L -816 -188 L -804.9 -188" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Line_31">
+        <path d="M -264 -40 L -88 -40 L -88 -576 L -123.1 -576" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_30">
+        <text transform="translate(-499 -671.448)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="5.952" y="15" xml:space="preserve">Video Frames</tspan>
+        </text>
+      </g>
+      <g id="Graphic_28">
+        <text transform="translate(-163 -515)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="2.552" y="15" xml:space="preserve">Message</tspan>
+        </text>
+      </g>
+      <g id="Graphic_24">
+        <path d="M -776 -272 L -696 -272 C -687.16344 -272 -680 -264.83656 -680 -256 L -680 -120 C -680 -111.16344 -687.16344 -104 -696 -104 L -776 -104 C -784.8366 -104 -792 -111.16344 -792 -120 L -792 -256 C -792 -264.83656 -784.8366 -272 -776 -272 Z" fill="#fef6e3"/>
+        <path d="M -776 -272 L -696 -272 C -687.16344 -272 -680 -264.83656 -680 -256 L -680 -120 C -680 -111.16344 -687.16344 -104 -696 -104 L -776 -104 C -784.8366 -104 -792 -111.16344 -792 -120 L -792 -256 C -792 -264.83656 -784.8366 -272 -776 -272 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-787 -197.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="10.088" y="15" xml:space="preserve">CmdQueue</tspan>
+        </text>
+      </g>
+      <g id="Graphic_21">
+        <path d="M -616 -256 L -536 -256 C -527.16344 -256 -520 -248.83656 -520 -240 L -520 -240 C -520 -231.16344 -527.16344 -224 -536 -224 L -616 -224 C -624.83656 -224 -632 -231.16344 -632 -240 L -632 -240 C -632 -248.83656 -624.83656 -256 -616 -256 Z" fill="#fef6e3"/>
+        <path d="M -616 -256 L -536 -256 C -527.16344 -256 -520 -248.83656 -520 -240 L -520 -240 C -520 -231.16344 -527.16344 -224 -536 -224 L -616 -224 C -624.83656 -224 -632 -231.16344 -632 -240 L -632 -240 C -632 -248.83656 -624.83656 -256 -616 -256 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-627 -249.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="34.264" y="15" xml:space="preserve">CPU</tspan>
+        </text>
+      </g>
+      <g id="Graphic_20">
+        <path d="M -488 -224 L -408 -224 C -399.16344 -224 -392 -216.83656 -392 -208 L -392 -208 C -392 -199.16344 -399.16344 -192 -408 -192 L -488 -192 C -496.83656 -192 -504 -199.16344 -504 -208 L -504 -208 C -504 -216.83656 -496.83656 -224 -488 -224 Z" fill="#fef6e3"/>
+        <path d="M -488 -224 L -408 -224 C -399.16344 -224 -392 -216.83656 -392 -208 L -392 -208 C -392 -199.16344 -399.16344 -192 -408 -192 L -488 -192 C -496.83656 -192 -504 -199.16344 -504 -208 L -504 -208 C -504 -216.83656 -496.83656 -224 -488 -224 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-499 -217.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="37.968" y="15" xml:space="preserve">CIA</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <path d="M -232 -160 L -152 -160 C -143.16344 -160 -136 -152.83656 -136 -144 L -136 -144 C -136 -135.16344 -143.16344 -128 -152 -128 L -232 -128 C -240.83656 -128 -248 -135.16344 -248 -144 L -248 -144 C -248 -152.83656 -240.83656 -160 -232 -160 Z" fill="#fef6e3"/>
+        <path d="M -232 -160 L -152 -160 C -143.16344 -160 -136 -152.83656 -136 -144 L -136 -144 C -136 -135.16344 -143.16344 -128 -152 -128 L -232 -128 C -240.83656 -128 -248 -135.16344 -248 -144 L -248 -144 C -248 -152.83656 -240.83656 -160 -232 -160 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-243 -153.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="43" y="15" xml:space="preserve">…</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <path d="M -616 -72 L -280 -72 C -271.16344 -72 -264 -64.836556 -264 -56 L -264 -24 C -264 -15.163444 -271.16344 -8 -280 -8 L -616 -8 C -624.83656 -8 -632 -15.163444 -632 -24 L -632 -56 C -632 -64.836556 -624.83656 -72 -616 -72 Z" fill="#fef6e3"/>
+        <path d="M -616 -72 L -280 -72 C -271.16344 -72 -264 -64.836556 -264 -56 L -264 -24 C -264 -15.163444 -271.16344 -8 -280 -8 L -616 -8 C -624.83656 -8 -632 -15.163444 -632 -24 L -632 -56 C -632 -64.836556 -624.83656 -72 -616 -72 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-627 -49.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="139.872" y="15" xml:space="preserve">MsgQueue</tspan>
+        </text>
+      </g>
+      <g id="Graphic_13">
+        <path d="M -616 -400 L -536 -400 C -527.16344 -400 -520 -392.83656 -520 -384 L -520 -384 C -520 -375.16344 -527.16344 -368 -536 -368 L -616 -368 C -624.83656 -368 -632 -375.16344 -632 -384 L -632 -384 C -632 -392.83656 -624.83656 -400 -616 -400 Z" fill="#fef6e3"/>
+        <path d="M -616 -400 L -536 -400 C -527.16344 -400 -520 -392.83656 -520 -384 L -520 -384 C -520 -375.16344 -527.16344 -368 -536 -368 L -616 -368 C -624.83656 -368 -632 -375.16344 -632 -384 L -632 -384 C -632 -392.83656 -624.83656 -400 -616 -400 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-627 -393.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.824" y="15" xml:space="preserve">CPUAPI</tspan>
+        </text>
+      </g>
+      <g id="Graphic_12">
+        <path d="M -488 -400 L -408 -400 C -399.16344 -400 -392 -392.83656 -392 -384 L -392 -384 C -392 -375.16344 -399.16344 -368 -408 -368 L -488 -368 C -496.83656 -368 -504 -375.16344 -504 -384 L -504 -384 C -504 -392.83656 -496.83656 -400 -488 -400 Z" fill="#fef6e3"/>
+        <path d="M -488 -400 L -408 -400 C -399.16344 -400 -392 -392.83656 -392 -384 L -392 -384 C -392 -375.16344 -399.16344 -368 -408 -368 L -488 -368 C -496.83656 -368 -504 -375.16344 -504 -384 L -504 -384 C -504 -392.83656 -496.83656 -400 -488 -400 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-499 -393.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="25.528" y="15" xml:space="preserve">CIAAPI</tspan>
+        </text>
+      </g>
+      <g id="Graphic_11">
+        <path d="M -232 -400 L -152 -400 C -143.16344 -400 -136 -392.83656 -136 -384 L -136 -384 C -136 -375.16344 -143.16344 -368 -152 -368 L -232 -368 C -240.83656 -368 -248 -375.16344 -248 -384 L -248 -384 C -248 -392.83656 -240.83656 -400 -232 -400 Z" fill="#fef6e3"/>
+        <path d="M -232 -400 L -152 -400 C -143.16344 -400 -136 -392.83656 -136 -384 L -136 -384 C -136 -375.16344 -143.16344 -368 -152 -368 L -232 -368 C -240.83656 -368 -248 -375.16344 -248 -384 L -248 -384 C -248 -392.83656 -240.83656 -400 -232 -400 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-243 -393.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="30.56" y="15" xml:space="preserve">…API</tspan>
+        </text>
+      </g>
+      <g id="Line_5">
+        <line x1="-448" y1="-355.1" x2="-448" y2="-237.9" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Line_4">
+        <line x1="-576" y1="-355.1" x2="-576" y2="-269.9" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_39">
+        <text transform="translate(-771 -393.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.664" y="15" xml:space="preserve">VirtualC64API</tspan>
+        </text>
+      </g>
+      <g id="Graphic_44">
+        <rect x="-640" y="-294.224" width="40" height="28.447998" fill="#d7d8df"/>
+        <text transform="translate(-635 -289.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".328" y="15" xml:space="preserve">C64</tspan>
+        </text>
+      </g>
+      <g id="Graphic_43">
+        <rect x="-792" y="-320" width="80" height="28.447998" fill="#d7d8df"/>
+        <text transform="translate(-787 -315)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="2.992" y="15" xml:space="preserve">Emulator</tspan>
+        </text>
+      </g>
+      <g id="Graphic_42">
+        <rect x="-848" y="-476.448" width="96" height="28.447998" fill="#d7d8df"/>
+        <text transform="translate(-843 -471.448)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="6.104" y="15" xml:space="preserve">VirtualC64</tspan>
+        </text>
+      </g>
+      <g id="Graphic_47"/>
+      <g id="Line_46">
+        <line x1="-625" y1="-544" x2="-625" y2="-444.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_51"/>
+      <g id="Line_50">
+        <line x1="-297" y1="-544" x2="-297" y2="-444.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_53"/>
+      <g id="Line_52">
+        <line x1="-281" y1="-432" x2="-281" y2="-531.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_54">
+        <text transform="translate(-619 -515)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="27000624e-20" y="15" xml:space="preserve">Async call</tspan>
+        </text>
+      </g>
+      <g id="Graphic_55">
+        <text transform="translate(-396.184 -515)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Blocking call</tspan>
+        </text>
+      </g>
+      <g id="Graphic_58">
+        <text transform="translate(-355 -671.448)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="14.096" y="15" xml:space="preserve">Audio samples</tspan>
+        </text>
+      </g>
+      <g id="Graphic_60">
+        <text transform="translate(-683 -670.7636)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="4.04" y="15" xml:space="preserve">External events</tspan>
+        </text>
+      </g>
+      <g id="Graphic_61">
+        <path d="M -232 -592 L -152 -592 C -143.16344 -592 -136 -584.83656 -136 -576 L -136 -576 C -136 -567.16344 -143.16344 -560 -152 -560 L -232 -560 C -240.83656 -560 -248 -567.16344 -248 -576 L -248 -576 C -248 -584.83656 -240.83656 -592 -232 -592 Z" fill="#fef6e3"/>
+        <path d="M -232 -592 L -152 -592 C -143.16344 -592 -136 -584.83656 -136 -576 L -136 -576 C -136 -567.16344 -143.16344 -560 -152 -560 L -232 -560 C -240.83656 -560 -248 -567.16344 -248 -576 L -248 -576 C -248 -584.83656 -240.83656 -592 -232 -592 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-243 -585.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="18.408" y="15" xml:space="preserve">process()</tspan>
+        </text>
+      </g>
+      <g id="Line_62">
+        <line x1="-192" y1="-355.1" x2="-192" y2="-173.9" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_64"/>
+      <g id="Line_63">
+        <line x1="-321" y1="-160" x2="-321" y2="-84.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_67"/>
+      <g id="Line_66">
+        <line x1="-449" y1="-192" x2="-449" y2="-84.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_69"/>
+      <g id="Line_68">
+        <line x1="-577" y1="-224" x2="-577" y2="-84.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_71">
+        <path d="M -360 -192 L -280 -192 C -271.16344 -192 -264 -184.83656 -264 -176 L -264 -176 C -264 -167.16344 -271.16344 -160 -280 -160 L -360 -160 C -368.83656 -160 -376 -167.16344 -376 -176 L -376 -176 C -376 -184.83656 -368.83656 -192 -360 -192 Z" fill="#fef6e3"/>
+        <path d="M -360 -192 L -280 -192 C -271.16344 -192 -264 -184.83656 -264 -176 L -264 -176 C -264 -167.16344 -271.16344 -160 -280 -160 L -360 -160 C -368.83656 -160 -376 -167.16344 -376 -176 L -376 -176 C -376 -184.83656 -368.83656 -192 -360 -192 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-371 -185.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="34.12" y="15" xml:space="preserve">VICII</tspan>
+        </text>
+      </g>
+      <g id="Graphic_70">
+        <path d="M -360 -400 L -280 -400 C -271.16344 -400 -264 -392.83656 -264 -384 L -264 -384 C -264 -375.16344 -271.16344 -368 -280 -368 L -360 -368 C -368.83656 -368 -376 -375.16344 -376 -384 L -376 -384 C -376 -392.83656 -368.83656 -400 -360 -400 Z" fill="#fef6e3"/>
+        <path d="M -360 -400 L -280 -400 C -271.16344 -400 -264 -392.83656 -264 -384 L -264 -384 C -264 -375.16344 -271.16344 -368 -280 -368 L -360 -368 C -368.83656 -368 -376 -375.16344 -376 -384 L -376 -384 C -376 -392.83656 -368.83656 -400 -360 -400 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <text transform="translate(-371 -393.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="21.68" y="15" xml:space="preserve">VICIIAPI</tspan>
+        </text>
+      </g>
+      <g id="Graphic_73"/>
+      <g id="Line_72">
+        <line x1="-680" y1="-241" x2="-644.9" y2="-241" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_76"/>
+      <g id="Line_75">
+        <line x1="-680" y1="-209" x2="-516.9" y2="-209" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_78"/>
+      <g id="Line_77">
+        <line x1="-680" y1="-177" x2="-388.9" y2="-177" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_80"/>
+      <g id="Line_79">
+        <line x1="-680" y1="-145" x2="-260.9" y2="-145" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_83"/>
+      <g id="Line_82">
+        <line x1="-321" y1="-355.1" x2="-321" y2="-204.9" marker-end="url(#FilledArrow_Marker)" marker-start="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_86"/>
+      <g id="Line_85">
+        <line x1="-625" y1="-648" x2="-625" y2="-620.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_88"/>
+      <g id="Line_87">
+        <line x1="-448" y1="-648" x2="-448" y2="-620.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_90"/>
+      <g id="Line_89">
+        <line x1="-287" y1="-648" x2="-287" y2="-620.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+  </g>
 </svg>

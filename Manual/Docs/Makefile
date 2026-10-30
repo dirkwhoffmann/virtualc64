@@ -11,13 +11,13 @@
 #
 # The headers are parsed by Doxygen (Doxyfile), the XML is prepared by
 # prepare_xml.py and turned into Markdown by moxygen (fix_markdown.py sorts
-# the pages into the guide, the setup chapters and the API). VitePress renders the site.
+# the pages into the guide and the API). VitePress renders the site.
 # moxygen and VitePress are installed with "npm install".
 
 SCHEME ?= tokyo-night
 export SCHEME
 
-GENERATED = docs/*.md docs/guide docs/setup docs/api
+GENERATED = docs/*.md docs/guide docs/api
 
 markdown:
 	mkdir -p build

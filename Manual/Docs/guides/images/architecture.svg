@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="-993 -81 738 586" width="738" height="586">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="-1064.5 -112.5 881 617" width="881" height="617">
   <defs>
     <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -3 7 6" markerWidth="7" markerHeight="6" color="black">
       <g>
@@ -17,13 +17,17 @@
     <title>Architecture</title>
     <g id="Architecture_Ebene_1">
       <title>Ebene 1</title>
+      <g id="Graphic_158">
+        <path d="M -1058 -112 L -190 -112 C -186.6863 -112 -184 -109.31371 -184 -106 L -184 498 C -184 501.3137 -186.6863 504 -190 504 L -1058 504 C -1061.3137 504 -1064 501.3137 -1064 498 L -1064 -106 C -1064 -109.31371 -1061.3137 -112 -1058 -112 Z" fill="#d7d8df"/>
+        <path d="M -1058 -112 L -190 -112 C -186.6863 -112 -184 -109.31371 -184 -106 L -184 498 C -184 501.3137 -186.6863 504 -190 504 L -1058 504 C -1061.3137 504 -1064 501.3137 -1064 498 L -1064 -106 C -1064 -109.31371 -1061.3137 -112 -1058 -112 Z" stroke="#dedede" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
       <g id="Graphic_108"/>
       <g id="Line_107">
-        <line x1="-416.75" y1="24" x2="-416.75" y2="504" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="16.0,10.0" stroke-width="2"/>
+        <line x1="-416.75" y1="21.492537" x2="-416.75" y2="480" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="16.0,10.0" stroke-width="2"/>
       </g>
       <g id="Graphic_106"/>
       <g id="Line_105">
-        <line x1="-864.75" y1="-32" x2="-864.75" y2="504" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,8.0" stroke-width="2"/>
+        <line x1="-864.75" y1="-32" x2="-864.75" y2="480" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,8.0" stroke-width="2"/>
       </g>
       <g id="Line_102">
         <line x1="-855" y1="0" x2="-493.9" y2="0" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -48,7 +52,7 @@
       </g>
       <g id="Graphic_91"/>
       <g id="Line_90">
-        <line x1="-640" y1="-32" x2="-640" y2="504" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,8.0" stroke-width="2"/>
+        <line x1="-640" y1="-32" x2="-640" y2="480" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8.0,8.0" stroke-width="2"/>
       </g>
       <g id="Graphic_87">
         <path d="M -700 -80 L -580 -80 C -577.79086 -80 -576 -78.20914 -576 -76 L -576 -36 C -576 -33.79086 -577.79086 -32 -580 -32 L -700 -32 C -702.2091 -32 -704 -33.79086 -704 -36 L -704 -76 C -704 -78.20914 -702.2091 -80 -700 -80 Z" fill="#fef6e3"/>

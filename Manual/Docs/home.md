@@ -13,15 +13,11 @@ hero:
       text: Project Home
       link: https://dirkwhoffmann.github.io/VirtualC64/
 features:
-  - icon: 🛠️
-    title: Setup
-    details: How to build the emulator core with CMake and how to use it in your own project.
-    link: /setup/build
   - icon: 🧭
     title: Guide
-    details: The architecture of the core, how to communicate with the emulator, and the life cycle of the emulator thread.
-    link: /guide/architecture
-  - icon: 📚
+    details: How to build the core, the architecture of the emulator, how to communicate with it, and a small example application.
+    link: /guide/build
+  - icon: 🛠️
     title: API
     details: An overview of the API and all classes, structs and enumerations of the emulation core.
     link: /api/overview

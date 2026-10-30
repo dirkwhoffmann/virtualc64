@@ -1,4 +1,4 @@
-# Building the Core {#setup_build}
+# Building the Core {#guide_build}
 
 The emulator core lives in the `VCCore` directory of the repository. It is a plain C++20 library with a CMake build. The macOS application uses the same sources through the Xcode project.
 
@@ -18,7 +18,7 @@ The compiler options are strict: the sources are compiled with `-Wall -Werror` (
 | Target | Description |
 |--------|-------------|
 | `VCCore` | The emulator core as a library. It links the utility library `utlib`, the retro library `rvlib` (disk images, file systems, ROMs), the SID emulation `resid`, and the threading library. |
-| `VC64Headless` | A small command-line app that is used for smoke tests (see @ref setup_headless "Headless App"). |
+| `VC64Headless` | A small command-line app that is used for smoke tests (see @ref guide_headless "Headless App"). |
 
 If you do not set a build type, CMake builds the Release configuration.
 
@@ -119,5 +119,5 @@ int main()
 }
 ```
 
-The chapter @ref setup_headless "Headless App" shows a complete program that is used for smoke tests. The [API overview](@ref api_overview) lists all sub-APIs, and the [Architecture](architecture.md) explains which thread may call what.
+The chapter @ref guide_headless "Headless App" shows a complete program that is used for smoke tests. The [API overview](@ref api_overview) lists all sub-APIs, and the [Architecture](architecture.md) explains which thread may call what.
 
