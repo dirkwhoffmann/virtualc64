@@ -14,6 +14,8 @@
 
 #include "Transport.h"
 
+#include <mutex>
+
 namespace vc64 {
 
 class Stdio {
