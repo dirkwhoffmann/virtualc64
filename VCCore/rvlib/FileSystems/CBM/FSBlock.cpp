@@ -237,7 +237,7 @@ FSBlock::dataSection()
     if (isData()) {
 
         auto ts = tsLink();
-        count = (ts.t == 0 && ts.s <= 254) ? ts.s : 254;
+        count = ts.t == 0 ? std::max<isize>(isize(ts.s) - 1, 0) : 254;
     }
 
     return std::span<u8>(data() + 2, count);

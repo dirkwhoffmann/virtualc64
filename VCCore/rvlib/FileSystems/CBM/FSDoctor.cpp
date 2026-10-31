@@ -38,7 +38,7 @@ EXPECT_RANGE(0, traits.numTracks() + 1)
 
 #define EXPECT_SECTOR_REF(t) { \
 if (isize num = traits.numSectors(t)) \
-EXPECT_RANGE(0,num) else if (strict) EXPECT_MAX(254) }
+EXPECT_RANGE(0,num) else if (strict) EXPECT_MAX(255) }
 
 
 namespace retro::vault::cbm {
@@ -102,7 +102,7 @@ FSDoctor::dump(BlockNr nr, std::ostream &os)
         {
             auto lastBlock = ts.t == 0;
             os << tab("Stored bytes");
-            os << (lastBlock ? ts.s : 254) << std::endl;
+            os << (lastBlock ? std::max<isize>(isize(ts.s) - 1, 0) : 254) << std::endl;
             break;
         }
         default:

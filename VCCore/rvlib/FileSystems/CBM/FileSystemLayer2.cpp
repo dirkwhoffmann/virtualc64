@@ -434,9 +434,9 @@ FileSystem::replace(std::vector<BlockNr> blocks, const u8 *buf, isize size)
 
         } else {
 
-            // Last block: Byte count
+            // Last block: Index of the last used byte (the 2 link bytes count, too)
             data[0] = 0;
-            data[1] = u8(written);
+            data[1] = u8(written + 1);
         }
     }
 

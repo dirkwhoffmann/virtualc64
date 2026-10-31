@@ -152,8 +152,9 @@ FileSystem::attr(const FSDirEntry &entry) const
         // All blocks except the last one contain 254 bytes
         numBytes = (numBlocks - 1) * 254;
 
-        // Add the byte count of the last block (encoded in the sector field)
-        numBytes += fetch(blocks.back()).data()[1];
+        // Add the byte count of the last block (the sector field holds the index of
+        // the last used byte, which is the byte count plus one)
+        numBytes += std::max(isize(fetch(blocks.back()).data()[1]) - 1, isize(0));
     }
 
     return FSAttr {
