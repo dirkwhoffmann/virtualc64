@@ -735,6 +735,9 @@ VICII::endFrame()
     if (debug) resetEmuTexture(activeBuffer);
     if (merge) resetXrayTexture(activeBuffer);
 
+    // Start the new frame with a fresh crosshair
+    if (xray.config.mode == XRayMode::XRAY_CROSSHAIRS) xray.computeCrosshairs(xrayTexture);
+
     emulator.unlockTexture();
 }
 

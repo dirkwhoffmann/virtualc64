@@ -132,6 +132,7 @@ XRay::setOption(Opt opt, i64 value)
             config.mode = (XRayMode)value;
             updateAccessRecorder();
             resetAccessMonitor();
+            if (config.mode == XRayMode::XRAY_CROSSHAIRS && isPaused()) _pause();
             vic.resetXrayTextures();
             vic.resetEmuTextures();
             return;

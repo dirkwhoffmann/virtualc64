@@ -345,6 +345,49 @@ XRay::drawHeatmap()
 }
 
 void
+XRay::_pause()
+{
+    if (config.mode != XRayMode::XRAY_CROSSHAIRS) return;
+
+    // Show the position the emulator has stopped at
+    emulator.lockTexture();
+    computeCrosshairs(vic.getStableXrayBuffer().pixels.ptr);
+    emulator.unlockTexture();
+}
+
+void
+XRay::computeCrosshairs(u32 *xray)
+{
+    switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
+
+        case TexelFormat::ABGR: computeCrosshairs<TexelFormat::ABGR>(xray); return;
+        case TexelFormat::ARGB: computeCrosshairs<TexelFormat::ARGB>(xray); return;
+
+        default: // RGBA
+            computeCrosshairs<TexelFormat::RGBA>(xray); return;
+    }
+}
+
+template <TexelFormat F>
+void
+XRay::computeCrosshairs(u32 *xray)
+{
+    constexpr isize width = Texture::width, height = Texture::height;
+
+    // Fill the texture with black
+    for (isize i = 0; i < width * height; i++) xray[i] = Texture::black;
+
+    // Locate the beam (one cycle covers 8 pixels)
+    auto row = std::clamp(isize(c64.scanline), isize(0), height - 1);
+    auto col = std::clamp(isize(c64.rasterCycle - 1) * 8 + 4, isize(0), width - 1);
+
+    // Draw the crosshair
+    auto color = GpuColor<F>(0xFF, 0x40, 0x40).rawValue;
+    for (isize x = 0; x < width; x++) xray[row * width + x] = color;
+    for (isize y = 0; y < height; y++) xray[y * width + col] = color;
+}
+
+void
 XRay::cutLayers()
 {
     // Cutting is a feature of the layer scan

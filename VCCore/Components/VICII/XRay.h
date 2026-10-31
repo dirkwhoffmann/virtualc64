@@ -116,6 +116,7 @@ public:
 private:
 
     void _dump(Category category, std::ostream &os) const override;
+    void _pause() override;
 
 
     //
@@ -199,6 +200,22 @@ private:
 
     // Recent activity of the address space
     Heatmap heatmap;
+
+
+    //
+    // Drawing the crosshairs
+    //
+
+public:
+
+    /* Recomputes the X-Ray texture for XRayMode::XRAY_CROSSHAIRS. The texture
+     * is filled with black and a crosshair is drawn, centered at the beam
+     * position (the cycle that is executed next). 'xray' points to the first
+     * texel of the texture.
+     */
+    void computeCrosshairs(u32 *xray);
+
+    template <TexelFormat F> void computeCrosshairs(u32 *xray);
 
 
     //
