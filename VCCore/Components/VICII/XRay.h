@@ -163,25 +163,12 @@ public:
 
 
     //
-    // Drawing the heat map
-    //
-
-public:
-
-    // Draws the most recent memory accesses into the X-Ray texture
-    void drawHeatmap();
-
-    template <TexelFormat F> void drawHeatmap();
-
-
-    //
-    // Drawing the access monitors (spectrum analyzer, oscilloscope)
+    // Drawing the spectrum analyzer
     //
 
 public:
 
     static constexpr isize spectrumBars = 64;
-    static constexpr isize scopeLanes = 9;
 
 private:
 
@@ -189,12 +176,9 @@ private:
     u32 lastReads[256] = { };
     u32 lastWrites[256] = { };
 
-    // Spectrum analyzer: Bar heights and peak markers (0 ... 1) [read, write]
+    // Bar heights and peak markers (0 ... 1) [read, write]
     float bars[2][spectrumBars] = { };
     float peaks[2][spectrumBars] = { };
-
-    // Oscilloscope: Amplitude (0 ... 255) per lane and scanline [read, write]
-    u8 scope[2][scopeLanes][512] = { };
 
 public:
 
@@ -204,15 +188,10 @@ public:
     // Updates the access recorder after the X-Ray mode has changed
     void updateAccessRecorder();
 
-    // Takes a sample at the end of a scanline (oscilloscope)
-    void sampleScanline(isize line);
-
-    // Draws the spectrum analyzer or the oscilloscope into the X-Ray texture
+    // Draws the spectrum analyzer into the X-Ray texture
     void drawSpectrum();
-    void drawScope();
 
     template <TexelFormat F> void drawSpectrum();
-    template <TexelFormat F> void drawScope();
 
 
     //

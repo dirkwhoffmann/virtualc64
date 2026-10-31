@@ -714,15 +714,8 @@ VICII::endFrame()
     // Only proceed if the current frame hasn't been executed in headless mode
     if (c64.getHeadless()) return;
 
-    // Draw the heat map into the X-ray texture if enabled
-    switch (xray.config.mode) {
-
-        case XRayMode::XRAY_HEATMAP:  xray.drawHeatmap(); break;
-        case XRayMode::XRAY_SPECTRUM: xray.drawSpectrum(); break;
-        case XRayMode::XRAY_SCOPE:    xray.drawScope(); break;
-
-        default: break;
-    }
+    // Draw the spectrum analyzer into the X-ray texture if enabled
+    if (xray.config.mode == XRayMode::XRAY_SPECTRUM) xray.drawSpectrum();
 
     // Merge the X-ray texture into the picture if enabled
     if (merge) xray.computeOverlay(emuTexture, xrayTexture);
@@ -828,9 +821,6 @@ VICII::endScanline()
     
     // Paint the cut-out layers into the X-ray texture (if requested)
     xray.cutLayers();
-
-    // Record the memory activity of this line (if requested)
-    xray.sampleScanline(c64.scanline);
 
     // Prepare buffers for the next line
     for (isize i = 0; i < Texture::width; i++) { zBuffer[i] = 0; }

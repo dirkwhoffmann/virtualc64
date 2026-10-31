@@ -31,15 +31,13 @@ enum class XRayMode : long
     XRAY_NONE,
     XRAY_DMA,
     XRAY_LAYERS,
-    XRAY_HEATMAP,
-    XRAY_SPECTRUM,
-    XRAY_SCOPE
+    XRAY_SPECTRUM
 };
 
 struct XRayModeEnum : utl::Reflectable<XRayModeEnum, XRayMode> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(XRayMode::XRAY_SCOPE);
+    static constexpr long maxVal = long(XRayMode::XRAY_SPECTRUM);
 
     static const char *_key(XRayMode value)
     {
@@ -48,9 +46,7 @@ struct XRayModeEnum : utl::Reflectable<XRayModeEnum, XRayMode> {
             case XRayMode::XRAY_NONE:   return "XRAY_NONE";
             case XRayMode::XRAY_DMA:    return "XRAY_DMA";
             case XRayMode::XRAY_LAYERS: return "XRAY_LAYERS";
-            case XRayMode::XRAY_HEATMAP: return "XRAY_HEATMAP";
             case XRayMode::XRAY_SPECTRUM: return "XRAY_SPECTRUM";
-            case XRayMode::XRAY_SCOPE:  return "XRAY_SCOPE";
         }
         return "???";
     }
@@ -61,9 +57,7 @@ struct XRayModeEnum : utl::Reflectable<XRayModeEnum, XRayMode> {
             case XRayMode::XRAY_NONE:   return "Off";
             case XRayMode::XRAY_DMA:    return "DMA debugger";
             case XRayMode::XRAY_LAYERS: return "Layer inspector";
-            case XRayMode::XRAY_HEATMAP: return "Memory heat map";
             case XRayMode::XRAY_SPECTRUM: return "Memory spectrum analyzer";
-            case XRayMode::XRAY_SCOPE:  return "Memory oscilloscope";
         }
         return "???";
     }
@@ -145,7 +139,7 @@ struct DmaDisplayModeEnum : utl::Reflectable<DmaDisplayModeEnum, DmaDisplayMode>
 typedef struct
 {
     // X-Ray mode (off, DMA debugger, layer inspector)
-    XRayMode mode;                       ///< X-Ray mode (off, DMA debugger, layer inspector, heat map, spectrum analyzer, oscilloscope)
+    XRayMode mode;                       ///< X-Ray mode (off, DMA debugger, layer inspector, spectrum analyzer)
     bool dmaOverlay;                        ///< Enable the DMA overlay
     XRayCompositor compositor;              ///< Compositor used to merge the overlay with the picture
     bool dmaChannel[6];                     ///< Visualize the DMA channel (one flag per channel)

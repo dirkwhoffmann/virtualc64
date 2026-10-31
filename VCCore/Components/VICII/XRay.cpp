@@ -166,111 +166,12 @@ XRay::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
 }
 
 void
-XRay::drawHeatmap()
-{
-    // Dispatched once per call (not per pixel) -- see computeOverlay above.
-    switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
-
-        case TexelFormat::ABGR: drawHeatmap<TexelFormat::ABGR>(); return;
-        case TexelFormat::ARGB: drawHeatmap<TexelFormat::ARGB>(); return;
-
-        default: // RGBA
-            drawHeatmap<TexelFormat::RGBA>(); return;
-    }
-}
-
-/* Maps an address to a position in a 256 x 256 grid. This is the one place
- * where the mapping is chosen.
- *
- *   Linear:  The high byte selects the row, the low byte selects the column.
- *   Hilbert: Addresses are laid out along a Hilbert curve. Neighboring
- *            addresses stay close together, so code that executes
- *            sequentially crawls across the grid like a snake.
- */
-static constexpr bool heatmapHilbert = true;
-
-static void
-heatmapPosition(u16 addr, isize &x, isize &y)
-{
-    if constexpr (!heatmapHilbert) {
-
-        x = addr & 0xFF;
-        y = addr >> 8;
-
-    } else {
-
-        u32 t = addr;
-        u32 px = 0, py = 0;
-
-        for (u32 s = 1; s < 256; s <<= 1) {
-
-            u32 rx = 1 & (t >> 1);
-            u32 ry = 1 & (t ^ rx);
-
-            // Rotate the quadrant
-            if (ry == 0) {
-                if (rx == 1) { px = s - 1 - px; py = s - 1 - py; }
-                std::swap(px, py);
-            }
-            px += s * rx;
-            py += s * ry;
-            t >>= 2;
-        }
-        x = px;
-        y = py;
-    }
-}
-
-template <TexelFormat F>
-void
-XRay::drawHeatmap()
-{
-    constexpr isize gridSize = 256;
-
-    // Center the grid inside the texture
-    constexpr isize x0 = (Texture::width - gridSize) / 2;
-    constexpr isize y0 = (Texture::height - gridSize) / 2;
-    static_assert(x0 >= 0 && y0 >= 0);
-
-    // Colors of reads and writes
-    constexpr u8 readRgb[3]  = { 0x40, 0xFF, 0x70 };
-    constexpr u8 writeRgb[3] = { 0xFF, 0x50, 0x30 };
-
-    u32 *texture = vic.xrayTexture;
-    auto &trace = mem.trace;
-    auto n = trace.count();
-
-    /* Walk the trace from the oldest to the newest access. The newer an
-     * access, the more opaque its dot. Opacity is emulated by scaling the
-     * color towards black, because the compositor works with a single weight
-     * per mode instead of a per-pixel alpha. Newer dots overwrite older ones.
-     */
-    for (usize i = 0; i < n; i++) {
-
-        const auto &entry = trace[i];
-
-        isize x, y;
-        heatmapPosition(entry.addr, x, y);
-
-        double age = double(i + 1) / double(n);
-        double alpha = age * age;
-        const u8 *rgb = entry.write ? writeRgb : readRgb;
-
-        texture[(y0 + y) * Texture::width + x0 + x] =
-            GpuColor<F>(u8(rgb[0] * alpha), u8(rgb[1] * alpha), u8(rgb[2] * alpha)).rawValue;
-    }
-}
-
-void
 XRay::updateAccessRecorder()
 {
     auto &trace = mem.trace;
     auto mode = config.mode;
 
-    trace.enabled = mode == XRayMode::XRAY_HEATMAP ||
-                    mode == XRayMode::XRAY_SPECTRUM ||
-                    mode == XRayMode::XRAY_SCOPE;
-    trace.ring = mode == XRayMode::XRAY_HEATMAP;
+    trace.enabled = mode == XRayMode::XRAY_SPECTRUM;
 }
 
 void
@@ -278,12 +179,10 @@ XRay::resetAccessMonitor()
 {
     auto &trace = mem.trace;
 
-    trace.clear();
     for (isize i = 0; i < 256; i++) { lastReads[i] = trace.reads[i]; lastWrites[i] = trace.writes[i]; }
 
     memset(bars, 0, sizeof(bars));
     memset(peaks, 0, sizeof(peaks));
-    memset(scope, 0, sizeof(scope));
 }
 
 // Converts an access count into a level between 0 and 1 (logarithmic)
@@ -293,47 +192,9 @@ accessLevel(u32 count, double full)
     return std::min(1.0, std::log2(1.0 + count) / std::log2(1.0 + full));
 }
 
-/* Memory regions shown by the oscilloscope (one lane per region). The ranges
- * are given in pages (256 bytes).
- */
-struct ScopeRegion { u8 first, last; };
-static constexpr ScopeRegion scopeRegions[XRay::scopeLanes] = {
-
-    { 0x00, 0x00 },     // Zero page
-    { 0x01, 0x01 },     // Stack
-    { 0x02, 0x9F },     // RAM
-    { 0xA0, 0xBF },     // BASIC ROM
-    { 0xC0, 0xCF },     // RAM
-    { 0xD0, 0xD3 },     // VICII
-    { 0xD4, 0xD7 },     // SID
-    { 0xD8, 0xDF },     // Color RAM, CIAs
-    { 0xE0, 0xFF }      // KERNAL ROM
-};
-
 // Colors of the read and write graphs
 static constexpr double readColor[3]  = { 0.15, 0.70, 1.00 };
 static constexpr double writeColor[3] = { 1.00, 0.45, 0.15 };
-
-void
-XRay::sampleScanline(isize line)
-{
-    if (config.mode != XRayMode::XRAY_SCOPE) return;
-    if (line < 0 || line >= 512) return;
-
-    auto &trace = mem.trace;
-
-    for (isize lane = 0; lane < scopeLanes; lane++) {
-
-        u32 r = 0, w = 0;
-        for (isize p = scopeRegions[lane].first; p <= scopeRegions[lane].last; p++) {
-            r += trace.reads[p] - lastReads[p];
-            w += trace.writes[p] - lastWrites[p];
-        }
-        scope[0][lane][line] = u8(255 * accessLevel(r, 64));
-        scope[1][lane][line] = u8(255 * accessLevel(w, 64));
-    }
-    for (isize i = 0; i < 256; i++) { lastReads[i] = trace.reads[i]; lastWrites[i] = trace.writes[i]; }
-}
 
 void
 XRay::drawSpectrum()
@@ -345,19 +206,6 @@ XRay::drawSpectrum()
 
         default: // RGBA
             drawSpectrum<TexelFormat::RGBA>(); return;
-    }
-}
-
-void
-XRay::drawScope()
-{
-    switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
-
-        case TexelFormat::ABGR: drawScope<TexelFormat::ABGR>(); return;
-        case TexelFormat::ARGB: drawScope<TexelFormat::ARGB>(); return;
-
-        default: // RGBA
-            drawScope<TexelFormat::RGBA>(); return;
     }
 }
 
@@ -434,69 +282,6 @@ XRay::drawSpectrum()
 
     // Start the next measurement
     for (isize i = 0; i < 256; i++) { lastReads[i] = trace.reads[i]; lastWrites[i] = trace.writes[i]; }
-}
-
-template <TexelFormat F>
-void
-XRay::drawScope()
-{
-    /* One lane per memory region with a time axis that spans a frame (x is
-     * the scanline, so the picture is triggered by the vertical sync). The
-     * read signal swings up from the lane's center line, the write signal
-     * swings down.
-     */
-    constexpr isize laneHeight = (Texture::height - 6) / scopeLanes;
-    constexpr isize swing = laneHeight / 2 - 2;
-
-    u32 *texture = vic.xrayTexture;
-    isize lines = std::min<isize>(vic.getLinesPerFrame(), 512);
-
-    auto plot = [&](isize x, isize y, double r, double g, double b) {
-
-        if (x < 0 || x >= Texture::width || y < 0 || y >= Texture::height) return;
-        auto c = [](double v) { return u8(255 * std::clamp(v, 0.0, 1.0)); };
-        texture[y * Texture::width + x] = GpuColor<F>(c(r), c(g), c(b)).rawValue;
-    };
-
-    auto line = [&](isize x1, isize y1, isize x2, isize y2, const double *col) {
-
-        // Bresenham with a thickness of two pixels
-        isize dx = std::abs(x2 - x1), dy = -std::abs(y2 - y1);
-        isize sx = x1 < x2 ? 1 : -1, sy = y1 < y2 ? 1 : -1;
-        isize err = dx + dy;
-
-        while (true) {
-            plot(x1, y1, col[0], col[1], col[2]);
-            plot(x1, y1 + 1, col[0] * 0.6, col[1] * 0.6, col[2] * 0.6);
-            if (x1 == x2 && y1 == y2) break;
-            isize e2 = 2 * err;
-            if (e2 >= dy) { err += dy; x1 += sx; }
-            if (e2 <= dx) { err += dx; y1 += sy; }
-        }
-    };
-
-    for (isize lane = 0; lane < scopeLanes; lane++) {
-
-        isize centerY = 3 + lane * laneHeight + laneHeight / 2;
-
-        // Center line
-        for (isize x = 0; x < Texture::width; x++) plot(x, centerY, 0.12, 0.2, 0.15);
-
-        for (isize k = 0; k < 2; k++) {
-
-            isize dir = k == 0 ? -1 : 1;
-            const double *col = k == 0 ? readColor : writeColor;
-
-            isize px = 0, py = centerY;
-            for (isize l = 0; l < lines; l++) {
-
-                isize x = l * (Texture::width - 1) / (lines - 1);
-                isize y = centerY + dir * (scope[k][lane][l] * swing / 255);
-                if (l) line(px, py, x, y, col);
-                px = x; py = y;
-            }
-        }
-    }
 }
 
 void
