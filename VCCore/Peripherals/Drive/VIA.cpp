@@ -29,7 +29,7 @@ void VIA6522::_didReset(bool hard)
     t1 = 0x01AA;
     t2 = 0x01AA;
     t1_latch_hi = 0x01;
-    t1_latch_lo = 0x05; // Makes "drive/defaults.prg" happy
+    t1_latch_lo = 0xFF;
     t2_latch_lo = 0xAA;
     feed = (VIACountA0 | VIACountB0);
 }
