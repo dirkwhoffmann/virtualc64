@@ -179,10 +179,10 @@ class HardwareSettingsViewController: SettingsViewController {
         emu.suspend()
 
         // Revert to standard settings
-        EmulatorProxy.defaults.removePeripheralsUserDefaults()
+        EmulatorProxy.defaults.removeHardwareUserDefaults()
 
         // Update the configuration
-        config?.applyPeripheralsUserDefaults()
+        config?.applyHardwareUserDefaults()
 
         // Override some options
         switch tag {

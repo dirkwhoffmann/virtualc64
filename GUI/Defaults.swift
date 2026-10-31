@@ -239,6 +239,7 @@ extension DefaultsProxy {
         registerControlsUserDefaults()
         registerDevicesUserDefaults()
         registerKeyboardUserDefaults()
+        registerCapturesUserDefaults()
         
         registerHardwareUserDefaults()
         registerPeripheralsUserDefaults()
@@ -259,6 +260,7 @@ extension Preferences {
         applyControlsUserDefaults()
         applyDevicesUserDefaults()
         applyKeyboardUserDefaults()
+        applyCapturesUserDefaults()
     }
 }
 
@@ -755,13 +757,14 @@ extension DefaultsProxy {
         loginfo(.defaults)
         
         remove(.VICII_REVISION)
+        remove(.VICII_GRAY_DOT_BUG)
         remove(.VICII_POWER_SAVE)
         
         remove(.CIA_REVISION)
         remove(.CIA_TIMER_B_BUG)
         
-        remove(.SID_REV)
-        remove(.SID_FILTER)
+        remove(.SID_REV, [0, 1, 2, 3])
+        remove(.SID_FILTER, [0, 1, 2, 3])
         remove(.SID_ENABLE, [0, 1, 2, 3])
         remove(.SID_ADDRESS, [0, 1, 2, 3])
         
@@ -882,6 +885,12 @@ extension DefaultsProxy {
         remove(.DRV_RAM, [0, 1])
         remove(.DRV_PARCABLE, [0, 1])
         remove(.DRV_AUTO_CONFIG, [0, 1])
+        remove(.DAT_CONNECT)
+        remove(.DAT_MODEL)
+        remove(.AUTOFIRE)
+        remove(.AUTOFIRE_BURSTS)
+        remove(.AUTOFIRE_BULLETS)
+        remove(.AUTOFIRE_DELAY)
         removeKey(Keys.Per.gameDevice1)
         removeKey(Keys.Per.gameDevice2)
     }
@@ -907,16 +916,24 @@ extension Configuration {
             defaults.set(.DRV_AUTO_CONFIG, 0, drive8AutoConf)
             
             defaults.set(.DRV_CONNECT, 1, drive9Connected)
-            defaults.set(.DRV_TYPE, 1, drive8Type)
-            defaults.set(.DRV_RAM, 1, drive8Ram)
-            defaults.set(.DRV_PARCABLE, 1, drive8ParCable)
-            defaults.set(.DRV_AUTO_CONFIG, 1, drive8AutoConf)
+            defaults.set(.DRV_TYPE, 1, drive9Type)
+            defaults.set(.DRV_RAM, 1, drive9Ram)
+            defaults.set(.DRV_PARCABLE, 1, drive9ParCable)
+            defaults.set(.DRV_AUTO_CONFIG, 1, drive9AutoConf)
             
             defaults.set(Keys.Per.gameDevice1, gameDevice1)
             defaults.set(Keys.Per.gameDevice2, gameDevice2)
             
+            defaults.set(.DAT_CONNECT, datasetteConnected)
+            defaults.set(.DAT_MODEL, datasetteModel)
+            
             defaults.set(.MOUSE_MODEL, mouseModel)
             defaults.set(.PADDLE_ORIENTATION, paddleOrientation)
+            
+            defaults.set(.AUTOFIRE, autofire)
+            defaults.set(.AUTOFIRE_BURSTS, autofireBursts)
+            defaults.set(.AUTOFIRE_BULLETS, autofireBullets)
+            defaults.set(.AUTOFIRE_DELAY, autofireFrequency)
             
             defaults.save()
             
@@ -949,8 +966,16 @@ extension Configuration {
             gameDevice1 = defaults.int(Keys.Per.gameDevice1)
             gameDevice2 = defaults.int(Keys.Per.gameDevice2)
             
+            datasetteConnected = defaults.get(.DAT_CONNECT) != 0
+            datasetteModel = defaults.get(.DAT_MODEL)
+            
             mouseModel = defaults.get(.MOUSE_MODEL)
             paddleOrientation = defaults.get(.PADDLE_ORIENTATION)
+            
+            autofire = defaults.get(.AUTOFIRE) != 0
+            autofireBursts = defaults.get(.AUTOFIRE_BURSTS) != 0
+            autofireBullets = defaults.get(.AUTOFIRE_BULLETS)
+            autofireFrequency = defaults.get(.AUTOFIRE_DELAY)
             
             emu.resume()
         }
@@ -1109,6 +1134,7 @@ extension Configuration {
             defaults.set(.AUD_VOL_R, volR)
             defaults.set(.AUD_BUFFER_SIZE, audioBufferSize)
             defaults.set(.AUD_ASR, asr)
+            defaults.set(.SID_ENGINE, [0, 1, 2, 3], sidEngine)
             defaults.set(.SID_SAMPLING, [0, 1, 2, 3], sidSampling)
             defaults.set(.DRV_PAN, 0, drive8Pan)
             defaults.set(.DRV_PAN, 1, drive9Pan)
@@ -1149,6 +1175,7 @@ extension Configuration {
             volR = defaults.get(.AUD_VOL_R)
             audioBufferSize = defaults.get(.AUD_BUFFER_SIZE)
             asr = defaults.get(.AUD_ASR)
+            sidEngine = defaults.get(.SID_ENGINE, 0)
             sidSampling = defaults.get(.SID_SAMPLING, 0)
             stepVolume = defaults.get(.DRV_STEP_VOL, 0)
             insertVolume = defaults.get(.DRV_INSERT_VOL, 0)
