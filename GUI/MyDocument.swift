@@ -92,6 +92,18 @@ class MyDocument: NSDocument {
         self.addWindowController(controller)
     }
 
+    override func canClose(withDelegate delegate: Any,
+                           shouldClose shouldCloseSelector: Selector?,
+                           contextInfo: UnsafeMutableRawPointer?) {
+
+        // Skip the "save changes?" sheet if the user opted out of it
+        if pref.closeWithoutAsking { updateChangeCount(.changeCleared) }
+
+        super.canClose(withDelegate: delegate,
+                       shouldClose: shouldCloseSelector,
+                       contextInfo: contextInfo)
+    }
+
     func shutDown() {
 
         loginfo(.shutdown, "Remove proxy...")
