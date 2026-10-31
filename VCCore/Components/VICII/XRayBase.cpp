@@ -13,6 +13,7 @@
 #include "vcconfig.h"
 #include "XRay.h"
 #include "VICII.h"
+#include "Memory.h"
 #include "MsgQueue.h"
 
 namespace vc64 {
@@ -129,6 +130,8 @@ XRay::setOption(Opt opt, i64 value)
         case Opt::XRAY_MODE:
 
             config.mode = (XRayMode)value;
+            updateAccessRecorder();
+            resetAccessMonitor();
             vic.resetXrayTextures();
             vic.resetEmuTextures();
             return;

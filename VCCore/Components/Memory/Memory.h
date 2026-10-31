@@ -85,6 +85,9 @@ public:
     // Debugging
     Heatmap heatmap;
 
+    // Most recent accesses (for the X-Ray heat map)
+    AccessTrace trace;
+
 
     //
     // Methods

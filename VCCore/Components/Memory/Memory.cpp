@@ -228,6 +228,7 @@ Memory::updatePeekPokeLookupTables()
 u8
 Memory::peek(u16 addr, MemType source)
 {
+    if (trace.enabled) trace.record(addr, false);
     if (config.heatmap) metrics.reads[addr]++;
 
     switch(source) {
@@ -281,6 +282,7 @@ Memory::peek(u16 addr, bool gameLine, bool exromLine)
 u8
 Memory::peekZP(u8 addr)
 {
+    if (trace.enabled) trace.record(addr, false);
     if (config.heatmap) metrics.reads[addr]++;
 
     if (likely(addr >= 0x02)) {
@@ -293,6 +295,7 @@ Memory::peekZP(u8 addr)
 u8
 Memory::peekStack(u8 sp)
 {
+    if (trace.enabled) trace.record(0x100 + sp, false);
     if (config.heatmap) metrics.reads[sp]++;
 
     return ram[0x100 + sp];
@@ -453,6 +456,7 @@ Memory::spypeekColor(u16 addr) const
 void
 Memory::poke(u16 addr, u8 value, MemType target)
 {
+    if (trace.enabled) trace.record(addr, true);
     if (config.heatmap) metrics.writes[addr]++;
 
     switch(target) {
@@ -507,6 +511,7 @@ Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
 void
 Memory::pokeZP(u8 addr, u8 value)
 {
+    if (trace.enabled) trace.record(addr, true);
     if (config.heatmap) metrics.writes[addr]++;
 
     if (likely(addr >= 0x02)) {
@@ -521,6 +526,7 @@ Memory::pokeZP(u8 addr, u8 value)
 void
 Memory::pokeStack(u8 sp, u8 value)
 {
+    if (trace.enabled) trace.record(0x100 + sp, true);
     if (config.heatmap) metrics.writes[sp]++;
 
     ram[0x100 + sp] = value;
