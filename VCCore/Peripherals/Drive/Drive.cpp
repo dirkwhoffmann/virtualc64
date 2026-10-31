@@ -537,12 +537,17 @@ Drive::vsyncHandler()
 {
     // Only proceed if the drive is connected and switched on
     if (!config.connected || !config.switchedOn) return;
-
-    // Check if we should enter power-save mode
-    if (!spinning && config.powerSave) {
-
+    
+    if (spinning) {
+        
+        // A spinning drive is never idle
+        wakeUp();
+        
+    } else if (config.powerSave) {
+        
+        // Check if we should enter power-save mode
         if (!isIdle() && ++idleCounter == powerSafeThreshold) {
-
+            
             logmsg(LOG_DRV, "Entering power-save mode\n");
             needsEmulation = false;
             msgQueue.put(Msg::DRIVE_POWER_SAVE, DriveMsg { .nr = i16(objid), .value = 1 } );
