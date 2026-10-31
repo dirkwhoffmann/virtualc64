@@ -207,9 +207,6 @@ public:
     
     // Position of the drive head inside the current track
     HeadPos offset = 0;
-
-    // Indicates whether the drive was in write mode during the last bit cycle
-    bool writing = false;
     
     /* Current disk zone. Each track belongs to one of four zones. Whenever the
      * drive moves the r/w head, it computes the new number and writes into PB5
@@ -579,7 +576,7 @@ public:
      */
     void updateByteReady();
 
-    // Sets the length of a blank halftrack when writing starts (see Drive.cpp)
+    // Sets the length of a blank halftrack. Called when write mode is switched on.
     void fitBlankHalftrack();
     
     // Raises the byte ready line

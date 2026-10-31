@@ -156,10 +156,6 @@ Drive::executeUF4()
             byteReadyCounter = sync ? (byteReadyCounter + 1) & 7 : 0;
             
             // (4) Execute the write shift register
-            if (writeMode() != writing) {
-                writing = writeMode();
-                if (writing) fitBlankHalftrack();
-            }
             if (writeMode() && hasDisk() && !getLightBarrier()) {
                 writeBitToHead(writeShiftreg & 0x80);
                 disk->setModified(true);

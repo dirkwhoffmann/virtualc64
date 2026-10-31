@@ -738,6 +738,7 @@ VIA6522::pokePCR(u8 value)
     }
     
     // Check CB2 control bits
+    bool oldCB2 = cb2;
     switch(cb2Control()) {
         case 0:
         case 1:
@@ -754,6 +755,9 @@ VIA6522::pokePCR(u8 value)
             cb2 = true;
             break;
     }
+
+    // On VIA2, CB2 is the r/w mode pin. Switching to write mode starts a write.
+    if (isVia2() && oldCB2 && !cb2) drive.fitBlankHalftrack();
 }
 
 u8
