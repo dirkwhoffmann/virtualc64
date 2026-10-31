@@ -1308,14 +1308,6 @@ MemoryDebuggerAPI::memDump(MemType src, u16 addr, isize bytes, isize sz) const
     return mem->debugger.memDump(src, addr, bytes, sz);
 }
 
-void
-MemoryAPI::drawHeatmap(u32 *buffer, isize width, isize height) const
-{
-    VC64_PUBLIC
-    if (width != 256 || height != 256) throw CoreError(CoreError::OPT_INV_ARG, "256 x 256");
-    mem->heatmap.draw(buffer, width, height);
-}
-
 
 //
 // CIAs

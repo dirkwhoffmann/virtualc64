@@ -144,7 +144,6 @@ enum class Opt : long
 
     // Memory
     MEM_INIT_PATTERN,       ///< Ram initialization pattern
-    MEM_HEATMAP,            ///< Memory heatmap
     MEM_SAVE_ROMS,          ///< Save Roms in snapshots
 
     // Drive
@@ -313,7 +312,6 @@ struct OptEnum : utl::Reflectable<OptEnum, Opt> {
             case Opt::AUD_ASR:                  return "AUD.ASR";
     
             case Opt::MEM_INIT_PATTERN:         return "MEM.INIT_PATTERN";
-            case Opt::MEM_HEATMAP:              return "MEM.HEATMAP";
             case Opt::MEM_SAVE_ROMS:            return "MEM.SAVE_ROMS";
     
             case Opt::DRV_AUTO_CONFIG:          return "DRV.AUTO_CONFIG";
@@ -470,7 +468,6 @@ struct OptEnum : utl::Reflectable<OptEnum, Opt> {
             case Opt::AUD_ASR:                  return "Adaptive Sample Rate";
     
             case Opt::MEM_INIT_PATTERN:         return "Memory start-up pattern";
-            case Opt::MEM_HEATMAP:              return "Heatmap";
             case Opt::MEM_SAVE_ROMS:            return "Save ROMs in snapshots";
     
             case Opt::DRV_AUTO_CONFIG:          return "Auto-configure drives";

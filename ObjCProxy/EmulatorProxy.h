@@ -402,8 +402,6 @@ NSString *EventSlotName(EventSlot slot);
 - (NSString *)decDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src;
 - (NSString *)ascDump:(NSInteger)addr bytes:(NSInteger)bytes src:(MemType)src;
 
-- (void)drawHeatmap:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h;
-
 @end
 
 

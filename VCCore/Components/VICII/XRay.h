@@ -15,6 +15,7 @@
 #include "XRayTypes.h"
 #include "SubComponent.h"
 #include "utl/gfx/Colors.h"
+#include "Heatmap.h"
 
 namespace vc64 {
 
@@ -172,9 +173,8 @@ public:
 
 private:
 
-    // Access counters at the time of the last sample
-    u32 lastReads[256] = { };
-    u32 lastWrites[256] = { };
+    // Access counters (summed up per bar) at the time of the last sample
+    u64 lastTotals[2][spectrumBars] = { };
 
     // Bar heights and peak markers (0 ... 1) [read, write]
     float bars[2][spectrumBars] = { };
@@ -190,8 +190,15 @@ public:
 
     // Draws the spectrum analyzer into the X-Ray texture
     void drawSpectrum();
+    void drawHeatmap();
 
     template <TexelFormat F> void drawSpectrum();
+    template <TexelFormat F> void drawHeatmap();
+
+private:
+
+    // Recent activity of the address space
+    Heatmap heatmap;
 
 
     //

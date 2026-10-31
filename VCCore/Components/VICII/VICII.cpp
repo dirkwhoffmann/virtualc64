@@ -714,8 +714,9 @@ VICII::endFrame()
     // Only proceed if the current frame hasn't been executed in headless mode
     if (c64.getHeadless()) return;
 
-    // Draw the spectrum analyzer into the X-ray texture if enabled
+    // Draw the spectrum analyzer or the heatmap into the X-ray texture if enabled
     if (xray.config.mode == XRayMode::XRAY_SPECTRUM) xray.drawSpectrum();
+    if (xray.config.mode == XRayMode::XRAY_HEATMAP) xray.drawHeatmap();
 
     // Merge the X-ray texture into the picture if enabled
     if (merge) xray.computeOverlay(emuTexture, xrayTexture);

@@ -16,40 +16,48 @@
 
 namespace vc64 {
 
-/* Counts memory accesses for the X-Ray spectrum analyzer. It keeps running
- * read / write counters per 256-byte page. It is neither exposed through the
- * API nor snapshotted. Recording is off unless the spectrum analyzer is
- * active, so the cost for everyone else is a single branch per access.
+/* Counts memory accesses for the X-Ray visualizations. It keeps running
+ * read / write counters per address. It is neither exposed through the API nor
+ * snapshotted. Recording is off unless an X-Ray mode that needs it is active,
+ * so the cost for everyone else is a single branch per access.
  */
 class AccessTrace final {
 
 public:
 
-    // Running access counters per page (they wrap around, use differences)
-    u32 reads[256] = { };
-    u32 writes[256] = { };
+    // Running access counters per address (they wrap around, use differences)
+    u32 reads[65536] = { };
+    u32 writes[65536] = { };
 
     // Enables or disables recording
     bool enabled = false;
 
     void record(u16 addr, bool write)
     {
-        (write ? writes : reads)[addr >> 8]++;
+        (write ? writes : reads)[addr]++;
     }
 };
 
+/* The heatmap shows the recent activity of the 64 KB address space as a grid
+ * of 256 x 256 cells. Neighboring addresses are mapped to neighboring cells by
+ * interleaving the address bits, so that address ranges form compact blocks.
+ * A cell lights up when its address is accessed and fades out over time.
+ */
 class Heatmap final {
 
 public:
 
-    // Heapmap data
+    // Grid dimensions after accumulating 4 x 8 cells
+    static constexpr isize cols = 64;
+    static constexpr isize rows = 32;
+
+private:
+
+    // Heat per cell
     float heatmap[256][256] = { };
 
-    // Cached accesses
-    isize history[65536] = { };
-
-    // Color palette
-    u32 palette[256];
+    // Access counters at the time of the last update
+    u32 history[65536] = { };
 
 
     //
@@ -57,14 +65,15 @@ public:
     //
 
 public:
-    
-    Heatmap();
 
-    // Updates heatmap data
-    void update(const class Memory &mem);
+    // Forgets all heat and starts counting from the current access counters
+    void reset(const AccessTrace &trace);
 
-    // Draws a heatmap
-    void draw(u32 *buffer, isize width, isize height) const;
+    // Updates the heat (call once per frame)
+    void update(const AccessTrace &trace);
+
+    // Computes the brightness (0 ... 1) of each block of 4 x 8 cells
+    void compute(float (&levels)[rows][cols]) const;
 };
 
 }

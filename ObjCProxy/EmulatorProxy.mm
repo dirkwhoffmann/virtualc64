@@ -527,11 +527,6 @@ static NSString *padded(const string &dump, NSInteger pads)
     return @([self mem]->debugger.ascDump(src, (u16)addr, bytes).c_str());
 }
 
-- (void)drawHeatmap:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h
-{
-    [self mem]->drawHeatmap(buffer, w, h);
-}
-
 @end
 
 

@@ -201,23 +201,6 @@ public:
     const MemInfo &getCachedInfo() const;
 
 
-    /** @brief  Draws a heatmap of the recent memory accesses.
-     *
-     *  The 64 KB address space is shown as a grid of 256 x 256 cells. Neighboring
-     *  addresses are mapped to neighboring cells by interleaving the address
-     *  bits, so that address ranges form compact blocks. A cell lights up when
-     *  its address is accessed and fades out over time. The map is updated at
-     *  the end of each frame, and only while the option Opt::MEM_HEATMAP is
-     *  enabled.
-     *
-     *  @param  buffer  Texture buffer for 256 x 256 pixels (RGBA)
-     *  @param  width   Width of the texture, must be 256
-     *  @param  height  Height of the texture, must be 256
-     *
-     *  @throw  CoreError (CoreError::OPT_INV_ARG) if the size is not 256 x 256.
-     */
-    void drawHeatmap(u32 *buffer, isize width, isize height) const;
-
 };
 
 

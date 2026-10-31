@@ -31,13 +31,14 @@ enum class XRayMode : long
     XRAY_NONE,
     XRAY_DMA,
     XRAY_LAYERS,
-    XRAY_SPECTRUM
+    XRAY_SPECTRUM,
+    XRAY_HEATMAP
 };
 
 struct XRayModeEnum : utl::Reflectable<XRayModeEnum, XRayMode> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(XRayMode::XRAY_SPECTRUM);
+    static constexpr long maxVal = long(XRayMode::XRAY_HEATMAP);
 
     static const char *_key(XRayMode value)
     {
@@ -47,6 +48,7 @@ struct XRayModeEnum : utl::Reflectable<XRayModeEnum, XRayMode> {
             case XRayMode::XRAY_DMA:    return "XRAY_DMA";
             case XRayMode::XRAY_LAYERS: return "XRAY_LAYERS";
             case XRayMode::XRAY_SPECTRUM: return "XRAY_SPECTRUM";
+            case XRayMode::XRAY_HEATMAP: return "XRAY_HEATMAP";
         }
         return "???";
     }
@@ -58,6 +60,7 @@ struct XRayModeEnum : utl::Reflectable<XRayModeEnum, XRayMode> {
             case XRayMode::XRAY_DMA:    return "DMA debugger";
             case XRayMode::XRAY_LAYERS: return "Layer inspector";
             case XRayMode::XRAY_SPECTRUM: return "Memory spectrum analyzer";
+            case XRayMode::XRAY_HEATMAP: return "Memory heatmap";
         }
         return "???";
     }
@@ -139,7 +142,7 @@ struct DmaDisplayModeEnum : utl::Reflectable<DmaDisplayModeEnum, DmaDisplayMode>
 typedef struct
 {
     // X-Ray mode (off, DMA debugger, layer inspector)
-    XRayMode mode;                       ///< X-Ray mode (off, DMA debugger, layer inspector, spectrum analyzer)
+    XRayMode mode;                       ///< X-Ray mode (off, DMA debugger, layer inspector, spectrum analyzer, heatmap)
     bool dmaOverlay;                        ///< Enable the DMA overlay
     XRayCompositor compositor;              ///< Compositor used to merge the overlay with the picture
     bool dmaChannel[6];                     ///< Visualize the DMA channel (one flag per channel)

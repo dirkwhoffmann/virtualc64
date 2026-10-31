@@ -21,8 +21,6 @@ namespace vc64 {
 
 class Memory final : public SubComponent {
 
-    friend class Heatmap;
-
     Descriptions descriptions = {{
 
         .type           = Class::Memory,
@@ -34,7 +32,6 @@ class Memory final : public SubComponent {
     Options options = {
 
         Opt::MEM_INIT_PATTERN,
-        Opt::MEM_HEATMAP,
         Opt::MEM_SAVE_ROMS
     };
 
@@ -82,10 +79,7 @@ public:
     // Indicates if watchpoints should be checked
     bool checkWatchpoints = false;
 
-    // Debugging
-    Heatmap heatmap;
-
-    // Most recent accesses (for the X-Ray heat map)
+    // Access counters (for the X-Ray visualizations)
     AccessTrace trace;
 
 
@@ -185,14 +179,6 @@ public:
 
     MemInfo cacheInfo() const;
 
-private:
-
-    /* Access counters for the heatmap. These are neither exposed through the
-     * API nor snapshotted, so they are kept in a plain member: wrapping them
-     * in a Backed would triple their size (value, cache, live) for nothing.
-     */
-    MemMetrics metrics = { };
-
 
     //
     // Accessing
@@ -264,12 +250,6 @@ public:
     static void sprint8b(char *s, u8 value);
     static void sprint16b(char *s, u16 value);
 
-    
-    //
-    // Executing
-    //
-
-    void endFrame();
-};
+    };
 
 }

@@ -638,7 +638,6 @@
 		50BD641A2C0373F9007CD347 /* PowerPortBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64182C0373F9007CD347 /* PowerPortBase.cpp */; };
 		50BD641D2C04C05A007CD347 /* Heatmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD641B2C04C05A007CD347 /* Heatmap.cpp */; };
 		50BD641E2C04C05A007CD347 /* Heatmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BD641B2C04C05A007CD347 /* Heatmap.cpp */; };
-		50BD64222C077610007CD347 /* HeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BD64212C077610007CD347 /* HeatmapView.swift */; };
 		50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5424E7F77F008F39C9 /* URL.swift */; };
 		50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5724E7F80C008F39C9 /* FileManager.swift */; };
 		50BE4B5A24E7F81B008F39C9 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5924E7F81B008F39C9 /* NSColor.swift */; };
@@ -1507,7 +1506,6 @@
 		50BD64182C0373F9007CD347 /* PowerPortBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerPortBase.cpp; sourceTree = "<group>"; };
 		50BD641B2C04C05A007CD347 /* Heatmap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Heatmap.cpp; sourceTree = "<group>"; };
 		50BD641C2C04C05A007CD347 /* Heatmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Heatmap.h; sourceTree = "<group>"; };
-		50BD64212C077610007CD347 /* HeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeatmapView.swift; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		50BE4B5924E7F81B008F39C9 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
@@ -1847,7 +1845,6 @@
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 				50A9443A2DD7594300A242B0 /* DmaView.swift */,
 				50FBB62C28294C29001366F9 /* WaveformView.swift */,
-				50BD64212C077610007CD347 /* HeatmapView.swift */,
 				50726F30295C27470031F2F5 /* EventTableView.swift */,
 				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
 			);
@@ -3860,7 +3857,6 @@
 				505184DE24F23484002C6124 /* MyControllerSnapshots.swift in Sources */,
 				502DD2D72F9E539400ACBE45 /* rvdebug.cpp in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
-				50BD64222C077610007CD347 /* HeatmapView.swift in Sources */,
 				50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */,
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50DC243E303A37990054EA1F /* UUID.cpp in Sources */,

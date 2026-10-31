@@ -140,7 +140,6 @@
                 <outlet property="memCharen" destination="Brr-uN-fQ7" id="VaA-t7-wAh"/>
                 <outlet property="memExrom" destination="fIJ-UE-OYw" id="zoZ-MA-PUP"/>
                 <outlet property="memGame" destination="2UE-Dq-Yb4" id="aZw-bf-jna"/>
-                <outlet property="memHeatmapView" destination="dAH-DN-gCk" id="qkq-3r-PSg"/>
                 <outlet property="memHiram" destination="TrT-jl-oSZ" id="47s-93-X5P"/>
                 <outlet property="memIOButton" destination="uNj-SC-zUi" id="5O8-AK-zhX"/>
                 <outlet property="memKernalButton" destination="clj-p9-gla" id="tev-Xi-ACN"/>
@@ -1418,22 +1417,6 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </tableHeaderView>
                                                             </scrollView>
-                                                        </subviews>
-                                                    </view>
-                                                </tabViewItem>
-                                                <tabViewItem label="Heatmap" identifier="" id="Iib-Ga-NE3">
-                                                    <view key="view" id="xEA-rZ-7Xd">
-                                                        <rect key="frame" x="10" y="33" width="822" height="228"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <subviews>
-                                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dAH-DN-gCk" customClass="HeatmapView" customModule="VirtualC64" customModuleProvider="target">
-                                                                <rect key="frame" x="7" y="36" width="768" height="192"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="monitorTemplate" id="i0b-YP-grC"/>
-                                                                <connections>
-                                                                    <outlet property="inspector" destination="-2" id="dLK-73-fVV"/>
-                                                                </connections>
-                                                            </imageView>
                                                         </subviews>
                                                     </view>
                                                 </tabViewItem>

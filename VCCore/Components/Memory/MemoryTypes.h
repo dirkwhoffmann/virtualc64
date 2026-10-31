@@ -123,7 +123,6 @@ typedef struct
 {
     RamPattern ramPattern;                  ///< RAM start-up pattern
     bool saveRoms;                          ///< Include ROMs in snapshots
-    bool heatmap;                           ///< Count memory accesses for the heatmap
 }
 MemConfig;
 
@@ -141,14 +140,6 @@ typedef struct
     MemType vicPeekSrc[16];                 ///< Memory type read by the VICII from each 4 KB bank
 }
 MemInfo;
-
-/// Memory access statistics
-typedef struct
-{
-    isize reads[65536];                     ///< Number of read accesses per address
-    isize writes[65536];                    ///< Number of write accesses per address
-}
-MemMetrics;
 
 
 }

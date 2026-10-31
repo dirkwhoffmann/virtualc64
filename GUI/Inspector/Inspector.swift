@@ -114,7 +114,6 @@ class Inspector: DialogController {
     @IBOutlet weak var memHiram: NSButton!
     @IBOutlet weak var memLoram: NSButton!
     @IBOutlet weak var memSource: NSPopUpButton!
-    @IBOutlet weak var memHeatmapView: HeatmapView!
 
     var bankType: [Int: vc64.MemType] = [:]
     var displayedBank = 0
@@ -372,7 +371,6 @@ class Inspector: DialogController {
 
         // Enter debug mode
         emu?.trackOnAsync()
-        emu?.setAsync(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
         
         // Adjust window height to match what we see in interface builder
@@ -399,7 +397,6 @@ class Inspector: DialogController {
 
         // Enter debug mode
         emu?.trackOnAsync()
-        emu?.setAsync(.MEM_HEATMAP, enable: true)
         updateInspectionTarget()
     }
     */
@@ -636,7 +633,6 @@ extension Inspector {
 
             // Leave debug mode
             emu?.trackOffAsync()
-            emu?.setAsync(.MEM_HEATMAP, enable: false)
             emu?.c64.autoInspectionMask = 0
         }
     }

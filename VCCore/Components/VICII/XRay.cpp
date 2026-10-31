@@ -165,13 +165,25 @@ XRay::computeOverlay(u32 *emuTexture, u32 *xrayTexture)
     }
 }
 
+// Returns the number of accesses to the memory covered by a bar (k: 0 = reads, 1 = writes)
+static u64
+barTotal(const AccessTrace &trace, isize k, isize bar)
+{
+    constexpr isize span = 65536 / XRay::spectrumBars;
+
+    const u32 *counters = k == 0 ? trace.reads : trace.writes;
+    u64 total = 0;
+    for (isize addr = bar * span; addr < (bar + 1) * span; addr++) total += counters[addr];
+    return total;
+}
+
 void
 XRay::updateAccessRecorder()
 {
     auto &trace = mem.trace;
     auto mode = config.mode;
 
-    trace.enabled = mode == XRayMode::XRAY_SPECTRUM;
+    trace.enabled = mode == XRayMode::XRAY_SPECTRUM || mode == XRayMode::XRAY_HEATMAP;
 }
 
 void
@@ -179,10 +191,13 @@ XRay::resetAccessMonitor()
 {
     auto &trace = mem.trace;
 
-    for (isize i = 0; i < 256; i++) { lastReads[i] = trace.reads[i]; lastWrites[i] = trace.writes[i]; }
+    for (isize k = 0; k < 2; k++) {
+        for (isize bar = 0; bar < spectrumBars; bar++) lastTotals[k][bar] = barTotal(trace, k, bar);
+    }
 
     memset(bars, 0, sizeof(bars));
     memset(peaks, 0, sizeof(peaks));
+    heatmap.reset(trace);
 }
 
 // Converts an access count into a level between 0 and 1 (logarithmic)
@@ -218,7 +233,6 @@ XRay::drawSpectrum()
      * and falls back slowly. The part of a bar that reflects the current
      * frame is bright, the part that is merely decaying is dim.
      */
-    constexpr isize pagesPerBar = 256 / spectrumBars;
     constexpr isize pitch = 8, barWidth = 6;
     constexpr isize x0 = (Texture::width - spectrumBars * pitch) / 2;
     constexpr isize centerY = Texture::height / 2;
@@ -243,10 +257,9 @@ XRay::drawSpectrum()
         for (isize k = 0; k < 2; k++) {
 
             // Accesses within the last frame
-            u32 count = 0;
-            for (isize p = bar * pagesPerBar; p < (bar + 1) * pagesPerBar; p++) {
-                count += k == 0 ? trace.reads[p] - lastReads[p] : trace.writes[p] - lastWrites[p];
-            }
+            u64 total = barTotal(trace, k, bar);
+            u32 count = u32(total - lastTotals[k][bar]);
+            lastTotals[k][bar] = total;
 
             auto level = accessLevel(count, fullScale);
             bars[k][bar] = float(std::max(level, bars[k][bar] * decay));
@@ -280,8 +293,55 @@ XRay::drawSpectrum()
         }
     }
 
-    // Start the next measurement
-    for (isize i = 0; i < 256; i++) { lastReads[i] = trace.reads[i]; lastWrites[i] = trace.writes[i]; }
+}
+
+void
+XRay::drawHeatmap()
+{
+    switch (static_cast<TexelFormat>(host.getConfig().texFormat)) {
+
+        case TexelFormat::ABGR: drawHeatmap<TexelFormat::ABGR>(); return;
+        case TexelFormat::ARGB: drawHeatmap<TexelFormat::ARGB>(); return;
+
+        default: // RGBA
+            drawHeatmap<TexelFormat::RGBA>(); return;
+    }
+}
+
+template <TexelFormat F>
+void
+XRay::drawHeatmap()
+{
+    /* The heatmap grid is stretched over the whole texture. Each cell is
+     * separated from its neighbors by a one pixel gap on its right and bottom
+     * side. Cells that haven't been touched recently stay black (no effect).
+     */
+    constexpr isize cols = Heatmap::cols, rows = Heatmap::rows;
+    constexpr isize width = Texture::width, height = Texture::height;
+
+    u32 *texture = vic.xrayTexture;
+
+    heatmap.update(mem.trace);
+
+    float levels[rows][cols];
+    heatmap.compute(levels);
+
+    for (isize y = 0; y < height; y++) {
+
+        isize row = y * rows / height;
+        bool gapY = (y + 1) * rows / height != row;
+
+        for (isize x = 0; x < width; x++) {
+
+            isize col = x * cols / width;
+            bool gapX = (x + 1) * cols / width != col;
+
+            float level = levels[row][col];
+            if (gapX || gapY || level <= 0) continue;
+
+            texture[y * width + x] = GpuColor<F>(u8(255 * level), 0, 0).rawValue;
+        }
+    }
 }
 
 void

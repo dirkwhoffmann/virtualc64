@@ -131,7 +131,6 @@ OptionParser::create(Opt opt, i64 arg)
         case Opt::AUD_ASR:                   return boolParser();
 
         case Opt::MEM_INIT_PATTERN:          return enumParser.template operator()<RamPatternEnum,RamPattern>();
-        case Opt::MEM_HEATMAP:               return boolParser();
         case Opt::MEM_SAVE_ROMS:             return boolParser();
 
         case Opt::DRV_AUTO_CONFIG:           return boolParser();

@@ -84,7 +84,6 @@ Memory::getOption(Opt option) const
     switch (option) {
 
         case Opt::MEM_INIT_PATTERN:  return (i64)config.ramPattern;
-        case Opt::MEM_HEATMAP:       return (i64)config.heatmap;
         case Opt::MEM_SAVE_ROMS:     return (i64)config.saveRoms;
 
         default:
@@ -104,7 +103,6 @@ Memory::checkOption(Opt opt, i64 value)
             }
             return;
 
-        case Opt::MEM_HEATMAP:
         case Opt::MEM_SAVE_ROMS:
 
             return;
@@ -124,11 +122,6 @@ Memory::setOption(Opt opt, i64 value)
         case Opt::MEM_INIT_PATTERN:
 
             config.ramPattern = (RamPattern)value;
-            return;
-
-        case Opt::MEM_HEATMAP:
-
-            config.heatmap = (bool)value;
             return;
 
         case Opt::MEM_SAVE_ROMS:

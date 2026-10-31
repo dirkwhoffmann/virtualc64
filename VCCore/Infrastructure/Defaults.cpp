@@ -127,7 +127,6 @@ Defaults::Defaults()
     setFallback(Opt::SID_POWER_SAVE,            false,                  {0, 1, 2, 3});
 
     setFallback(Opt::MEM_INIT_PATTERN,          (i64)RamPattern::VICE);
-    setFallback(Opt::MEM_HEATMAP,               false);
     setFallback(Opt::MEM_SAVE_ROMS,             true);
 
     setFallback(Opt::DRV_AUTO_CONFIG,           true,               {DRIVE8, DRIVE9});
