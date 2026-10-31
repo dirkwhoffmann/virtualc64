@@ -151,7 +151,6 @@ Drive::_didReset(bool hard)
 {
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;
-    watchdog = INT64_MAX;
     needsEmulation = config.connected && config.switchedOn;
 }
 

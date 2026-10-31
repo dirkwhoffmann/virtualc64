@@ -78,8 +78,8 @@ class Drive final : public SubComponent {
     // Constants
     //
 
-    /* Power-safe threshold measured in frames. If the drive was inactive for
-     * the specified number of frames, it is put into power-safe mode (if this
+    /* Power-save threshold measured in frames. If the drive was inactive for
+     * the specified number of frames, it is put into power-save mode (if this
      * option is enabled). In this mode, executing the drive is skipped inside
      * the run loop. As a effect, the current drive state is frozen until the
      * drive is woken up.
@@ -248,7 +248,7 @@ public:
     //
     
     // Idle counter
-    i64 watchdog = INT64_MAX;
+    i64 idleCounter = 0;
 
     // Indicates whether execute() should be called inside the run loop
     bool needsEmulation = false;
@@ -286,7 +286,7 @@ public:
         CLONE(writeShiftreg)
         CLONE(sync)
         CLONE(byteReady)
-        CLONE(watchdog)
+        CLONE(idleCounter)
         CLONE(needsEmulation)
 
         CLONE(insertionStatus)
@@ -332,7 +332,7 @@ public:
         << writeShiftreg
         << sync
         << byteReady
-        << watchdog
+        << idleCounter
         << needsEmulation;
 
         if (isResetter(worker)) return;
@@ -435,7 +435,7 @@ public:
     bool connectedAndOn() { return config.connected && config.switchedOn; }
 
     // Checks whether the drive has been put in power-saving mode
-    bool isIdle() const { return watchdog <= 0; }
+    bool isIdle() const { return idleCounter >= powerSafeThreshold; }
 
     // Returns true iff the red drive LED is on
     bool getRedLED() const { return redLED; };
@@ -449,8 +449,8 @@ public:
     // Turns the drive engine on or off
     void setRotating(bool b);
     
-    // Wakes up the drive (clears the idle state)
-    void wakeUp(isize awakeness = powerSafeThreshold);
+    // Wakes up the drive (leaves the idle state)
+    void wakeUp();
 
     
     //
