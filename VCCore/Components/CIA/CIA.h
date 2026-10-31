@@ -260,6 +260,12 @@ private:
      * when a bit is shifted out.
      */
     u8 serCounter;
+
+    // Indicates that a byte has been written to SDR and is not yet fully shifted
+    bool serLoaded;
+
+    // Indicates that a second byte is waiting until the current one is done
+    bool serPending;
     
     //
     // Port pins
@@ -336,6 +342,8 @@ public:
         CLONE(sdr)
         CLONE(serClk)
         CLONE(serCounter)
+        CLONE(serLoaded)
+        CLONE(serPending)
         CLONE(CNT)
         CLONE(INT)
         CLONE(tiredness)
@@ -384,6 +392,8 @@ public:
         << sdr
         << serClk
         << serCounter
+        << serLoaded
+        << serPending
         << CNT
         << INT
         << tiredness

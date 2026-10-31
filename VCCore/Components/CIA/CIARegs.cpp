@@ -324,8 +324,17 @@ CIA::poke(u16 addr, u8 value)
         case 0x0C: // CIA_DATA_REGISTER
             
             sdr = value;
-            delay |= CIASerLoad0;
-            feed |= CIASerLoad0;
+            if (serLoaded) {
+
+                // The shift register is occupied. Keep the byte as pending.
+                serPending = true;
+
+            } else {
+
+                serLoaded = true;
+                delay |= CIASerLoad0;
+                feed |= CIASerLoad0;
+            }
             // delay &= ~SerLoad1;
             return;
             
@@ -423,6 +432,8 @@ CIA::poke(u16 addr, u8 value)
                 delay &= ~(CIASerLoad0 | CIASerLoad1);
                 feed &= ~CIASerLoad0;
                 serCounter = 0;
+                serLoaded = false;
+                serPending = false;
 
                 delay &= ~(CIASerClk0 | CIASerClk1 | CIASerClk2);
                 feed &= ~CIASerClk0;

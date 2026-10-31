@@ -303,7 +303,19 @@ CIA::executeOneCycle()
         if ((delay & (CIASerClk2 | CIASerClk1)) == CIASerClk1) {
             
             // Positive edge
-            if (serCounter == 1) delay |= CIASerInt0;
+            if (serCounter == 1) {
+
+                delay |= CIASerInt0;
+
+                // Hand over to the pending byte (if any)
+                if (serPending) {
+                    serPending = false;
+                    delay |= CIASerLoad0;
+                    feed |= CIASerLoad0;
+                } else {
+                    serLoaded = false;
+                }
+            }
 
         } else if ((delay & (CIASerClk2 | CIASerClk1)) == CIASerClk2) {
             
