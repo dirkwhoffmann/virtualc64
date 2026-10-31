@@ -6,6 +6,7 @@
 //
 // See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -29,6 +30,7 @@ using utl::usize;
 // Enumerations
 //
 
+/// Type of a media image.
 enum class ImageType : long
 {
     UNKNOWN,
@@ -75,6 +77,7 @@ struct ImageTypeEnum : utl::Reflectable<ImageTypeEnum, ImageType>
     }
 };
 
+/// Format of a disk image or file.
 enum class ImageFormat : long
 {
     UNKNOWN,
@@ -136,6 +139,7 @@ struct ImageFormatEnum : utl::Reflectable<ImageFormatEnum, ImageFormat>
     }
 };
 
+/// Family of a file system.
 enum class FSFamily : long
 {
     UNKNOWN,
@@ -177,10 +181,11 @@ struct FSFamilyEnum : utl::Reflectable<FSFamilyEnum, FSFamily>
 // Structures
 //
 
+/// Describes the contents of a disk image.
 struct ImageInfo {
 
-    ImageType   type;
-    ImageFormat format;
+    ImageType   type;                   ///< The image type
+    ImageFormat format;                 ///< The image format
 };
 
 }

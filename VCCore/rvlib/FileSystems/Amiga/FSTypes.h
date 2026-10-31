@@ -6,6 +6,7 @@
 //
 // See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -17,6 +18,7 @@ using namespace utl;
 
 struct FSBlock;
 
+/// File system format.
 enum class FSFormat : long
 {
     OFS      = 0,    // Original File System
@@ -74,6 +76,7 @@ struct FSFormatEnum : Reflectable<FSFormatEnum, FSFormat>
     }
 };
 
+/// Returns true if the given format is an Old File System (OFS) variant.
 inline bool isOFSVolumeType(FSFormat value)
 {
     switch (value) {
@@ -86,6 +89,7 @@ inline bool isOFSVolumeType(FSFormat value)
     }
 }
 
+/// Returns true if the given format is a Fast File System (FFS) variant.
 inline bool isFFSVolumeType(FSFormat value)
 {
     switch (value) {
@@ -98,6 +102,7 @@ inline bool isFFSVolumeType(FSFormat value)
     }
 }
 
+/// Returns true if the given format is an international (INTL) variant.
 inline bool isINTLVolumeType(FSFormat value)
 {
     switch (value) {
@@ -112,6 +117,7 @@ inline bool isINTLVolumeType(FSFormat value)
     }
 }
 
+/// Type of a file system block.
 enum class FSBlockType : long
 {
     UNKNOWN,
@@ -171,6 +177,7 @@ struct FSBlockTypeEnum : Reflectable<FSBlockTypeEnum, FSBlockType>
     }
 };
 
+/// Type of a field inside a file system block.
 enum class FSItemType
 {
     UNKNOWN,
@@ -315,6 +322,7 @@ struct FSItemTypeEnum : Reflectable<FSItemTypeEnum, FSItemType>
 };
 
 
+/// Error found in a file system block.
 enum class FSBlockError : long
 {
     OK,
@@ -368,6 +376,7 @@ struct FSBlockErrorEnum : Reflectable<FSBlockErrorEnum, FSBlockError>
     }
 };
 
+/// Type of a boot block.
 enum class BootBlockType
 {
     STANDARD,
@@ -396,6 +405,7 @@ struct BootBlockTypeEnum : Reflectable<BootBlockTypeEnum, BootBlockType>
     }
 };
 
+/// Identifies a known boot block.
 enum class BootBlockId
 {
     NONE,
@@ -441,29 +451,35 @@ struct BootBlockIdEnum : Reflectable<BootBlockIdEnum, BootBlockId>
 // Structures
 //
 
+/// Static properties of an Amiga file system.
 struct FSTraits
 {
-    FSFormat dos = FSFormat::NODOS;
+    FSFormat dos = FSFormat::NODOS;     ///< File system format
 
-    isize blocks = 0;
-    isize bytes = 0;
-    isize bsize = 512;
-    isize reserved = 2;
+    isize blocks = 0;                   ///< Number of blocks
+    isize bytes = 0;                    ///< Capacity in bytes
+    isize bsize = 512;                  ///< Block size in bytes
+    isize reserved = 2;                 ///< Number of reserved blocks
 
+    /// Returns true if the file system is an Old File System (OFS) variant.
     bool ofs() const { return isOFSVolumeType(dos); }
+    /// Returns true if the file system is a Fast File System (FFS) variant.
     bool ffs() const { return isFFSVolumeType(dos); }
+    /// Returns true if the file system is an international (INTL) variant.
     bool intl() const { return isINTLVolumeType(dos); }
+    /// Returns true if the volume can be stored in an ADF file.
     bool adf() const;
 };
 
+/// Result of a file system consistency check.
 typedef struct
 {
-    // Block errors
+    /// Block errors
     std::vector<BlockNr> blockErrors;
 
-    // Bitmap errors
+    /// Bitmap errors
     std::vector<BlockNr> usedButUnallocated;
-    std::vector<BlockNr> unusedButAllocated;
+    std::vector<BlockNr> unusedButAllocated;  ///< Blocks that are marked as allocated but are not in use
 }
 FSDiagnosis;
 

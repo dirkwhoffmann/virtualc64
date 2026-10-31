@@ -6,6 +6,7 @@
 //
 // See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -29,27 +30,30 @@ using utl::usize;
 // Aliases
 //
 
-// Track devices
+/// Track devices
 using BlockNr  = isize;
-using CylNr    = isize;
-using HeadNr   = isize;
-using SectorNr = isize;
-using TrackNr  = isize;
+using CylNr    = isize;                 ///< Cylinder number
+using HeadNr   = isize;                 ///< Head number
+using SectorNr = isize;                 ///< Sector number
+using TrackNr  = isize;                 ///< Track number
 
 
 //
 // Structures
 //
 
+/// A track/sector link of a disk image.
 struct TSLink
 {
-    TrackNr t;
-    SectorNr s;
+    TrackNr t;                          ///< Track number
+    SectorNr s;                         ///< Sector number
 };
 
+/// Returns true if both links point to the same track and sector.
 constexpr bool operator==(const TSLink &a, const TSLink &b) noexcept {
     return a.t == b.t && a.s == b.s;
 }
+/// Returns true if the links point to different tracks or sectors.
 constexpr bool operator!=(const TSLink &a, const TSLink &b) noexcept {
     return !(a == b);
 }
@@ -59,30 +63,31 @@ constexpr bool operator!=(const TSLink &a, const TSLink &b) noexcept {
 // Constants
 //
 
-/* Hard drive geometry limits
+/** Hard drive geometry limits
  *
  * What a drive geometry may look like (see
  * GeometryDescriptor::checkCompatibility). A geometry beyond these values
  * cannot be described by the CHS fields it has to pass through.
  */
 static const isize HDR_C_MAX =  32768;
-static const isize HDR_H_MAX =  16;
-static const isize HDR_S_MAX =  256;
+static const isize HDR_H_MAX =  16;     ///< Maximum number of heads
+static const isize HDR_S_MAX =  256;    ///< Maximum number of sectors per track
 
-/* Bounds for proposing a geometry
+/** Bounds for proposing a geometry
  *
  * Geometries this small are legal, but nothing to offer a user who is about
  * to create a drive (see GeometryDescriptor::driveGeometries).
  */
 static const isize HDR_C_MIN =  16;
-static const isize HDR_H_MIN =  1;
-static const isize HDR_S_MIN =  16;
+static const isize HDR_H_MIN =  1;      ///< Minimum number of heads
+static const isize HDR_S_MIN =  16;     ///< Minimum number of sectors per track
 
 
 //
 // Enumerations
 //
 
+/// Diameter of a disk.
 enum class Diameter : long
 {
     INCH_35,
@@ -117,6 +122,7 @@ struct DiameterEnum : utl::Reflectable<DiameterEnum, Diameter>
     }
 };
 
+/// Density of a disk.
 enum class Density
 {
     SD,
