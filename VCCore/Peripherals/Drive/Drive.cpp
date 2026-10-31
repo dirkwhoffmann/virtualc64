@@ -156,6 +156,10 @@ Drive::executeUF4()
             byteReadyCounter = sync ? (byteReadyCounter + 1) & 7 : 0;
             
             // (4) Execute the write shift register
+            if (writeMode() != writing) {
+                writing = writeMode();
+                if (writing) fitBlankHalftrack();
+            }
             if (writeMode() && hasDisk() && !getLightBarrier()) {
                 writeBitToHead(writeShiftreg & 0x80);
                 disk->setModified(true);
@@ -175,6 +179,20 @@ Drive::executeUF4()
             }
             break;
     }
+}
+
+void
+Drive::fitBlankHalftrack()
+{
+    if (!hasDisk() || !disk->halftrackIsEmpty(halftrack)) return;
+
+    // An unformatted halftrack has no length of its own. When we start writing
+    // to it, the number of bits that fit on the track is determined by the
+    // current bit rate (one revolution takes 200000 cycles).
+    isize bits = (isize)(500000000 / delayBetweenTwoCarryPulses[zone]) & ~7;
+
+    disk->length.halftrack[halftrack] = (u16)bits;
+    if (offset >= bits) offset %= bits;
 }
 
 void

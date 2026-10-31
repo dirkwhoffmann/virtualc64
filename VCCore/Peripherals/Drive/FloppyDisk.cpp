@@ -467,7 +467,7 @@ FloppyDisk::_bitDelay(Halftrack ht, HeadPos pos) const {
     if (ht <= 59)
         return 4 * 8750;  // Density bits = 10: 4 * 14/16 * 10^4 1/10 nsec
     
-    return 4 * 8125;     // Density bits = 11: 4 * 13/16 * 10^4 1/10 nsec
+    return 4 * 8125;      // Density bits = 11: 4 * 13/16 * 10^4 1/10 nsec
 }
 
 void
