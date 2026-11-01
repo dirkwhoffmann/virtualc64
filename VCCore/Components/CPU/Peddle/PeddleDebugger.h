@@ -220,6 +220,7 @@ public:
 
     // Disassembles an item from the log buffer
     isize disassRecorded(char *dst, const char *fmt, isize addr) const;
+    isize disassRecorded(char *dst, const char *fmt, isize addr, const DasmStyle &style) const;
 
     // DEPRECATED
     isize disassembleRecordedInstr(isize i, char *str) const;

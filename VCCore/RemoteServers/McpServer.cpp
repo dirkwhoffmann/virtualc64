@@ -316,8 +316,8 @@ toolDefinitions()
         {"title", "Disassemble"},
         {"description",
             "Disassembles 6510 code as the CPU sees it. Starts at the current "
-            "program counter unless an address is given. Operands are hexadecimal, "
-            "without a '$' prefix."},
+            "program counter unless an address is given. Numbers are hexadecimal, "
+            "prefixed with '$'."},
         {"inputSchema", {
 
             {"type", "object"},
@@ -962,7 +962,7 @@ McpServer::toolDisassemble(const json &args)
         for (long i = 0; i < count; i++) {
 
             char str[256];
-            auto length = cpu.disassembler.disass(str, "%i", addr);
+            auto length = cpu.disassembler.disass(str, "%i", addr, DasmStyle::hex());
 
             string mnemonic = str;
             mnemonic.erase(mnemonic.find_last_not_of(' ') + 1);

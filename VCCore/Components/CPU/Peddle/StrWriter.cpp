@@ -29,15 +29,19 @@ StrWriter::sprintd(char *&s, u64 value)
 }
 
 void
-StrWriter::sprintx(char *&s, u64 value, isize digits)
+StrWriter::sprintx(char *&s, u64 value, isize digits, isize width, char fill)
 {
-    char a = (style.numberFormat.upperCase ? 'A' : 'a') - 10;
+    char a = (format.upperCase ? 'A' : 'a') - 10;
 
-    if (value || !style.numberFormat.plainZero) {
+    if (value || !format.plainZero) {
 
-        auto prefix = style.numberFormat.prefix;
+        auto prefix = format.prefix;
         for (int i = 0; prefix[i]; i++) *s++ = prefix[i];
     }
+
+    // Pad after the prefix (so that the result looks like $0A, not 0$A)
+    if (fill) for (isize i = 0; i < width - digits; i++) *s++ = fill;
+
     for (isize i = digits - 1; i >= 0; i--) {
 
         auto digit = char(value % 16);
@@ -84,9 +88,9 @@ StrWriter::operator<<(string_view str)
 StrWriter&
 StrWriter::operator<<(u8 value)
 {
-    auto fill = style.numberFormat.fill;
+    auto fill = format.fill;
 
-    switch (style.numberFormat.radix) {
+    switch (format.radix) {
 
         case 10:
         {
@@ -98,8 +102,7 @@ StrWriter::operator<<(u8 value)
         case 16:
         {
             auto digits = hexDigits(value);
-            if (fill) for (isize i = 0; i < 2 - digits; i++) *ptr++ = fill;
-            sprintx(ptr, value, digits);
+            sprintx(ptr, value, digits, 2, fill);
             break;
         }
     }
@@ -110,9 +113,9 @@ StrWriter::operator<<(u8 value)
 StrWriter&
 StrWriter::operator<<(u16 value)
 {
-    auto fill = style.numberFormat.fill;
+    auto fill = format.fill;
 
-    switch (style.numberFormat.radix) {
+    switch (format.radix) {
 
         case 10:
         {
@@ -124,8 +127,7 @@ StrWriter::operator<<(u16 value)
         case 16:
         {
             auto digits = hexDigits(value);
-            if (fill) for (isize i = 0; i < 4 - digits; i++) *ptr++ = fill;
-            sprintx(ptr, value, digits);
+            sprintx(ptr, value, digits, 4, fill);
             break;
         }
     }
@@ -276,7 +278,7 @@ StrWriter::operator<<(Dir op)
 StrWriter&
 StrWriter::operator<<(Tab tab)
 {
-    do { *ptr++ = ' '; } while (ptr < base + style.tab);
+    do { *ptr++ = ' '; } while (ptr < base + column);
     return *this;
 }
 

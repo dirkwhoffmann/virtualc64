@@ -451,11 +451,27 @@ typedef struct
 }
 DasmNumberFormat;
 
-typedef struct
+/* Defines how the disassembler formats its output. The style is passed to the
+ * disassembler functions. Functions without a style parameter use the style
+ * stored in the disassembler (see Disassembler::style).
+ */
+struct DasmStyle
 {
-    DasmNumberFormat numberFormat;
-    int tab;
-}
-DasmStyle;
+    // Format for numbers inside instructions (operands, branch targets)
+    DasmNumberFormat instr = { .prefix = "", .radix = 16, .upperCase = true, .fill = '0' };
+
+    // Format for numbers in data dumps (bytes, words, registers, addresses)
+    DasmNumberFormat data = { .prefix = "", .radix = 16, .upperCase = true, .fill = '0' };
+
+    // Column at which the operand of an instruction starts
+    int tab = 4;
+
+    // Returns a style that prefixes hexadecimal numbers with '$'
+    static DasmStyle hex() {
+
+        DasmNumberFormat fmt = { .prefix = "$", .radix = 16, .upperCase = true, .fill = '0' };
+        return DasmStyle { .instr = fmt, .data = fmt, .tab = 4 };
+    }
+};
 
 }

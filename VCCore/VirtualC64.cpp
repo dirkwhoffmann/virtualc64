@@ -1033,6 +1033,32 @@ CPUDebuggerAPI::disassemble(u16 addr, const string &fmt, isize *len) const
 }
 
 string
+CPUDebuggerAPI::disassemble(u16 addr, const string &fmt, const DasmStyle &style, isize *len) const
+{
+    VC64_PUBLIC
+    checkDisassemblyFormat(fmt);
+
+    std::vector<char> buffer(32 * fmt.size() + 64);
+    auto result = cpu->disassembler.disass(buffer.data(), fmt.c_str(), addr, style);
+    if (len) *len = result;
+
+    return string(buffer.data());
+}
+
+string
+CPUDebuggerAPI::disassembleRecorded(isize nr, const string &fmt, const DasmStyle &style, isize *len) const
+{
+    VC64_PUBLIC
+    checkDisassemblyFormat(fmt);
+
+    std::vector<char> buffer(32 * fmt.size() + 64);
+    auto result = cpu->debugger.disassRecorded(buffer.data(), fmt.c_str(), nr, style);
+    if (len) *len = result;
+
+    return string(buffer.data());
+}
+
+string
 CPUDebuggerAPI::disassembleRecorded(isize nr, const string &fmt, isize *len) const
 {
     VC64_PUBLIC

@@ -373,6 +373,14 @@ Debugger::disassRecorded(char *dst, const char *fmt, isize nr) const
 }
 
 isize
+Debugger::disassRecorded(char *dst, const char *fmt, isize nr, const DasmStyle &style) const
+{
+    RecordedInstruction instr = logEntryAbs(nr);
+
+    return cpu.disassembler.disass(dst, fmt, instr, style);
+}
+
+isize
 Debugger::disassembleRecordedInstr(isize i, char *str) const
 {
     RecordedInstruction instr = logEntryAbs(i);

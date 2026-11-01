@@ -391,6 +391,14 @@ public:
      */
     string disassemble(u16 addr, const string &fmt, isize *len = nullptr) const;
 
+    /** Disassembles an instruction using a specific output style.
+     *  The style determines how numbers are formatted and where operands
+     *  start. All other parameters are as in disassemble() above, which
+     *  uses the default style (see setNumberFormat()).
+     *  @param  style   The output style (see DasmStyle::hex() for a ready-made one)
+     */
+    string disassemble(u16 addr, const string &fmt, const DasmStyle &style, isize *len = nullptr) const;
+
     /** Disassembles an instruction from the record buffer.
      *  @param  nr      Index of the instruction in the record buffer
      *  @param  fmt     String defining the output format (see disassemble())
@@ -398,6 +406,9 @@ public:
      *  @return The disassembled text.
      */
     string disassembleRecorded(isize nr, const string &fmt, isize *len = nullptr) const;
+
+    /// Disassembles an instruction from the record buffer using a specific output style.
+    string disassembleRecorded(isize nr, const string &fmt, const DasmStyle &style, isize *len = nullptr) const;
 };
 
 /** CPU API

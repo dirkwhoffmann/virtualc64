@@ -23,11 +23,8 @@ class Disassembler {
 
 public:
 
-    // Visual style for disassembled instructions
-    DasmStyle instrStyle;
-
-    // Visual style for data dumps
-    DasmStyle dataStyle;
+    // The default style used by all functions without a style parameter
+    DasmStyle style;
 
 
     //
@@ -56,24 +53,27 @@ public:
 
     // Experimental
     isize disass(char *dst, const char *fmt, u16 addr) const;
+    isize disass(char *dst, const char *fmt, u16 addr, const DasmStyle &style) const;
     isize disass(char *dst, const char *fmt, const RecordedInstruction &instr) const;
+    isize disass(char *dst, const char *fmt, const RecordedInstruction &instr, const DasmStyle &style) const;
     isize disass(char *dst, u16 addr) const;
     isize disass(char *dst, const RecordedInstruction &instr) const;
 
 private:
 
-    isize disass8(u8 value, char *dst, isize tab) const;
-    isize disass16(u16 value, char *dst, isize tab) const;
-    isize disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const;
-    isize disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const;
+    isize disass8(u8 value, char *dst, isize tab, const DasmStyle &style) const;
+    isize disass16(u16 value, char *dst, isize tab, const DasmStyle &style) const;
+    isize disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab, const DasmStyle &style) const;
+    isize disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab, const DasmStyle &style) const;
     isize disassF(u8 flags, char *dst, isize tab) const;
-    isize disassL(u16 addr, char *dst, isize tab) const;
+    isize disassL(u16 addr, char *dst, isize tab, const DasmStyle &style) const;
 
 public:
 
     // Disassembles an instruction (DEPRECATED)
     isize disassemble(char *str, u16 addr) const;
     isize disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const;
+    isize disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3, const DasmStyle &style) const;
 
     // Creates a textual representation for the status register (DEPRECATED)
     void disassembleFlags(char *str, u8 sr) const;
@@ -81,17 +81,25 @@ public:
 
     // Creates a textual representation for a single byte or word
     void dumpByte(char *str, u8 value) const;
+    void dumpByte(char *str, u8 value, const DasmStyle &style) const;
     void dumpWord(char *str, u16 value) const;
+    void dumpWord(char *str, u16 value, const DasmStyle &style) const;
 
     // Creates a textual representation for a sequence of bytes or words
     void dumpBytes(char *str, u32 addr, isize cnt) const;
+    void dumpBytes(char *str, u32 addr, isize cnt, const DasmStyle &style) const;
     void dumpBytes(char *str, u8 values[], isize cnt) const;
+    void dumpBytes(char *str, u8 values[], isize cnt, const DasmStyle &style) const;
     void dumpWords(char *str, u32 addr, isize cnt) const;
+    void dumpWords(char *str, u32 addr, isize cnt, const DasmStyle &style) const;
     void dumpWords(char *str, u16 values[], isize cnt) const;
+    void dumpWords(char *str, u16 values[], isize cnt, const DasmStyle &style) const;
 
     // Disassembles larger code sections
     void disassembleRange(std::ostream &os, u16 addr, isize count) const;
+    void disassembleRange(std::ostream &os, u16 addr, isize count, const DasmStyle &style) const;
     void disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max = 255) const;
+    void disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max, const DasmStyle &style) const;
 };
 
 }

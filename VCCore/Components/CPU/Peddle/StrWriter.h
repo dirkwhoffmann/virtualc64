@@ -48,17 +48,20 @@ public:
 
     char *base;             // Start address of the destination string
     char *ptr;              // Write pointer
-    const DasmStyle &style;
+    const DasmNumberFormat &format;
+    isize column;           // Column at which operands start (see Tab)
     const SymbolTable *symTable;
 
 public:
 
-    StrWriter(char *p, const DasmStyle &style) : style(style), symTable(nullptr) {
+    StrWriter(char *p, const DasmNumberFormat &format, isize column = 0) :
+        format(format), column(column), symTable(nullptr) {
 
         base = ptr = p;
     };
 
-    StrWriter(char *p, const DasmStyle &style, const SymbolTable &st) : StrWriter(p, style) {
+    StrWriter(char *p, const DasmNumberFormat &format, isize column, const SymbolTable &st) :
+        StrWriter(p, format, column) {
 
         symTable = &st;
     };
@@ -84,7 +87,7 @@ private:
 
     void sprintd(char *&s, u64 value, isize digits);
     void sprintd(char *&s, u64 value);
-    void sprintx(char *&s, u64 value, isize digits);
+    void sprintx(char *&s, u64 value, isize digits, isize width = 0, char fill = 0);
     void sprintx(char *&s, u64 value);
 
 public:

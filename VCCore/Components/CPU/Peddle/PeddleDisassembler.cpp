@@ -16,11 +16,6 @@ namespace vc64::peddle {
 
 Disassembler::Disassembler(Peddle& ref) : cpu(ref)
 {
-    instrStyle = dataStyle = DasmStyle {
-
-        .numberFormat = { .prefix = "", .radix = 16, .upperCase = true, .fill = '0' },
-        .tab          = 4
-    };
 }
 
 void
@@ -36,19 +31,24 @@ Disassembler::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dat
         throw std::runtime_error("radix must be 10 or 16");
     }
 
-    instrStyle.numberFormat = instrFormat;
-    dataStyle.numberFormat = dataFormat;
+    style.instr = instrFormat;
+    style.data = dataFormat;
 }
 
 void
 Disassembler::setIndentation(int value)
 {
-    instrStyle.tab = value;
-    dataStyle.tab = value;
+    style.tab = value;
 }
 
 isize
 Disassembler::disass(char *dst, const char *fmt, u16 addr) const
+{
+    return disass(dst, fmt, addr, style);
+}
+
+isize
+Disassembler::disass(char *dst, const char *fmt, u16 addr, const DasmStyle &style) const
 {
     auto instr = RecordedInstruction {
 
@@ -58,11 +58,17 @@ Disassembler::disass(char *dst, const char *fmt, u16 addr) const
         .pc = addr
     };
 
-    return disass(dst, fmt, instr);
+    return disass(dst, fmt, instr, style);
 }
 
 isize
 Disassembler::disass(char *dst, const char *fmt, const RecordedInstruction &instr) const
+{
+    return disass(dst, fmt, instr, style);
+}
+
+isize
+Disassembler::disass(char *dst, const char *fmt, const RecordedInstruction &instr, const DasmStyle &style) const
 {
     bool ctrl = false;
     isize tab = 0;
@@ -85,42 +91,42 @@ Disassembler::disass(char *dst, const char *fmt, const RecordedInstruction &inst
 
             case 'l': // Label
 
-                dst += disassL(instr.pc, dst, tab);
+                dst += disassL(instr.pc, dst, tab, style);
                 break;
 
             case 'p': // Program counter (instruction address)
 
-                dst += disass16(instr.pc, dst, tab);
+                dst += disass16(instr.pc, dst, tab, style);
                 break;
 
             case 'a': // Accumulator
 
-                dst += disass8(instr.a, dst, tab);
+                dst += disass8(instr.a, dst, tab, style);
                 break;
 
             case 'x': // X register
 
-                dst += disass8(instr.x, dst, tab);
+                dst += disass8(instr.x, dst, tab, style);
                 break;
 
             case 'y': // Y register
 
-                dst += disass8(instr.y, dst, tab);
+                dst += disass8(instr.y, dst, tab, style);
                 break;
 
             case 's': // Stack pointer
 
-                dst += disass8(instr.sp, dst, tab);
+                dst += disass8(instr.sp, dst, tab, style);
                 break;
 
             case 'b': // Instruction bytes (1 - 3)
 
-                dst += disassB(instr.byte1, instr.byte2, instr.byte3, dst, tab);
+                dst += disassB(instr.byte1, instr.byte2, instr.byte3, dst, tab, style);
                 break;
 
             case 'i': // Disassembled instruction
 
-                dst += disassI(instr.pc, instr.byte1, instr.byte2, instr.byte3, dst, tab);
+                dst += disassI(instr.pc, instr.byte1, instr.byte2, instr.byte3, dst, tab, style);
                 break;
 
             case 'f': // Flags
@@ -152,9 +158,9 @@ Disassembler::disass(char *dst, const RecordedInstruction &instr) const
 }
 
 isize
-Disassembler::disass8(u8 value, char *dst, isize tab) const
+Disassembler::disass8(u8 value, char *dst, isize tab, const DasmStyle &style) const
 {
-    StrWriter writer(dst, dataStyle);
+    StrWriter writer(dst, style.data);
 
     writer << value;
     writer.fill(tab);
@@ -163,9 +169,9 @@ Disassembler::disass8(u8 value, char *dst, isize tab) const
 }
 
 isize
-Disassembler::disass16(u16 value, char *dst, isize tab) const
+Disassembler::disass16(u16 value, char *dst, isize tab, const DasmStyle &style) const
 {
-    StrWriter writer(dst, dataStyle);
+    StrWriter writer(dst, style.data);
 
     writer << value;
     writer.fill(tab);
@@ -174,9 +180,9 @@ Disassembler::disass16(u16 value, char *dst, isize tab) const
 }
 
 isize
-Disassembler::disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const
+Disassembler::disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab, const DasmStyle &style) const
 {
-    StrWriter writer(dst, dataStyle);
+    StrWriter writer(dst, style.data);
 
     auto count = cpu.getLengthOfInstruction(byte1);
 
@@ -189,9 +195,9 @@ Disassembler::disassB(u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const
 }
 
 isize
-Disassembler::disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab) const
+Disassembler::disassI(u16 addr, u8 byte1, u8 byte2, u8 byte3, char *dst, isize tab, const DasmStyle &style) const
 {
-    StrWriter writer(dst, instrStyle, cpu.symbolTable);
+    StrWriter writer(dst, style.instr, style.tab, cpu.symbolTable);
 
     // Write mnemonic
     writer << Ins { byte1 };
@@ -238,9 +244,9 @@ Disassembler::disassF(u8 flags, char *dst, isize tab) const
 }
 
 isize
-Disassembler::disassL(u16 addr, char *dst, isize tab) const
+Disassembler::disassL(u16 addr, char *dst, isize tab, const DasmStyle &style) const
 {
-    StrWriter writer(dst, instrStyle);
+    StrWriter writer(dst, style.instr, style.tab);
 
     if (auto label = cpu.symbolTable.symbols.seek(addr); label) {
 
@@ -268,7 +274,13 @@ Disassembler::disassemble(char *str, u16 addr) const
 isize
 Disassembler::disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const
 {
-    StrWriter writer(str, instrStyle);
+    return disassemble(str, pc, byte1, byte2, byte3, style);
+}
+
+isize
+Disassembler::disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3, const DasmStyle &style) const
+{
+    StrWriter writer(str, style.instr, style.tab);
 
     // Write mnemonic
     writer << Ins { byte1 };
@@ -324,19 +336,37 @@ Disassembler::disassembleFlags(char *str) const
 void
 Disassembler::dumpByte(char *str, u8 value) const
 {
-    StrWriter(str, dataStyle) << value << '\0';
+    dumpByte(str, value, style);
+}
+
+void
+Disassembler::dumpByte(char *str, u8 value, const DasmStyle &style) const
+{
+    StrWriter(str, style.data) << value << '\0';
 }
 
 void
 Disassembler::dumpWord(char *str, u16 value) const
 {
-    StrWriter(str, dataStyle) << value << '\0';
+    dumpWord(str, value, style);
+}
+
+void
+Disassembler::dumpWord(char *str, u16 value, const DasmStyle &style) const
+{
+    StrWriter(str, style.data) << value << '\0';
 }
 
 void
 Disassembler::dumpBytes(char *str, u32 addr, isize cnt) const
 {
-    StrWriter writer(str, dataStyle);
+    dumpBytes(str, addr, cnt, style);
+}
+
+void
+Disassembler::dumpBytes(char *str, u32 addr, isize cnt, const DasmStyle &style) const
+{
+    StrWriter writer(str, style.data);
 
     for (isize i = 0; i < cnt; i++) {
 
@@ -349,7 +379,13 @@ Disassembler::dumpBytes(char *str, u32 addr, isize cnt) const
 void
 Disassembler::dumpBytes(char *str, u8 values[], isize cnt) const
 {
-    StrWriter writer(str, dataStyle);
+    dumpBytes(str, values, cnt, style);
+}
+
+void
+Disassembler::dumpBytes(char *str, u8 values[], isize cnt, const DasmStyle &style) const
+{
+    StrWriter writer(str, style.data);
 
     for (isize i = 0; i < cnt; i++) {
 
@@ -362,7 +398,13 @@ Disassembler::dumpBytes(char *str, u8 values[], isize cnt) const
 void
 Disassembler::dumpWords(char *str, u32 addr, isize cnt) const
 {
-    StrWriter writer(str, dataStyle);
+    dumpWords(str, addr, cnt, style);
+}
+
+void
+Disassembler::dumpWords(char *str, u32 addr, isize cnt, const DasmStyle &style) const
+{
+    StrWriter writer(str, style.data);
 
     for (isize i = 0; i < cnt; i++) {
 
@@ -376,7 +418,13 @@ Disassembler::dumpWords(char *str, u32 addr, isize cnt) const
 void
 Disassembler::dumpWords(char *str, u16 values[], isize cnt) const
 {
-    StrWriter writer(str, dataStyle);
+    dumpWords(str, values, cnt, style);
+}
+
+void
+Disassembler::dumpWords(char *str, u16 values[], isize cnt, const DasmStyle &style) const
+{
+    StrWriter writer(str, style.data);
 
     for (isize i = 0; i < cnt; i++) {
 
@@ -389,11 +437,23 @@ Disassembler::dumpWords(char *str, u16 values[], isize cnt) const
 void
 Disassembler::disassembleRange(std::ostream &os, u16 addr, isize count) const
 {
-    disassembleRange(os, std::pair<u16, u16>(addr, UINT16_MAX), count);
+    disassembleRange(os, addr, count, style);
+}
+
+void
+Disassembler::disassembleRange(std::ostream &os, u16 addr, isize count, const DasmStyle &style) const
+{
+    disassembleRange(os, std::pair<u16, u16>(addr, UINT16_MAX), count, style);
 }
 
 void
 Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max) const
+{
+    disassembleRange(os, range, max, style);
+}
+
+void
+Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isize max, const DasmStyle &style) const
 {
     char str[256];
     u16 addr = range.first;
@@ -401,7 +461,7 @@ Disassembler::disassembleRange(std::ostream &os, std::pair<u16, u16> range, isiz
 
     for (isize i = 0; i < max && addr <= range.second; i++) {
 
-        auto numBytes = disass(str, "%14l %p  %11b %i", addr);
+        auto numBytes = disass(str, "%14l %p  %11b %i", addr, style);
 
         os << std::setfill(' ');
         // os << (addr == pc ? "->" : "  ");
