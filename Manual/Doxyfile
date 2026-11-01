@@ -72,7 +72,7 @@ INPUT                  = guides \
                          ../VCCore/Media/Snapshot.h \
                          ../VCCore/RemoteServers/RemoteManagerTypes.h \
                          ../VCCore/RemoteServers/RemoteServerTypes.h \
-                         ../VCCore/Misc/RetroShell/RetroShellTypes.h \
+                         ../VCCore/RetroShell/RetroShellTypes.h \
                          ../VCCore/Peripherals/Datasette/DatasetteTypes.h \
                          ../VCCore/Peripherals/Drive/DiskAnalyzerTypes.h \
                          ../VCCore/Peripherals/Drive/DriveTypes.h \

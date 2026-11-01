@@ -58,6 +58,6 @@
 // Miscellaneous
 #include "RemoteServers/RemoteManagerTypes.h"
 #include "RemoteServers/RemoteServerTypes.h"
-#include "Misc/RetroShell/RetroShellTypes.h"
+#include "RetroShell/RetroShellTypes.h"
 
 #include "Constants.h"
