@@ -138,6 +138,10 @@ private:
     nlohmann::json toolScreenshot(const nlohmann::json &args);
     nlohmann::json toolReadMemory(const nlohmann::json &args);
     nlohmann::json toolGetState(const nlohmann::json &args);
+    nlohmann::json toolWriteMemory(const nlohmann::json &args);
+    nlohmann::json toolTypeText(const nlohmann::json &args);
+    nlohmann::json toolInsertMedia(const nlohmann::json &args);
+    nlohmann::json toolDisassemble(const nlohmann::json &args);
 };
 
 }

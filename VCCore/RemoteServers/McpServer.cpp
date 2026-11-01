@@ -18,6 +18,7 @@
 #include "httplib.h"
 #include "utl/support.h"
 #include <future>
+#include <sstream>
 
 namespace vc64 {
 
@@ -224,7 +225,120 @@ toolDefinitions()
         {"annotations", {{"readOnlyHint", true}, {"openWorldHint", false}}}
     };
 
-    return json::array({ retroshell, screenshot, readMemory, getState });
+    json writeMemory = {
+
+        {"name", "write_memory"},
+        {"title", "Write memory"},
+        {"description",
+            "Writes bytes into the C64 address space. By default, the write "
+            "goes through the CPU's current memory mapping (so I/O registers "
+            "can be written, and writes to ROM areas land in the RAM below). "
+            "Use target 'ram' to write into RAM unconditionally."},
+        {"inputSchema", {
+
+            {"type", "object"},
+            {"properties", {
+                {"address", {
+                    {"type", json::array({"integer", "string"})},
+                    {"description", "Start address (0...65535), or a string such as '$C000'"}
+                }},
+                {"bytes", {
+                    {"type", json::array({"array", "string"})},
+                    {"items", {{"type", "integer"}, {"minimum", 0}, {"maximum", 255}}},
+                    {"description", "Bytes to write, as an array of integers or a hex string such as 'A9 00 8D 20 D0'"}
+                }},
+                {"target", {
+                    {"type", "string"},
+                    {"enum", json::array({"cpu", "ram"})},
+                    {"description", "Memory view (default: cpu)"}
+                }}
+            }},
+            {"required", json::array({"address", "bytes"})}
+        }},
+        {"annotations", {{"readOnlyHint", false}, {"destructiveHint", true},
+                         {"idempotentHint", true}, {"openWorldHint", false}}}
+    };
+
+    json typeText = {
+
+        {"name", "type_text"},
+        {"title", "Type text"},
+        {"description",
+            "Types text on the C64 keyboard. Use '\\n' for the RETURN key. "
+            "Typing is asynchronous: the keys are fed to the machine over the "
+            "next frames. Example: 'load \"*\",8,1\\n'."},
+        {"inputSchema", {
+
+            {"type", "object"},
+            {"properties", {
+                {"text", {{"type", "string"}, {"description", "Text to type"}}}
+            }},
+            {"required", json::array({"text"})}
+        }},
+        {"annotations", {{"readOnlyHint", false}, {"destructiveHint", false}, {"openWorldHint", false}}}
+    };
+
+    json insertMedia = {
+
+        {"name", "insert_media"},
+        {"title", "Insert media"},
+        {"description",
+            "Inserts a file into the emulated machine. The kind is derived from "
+            "the file extension unless given: D64/G64/T64/P00/PRG are inserted "
+            "as a disk into a floppy drive, TAP as a tape into the datasette, "
+            "and CRT as a cartridge into the expansion port (which resets the "
+            "machine). Kind 'program' flashes a PRG file directly into memory."},
+        {"inputSchema", {
+
+            {"type", "object"},
+            {"properties", {
+                {"path", {{"type", "string"}, {"description", "File path"}}},
+                {"kind", {
+                    {"type", "string"},
+                    {"enum", json::array({"disk", "tape", "cartridge", "program"})},
+                    {"description", "Media kind (default: derived from the extension)"}
+                }},
+                {"drive", {
+                    {"type", "integer"},
+                    {"enum", json::array({8, 9})},
+                    {"description", "Target drive for disks (default: 8)"}
+                }}
+            }},
+            {"required", json::array({"path"})}
+        }},
+        {"annotations", {{"readOnlyHint", false}, {"destructiveHint", true},
+                         {"idempotentHint", false}, {"openWorldHint", false}}}
+    };
+
+    json disassemble = {
+
+        {"name", "disassemble"},
+        {"title", "Disassemble"},
+        {"description",
+            "Disassembles 6510 code as the CPU sees it. Starts at the current "
+            "program counter unless an address is given. Operands are hexadecimal, "
+            "without a '$' prefix."},
+        {"inputSchema", {
+
+            {"type", "object"},
+            {"properties", {
+                {"address", {
+                    {"type", json::array({"integer", "string"})},
+                    {"description", "Start address (default: program counter)"}
+                }},
+                {"count", {
+                    {"type", "integer"},
+                    {"minimum", 1},
+                    {"maximum", 256},
+                    {"description", "Number of instructions (default: 16)"}
+                }}
+            }}
+        }},
+        {"annotations", {{"readOnlyHint", true}, {"openWorldHint", false}}}
+    };
+
+    return json::array({ retroshell, screenshot, readMemory, getState,
+                         writeMemory, typeText, insertMedia, disassemble });
 }
 
 // Encodes binary data as base64
@@ -551,6 +665,10 @@ McpServer::callTool(const string &name, const json &args)
     if (name == "screenshot")   return toolScreenshot(args);
     if (name == "read_memory")  return toolReadMemory(args);
     if (name == "get_state")    return toolGetState(args);
+    if (name == "write_memory") return toolWriteMemory(args);
+    if (name == "type_text")    return toolTypeText(args);
+    if (name == "insert_media") return toolInsertMedia(args);
+    if (name == "disassemble")  return toolDisassemble(args);
 
     throw std::invalid_argument("Unknown tool: " + name);
 }
@@ -706,6 +824,172 @@ McpServer::toolGetState(const json &)
 
     auto result = textResult(line);
     result["structuredContent"] = state;
+    return result;
+}
+
+json
+McpServer::toolWriteMemory(const json &args)
+{
+    if (!args.contains("address")) throw std::invalid_argument("Missing argument 'address'");
+    if (!args.contains("bytes")) throw std::invalid_argument("Missing argument 'bytes'");
+
+    auto address = parseAddress(args["address"]);
+    auto target = args.value("target", string("cpu"));
+
+    // The payload is either an array of integers or a string of hex digits
+    std::vector<u8> data;
+    if (args["bytes"].is_array()) {
+
+        for (auto &b : args["bytes"]) {
+            if (!b.is_number_integer() || b.get<long>() < 0 || b.get<long>() > 255)
+                throw std::invalid_argument("Bytes must be integers in 0...255");
+            data.push_back(u8(b.get<long>()));
+        }
+
+    } else if (args["bytes"].is_string()) {
+
+        string digits;
+        for (char c : args["bytes"].get<string>()) {
+            if (isxdigit((unsigned char)c)) digits += c;
+            else if (!isspace((unsigned char)c) && c != ',' && c != '$')
+                throw std::invalid_argument("Invalid hex string");
+        }
+        if (digits.size() % 2) throw std::invalid_argument("Odd number of hex digits");
+        for (size_t i = 0; i < digits.size(); i += 2) data.push_back(u8(std::stoi(digits.substr(i, 2), nullptr, 16)));
+
+    } else {
+        throw std::invalid_argument("'bytes' must be an array or a hex string");
+    }
+
+    if (data.empty()) throw std::invalid_argument("Nothing to write");
+    if (data.size() > 4096) throw std::invalid_argument("At most 4096 bytes can be written at once");
+    if (address < 0 || address + long(data.size()) > 0x10000) throw std::invalid_argument("Range exceeds the address space");
+    if (target != "cpu" && target != "ram") throw std::invalid_argument("Invalid target");
+
+    // Write on the emulator thread
+    emulator.call([&] {
+
+        for (size_t i = 0; i < data.size(); i++) {
+
+            auto addr = u16(address + long(i));
+            if (target == "ram") mem.poke(addr, data[i], MemType::RAM); else mem.poke(addr, data[i]);
+        }
+    });
+
+    char line[64];
+    snprintf(line, sizeof(line), "Wrote %zu byte(s) at $%04lX", data.size(), address);
+    return textResult(line);
+}
+
+json
+McpServer::toolTypeText(const json &args)
+{
+    if (!args.contains("text") || !args["text"].is_string()) {
+        throw std::invalid_argument("Missing string argument 'text'");
+    }
+    auto text = args["text"].get<string>();
+    if (text.empty()) throw std::invalid_argument("Nothing to type");
+
+    emulator.put(Cmd::KEY_AUTOTYPE, text);
+
+    return textResult("Typing " + std::to_string(text.size()) + " character(s)");
+}
+
+json
+McpServer::toolInsertMedia(const json &args)
+{
+    if (!args.contains("path") || !args["path"].is_string()) {
+        throw std::invalid_argument("Missing string argument 'path'");
+    }
+
+    auto path = host.makeAbsolute(args["path"].get<string>());
+    if (!utl::fileExists(path)) throw std::invalid_argument("File not found: " + path.string());
+
+    // Determine the media kind
+    auto ext = path.extension().string();
+    for (auto &c : ext) c = char(tolower((unsigned char)c));
+
+    auto kind = args.value("kind", string());
+    if (kind.empty()) {
+
+        if (ext == ".d64" || ext == ".g64" || ext == ".t64" || ext == ".p00" || ext == ".prg") kind = "disk";
+        else if (ext == ".tap") kind = "tape";
+        else if (ext == ".crt") kind = "cartridge";
+        else throw std::invalid_argument("Can't derive the media kind from extension '" + ext + "'");
+    }
+
+    auto drive = args.value("drive", 8L);
+    if (drive != 8 && drive != 9) throw std::invalid_argument("Drive must be 8 or 9");
+
+    if (kind == "disk") {
+
+        emulator.call([&] { (drive == 9 ? drive9 : drive8).insertDisk(path, false); });
+        return textResult("Inserted " + path.filename().string() + " into drive " + std::to_string(drive));
+    }
+    if (kind == "tape") {
+
+        emulator.call([&] { datasette.insertTape(path); });
+        return textResult("Inserted tape " + path.filename().string());
+    }
+    if (kind == "cartridge") {
+
+        emulator.call([&] { expansionPort.attachCartridge(path); });
+        return textResult("Attached cartridge " + path.filename().string());
+    }
+    if (kind == "program") {
+
+        emulator.call([&] { c64.flash(path, 0); });
+        return textResult("Flashed " + path.filename().string() + " into memory");
+    }
+    throw std::invalid_argument("Invalid kind");
+}
+
+json
+McpServer::toolDisassemble(const json &args)
+{
+    auto count = args.value("count", 16L);
+    if (count < 1 || count > 256) throw std::invalid_argument("Count must be in 1...256");
+
+    json instructions = json::array();
+    std::stringstream text;
+    {
+        Suspender _(emulator);
+
+        long address = args.contains("address") ? parseAddress(args["address"]) : long(cpu.getPC0());
+        if (address < 0 || address > 0xFFFF) throw std::invalid_argument("Address out of range");
+
+        auto addr = u16(address);
+        for (long i = 0; i < count; i++) {
+
+            char str[256];
+            auto length = cpu.disassembler.disass(str, "%i", addr);
+
+            string mnemonic = str;
+            mnemonic.erase(mnemonic.find_last_not_of(' ') + 1);
+
+            json bytes = json::array();
+            char hex[16];
+            string dump;
+            for (isize j = 0; j < length; j++) {
+                auto b = cpu.readDasm(u16(addr + j));
+                bytes.push_back(b);
+                snprintf(hex, sizeof(hex), "%s%02X", j ? " " : "", b);
+                dump += hex;
+            }
+
+            instructions.push_back({ {"address", addr}, {"bytes", bytes}, {"text", mnemonic} });
+
+            snprintf(hex, sizeof(hex), "$%04X", addr);
+            char col[32];
+            snprintf(col, sizeof(col), "%-9s", dump.c_str());
+            text << hex << "  " << col << " " << mnemonic << "\n";
+
+            addr = u16(addr + length);
+        }
+    }
+
+    auto result = textResult(text.str());
+    result["structuredContent"] = { {"instructions", instructions} };
     return result;
 }
 
