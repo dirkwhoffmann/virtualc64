@@ -214,7 +214,6 @@
 		50726F532961C9940031F2F5 /* SerialPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433C24AF29AC00E69CAE /* SerialPort.cpp */; };
 		50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */; };
 		50726F552961C99A0031F2F5 /* Peddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA48B0292F8EC30084401D /* Peddle.cpp */; };
-		50726F562961C99A0031F2F5 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		50726F572961C9A10031F2F5 /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435824AF29AC00E69CAE /* CIA.cpp */; };
 		50726F582961C9A10031F2F5 /* CIARegs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B7124E81266008F39C9 /* CIARegs.cpp */; };
 		50726F592961C9A10031F2F5 /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435524AF29AC00E69CAE /* TOD.cpp */; };
@@ -342,7 +341,6 @@
 		508C1E732C0C59A20097473C /* PaddleBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E712C0C59A20097473C /* PaddleBase.cpp */; };
 		508C1E752C0C59BA0097473C /* JoystickBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E742C0C59BA0097473C /* JoystickBase.cpp */; };
 		508C1E762C0C59BA0097473C /* JoystickBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508C1E742C0C59BA0097473C /* JoystickBase.cpp */; };
-		509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5095C81C2BA09DE800A83825 /* MemoryDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* MemoryDebugger.cpp */; };
 		5095C81D2BA09DE800A83825 /* MemoryDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5095C81A2BA08B0A00A83825 /* MemoryDebugger.cpp */; };
@@ -1138,7 +1136,6 @@
 		508C1E712C0C59A20097473C /* PaddleBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PaddleBase.cpp; sourceTree = "<group>"; };
 		508C1E742C0C59BA0097473C /* JoystickBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = JoystickBase.cpp; sourceTree = "<group>"; };
 		508C1E772C0C5A1D0097473C /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
 		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
@@ -2540,7 +2537,6 @@
 				50AA48B1292F8EC30084401D /* Peddle.h */,
 				50AA48B0292F8EC30084401D /* Peddle.cpp */,
 				509280CE2930A1B6006E1966 /* PeddleUtils.h */,
-				509280CD2930A1B6006E1966 /* PeddleUtils.cpp */,
 				5044C5D02931F94800F4A413 /* PeddleInit_cpp.h */,
 				504C42EA24AF29AB00E69CAE /* PeddleExec_cpp.h */,
 				5044C5D12931FA5F00F4A413 /* PeddleMemory_cpp.h */,
@@ -3672,7 +3668,6 @@
 				50A194852BDA5CD40046849E /* TODBase.cpp in Sources */,
 				508C1E6E2C0C58FF0097473C /* Paddle.cpp in Sources */,
 				508C1E5B2C0B20EE0097473C /* SerialPortBase.cpp in Sources */,
-				50726F562961C99A0031F2F5 /* PeddleUtils.cpp in Sources */,
 				50726FA82961CA1C0031F2F5 /* PRGFile.cpp in Sources */,
 				50DC243A303A36690054EA1F /* zip.c in Sources */,
 				50726F7E2961C9E80031F2F5 /* Mouse.cpp in Sources */,
@@ -3890,7 +3885,6 @@
 				504C437A24AF29AC00E69CAE /* AnyFile.cpp in Sources */,
 				50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,
-				509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */,
 				506E28452EB746C7003FF0D3 /* DapAdapter.cpp in Sources */,
 				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
 				50A92A232EC85E2B00F90519 /* HttpTransport.cpp in Sources */,

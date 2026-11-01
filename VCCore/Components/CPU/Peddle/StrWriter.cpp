@@ -286,24 +286,6 @@ StrWriter&
 StrWriter::operator<<(Sep)
 {
     *ptr++ = ',';
-
-    /*
-    switch (style.syntax) {
-
-        case DASM_MOIRA:
-        case DASM_MOIRA_MIT:
-        case DASM_MUSASHI:
-
-            *ptr++ = ' ';
-            break;
-
-        case DASM_GNU:
-        case DASM_GNU_MIT:
-
-            break;
-    }
-    */
-
     return *this;
 }
 
