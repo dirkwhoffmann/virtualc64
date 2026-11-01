@@ -63,8 +63,6 @@
  * still calls the read function to inform the environment about the access but
  * discards the returned value. It is then the responsibility of the environment
  * to pass in the correct value by calling the concludeRead() function before
- * the next CPU cycle begins. The Atari 2600 emulator Tiara utilizes
- * asynchronous read mode, as the values read from certain chip registers can
- * only be decided after the CPU has completed its current cycle.
+ * the next CPU cycle begins.
  */
 #define PEDDLE_ASYNC_READS false

@@ -8,7 +8,6 @@
 #pragma once
 
 #include "PeddleTypes.h"
-#include "json_fwd.h"
 #include <unordered_map>
 
 using std::unordered_map;
@@ -77,11 +76,6 @@ public:
     const auto &get() { return map; }
     isize size() { return (isize)map.size(); }
 
-    /*
-    optional<T> get(isize id) const {
-        return map.contains(id) ? std::optional<T>(map.at(id)) : std::nullopt;
-    }
-    */
     optional<T> operator[](isize id) const {
         return map.contains(id) ? std::optional<T>(map.at(id)) : std::nullopt;
     }
