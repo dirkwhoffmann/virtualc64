@@ -13,7 +13,6 @@
 #pragma once
 
 #include "Transport.h"
-
 #include <mutex>
 
 namespace vc64 {
