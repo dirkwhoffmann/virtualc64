@@ -25,13 +25,14 @@ enum class ServerType : long
     RSH,
     RPC,
     DAP,
-    PROM
+    PROM,
+    MCP
 };
 
 struct ServerTypeEnum : utl::Reflectable<ServerTypeEnum, ServerType>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = long(ServerType::PROM);
+    static constexpr long maxVal = long(ServerType::MCP);
 
     static const char *_key(ServerType value)
     {
@@ -41,6 +42,7 @@ struct ServerTypeEnum : utl::Reflectable<ServerTypeEnum, ServerType>
             case ServerType::RPC:    return "RPC";
             case ServerType::DAP:    return "DAP";
             case ServerType::PROM:   return "PROM";
+            case ServerType::MCP:    return "MCP";
         }
         return "???";
     }
@@ -52,6 +54,7 @@ struct ServerTypeEnum : utl::Reflectable<ServerTypeEnum, ServerType>
             case ServerType::RPC:    return "JSON RPC server";
             case ServerType::DAP:    return "Debug adapter";
             case ServerType::PROM:   return "Prometheus server";
+            case ServerType::MCP:    return "MCP server";
         }
         return "???";
     }
@@ -102,6 +105,7 @@ typedef struct
     RemoteServerInfo rpcInfo;               ///< State of the RPC server
     RemoteServerInfo dapInfo;               ///< State of the DAP server
     RemoteServerInfo promInfo;              ///< State of the Prometheus server
+    RemoteServerInfo mcpInfo;               ///< State of the MCP server
 }
 RemoteManagerInfo;
 

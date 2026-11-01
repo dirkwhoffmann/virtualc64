@@ -2134,6 +2134,7 @@ Console::initCommanderCommands(RSCommand &root)
     cmd = registerComponent(remoteManager.rpcServer);
     cmd = registerComponent(remoteManager.dapServer);
     cmd = registerComponent(remoteManager.promServer);
+    cmd = registerComponent(remoteManager.mcpServer);
 }
 
 void

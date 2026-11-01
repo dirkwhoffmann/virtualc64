@@ -18,6 +18,7 @@
 #include "RshServer.h"
 #include "DapServer.h"
 #include "PromServer.h"
+#include "McpServer.h"
 #include "utl/wrappers.h"
 #include <deque>
 #include <mutex>
@@ -72,9 +73,10 @@ public:
     RpcServer rpcServer = RpcServer(c64, isize(ServerType::RPC));
     DapServer dapServer = DapServer(c64, isize(ServerType::DAP));
     PromServer promServer = PromServer(c64, isize(ServerType::PROM));
+    McpServer mcpServer = McpServer(c64, isize(ServerType::MCP));
 
     // Convenience wrapper
-    std::vector <RemoteServer *> servers = { &rshServer, &rpcServer, &dapServer, &promServer };
+    std::vector <RemoteServer *> servers = { &rshServer, &rpcServer, &dapServer, &promServer, &mcpServer };
 
     // Result of the latest inspection
     utl::Backed<RemoteManagerInfo> info;
@@ -99,6 +101,7 @@ public:
         CLONE(rpcServer)
         CLONE(dapServer)
         CLONE(promServer)
+        CLONE(mcpServer)
 
         return *this;
     }

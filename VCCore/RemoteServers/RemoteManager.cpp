@@ -70,6 +70,7 @@ RemoteManager::RemoteManager(C64& ref) : SubComponent(ref)
         &rpcServer,
         &dapServer,
         &promServer,
+        &mcpServer,
     };
 
     info.bind([this] { return cacheInfo(); } );
@@ -108,6 +109,7 @@ RemoteManager::cacheInfo() const
     info.rpcInfo = rpcServer.cacheInfo();
     info.dapInfo = dapServer.cacheInfo();
     info.promInfo = promServer.cacheInfo();
+    info.mcpInfo = mcpServer.cacheInfo();
 
     return info;
 }
@@ -168,6 +170,7 @@ RemoteManager::update()
     launchDaemon(rpcServer, rpcServer.config);
     launchDaemon(dapServer, dapServer.config);
     launchDaemon(promServer, promServer.config);
+    launchDaemon(mcpServer, mcpServer.config);
 }
 
 void
@@ -197,6 +200,7 @@ RemoteManager::send(ServerType server, const string &payload)
         case ServerType::RPC:  rpcServer.send(payload);  break;
         case ServerType::DAP:  dapServer.send(payload);  break;
         case ServerType::PROM: promServer.send(payload); break;
+        case ServerType::MCP:  mcpServer.send(payload);  break;
 
         default:
             fatalError;

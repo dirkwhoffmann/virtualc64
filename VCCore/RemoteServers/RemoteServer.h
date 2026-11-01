@@ -49,6 +49,10 @@ class RemoteServer : public SubComponent, public TransportDelegate {
         .name           = "PromServer",
         .description    = "Prometheus Server",
         .shell          = "server prom"
+    }, {
+        .name           = "McpServer",
+        .description    = "Model Context Protocol Server",
+        .shell          = "server mcp"
     }};
 
     Options options = {

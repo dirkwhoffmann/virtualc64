@@ -187,6 +187,11 @@ Defaults::Defaults()
     setFallback(Opt::SRV_TRANSPORT,             (i64)TransportProtocol::HTTP, { (i64)ServerType::PROM });
     setFallback(Opt::SRV_VERBOSE,               false,                  { (i64)ServerType::PROM });
 
+    setFallback(Opt::SRV_ENABLE,                false,                  { (i64)ServerType::MCP });
+    setFallback(Opt::SRV_PORT,                  8085,                   { (i64)ServerType::MCP });
+    setFallback(Opt::SRV_TRANSPORT,             (i64)TransportProtocol::HTTP, { (i64)ServerType::MCP });
+    setFallback(Opt::SRV_VERBOSE,               false,                  { (i64)ServerType::MCP });
+
     setFallback(Opt::DBG_DEBUGCART,             0);
     setFallback(Opt::DBG_WATCHDOG,              0);
 

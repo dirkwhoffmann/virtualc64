@@ -240,6 +240,7 @@ extension RemoteManagerProxy {
         count(info.rpcInfo)
         count(info.dapInfo)
         count(info.promInfo)
+        count(info.mcpInfo)
 
         if numConnected > 0 { return Symbol.get(.serverConnected) }
         if numActive > 0 { return Symbol.get(.serverListening) }
