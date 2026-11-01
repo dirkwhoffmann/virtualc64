@@ -7,19 +7,48 @@
 
 #include "PeddleConfig.h"
 #include "SymbolTable.h"
-#include "utl/io/Parser.h"
-#include "utl/support/Strings.h"
 #include <fstream>
 #include <sstream>
 #include <algorithm>
 #include <iostream>
+#include <stdexcept>
+#include <cerrno>
+#include <cstdlib>
 
 namespace vc64::peddle {
 
-inline u16 parseU16(string_view sv) { return (u16)utl::parseNum(string(sv)); }
-inline u32 parseU32(string_view sv) { return (u32)utl::parseNum(string(sv)); }
-inline u64 parseU64(string_view sv) { return (u64)utl::parseNum(string(sv)); }
-inline isize parseNum(string_view sv) { return (isize)utl::parseNum(string(sv)); }
+// Strips a pair of surrounding double quotes (if present)
+inline string_view unquote(string_view sv)
+{
+    bool quoted = sv.size() >= 2 && sv.front() == '"' && sv.back() == '"';
+    return quoted ? sv.substr(1, sv.size() - 2) : sv;
+}
+
+// Parses a number given in decimal, hexadecimal ($ff or 0xff), or binary (%101) notation
+inline long parseLong(string_view sv)
+{
+    string token(sv);
+    string digits = token;
+    int base = 0;
+
+    if (token.starts_with("$"))       { digits.erase(0, 1); base = 16; }
+    else if (token.starts_with("0x")) { digits.erase(0, 2); base = 16; }
+    else if (token.starts_with("%"))  { digits.erase(0, 1); base = 2; }
+
+    char *end = nullptr;
+    errno = 0;
+    auto result = strtol(digits.c_str(), &end, base);
+
+    if (digits.empty() || end != digits.c_str() + digits.size() || errno == ERANGE) {
+        throw std::invalid_argument("Invalid number: " + token);
+    }
+    return result;
+}
+
+inline u16 parseU16(string_view sv) { return (u16)parseLong(sv); }
+inline u32 parseU32(string_view sv) { return (u32)parseLong(sv); }
+inline u64 parseU64(string_view sv) { return (u64)parseLong(sv); }
+inline isize parseNum(string_view sv) { return (isize)parseLong(sv); }
 
 inline void parseKeyValueLine(string_view line, auto &&handler) {
 
@@ -34,7 +63,7 @@ inline void parseKeyValueLine(string_view line, auto &&handler) {
 
             string_view field = token.substr(0, eq);
             string_view value = token.substr(eq + 1);
-            handler(field, utl::unquote(value));
+            handler(field, unquote(value));
         }
 
         if (comma == string_view::npos) break;
