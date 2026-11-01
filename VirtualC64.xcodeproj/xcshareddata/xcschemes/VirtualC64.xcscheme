@@ -122,7 +122,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;wait 5&quot; -&quot;keyboard type run&quot;"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;regression  set WATCHDOG 10000000&quot;"

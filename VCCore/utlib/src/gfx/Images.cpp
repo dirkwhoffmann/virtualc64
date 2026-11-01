@@ -47,12 +47,12 @@ exportPNG(const fs::path &path, const void *data, isize w, isize h,
     exportPNG(path, data, w, h, w, 1, texelFormat);
 }
 
-void
-exportPNG(const fs::path &path, const void *data, isize w, isize h, isize stride,
+std::vector<u8>
+encodePNG(const void *data, isize w, isize h, isize stride,
           isize vscale, TexelFormat texelFormat)
 {
     if (!data || w <= 0 || h <= 0 || stride < w || vscale < 1)
-        throw Error(0, "exportPNG: invalid image data or dimensions");
+        throw Error(0, "encodePNG: invalid image data or dimensions");
 
     auto *pixels = static_cast<const u32 *>(data);
 
@@ -81,17 +81,27 @@ exportPNG(const fs::path &path, const void *data, isize w, isize h, isize stride
         pixels = tmp.data();
     }
 
-    // Encode into memory and write the file ourselves, which keeps
-    // non-ASCII paths working
     size_t len = 0;
     void *png = tdefl_write_image_to_png_file_in_memory_ex(pixels, int(w), int(h * vscale), 4, &len,
                                                            pngLevel, MZ_FALSE);
     if (!png)
-        throw Error(0, "exportPNG: image encoding failed");
+        throw Error(0, "encodePNG: image encoding failed");
 
-    std::ofstream file(path, std::ios::binary);
-    file.write(static_cast<const char *>(png), std::streamsize(len));
+    std::vector<u8> result(static_cast<const u8 *>(png), static_cast<const u8 *>(png) + len);
     mz_free(png);
+
+    return result;
+}
+
+void
+exportPNG(const fs::path &path, const void *data, isize w, isize h, isize stride,
+          isize vscale, TexelFormat texelFormat)
+{
+    auto png = encodePNG(data, w, h, stride, vscale, texelFormat);
+
+    // Write the file ourselves, which keeps non-ASCII paths working
+    std::ofstream file(path, std::ios::binary);
+    file.write(reinterpret_cast<const char *>(png.data()), std::streamsize(png.size()));
     if (!file)
         throw Error(0, "exportPNG: can't write " + path.string());
 }

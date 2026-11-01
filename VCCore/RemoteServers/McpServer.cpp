@@ -13,6 +13,7 @@
 #include "vcconfig.h"
 #include "McpServer.h"
 #include "C64.h"
+#include "Emulator.h"
 #include "json.h"
 #include "httplib.h"
 #include "utl/support.h"
@@ -151,7 +152,139 @@ toolDefinitions()
         }}
     };
 
-    return json::array({ retroshell });
+    json screenshot = {
+
+        {"name", "screenshot"},
+        {"title", "Screenshot"},
+        {"description",
+            "Returns the current screen contents as a PNG image. The layer "
+            "'xray' shows the bus debugger overlay instead of the regular picture."},
+        {"inputSchema", {
+
+            {"type", "object"},
+            {"properties", {
+                {"layer", {
+                    {"type", "string"},
+                    {"enum", json::array({"emulator", "xray"})},
+                    {"description", "Texture to capture (default: emulator)"}
+                }},
+                {"area", {
+                    {"type", "string"},
+                    {"enum", json::array({"visible", "full"})},
+                    {"description", "'visible' crops the border to the usual screen area, "
+                                    "'full' returns the entire texture (default: visible)"}
+                }}
+            }}
+        }},
+        {"annotations", {{"readOnlyHint", true}, {"openWorldHint", false}}}
+    };
+
+    json readMemory = {
+
+        {"name", "read_memory"},
+        {"title", "Read memory"},
+        {"description",
+            "Reads bytes from the C64 address space without side effects. By "
+            "default, memory is shown as the CPU sees it (including the ROMs "
+            "and I/O area selected by the processor port). Use source 'ram' to "
+            "read the RAM underneath."},
+        {"inputSchema", {
+
+            {"type", "object"},
+            {"properties", {
+                {"address", {
+                    {"type", json::array({"integer", "string"})},
+                    {"description", "Start address (0...65535), or a string such as '$C000' or '0xC000'"}
+                }},
+                {"length", {
+                    {"type", "integer"},
+                    {"minimum", 1},
+                    {"maximum", 4096},
+                    {"description", "Number of bytes to read (default: 256)"}
+                }},
+                {"source", {
+                    {"type", "string"},
+                    {"enum", json::array({"cpu", "ram"})},
+                    {"description", "Memory view (default: cpu)"}
+                }}
+            }},
+            {"required", json::array({"address"})}
+        }},
+        {"annotations", {{"readOnlyHint", true}, {"openWorldHint", false}}}
+    };
+
+    json getState = {
+
+        {"name", "get_state"},
+        {"title", "Emulator state"},
+        {"description",
+            "Returns the power state, the video standard, the current frame, "
+            "raster line and raster cycle, and the CPU registers."},
+        {"inputSchema", {{"type", "object"}, {"properties", json::object()}}},
+        {"annotations", {{"readOnlyHint", true}, {"openWorldHint", false}}}
+    };
+
+    return json::array({ retroshell, screenshot, readMemory, getState });
+}
+
+// Encodes binary data as base64
+string
+base64(const std::vector<u8> &data)
+{
+    static const char *tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+    string out;
+    out.reserve((data.size() + 2) / 3 * 4);
+
+    for (size_t i = 0; i < data.size(); i += 3) {
+
+        u32 n = u32(data[i]) << 16;
+        if (i + 1 < data.size()) n |= u32(data[i + 1]) << 8;
+        if (i + 2 < data.size()) n |= u32(data[i + 2]);
+
+        out += tab[(n >> 18) & 63];
+        out += tab[(n >> 12) & 63];
+        out += i + 1 < data.size() ? tab[(n >> 6) & 63] : '=';
+        out += i + 2 < data.size() ? tab[n & 63] : '=';
+    }
+    return out;
+}
+
+// Parses an address given as an integer or as a string ('$C000', '0xC000', '49152')
+long
+parseAddress(const json &value)
+{
+    if (value.is_number_integer()) return value.get<long>();
+
+    if (value.is_string()) {
+
+        auto s = value.get<string>();
+        int base = 10;
+        if (!s.empty() && s[0] == '$') { s.erase(0, 1); base = 16; }
+        else if (s.size() > 2 && s[0] == '0' && (s[1] == 'x' || s[1] == 'X')) { s.erase(0, 2); base = 16; }
+
+        size_t used = 0;
+        try {
+            auto result = std::stol(s, &used, base);
+            if (used == s.size()) return result;
+        } catch (...) { }
+    }
+    throw std::invalid_argument("Invalid address");
+}
+
+// Suspends the emulator thread for the lifetime of the object
+struct Suspender {
+
+    const Emulator &emulator;
+    Suspender(const Emulator &e) : emulator(e) { emulator.suspend(); }
+    ~Suspender() { emulator.resume(); }
+};
+
+// Wraps text into the result of a tool call
+json
+textResult(const string &text)
+{
+    return { {"content", json::array({ {{"type", "text"}, {"text", text}} })} };
 }
 
 }
@@ -376,22 +509,21 @@ McpServer::process(const string &message, const struct httplib::Request *req)
 
         } else if (method == "tools/call") {
 
-            if (params.value("name", string()) != "retroshell") {
-                throw McpError { MCP::INVALID_PARAMS, "Unknown tool", 200 };
-            }
+            auto name = params.value("name", string());
             auto args = params.value("arguments", json::object());
-            if (!args.is_object() || !args.contains("command") || !args["command"].is_string()) {
-                throw McpError { MCP::INVALID_PARAMS, "Missing string argument 'command'", 200 };
-            }
+            if (!args.is_object()) args = json::object();
 
-            // Failing commands are reported as tool errors, not as protocol errors
-            result = { {"isError", false} };
+            bool known = false;
+            for (auto &tool : toolDefinitions()) if (tool["name"] == name) known = true;
+            if (!known) throw McpError { MCP::INVALID_PARAMS, "Unknown tool: " + name, 200 };
+
+            // Failing tools are reported as tool errors, not as protocol errors
             try {
-                auto output = execBlocking(args["command"].get<string>());
-                result["content"] = json::array({ {{"type", "text"}, {"text", output}} });
+                result = callTool(name, args);
+                result["isError"] = false;
             } catch (const std::exception &e) {
+                result = textResult(e.what());
                 result["isError"] = true;
-                result["content"] = json::array({ {{"type", "text"}, {"text", e.what()}} });
             }
 
         } else {
@@ -410,6 +542,171 @@ McpServer::process(const string &message, const struct httplib::Request *req)
 
         return { 500, makeError(id, McpError { MCP::INTERNAL_ERROR, e.what(), 500 }).dump() };
     }
+}
+
+json
+McpServer::callTool(const string &name, const json &args)
+{
+    if (name == "retroshell")   return toolRetroShell(args);
+    if (name == "screenshot")   return toolScreenshot(args);
+    if (name == "read_memory")  return toolReadMemory(args);
+    if (name == "get_state")    return toolGetState(args);
+
+    throw std::invalid_argument("Unknown tool: " + name);
+}
+
+json
+McpServer::toolRetroShell(const json &args)
+{
+    if (!args.contains("command") || !args["command"].is_string()) {
+        throw std::invalid_argument("Missing string argument 'command'");
+    }
+    return textResult(execBlocking(args["command"].get<string>()));
+}
+
+json
+McpServer::toolScreenshot(const json &args)
+{
+    auto layer = args.value("layer", string("emulator"));
+    auto area = args.value("area", string("visible"));
+
+    if (layer != "emulator" && layer != "xray") throw std::invalid_argument("Invalid layer");
+    if (area != "visible" && area != "full") throw std::invalid_argument("Invalid area");
+
+    std::vector<u8> png;
+    {
+        Suspender _(emulator);
+        emulator.lockTexture();
+
+        try {
+            if (area == "full") {
+
+                png = layer == "xray" ? videoPort.encodeXrayTexture() : videoPort.encodeTexture();
+
+            } else {
+
+                // Same cutout as used for snapshot previews
+                auto y2 = vic.pal() ? 299 : 249;
+                png = layer == "xray" ? videoPort.encodeXrayTexture(104, 487, 16, y2)
+                                      : videoPort.encodeTexture(104, 487, 16, y2);
+            }
+
+        } catch (...) { emulator.unlockTexture(); throw; }
+        emulator.unlockTexture();
+    }
+
+    return { {"content", json::array({
+
+        { {"type", "image"}, {"data", base64(png)}, {"mimeType", "image/png"} }
+
+    })} };
+}
+
+json
+McpServer::toolReadMemory(const json &args)
+{
+    if (!args.contains("address")) throw std::invalid_argument("Missing argument 'address'");
+
+    auto address = parseAddress(args["address"]);
+    auto length = args.value("length", 256L);
+    auto source = args.value("source", string("cpu"));
+
+    if (address < 0 || address > 0xFFFF) throw std::invalid_argument("Address out of range");
+    if (length < 1 || length > 4096) throw std::invalid_argument("Length must be in 1...4096");
+    if (address + length > 0x10000) throw std::invalid_argument("Range exceeds the address space");
+    if (source != "cpu" && source != "ram") throw std::invalid_argument("Invalid source");
+
+    json bytes = json::array();
+    {
+        Suspender _(emulator);
+
+        for (long i = 0; i < length; i++) {
+
+            auto addr = u16(address + i);
+            bytes.push_back(source == "ram" ? mem.spypeek(addr, MemType::RAM) : mem.spypeek(addr));
+        }
+    }
+
+    // Render a hex dump with 16 bytes per line
+    std::stringstream dump;
+    for (long i = 0; i < length; i += 16) {
+
+        char line[16];
+        snprintf(line, sizeof(line), "$%04lX:", address + i);
+        dump << line;
+
+        string ascii;
+        for (long j = i; j < std::min(i + 16, length); j++) {
+
+            u8 b = bytes[size_t(j)];
+            snprintf(line, sizeof(line), " %02X", b);
+            dump << line;
+            ascii += (b >= 32 && b < 127) ? char(b) : '.';
+        }
+        dump << "  " << ascii << "\n";
+    }
+
+    auto result = textResult(dump.str());
+    result["structuredContent"] = {
+
+        {"address", address},
+        {"length", length},
+        {"source", source},
+        {"bytes", bytes}
+    };
+    return result;
+}
+
+json
+McpServer::toolGetState(const json &)
+{
+    json state;
+    {
+        Suspender _(emulator);
+
+        auto ci = cpu.cacheInfo();
+
+        auto power = c64.isPoweredOff() ? "off" : c64.isPaused() ? "paused" : "running";
+        auto flags = string("") + (ci.sr & 0x80 ? 'N' : '-') + (ci.sr & 0x40 ? 'V' : '-')
+                   + '-' + (ci.sr & 0x10 ? 'B' : '-') + (ci.sr & 0x08 ? 'D' : '-')
+                   + (ci.sr & 0x04 ? 'I' : '-') + (ci.sr & 0x02 ? 'Z' : '-') + (ci.sr & 0x01 ? 'C' : '-');
+
+        state = {
+
+            {"power", power},
+            {"video", vic.pal() ? "PAL" : "NTSC"},
+            {"frame", c64.frame},
+            {"rasterLine", c64.scanline},
+            {"rasterCycle", c64.rasterCycle},
+            {"cpu", {
+                {"pc", ci.pc},
+                {"pc0", ci.pc0},
+                {"sp", ci.sp},
+                {"a", ci.a},
+                {"x", ci.x},
+                {"y", ci.y},
+                {"sr", ci.sr},
+                {"flags", flags},
+                {"jammed", ci.jammed},
+                {"cycle", ci.cycle}
+            }}
+        };
+    }
+
+    char line[256];
+    snprintf(line, sizeof(line),
+             "%s, %s, frame %llu, raster line %d cycle %d\n"
+             "PC=$%04X SP=$%02X A=$%02X X=$%02X Y=$%02X SR=$%02X (%s)%s\n",
+             state["power"].get<string>().c_str(), state["video"].get<string>().c_str(),
+             (unsigned long long)c64.frame, int(c64.scanline), int(c64.rasterCycle),
+             state["cpu"]["pc"].get<int>(), state["cpu"]["sp"].get<int>(),
+             state["cpu"]["a"].get<int>(), state["cpu"]["x"].get<int>(), state["cpu"]["y"].get<int>(),
+             state["cpu"]["sr"].get<int>(), state["cpu"]["flags"].get<string>().c_str(),
+             state["cpu"]["jammed"].get<bool>() ? " JAMMED" : "");
+
+    auto result = textResult(line);
+    result["structuredContent"] = state;
+    return result;
 }
 
 string

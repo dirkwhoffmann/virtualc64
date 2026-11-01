@@ -141,8 +141,20 @@ public:
     void saveXrayTexture(const fs::path &path, isize x1, isize x2, isize y1, isize y2,
                          isize offset = 0) const;
 
+    /* Encodes the stable emulator texture or X-Ray texture as PNG data. The
+     * cutout semantics are the same as above.
+     */
+    std::vector<u8> encodeTexture(isize offset = 0) const;
+    std::vector<u8> encodeTexture(isize x1, isize x2, isize y1, isize y2,
+                                  isize offset = 0) const;
+    std::vector<u8> encodeXrayTexture(isize offset = 0) const;
+    std::vector<u8> encodeXrayTexture(isize x1, isize x2, isize y1, isize y2,
+                                      isize offset = 0) const;
+
 private:
 
+    std::vector<u8> encodePNG(const Texture &texture,
+                              isize x1, isize x2, isize y1, isize y2) const;
     void savePNG(const Texture &texture, const fs::path &path,
                  isize x1, isize x2, isize y1, isize y2) const;
 

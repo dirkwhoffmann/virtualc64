@@ -1625,6 +1625,42 @@ VideoPortAPI::saveXrayTexture(const fs::path &path, isize x1, isize x2, isize y1
     emu->unlockTexture();
 }
 
+std::vector<u8>
+VideoPortAPI::encodeTexture() const
+{
+    VC64_PUBLIC
+    emu->lockTexture();
+    try { auto png = videoPort->encodeTexture(); emu->unlockTexture(); return png; }
+    catch (...) { emu->unlockTexture(); throw; }
+}
+
+std::vector<u8>
+VideoPortAPI::encodeTexture(isize x1, isize x2, isize y1, isize y2) const
+{
+    VC64_PUBLIC
+    emu->lockTexture();
+    try { auto png = videoPort->encodeTexture(x1, x2, y1, y2); emu->unlockTexture(); return png; }
+    catch (...) { emu->unlockTexture(); throw; }
+}
+
+std::vector<u8>
+VideoPortAPI::encodeXrayTexture() const
+{
+    VC64_PUBLIC
+    emu->lockTexture();
+    try { auto png = videoPort->encodeXrayTexture(); emu->unlockTexture(); return png; }
+    catch (...) { emu->unlockTexture(); throw; }
+}
+
+std::vector<u8>
+VideoPortAPI::encodeXrayTexture(isize x1, isize x2, isize y1, isize y2) const
+{
+    VC64_PUBLIC
+    emu->lockTexture();
+    try { auto png = videoPort->encodeXrayTexture(x1, x2, y1, y2); emu->unlockTexture(); return png; }
+    catch (...) { emu->unlockTexture(); throw; }
+}
+
 void
 VideoPortAPI::findInnerArea(isize &x1, isize &x2, isize &y1, isize &y2) const
 {

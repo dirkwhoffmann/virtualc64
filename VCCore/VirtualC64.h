@@ -766,6 +766,24 @@ public:
     void saveXrayTexture(const std::filesystem::path &path,
                          isize x1, isize x2, isize y1, isize y2) const;
 
+    /** @brief  Returns the most recent stable texture as PNG data
+     *
+     * The cutout is given in texels of the texture. The upper bounds x2 and
+     * y2 are exclusive. Without a cutout, the entire texture is encoded.
+     * The data can be written to a file as is or passed on to other
+     * components (e.g., a network server).
+     *
+     *  @throw Error if the cutout is empty or exceeds the texture.
+     */
+    std::vector<u8> encodeTexture() const;
+    /// Returns a cutout of the most recent stable texture as PNG data (see above).
+    std::vector<u8> encodeTexture(isize x1, isize x2, isize y1, isize y2) const;
+
+    /// Returns the most recent stable X-Ray texture as PNG data.
+    std::vector<u8> encodeXrayTexture() const;
+    /// Returns a cutout of the most recent stable X-Ray texture as PNG data.
+    std::vector<u8> encodeXrayTexture(isize x1, isize x2, isize y1, isize y2) const;
+
     /** @brief  Determines the area of the texture that contains picture data.
      *
      *  The result is meant to be used to crop the border of the picture. The

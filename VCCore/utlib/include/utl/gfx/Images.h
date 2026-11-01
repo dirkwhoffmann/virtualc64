@@ -11,6 +11,7 @@
 
 #include "utl/common.h"
 #include "GraphicsTypes.h"
+#include <vector>
 
 namespace utl {
 
@@ -26,5 +27,9 @@ void exportPNG(const fs::path &path, const void *data, isize w, isize h,
  */
 void exportPNG(const fs::path &path, const void *data, isize w, isize h, isize stride,
                isize vscale = 1, TexelFormat texelFormat = TexelFormat::ABGR);
+
+/* Same as above, but returns the PNG data instead of writing a file. */
+std::vector<u8> encodePNG(const void *data, isize w, isize h, isize stride,
+                          isize vscale = 1, TexelFormat texelFormat = TexelFormat::ABGR);
 
 }

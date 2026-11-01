@@ -16,6 +16,7 @@
 #include "StdioTransport.h"
 #include "TcpTransport.h"
 #include "HttpTransport.h"
+#include "json_fwd.h"
 #include <atomic>
 #include <mutex>
 
@@ -122,6 +123,21 @@ private:
 
     // Executes a RetroShell command and waits for the result
     string execBlocking(const string &command);
+
+
+    //
+    // Tools
+    //
+
+    /* Each tool receives the 'arguments' object of the call and returns the
+     * result of the tool call (content, structuredContent). A tool signals
+     * failure by throwing an exception.
+     */
+    nlohmann::json callTool(const string &name, const nlohmann::json &args);
+    nlohmann::json toolRetroShell(const nlohmann::json &args);
+    nlohmann::json toolScreenshot(const nlohmann::json &args);
+    nlohmann::json toolReadMemory(const nlohmann::json &args);
+    nlohmann::json toolGetState(const nlohmann::json &args);
 };
 
 }
