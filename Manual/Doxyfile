@@ -70,8 +70,8 @@ INPUT                  = guides \
                          ../VCCore/Media/MediaFileTypes.h \
                          ../VCCore/Media/MediaError.h \
                          ../VCCore/Media/Snapshot.h \
-                         ../VCCore/Misc/RemoteServers/RemoteManagerTypes.h \
-                         ../VCCore/Misc/RemoteServers/RemoteServerTypes.h \
+                         ../VCCore/RemoteServers/RemoteManagerTypes.h \
+                         ../VCCore/RemoteServers/RemoteServerTypes.h \
                          ../VCCore/Misc/RetroShell/RetroShellTypes.h \
                          ../VCCore/Peripherals/Datasette/DatasetteTypes.h \
                          ../VCCore/Peripherals/Drive/DiskAnalyzerTypes.h \

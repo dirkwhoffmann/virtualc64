@@ -62,6 +62,7 @@ add_subdirectory(Infrastructure)
 add_subdirectory(Components)
 add_subdirectory(Ports)
 add_subdirectory(Media)
+add_subdirectory(RemoteServers)
 add_subdirectory(Misc)
 add_subdirectory(Peripherals)
 

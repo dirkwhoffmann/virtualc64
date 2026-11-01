@@ -56,8 +56,8 @@
 #include "Media/Cartridges/CartridgeTypes.h"
 
 // Miscellaneous
-#include "Misc/RemoteServers/RemoteManagerTypes.h"
-#include "Misc/RemoteServers/RemoteServerTypes.h"
+#include "RemoteServers/RemoteManagerTypes.h"
+#include "RemoteServers/RemoteServerTypes.h"
 #include "Misc/RetroShell/RetroShellTypes.h"
 
 #include "Constants.h"

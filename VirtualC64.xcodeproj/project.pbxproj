@@ -1990,6 +1990,7 @@
 				50ACF4DC256EB451003B5690 /* Ports */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C42C624AF29AB00E69CAE /* Media */,
+				50A5B7CD2C74E44C00D6DDAD /* RemoteServers */,
 				50EF22312815925100440C4D /* Misc */,
 			);
 			path = VCCore;
@@ -3266,7 +3267,6 @@
 			isa = PBXGroup;
 			children = (
 				50EF22322815927D00440C4D /* CMakeLists.txt */,
-				50A5B7CD2C74E44C00D6DDAD /* RemoteServers */,
 				5036E0AD261AEF000048E66A /* RetroShell */,
 				50EF22302815922300440C4D /* RegressionTester */,
 			);
