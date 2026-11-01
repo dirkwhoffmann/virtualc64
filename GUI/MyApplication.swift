@@ -41,7 +41,7 @@ class MyAppDelegate: NSObject, NSApplicationDelegate {
     var database = DeviceDatabase()
     
     // Command line arguments
-    var argv: [String] = []
+    var argv: [String] = Array(CommandLine.arguments.dropFirst())
     
     // User activity token obtained in applicationDidFinishLaunching()
     var token: NSObjectProtocol!
@@ -65,8 +65,6 @@ class MyAppDelegate: NSObject, NSApplicationDelegate {
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         token = ProcessInfo.processInfo.beginActivity(options: [ .idleSystemSleepDisabled, .suddenTerminationDisabled ], reason: "Running an emulator")
-        argv = Array(CommandLine.arguments.dropFirst())
-        
         loginfo(.lifetime, "Launched with arguments \(argv)")
     }
     

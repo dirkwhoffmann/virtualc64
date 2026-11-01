@@ -121,8 +121,8 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-&quot;keyboard type run&quot;"
-            isEnabled = "NO">
+            argument = "-&quot;wait 5&quot; -&quot;keyboard type run&quot;"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-&quot;regression  set WATCHDOG 10000000&quot;"
