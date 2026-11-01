@@ -225,8 +225,6 @@ public:
     // DEPRECATED
     isize disassembleRecordedInstr(isize i, char *str) const;
     isize disassembleRecordedBytes(isize i, char *str) const;
-    void disassembleRecordedFlags(isize i, char *str) const;
-    void disassembleRecordedPC(isize i, char *str) const;
 
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
