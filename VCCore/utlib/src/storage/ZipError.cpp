@@ -97,4 +97,5 @@ ZipError::setError(long fault, long ec)
         default: setError(fault, std::to_string(ec));
     }
 }
+
 }

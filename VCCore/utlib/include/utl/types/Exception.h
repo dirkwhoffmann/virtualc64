@@ -6,6 +6,7 @@
 //
 // See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -28,6 +29,7 @@ struct GenericException : public Exception {
     T payload;                                  ///< Exception-specific payload
     std::string msg;                            ///< Message returned by what()
 
+    /// Creates an exception with a payload and a message.
     explicit GenericException(T payload = {}, std::string msg = "")
     : payload(std::move(payload)), msg(std::move(msg)) { }
 
@@ -36,8 +38,9 @@ struct GenericException : public Exception {
         return msg.c_str();
     }
 
-    // Setters
+    /// Setters
     void set_msg(std::string value) { msg = std::move(value); }
+    /// Replaces the payload
     void set_payload(T value) { payload = std::move(value); }
 };
 

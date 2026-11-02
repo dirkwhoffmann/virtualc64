@@ -6,6 +6,7 @@
 //
 // See https://mozilla.org/MPL/2.0 for license information
 // -----------------------------------------------------------------------------
+/// @file
 
 #pragma once
 
@@ -159,7 +160,9 @@ struct IOError : public Error {
         }
     }
 
+    /// Creates an error with a fault code and a string argument.
     explicit IOError(long fault, const char *str) : IOError(fault, string(str)) { }
+    /// Creates an error with a fault code and a path argument.
     explicit IOError(long fault, const fs::path &path) : IOError(fault, path.string()) { }
 };
 

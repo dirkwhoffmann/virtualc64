@@ -9,9 +9,9 @@
 
 #pragma once
 
+#include <vector>
 #include "utl/common.h"
 #include "GraphicsTypes.h"
-#include <vector>
 
 namespace utl {
 
