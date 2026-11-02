@@ -16,19 +16,16 @@
 #include "utl/support/Bits.h"
 #include "utl/hints.h"
 #include "utl/abilities/LogMacros.h"
-
-/* Internal code uses the names of utlib without qualification. The directive
- * lives here and not in the public headers, so that it does not leak into the
- * code of API clients.
- */
 #include "utl/common.h"
-namespace vc64 { using namespace utl; }
+
+namespace vc64 {
+
+using namespace utl;
 
 //
 // Release settings
 //
 
-namespace vc64 {
 // Version number
 static constexpr int VER_MAJOR      = 6;
 static constexpr int VER_MINOR      = 2;

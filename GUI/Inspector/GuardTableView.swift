@@ -218,8 +218,6 @@ class WatchTableView: GuardTableView {
 
             if cpu.hasWatchpoint(withNr: row) {
 
-                let wp = cpu.watchpoint(withNr: row)
-
                 if col == 0 {
 
                     cpu.toggleWatchpoint(withNr: row)

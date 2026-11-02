@@ -10,10 +10,10 @@
 #include "PeddleConfig.h"
 #include "PeddleTypes.h"
 #include "PeddleDisassembler.h"
-#include "SymbolTable.h"
 #include "PeddleDebugger.h"
-#include "SubComponent.h"
 #include "PeddleUtils.h"
+#include "SymbolTable.h"
+#include "SubComponent.h"
 #include "TimeDelayed.h"
 
 namespace vc64::peddle {
