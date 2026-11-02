@@ -282,13 +282,32 @@ class KeyboardController: NSObject {
         MacKey.Ansi.period: C64Key.period,
         MacKey.Ansi.slash: C64Key.slash,
         MacKey.curRight: C64Key.curLeftRight,
-        // MacKey.curLeft: C64Key.curLeftRight,
         MacKey.curDown: C64Key.curUpDown,
-        // MacKey.curUp: C64Key.curUpDown,
         MacKey.F7: C64Key.F7F8,
 
         // Fifth row of C64 keyboard
-        MacKey.space: C64Key.space
+        MacKey.space: C64Key.space,
+        
+        // Keypad
+        MacKey.Ansi.Keypad.decimal: C64Key.period,
+        MacKey.Ansi.Keypad.multiply: C64Key.asterisk,
+        MacKey.Ansi.Keypad.plus: C64Key.plus,
+        MacKey.Ansi.Keypad.clear: C64Key.delete,
+        MacKey.Ansi.Keypad.divide:C64Key.slash,
+        MacKey.Ansi.Keypad.enter: C64Key.ret,
+        MacKey.Ansi.Keypad.minus: C64Key.minus,
+        MacKey.Ansi.Keypad.equals: C64Key.equal,
+        
+        MacKey.Ansi.Keypad.digit0: C64Key.digit0,
+        MacKey.Ansi.Keypad.digit1: C64Key.digit1,
+        MacKey.Ansi.Keypad.digit2: C64Key.digit2,
+        MacKey.Ansi.Keypad.digit3: C64Key.digit3,
+        MacKey.Ansi.Keypad.digit4: C64Key.digit4,
+        MacKey.Ansi.Keypad.digit5: C64Key.digit5,
+        MacKey.Ansi.Keypad.digit6: C64Key.digit6,
+        MacKey.Ansi.Keypad.digit7: C64Key.digit7,
+        MacKey.Ansi.Keypad.digit8: C64Key.digit8,
+        MacKey.Ansi.Keypad.digit9: C64Key.digit9
     ]
     
     // Logical key mapping
@@ -330,6 +349,19 @@ class KeyboardController: NSObject {
         case MacKey.F6: return [C64Key.F5F6, C64Key.shift]
         case MacKey.F7: return [C64Key.F7F8]
         case MacKey.F8: return [C64Key.F7F8, C64Key.shift]
+            
+        // Keymap
+        case MacKey.Ansi.Keypad.digit0: return [C64Key.digit0]
+        case MacKey.Ansi.Keypad.digit1: return [C64Key.digit1]
+        case MacKey.Ansi.Keypad.digit2: return [C64Key.digit2]
+        case MacKey.Ansi.Keypad.digit3: return [C64Key.digit3]
+        case MacKey.Ansi.Keypad.digit4: return [C64Key.digit4]
+        case MacKey.Ansi.Keypad.digit5: return [C64Key.digit5]
+        case MacKey.Ansi.Keypad.digit6: return [C64Key.digit6]
+        case MacKey.Ansi.Keypad.digit7: return [C64Key.digit7]
+        case MacKey.Ansi.Keypad.digit8: return [C64Key.digit8]
+        case MacKey.Ansi.Keypad.digit9: return [C64Key.digit9]
+        case MacKey.Ansi.Keypad.enter: return [C64Key.ret]
             
         default:
             
