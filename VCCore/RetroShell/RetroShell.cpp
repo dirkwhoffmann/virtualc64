@@ -85,6 +85,7 @@ RetroShell::newSession()
         cancelWakeup();
         console.clear();
         enterCommander();
+        switchConsole();
     }
 }
 
@@ -109,8 +110,13 @@ RetroShell::cacheInfo() const
 }
 
 void
-RetroShell::enterConsole(CommandSet cs)
+RetroShell::switchConsole()
 {
+    if (!nextCommandSet) return;
+
+    auto cs = *nextCommandSet;
+    nextCommandSet = { };
+
     // Replace the command tree
     console.setCommandSet(cs);
 

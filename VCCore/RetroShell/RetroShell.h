@@ -80,6 +80,9 @@ private:
     // Command queue (stores all pending commands)
     std::vector<InputLine> commands;
 
+    // Command set to switch to once the running command has finished
+    optional<CommandSet> nextCommandSet;
+
 public:
 
     CommandSet commandSet() const { return console.getCommandSet(); }
@@ -177,9 +180,17 @@ public:
 
 public:
 
-    void enterConsole(CommandSet cs);
+    /* Requests a switch to another command set. The switch replaces the
+     * command tree, which also owns the handler of the running command.
+     * Hence, it is postponed until the handler has returned (see
+     * switchConsole()).
+     */
+    void enterConsole(CommandSet cs) { nextCommandSet = cs; }
     void enterCommander() { enterConsole(CommandSet::Commander); }
     void enterDebugger() { enterConsole(CommandSet::Debugger); }
+
+    // Performs a pending command set switch
+    void switchConsole();
 
 
     //
