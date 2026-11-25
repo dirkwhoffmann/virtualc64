@@ -32,8 +32,10 @@ public:
     virtual void didActivate() { };
     virtual void didDeactivate() { };
 
-    // Provides the output of an executed RetroShell command
+    // Called before a RetroShell command is executed
     virtual void willExecute(const InputLine &input) = 0;
+
+    // Provides the output of an executed RetroShell command
     virtual void didExecute(const InputLine &input, std::stringstream &ss) = 0;
     virtual void didExecute(const InputLine &input, std::stringstream &ss, std::exception &e) = 0;
 };

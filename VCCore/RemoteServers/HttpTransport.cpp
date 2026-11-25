@@ -24,12 +24,14 @@ HttpTransport::~HttpTransport()
 void
 HttpTransport::disconnect()
 {
-    if (srv) {
+    {   std::lock_guard<std::mutex> lock(srvLock);
 
-        // Stop the server to exit the main thread
-        srv->stop();
-        delete srv;
-        srv = nullptr;
+        /* Stop the server to exit the main thread. The server thread deletes
+         * the server once listen() has returned. Requests in flight are still
+         * answered. Their handlers notice that the transport is terminating
+         * and stop waiting for the emulator (see RemoteServer::waitFor()).
+         */
+        if (srv) srv->stop();
     }
 
     delegate.didDisconnect();
@@ -38,33 +40,45 @@ HttpTransport::disconnect()
 void
 HttpTransport::main(u16 port, const string &endpoint)
 {
+    // A stop() may already have landed while this thread was being spawned
+    if (terminating()) { switchState(SrvState::OFF); return; }
+
+    auto server = std::make_unique<httplib::Server>();
+
+    // Define the endpoints
+    auto handler = [this](const httplib::Request& req, httplib::Response& res) {
+
+        // Requests that sneak in while the server is shutting down are turned away
+        if (terminating()) { res.status = 503; return; }
+
+        switchState(SrvState::CONNECTED);
+        deliver(req, res);
+    };
+    server->Get(endpoint, handler);
+    server->Post(endpoint, handler);
+
+    // Publish the server, unless a stop request has arrived in the meantime
+    {   std::lock_guard<std::mutex> lock(srvLock);
+
+        if (terminating()) { switchState(SrvState::OFF); return; }
+        srv = server.get();
+    }
+
     try {
-
-        // Create the HTTP server
-        if (!srv) srv = new httplib::Server();
-
-        // Define the endpoints
-        srv->Get(endpoint, [this](const httplib::Request& req, httplib::Response& res) {
-
-            switchState(SrvState::CONNECTED);
-            deliver(req, res);
-        });
-
-        srv->Post(endpoint, [this](const httplib::Request& req, httplib::Response& res) {
-
-            switchState(SrvState::CONNECTED);
-            deliver(req, res);
-        });
 
         // Start the server to listen on localhost
         switchState(SrvState::LISTENING);
-        srv->listen("localhost", port);
+        server->listen("localhost", port);
 
     } catch (std::exception &err) {
 
         logmsg(LOG_SRV, "HTTP server thread interrupted\n");
         delegate.didTerminate(err.what());
     }
+
+    // Withdraw the server before it is deleted
+    std::lock_guard<std::mutex> lock(srvLock);
+    srv = nullptr;
 }
 
 void

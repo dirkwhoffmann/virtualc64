@@ -118,11 +118,11 @@ private:
     // Response to a single message (an empty body denotes a notification)
     struct Reply { int status = 200; string body; };
 
-    // Processes a single JSON-RPC message
-    Reply process(const string &message, const struct httplib::Request *req);
+    // Processes a single JSON-RPC message received via the given transport
+    Reply process(const string &message, const struct httplib::Request *req, const Transport &via);
 
     // Executes a RetroShell command and waits for the result
-    string execBlocking(const string &command);
+    string execBlocking(const string &command, const Transport &via);
 
 
     //
@@ -133,8 +133,8 @@ private:
      * result of the tool call (content, structuredContent). A tool signals
      * failure by throwing an exception.
      */
-    nlohmann::json callTool(const string &name, const nlohmann::json &args);
-    nlohmann::json toolRetroShell(const nlohmann::json &args);
+    nlohmann::json callTool(const string &name, const nlohmann::json &args, const Transport &via);
+    nlohmann::json toolRetroShell(const nlohmann::json &args, const Transport &via);
     nlohmann::json toolScreenshot(const nlohmann::json &args);
     nlohmann::json toolReadMemory(const nlohmann::json &args);
     nlohmann::json toolGetState(const nlohmann::json &args);

@@ -19,6 +19,8 @@
 // #include "Thread.h"
 #include "Transport.h"
 #include "utl/wrappers.h"
+#include <chrono>
+#include <future>
 // #include <thread>
 
 namespace vc64 {
@@ -205,6 +207,35 @@ public:
 
     // Switches into the WAITING state
     void waitForLaunch();
+
+protected:
+
+    /* Waits for the result of a request that is carried out by the emulator
+     * thread. A request handler must not hold up the shutdown of the transport
+     * it has been received on: the shutdown runs on the emulator thread (e.g.,
+     * when a RetroShell command reconfigures the server) and waits until all
+     * handlers have returned. Hence, the handler gives up as soon as that
+     * transport is terminating. Throws if it gives up or if the optional
+     * timeout expires.
+     */
+    template <typename T>
+    static T waitFor(std::future<T> &future, const Transport &via,
+                     optional<std::chrono::milliseconds> timeout = { })
+    {
+        using namespace std::chrono;
+        const auto start = steady_clock::now();
+
+        while (future.wait_for(milliseconds(50)) != std::future_status::ready) {
+
+            if (via.terminating()) {
+                throw std::runtime_error("The server is shutting down");
+            }
+            if (timeout && steady_clock::now() - start > *timeout) {
+                throw std::runtime_error("Timeout. Is the emulator running?");
+            }
+        }
+        return future.get();
+    }
 
 
     //

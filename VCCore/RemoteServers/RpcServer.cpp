@@ -208,8 +208,12 @@ RpcServer::execBlocking(const string &command, isize id)
         }
     });
 
-    // Wait until the promise gets fulfilled
-    return future.get();
+    // Wait until the promise gets fulfilled (blocking requests arrive via HTTP)
+    try {
+        return waitFor(future, http);
+    } catch (...) {
+        return makeError(id, std::current_exception());
+    }
 }
 
 string

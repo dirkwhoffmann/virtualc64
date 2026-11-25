@@ -152,7 +152,11 @@ RshServer::didReceive(const httplib::Request &req, httplib::Response &res)
         }
     });
 
-    res.set_content(future.get(), "text/plain");
+    // Give up if the transport is shut down meanwhile (e.g., by this very command)
+    string text;
+    try { text = waitFor(future, http); } catch (std::exception &e) { text = e.what(); }
+
+    res.set_content(text, "text/plain");
 }
 
 void
